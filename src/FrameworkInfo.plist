@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<!--
+    The Objective-C wrapper around this file is AKFrameworkInfo.
+    
+    This config file is only used in the case where there is no docset index.
+    Docset indexes were introduced in Leopard.
+-->
+
+<plist version="1.0">
+<dict>
+
+
+<key>FrameworksOldStyle</key>
+<array>
+
+    <!-- ========== Foundation ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>Foundation</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/Foundation.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/Cocoa/Reference/Foundation</string>
+        </array>
+    </dict>
+
+    <!-- ========== AppKit ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>AppKit</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/AppKit.framework</string>
+ 
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/Cocoa/Reference/ApplicationKit</string>
+        </array>
+   </dict>
+
+    <!-- ========== CoreData ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>CoreData</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/CoreData.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/Cocoa/Reference/CoreDataFramework</string>
+        </array>
+    </dict>
+
+    <!-- ========== CoreImage ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>CoreImage</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/QuartzCore.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/GraphicsImaging/Reference/QuartzCoreFramework</string>
+        </array>
+    </dict>
+
+    <!-- ========== AddressBook ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>AddressBook</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/AddressBook.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/UserExperience/Reference/AddressBook</string>
+        </array>
+    </dict>
+
+    <!-- ========== PDFKit ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>PDFKit</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/Quartz.framework/Frameworks/PDFKit.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/GraphicsImaging/Reference/QuartzFramework</string>
+        </array>
+    </dict>
+
+    <!-- ========== PreferencePanes ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>PreferencePanes</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/PreferencePanes.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/UserExperience/Reference/PreferencePanes</string>
+        </array>
+    </dict>
+
+    <!-- ========== QTKit ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>QTKit</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/QTKit.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/QuickTime/Reference/QTKitFramework</string>
+        </array>
+    </dict>
+
+    <!-- ========== QuartzComposer ========== -->
+    <!-- FIXME [agl] Currently, QC docs are in *two* different directories:
+        the same as PDFKit, and, on Leopard, in a bunch of directories under
+        documentation/Cocoa.
+    -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>QuartzComposer</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/Quartz.framework/Frameworks/QuartzComposer.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/GraphicsImaging/Reference/QuartzFramework</string>
+        </array>
+    </dict>
+
+    <!-- ========== ScreenSaver ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>ScreenSaver</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/ScreenSaver.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/UserExperience/Reference/ScreenSaver</string>
+        </array>
+    </dict>
+
+    <!-- ========== SyncServices ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>SyncServices</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/SyncServices.framework</string>
+
+        <key>FrameworkClass</key>
+        <string>AKCocoaFramework22</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/Cocoa/Reference/SyncServicesFramework</string>
+            <string>/Developer/ADC Reference Library/documentation/Cocoa/Reference/SyncServicesRef_ObjC</string>
+        </array>
+    </dict>
+
+    <!-- ========== WebKit ========== -->
+    <dict>
+        <key>FrameworkName</key>
+        <string>WebKit</string>
+
+        <key>FrameworkPath</key>
+        <string>/System/Library/Frameworks/WebKit.framework</string>
+
+        <key>PossibleDocDirs</key>
+        <array>
+            <string>/Developer/ADC Reference Library/documentation/Cocoa/Reference/WebKit</string>
+        </array>
+    </dict>
+</array>
+
+
+</dict>
+</plist>

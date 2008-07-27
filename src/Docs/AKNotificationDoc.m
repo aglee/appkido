@@ -1,0 +1,73 @@
+/*
+ * AKNotificationDoc.m
+ *
+ * Created by Andy Lee on Sun Mar 21 2004.
+ * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
+ */
+
+#import "AKNotificationDoc.h"
+
+#import "AKBehaviorNode.h"
+#import "AKMethodNode.h"
+
+@implementation AKNotificationDoc
+
+//-------------------------------------------------------------------------
+// AKMethodDoc methods
+//-------------------------------------------------------------------------
+
++ (NSString *)punctuateMethodName:(NSString *)methodName
+{
+    return methodName;
+}
+
+//-------------------------------------------------------------------------
+// AKDoc methods
+//-------------------------------------------------------------------------
+
+- (NSString *)commentString
+{
+    NSString *methodFrameworkName = [_methodNode owningFramework];
+    BOOL methodIsInSameFramework = 
+        [methodFrameworkName
+            isEqualToString:[_behaviorNode owningFramework]];
+    AKBehaviorNode *ownerOfMethod = [_methodNode owningBehavior];
+
+    if (_behaviorNode == ownerOfMethod)
+    {
+        // We're the first class/protocol to declare this method.
+        if (methodIsInSameFramework)
+        {
+            return @"";
+        }
+        else
+        {
+            return
+                [NSString
+                    stringWithFormat:
+                        @"This notification comes from the %@ framework.",
+                        methodFrameworkName];
+        }
+    }
+    else
+    {
+        // We inherited this method from an ancestor class.
+        if (methodIsInSameFramework)
+        {
+            return
+                [NSString stringWithFormat:
+                    @"This notification is delivered by class %@.",
+                    [ownerOfMethod nodeName]];
+        }
+        else
+        {
+            return
+                [NSString stringWithFormat:
+                    @"This notification is delivered by %@ class %@.",
+                    methodFrameworkName,
+                    [ownerOfMethod nodeName]];
+        }
+    }
+}
+
+@end

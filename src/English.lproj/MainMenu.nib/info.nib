@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBFramework Version</key>
+	<string>670</string>
+	<key>IBLastKnownRelativeProjectPath</key>
+	<string>../AppKiDo.xcodeproj</string>
+	<key>IBOldestOS</key>
+	<integer>4</integer>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>946</integer>
+		<integer>630</integer>
+		<integer>358</integer>
+		<integer>506</integer>
+		<integer>849</integer>
+	</array>
+	<key>IBSystem Version</key>
+	<string>9E17</string>
+	<key>targetFramework</key>
+	<string>IBCocoaFramework</string>
+</dict>
+</plist>

@@ -1,0 +1,211 @@
+/*
+ * AKProtocolTopic.m
+ *
+ * Created by Andy Lee on Sun May 25 2003.
+ * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
+ */
+
+#import "AKProtocolTopic.h"
+
+#import <DIGSLog.h>
+
+#import "AKFrameworkConstants.h"
+#import "AKDatabase.h"
+#import "AKProtocolNode.h"
+
+#import "AKProtocolOverviewSubtopic.h"
+#import "AKPropertiesSubtopic.h"
+#import "AKClassMethodsSubtopic.h"
+#import "AKInstanceMethodsSubtopic.h"
+#import "AKDelegateMethodsSubtopic.h"
+#import "AKNotificationsSubtopic.h"
+
+@implementation AKProtocolTopic
+
+//-------------------------------------------------------------------------
+// Factory methods
+//-------------------------------------------------------------------------
+
++ (id)withProtocolNode:(AKProtocolNode *)protocolNode
+{
+    return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
+}
+
+//-------------------------------------------------------------------------
+// Init/awake/dealloc
+//-------------------------------------------------------------------------
+
+- (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
+{
+    if ((self = [super init]))
+    {
+        _protocolNode = [protocolNode retain];
+    }
+
+    return self;
+}
+
+- (id)init
+{
+    DIGSLogNondesignatedInitializer();
+    [self dealloc];
+    return nil;
+}
+
+- (void)dealloc
+{
+    [_protocolNode release];
+
+    [super dealloc];
+}
+
+//-------------------------------------------------------------------------
+// AKTopic methods
+//-------------------------------------------------------------------------
+
++ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
+{
+    if (prefDict == nil)
+    {
+        return nil;
+    }
+
+    NSString *protocolName =
+        [prefDict objectForKey:AKBehaviorNamePrefKey];
+
+    if (protocolName == nil)
+    {
+        DIGSLogWarning(
+            @"malformed pref dictionary for class %@",
+            [self className]);
+        return nil;
+    }
+    else
+    {
+        AKProtocolNode *protocolNode =
+            [[AKDatabase defaultDatabase] protocolWithName:protocolName];
+
+        if (!protocolNode)
+        {
+            DIGSLogInfo(
+                @"couldn't find a protocol in the database named %@",
+                protocolName);
+            return nil;
+        }
+
+        return [self withProtocolNode:protocolNode];
+    }
+}
+
+- (NSString *)stringToDisplayInTopicBrowser
+{
+    return [NSString stringWithFormat:@"<%@>", [_protocolNode nodeName]];
+}
+
+- (NSString *)stringToDisplayInDescriptionField
+{
+    NSString *stringFormat =
+        [_protocolNode isInformal]
+        ? @"%@ INFORMAL protocol <%@>"
+        : @"%@ protocol <%@>";
+
+    return
+        [NSString stringWithFormat:stringFormat,
+            [_protocolNode owningFramework], [_protocolNode nodeName]];
+}
+
+- (NSString *)pathInTopicBrowser
+{
+    NSString *whichProtocols =
+        [_protocolNode isInformal]
+        ? AKInformalProtocolsTopicName
+        : AKProtocolsTopicName;
+
+    return
+        [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
+            AKTopicBrowserPathSeparator, [_protocolNode owningFramework],
+            AKTopicBrowserPathSeparator, whichProtocols,
+            AKTopicBrowserPathSeparator, [_protocolNode nodeName]];
+}
+
+- (BOOL)browserCellHasChildren
+{
+    return NO;
+}
+
+//-------------------------------------------------------------------------
+// AKBehaviorTopic methods
+//-------------------------------------------------------------------------
+
+- (NSString *)behaviorName
+{
+    return [_protocolNode nodeName];
+}
+
+- (NSArray *)createSubtopicsArray
+{
+    AKProtocolOverviewSubtopic *overviewSubtopic =
+        [AKProtocolOverviewSubtopic subtopicForProtocolNode:_protocolNode];
+
+    AKPropertiesSubtopic *propertiesSubtopic =
+        [AKPropertiesSubtopic
+            subtopicForClassNode:nil
+            includeAncestors:NO];
+    AKPropertiesSubtopic *allPropertiesSubtopic =
+        [AKPropertiesSubtopic
+            subtopicForClassNode:nil
+            includeAncestors:YES];
+
+    AKClassMethodsSubtopic *classMethodsSubtopic =
+        [AKClassMethodsSubtopic
+            subtopicForBehaviorNode:_protocolNode
+            includeAncestors:NO];
+    AKClassMethodsSubtopic *allClassMethodsSubtopic =
+        [AKClassMethodsSubtopic
+            subtopicForBehaviorNode:_protocolNode
+            includeAncestors:YES];
+
+    AKInstanceMethodsSubtopic *instMethodsSubtopic =
+        [AKInstanceMethodsSubtopic
+            subtopicForBehaviorNode:_protocolNode
+            includeAncestors:NO];
+    AKInstanceMethodsSubtopic *allInstanceMethodsSubtopic =
+        [AKInstanceMethodsSubtopic
+            subtopicForBehaviorNode:_protocolNode
+            includeAncestors:YES];
+
+    AKDelegateMethodsSubtopic *delegateMethodsSubtopic =
+        [AKDelegateMethodsSubtopic
+            subtopicForClassNode:nil
+            includeAncestors:NO];
+    AKDelegateMethodsSubtopic *allDelegateMethodsSubtopic =
+        [AKDelegateMethodsSubtopic
+            subtopicForClassNode:nil
+            includeAncestors:YES];
+
+    AKNotificationsSubtopic *notificationsSubtopic =
+        [AKNotificationsSubtopic
+            subtopicForClassNode:nil
+            includeAncestors:NO];
+    AKNotificationsSubtopic *allNotificationsSubtopic =
+        [AKNotificationsSubtopic
+            subtopicForClassNode:nil
+            includeAncestors:YES];
+
+    return
+        [NSArray arrayWithObjects:
+            overviewSubtopic,
+            propertiesSubtopic,
+                allPropertiesSubtopic,
+            classMethodsSubtopic,
+                allClassMethodsSubtopic,
+            instMethodsSubtopic,
+                allInstanceMethodsSubtopic,
+            delegateMethodsSubtopic,
+                allDelegateMethodsSubtopic,
+            notificationsSubtopic,
+                allNotificationsSubtopic,
+            nil];
+}
+
+@end
