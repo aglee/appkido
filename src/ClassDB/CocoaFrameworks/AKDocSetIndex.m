@@ -28,6 +28,8 @@
     orType:(NSString *)tokenType2
     orType:(NSString *)tokenType3
     forFramework:(NSString *)frameworkName;
+- (void)_forceFrameworkNames:(NSArray *)specialFwNames
+    toTopOfList:(NSMutableArray *)fwNames;
 
 @end
 
@@ -122,7 +124,7 @@ static NSString *s_headerPathsQueryTemplate =
     while ([rs next])
     {
         NSString *fwName = [rs stringForColumnIndex:0];
-        if (![fwName isEqualToString:@"Carbon"])  // [agl] REMOVE why is carbon included?
+        if (![fwName isEqualToString:@"Carbon"])  // [agl] REMOVE why is carbon returned by the query?
         {
             [frameworkNames addObject:fwName];
         }
@@ -132,24 +134,20 @@ static NSString *s_headerPathsQueryTemplate =
     // Close the database.
     [db close];
 
-    // Force Foundation and AppKit/UIKit to the top of the list.
-    if ([frameworkNames containsObject:AKUIKitFrameworkName])
-    {
-        [frameworkNames removeObject:AKUIKitFrameworkName];
-        [frameworkNames insertObject:AKUIKitFrameworkName atIndex:0];
-    }
-
-    if ([frameworkNames containsObject:AKAppKitFrameworkName])
-    {
-        [frameworkNames removeObject:AKAppKitFrameworkName];
-        [frameworkNames insertObject:AKAppKitFrameworkName atIndex:0];
-    }
-
-    if ([frameworkNames containsObject:AKFoundationFrameworkName])
-    {
-        [frameworkNames removeObject:AKFoundationFrameworkName];
-        [frameworkNames insertObject:AKFoundationFrameworkName atIndex:0];
-    }
+    // Force special framework names to the top of the list.  Order is
+    // important because frameworks will be loaded in this order, and the first
+    // framework seen for a node is the node's primary framework.
+    [self
+        _forceFrameworkNames:
+            [NSArray arrayWithObjects:
+                AKFoundationFrameworkName,
+                AKAppKitFrameworkName,
+                AKUIKitFrameworkName,
+                AKCoreDataFrameworkName,
+                AKCoreImageFrameworkName,
+                AKQuartzCoreFrameworkName,
+                nil]
+        toTopOfList:frameworkNames];
 
     return frameworkNames;
 }
@@ -332,6 +330,24 @@ static NSString *s_headerPathsQueryTemplate =
     [db close];
 
     return docPaths;
+}
+
+- (void)_forceFrameworkNames:(NSArray *)specialFwNames
+    toTopOfList:(NSMutableArray *)fwNames
+{
+    NSUInteger numSpecialNames = [specialFwNames count];
+    int i;
+
+    for (i = numSpecialNames - 1; i >= 0; i--)
+    {
+        NSString *specialName = [specialFwNames objectAtIndex:i];
+
+        if ([fwNames containsObject:specialName])
+        {
+            [fwNames removeObject:specialName];
+            [fwNames insertObject:specialName atIndex:0];
+        }
+    }
 }
 
 @end

@@ -277,6 +277,17 @@
     [copyURLItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:copyURLItem];
 
+    // Add an item to the menu that allows the user to open the
+    // currently displayed file in the default web browser.
+    NSMenuItem *openURLInBrowserItem =
+        [[[NSMenuItem alloc]
+            initWithTitle:@"Open Page in Browser"
+            action:@selector(openDocURLInBrowser:)
+            keyEquivalent:@""]
+            autorelease];
+    [openURLInBrowserItem setTarget:nil];  // will go to first responder
+    [newMenuItems addObject:openURLInBrowserItem];
+
     // Add an item to the menu that allows the user to reveal the
     // currently displayed file in the Finder.
     NSMenuItem *revealInFinderItem =

@@ -13,10 +13,10 @@
 @implementation AKPropertyDoc
 
 //-------------------------------------------------------------------------
-// AKMethodDoc methods
+// AKMemberDoc methods
 //-------------------------------------------------------------------------
 
-+ (NSString *)punctuateMethodName:(NSString *)methodName
++ (NSString *)punctuateNodeName:(NSString *)methodName
 {
     return methodName;
 }
@@ -27,11 +27,11 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [_methodNode owningFramework];
+    NSString *methodFrameworkName = [_memberNode owningFramework];
     BOOL methodIsInSameFramework = 
         [methodFrameworkName
             isEqualToString:[_behaviorNode owningFramework]];
-    AKBehaviorNode *ownerOfMethod = [_methodNode owningBehavior];
+    AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
 
     if (_behaviorNode == ownerOfMethod)
     {

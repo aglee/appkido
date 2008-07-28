@@ -228,7 +228,8 @@ NSLog(@"new devToolsPath: [%@]", devToolsPath);  // [agl] REMOVE
             || [fwName isEqualToString:AKAppKitFrameworkName]
             || [fwName isEqualToString:AKUIKitFrameworkName]
             || [fwName isEqualToString:AKCoreDataFrameworkName]
-            || [fwName isEqualToString:AKCoreImageFrameworkName])
+            || [fwName isEqualToString:AKCoreImageFrameworkName]
+            || [fwName isEqualToString:AKQuartzCoreFrameworkName])
         {
             // Do not allow the user to remove Foundation, AppKit, UIKit,
             // CoreData, or CoreImage.

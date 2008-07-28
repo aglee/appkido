@@ -1,5 +1,5 @@
 /*
- * AKMethodDoc.h
+ * AKMemberDoc.h
  *
  * Created by Andy Lee on Tue Mar 16 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -8,11 +8,11 @@
 #import "AKDoc.h"
 
 @class AKBehaviorNode;
-@class AKMethodNode;
+@class AKMemberNode;
 
-@interface AKMethodDoc : AKDoc
+@interface AKMemberDoc : AKDoc
 {
-    AKMethodNode *_methodNode;
+    AKMemberNode *_memberNode;
     AKBehaviorNode *_behaviorNode;
 }
 
@@ -21,20 +21,14 @@
 //-------------------------------------------------------------------------
 
 // Designated initializer
-- (id)initWithMethodNode:(AKMethodNode *)methodNode
+- (id)initWithMemberNode:(AKMemberNode *)memberNode
     inheritedByBehavior:(AKBehaviorNode *)behaviorNode;
 
 //-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
-
-- (AKMethodNode *)docMethodNode;
-
-//-------------------------------------------------------------------------
-// Manipulating method names
+// Manipulating node names
 //-------------------------------------------------------------------------
 
 // Override this.
-+ (NSString *)punctuateMethodName:(NSString *)methodName;
++ (NSString *)punctuateNodeName:(NSString *)memberName;
 
 @end

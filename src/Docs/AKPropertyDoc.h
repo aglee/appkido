@@ -6,9 +6,9 @@
 //  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
-#import "AKMethodDoc.h"
+#import "AKMemberDoc.h"
 
-@interface AKPropertyDoc : AKMethodDoc
+@interface AKPropertyDoc : AKMemberDoc
 {
 }
 

@@ -5,9 +5,9 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKMethodDoc.h"
+#import "AKMemberDoc.h"
 
-@interface AKNotificationDoc : AKMethodDoc
+@interface AKNotificationDoc : AKMemberDoc
 {
 }
 

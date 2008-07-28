@@ -49,7 +49,7 @@
 		65B1097E09D7B6C300A8A637 /* AKLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 7370170405FBA7B300C74AA7 /* AKLink.h */; };
 		65B1097F09D7B6C300A8A637 /* AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976020606A280002E4E83 /* AKDoc.h */; };
 		65B1098009D7B6C300A8A637 /* AKFunctionDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976B90606C1F0002E4E83 /* AKFunctionDoc.h */; };
-		65B1098109D7B6C300A8A637 /* AKMethodDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7319772E0606C3F6002E4E83 /* AKMethodDoc.h */; };
+		65B1098109D7B6C300A8A637 /* AKMemberDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7319772E0606C3F6002E4E83 /* AKMemberDoc.h */; };
 		65B1098209D7B6C300A8A637 /* AKHeaderFileDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73197A840606E025002E4E83 /* AKHeaderFileDoc.h */; };
 		65B1098309D7B6C300A8A637 /* AKInheritanceDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */; };
 		65B1098409D7B6C300A8A637 /* AKDocLocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 732EE0F7060E10E600B5EDA7 /* AKDocLocator.h */; };
@@ -165,7 +165,7 @@
 		65B10A0309D7B6C300A8A637 /* AKLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 7370170505FBA7B300C74AA7 /* AKLink.m */; };
 		65B10A0409D7B6C300A8A637 /* AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976030606A280002E4E83 /* AKDoc.m */; };
 		65B10A0509D7B6C300A8A637 /* AKFunctionDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */; };
-		65B10A0609D7B6C300A8A637 /* AKMethodDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7319772F0606C3F6002E4E83 /* AKMethodDoc.m */; };
+		65B10A0609D7B6C300A8A637 /* AKMemberDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7319772F0606C3F6002E4E83 /* AKMemberDoc.m */; };
 		65B10A0709D7B6C300A8A637 /* AKHeaderFileDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73197A850606E025002E4E83 /* AKHeaderFileDoc.m */; };
 		65B10A0809D7B6C300A8A637 /* AKInheritanceDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */; };
 		65B10A0909D7B6C300A8A637 /* AKDocLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 732EE0F8060E10E600B5EDA7 /* AKDocLocator.m */; };
@@ -345,8 +345,8 @@
 		731976030606A280002E4E83 /* AKDoc.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDoc.m; sourceTree = "<group>"; };
 		731976B90606C1F0002E4E83 /* AKFunctionDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFunctionDoc.h; sourceTree = "<group>"; };
 		731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFunctionDoc.m; sourceTree = "<group>"; };
-		7319772E0606C3F6002E4E83 /* AKMethodDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMethodDoc.h; sourceTree = "<group>"; };
-		7319772F0606C3F6002E4E83 /* AKMethodDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMethodDoc.m; sourceTree = "<group>"; };
+		7319772E0606C3F6002E4E83 /* AKMemberDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMemberDoc.h; sourceTree = "<group>"; };
+		7319772F0606C3F6002E4E83 /* AKMemberDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMemberDoc.m; sourceTree = "<group>"; };
 		73197A840606E025002E4E83 /* AKHeaderFileDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHeaderFileDoc.h; sourceTree = "<group>"; };
 		73197A850606E025002E4E83 /* AKHeaderFileDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderFileDoc.m; sourceTree = "<group>"; };
 		73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKInheritanceDoc.h; sourceTree = "<group>"; };
@@ -770,8 +770,8 @@
 		730D36FF060E771700ABA5E5 /* method docs */ = {
 			isa = PBXGroup;
 			children = (
-				7319772E0606C3F6002E4E83 /* AKMethodDoc.h */,
-				7319772F0606C3F6002E4E83 /* AKMethodDoc.m */,
+				7319772E0606C3F6002E4E83 /* AKMemberDoc.h */,
+				7319772F0606C3F6002E4E83 /* AKMemberDoc.m */,
 				734879FA0E3AB59800A3B12F /* AKPropertyDoc.h */,
 				734879FB0E3AB59800A3B12F /* AKPropertyDoc.m */,
 				730D3706060E772F00ABA5E5 /* AKClassMethodDoc.h */,
@@ -1278,7 +1278,7 @@
 				65B1097E09D7B6C300A8A637 /* AKLink.h in Headers */,
 				65B1097F09D7B6C300A8A637 /* AKDoc.h in Headers */,
 				65B1098009D7B6C300A8A637 /* AKFunctionDoc.h in Headers */,
-				65B1098109D7B6C300A8A637 /* AKMethodDoc.h in Headers */,
+				65B1098109D7B6C300A8A637 /* AKMemberDoc.h in Headers */,
 				65B1098209D7B6C300A8A637 /* AKHeaderFileDoc.h in Headers */,
 				65B1098309D7B6C300A8A637 /* AKInheritanceDoc.h in Headers */,
 				65B1098409D7B6C300A8A637 /* AKDocLocator.h in Headers */,
@@ -1478,7 +1478,7 @@
 				65B10A0309D7B6C300A8A637 /* AKLink.m in Sources */,
 				65B10A0409D7B6C300A8A637 /* AKDoc.m in Sources */,
 				65B10A0509D7B6C300A8A637 /* AKFunctionDoc.m in Sources */,
-				65B10A0609D7B6C300A8A637 /* AKMethodDoc.m in Sources */,
+				65B10A0609D7B6C300A8A637 /* AKMemberDoc.m in Sources */,
 				65B10A0709D7B6C300A8A637 /* AKHeaderFileDoc.m in Sources */,
 				65B10A0809D7B6C300A8A637 /* AKInheritanceDoc.m in Sources */,
 				65B10A0909D7B6C300A8A637 /* AKDocLocator.m in Sources */,

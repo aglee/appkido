@@ -12,10 +12,10 @@
 @implementation AKClassMethodDoc
 
 //-------------------------------------------------------------------------
-// AKMethodDoc methods
+// AKMemberDoc methods
 //-------------------------------------------------------------------------
 
-+ (NSString *)punctuateMethodName:(NSString *)methodName
++ (NSString *)punctuateNodeName:(NSString *)methodName
 {
     return [@"+" stringByAppendingString:methodName];
 }
