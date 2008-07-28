@@ -581,10 +581,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (IBAction)exportDatabase:(id)sender
 {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
-//    NSString *defaultFilename =
-//        [NSString stringWithFormat:@"AppKiDo-DB-%@.xml",
-//            [self _appVersion]];
-    NSString *defaultFilename = @"AppKiDo-DB.xml";
+    NSString *defaultFilename =
+        [NSString stringWithFormat:@"AppKiDo-DB-%@.xml",
+            [self _appVersion]];
 
     int modalResult =
         [savePanel
