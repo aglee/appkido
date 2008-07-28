@@ -1,31 +1,30 @@
 /*
- * AKMethodDoc.m
+ * AKMemberDoc.m
  *
  * Created by Andy Lee on Tue Mar 16 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKMethodDoc.h"
+#import "AKMemberDoc.h"
 
 #import <DIGSLog.h>
 
 #import "AKFrameworkConstants.h"
 #import "AKProtocolNode.h"
-#import "AKMethodNode.h"
-#import "AKMethodsSubtopic.h"
+#import "AKMemberNode.h"
 
-@implementation AKMethodDoc
+@implementation AKMemberDoc
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithMethodNode:(AKMethodNode *)methodNode
+- (id)initWithMemberNode:(AKMemberNode *)memberNode
     inheritedByBehavior:(AKBehaviorNode *)behaviorNode
 {
     if ((self = [super init]))
     {
-        _methodNode = [methodNode retain];
+        _memberNode = [memberNode retain];
         _behaviorNode = [behaviorNode retain];
     }
 
@@ -41,26 +40,17 @@
 
 - (void)dealloc
 {
-    [_methodNode release];
+    [_memberNode release];
     [_behaviorNode release];
 
     [super dealloc];
 }
 
 //-------------------------------------------------------------------------
-// Getters and setters
+// Manipulating node names
 //-------------------------------------------------------------------------
 
-- (AKMethodNode *)docMethodNode
-{
-    return _methodNode;
-}
-
-//-------------------------------------------------------------------------
-// Manipulating method names
-//-------------------------------------------------------------------------
-
-+ (NSString *)punctuateMethodName:(NSString *)methodName
++ (NSString *)punctuateNodeName:(NSString *)memberName
 {
     DIGSLogMissingOverride();
     return nil;
@@ -72,49 +62,50 @@
 
 - (AKFileSection *)fileSection
 {
-    return [_methodNode nodeDocumentation];
+    return [_memberNode nodeDocumentation];
 }
 
 - (NSString *)stringToDisplayInDocList
 {
     NSString *displayString =
-        [[self class] punctuateMethodName:[self docName]];
-    AKBehaviorNode *ownerOfMethod = [_methodNode owningBehavior];
+        [[self class] punctuateNodeName:[self docName]];
+    AKBehaviorNode *owningBehavior = [_memberNode owningBehavior];
 
-    // Qualify the method name with ancestor or protocol info if any.
-    if (_behaviorNode != ownerOfMethod)
+    // Qualify the member name with ancestor or protocol info if any.
+    if (_behaviorNode != owningBehavior)
     {
-        if ([ownerOfMethod isClassNode])
+        if ([owningBehavior isClassNode])
         {
-            // We inherited this method from an ancestor class.
+            // We inherited this member from an ancestor class.
             displayString =
                 [NSString stringWithFormat:@"%@ (%@)",
                     displayString,
-                    [ownerOfMethod nodeName]];
+                    [owningBehavior nodeName]];
         }
         else
         {
-            // We implement this method in order to conform to a protocol.
+            // This member is a method we implement in order to conform to
+            // a protocol.
             displayString =
                 [NSString stringWithFormat:@"%@ <%@>",
                     displayString,
-                    [ownerOfMethod nodeName]];
+                    [owningBehavior nodeName]];
         }
     }
 
-    // If the method is added by a framework that is not the class's
+    // If this is a method that is added by a framework that is not the class's
     // main framework, show that.
-    NSString *methodFrameworkName = [_methodNode owningFramework];
-    BOOL methodIsInSameFramework = 
-        [methodFrameworkName
+    NSString *memberFrameworkName = [_memberNode owningFramework];
+    BOOL memberIsInSameFramework = 
+        [memberFrameworkName
             isEqualToString:[_behaviorNode owningFramework]];
 
-    if (!methodIsInSameFramework)
+    if (!memberIsInSameFramework)
     {
         displayString =
             [NSString stringWithFormat:@"%@ [%@]",
                 displayString,
-                methodFrameworkName];
+                memberFrameworkName];
     }
     
     // In the Feb 2007 docs (maybe earlier?), deprecated methods are documented
@@ -122,7 +113,7 @@
     // assuming the docs are accurate.
     //
     // If we know the method is deprecated, show that.
-    if ([_methodNode isDeprecated])
+    if ([_memberNode isDeprecated])
     {
         displayString =
             [NSString stringWithFormat:@"%@ (deprecated)",
@@ -133,18 +124,21 @@
     return displayString;
 }
 
+// This implementation of -commentString assumes the receiver represents a
+// method.  Subclasses of AKMemberDoc for which this is not true need to
+// override this method.
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [_methodNode owningFramework];
-    BOOL methodIsInSameFramework = 
-        [methodFrameworkName
+    NSString *memberFrameworkName = [_memberNode owningFramework];
+    BOOL memberIsInSameFramework = 
+        [memberFrameworkName
             isEqualToString:[_behaviorNode owningFramework]];
-    AKBehaviorNode *ownerOfMethod = [_methodNode owningBehavior];
+    AKBehaviorNode *owningBehavior = [_memberNode owningBehavior];
 
-    if (_behaviorNode == ownerOfMethod)
+    if (_behaviorNode == owningBehavior)
     {
         // We're the first class/protocol to declare this method.
-        if (methodIsInSameFramework)
+        if (memberIsInSameFramework)
         {
             return @"";
         }
@@ -154,45 +148,45 @@
                 [NSString
                     stringWithFormat:
                         @"This method is added by a category in %@.",
-                        methodFrameworkName];
+                        memberFrameworkName];
         }
     }
-    else if ([ownerOfMethod isClassNode])
+    else if ([owningBehavior isClassNode])
     {
         // We inherited this method from an ancestor class.
-        if (methodIsInSameFramework)
+        if (memberIsInSameFramework)
         {
             return
                 [NSString stringWithFormat:
                     @"This method is inherited from class %@.",
-                    [ownerOfMethod nodeName]];
+                    [owningBehavior nodeName]];
         }
         else
         {
             return
                 [NSString stringWithFormat:
                     @"This method is inherited from %@ class %@.",
-                    methodFrameworkName,
-                    [ownerOfMethod nodeName]];
+                    memberFrameworkName,
+                    [owningBehavior nodeName]];
         }
     }
     else
     {
         // We implement this method in order to conform to a protocol.
-        if (methodIsInSameFramework)
+        if (memberIsInSameFramework)
         {
             return
                 [NSString stringWithFormat:
                     @"This method is declared in protocol <%@>.",
-                    [ownerOfMethod nodeName]];
+                    [owningBehavior nodeName]];
         }
         else
         {
             return
                 [NSString stringWithFormat:
                     @"This method is declared in %@ protocol <%@>.",
-                    methodFrameworkName,
-                    [ownerOfMethod nodeName]];
+                    memberFrameworkName,
+                    [owningBehavior nodeName]];
         }
     }
 }

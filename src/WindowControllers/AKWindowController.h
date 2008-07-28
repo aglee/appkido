@@ -225,6 +225,8 @@
 
 - (IBAction)copyDocTextURL:(id)sender;
 
+- (IBAction)openDocURLInBrowser:(id)sender;
+
 //-------------------------------------------------------------------------
 // Action methods -- search (forwarded to the quicklist controller)
 //-------------------------------------------------------------------------

@@ -436,6 +436,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         || (itemAction == @selector(jumpToFrameworkGlobals:))
         || (itemAction == @selector(jumpToDocLocatorRepresentedBy:))
         || (itemAction == @selector(copyDocTextURL:))
+        || (itemAction == @selector(openDocURLInBrowser:))
         || (itemAction == @selector(rememberWindowLayout:)))
     {
         return YES;
@@ -833,6 +834,16 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [pasteboard declareTypes:pasteboardTypes owner:nil];
     [pasteboard setString:urlString forType:NSStringPboardType];
+}
+
+- (IBAction)openDocURLInBrowser:(id)sender
+{
+    NSString *filePath =
+        [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
+    NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
+    NSURL *fileURL = [[docFileURL absoluteURL] standardizedURL];
+
+    [[NSWorkspace sharedWorkspace] openURL:fileURL];
 }
 
 //-------------------------------------------------------------------------

@@ -11,7 +11,7 @@
 
 #import "AKClassNode.h"
 #import "AKMethodNode.h"
-#import "AKMethodDoc.h"
+#import "AKMemberDoc.h"
 
 @implementation AKPseudoMethodsSubtopic
 

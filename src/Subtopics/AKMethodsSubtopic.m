@@ -12,7 +12,7 @@
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
 #import "AKMethodNode.h"
-#import "AKMethodDoc.h"
+#import "AKMemberDoc.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
@@ -76,7 +76,7 @@
     // Get method nodes for all the methods we want to list.
     NSDictionary *methodNodesByName = [self _subtopicMethodsByName];
 
-    // Create an AKMethodDoc instance for each method we want to list.
+    // Create an AKMemberDoc instance for each method we want to list.
     Class methodClass = [[self class] methodDocClass];
     NSArray *sortedMethodNames =
         [[methodNodesByName allKeys]
@@ -89,9 +89,9 @@
         AKMethodNode *methodNode =
             [methodNodesByName objectForKey:methodName];
 
-        AKMethodDoc *methodDoc =
+        AKMemberDoc *methodDoc =
             [[[methodClass alloc]
-                initWithMethodNode:methodNode
+                initWithMemberNode:methodNode
                 inheritedByBehavior:[self behaviorNode]]
                 autorelease];
 

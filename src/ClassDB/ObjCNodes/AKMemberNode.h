@@ -10,6 +10,10 @@
 
 @class AKBehaviorNode;
 
+/*!
+ * Stretches the concept of "member" slightly.  Used for properties, class
+ * methods, instance methods, delegate methods, and notifications.
+ */
 @interface AKMemberNode : AKDatabaseNode
 {
 @private
@@ -20,6 +24,7 @@
 // Getters and setters
 //-------------------------------------------------------------------------
 
+// [agl] TODO should really set owningBehavior in init method.
 - (AKBehaviorNode *)owningBehavior;
 - (void)setOwningBehavior:(AKBehaviorNode *)behaviorNode;
 
