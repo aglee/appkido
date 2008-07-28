@@ -585,9 +585,9 @@
 				7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */,
 				732BD61605ED913B0055715D /* ---- S U P P O R T   C L A S S E S ---- */,
 				732BD5FB05ED90900055715D /* ----------- M O D E L S ----------- */,
-				73D02303060C1D1F00E81879 /* -------- N A V I G A T I O N -------- */,
 				732BD60005ED90A10055715D /* ------------ V I E W S ------------ */,
 				732BD60505ED90AB0055715D /* ------- C O N T R O L L E R S ------- */,
+				73D02303060C1D1F00E81879 /* -------- N A V I G A T I O N -------- */,
 				732BD5EA05ED8FE10055715D /* ------- O T H E R   S T U F F ------- */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -767,7 +767,7 @@
 			name = "pseudo-methods";
 			sourceTree = "<group>";
 		};
-		730D36FF060E771700ABA5E5 /* method docs */ = {
+		730D36FF060E771700ABA5E5 /* member docs */ = {
 			isa = PBXGroup;
 			children = (
 				7319772E0606C3F6002E4E83 /* AKMemberDoc.h */,
@@ -783,7 +783,7 @@
 				730D3733060E775600ABA5E5 /* AKNotificationDoc.h */,
 				730D3734060E775600ABA5E5 /* AKNotificationDoc.m */,
 			);
-			name = "method docs";
+			name = "member docs";
 			sourceTree = "<group>";
 		};
 		7314BA8F060C20730075C786 /* doc locators */ = {
@@ -806,7 +806,7 @@
 				731976B90606C1F0002E4E83 /* AKFunctionDoc.h */,
 				731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */,
 				7369B979060E4BAC00E0C9B6 /* interface overview docs */,
-				730D36FF060E771700ABA5E5 /* method docs */,
+				730D36FF060E771700ABA5E5 /* member docs */,
 			);
 			name = docs;
 			path = Docs;

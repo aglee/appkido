@@ -19,3 +19,12 @@ extern NSString *AKCoreDataFrameworkName;
 extern NSString *AKCoreImageFrameworkName;
 extern NSString *AKQuartzCoreFrameworkName;
 
+/*!
+ * Returns the names of frameworks that must be loaded into the database
+ * if available within the docset for that database.  These frameworks must
+ * be loaded first and in the order given.  Order is important because the
+ * first framework seen for a node is considered to be the node's primary
+ * framework.
+ */
+extern NSArray *AKNamesOfEssentialFrameworks();
+
