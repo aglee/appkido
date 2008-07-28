@@ -46,7 +46,7 @@
 		65B1097B09D7B6C300A8A637 /* AKObjCHeaderParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD56C05ED8DC60055715D /* AKObjCHeaderParser.h */; };
 		65B1097C09D7B6C300A8A637 /* AKAppController.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD5D505ED8FBE0055715D /* AKAppController.h */; };
 		65B1097D09D7B6C300A8A637 /* AKDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CC2AD705EDAF5F006D882D /* AKDocParser.h */; };
-		65B1097E09D7B6C300A8A637 /* AKLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 7370170405FBA7B300C74AA7 /* AKLink.h */; };
+		65B1097E09D7B6C300A8A637 /* AKLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 7370170405FBA7B300C74AA7 /* AKLinkResolver.h */; };
 		65B1097F09D7B6C300A8A637 /* AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976020606A280002E4E83 /* AKDoc.h */; };
 		65B1098009D7B6C300A8A637 /* AKFunctionDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976B90606C1F0002E4E83 /* AKFunctionDoc.h */; };
 		65B1098109D7B6C300A8A637 /* AKMemberDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7319772E0606C3F6002E4E83 /* AKMemberDoc.h */; };
@@ -162,7 +162,7 @@
 		65B10A0009D7B6C300A8A637 /* AKObjCHeaderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */; };
 		65B10A0109D7B6C300A8A637 /* AKAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD5D605ED8FBE0055715D /* AKAppController.m */; };
 		65B10A0209D7B6C300A8A637 /* AKDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CC2AD805EDAF5F006D882D /* AKDocParser.m */; };
-		65B10A0309D7B6C300A8A637 /* AKLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 7370170505FBA7B300C74AA7 /* AKLink.m */; };
+		65B10A0309D7B6C300A8A637 /* AKLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7370170505FBA7B300C74AA7 /* AKLinkResolver.m */; };
 		65B10A0409D7B6C300A8A637 /* AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976030606A280002E4E83 /* AKDoc.m */; };
 		65B10A0509D7B6C300A8A637 /* AKFunctionDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */; };
 		65B10A0609D7B6C300A8A637 /* AKMemberDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7319772F0606C3F6002E4E83 /* AKMemberDoc.m */; };
@@ -414,8 +414,8 @@
 		7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfNodes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCollectionOfNodes.m; sourceTree = "<group>"; };
 		7369B7F5060E3D9E00E0C9B6 /* AKOverviewDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKOverviewDoc.h; sourceTree = "<group>"; };
 		7369B7F6060E3D9E00E0C9B6 /* AKOverviewDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKOverviewDoc.m; sourceTree = "<group>"; };
-		7370170405FBA7B300C74AA7 /* AKLink.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKLink.h; path = WindowControllers/AKLink.h; sourceTree = SOURCE_ROOT; };
-		7370170505FBA7B300C74AA7 /* AKLink.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKLink.m; path = WindowControllers/AKLink.m; sourceTree = SOURCE_ROOT; };
+		7370170405FBA7B300C74AA7 /* AKLinkResolver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKLinkResolver.h; sourceTree = "<group>"; };
+		7370170505FBA7B300C74AA7 /* AKLinkResolver.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKLinkResolver.m; sourceTree = "<group>"; };
 		73793575068B3D75008B63F4 /* AKFileSection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKFileSection.h; path = ClassDB/AKFileSection.h; sourceTree = SOURCE_ROOT; };
 		73793576068B3D75008B63F4 /* AKFileSection.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKFileSection.m; path = ClassDB/AKFileSection.m; sourceTree = SOURCE_ROOT; };
 		7379357C068B3D8B008B63F4 /* AKFileSectionDoc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFileSectionDoc.h; sourceTree = "<group>"; };
@@ -967,8 +967,8 @@
 		7370171105FBA7CE00C74AA7 /* links */ = {
 			isa = PBXGroup;
 			children = (
-				7370170405FBA7B300C74AA7 /* AKLink.h */,
-				7370170505FBA7B300C74AA7 /* AKLink.m */,
+				7370170405FBA7B300C74AA7 /* AKLinkResolver.h */,
+				7370170505FBA7B300C74AA7 /* AKLinkResolver.m */,
 			);
 			name = links;
 			path = WindowControllers;
@@ -1275,7 +1275,7 @@
 				65B1097B09D7B6C300A8A637 /* AKObjCHeaderParser.h in Headers */,
 				65B1097C09D7B6C300A8A637 /* AKAppController.h in Headers */,
 				65B1097D09D7B6C300A8A637 /* AKDocParser.h in Headers */,
-				65B1097E09D7B6C300A8A637 /* AKLink.h in Headers */,
+				65B1097E09D7B6C300A8A637 /* AKLinkResolver.h in Headers */,
 				65B1097F09D7B6C300A8A637 /* AKDoc.h in Headers */,
 				65B1098009D7B6C300A8A637 /* AKFunctionDoc.h in Headers */,
 				65B1098109D7B6C300A8A637 /* AKMemberDoc.h in Headers */,
@@ -1475,7 +1475,7 @@
 				65B10A0009D7B6C300A8A637 /* AKObjCHeaderParser.m in Sources */,
 				65B10A0109D7B6C300A8A637 /* AKAppController.m in Sources */,
 				65B10A0209D7B6C300A8A637 /* AKDocParser.m in Sources */,
-				65B10A0309D7B6C300A8A637 /* AKLink.m in Sources */,
+				65B10A0309D7B6C300A8A637 /* AKLinkResolver.m in Sources */,
 				65B10A0409D7B6C300A8A637 /* AKDoc.m in Sources */,
 				65B10A0509D7B6C300A8A637 /* AKFunctionDoc.m in Sources */,
 				65B10A0609D7B6C300A8A637 /* AKMemberDoc.m in Sources */,
