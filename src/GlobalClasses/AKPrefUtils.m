@@ -60,29 +60,20 @@
             atIndex:index];
     }
 
-    // KLUDGE -- It seems prefs files can be messed up from earlier app
-    // versions.  Thanks to Gerriet for submitting this workaround.
-    // -- add things which are required (helps with old and bad preferences) - gmd
-    if (![fwNames containsObject:AKFoundationFrameworkName])
-    {
-        [fwNames addObject:AKFoundationFrameworkName];
-    };
+    // It seems prefs files can be messed up from earlier app versions.  In
+    // particular, required frameworks can be missing from the prefs setting.
+    // Thanks to Gerriet for pointing this out.
+    NSEnumerator *essentialFrameworkNamesEnum =
+        [AKNamesOfEssentialFrameworks() objectEnumerator];
+    NSString *essentialFrameworkName;
 
-    if (![fwNames containsObject:AKCoreDataFrameworkName])
+    while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
     {
-        [fwNames addObject:AKCoreDataFrameworkName];
-    };
-
-    if (![fwNames containsObject:AKCoreImageFrameworkName])
-    {
-        [fwNames addObject:AKCoreImageFrameworkName];
-    };
-
-    if (![fwNames containsObject:AKQuartzCoreFrameworkName])
-    {
-        [fwNames addObject:AKQuartzCoreFrameworkName];
-    };
-    // --
+        if (![fwNames containsObject:essentialFrameworkName])
+        {
+            [fwNames addObject:essentialFrameworkName];
+        };
+    } 
 
     return fwNames;
 }
@@ -248,15 +239,7 @@
         forKey:AKFavoritesPrefName];
 
     [defaultPrefsDictionary
-        setObject:
-            [NSArray
-                arrayWithObjects:
-                    AKFoundationFrameworkName,
-                    AKAppKitFrameworkName,
-                    AKCoreDataFrameworkName,
-                    AKCoreImageFrameworkName,
-                    AKQuartzCoreFrameworkName,
-                    nil]
+        setObject:AKNamesOfEssentialFrameworks()
         forKey:AKSelectedFrameworksPrefName];
 
     [[NSUserDefaults standardUserDefaults]

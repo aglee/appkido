@@ -28,8 +28,7 @@
     orType:(NSString *)tokenType2
     orType:(NSString *)tokenType3
     forFramework:(NSString *)frameworkName;
-- (void)_forceFrameworkNames:(NSArray *)specialFwNames
-    toTopOfList:(NSMutableArray *)fwNames;
+- (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames;
 
 @end
 
@@ -134,20 +133,8 @@ static NSString *s_headerPathsQueryTemplate =
     // Close the database.
     [db close];
 
-    // Force special framework names to the top of the list.  Order is
-    // important because frameworks will be loaded in this order, and the first
-    // framework seen for a node is the node's primary framework.
-    [self
-        _forceFrameworkNames:
-            [NSArray arrayWithObjects:
-                AKFoundationFrameworkName,
-                AKAppKitFrameworkName,
-                AKUIKitFrameworkName,
-                AKCoreDataFrameworkName,
-                AKCoreImageFrameworkName,
-                AKQuartzCoreFrameworkName,
-                nil]
-        toTopOfList:frameworkNames];
+    // Force essential framework names to the top of the list.
+    [self _forceEssentialFrameworkNamesToTopOfList:frameworkNames];
 
     return frameworkNames;
 }
@@ -332,20 +319,18 @@ static NSString *s_headerPathsQueryTemplate =
     return docPaths;
 }
 
-- (void)_forceFrameworkNames:(NSArray *)specialFwNames
-    toTopOfList:(NSMutableArray *)fwNames
+- (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames
 {
-    NSUInteger numSpecialNames = [specialFwNames count];
-    int i;
+    NSEnumerator *essentialFrameworkNamesEnum =
+        [AKNamesOfEssentialFrameworks() reverseObjectEnumerator];
+    NSString *essentialFrameworkName;
 
-    for (i = numSpecialNames - 1; i >= 0; i--)
+    while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
     {
-        NSString *specialName = [specialFwNames objectAtIndex:i];
-
-        if ([fwNames containsObject:specialName])
+        if ([fwNames containsObject:essentialFrameworkName])
         {
-            [fwNames removeObject:specialName];
-            [fwNames insertObject:specialName atIndex:0];
+            [fwNames removeObject:essentialFrameworkName];
+            [fwNames insertObject:essentialFrameworkName atIndex:0];
         }
     }
 }

@@ -58,8 +58,9 @@
 - (NSString *)baseDirForDocPaths;
 
 /*!
- * Returns alphabetical list of all frameworks that have an Objective-C token,
- * with Foundation and AppKit forced to the beginning of the list.
+ * Returns list of all frameworks that have an Objective-C token, with
+ * "essential" frameworks forced to the beginning of the list.  (See
+ * +[AKFramework namesOfEssentialFrameworks].)
  */
 - (NSArray *)objectiveCFrameworkNames;
 
