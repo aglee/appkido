@@ -1,11 +1,11 @@
 /*
- * AKLink.m
+ * AKLinkResolver.m
  *
  * Created by Andy Lee on Sun Mar 07 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKLink.h"
+#import "AKLinkResolver.h"
 
 #import <DIGSLog.h>
 
@@ -36,7 +36,15 @@
 // Forward declarations of private methods
 //-------------------------------------------------------------------------
 
-@interface AKLink (Private)
+@interface AKLinkResolver (Private)
+
+/*!
+ * Try to derive an AKDocLocator by parsing linkAnchor (the part after the
+ * "#" in a link URL).  We should be successful in the cases where the
+ * anchor looks like "//apple_ref/occ/instm/CALayer/actionForKey:".  If not
+ * successful, return nil.
+ */
+- (AKDocLocator *)_deriveDocLocatorUsingAnchorOfLinkURL:(NSURL *)linkURL;
 
 /*!
  * Returns the name of the framework referred to by aString, or nil if
@@ -45,32 +53,61 @@
  * "XXX.framework" (in which case XXX is returned), or the string
  * "ApplicationKit" (in which case "AppKit" is returned).
  */
-+ (NSString *)_frameworkNameImpliedBy:(NSString *)aString;
+- (NSString *)_frameworkNameImpliedBy:(NSString *)aString;
 
-+ (int)_offsetOfAnchor:(NSString *)anchor
+- (int)_offsetOfAnchor:(NSString *)anchor
     inFileSection:(AKFileSection *)fileSection;
 
-+ (NSString *)_subtopicNameImpliedBySectionName:(NSString *)subtopicDesc;
+- (NSString *)_subtopicNameImpliedBySectionName:(NSString *)subtopicDesc;
 
-+ (AKDocLocator *)_docLocatorForLinkAnchor:(NSString *)linkAnchor
+- (AKDocLocator *)_docLocatorForLinkAnchor:(NSString *)linkAnchor
     rootSection:(AKFileSection *)rootSection
     topic:(AKTopic *)docTopic
     behaviorNode:(AKBehaviorNode *)behaviorNode
     frameworkName:(NSString *)frameworkName;
 
-+ (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
+- (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
     containingOffset:(unsigned)offset;
 
 @end
 
 
-@implementation AKLink
+@implementation AKLinkResolver
 
 //-------------------------------------------------------------------------
-// Type conversion
+// Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-+ (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
+/*! Designated initializer. */
+- (id)initWithDatabase:(AKDatabase *)database
+{
+    if ((self = [super init]))
+    {
+        _database = [database retain];
+    }
+
+    return self;
+}
+
+- (id)init
+{
+    DIGSLogNondesignatedInitializer();
+    [self release];
+    return nil;
+}
+
+- (void)dealloc
+{
+    [_database release];
+
+    [super dealloc];
+}
+
+//-------------------------------------------------------------------------
+// Resolving links
+//-------------------------------------------------------------------------
+
+- (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
 {
     linkURL = [linkURL absoluteURL];
 // [agl] MEMORY LEAK -- There seems to be a leak in -standardizedURL.
@@ -78,8 +115,13 @@
 // to take any chances.
     linkURL = [linkURL standardizedURL];
 
+    AKDocLocator *maybeDocLocator =
+        [self _deriveDocLocatorUsingAnchorOfLinkURL:linkURL];
+    if (maybeDocLocator)
+    {
+        return maybeDocLocator;
+    }
 
-    AKDatabase *db = [AKDatabase defaultDatabase];
     NSString *filePath = [linkURL path];
 
     // Based on the file name and the name of the anchor within the file,
@@ -112,7 +154,7 @@
         else if ([upperPathComponent isEqualToString:@"CLASSES"])
         {
             AKClassNode *classNode =
-                [db classDocumentedInHTMLFile:filePath];
+                [_database classDocumentedInHTMLFile:filePath];
 
             behaviorNode = classNode;
             rootSection =
@@ -124,7 +166,7 @@
         else if ([upperPathComponent isEqualToString:@"PROTOCOLS"])
         {
             AKProtocolNode *protocolNode =
-                [db protocolDocumentedInHTMLFile:filePath];
+                [_database protocolDocumentedInHTMLFile:filePath];
 
             behaviorNode = protocolNode;
             rootSection = [protocolNode nodeDocumentation];
@@ -139,7 +181,7 @@
 				||[upperPathComponent hasSuffix:@"_FUNCTIONS"])
         {
             behaviorNode = nil;
-            rootSection = [db rootSectionForHTMLFile:filePath];
+            rootSection = [_database rootSectionForHTMLFile:filePath];
             docTopic = [AKFunctionsTopic withFrameworkName:fwName];
 
             break;
@@ -152,7 +194,7 @@
 				|| [upperPathComponent hasSuffix:@"_DATATYPES"])
         {
             behaviorNode = nil;
-            rootSection = [db rootSectionForHTMLFile:filePath];
+            rootSection = [_database rootSectionForHTMLFile:filePath];
             docTopic = [AKGlobalsTopic withFrameworkName:fwName];
 
             break;
@@ -175,12 +217,77 @@
 // Private methods
 //-------------------------------------------------------------------------
 
-@implementation AKLink (Private)
+@implementation AKLinkResolver (Private)
 
-+ (NSString *)_frameworkNameImpliedBy:(NSString *)aString
+- (AKDocLocator *)_deriveDocLocatorUsingAnchorOfLinkURL:(NSURL *)linkURL
+{
+return nil;  // [agl] REMOVE flesh this method out
+/*
+    NSString *linkAnchor = [linkURL fragment];
+    NSEnumerator *en = [[linkAnchor pathComponents] objectEnumerator];
+    NSString *anchorComponent;
+
+    while ((anchorComponent = [en nextObject]))
+    {
+        NSString *possibleFrameworkName =
+            fwName
+            ? nil
+            : [self _frameworkNameImpliedBy:anchorComponent];
+
+        if (possibleFrameworkName != nil)
+        {
+            fwName = possibleFrameworkName;
+        }
+        else if ([anchorComponent isEqualToString:@"c"])
+        {
+            NSString *tokenType = [en nextObject];
+            NSString *tokenName = [en nextObject];
+
+            behaviorNode = nil;
+            rootSection = [_database rootSectionForHTMLFile:filePath];
+            docTopic = [AKFunctionsTopic withFrameworkName:fwName];
+
+
+            behaviorNode = nil;
+            rootSection = [_database rootSectionForHTMLFile:filePath];
+            docTopic = [AKGlobalsTopic withFrameworkName:fwName];
+
+
+            return nil;
+        }
+        else if ([anchorComponent isEqualToString:@"occ"])
+        {
+            NSString *tokenType = [en nextObject];
+            NSString *tokenName = [en nextObject];
+
+
+            AKClassNode *classNode =
+                [_database classDocumentedInHTMLFile:filePath];
+
+            behaviorNode = classNode;
+            rootSection =
+                [classNode nodeDocumentationForFramework:fwName];
+            docTopic = [AKClassTopic withClassNode:classNode];
+
+
+
+            AKProtocolNode *protocolNode =
+                [_database protocolDocumentedInHTMLFile:filePath];
+
+            behaviorNode = protocolNode;
+            rootSection = [protocolNode nodeDocumentation];
+            docTopic = [AKProtocolTopic withProtocolNode:protocolNode];
+
+            break;
+        }
+    }
+*/
+}
+
+- (NSString *)_frameworkNameImpliedBy:(NSString *)aString
 {
     // Is it the name of a framework already in the database?
-    if ([[AKDatabase defaultDatabase] hasFrameworkWithName:aString])
+    if ([_database hasFrameworkWithName:aString])
     {
         return aString;
     }
@@ -192,8 +299,7 @@
     }
 
     // Is it a known framework name followed by ".framework"?
-    NSEnumerator *en =
-        [[[AKDatabase defaultDatabase] frameworkNames] objectEnumerator];
+    NSEnumerator *en = [[_database frameworkNames] objectEnumerator];
     NSString *fwName;
     while ((fwName = [en nextObject]))
     {
@@ -226,13 +332,11 @@
 // Returns a byte offset within the HTML file that lies within the file
 // element referred to by the given anchor string.  This byte offset can
 // be passed to -_childSectionOf:containingOffset:.
-+ (int)_offsetOfAnchor:(NSString *)anchorString
+- (int)_offsetOfAnchor:(NSString *)anchorString
     inFileSection:(AKFileSection *)fileSection
 {
-    AKDatabase *db =
-        [AKDatabase defaultDatabase];
     int anchorOffset =
-        [db
+        [_database
             offsetOfAnchorString:anchorString
             inHTMLFile:[fileSection filePath]];
 
@@ -290,7 +394,7 @@
 }
 
 // desc is a major section's -sectionName
-+ (NSString *)_subtopicNameImpliedBySectionName:(NSString *)sectionName
+- (NSString *)_subtopicNameImpliedBySectionName:(NSString *)sectionName
 {
     NSArray *namePairs =
         [NSArray arrayWithObjects:
@@ -345,7 +449,7 @@
     return sectionName;
 }
 
-+ (AKDocLocator *)_docLocatorForLinkAnchor:(NSString *)linkAnchor
+- (AKDocLocator *)_docLocatorForLinkAnchor:(NSString *)linkAnchor
     rootSection:(AKFileSection *)rootSection
     topic:(AKTopic *)docTopic
     behaviorNode:(AKBehaviorNode *)behaviorNode
@@ -416,7 +520,7 @@
 
 // [agl] make a note of the assumptions about child sections that this
 // relies on: same file, sequential, non-overlapping.
-+ (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
+- (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
     containingOffset:(unsigned)offset
 {
     if (offset < [fileSection sectionOffset])

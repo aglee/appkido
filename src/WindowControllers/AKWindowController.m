@@ -32,7 +32,7 @@
 #import "AKWindowLayout.h"
 #import "AKSavedWindowState.h"
 #import "AKDocView.h"
-#import "AKLink.h"
+#import "AKLinkResolver.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
@@ -241,8 +241,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // If the link can be converted to an AKDocLocator, jump to that
-    // locator.  Otherwise, try opening the file via the Finder.
-    AKDocLocator *linkDestination = [AKLink docLocatorForURL:linkURL];
+    // locator.  Otherwise, try opening the file in the user's browser.
+    AKLinkResolver *linkResolver =
+        [[[AKLinkResolver alloc]
+            initWithDatabase:[AKDatabase defaultDatabase]]
+            autorelease];
+    AKDocLocator *linkDestination = [linkResolver docLocatorForURL:linkURL];
     if (linkDestination)
     {
         [self jumpToDocLocator:linkDestination];
@@ -250,15 +254,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         [[_topLevelSplitView window] makeKeyAndOrderFront:nil];
         return YES;
     }
-    else if ([[NSWorkspace sharedWorkspace] openFile:[linkURL path]])
+    else if ([[NSWorkspace sharedWorkspace] openURL:linkURL])
     {
-        DIGSLogDebug(@"NSWorkspace opened file [%@]", [linkURL path]);
+        DIGSLogDebug(@"NSWorkspace opened URL [%@]", linkURL);
         return YES;
     }
     else
     {
-        DIGSLogWarning(
-            @"NSWorkspace couldn't open file [%@]", [linkURL path]);
+        DIGSLogWarning(@"NSWorkspace couldn't open URL [%@]", linkURL);
         return NO;
     }
 }
