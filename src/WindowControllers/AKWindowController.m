@@ -33,6 +33,7 @@
 #import "AKSavedWindowState.h"
 #import "AKDocView.h"
 #import "AKLinkResolver.h"
+#import "AKOldLinkResolver.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
@@ -242,11 +243,17 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // If the link can be converted to an AKDocLocator, jump to that
     // locator.  Otherwise, try opening the file in the user's browser.
-    AKLinkResolver *linkResolver =
-        [[[AKLinkResolver alloc]
-            initWithDatabase:[AKDatabase defaultDatabase]]
-            autorelease];
-    AKDocLocator *linkDestination = [linkResolver docLocatorForURL:linkURL];
+    AKDocLocator *linkDestination =
+        [[AKLinkResolver linkResolverWithDatabase:[AKDatabase defaultDatabase]]
+            docLocatorForURL:linkURL];
+
+    if (linkDestination == nil)
+    {
+        linkDestination =
+            [[AKOldLinkResolver linkResolverWithDatabase:[AKDatabase defaultDatabase]]
+                docLocatorForURL:linkURL];
+    }
+
     if (linkDestination)
     {
         [self jumpToDocLocator:linkDestination];

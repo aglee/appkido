@@ -248,6 +248,9 @@
     if (rootSection != nil)
     {
         [_databaseBeingPopulated
+            rememberFramework:_frameworkName
+            forHTMLFile:[self currentPath]];
+        [_databaseBeingPopulated
             rememberRootSection:rootSection
             forHTMLFile:[self currentPath]];
         [self applyParseResults];
