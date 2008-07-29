@@ -402,7 +402,8 @@ enum
             _AKQuicklistPasteboardType,
             nil]];
 
-    // Set up the menu of frameworks.
+    // Set up the popup menu of frameworks for the "Classes in framework:"
+    // quicklist item.
     // Note that the IB default for popup buttons is to autoenable items.
     // We don't want that.
     [_frameworkPopup setAutoenablesItems:NO];
@@ -413,11 +414,7 @@ enum
 
     while ((fwName = [fwEnum nextObject]))
     {
-        if (![fwName isEqualToString:AKFoundationFrameworkName]
-            && ![fwName isEqualToString:AKAppKitFrameworkName])
-        {
-            [_frameworkPopup addItemWithTitle:fwName];
-        }
+        [_frameworkPopup addItemWithTitle:fwName];
     }
 
     // Initialize the search field to match the system find-pasteboard.
