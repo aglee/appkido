@@ -64,4 +64,8 @@
 
 - (IBAction)doFrameworksListAction:(id)sender;
 
+- (IBAction)selectAllFrameworks:(id)sender;
+
+- (IBAction)deselectAllFrameworks:(id)sender;
+
 @end

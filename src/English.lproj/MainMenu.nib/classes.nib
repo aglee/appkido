@@ -9,9 +9,13 @@
 			<dict>
 				<key>applyAppearancePrefs</key>
 				<string>id</string>
+				<key>deselectAllFrameworks</key>
+				<string>id</string>
 				<key>doFrameworksListAction</key>
 				<string>id</string>
 				<key>openPrefsPanel</key>
+				<string>id</string>
+				<key>selectAllFrameworks</key>
 				<string>id</string>
 				<key>selectDevToolsPath</key>
 				<string>id</string>
