@@ -25,14 +25,14 @@ NSArray *AKNamesOfEssentialFrameworks()
     if (s_namesOfEssentialFrameworks == nil)
     {
         s_namesOfEssentialFrameworks =
-            [NSArray arrayWithObjects:
+            [[NSArray arrayWithObjects:
                 AKFoundationFrameworkName,
                 AKAppKitFrameworkName,
                 AKUIKitFrameworkName,
                 AKCoreDataFrameworkName,
                 AKCoreImageFrameworkName,
                 AKQuartzCoreFrameworkName,
-                nil];
+                nil] retain];
     }
 
     return s_namesOfEssentialFrameworks;
