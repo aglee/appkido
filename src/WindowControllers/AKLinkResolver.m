@@ -221,9 +221,19 @@
 
 - (AKDocLocator *)_deriveDocLocatorUsingAnchorOfLinkURL:(NSURL *)linkURL
 {
+
+
+
 return nil;  // [agl] REMOVE flesh this method out
 /*
-    NSString *linkAnchor = [linkURL fragment];
+    NSString *filePath = [linkURL path];
+    NSString *anchor = [linkURL fragment];
+
+DIGSLogDebug(@"linkURL -- path = [%@], fragment = [%@]",  // [agl] REMOVE
+    [linkURL path], [linkURL fragment]);
+DIGSLogDebug(@"classDocumentedInHTMLFile: -- [%@]",  // [agl] REMOVE
+    [_database classDocumentedInHTMLFile:[linkURL path]]);
+
     NSEnumerator *en = [[linkAnchor pathComponents] objectEnumerator];
     NSString *anchorComponent;
 
