@@ -69,6 +69,8 @@
         _globalsGroupListsByFramework = [[NSMutableDictionary alloc] init];
         _globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
+        _frameworkNamesByHTMLFilePath =
+            [[NSMutableDictionary alloc] init];
         _classNodesByHTMLFilePath =
             [[NSMutableDictionary alloc] init];
         _protocolNodesByHTMLFilePath =
@@ -99,6 +101,7 @@
     [_globalsGroupListsByFramework release];
     [_globalsGroupsByFrameworkAndGroup release];
 
+    [_frameworkNamesByHTMLFilePath release];
     [_classNodesByHTMLFilePath release];
     [_protocolNodesByHTMLFilePath release];
 
@@ -434,6 +437,17 @@
 //-------------------------------------------------------------------------
 // Getters and setters -- hyperlink support
 //-------------------------------------------------------------------------
+
+- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath
+{
+    return [_frameworkNamesByHTMLFilePath objectForKey:htmlFilePath];
+}
+
+- (void)rememberFramework:(NSString *)frameworkName
+    forHTMLFile:(NSString *)htmlFilePath
+{
+    [_frameworkNamesByHTMLFilePath setObject:frameworkName forKey:htmlFilePath];
+}
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
 {

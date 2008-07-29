@@ -229,6 +229,8 @@
 		738A570F0DD6087E00E8BB99 /* AKDatabaseExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 738A570D0DD6087E00E8BB99 /* AKDatabaseExporter.h */; };
 		7395580F0D29CA83008105BD /* AKDatabaseXMLExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */; };
 		739558100D29CA83008105BD /* AKDatabaseXMLExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */; };
+		73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */; };
+		73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */; };
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
 		73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
@@ -466,6 +468,8 @@
 		73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKSubtopic.m; sourceTree = "<group>"; };
 		73AE0907049B71D800A80007 /* AKWindowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowLayout.h; sourceTree = "<group>"; };
 		73AE0908049B71D800A80007 /* AKWindowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowLayout.m; sourceTree = "<group>"; };
+		73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKOldLinkResolver.h; sourceTree = "<group>"; };
+		73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKOldLinkResolver.m; sourceTree = "<group>"; };
 		73B313A90617441B006C9BA7 /* AKGroupNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGroupNode.h; sourceTree = "<group>"; };
 		73B313AA0617441B006C9BA7 /* AKGroupNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGroupNode.m; sourceTree = "<group>"; };
 		73B315450617A3F3006C9BA7 /* AKGroupNodeSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGroupNodeSubtopic.h; sourceTree = "<group>"; };
@@ -969,6 +973,8 @@
 			children = (
 				7370170405FBA7B300C74AA7 /* AKLinkResolver.h */,
 				7370170505FBA7B300C74AA7 /* AKLinkResolver.m */,
+				73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */,
+				73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */,
 			);
 			name = links;
 			path = WindowControllers;
@@ -1351,6 +1357,7 @@
 				73E86F4A0E397760002AFB76 /* AKNotificationNode.h in Headers */,
 				734879D30E3AB45000A3B12F /* AKPropertiesSubtopic.h in Headers */,
 				734879FC0E3AB59800A3B12F /* AKPropertyDoc.h in Headers */,
+				73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1550,6 +1557,7 @@
 				73E86F4B0E397760002AFB76 /* AKNotificationNode.m in Sources */,
 				734879D40E3AB45000A3B12F /* AKPropertiesSubtopic.m in Sources */,
 				734879FD0E3AB59800A3B12F /* AKPropertyDoc.m in Sources */,
+				73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

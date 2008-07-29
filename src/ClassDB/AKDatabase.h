@@ -91,17 +91,17 @@
 
     // --- KLUDGED HYPERLINK SUPPORT ---
 
-    // Keys are path names of HTML doc files for classes.  Each value is
-    // the AKClassNode for the class documented in that HTML file.
+    // (path to HTML file) -> (name of framework)
+    NSMutableDictionary *_frameworkNamesByHTMLFilePath;
+
+    // (path to HTML file) -> (AKClassNode)
     NSMutableDictionary *_classNodesByHTMLFilePath;
 
-    // Keys are path names of HTML doc files for protocols.  Each value is
-    // the AKProtocolNode for the protocol documented in that HTML file.
+    // (path to HTML file) -> (AKProtocolNode)
     NSMutableDictionary *_protocolNodesByHTMLFilePath;
 
-    // Keys are path names of HTML documentation files.  Each value is an
-    // AKFileSection which is the root section for that file.  See
-    // AKDocParser for an explanation of root sections.
+    // (path to HTML file) -> (root AKFileSection for that file)
+    // See AKDocParser for an explanation of root sections.
     NSMutableDictionary *_rootSectionsByHTMLFilePath;
 
     // Keys are anchor strings.  Each value is a dictionary whose keys are
@@ -217,6 +217,10 @@
 //-------------------------------------------------------------------------
 // Getters and setters -- hyperlink support
 //-------------------------------------------------------------------------
+
+- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
+- (void)rememberFramework:(NSString *)frameworkName
+    forHTMLFile:(NSString *)htmlFilePath;
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberThatClass:(AKClassNode *)classNode
