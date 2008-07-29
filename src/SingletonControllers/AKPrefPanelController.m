@@ -190,6 +190,18 @@ NSLog(@"new devToolsPath: [%@]", devToolsPath);  // [agl] REMOVE
     }
 }
 
+- (IBAction)selectAllFrameworks:(id)sender
+{
+    [AKPrefUtils setSelectedFrameworkNamesPref:[self _namesOfAvailableFrameworks]];
+    [_frameworksTable reloadData];
+}
+
+- (IBAction)deselectAllFrameworks:(id)sender
+{
+    [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks()];
+    [_frameworksTable reloadData];
+}
+
 //-------------------------------------------------------------------------
 // NSTableView datasource methods
 //-------------------------------------------------------------------------
@@ -224,15 +236,9 @@ NSLog(@"new devToolsPath: [%@]", devToolsPath);  // [agl] REMOVE
 
     if ([columnID isEqualToString:_AKCheckboxesColumnID])
     {
-        if ([fwName isEqualToString:AKFoundationFrameworkName]
-            || [fwName isEqualToString:AKAppKitFrameworkName]
-            || [fwName isEqualToString:AKUIKitFrameworkName]
-            || [fwName isEqualToString:AKCoreDataFrameworkName]
-            || [fwName isEqualToString:AKCoreImageFrameworkName]
-            || [fwName isEqualToString:AKQuartzCoreFrameworkName])
+        if ([AKNamesOfEssentialFrameworks() containsObject:fwName])
         {
-            // Do not allow the user to remove Foundation, AppKit, UIKit,
-            // CoreData, or CoreImage.
+            // Do not allow the user to remove "essential" frameworks.
             [aCell setEnabled:NO];
             [aCell setState:NSOnState];
         }
