@@ -26,7 +26,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)withClassNode:(AKClassNode *)classNode
++ (id)topicWithClassNode:(AKClassNode *)classNode
 {
     return [[[self alloc] initWithClassNode:classNode] autorelease];
 }
@@ -93,7 +93,7 @@
             return nil;
         }
 
-        return [self withClassNode:classNode];
+        return [self topicWithClassNode:classNode];
     }
 }
 
@@ -152,7 +152,7 @@
     while ((subclassNode = [en nextObject]))
     {
         [columnValues addObject:
-            [AKClassTopic withClassNode:subclassNode]];
+            [AKClassTopic topicWithClassNode:subclassNode]];
     }
 
     return columnValues;

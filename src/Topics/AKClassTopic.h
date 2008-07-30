@@ -19,7 +19,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)withClassNode:(AKClassNode *)classNode;
++ (id)topicWithClassNode:(AKClassNode *)classNode;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc

@@ -25,7 +25,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKFrameworkTopic *)withFrameworkName:(NSString *)fwName;
++ (AKFrameworkTopic *)topicWithFrameworkName:(NSString *)fwName;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc

@@ -106,7 +106,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKClassNode *objectNode =
         [[AKDatabase defaultDatabase] classWithName:@"NSObject"];
     [self jumpToTopic:
-        [AKClassTopic withClassNode:objectNode]];
+        [AKClassTopic topicWithClassNode:objectNode]];
 }
 
 - (void)dealloc
@@ -689,7 +689,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     if (node)
     {
-        [self jumpToTopic:[AKClassTopic withClassNode:node]];
+        [self jumpToTopic:[AKClassTopic topicWithClassNode:node]];
     }
 }
 
@@ -715,7 +715,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Do the jump.
-    [self jumpToTopic:[AKClassTopic withClassNode:classNode]];
+    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
 }
 
 - (IBAction)jumpToFrameworkFormalProtocols:(id)sender
@@ -724,7 +724,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFormalProtocolsTopic withFrameworkName:fwName]];
+        [self jumpToTopic:[AKFormalProtocolsTopic topicWithFrameworkName:fwName]];
 
         [self showBrowser:nil];
     }
@@ -736,7 +736,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKInformalProtocolsTopic withFrameworkName:fwName]];
+        [self jumpToTopic:[AKInformalProtocolsTopic topicWithFrameworkName:fwName]];
         [self showBrowser:nil];
     }
 }
@@ -747,7 +747,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFunctionsTopic withFrameworkName:fwName]];
+        [self jumpToTopic:[AKFunctionsTopic topicWithFrameworkName:fwName]];
         [self showBrowser:nil];
     }
 }
@@ -758,7 +758,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKGlobalsTopic withFrameworkName:fwName]];
+        [self jumpToTopic:[AKGlobalsTopic topicWithFrameworkName:fwName]];
         [self showBrowser:nil];
     }
 }

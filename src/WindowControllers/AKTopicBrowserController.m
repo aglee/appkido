@@ -306,23 +306,23 @@
 
     // Set up the ":: classes ::" section of this browser column.  We want
     // the browser column to list all classes that don't have superclasses.
-    [columnValues addObject:[AKLabelTopic withLabel:@":: classes ::"]];
+    [columnValues addObject:[AKLabelTopic topicWithLabel:@":: classes ::"]];
 
     while ((classNode = [classEnum nextObject]))
     {
-        [columnValues addObject:[AKClassTopic withClassNode:classNode]];
+        [columnValues addObject:[AKClassTopic topicWithClassNode:classNode]];
     }
 
     // Set up the ":: other topics ::" section of this browser column.
     // We want the browser column to list all known frameworks.
-    [columnValues addObject:[AKLabelTopic withLabel:@":: other topics ::"]];
+    [columnValues addObject:[AKLabelTopic topicWithLabel:@":: other topics ::"]];
 
     NSEnumerator *fwNameEnum = [[db sortedFrameworkNames] objectEnumerator];
     NSString *fwName;
 
     while ((fwName = [fwNameEnum nextObject]))
     {
-        [columnValues addObject:[AKFrameworkTopic withFrameworkName:fwName]];
+        [columnValues addObject:[AKFrameworkTopic topicWithFrameworkName:fwName]];
     }
 
     [_topicListsForBrowserColumns addObject:columnValues];

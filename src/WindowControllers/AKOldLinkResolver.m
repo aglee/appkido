@@ -114,7 +114,7 @@
             behaviorNode = classNode;
             rootSection =
                 [classNode nodeDocumentationForFramework:fwName];
-            docTopic = [AKClassTopic withClassNode:classNode];
+            docTopic = [AKClassTopic topicWithClassNode:classNode];
 
             break;
         }
@@ -125,7 +125,7 @@
 
             behaviorNode = protocolNode;
             rootSection = [protocolNode nodeDocumentation];
-            docTopic = [AKProtocolTopic withProtocolNode:protocolNode];
+            docTopic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
             break;
         }
@@ -137,7 +137,7 @@
         {
             behaviorNode = nil;
             rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKFunctionsTopic withFrameworkName:fwName];
+            docTopic = [AKFunctionsTopic topicWithFrameworkName:fwName];
 
             break;
         }
@@ -150,7 +150,7 @@
         {
             behaviorNode = nil;
             rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKGlobalsTopic withFrameworkName:fwName];
+            docTopic = [AKGlobalsTopic topicWithFrameworkName:fwName];
 
             break;
         }

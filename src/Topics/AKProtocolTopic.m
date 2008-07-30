@@ -26,7 +26,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)withProtocolNode:(AKProtocolNode *)protocolNode
++ (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
 {
     return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
 }
@@ -93,7 +93,7 @@
             return nil;
         }
 
-        return [self withProtocolNode:protocolNode];
+        return [self topicWithProtocolNode:protocolNode];
     }
 }
 

@@ -35,7 +35,7 @@
     while ((protocolNode = [en nextObject]))
     {
         [columnValues addObject:
-            [AKProtocolTopic withProtocolNode:protocolNode]];
+            [AKProtocolTopic topicWithProtocolNode:protocolNode]];
     }
 
     return [AKSortUtils arrayBySortingArray:columnValues];
