@@ -12,7 +12,6 @@
 #import "AKDatabase.h"
 #import "AKProtocolNode.h"
 #import "AKCategoryNode.h"
-#import "AKPropertyNode.h"
 #import "AKMethodNode.h"
 #import "AKNotificationNode.h"
 #import "AKCollectionOfNodes.h"
@@ -45,7 +44,6 @@
         _childClassNodes = [[NSMutableArray alloc] init];
         _categoryNodes = [[NSMutableArray alloc] init];
 
-        _indexOfProperties = [[AKCollectionOfNodes alloc] init];
         _indexOfDelegateMethods = [[AKCollectionOfNodes alloc] init];
         _indexOfNotifications = [[AKCollectionOfNodes alloc] init];
     }
@@ -58,7 +56,6 @@
     [_childClassNodes release];
     [_categoryNodes release];
 
-    [_indexOfProperties release];
     [_indexOfDelegateMethods release];
     [_indexOfNotifications release];
 
@@ -160,25 +157,6 @@
     }
 
     return result;
-}
-
-//-------------------------------------------------------------------------
-// Getters and setters -- properties
-//-------------------------------------------------------------------------
-
-- (NSArray *)documentedProperties
-{
-    return [_indexOfProperties nodesWithDocumentation];
-}
-
-- (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName
-{
-    return (AKPropertyNode *)[_indexOfProperties nodeWithName:propertyName];
-}
-
-- (void)addPropertyNode:(AKPropertyNode *)propertyNode;
-{
-    [_indexOfProperties addNode:propertyNode];
 }
 
 //-------------------------------------------------------------------------

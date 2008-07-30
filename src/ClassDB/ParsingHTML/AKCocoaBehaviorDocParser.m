@@ -450,6 +450,7 @@
             usingGetSelector:@selector(instanceMethodWithName:)
             addSelector:@selector(addInstanceMethod:)];
 
+    // Add member nodes specific to classes.
     if ([behaviorNode isClassNode])
     {
         // Add delegate method nodes.

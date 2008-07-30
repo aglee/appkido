@@ -202,6 +202,9 @@
     inFramework:(NSString *)fwName;
 - (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
 
+- (AKGroupNode *)functionsGroupContainingFunction:functionName
+    inFramework:(NSString *)fwName;
+
 //-------------------------------------------------------------------------
 // Getters and setters -- globals
 //-------------------------------------------------------------------------
@@ -212,6 +215,8 @@
     inFramework:(NSString *)fwName;
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
 
+- (AKGroupNode *)globalsGroupContainingGlobal:nameOfGlobal
+    inFramework:(NSString *)fwName;
 
 
 //-------------------------------------------------------------------------
