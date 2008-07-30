@@ -149,11 +149,11 @@
 
     AKPropertiesSubtopic *propertiesSubtopic =
         [AKPropertiesSubtopic
-            subtopicForClassNode:nil
+            subtopicForClassNode:_protocolNode
             includeAncestors:NO];
     AKPropertiesSubtopic *allPropertiesSubtopic =
         [AKPropertiesSubtopic
-            subtopicForClassNode:nil
+            subtopicForClassNode:_protocolNode
             includeAncestors:YES];
 
     AKClassMethodsSubtopic *classMethodsSubtopic =
