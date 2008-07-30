@@ -1,5 +1,5 @@
 /*
- * AKMethodsSubtopic.h
+ * AKMembersSubtopic.h
  *
  * Created by Andy Lee on Tue Jul 09 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -9,7 +9,7 @@
 
 @class AKBehaviorNode;
 
-@interface AKMethodsSubtopic : AKSubtopic
+@interface AKMembersSubtopic : AKSubtopic
 {
 @private
     // Do we include methods inherited from ancestor classes and declared
@@ -35,10 +35,10 @@
 
 // Override this.  Returns method nodes for a single node -- no superclasses
 // or protocols included.
-- (NSArray *)methodNodesForBehavior:(AKBehaviorNode *)behaviorNode;
+- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode;
 
 // Override this.
-+ (id)methodDocClass;
++ (id)memberDocClass;
 
 @end
 

@@ -5,11 +5,11 @@
  * Copyright (c) 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKMethodsSubtopic.h"
+#import "AKMembersSubtopic.h"
 
 @class AKBehaviorNode;
 
-@interface AKRealMethodsSubtopic : AKMethodsSubtopic
+@interface AKRealMethodsSubtopic : AKMembersSubtopic
 {
     AKBehaviorNode *_behaviorNode;
 }

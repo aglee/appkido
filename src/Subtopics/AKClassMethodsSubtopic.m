@@ -33,15 +33,15 @@
 }
 
 //-------------------------------------------------------------------------
-// AKMethodsSubtopic methods
+// AKMembersSubtopic methods
 //-------------------------------------------------------------------------
 
-- (NSArray *)methodNodesForBehavior:(AKBehaviorNode *)behaviorNode
+- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
 {
     return [behaviorNode documentedClassMethods];
 }
 
-+ (id)methodDocClass
++ (id)memberDocClass
 {
     return [AKClassMethodDoc class];
 }

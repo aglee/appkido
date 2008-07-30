@@ -1,11 +1,11 @@
 /*
- * AKMethodsSubtopic.m
+ * AKMembersSubtopic.m
  *
  * Created by Andy Lee on Tue Jul 09 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKMethodsSubtopic.h"
+#import "AKMembersSubtopic.h"
 
 #import <DIGSLog.h>
 
@@ -18,13 +18,13 @@
 // Forward declarations of private methods
 //-------------------------------------------------------------------------
 
-@interface AKMethodsSubtopic (Private)
+@interface AKMembersSubtopic (Private)
 - (NSArray *)_ancestorNodesWeCareAbout;
 - (NSDictionary *)_subtopicMethodsByName;
 @end
 
 
-@implementation AKMethodsSubtopic
+@implementation AKMembersSubtopic
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
@@ -55,13 +55,13 @@
     return nil;
 }
 
-- (NSArray *)methodNodesForBehavior:(AKBehaviorNode *)behaviorNode
+- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
 {
     DIGSLogMissingOverride();
     return nil;
 }
 
-+ (id)methodDocClass
++ (id)memberDocClass
 {
     DIGSLogMissingOverride();
     return nil;
@@ -77,7 +77,7 @@
     NSDictionary *methodNodesByName = [self _subtopicMethodsByName];
 
     // Create an AKMemberDoc instance for each method we want to list.
-    Class methodClass = [[self class] methodDocClass];
+    Class methodClass = [[self class] memberDocClass];
     NSArray *sortedMethodNames =
         [[methodNodesByName allKeys]
             sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
@@ -106,7 +106,7 @@
 // Private methods
 //-------------------------------------------------------------------------
 
-@implementation AKMethodsSubtopic (Private)
+@implementation AKMembersSubtopic (Private)
 
 - (NSArray *)_ancestorNodesWeCareAbout
 {
@@ -160,7 +160,7 @@
     while ((ancestorNode = [ancestorEnum nextObject]) != nil)
     {
         NSEnumerator *methodNodeEnum =
-            [[self methodNodesForBehavior:ancestorNode] objectEnumerator];
+            [[self memberNodesForBehavior:ancestorNode] objectEnumerator];
         AKMethodNode *methodNode;
 
         while ((methodNode = [methodNodeEnum nextObject]) != nil)
