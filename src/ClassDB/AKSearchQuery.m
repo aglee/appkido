@@ -474,6 +474,12 @@ g_UTF8Comparisons++;
         AKProtocolTopic *topic =
             [AKProtocolTopic withProtocolNode:protocolNode];
 
+        // Search the protocol's properties.
+        [self
+            _searchNodes:[protocolNode documentedProperties]
+            forSubtopic:AKPropertiesSubtopicName
+            ofBehaviorTopic:topic];
+
         // Search the protocol's class methods.
         [self
             _searchNodes:[protocolNode documentedClassMethods]

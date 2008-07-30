@@ -9,6 +9,7 @@
 
 #import <DIGSLog.h>
 #import "AKProtocolNode.h"
+#import "AKPropertyNode.h"
 #import "AKMethodNode.h"
 #import "AKCollectionOfNodes.h"
 
@@ -26,6 +27,7 @@
         _protocolNodes = [[NSMutableArray alloc] init];
         _protocolNodeNames = [[NSMutableSet alloc] init];
 
+        _indexOfProperties = [[AKCollectionOfNodes alloc] init];
         _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
         _indexOfInstanceMethods = [[AKCollectionOfNodes alloc] init];
 
@@ -45,6 +47,7 @@
     [_protocolNodes release];
     [_protocolNodeNames release];
 
+    [_indexOfProperties release];
     [_indexOfClassMethods release];
     [_indexOfInstanceMethods release];
 
@@ -132,6 +135,25 @@
 
     [_nodeDocumentationByFramework
         setObject:fileSection forKey:frameworkName];
+}
+
+//-------------------------------------------------------------------------
+// Getters and setters -- properties
+//-------------------------------------------------------------------------
+
+- (NSArray *)documentedProperties
+{
+    return [_indexOfProperties nodesWithDocumentation];
+}
+
+- (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName
+{
+    return (AKPropertyNode *)[_indexOfProperties nodeWithName:propertyName];
+}
+
+- (void)addPropertyNode:(AKPropertyNode *)propertyNode;
+{
+    [_indexOfProperties addNode:propertyNode];
 }
 
 //-------------------------------------------------------------------------

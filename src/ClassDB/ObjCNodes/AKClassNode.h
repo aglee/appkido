@@ -42,9 +42,6 @@
     // this class.
     NSMutableArray *_categoryNodes;
 
-    // Contains AKPropertyNodes, each representing a property of this class.
-    AKCollectionOfNodes *_indexOfProperties;
-
     // Contains AKMethodNodes, one for each delegate method that has been
     // found in the documentation for this class.
     AKCollectionOfNodes *_indexOfDelegateMethods;
@@ -70,18 +67,6 @@
 - (void)addCategory:(AKCategoryNode *)node;
 - (AKCategoryNode *)categoryNamed:(NSString *)catName;
 - (NSArray *)allCategories;
-
-//-------------------------------------------------------------------------
-// Getters and setters -- properties
-//-------------------------------------------------------------------------
-
-/** Returns only properties that are in this class's documentation. */
-- (NSArray *)documentedProperties;
-
-- (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName;
-
-/*! Does nothing if a property with the same name already exists. */
-- (void)addPropertyNode:(AKPropertyNode *)propertyNode;
 
 //-------------------------------------------------------------------------
 // Getters and setters -- delegate methods

@@ -85,86 +85,38 @@
 // Resolving links
 //-------------------------------------------------------------------------
 
-- (NSString *)_overviewDocNameForBehavior:(AKBehaviorNode *)behaviorNode
+- (AKDocLocator *)_docLocatorForGlobal:(NSString *)nameOfGlobal
     inFramework:(NSString *)frameworkName
 {
-    if ([frameworkName isEqualToString:[behaviorNode owningFramework]])
-    {
-        return AKClassDescriptionAlternateHTMLSectionName;
-    }
-    else
-    {
-        return
-            [AKOverviewDoc
-                qualifyDocName:AKClassDescriptionAlternateHTMLSectionName
-                withFrameworkName:frameworkName];
-    }
-}
+    AKGroupNode *globalsGroupNode =
+        [_database
+            globalsGroupContainingGlobal:nameOfGlobal
+            inFramework:frameworkName];
 
-- (AKDocLocator *)_docLocatorForClassNamed:(NSString *)className
-    inFramework:(NSString *)frameworkName
-{
-    DIGSLogDebug(@"AKLinkResolver -- class [%@] in framework [%@]",
-        className, frameworkName);
-
-    AKClassNode *classNode = [_database classWithName:className];
-
-    if (classNode == nil)
+    if (globalsGroupNode == nil)
     {
-        DIGSLogDebug(@"AKLinkResolver -- couldn't find class with name [%@]", className);
         return nil;
     }
 
-    NSString *docName =
-        [self
-            _overviewDocNameForBehavior:classNode
-            inFramework:frameworkName];
-
     return
         [AKDocLocator
-            withTopic:[AKClassTopic withClassNode:classNode]
-            subtopicName:AKOverviewSubtopicName
-            docName:docName];
-}
-
-- (AKDocLocator *)_docLocatorForProtocolNamed:(NSString *)protocolName
-    inFramework:(NSString *)frameworkName
-{
-    DIGSLogDebug(@"AKLinkResolver -- protocol [%@] in framework [%@]",
-        protocolName, frameworkName);
-
-    AKProtocolNode *protocolNode = [_database protocolWithName:protocolName];
-
-    if (protocolNode == nil)
-    {
-        DIGSLogDebug(@"AKLinkResolver -- couldn't find protocol with name [%@]", protocolName);
-        return nil;
-    }
-
-    NSString *docName =
-        [self
-            _overviewDocNameForBehavior:protocolNode
-            inFramework:frameworkName];
-
-    return
-        [AKDocLocator
-            withTopic:[AKProtocolTopic withProtocolNode:protocolNode]
-            subtopicName:AKOverviewSubtopicName
-            docName:docName];
+            withTopic:[AKGlobalsTopic withFrameworkName:frameworkName]
+            subtopicName:[globalsGroupNode nodeName]
+            docName:nameOfGlobal];
 }
 
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
 {
     NSURL *normalizedLinkURL = [[linkURL absoluteURL] standardizedURL];
     NSString *filePath = [normalizedLinkURL path];
-    NSString *fwName = [_database frameworkForHTMLFile:filePath];
+    NSString *frameworkName = [_database frameworkForHTMLFile:filePath];
 
 DIGSLogDebug(@"AKLinkResolver -- path = [%@], framework = [%@], anchor = [%@]",  // [agl] REMOVE
-    filePath, fwName, [normalizedLinkURL fragment]);
+    filePath, frameworkName, [normalizedLinkURL fragment]);
 
-    if (fwName == nil)
+    if (frameworkName == nil)
     {
-        DIGSLogDebug(@"couldn't determine framework for file [%@]", filePath);
+        DIGSLogDebug(@"AKLinkResolver -- couldn't determine framework for file [%@]", filePath);
         return nil;
     }
 
@@ -176,43 +128,145 @@ DIGSLogDebug(@"AKLinkResolver -- path = [%@], framework = [%@], anchor = [%@]", 
     {
         if ([anchorComponent isEqualToString:@"occ"])
         {
+            AKBehaviorNode *behaviorNode = nil;
+            AKBehaviorTopic *behaviorTopic = nil;
+
             NSString *tokenType = [en nextObject];
 
-            if ([tokenType isEqualToString:@"cl"])
+            if ([tokenType isEqualToString:@"cl"]
+                || [tokenType isEqualToString:@"instp"]
+                || [tokenType isEqualToString:@"clm"]
+                || [tokenType isEqualToString:@"instm"])
             {
-                return
-                    [self
-                        _docLocatorForClassNamed:[en nextObject]
-                        inFramework:fwName];
+                NSString *className = [en nextObject];
+                AKClassNode *classNode = [_database classWithName:className];
+
+                if (classNode == nil)
+                {
+                    DIGSLogDebug(@"AKLinkResolver -- couldn't find class with name [%@]", className);
+                    return nil;
+                }
+
+                behaviorNode = classNode;
+                behaviorTopic = [AKClassTopic withClassNode:classNode];
             }
-            else if ([tokenType isEqualToString:@"intf"])
+            else if ([tokenType isEqualToString:@"intf"]
+                || [tokenType isEqualToString:@"intfp"]
+                || [tokenType isEqualToString:@"intfcm"]
+                || [tokenType isEqualToString:@"intfm"])
             {
-                return
-                    [self
-                        _docLocatorForProtocolNamed:[en nextObject]
-                        inFramework:fwName];
+                NSString *protocolName = [en nextObject];
+                AKProtocolNode *protocolNode = [_database protocolWithName:protocolName];
+
+                if (protocolNode == nil)
+                {
+                    DIGSLogDebug(@"AKLinkResolver -- couldn't find protocol with name [%@]", protocolName);
+                    return nil;
+                }
+
+                behaviorNode = protocolNode;
+                behaviorTopic = [AKProtocolTopic withProtocolNode:protocolNode];
             }
 
-            break;
+            // Does the link point to a class/protocol?
+            if ([tokenType isEqualToString:@"cl"]
+                || [tokenType isEqualToString:@"intf"])
+            {
+                NSString *docName = AKOverviewSubtopicName;
+
+                if (![frameworkName isEqualToString:[behaviorNode owningFramework]])
+                {
+                    docName =
+                        [AKOverviewDoc
+                            qualifyDocName:docName
+                            withFrameworkName:frameworkName];
+                }
+
+                return
+                    [AKDocLocator
+                        withTopic:behaviorTopic
+                        subtopicName:AKOverviewSubtopicName
+                        docName:docName];
+            }
+
+            // Does the link point to a property?
+            if ([tokenType isEqualToString:@"instp"]
+                || [tokenType isEqualToString:@"intfp"])
+            {
+                NSString *propertyName = [en nextObject];
+                return
+                    [AKDocLocator
+                        withTopic:behaviorTopic
+                        subtopicName:AKPropertiesSubtopicName
+                        docName:propertyName];
+            }
+
+            // Does the link point to a class method?
+            if ([tokenType isEqualToString:@"clm"]
+                || [tokenType isEqualToString:@"intfcm"])
+            {
+                NSString *methodName = [en nextObject];
+                return
+                    [AKDocLocator
+                        withTopic:behaviorTopic
+                        subtopicName:AKClassMethodsSubtopicName
+                        docName:methodName];
+            }
+
+            // Does the link point to an instance method?
+            if ([tokenType isEqualToString:@"instm"]
+                || [tokenType isEqualToString:@"intfm"])
+            {
+                NSString *methodName = [en nextObject];
+                return
+                    [AKDocLocator
+                        withTopic:behaviorTopic
+                        subtopicName:AKInstanceMethodsSubtopicName
+                        docName:methodName];
+            }
+
+            // Last ditch: see if the link points to a global.
+            NSString *possibleNameOfGlobal = [en nextObject];
+            return
+                [self
+                    _docLocatorForGlobal:possibleNameOfGlobal
+                    inFramework:frameworkName];
         }
         else if ([anchorComponent isEqualToString:@"c"])
         {
-/*
             NSString *tokenType = [en nextObject];
-            NSString *tokenName = [en nextObject];
 
-            behaviorNode = nil;
-            rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKFunctionsTopic withFrameworkName:fwName];
+            // Does the link point to a function/macro?
+            if ([tokenType isEqualToString:@"func"]
+                || [tokenType isEqualToString:@"macro"])
+            {
+                NSString *functionName = [en nextObject];
 
+                AKGroupNode *functionsGroupNode =
+                    [_database
+                        functionsGroupContainingFunction:functionName
+                        inFramework:frameworkName];
 
-            behaviorNode = nil;
-            rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKGlobalsTopic withFrameworkName:fwName];
+                if (functionsGroupNode == nil)
+                {
+                    DIGSLogDebug(@"AKLinkResolver -- couldn't find function named [%@] in framework [%@]",
+                        functionName, frameworkName);
+                    return nil;
+                }
 
+                return
+                    [AKDocLocator
+                        withTopic:[AKFunctionsTopic withFrameworkName:frameworkName]
+                        subtopicName:[functionsGroupNode nodeName]
+                        docName:functionName];
+            }
 
-            return nil;
-*/
+            // Last ditch: see if the link points to a global.
+            NSString *possibleNameOfGlobal = [en nextObject];
+            return
+                [self
+                    _docLocatorForGlobal:possibleNameOfGlobal
+                    inFramework:frameworkName];
         }
     }
 

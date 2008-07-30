@@ -39,14 +39,7 @@
 
 - (NSArray *)methodNodesForBehavior:(AKBehaviorNode *)behaviorNode
 {
-    if ([behaviorNode isClassNode])
-    {
-        return [(AKClassNode *)behaviorNode documentedProperties];
-    }
-    else
-    {
-        return [NSArray array];
-    }
+    return [behaviorNode documentedProperties];
 }
 
 + (id)methodDocClass

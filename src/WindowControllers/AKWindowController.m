@@ -237,7 +237,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Let somebody else handle the URL if it's not a "file:/" URL.
     if (![linkURL isFileURL])
     {
-        DIGSLogDebug(@"let somebody else handle non-file url");
+        DIGSLogDebug(@"let somebody else handle non-file url %@", linkURL);
         return NO;
     }
 
@@ -249,6 +249,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     if (linkDestination == nil)
     {
+        DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
         linkDestination =
             [[AKOldLinkResolver linkResolverWithDatabase:[AKDatabase defaultDatabase]]
                 docLocatorForURL:linkURL];

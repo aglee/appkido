@@ -8,6 +8,7 @@
 #import "AKDatabaseNode.h"
 
 @class AKProtocolNode;
+@class AKPropertyNode;
 @class AKMethodNode;
 @class AKCollectionOfNodes;
 
@@ -33,6 +34,9 @@
 
     // Indexes the contents of _protocolNodes.
     NSMutableSet *_protocolNodeNames;
+
+    // Contains AKPropertyNodes, each representing a property of this class.
+    AKCollectionOfNodes *_indexOfProperties;
 
     // Contains AKMethodNodes, one for each class method that has either
     // been found in my .h file or been found in the documentation for my
@@ -85,6 +89,18 @@
 
 - (void)setNodeDocumentation:(AKFileSection *)fileSection
     forFramework:(NSString *)frameworkName;
+
+//-------------------------------------------------------------------------
+// Getters and setters -- properties
+//-------------------------------------------------------------------------
+
+/** Returns only properties that are in this class's documentation. */
+- (NSArray *)documentedProperties;
+
+- (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName;
+
+/*! Does nothing if a property with the same name already exists. */
+- (void)addPropertyNode:(AKPropertyNode *)propertyNode;
 
 //-------------------------------------------------------------------------
 // Getters and setters -- class methods

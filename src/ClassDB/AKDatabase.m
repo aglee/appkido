@@ -332,47 +332,31 @@
     }
 }
 
-/*
-- (void)addFunctionNode:(AKFunctionNode *)functionNode
+- (AKGroupNode *)functionsGroupContainingFunction:functionName
+    inFramework:(NSString *)fwName
 {
-    NSString *fwName = [functionNode owningFramework];
-
-    // See if we have any functions groups in the framework yet.
-    NSMutableArray *groupList = nil;
-    NSMutableDictionary *groupsByName =
-        [_functionsGroupsByFrameworkAndGroup objectForKey:fwName];
-
-    if (groupsByName)
+    // Get the functions groups for the given framework.
+    NSMutableArray *groupList = [_functionsGroupListsByFramework objectForKey:fwName];
+    if (groupList == nil)
     {
-        groupList = [_functionsGroupListsByFramework objectForKey:fwName];
-    }
-    else
-    {
-        groupsByName = [NSMutableDictionary dictionary];
-        [_functionsGroupsByFrameworkAndGroup setObject:groupsByName forKey:fwName];
-
-        groupList = [NSMutableArray array];
-        [_functionsGroupListsByFramework setObject:groupList forKey:fwName];
+        return nil;
     }
 
-    // See if the specified functions group is in the framework yet.
-    NSString *groupName = [functionNode groupName];
-    AKGroupNode *groupNode = [groupsByName objectForKey:groupName];
+    // Check each functions group to see if it contains the given function.
+    NSEnumerator *groupListEnum = [groupList objectEnumerator];
+    AKGroupNode *groupNode;
 
-    if (!groupNode)
+    while ((groupNode = [groupListEnum nextObject]))
     {
-        groupNode =
-            [[AKGroupNode alloc]
-                initWithNodeName:groupName
-                owningFramework:fwName];
-        [groupList addObject:groupNode];
-        [groupsByName setObject:groupNode forKey:[groupNode nodeName]];
+        if ([groupNode subnodeWithName:functionName] != nil)
+        {
+            return groupNode;
+        }
     }
 
-    // Add the function to the group.
-    [groupNode addSubnode:functionNode];
+    // If we got this far, we couldn't find the function.
+    return nil;
 }
-*/
 
 //-------------------------------------------------------------------------
 // Getters and setters -- globals
@@ -430,6 +414,32 @@
         [groupList addObject:groupNode];
         [groupsByName setObject:groupNode forKey:[groupNode nodeName]];
     }
+}
+
+- (AKGroupNode *)globalsGroupContainingGlobal:nameOfGlobal
+    inFramework:(NSString *)fwName
+{
+    // Get the globals groups for the given framework.
+    NSMutableArray *groupList = [_globalsGroupListsByFramework objectForKey:fwName];
+    if (groupList == nil)
+    {
+        return nil;
+    }
+
+    // Check each globals group to see if it contains the given global.
+    NSEnumerator *groupListEnum = [groupList objectEnumerator];
+    AKGroupNode *groupNode;
+
+    while ((groupNode = [groupListEnum nextObject]))
+    {
+        if ([groupNode subnodeWithName:nameOfGlobal] != nil)
+        {
+            return groupNode;
+        }
+    }
+
+    // If we got this far, we couldn't find the global.
+    return nil;
 }
 
 
