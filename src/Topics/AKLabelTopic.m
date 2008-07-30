@@ -15,7 +15,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKLabelTopic *)withLabel:(NSString *)label
++ (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
     AKLabelTopic *obj = [[[self alloc] init] autorelease];
 
@@ -69,7 +69,7 @@
     }
     else
     {
-        return [self withLabel:labelString];
+        return [self topicWithLabel:labelString];
     }
 }
 

@@ -100,7 +100,7 @@
 
     return
         [AKDocLocator
-            withTopic:[AKGlobalsTopic withFrameworkName:frameworkName]
+            withTopic:[AKGlobalsTopic topicWithFrameworkName:frameworkName]
             subtopicName:[globalsGroupNode nodeName]
             docName:nameOfGlobal];
 }
@@ -148,7 +148,7 @@ DIGSLogDebug(@"AKLinkResolver -- path = [%@], framework = [%@], anchor = [%@]", 
                 }
 
                 behaviorNode = classNode;
-                behaviorTopic = [AKClassTopic withClassNode:classNode];
+                behaviorTopic = [AKClassTopic topicWithClassNode:classNode];
             }
             else if ([tokenType isEqualToString:@"intf"]
                 || [tokenType isEqualToString:@"intfp"]
@@ -165,7 +165,7 @@ DIGSLogDebug(@"AKLinkResolver -- path = [%@], framework = [%@], anchor = [%@]", 
                 }
 
                 behaviorNode = protocolNode;
-                behaviorTopic = [AKProtocolTopic withProtocolNode:protocolNode];
+                behaviorTopic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
             }
 
             // Does the link point to a class/protocol?
@@ -256,7 +256,7 @@ DIGSLogDebug(@"AKLinkResolver -- path = [%@], framework = [%@], anchor = [%@]", 
 
                 return
                     [AKDocLocator
-                        withTopic:[AKFunctionsTopic withFrameworkName:frameworkName]
+                        withTopic:[AKFunctionsTopic topicWithFrameworkName:frameworkName]
                         subtopicName:[functionsGroupNode nodeName]
                         docName:functionName];
             }

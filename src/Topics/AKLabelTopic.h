@@ -16,7 +16,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKLabelTopic *)withLabel:(NSString *)label;
++ (AKLabelTopic *)topicWithLabel:(NSString *)label;
 
 //-------------------------------------------------------------------------
 // Getters and setters

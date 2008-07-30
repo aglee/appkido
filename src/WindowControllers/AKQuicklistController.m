@@ -969,7 +969,7 @@ enum
         // documented yet or intended for Apple's internal use.
         if ([classNode nodeDocumentation])
         {
-            AKTopic *topic = [AKClassTopic withClassNode:classNode];
+            AKTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
             [quicklistItems
                 addObject:
@@ -997,7 +997,7 @@ enum
         if ([protocolNode nodeDocumentation])
         {
             AKTopic *topic =
-                [AKProtocolTopic withProtocolNode:protocolNode];
+                [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
             [quicklistItems
                 addObject:

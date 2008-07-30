@@ -23,7 +23,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKFrameworkTopic *)withFrameworkName:(NSString *)fwName
++ (AKFrameworkTopic *)topicWithFrameworkName:(NSString *)fwName
 {
     return [[[self alloc] initWithFrameworkName:fwName] autorelease];
 }
@@ -93,7 +93,7 @@
     }
 
     // If we got this far, we have what we need to create an instance.
-    return [self withFrameworkName:fwName];
+    return [self topicWithFrameworkName:fwName];
 }
 
 - (NSDictionary *)asPrefDictionary
@@ -132,25 +132,25 @@
     if ([db numberOfFunctionsGroupsForFramework:_topicFramework] > 0)
     {
         [columnValues
-            addObject:[AKFunctionsTopic withFrameworkName:_topicFramework]];
+            addObject:[AKFunctionsTopic topicWithFrameworkName:_topicFramework]];
     }
 
     if ([db numberOfGlobalsGroupsForFramework:_topicFramework] > 0)
     {
         [columnValues
-            addObject:[AKGlobalsTopic withFrameworkName:_topicFramework]];
+            addObject:[AKGlobalsTopic topicWithFrameworkName:_topicFramework]];
     }
 
     if ([[db formalProtocolsForFramework:_topicFramework] count] > 0)
     {
         [columnValues
-            addObject:[AKFormalProtocolsTopic withFrameworkName:_topicFramework]];
+            addObject:[AKFormalProtocolsTopic topicWithFrameworkName:_topicFramework]];
     }
 
     if ([[db informalProtocolsForFramework:_topicFramework] count] > 0)
     {
         [columnValues
-            addObject:[AKInformalProtocolsTopic withFrameworkName:_topicFramework]];
+            addObject:[AKInformalProtocolsTopic topicWithFrameworkName:_topicFramework]];
     }
 
     return columnValues;

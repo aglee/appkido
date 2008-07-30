@@ -19,7 +19,7 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)withProtocolNode:(AKProtocolNode *)protocolNode;
++ (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc

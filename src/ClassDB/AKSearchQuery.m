@@ -389,7 +389,7 @@ g_UTF8Comparisons++;
         if ([self _matchesNode:classNode])
         {
             AKClassTopic *topic =
-                [AKClassTopic withClassNode:classNode];
+                [AKClassTopic topicWithClassNode:classNode];
 
             [_searchResults
                 addObject:
@@ -411,7 +411,7 @@ g_UTF8Comparisons++;
         if ([self _matchesNode:protocolNode])
         {
             AKProtocolTopic *topic =
-                [AKProtocolTopic withProtocolNode:protocolNode];
+                [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
             [_searchResults
                 addObject:
@@ -430,7 +430,7 @@ g_UTF8Comparisons++;
 
     while ((classNode = [en nextObject]))
     {
-        AKClassTopic *topic = [AKClassTopic withClassNode:classNode];
+        AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
         // Search the class's properties.
         [self
@@ -472,7 +472,7 @@ g_UTF8Comparisons++;
     while ((protocolNode = [en nextObject]))
     {
         AKProtocolTopic *topic =
-            [AKProtocolTopic withProtocolNode:protocolNode];
+            [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
         // Search the protocol's properties.
         [self
@@ -517,7 +517,7 @@ g_UTF8Comparisons++;
             {
                 if ([self _matchesNode:subnode])
                 {
-                    AKTopic *topic = [AKFunctionsTopic withFrameworkName:fwName];
+                    AKTopic *topic = [AKFunctionsTopic topicWithFrameworkName:fwName];
 
                     [_searchResults
                         addObject:
@@ -579,7 +579,7 @@ g_UTF8Comparisons++;
 
                 if (matchFound)
                 {
-                    AKTopic *topic = [AKGlobalsTopic withFrameworkName:fwName];
+                    AKTopic *topic = [AKGlobalsTopic topicWithFrameworkName:fwName];
 
                     [_searchResults
                         addObject:
