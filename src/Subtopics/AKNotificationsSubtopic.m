@@ -33,10 +33,10 @@
 }
 
 //-------------------------------------------------------------------------
-// AKMethodsSubtopic methods
+// AKMembersSubtopic methods
 //-------------------------------------------------------------------------
 
-- (NSArray *)methodNodesForBehavior:(AKBehaviorNode *)behaviorNode
+- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
 {
     if ([behaviorNode isClassNode])
     {
@@ -48,7 +48,7 @@
     }
 }
 
-+ (id)methodDocClass
++ (id)memberDocClass
 {
     return [AKNotificationDoc class];
 }

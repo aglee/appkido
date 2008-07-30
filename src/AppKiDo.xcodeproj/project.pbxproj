@@ -27,7 +27,7 @@
 		65B1096809D7B6C300A8A637 /* AKClassMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */; };
 		65B1096909D7B6C300A8A637 /* AKDelegateMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25C04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.h */; };
 		65B1096A09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26004EDC6AE00A80003 /* AKInstanceMethodsSubtopic.h */; };
-		65B1096B09D7B6C300A8A637 /* AKMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26404EDC6AE00A80003 /* AKMethodsSubtopic.h */; };
+		65B1096B09D7B6C300A8A637 /* AKMembersSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */; };
 		65B1096C09D7B6C300A8A637 /* AKNotificationsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26604EDC6AE00A80003 /* AKNotificationsSubtopic.h */; };
 		65B1096D09D7B6C300A8A637 /* AKSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */; };
 		65B1096E09D7B6C300A8A637 /* AKClassTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1704EDCF3B00A80003 /* AKClassTopic.h */; };
@@ -143,7 +143,7 @@
 		65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25B04EDC6AE00A80003 /* AKClassMethodsSubtopic.m */; };
 		65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */; };
 		65B109EF09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26104EDC6AE00A80003 /* AKInstanceMethodsSubtopic.m */; };
-		65B109F009D7B6C300A8A637 /* AKMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26504EDC6AE00A80003 /* AKMethodsSubtopic.m */; };
+		65B109F009D7B6C300A8A637 /* AKMembersSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */; };
 		65B109F109D7B6C300A8A637 /* AKNotificationsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26704EDC6AE00A80003 /* AKNotificationsSubtopic.m */; };
 		65B109F209D7B6C300A8A637 /* AKSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */; };
 		65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1804EDCF3B00A80003 /* AKClassTopic.m */; };
@@ -460,8 +460,8 @@
 		73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDelegateMethodsSubtopic.m; sourceTree = "<group>"; };
 		73ACB26004EDC6AE00A80003 /* AKInstanceMethodsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKInstanceMethodsSubtopic.h; sourceTree = "<group>"; };
 		73ACB26104EDC6AE00A80003 /* AKInstanceMethodsSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKInstanceMethodsSubtopic.m; sourceTree = "<group>"; };
-		73ACB26404EDC6AE00A80003 /* AKMethodsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKMethodsSubtopic.h; sourceTree = "<group>"; };
-		73ACB26504EDC6AE00A80003 /* AKMethodsSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKMethodsSubtopic.m; sourceTree = "<group>"; };
+		73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKMembersSubtopic.h; sourceTree = "<group>"; };
+		73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKMembersSubtopic.m; sourceTree = "<group>"; };
 		73ACB26604EDC6AE00A80003 /* AKNotificationsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKNotificationsSubtopic.h; sourceTree = "<group>"; };
 		73ACB26704EDC6AE00A80003 /* AKNotificationsSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKNotificationsSubtopic.m; sourceTree = "<group>"; };
 		73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSubtopic.h; sourceTree = "<group>"; };
@@ -1055,8 +1055,8 @@
 			children = (
 				73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */,
 				73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */,
-				73ACB26404EDC6AE00A80003 /* AKMethodsSubtopic.h */,
-				73ACB26504EDC6AE00A80003 /* AKMethodsSubtopic.m */,
+				73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */,
+				73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */,
 				73ACB28204EDC6C900A80003 /* behavior overviews */,
 				730A36370688A42300699C6D /* real methods */,
 				730A363F0688A43800699C6D /* pseudo-methods */,
@@ -1262,7 +1262,7 @@
 				65B1096809D7B6C300A8A637 /* AKClassMethodsSubtopic.h in Headers */,
 				65B1096909D7B6C300A8A637 /* AKDelegateMethodsSubtopic.h in Headers */,
 				65B1096A09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.h in Headers */,
-				65B1096B09D7B6C300A8A637 /* AKMethodsSubtopic.h in Headers */,
+				65B1096B09D7B6C300A8A637 /* AKMembersSubtopic.h in Headers */,
 				65B1096C09D7B6C300A8A637 /* AKNotificationsSubtopic.h in Headers */,
 				65B1096D09D7B6C300A8A637 /* AKSubtopic.h in Headers */,
 				65B1096E09D7B6C300A8A637 /* AKClassTopic.h in Headers */,
@@ -1463,7 +1463,7 @@
 				65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */,
 				65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */,
 				65B109EF09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.m in Sources */,
-				65B109F009D7B6C300A8A637 /* AKMethodsSubtopic.m in Sources */,
+				65B109F009D7B6C300A8A637 /* AKMembersSubtopic.m in Sources */,
 				65B109F109D7B6C300A8A637 /* AKNotificationsSubtopic.m in Sources */,
 				65B109F209D7B6C300A8A637 /* AKSubtopic.m in Sources */,
 				65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */,
