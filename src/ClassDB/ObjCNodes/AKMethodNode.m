@@ -7,7 +7,7 @@
 
 #import "AKMethodNode.h"
 
-#import "AKBehaviorNode.h"
+#import "AKClassNode.h"
 
 @implementation AKMethodNode
 
@@ -36,6 +36,21 @@
 //-------------------------------------------------------------------------
 // Getters and setters
 //-------------------------------------------------------------------------
+
+- (BOOL)isClassMethod
+{
+    return
+        ([(AKClassNode *)[self owningBehavior]
+            classMethodWithName:[self nodeName]] != nil);
+}
+
+- (BOOL)isDelegateMethod
+{
+    return
+        [[self owningBehavior] isClassNode]
+        && ([(AKClassNode *)[self owningBehavior]
+                delegateMethodWithName:[self nodeName]] != nil);
+}
 
 - (NSArray *)argumentTypes
 {

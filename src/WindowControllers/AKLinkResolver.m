@@ -18,6 +18,11 @@
 #import "AKFileSection.h"
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
+#import "AKPropertyNode.h"
+#import "AKMethodNode.h"
+#import "AKNotificationNode.h"
+#import "AKFunctionNode.h"
+#import "AKGlobalsNode.h"
 #import "AKCocoaFramework.h"
 
 #import "AKDocLocator.h"
@@ -85,27 +90,161 @@
 // Resolving links
 //-------------------------------------------------------------------------
 
-- (AKDocLocator *)_docLocatorForGlobal:(NSString *)nameOfGlobal
+- (AKBehaviorTopic *)_topicForBehavior:(AKBehaviorNode *)behaviorNode
+{
+    return
+        [behaviorNode isClassNode]
+        ? [AKClassTopic topicWithClassNode:(AKClassNode *)behaviorNode]
+        : [AKProtocolTopic topicWithProtocolNode:(AKProtocolNode *)behaviorNode];
+}
+
+- (AKDocLocator *)_docLocatorForBehavior:(AKBehaviorNode *)behaviorNode
     inFramework:(NSString *)frameworkName
 {
-    AKGroupNode *globalsGroupNode =
-        [_database
-            globalsGroupContainingGlobal:nameOfGlobal
-            inFramework:frameworkName];
+    NSString *docName = AKClassDescriptionAlternateHTMLSectionName;
 
-    if (globalsGroupNode == nil)
+    if (![frameworkName isEqualToString:[behaviorNode owningFramework]])
     {
-        return nil;
+        docName =
+            [AKOverviewDoc
+                qualifyDocName:docName
+                withFrameworkName:frameworkName];
     }
 
     return
         [AKDocLocator
-            withTopic:[AKGlobalsTopic topicWithFrameworkName:frameworkName]
-            subtopicName:[globalsGroupNode nodeName]
-            docName:nameOfGlobal];
+            withTopic:[self _topicForBehavior:behaviorNode]
+            subtopicName:AKOverviewSubtopicName
+            docName:docName];
+}
+
+- (AKDocLocator *)_docLocatorForProperty:(AKPropertyNode *)propertyNode
+{
+    return
+        [AKDocLocator
+            withTopic:[self _topicForBehavior:[propertyNode owningBehavior]]
+            subtopicName:AKPropertiesSubtopicName
+            docName:[propertyNode nodeName]];
+}
+
+- (AKDocLocator *)_docLocatorForMethod:(AKMethodNode *)methodNode
+{
+    AKBehaviorTopic *behaviorTopic =
+        [self _topicForBehavior:[methodNode owningBehavior]];
+    NSString *methodName = [methodNode nodeName];
+
+    if ([methodNode isClassMethod])
+    {
+        DIGSLogDebug(@"AKLinkResolver -- _CLASS METHOD_ node [%@]", methodName);
+        return
+            [AKDocLocator
+                withTopic:behaviorTopic
+                subtopicName:AKClassMethodsSubtopicName
+                docName:methodName];
+    }
+    else if ([methodNode isDelegateMethod])
+    {
+        DIGSLogDebug(@"AKLinkResolver -- _DELEGATE METHOD_ node [%@]", methodName);
+        return
+            [AKDocLocator
+                withTopic:behaviorTopic
+                subtopicName:AKDelegateMethodsSubtopicName
+                docName:methodName];
+    }
+    else
+    {
+        DIGSLogDebug(@"AKLinkResolver -- _INSTANCE METHOD_ node [%@]", methodName);
+        return
+            [AKDocLocator
+                withTopic:behaviorTopic
+                subtopicName:AKInstanceMethodsSubtopicName
+                docName:methodName];
+    }
+}
+
+- (AKDocLocator *)_docLocatorForNotification:(AKNotificationNode *)notificationNode
+{
+    DIGSLogDebug(@"AKLinkResolver -- _NOTIFICATION_ node [%@]", [notificationNode nodeName]);
+    return
+        [AKDocLocator
+            withTopic:[self _topicForBehavior:[notificationNode owningBehavior]]
+            subtopicName:AKNotificationsSubtopicName
+            docName:[notificationNode nodeName]];
+}
+
+- (AKDocLocator *)_docLocatorForFunction:(AKFunctionNode *)functionNode
+{
+    DIGSLogDebug(@"AKLinkResolver -- _FUNCTION_ node [%@]", [functionNode nodeName]);
+    return nil;
+}
+
+- (AKDocLocator *)_docLocatorForGlobalsNode:(AKGlobalsNode *)globalsNode
+{
+    DIGSLogDebug(@"AKLinkResolver -- _GLOBALS_ node [%@]", [globalsNode nodeName]);
+    return nil;
 }
 
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
+{
+    NSURL *normalizedLinkURL = [[linkURL absoluteURL] standardizedURL];
+    NSString *filePath = [normalizedLinkURL path];
+
+    NSString *frameworkName = [_database frameworkForHTMLFile:filePath];
+
+DIGSLogDebug(@"AKLinkResolver -- path = [%@], framework = [%@], anchor = [%@]",  // [agl] REMOVE
+    filePath, frameworkName, [normalizedLinkURL fragment]);
+
+    if (frameworkName == nil)
+    {
+        DIGSLogDebug(@"AKLinkResolver -- couldn't determine framework for file [%@]", filePath);
+        return nil;
+    }
+
+    NSString *linkAnchor = [normalizedLinkURL fragment];
+    NSString *nodeName = [[linkAnchor pathComponents] lastObject];
+    id node = [_database nodeForTokenName:nodeName inHTMLFile:filePath];
+
+    if (node == nil)
+    {
+        DIGSLogDebug(@"AKLinkResolver -- couldn't find node [%@] in file [%@]",
+            nodeName, filePath);
+        return nil;
+    }
+
+    if ([node isKindOfClass:[AKClassNode class]]
+        || [node isKindOfClass:[AKProtocolNode class]])
+    {
+        return [self _docLocatorForBehavior:node inFramework:frameworkName];
+    }
+    else if ([node isKindOfClass:[AKPropertyNode class]])
+    {
+        return [self _docLocatorForProperty:node];
+    }
+    else if ([node isKindOfClass:[AKMethodNode class]])
+    {
+        return [self _docLocatorForMethod:node];
+    }
+    else if ([node isKindOfClass:[AKNotificationNode class]])
+    {
+        return [self _docLocatorForNotification:node];
+    }
+    else if ([node isKindOfClass:[AKFunctionNode class]])
+    {
+        return [self _docLocatorForFunction:node];
+    }
+    else if ([node isKindOfClass:[AKGlobalsNode class]])
+    {
+        return [self _docLocatorForGlobalsNode:node];
+    }
+
+    return nil;
+//    return [self xxxdocLocatorForURL:linkURL];  // [agl] REMOVE
+
+}
+
+
+
+- (AKDocLocator *)xxxdocLocatorForURL:(NSURL *)linkURL  // [agl] REMOVE
 {
     NSURL *normalizedLinkURL = [[linkURL absoluteURL] standardizedURL];
     NSString *filePath = [normalizedLinkURL path];

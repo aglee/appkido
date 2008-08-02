@@ -6,9 +6,9 @@
 //  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
-#import "AKPseudoMethodsSubtopic.h"
+#import "AKRealMethodsSubtopic.h"
 
-@interface AKPropertiesSubtopic : AKPseudoMethodsSubtopic
+@interface AKPropertiesSubtopic : AKRealMethodsSubtopic
 {
 }
 

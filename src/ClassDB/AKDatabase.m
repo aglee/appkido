@@ -9,18 +9,12 @@
 
 #import "DIGSLog.h"
 
-#import "AKFrameworkConstants.h"
-#import "AKPrefConstants.h"
-#import "AKPrefUtils.h"
-#import "AKSortUtils.h"
-
-#import "AKFileSection.h"
-#import "AKFramework.h"
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
-#import "AKFunctionNode.h"
-#import "AKGlobalsNode.h"
 #import "AKGroupNode.h"
+
+#import "AKDatabaseWithDocSet.h"  // [agl] REMOVE
+#import "AKDocSetIndex.h"  // [agl] REMOVE
 
 
 @interface AKDatabase (Private)
@@ -35,13 +29,50 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKDatabase *)defaultDatabase
++ (AKDatabase *)defaultDatabase  // [agl] REMOVE get rid of the global database; use individual instances
 {
     static AKDatabase *s_defaultDatabase = nil;
 
     if (!s_defaultDatabase)
     {
-        s_defaultDatabase = [[self alloc] init];
+//        s_defaultDatabase = [[self alloc] init];
+NSString *devToolsPath = @"/Developer";
+NSString *docSetPath;
+NSString *basePathForHeaders;
+BOOL isForIPhone = NO;  // [agl] REMOVE
+if (isForIPhone)
+{
+        docSetPath =
+            [devToolsPath
+                stringByAppendingPathComponent:
+                    @"Platforms/iPhoneOS.platform/"
+                    "Developer/Documentation/DocSets/"
+                    "com.apple.adc.documentation.AppleiPhone2_0.iPhoneLibrary.docset"];
+        basePathForHeaders =
+            [devToolsPath
+                stringByAppendingPathComponent:
+                    @"Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator2.0.sdk"];
+}
+else
+{
+        docSetPath =
+            [devToolsPath
+                stringByAppendingPathComponent:
+                    @"Documentation/DocSets/"
+                    "com.apple.ADC_Reference_Library.CoreReference.docset"];
+        basePathForHeaders = @"/";
+}
+
+        AKDocSetIndex *docSetIndex =
+            [[[AKDocSetIndex alloc]
+                initWithDocSetPath:docSetPath
+                basePathForHeaders:basePathForHeaders] autorelease];
+
+        s_defaultDatabase =
+            [[AKDatabaseWithDocSet alloc]
+                initWithDocSetIndex:docSetIndex];
+
+
     }
 
     return s_defaultDatabase;
@@ -69,17 +100,14 @@
         _globalsGroupListsByFramework = [[NSMutableDictionary alloc] init];
         _globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
-        _frameworkNamesByHTMLFilePath =
-            [[NSMutableDictionary alloc] init];
-        _classNodesByHTMLFilePath =
-            [[NSMutableDictionary alloc] init];
-        _protocolNodesByHTMLFilePath =
-            [[NSMutableDictionary alloc] init];
-
-        _rootSectionsByHTMLFilePath = [[NSMutableDictionary alloc] init];
-
+        _classNodesByHTMLPath = [[NSMutableDictionary alloc] init];
+        _protocolNodesByHTMLPath = [[NSMutableDictionary alloc] init];
+        _rootSectionsByHTMLPath = [[NSMutableDictionary alloc] init];
         _offsetsOfAnchorStringsInHTMLFiles =
             [[NSMutableDictionary alloc] initWithCapacity:30000];
+
+        _nodesByHTMLPathAndTokenName = [[NSMutableDictionary alloc] init];
+        _frameworkNamesByHTMLPath = [[NSMutableDictionary alloc] init];
     }
 
     return self;
@@ -101,15 +129,45 @@
     [_globalsGroupListsByFramework release];
     [_globalsGroupsByFrameworkAndGroup release];
 
-    [_frameworkNamesByHTMLFilePath release];
-    [_classNodesByHTMLFilePath release];
-    [_protocolNodesByHTMLFilePath release];
-
-    [_rootSectionsByHTMLFilePath release];
-
+    [_classNodesByHTMLPath release];
+    [_protocolNodesByHTMLPath release];
+    [_rootSectionsByHTMLPath release];
     [_offsetsOfAnchorStringsInHTMLFiles release];
 
+    [_nodesByHTMLPathAndTokenName release];
+    [_frameworkNamesByHTMLPath release];
+
     [super dealloc];
+}
+
+//-------------------------------------------------------------------------
+// Populating
+//-------------------------------------------------------------------------
+
+- (void)loadTokensForFrameworks:(NSArray *)frameworkNames
+{
+    NSEnumerator *fwNameEnum = [frameworkNames objectEnumerator];
+    NSString *fwName;
+
+    while ((fwName = [fwNameEnum nextObject]))
+    {
+        if ([_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
+        {
+            [_delegate database:self willLoadTokensForFramework:fwName];
+        }
+
+        [self loadTokensForFrameworkNamed:fwName];
+    }
+}
+
+- (void)loadTokensForFrameworkNamed:(NSString *)fwName
+{
+    DIGSLogMissingOverride();
+}
+
+- (void)setDelegate:(id)delegate
+{
+    _delegate = delegate;  // note this is NOT retained
 }
 
 //-------------------------------------------------------------------------
@@ -442,54 +500,47 @@
     return nil;
 }
 
-
-
 //-------------------------------------------------------------------------
-// Getters and setters -- hyperlink support
+// Getters and setters -- DEPRECATED hyperlink support
 //-------------------------------------------------------------------------
-
-- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath
-{
-    return [_frameworkNamesByHTMLFilePath objectForKey:htmlFilePath];
-}
 
 - (void)rememberFramework:(NSString *)frameworkName
     forHTMLFile:(NSString *)htmlFilePath
 {
-    [_frameworkNamesByHTMLFilePath setObject:frameworkName forKey:htmlFilePath];
+    [_frameworkNamesByHTMLPath setObject:frameworkName forKey:htmlFilePath];
 }
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    return [_classNodesByHTMLFilePath objectForKey:htmlFilePath];
+    return [_classNodesByHTMLPath objectForKey:htmlFilePath];
 }
 
 - (void)rememberThatClass:(AKClassNode *)classNode
     isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    [_classNodesByHTMLFilePath setObject:classNode forKey:htmlFilePath];
+    [_classNodesByHTMLPath setObject:classNode forKey:htmlFilePath];
 }
 
 - (AKProtocolNode *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    return [_protocolNodesByHTMLFilePath objectForKey:htmlFilePath];
+    return [_protocolNodesByHTMLPath objectForKey:htmlFilePath];
 }
 
 - (void)rememberThatProtocol:(AKProtocolNode *)protocolNode
     isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    [_protocolNodesByHTMLFilePath setObject:protocolNode forKey:htmlFilePath];
+    [_protocolNodesByHTMLPath setObject:protocolNode forKey:htmlFilePath];
 }
 
 - (AKFileSection *)rootSectionForHTMLFile:(NSString *)filePath
 {
-    return [_rootSectionsByHTMLFilePath objectForKey:filePath];
+    return [_rootSectionsByHTMLPath objectForKey:filePath];
 }
 
 - (void)rememberRootSection:(AKFileSection *)rootSection
     forHTMLFile:(NSString *)filePath
 {
-    [_rootSectionsByHTMLFilePath setObject:rootSection forKey:filePath];
+    [_rootSectionsByHTMLPath setObject:rootSection forKey:filePath];
 }
 
 - (int)offsetOfAnchorString:(NSString *)anchorString
@@ -536,6 +587,40 @@
         forKey:filePath];
 }
 
+//-------------------------------------------------------------------------
+// Getters and setters -- FUTURE hyperlink support
+//-------------------------------------------------------------------------
+
+- (AKDatabaseNode *)nodeForTokenName:(NSString *)tokenName
+    inHTMLFile:(NSString *)htmlFilePath
+{
+    NSMutableArray *nodeList =
+        [_nodesByHTMLPathAndTokenName objectForKey:htmlFilePath];
+
+    if (nodeList == nil)
+    {
+        return nil;
+    }
+
+    NSEnumerator *nodeEnum = [nodeList objectEnumerator];
+    AKDatabaseNode *node;
+    while ((node = [nodeEnum nextObject]))
+    {
+        if ([[node nodeName] isEqualToString:tokenName])
+        {
+            return node;
+        }
+    }
+
+    // If we got this far, we couldn't find the node.
+    return nil;
+}
+
+- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath
+{
+    return [_frameworkNamesByHTMLPath objectForKey:htmlFilePath];
+}
+
 @end
 
 
@@ -555,4 +640,5 @@
 }
 
 @end
+
 

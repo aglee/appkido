@@ -213,6 +213,10 @@
 		65B10A4209D7B6C300A8A637 /* AKMultiRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */; };
 		65B10A4409D7B6C300A8A637 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		65B10A4509D7B6C300A8A637 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734168FA0841F59C0027E6BD /* WebKit.framework */; };
+		731D74310E42B83300C54AD5 /* AKOldDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 731D742F0E42B83300C54AD5 /* AKOldDatabase.h */; };
+		731D74320E42B83300C54AD5 /* AKOldDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 731D74300E42B83300C54AD5 /* AKOldDatabase.m */; };
+		731D74370E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 731D74350E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h */; };
+		731D74380E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 731D74360E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m */; };
 		734879D30E3AB45000A3B12F /* AKPropertiesSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 734879D10E3AB45000A3B12F /* AKPropertiesSubtopic.h */; };
 		734879D40E3AB45000A3B12F /* AKPropertiesSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */; };
 		734879FC0E3AB59800A3B12F /* AKPropertyDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 734879FA0E3AB59800A3B12F /* AKPropertyDoc.h */; };
@@ -229,6 +233,8 @@
 		738A570F0DD6087E00E8BB99 /* AKDatabaseExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 738A570D0DD6087E00E8BB99 /* AKDatabaseExporter.h */; };
 		7395580F0D29CA83008105BD /* AKDatabaseXMLExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */; };
 		739558100D29CA83008105BD /* AKDatabaseXMLExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */; };
+		739CD25E0E44435300CFA042 /* AKCocoaFramework22.m in Sources */ = {isa = PBXBuildFile; fileRef = 739CD25C0E44435300CFA042 /* AKCocoaFramework22.m */; };
+		739CD25F0E44435300CFA042 /* AKCocoaFramework22.h in Headers */ = {isa = PBXBuildFile; fileRef = 739CD25D0E44435300CFA042 /* AKCocoaFramework22.h */; };
 		73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */; };
 		73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */; };
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
@@ -254,8 +260,6 @@
 		73D23AD10D4C45B500EF7503 /* DIGSPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23ACF0D4C45B500EF7503 /* DIGSPrefUtils.m */; };
 		73D23C0F0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */; };
 		73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */; };
-		73D23C2C0D4CC7C500EF7503 /* AKCocoaFramework22.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C260D4CC7C500EF7503 /* AKCocoaFramework22.m */; };
-		73D23C2D0D4CC7C500EF7503 /* AKCocoaFramework22.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C270D4CC7C500EF7503 /* AKCocoaFramework22.h */; };
 		73D23C2E0D4CC7C500EF7503 /* AKCocoaFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C280D4CC7C500EF7503 /* AKCocoaFramework.m */; };
 		73D23C2F0D4CC7C500EF7503 /* AKCocoaFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C290D4CC7C500EF7503 /* AKCocoaFramework.h */; };
 		73D23C4F0D4CCA1300EF7503 /* AKFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C490D4CCA1300EF7503 /* AKFramework.h */; };
@@ -353,6 +357,10 @@
 		73197A850606E025002E4E83 /* AKHeaderFileDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderFileDoc.m; sourceTree = "<group>"; };
 		73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKInheritanceDoc.h; sourceTree = "<group>"; };
 		73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKInheritanceDoc.m; sourceTree = "<group>"; };
+		731D742F0E42B83300C54AD5 /* AKOldDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKOldDatabase.h; sourceTree = "<group>"; };
+		731D74300E42B83300C54AD5 /* AKOldDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKOldDatabase.m; sourceTree = "<group>"; };
+		731D74350E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDatabaseWithDocSet.h; sourceTree = "<group>"; };
+		731D74360E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseWithDocSet.m; sourceTree = "<group>"; };
 		7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewUtils.h; sourceTree = "<group>"; };
 		7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewUtils.m; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };
@@ -444,6 +452,8 @@
 		738A570D0DD6087E00E8BB99 /* AKDatabaseExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDatabaseExporter.h; sourceTree = "<group>"; };
 		7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDatabaseXMLExporter.h; sourceTree = "<group>"; };
 		7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseXMLExporter.m; sourceTree = "<group>"; };
+		739CD25C0E44435300CFA042 /* AKCocoaFramework22.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKCocoaFramework22.m; path = ClassDB/CocoaFrameworksOldStyle/AKCocoaFramework22.m; sourceTree = "<group>"; };
+		739CD25D0E44435300CFA042 /* AKCocoaFramework22.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKCocoaFramework22.h; path = ClassDB/CocoaFrameworksOldStyle/AKCocoaFramework22.h; sourceTree = "<group>"; };
 		739D82000682A1FE00C03E01 /* AKDocView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKDocView.h; path = CustomViews/AKDocView.h; sourceTree = "<group>"; };
 		739D82010682A1FE00C03E01 /* AKDocView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKDocView.m; path = CustomViews/AKDocView.m; sourceTree = "<group>"; };
 		73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefConstants.h; sourceTree = "<group>"; };
@@ -488,8 +498,8 @@
 		73B9158806133DBF00066E17 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = English; path = English.lproj/Credits.html; sourceTree = "<group>"; };
 		73BACC00068573870016B38E /* AKParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKParser.h; sourceTree = "<group>"; };
 		73BACC01068573870016B38E /* AKParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKParser.m; sourceTree = "<group>"; };
-		73C237170D550CE600DFA6A5 /* AKFrameworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFrameworkInfo.h; path = ClassDB/AKFrameworkInfo.h; sourceTree = "<group>"; };
-		73C237180D550CE700DFA6A5 /* AKFrameworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFrameworkInfo.m; path = ClassDB/AKFrameworkInfo.m; sourceTree = "<group>"; };
+		73C237170D550CE600DFA6A5 /* AKFrameworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkInfo.h; sourceTree = "<group>"; };
+		73C237180D550CE700DFA6A5 /* AKFrameworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkInfo.m; sourceTree = "<group>"; };
 		73C7099306979F0E00509711 /* FrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = FrameworkInfo.plist; sourceTree = "<group>"; };
 		73C74137066BFAEF00A76FEE /* AKFindPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFindPanelController.h; sourceTree = "<group>"; };
 		73C74138066BFAEF00A76FEE /* AKFindPanelController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKFindPanelController.m; sourceTree = "<group>"; };
@@ -515,16 +525,14 @@
 		73D23ACF0D4C45B500EF7503 /* DIGSPrefUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIGSPrefUtils.m; sourceTree = "<group>"; };
 		73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKCocoaGlobalsDocParser.h; path = ClassDB/ParsingHTML/AKCocoaGlobalsDocParser.h; sourceTree = "<group>"; };
 		73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKCocoaGlobalsDocParser.m; path = ClassDB/ParsingHTML/AKCocoaGlobalsDocParser.m; sourceTree = "<group>"; };
-		73D23C260D4CC7C500EF7503 /* AKCocoaFramework22.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKCocoaFramework22.m; path = ClassDB/CocoaFrameworksOldStyle/AKCocoaFramework22.m; sourceTree = "<group>"; };
-		73D23C270D4CC7C500EF7503 /* AKCocoaFramework22.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKCocoaFramework22.h; path = ClassDB/CocoaFrameworksOldStyle/AKCocoaFramework22.h; sourceTree = "<group>"; };
 		73D23C280D4CC7C500EF7503 /* AKCocoaFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKCocoaFramework.m; path = ClassDB/CocoaFrameworksOldStyle/AKCocoaFramework.m; sourceTree = "<group>"; };
 		73D23C290D4CC7C500EF7503 /* AKCocoaFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKCocoaFramework.h; path = ClassDB/CocoaFrameworksOldStyle/AKCocoaFramework.h; sourceTree = "<group>"; };
 		73D23C490D4CCA1300EF7503 /* AKFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFramework.h; path = GenericFrameworks/AKFramework.h; sourceTree = "<group>"; };
 		73D23C4A0D4CCA1300EF7503 /* AKFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFramework.m; path = GenericFrameworks/AKFramework.m; sourceTree = "<group>"; };
 		73D23C770D4CCD4F00EF7503 /* AKDocSetBasedFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKDocSetBasedFramework.m; path = ClassDB/CocoaFrameworks/AKDocSetBasedFramework.m; sourceTree = "<group>"; };
 		73D23C780D4CCD4F00EF7503 /* AKDocSetBasedFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDocSetBasedFramework.h; path = ClassDB/CocoaFrameworks/AKDocSetBasedFramework.h; sourceTree = "<group>"; };
-		73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKDocSetIndex.m; path = ClassDB/CocoaFrameworks/AKDocSetIndex.m; sourceTree = "<group>"; };
-		73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDocSetIndex.h; path = ClassDB/CocoaFrameworks/AKDocSetIndex.h; sourceTree = "<group>"; };
+		73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKDocSetIndex.m; path = CocoaFrameworks/AKDocSetIndex.m; sourceTree = "<group>"; };
+		73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDocSetIndex.h; path = CocoaFrameworks/AKDocSetIndex.h; sourceTree = "<group>"; };
 		73D409E104A391D600A80003 /* AKPrefUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefUtils.h; sourceTree = "<group>"; };
 		73D409E204A391D600A80003 /* AKPrefUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPrefUtils.m; sourceTree = "<group>"; };
 		73D409E704A3A04F00A80003 /* AKSortUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSortUtils.h; sourceTree = "<group>"; };
@@ -685,10 +693,11 @@
 			children = (
 				73EE9E3D06856D120008CBEC /* AKDatabase.h */,
 				73EE9E3E06856D120008CBEC /* AKDatabase.m */,
-				738A570D0DD6087E00E8BB99 /* AKDatabaseExporter.h */,
-				738A570C0DD6087E00E8BB99 /* AKDatabaseExporter.m */,
-				7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */,
-				7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */,
+				735A3BFC0DBDB40200247D16 /* AKFrameworkSetup.h */,
+				735A3BFD0DBDB40200247D16 /* AKFrameworkSetup.m */,
+				739CD2600E4498AC00CFA042 /* docset-based database */,
+				739CD2610E4498EA00CFA042 /* old-style database */,
+				731D743A0E4357F000C54AD5 /* export */,
 				73C8ABB60836AF2D0000E3F7 /* database nodes */,
 			);
 			name = database;
@@ -748,6 +757,8 @@
 			children = (
 				730A36520688A49900699C6D /* AKRealMethodsSubtopic.h */,
 				730A36530688A49900699C6D /* AKRealMethodsSubtopic.m */,
+				734879D10E3AB45000A3B12F /* AKPropertiesSubtopic.h */,
+				734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */,
 				73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */,
 				73ACB25B04EDC6AE00A80003 /* AKClassMethodsSubtopic.m */,
 				73ACB26004EDC6AE00A80003 /* AKInstanceMethodsSubtopic.h */,
@@ -761,8 +772,6 @@
 			children = (
 				730A36F20688A81D00699C6D /* AKPseudoMethodsSubtopic.h */,
 				730A36F30688A81D00699C6D /* AKPseudoMethodsSubtopic.m */,
-				734879D10E3AB45000A3B12F /* AKPropertiesSubtopic.h */,
-				734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */,
 				73ACB25C04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.h */,
 				73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */,
 				73ACB26604EDC6AE00A80003 /* AKNotificationsSubtopic.h */,
@@ -815,6 +824,17 @@
 			name = docs;
 			path = Docs;
 			sourceTree = SOURCE_ROOT;
+		};
+		731D743A0E4357F000C54AD5 /* export */ = {
+			isa = PBXGroup;
+			children = (
+				738A570D0DD6087E00E8BB99 /* AKDatabaseExporter.h */,
+				738A570C0DD6087E00E8BB99 /* AKDatabaseExporter.m */,
+				7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */,
+				7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */,
+			);
+			name = export;
+			sourceTree = "<group>";
 		};
 		732BD5D405ED8FBE0055715D /* singleton controllers */ = {
 			isa = PBXGroup;
@@ -1012,8 +1032,6 @@
 		738F2A170DADA5DA00A3F0FD /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				735A3BFC0DBDB40200247D16 /* AKFrameworkSetup.h */,
-				735A3BFD0DBDB40200247D16 /* AKFrameworkSetup.m */,
 				73D23C490D4CCA1300EF7503 /* AKFramework.h */,
 				73D23C4A0D4CCA1300EF7503 /* AKFramework.m */,
 				7398E3CF0831DF700007EC91 /* old-style Cocoa frameworks */,
@@ -1026,15 +1044,35 @@
 		7398E3CF0831DF700007EC91 /* old-style Cocoa frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				73C237170D550CE600DFA6A5 /* AKFrameworkInfo.h */,
-				73C237180D550CE700DFA6A5 /* AKFrameworkInfo.m */,
 				73D23C290D4CC7C500EF7503 /* AKCocoaFramework.h */,
 				73D23C280D4CC7C500EF7503 /* AKCocoaFramework.m */,
-				73D23C270D4CC7C500EF7503 /* AKCocoaFramework22.h */,
-				73D23C260D4CC7C500EF7503 /* AKCocoaFramework22.m */,
+				739CD25D0E44435300CFA042 /* AKCocoaFramework22.h */,
+				739CD25C0E44435300CFA042 /* AKCocoaFramework22.m */,
 			);
 			name = "old-style Cocoa frameworks";
 			sourceTree = SOURCE_ROOT;
+		};
+		739CD2600E4498AC00CFA042 /* docset-based database */ = {
+			isa = PBXGroup;
+			children = (
+				73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */,
+				73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */,
+				731D74350E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h */,
+				731D74360E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m */,
+			);
+			name = "docset-based database";
+			sourceTree = "<group>";
+		};
+		739CD2610E4498EA00CFA042 /* old-style database */ = {
+			isa = PBXGroup;
+			children = (
+				73C237170D550CE600DFA6A5 /* AKFrameworkInfo.h */,
+				73C237180D550CE700DFA6A5 /* AKFrameworkInfo.m */,
+				731D742F0E42B83300C54AD5 /* AKOldDatabase.h */,
+				731D74300E42B83300C54AD5 /* AKOldDatabase.m */,
+			);
+			name = "old-style database";
+			sourceTree = "<group>";
 		};
 		73A1B612061B6A7B002C95F1 /* AppKiDo constants */ = {
 			isa = PBXGroup;
@@ -1170,8 +1208,6 @@
 		73D23BF40D4CBFF200EF7503 /* docset-based Cocoa frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */,
-				73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */,
 				73D23C780D4CCD4F00EF7503 /* AKDocSetBasedFramework.h */,
 				73D23C770D4CCD4F00EF7503 /* AKDocSetBasedFramework.m */,
 			);
@@ -1340,7 +1376,6 @@
 				73D239CC0D4ABBA000EF7503 /* AKDevToolsUtils.h in Headers */,
 				73D23AD00D4C45B500EF7503 /* DIGSPrefUtils.h in Headers */,
 				73D23C0F0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h in Headers */,
-				73D23C2D0D4CC7C500EF7503 /* AKCocoaFramework22.h in Headers */,
 				73D23C2F0D4CC7C500EF7503 /* AKCocoaFramework.h in Headers */,
 				73D23C4F0D4CCA1300EF7503 /* AKFramework.h in Headers */,
 				73D23C7A0D4CCD4F00EF7503 /* AKDocSetBasedFramework.h in Headers */,
@@ -1358,6 +1393,9 @@
 				734879D30E3AB45000A3B12F /* AKPropertiesSubtopic.h in Headers */,
 				734879FC0E3AB59800A3B12F /* AKPropertyDoc.h in Headers */,
 				73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */,
+				731D74310E42B83300C54AD5 /* AKOldDatabase.h in Headers */,
+				731D74370E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h in Headers */,
+				739CD25F0E44435300CFA042 /* AKCocoaFramework22.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1540,7 +1578,6 @@
 				73D239CD0D4ABBA000EF7503 /* AKDevToolsUtils.m in Sources */,
 				73D23AD10D4C45B500EF7503 /* DIGSPrefUtils.m in Sources */,
 				73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */,
-				73D23C2C0D4CC7C500EF7503 /* AKCocoaFramework22.m in Sources */,
 				73D23C2E0D4CC7C500EF7503 /* AKCocoaFramework.m in Sources */,
 				73D23C500D4CCA1300EF7503 /* AKFramework.m in Sources */,
 				73D23C790D4CCD4F00EF7503 /* AKDocSetBasedFramework.m in Sources */,
@@ -1558,6 +1595,9 @@
 				734879D40E3AB45000A3B12F /* AKPropertiesSubtopic.m in Sources */,
 				734879FD0E3AB59800A3B12F /* AKPropertyDoc.m in Sources */,
 				73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */,
+				731D74320E42B83300C54AD5 /* AKOldDatabase.m in Sources */,
+				731D74380E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m in Sources */,
+				739CD25E0E44435300CFA042 /* AKCocoaFramework22.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

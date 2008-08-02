@@ -9,11 +9,24 @@
 
 @class AKFileSection;
 @class AKFramework;
+@class AKDatabaseNode;
 @class AKClassNode;
 @class AKProtocolNode;
 @class AKFunctionNode;
 @class AKGlobalsNode;
 @class AKGroupNode;
+
+// [agl] TODO -- Should explain distinction between a node and a token.  A
+// node can map to multiple tokens.  For example a globals node for an enum
+// maps to all the items in the enum, and a group node contains multiple
+// subnodes.
+
+
+// [agl] TODO -- The class comment has to be rewriten.  It's up to
+// subclasses to *populate* the ivars in the abstract class via the
+// -populateDatabase method, which needs to be called after instantiating
+// the database and before trying to use it.  Also, there should be no more default
+// database.  Also, mention the delegate.
 
 /*!
  * @class       AKDatabase
@@ -49,7 +62,9 @@
  */
 @interface AKDatabase : NSObject
 {
-@private
+@protected
+    id _delegate;  // *NOT* retained
+
     // Elements are NSStrings, in the order in which the frameworks are
     // added to the database.  There are constants in AKFrameworkConstants.h
     // for the names of some frameworks that need to be treated specially.
@@ -87,22 +102,17 @@
     // (framework name) -> ((group name) -> AKGroupNode)
     NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;
 
-
-
-    // --- KLUDGED HYPERLINK SUPPORT ---
-
-    // (path to HTML file) -> (name of framework)
-    NSMutableDictionary *_frameworkNamesByHTMLFilePath;
+    // --- DEPRECATED Hyperlink support ---
 
     // (path to HTML file) -> (AKClassNode)
-    NSMutableDictionary *_classNodesByHTMLFilePath;
+    NSMutableDictionary *_classNodesByHTMLPath;
 
     // (path to HTML file) -> (AKProtocolNode)
-    NSMutableDictionary *_protocolNodesByHTMLFilePath;
+    NSMutableDictionary *_protocolNodesByHTMLPath;
 
     // (path to HTML file) -> (root AKFileSection for that file)
     // See AKDocParser for an explanation of root sections.
-    NSMutableDictionary *_rootSectionsByHTMLFilePath;
+    NSMutableDictionary *_rootSectionsByHTMLPath;
 
     // Keys are anchor strings.  Each value is a dictionary whose keys are
     // paths to HTML files and whose values are NSNumbers containing the
@@ -111,6 +121,14 @@
     // See the comment for -offsetOfAnchorString:inHTMLFile: to see what
     // is meant by "anchor strings."
     NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
+
+    // --- FUTURE Hyperlink support ---
+
+    // (path to HTML file) -> (dictionary of nodes keyed by token name)
+    NSMutableDictionary *_nodesByHTMLPathAndTokenName;
+
+    // (path to HTML file) -> (name of framework)
+    NSMutableDictionary *_frameworkNamesByHTMLPath;
 }
 
 //-------------------------------------------------------------------------
@@ -123,6 +141,21 @@
  *              it's perfectly okay to create other instances.
  */
 + (AKDatabase *)defaultDatabase;
+
+//-------------------------------------------------------------------------
+// Populating
+//-------------------------------------------------------------------------
+
+/*! Do not override.  Calls -loadTokensForFrameworkNamed:. */
+- (void)loadTokensForFrameworks:(NSArray *)frameworkNames;
+
+/*!
+ * Must override.  Called by -loadTokensForFrameworks:. Do not call directly.
+ */
+- (void)loadTokensForFrameworkNamed:(NSString *)fwName;
+
+/*! Is notified when a framework is about to be loaded. */
+- (void)setDelegate:(id)delegate;
 
 //-------------------------------------------------------------------------
 // Getters and setters -- frameworks
@@ -218,12 +251,10 @@
 - (AKGroupNode *)globalsGroupContainingGlobal:nameOfGlobal
     inFramework:(NSString *)fwName;
 
-
 //-------------------------------------------------------------------------
-// Getters and setters -- hyperlink support
+// Getters and setters -- DEPRECATED hyperlink support
 //-------------------------------------------------------------------------
 
-- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberFramework:(NSString *)frameworkName
     forHTMLFile:(NSString *)htmlFilePath;
 
@@ -257,4 +288,21 @@
     ofAnchorString:(NSString *)anchorString
     inHTMLFile:(NSString *)filePath;
 
+//-------------------------------------------------------------------------
+// Getters and setters -- FUTURE hyperlink support
+//-------------------------------------------------------------------------
+
+- (AKDatabaseNode *)nodeForTokenName:(NSString *)tokenName
+    inHTMLFile:(NSString *)htmlFilePath;
+
+- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
+
 @end
+
+
+
+@interface NSObject (AKDatabaseDelegate)
+- (void)database:(AKDatabase *)database
+    willLoadTokensForFramework:(NSString *)frameworkName;
+@end
+
