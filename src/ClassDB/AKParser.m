@@ -14,6 +14,28 @@
 @implementation AKParser
 
 //-------------------------------------------------------------------------
+// Class methods
+//-------------------------------------------------------------------------
+
++ (void)recursivelyParseDirectory:(NSString *)dirPath
+    forFramework:(NSString *)frameworkName
+    inDatabase:(AKDatabase *)database
+{
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dirPath])
+    {
+        return;
+    }
+
+    AKParser *parser =
+        [[self alloc]  // no autorelease
+            initWithDatabase:database frameworkName:frameworkName];
+
+    [parser processDirectory:dirPath recursively:YES];
+
+    [parser release];  // release here
+}
+
+//-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
