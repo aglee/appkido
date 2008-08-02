@@ -183,14 +183,14 @@ else
 - (void)_getFrameworkInfoFromPlist
 {
     NSArray *namesOfPossibleFrameworks =
-        [AKFrameworkInfo allPossibleFrameworkNames];
+        [[AKFrameworkInfo sharedInstance] allPossibleFrameworkNames];
 
     NSEnumerator *fwNameEnum = [namesOfPossibleFrameworks objectEnumerator];
     NSString *fwName;
 
     while ((fwName = [fwNameEnum nextObject]))
     {
-        if ([AKFrameworkInfo frameworkDirsExist:fwName])
+        if ([[AKFrameworkInfo sharedInstance] frameworkDirsExist:fwName])
         {
             AKFramework *fw =
                 [[[AKCocoaFramework alloc] initWithName:fwName] autorelease];

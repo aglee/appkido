@@ -1,0 +1,110 @@
+/*
+ * AKOldDatabase.m
+ *
+ * Created by Andy Lee on Thu Jun 27 2002.
+ * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
+ */
+
+#import "AKOldDatabase.h"
+
+#import "DIGSLog.h"
+
+#import "AKFrameworkInfo.h"
+#import "AKFileUtils.h"
+
+#import "AKObjCHeaderParser.h"
+#import "AKCocoaBehaviorDocParser.h"
+#import "AKCocoaFunctionsDocParser.h"
+#import "AKCocoaGlobalsDocParser.h"
+
+
+@implementation AKOldDatabase
+
+//-------------------------------------------------------------------------
+// AKDatabase methods
+//-------------------------------------------------------------------------
+
+- (void)loadTokensForFrameworkNamed:(NSString *)fwName
+{
+    // Parse header files before HTML files, so that later when we parse a
+    // "Deprecated Methods" HTML file we can distinguish between instance
+    // methods, class methods, and delegate methods by querying the database.
+    // We also use header info to distinguish formal protocols from informal
+    // ones -- informal ones do not have an associated header.
+    // ([agl] Is this a reliable test for informal protocols?)
+    NSString *_headerDir = [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:fwName];
+    DIGSLogDebug(@"parsing headers in %@", _headerDir);
+    [AKObjCHeaderParser
+        recursivelyParseDirectory:_headerDir
+        forFramework:fwName
+        inDatabase:self];
+    
+    // Figure out which directories contain the doc files.
+    NSString *_mainDocDir = [[AKFrameworkInfo sharedInstance] docDirForFrameworkNamed:fwName];
+    NSString *behaviorsDocDir = _mainDocDir;
+    NSString *functionsDocDir = nil;
+    NSString *constantsDocDir = nil;
+    NSString *datatypesDocDir = nil;
+
+    if ([[[AKFrameworkInfo sharedInstance] frameworkClassForFrameworkNamed:fwName]
+            isEqualToString:@"AKCocoaFramework22"])
+    {
+        functionsDocDir =
+            [AKFileUtils
+                subdirectoryOf:_mainDocDir
+                withName:@"Functions"
+                orName:@"functions"];
+        constantsDocDir = nil;
+        datatypesDocDir =
+            [AKFileUtils
+                subdirectoryOf:_mainDocDir
+                withName:@"TypesAndConstants"
+                orName:@"typesandconstants"];
+    }
+    else
+    {
+        NSString *miscPath =
+            [_mainDocDir stringByAppendingPathComponent:@"Miscellaneous"];
+
+        functionsDocDir =
+            [AKFileUtils
+                subdirectoryOf:miscPath
+                withNameEndingWith:@"Functions"];
+        constantsDocDir =
+            [AKFileUtils
+                subdirectoryOf:miscPath
+                withNameEndingWith:@"Constants"];
+        datatypesDocDir =
+            [AKFileUtils
+                subdirectoryOf:miscPath
+                withNameEndingWith:@"Datatypes"];
+    }
+
+    // Parse the doc files in the directories we figured out.
+    DIGSLogDebug(@"parsing behavior docs for %@", fwName);
+    [AKCocoaBehaviorDocParser
+        recursivelyParseDirectory:behaviorsDocDir
+        forFramework:fwName
+        inDatabase:self];
+
+    DIGSLogDebug(@"parsing functions docs for %@", fwName);
+    [AKCocoaFunctionsDocParser
+        recursivelyParseDirectory:functionsDocDir
+        forFramework:fwName
+        inDatabase:self];
+
+    DIGSLogDebug(@"parsing constants docs for %@", fwName);
+    [AKCocoaGlobalsDocParser
+        recursivelyParseDirectory:constantsDocDir
+        forFramework:fwName
+        inDatabase:self];
+
+    DIGSLogDebug(@"parsing datatypes docs for %@", fwName);
+    [AKCocoaGlobalsDocParser
+        recursivelyParseDirectory:datatypesDocDir
+        forFramework:fwName
+        inDatabase:self];
+}
+
+@end
+

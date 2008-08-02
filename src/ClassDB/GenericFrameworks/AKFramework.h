@@ -12,6 +12,8 @@
 @class AKDatabase;
 @class AKGroupNode;
 
+// [agl] TODO -- Class comment needs to be updated to reflect docset support.
+
 /*!
  * @class       AKFramework
  * @abstract    Contains information about a framework.

@@ -225,6 +225,11 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #endif MEASURE_PARSE_SPEED
 
     AKDatabase *db = [AKDatabase defaultDatabase];
+
+    [db setDelegate:self];
+    [db loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
+
+/* [agl] REMOVE -- replacing this
     NSEnumerator *en = [[AKPrefUtils selectedFrameworkNamesPref] objectEnumerator];
     NSString *fwName;
     while ((fwName = [en nextObject]))
@@ -239,6 +244,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [fw populateDatabase:db];
         }
     }
+*/
 
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
@@ -700,6 +706,17 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [AKPrefUtils
         setArrayValue:[self _allWindowsAsPrefArray]
         forPref:AKSavedWindowStatesPrefName];
+}
+
+//-------------------------------------------------------------------------
+// AKDatabase delegate methods
+//-------------------------------------------------------------------------
+
+- (void)database:(AKDatabase *)database
+    willLoadTokensForFramework:(NSString *)frameworkName
+{
+    [_splashMessage2Field setStringValue:frameworkName];
+    [_splashMessage2Field display];
 }
 
 @end

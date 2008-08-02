@@ -17,10 +17,9 @@
 
 @interface AKFrameworkInfo (Private)
 
-+ (void)_loadFrameworkInfoPlist;
-+ (NSString *)_findExistingDirInArray:(NSArray *)dirNames;
-+ (void)_checkNodeClass:(NSString *)fwClassName for:(NSString *)fwName;
-+ (void)_extractFrameworkInfo:(NSDictionary *)fwInfo;
+- (NSString *)_findExistingDirInArray:(NSArray *)dirNames;
+- (void)_checkNodeClass:(NSString *)fwClassName for:(NSString *)fwName;
+- (void)_extractFrameworkInfo:(NSDictionary *)fwInfo;
 
 @end
 
@@ -28,93 +27,110 @@
 @implementation AKFrameworkInfo
 
 //-------------------------------------------------------------------------
-// Static variables
+// Factory methods
 //-------------------------------------------------------------------------
 
-// The following have their values assigned by +initFrameworkInfo.  If
-// there is a docset index, only s_allPossibleFrameworkNames is actually
-// used, and the others remain nil.
-static NSMutableArray *s_allPossibleFrameworkNames = nil;
-static NSMutableDictionary *s_frameworkClassNamesByFrameworkName = nil;
-static NSMutableDictionary *s_frameworkPathsByFrameworkName = nil;
-static NSMutableDictionary *s_docDirsByFrameworkName = nil;
-
-//-------------------------------------------------------------------------
-// Initialization
-//-------------------------------------------------------------------------
-
-/*!
- * Loads the FrameworkInfo.plist, which contains info about frameworks
- * whose documentation we support.
- */
-+ (void)initFrameworkInfo
++ (AKFrameworkInfo *)sharedInstance
 {
-    s_allPossibleFrameworkNames = [[NSMutableArray array] retain];
-    s_frameworkClassNamesByFrameworkName = [[NSMutableDictionary dictionary] retain];
-    s_frameworkPathsByFrameworkName = [[NSMutableDictionary dictionary] retain];
-    s_docDirsByFrameworkName = [[NSMutableDictionary dictionary] retain];
+    AKFrameworkInfo *s_sharedInstance = nil;
 
-    // Load FrameworkInfo.plist into a dictionary.
-    NSString *frameworkInfoFile =
-        [[NSBundle mainBundle] pathForResource:@"FrameworkInfo" ofType:@"plist"];
-    NSDictionary *plistContents =
-        [NSDictionary dictionaryWithContentsOfFile:frameworkInfoFile];
-    if (plistContents == nil)
+    if (s_sharedInstance == nil)
     {
-        DIGSLogError(@"missing or malformed plist: %@", frameworkInfoFile);
-        return;
+        s_sharedInstance = [[AKFrameworkInfo alloc] init];
     }
 
-    // Iterate through the framework info dictionaries, one for each framework.
-    //
-    // PLIST["Frameworks"] is an array of:
-    //   dictionary with associations:
-    //     "FrameworkName" -> (string) framework name
-    //     "FrameworkPath" -> (string) /path/to/XXX.framework
-    //     "FrameworkClass" -> (string) optional name of framework class
-    //     "PossibleDocDirs" -> (array) doc dir names
-    //
-    // If FrameworkClass is present, it must be the name of a descendant class
-    // of AKCocoaFramework (inclusive).  Otherwise, AKCocoaFramework is used.
-    NSArray *allFrameworkInfo = [plistContents objectForKey:@"FrameworksOldStyle"];
-    if (allFrameworkInfo == nil)
-    {
-        DIGSLogError(@"FrameworkInfo.plist dictionary is missing \"Frameworks\" key");
-        return;
-    }
+    return s_sharedInstance;
+}
 
-    NSEnumerator *fwEnum = [allFrameworkInfo objectEnumerator];
-    NSDictionary *fwInfo;
-    while ((fwInfo = [fwEnum nextObject]))
+//-------------------------------------------------------------------------
+// Init/awake/dealloc
+//-------------------------------------------------------------------------
+
+- (id)init
+{
+    if ((self = [super init]))
     {
-        if (![fwInfo isKindOfClass:[NSDictionary class]])
+        _allPossibleFrameworkNames = [[NSMutableArray array] retain];
+        _frameworkClassNamesByFrameworkName = [[NSMutableDictionary dictionary] retain];
+        _frameworkPathsByFrameworkName = [[NSMutableDictionary dictionary] retain];
+        _docDirsByFrameworkName = [[NSMutableDictionary dictionary] retain];
+
+        // Load FrameworkInfo.plist into a dictionary.
+        NSString *frameworkInfoFile =
+            [[NSBundle mainBundle] pathForResource:@"FrameworkInfo" ofType:@"plist"];
+        NSDictionary *plistContents =
+            [NSDictionary dictionaryWithContentsOfFile:frameworkInfoFile];
+        if (plistContents == nil)
         {
-            DIGSLogWarning(@"fwInfo is not a dictionary: %@", fwInfo);
+            DIGSLogError(@"missing or malformed plist: %@", frameworkInfoFile);
+            [self release];
+            return nil;
         }
-        else
+
+        // Iterate through the framework info dictionaries, one for each framework.
+        //
+        // PLIST["Frameworks"] is an array of:
+        //   dictionary with associations:
+        //     "FrameworkName" -> (string) framework name
+        //     "FrameworkPath" -> (string) /path/to/XXX.framework
+        //     "FrameworkClass" -> (string) optional name of framework class
+        //     "PossibleDocDirs" -> (array) doc dir names
+        //
+        // If FrameworkClass is present, it must be the name of a descendant class
+        // of AKCocoaFramework (inclusive).  Otherwise, AKCocoaFramework is used.
+        NSArray *allFrameworkInfo = [plistContents objectForKey:@"FrameworksOldStyle"];
+        if (allFrameworkInfo == nil)
         {
-            [self _extractFrameworkInfo:fwInfo];
+            DIGSLogError(@"FrameworkInfo.plist dictionary is missing \"Frameworks\" key");
+            [self release];
+            return nil;
+        }
+
+        NSEnumerator *fwEnum = [allFrameworkInfo objectEnumerator];
+        NSDictionary *fwInfo;
+        while ((fwInfo = [fwEnum nextObject]))
+        {
+            if (![fwInfo isKindOfClass:[NSDictionary class]])
+            {
+                DIGSLogWarning(@"fwInfo is not a dictionary: %@", fwInfo);
+            }
+            else
+            {
+                [self _extractFrameworkInfo:fwInfo];
+            }
         }
     }
+
+    return self;
+}
+
+- (void)dealloc
+{
+    [_allPossibleFrameworkNames release];
+    [_frameworkClassNamesByFrameworkName release];
+    [_frameworkPathsByFrameworkName release];
+    [_docDirsByFrameworkName release];
+
+    [super dealloc];
 }
 
 //-------------------------------------------------------------------------
 // Getters and setters
 //-------------------------------------------------------------------------
 
-+ (NSArray *)allPossibleFrameworkNames
+- (NSArray *)allPossibleFrameworkNames
 {
-    return s_allPossibleFrameworkNames;
+    return _allPossibleFrameworkNames;
 }
 
-+ (NSString *)frameworkClassForFrameworkNamed:(NSString *)fwName
+- (NSString *)frameworkClassForFrameworkNamed:(NSString *)fwName
 {
-    return [s_frameworkClassNamesByFrameworkName objectForKey:fwName];
+    return [_frameworkClassNamesByFrameworkName objectForKey:fwName];
 }
 
-+ (NSString *)headerDirForFrameworkNamed:(NSString *)fwName
+- (NSString *)headerDirForFrameworkNamed:(NSString *)fwName
 {
-    NSString *frameworkPath = [s_frameworkPathsByFrameworkName objectForKey:fwName];
+    NSString *frameworkPath = [_frameworkPathsByFrameworkName objectForKey:fwName];
 
     if (frameworkPath == nil)
         return nil;
@@ -122,12 +138,12 @@ static NSMutableDictionary *s_docDirsByFrameworkName = nil;
         return [frameworkPath stringByAppendingPathComponent:@"Headers"];
 }
 
-+ (NSString *)docDirForFrameworkNamed:(NSString *)fwName
+- (NSString *)docDirForFrameworkNamed:(NSString *)fwName
 {
-    return [s_docDirsByFrameworkName objectForKey:fwName];
+    return [_docDirsByFrameworkName objectForKey:fwName];
 }
 
-+ (BOOL)frameworkDirsExist:(NSString *)fwName
+- (BOOL)frameworkDirsExist:(NSString *)fwName
 {
     NSString *headerDir = [self headerDirForFrameworkNamed:fwName];
     NSString *docDir = [self docDirForFrameworkNamed:fwName];
@@ -144,58 +160,8 @@ static NSMutableDictionary *s_docDirsByFrameworkName = nil;
 
 @implementation AKFrameworkInfo (Private)
 
-+ (void)_loadFrameworkInfoPlist
-{
-    s_allPossibleFrameworkNames = [[NSMutableArray array] retain];
-    s_frameworkClassNamesByFrameworkName = [[NSMutableDictionary dictionary] retain];
-    s_frameworkPathsByFrameworkName = [[NSMutableDictionary dictionary] retain];
-    s_docDirsByFrameworkName = [[NSMutableDictionary dictionary] retain];
-
-    // Load FrameworkInfo.plist into a dictionary.
-    NSString *frameworkInfoFile =
-        [[NSBundle mainBundle] pathForResource:@"FrameworkInfo" ofType:@"plist"];
-    NSDictionary *plistContents =
-        [NSDictionary dictionaryWithContentsOfFile:frameworkInfoFile];
-    if (plistContents == nil)
-    {
-        DIGSLogError(@"missing or malformed plist: %@", frameworkInfoFile);
-        return;
-    }
-
-    // Iterate through the framework info dictionaries, one for each framework.
-    //
-    // PLIST["Frameworks"] is an array of:
-    //   dictionary with associations:
-    //     "FrameworkName" -> (string) framework name
-    //     "FrameworkPath" -> (string) /path/to/XXX.framework
-    //     "FrameworkClass" -> (string) optional name of framework class
-    //     "PossibleDocDirs" -> (array) doc dir names
-    //
-    // If FrameworkClass is present, it must be the name of a descendant class
-    // of AKCocoaFramework (inclusive).  Otherwise, AKCocoaFramework is used.
-    NSArray *allFrameworkInfo = [plistContents objectForKey:@"FrameworksOldStyle"];
-    if (allFrameworkInfo == nil)
-    {
-        DIGSLogError(@"FrameworkInfo.plist dictionary is missing \"Frameworks\" key");
-        return;
-    }
-
-    NSEnumerator *fwEnum = [allFrameworkInfo objectEnumerator];
-    NSDictionary *fwInfo;
-    while ((fwInfo = [fwEnum nextObject]))
-    {
-        if (![fwInfo isKindOfClass:[NSDictionary class]])
-        {
-            DIGSLogWarning(@"fwInfo is not a dictionary: %@", fwInfo);
-        }
-        else
-        {
-            [self _extractFrameworkInfo:fwInfo];
-        }
-    }
-}
-
-+ (NSString *)_findExistingDirInArray:(NSArray *)dirNames
+// [agl] TODO Should this be in AKFileUtils?
+- (NSString *)_findExistingDirInArray:(NSArray *)dirNames
 {
     NSFileManager *fm = [NSFileManager defaultManager];
     NSEnumerator *dirNameEnum = [dirNames objectEnumerator];
@@ -215,7 +181,7 @@ static NSMutableDictionary *s_docDirsByFrameworkName = nil;
     return nil;
 }
 
-+ (void)_checkNodeClass:(NSString *)fwClassName for:(NSString *)fwName
+- (void)_checkNodeClass:(NSString *)fwClassName for:(NSString *)fwName
 {
 	// If we weren't given a framework class name, use AKCocoaFramework.
     if (fwClassName == nil)
@@ -252,14 +218,14 @@ static NSMutableDictionary *s_docDirsByFrameworkName = nil;
         }
         else
         {
-            [s_frameworkClassNamesByFrameworkName
+            [_frameworkClassNamesByFrameworkName
                 setObject:fwClassName
                 forKey:fwName];
         }
     }
 }
 
-+ (void)_extractFrameworkInfo:(NSDictionary *)fwInfo
+- (void)_extractFrameworkInfo:(NSDictionary *)fwInfo
 {
     NSString *fwName = [fwInfo objectForKey:@"FrameworkName"];
     NSString *frameworkPath = [fwInfo objectForKey:@"FrameworkPath"];
@@ -303,10 +269,10 @@ static NSMutableDictionary *s_docDirsByFrameworkName = nil;
     }
 
     // Remember the framework name.
-    [s_allPossibleFrameworkNames addObject:fwName];
+    [_allPossibleFrameworkNames addObject:fwName];
 
     // Remember the framework location.
-    [s_frameworkPathsByFrameworkName setObject:frameworkPath forKey:fwName];
+    [_frameworkPathsByFrameworkName setObject:frameworkPath forKey:fwName];
 
     // Was a valid class name given?
     [self _checkNodeClass:fwClassName for:fwName];
@@ -320,7 +286,7 @@ static NSMutableDictionary *s_docDirsByFrameworkName = nil;
     }
     else
     {
-        [s_docDirsByFrameworkName setObject:docDir forKey:fwName];
+        [_docDirsByFrameworkName setObject:docDir forKey:fwName];
     }
 }
 

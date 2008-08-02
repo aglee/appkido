@@ -35,6 +35,10 @@
 // Getters and setters
 //-------------------------------------------------------------------------
 
+- (BOOL)isClassMethod;
+
+- (BOOL)isDelegateMethod;
+
 - (NSArray *)argumentTypes;
 - (void)setArgumentTypes:(NSArray *)argTypes;
 

@@ -178,11 +178,17 @@ static NSString *s_headerPathsQueryTemplate =
 
 - (NSArray *)behaviorDocPathsForFramework:(NSString *)frameworkName
 {
-    return
+//    return
+//        [self
+//            _docPathsForTokensOfType:@"instm"  // note instm, not cl, to pick up "XXX Additions Reference"
+//            orType:@"clm"
+//            orType:@"intfm"
+//            forFramework:frameworkName];
+    return  // [agl] review
         [self
-            _docPathsForTokensOfType:@"instm"  // note instm, not cl, to pick up "XXX Additions Reference"
-            orType:@"clm"
-            orType:@"intfm"
+            _docPathsForTokensOfType:@"cl"
+            orType:@"intf"
+            orType:@"instm"  // to pick up "XXX Additions Reference" [agl] should check for @"clm" too
             forFramework:frameworkName];
 }
 

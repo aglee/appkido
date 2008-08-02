@@ -28,13 +28,18 @@
  */
 @interface AKFrameworkInfo : NSObject
 {
+@private
+    NSMutableArray *_allPossibleFrameworkNames;
+    NSMutableDictionary *_frameworkClassNamesByFrameworkName;
+    NSMutableDictionary *_frameworkPathsByFrameworkName;
+    NSMutableDictionary *_docDirsByFrameworkName;
 }
 
 //-------------------------------------------------------------------------
-// Initialization
+// Factory methods
 //-------------------------------------------------------------------------
 
-+ (void)initFrameworkInfo;
++ (AKFrameworkInfo *)sharedInstance;
 
 //-------------------------------------------------------------------------
 // Getters and setters
@@ -44,16 +49,16 @@
  * Returns all framework names listed in FrameworkInfo.plist, regardless
  * of the actual availability of those frameworks.
  */
-+ (NSArray *)allPossibleFrameworkNames;
+- (NSArray *)allPossibleFrameworkNames;
 
 /*! Returns AKCocoaFramework or a descendant thereof. */
-+ (NSString *)frameworkClassForFrameworkNamed:(NSString *)fwName;
+- (NSString *)frameworkClassForFrameworkNamed:(NSString *)fwName;
 
-+ (NSString *)headerDirForFrameworkNamed:(NSString *)fwName;
+- (NSString *)headerDirForFrameworkNamed:(NSString *)fwName;
 
-+ (NSString *)docDirForFrameworkNamed:(NSString *)fwName;
+- (NSString *)docDirForFrameworkNamed:(NSString *)fwName;
 
 /*! Returns YES if both header dir and doc dir exist. */
-+ (BOOL)frameworkDirsExist:(NSString *)fwName;
+- (BOOL)frameworkDirsExist:(NSString *)fwName;
 
 @end

@@ -49,7 +49,7 @@
     // Figure out what descendant class of AKFramework we need
     // to instantiate.
     NSString *fwClassName =
-        [AKFrameworkInfo frameworkClassForFrameworkNamed:fwName];
+        [[AKFrameworkInfo sharedInstance] frameworkClassForFrameworkNamed:fwName];
     Class fwClass =
         fwClassName
         ? NSClassFromString(fwClassName)
@@ -83,8 +83,8 @@
 {
     if ((self = [super initWithName:fwName]))
     {
-        _headerDir = [[AKFrameworkInfo headerDirForFrameworkNamed:fwName] retain];
-        _mainDocDir = [[AKFrameworkInfo docDirForFrameworkNamed:fwName] retain];
+        _headerDir = [[[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:fwName] retain];
+        _mainDocDir = [[[AKFrameworkInfo sharedInstance] docDirForFrameworkNamed:fwName] retain];
     }
 
     return self;
