@@ -96,7 +96,10 @@
 // of weird -- they have no documentation -- so maybe I shouldn't be displaying
 // them at all and should go back to the logic where I parsed an array of
 // header file paths rather than header dirs.)
+    DIGSLogDebug(@"---------------------------------------------------");
     DIGSLogDebug(@"Parsing headers for framework %@", fwName);
+    DIGSLogDebug(@"---------------------------------------------------");
+
     NSSet *headerDirs = [_docSetIndex headerDirsForFramework:fwName];
     NSEnumerator *headerDirEnum = [headerDirs objectEnumerator];
     NSString *headerDir;
@@ -109,6 +112,10 @@
     }
 
     // Parse HTML files.
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing HTML docs for framework %@", fwName);
+    DIGSLogDebug(@"---------------------------------------------------");
+
     DIGSLogDebug(@"Parsing behavior docs for framework %@", fwName);
     [self
         _useParserClass:[AKCocoaBehaviorDocParser class]

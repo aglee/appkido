@@ -173,6 +173,10 @@ else
 
     while ((fwName = [fwNameEnum nextObject]))
     {
+        DIGSLogDebug(@"===================================================");
+        DIGSLogDebug(@"Loading tokens for framework %@", fwName);
+        DIGSLogDebug(@"===================================================");
+
         if ([_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
         {
             [_delegate database:self willLoadTokensForFramework:fwName];

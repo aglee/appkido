@@ -10,23 +10,25 @@
 
 #import "DIGSLog.h"
 
-#import "AKDatabase.h"
-
 #import "AKSortUtils.h"
 
-#import "AKFileSection.h"
+#import "AKDatabase.h"
+#import "AKMemberNode.h"
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
-#import "AKCategoryNode.h"
-#import "AKMethodNode.h"
 #import "AKGroupNode.h"
-#import "AKGlobalsNode.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
 //-------------------------------------------------------------------------
 
 @interface AKDatabaseXMLExporter (Private)
+
+- (void)_performSelector:(SEL)aSelector onStrings:(NSArray *)strings;
+- (void)_performSelector:(SEL)aSelector onNodes:(NSArray *)nodes;
+- (void)_performSelector:(SEL)aSelector
+    onNodes:(NSArray *)nodes
+    with:(id)arg;
 
 - (void)_openXMLElement:(NSString *)xmlElementName
     nameAttribute:(NSString *)nameAttribute
@@ -41,6 +43,18 @@
 - (void)_openXMLElement:(NSString *)xmlElementName;
 - (void)_closeXMLElement:(NSString *)xmlElementName;
 
+- (NSString *)_spreadString:(NSString *)s;
+
+- (void)_writeLine:(NSString *)s;
+- (void)_writeLine;
+
+- (void)_writeLongDividerWithString:(NSString *)aString;
+- (void)_writeDividerWithString:(NSString *)aString;
+- (void)_writeAltDividerWithString:(NSString *)aString;
+- (void)_writeDividerWithString:(NSString *)string1
+    string:(NSString *)string2;
+- (void)_writeShortDividerWithString:(NSString *)aString;
+
 @end
 
 
@@ -51,355 +65,308 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithDatabase:(AKDatabase *)database
+    fileHandle:(NSFileHandle *)outfile
 {
-    if ((self = [super initWithDatabase:database]))
+    if ((self = [super init]))
     {
-        _indent = 0;
+        _database = [database retain];
+        _outfile = [outfile retain];
     }
     
     return self;
+}
+
+- (id)init
+{
+    DIGSLogNondesignatedInitializer();
+    [self dealloc];
+    return nil;
+}
+
+- (void)dealloc
+{
+    [_database release];
+    [_outfile release];
+    
+    [super dealloc];
 }
 
 //-------------------------------------------------------------------------
 // The main export method
 //-------------------------------------------------------------------------
 
-- (void)exportToFileHandle:(NSFileHandle *)fileHandle
+- (void)doExport
 {
     _indent = 0;
 
-    [super exportToFileHandle:fileHandle];
-}
-
-//-------------------------------------------------------------------------
-// Exporting -- top level
-//-------------------------------------------------------------------------
-
-- (void)_writeFileBeginning
-{
-    // Obligatory XML intro.
     [self _writeLine:@"<?xml version=\"1.0\"?>"];
     [self _writeLine];
-
-    // Open a <database> element.
     [self _writeLine:@"<database>"];
     [self _writeLine];
-}
 
-- (void)_writeFileEnd
-{
-    // Close the <database> element.
+        [self
+            _performSelector:@selector(exportFrameworkNamed:)
+            onStrings:[_database frameworkNames]];
+
     [self _writeLine:@"</database>"];
-    
 }
 
-- (void)_exportFrameworkNamed:(NSString *)fwName
+//-------------------------------------------------------------------------
+// Exporting -- members
+//-------------------------------------------------------------------------
+
+- (void)exportMembers:(NSString *)membersType
+    ofBehavior:(AKBehaviorNode *)behaviorNode
+    usingGetSelector:(SEL)getSelector
+    xmlTag:(NSString *)memberTag
+{
+    [self _writeShortDividerWithString:membersType];
+    [self _openXMLElement:membersType];
+
+        [self
+            _performSelector:@selector(exportMember:withXMLTag:)
+            onNodes:[behaviorNode performSelector:getSelector]
+            with:memberTag];
+
+    [self _closeXMLElement:membersType];
+}
+
+- (void)exportMember:(AKMemberNode *)memberNode
+    withXMLTag:(NSString *)memberTag
 {
     [self
-         _writeLine:
-            [NSString
-                stringWithFormat:@"<!-- ========== [ %@ ] ========== -->",
-                [self _spreadString:fwName]]];
-
-    // Open a <framework> element.
-    [self _openXMLElement:@"framework" nameAttribute:fwName];
-
-    // Export components of the framework.
-    [super _exportFrameworkNamed:fwName];
-
-    // Close the <framework> element.
-    [self _closeXMLElement:@"framework"];
-
-    // Spacer line.
-    [self _writeLine:@""];
+        _openXMLElement:memberTag
+        nameAttribute:[memberNode nodeName]
+        typeAttribute:nil
+        deprecated:[memberNode isDeprecated]
+        alsoClose:YES];
 }
 
 //-------------------------------------------------------------------------
 // Exporting -- classes and protocols
 //-------------------------------------------------------------------------
 
-- (void)_exportClassesForFramework:(NSString *)fwName
+- (void)exportClass:(AKClassNode *)classNode
 {
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== %@ classes ===== -->",
-                    fwName]];
-
-    // Open a <classes> element.
-    [self _openXMLElement:@"classes"];
-
-    // Export the class nodes.
-    [super _exportClassesForFramework:fwName];
-
-    // Close the <classes> element.
-    [self _closeXMLElement:@"classes"];
-}
-
-- (void)_exportClass:(AKClassNode *)classNode
-{
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== class %@ ===== -->",
-                    [classNode nodeName]]];
-
-    // Open a <class> element.
+    [self _writeDividerWithString:@"class" string:[classNode nodeName]];
     [self _openXMLElement:@"class" nameAttribute:[classNode nodeName]];
 
-    // Export the class's methods.
-    [super _exportClass:classNode];
+        [self
+            exportMembers:@"properties"
+            ofBehavior:classNode
+            usingGetSelector:@selector(documentedProperties)
+            xmlTag:@"property"];
+        [self
+            exportMembers:@"classmethods"
+            ofBehavior:classNode
+            usingGetSelector:@selector(documentedClassMethods)
+            xmlTag:@"method"];
+        [self
+            exportMembers:@"instancemethods"
+            ofBehavior:classNode
+            usingGetSelector:@selector(documentedInstanceMethods)
+            xmlTag:@"method"];
+        [self
+            exportMembers:@"delegatemethods"
+            ofBehavior:classNode
+            usingGetSelector:@selector(documentedDelegateMethods)
+            xmlTag:@"method"];
+        [self
+            exportMembers:@"notifications"
+            ofBehavior:classNode
+            usingGetSelector:@selector(documentedNotifications)
+            xmlTag:@"notification"];
 
-    // Close the <class> element.
     [self _closeXMLElement:@"class"];
 }
 
-- (void)_exportProtocolsForFramework:(NSString *)fwName
+- (void)exportProtocol:(AKProtocolNode *)protocolNode
 {
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== %@ protocols ===== -->",
-                    fwName]];
-
-    // Open a <protocols> element.
-    [self _openXMLElement:@"protocols"];
-
-    // Export the protocols.
-    [super _exportProtocolsForFramework:fwName];
-
-    // Close the <protocols> element.
-    [self _closeXMLElement:@"protocols"];
-}
-
-- (void)_exportProtocolsForFramework:(NSString *)fwName
-    formal:(BOOL)formalFlag
-{
-    _indent--;
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== %@ %@ protocols ===== -->",
-                    fwName,
-                    formalFlag ? @"formal" : @"informal"]];
-    _indent++;
-
-    [super _exportProtocolsForFramework:fwName formal:formalFlag];
-}
-
-- (void)_exportProtocol:(AKProtocolNode *)protocolNode formal:(BOOL)formalFlag
-{
-    // Dividing line marking the beginning of a protocol.
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== protocol %@ ===== -->",
-                    [protocolNode nodeName]]];
-
-    // Open a <protocol> element.
+    [self _writeDividerWithString:@"protocol" string:[protocolNode nodeName]];
     [self _openXMLElement:@"protocol"
         nameAttribute:[protocolNode nodeName]
-        typeAttribute:(formalFlag ? @"formal" : @"informal")];
+        typeAttribute:([protocolNode isInformal] ? @"informal" : @"formal")];
 
-    // Export the protocol's methods.
-    [super _exportProtocol:protocolNode formal:formalFlag];
+        [self
+            exportMembers:@"properties"
+            ofBehavior:protocolNode
+            usingGetSelector:@selector(documentedProperties)
+            xmlTag:@"property"];
+        [self
+            exportMembers:@"classmethods"
+            ofBehavior:protocolNode
+            usingGetSelector:@selector(documentedClassMethods)
+            xmlTag:@"method"];
+        [self
+            exportMembers:@"instancemethods"
+            ofBehavior:protocolNode
+            usingGetSelector:@selector(documentedInstanceMethods)
+            xmlTag:@"method"];
 
-    // Close the <protocol> element.
     [self _closeXMLElement:@"protocol"];
 }
 
-- (void)_exportClassMethods:(NSArray *)methodNodes
-{
-    [self _writeLine:@"<!-- ## classmethods ## -->"];
-
-    // Open a <classmethods> element.
-    [self _openXMLElement:@"classmethods"];
-
-    // Export the methods.
-    [super _exportClassMethods:methodNodes];
-
-    // Close the <classmethods> element.
-    [self _closeXMLElement:@"classmethods"];
-}
-
-- (void)_exportInstanceMethods:(NSArray *)methodNodes
-{
-    [self _writeLine:@"<!-- ## instancemethods ## -->"];
-
-    // Open an <instancemethods> element.
-    [self _openXMLElement:@"instancemethods"];
-
-    // Export the methods.
-    [super _exportInstanceMethods:methodNodes];
-
-    // Close the <instancemethods> element.
-    [self _closeXMLElement:@"instancemethods"];
-}
-
-- (void)_exportDelegateMethods:(NSArray *)methodNodes
-{
-    [self _writeLine:@"<!-- ## delegatemethods ## -->"];
-
-    // Open a <delegatemethods> element.
-    [self _openXMLElement:@"delegatemethods"];
-
-    // Export the methods.
-    [super _exportDelegateMethods:methodNodes];
-
-    // Close the <delegatemethods> element.
-    [self _closeXMLElement:@"delegatemethods"];
-}
-
-- (void)_exportNotifications:(NSArray *)methodNodes
-{
-    [self _writeLine:@"<!-- ## notifications ## -->"];
-
-    // Open a <notifications> element.
-    [self _openXMLElement:@"notifications"];
-
-    // Export the methods.
-    [super _exportNotifications:methodNodes];
-
-    // Close the <notifications> element.
-    [self _closeXMLElement:@"notifications"];
-}
-
-- (void)_exportMethod:(AKMethodNode *)methodNode
-{
-    // Create a <method/> element.
-    [self
-        _openXMLElement:@"method"
-        nameAttribute:[methodNode nodeName]
-        typeAttribute:nil
-        deprecated:[methodNode isDeprecated]
-        alsoClose:YES];
-}
-
 //-------------------------------------------------------------------------
-// Exporting -- functions and globals
+// Exporting -- group nodes
 //-------------------------------------------------------------------------
 
-- (void)_exportFunctionsForFramework:(NSString *)fwName
+- (void)exportGroupSubnode:(AKDatabaseNode *)databaseNode
+    withXMLTag:(NSString *)subnodeTag
 {
     [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== %@ functions ===== -->",
-                    fwName]];
-
-    // Open a <functions> element.
-    [self _openXMLElement:@"functions"];
-
-    // Export the function groups.
-    [super _exportFunctionsForFramework:fwName];
-
-    // Close the <functions> element.
-    [self _closeXMLElement:@"functions"];
-}
-
-- (void)_exportFunctionsGroupNode:(AKGroupNode *)groupNode
-{
-    NSString *s =
-        [NSString
-            stringWithFormat:
-                @"<!-- ===== [%@] ===== -->",
-                [groupNode nodeName]];
-    [self _writeLine:s];
-
-    // Open a <group> element.
-    [self _openXMLElement:@"group" nameAttribute:[groupNode nodeName]];
-
-    // Iterate through subnodes of the group.
-    [super _exportFunctionsGroupNode:groupNode];
-
-    // Close the <group> element.
-    [self _closeXMLElement:@"group"];
-}
-
-- (void)_exportFunction:(AKFunctionNode *)functionNode
-{
-    [self
-        _openXMLElement:@"function"
-        nameAttribute:[functionNode nodeName]
-        typeAttribute:nil
-        deprecated:[functionNode isDeprecated]
-        alsoClose:YES];
-}
-
-- (void)_exportGlobalsForFramework:(NSString *)fwName
-{
-    [self
-        _writeLine:
-            [NSString
-            stringWithFormat:
-                @"<!-- ===== %@ types and constants ===== -->",
-                fwName]];
-
-    // Open a <globals> element.
-    [self _openXMLElement:@"globals"];
-
-    // Export the groups of types and constants.
-    [super _exportGlobalsForFramework:fwName];
-
-    // Close the <globals> element.
-    [self _closeXMLElement:@"globals"];
-}
-
-- (void)_exportGlobalsGroupNode:(AKGroupNode *)groupNode
-{
-    NSString *s =
-        [NSString
-            stringWithFormat:
-                @"<!-- ===== [%@] ===== -->",
-                [groupNode nodeName]];
-    [self _writeLine:s];
-
-    // Open a <group> element.
-    [self _openXMLElement:@"group" nameAttribute:[groupNode nodeName]];
-
-    // Iterate through subnodes of the group.
-    [super _exportGlobalsGroupNode:groupNode];
-
-    // Close the <group> element.
-    [self _closeXMLElement:@"group"];
-}
-
-- (void)_exportGlobal:(AKDatabaseNode *)databaseNode
-{
-    [self
-        _openXMLElement:@"global"
+        _openXMLElement:subnodeTag
         nameAttribute:[databaseNode nodeName]
         typeAttribute:nil
         deprecated:[databaseNode isDeprecated]
         alsoClose:YES];
 }
 
+- (void)exportGroupNode:(AKGroupNode *)groupNode
+    usingSubnodeTag:(NSString *)subnodeTag
+{
+    [self _writeAltDividerWithString:[groupNode nodeName]];
+    [self _openXMLElement:@"group" nameAttribute:[groupNode nodeName]];
+
+        [self
+            _performSelector:@selector(exportGroupSubnode:withXMLTag:)
+            onNodes:[groupNode subnodes]
+            with:subnodeTag];
+
+    [self _closeXMLElement:@"group"];
+}
+
+//-------------------------------------------------------------------------
+// Exporting -- frameworks
+//-------------------------------------------------------------------------
+
+- (void)exportNodesInSection:(NSString *)frameworkSection
+    ofFramework:(NSString *)fwName
+    usingGetSelector:(SEL)getSelector
+    exportSelector:(SEL)exportSelector
+{
+    [self _writeDividerWithString:fwName string:frameworkSection];
+    [self _openXMLElement:frameworkSection];
+
+        [self
+            _performSelector:exportSelector
+            onNodes:[_database performSelector:getSelector withObject:fwName]];
+
+    [self _closeXMLElement:frameworkSection];
+}
+
+- (void)exportProtocolsForFramework:(NSString *)fwName
+{
+    [self _writeDividerWithString:fwName string:@"protocols"];
+    [self _openXMLElement:@"protocols"];
+
+        // Write formal protocols.
+        _indent--;
+        [self _writeDividerWithString:fwName string:@"formal protocols"];
+        _indent++;
+        [self
+            _performSelector:@selector(exportProtocol:)
+            onNodes:[_database formalProtocolsForFramework:fwName]];
+
+        // Write informal protocols.
+        _indent--;
+        [self _writeDividerWithString:fwName string:@"informal protocols"];
+        _indent++;
+        [self
+            _performSelector:@selector(exportProtocol:)
+            onNodes:[_database informalProtocolsForFramework:fwName]];
+
+    [self _closeXMLElement:@"protocols"];
+}
+
+- (void)exportGroupNodesInSection:(NSString *)frameworkSection
+    ofFramework:(NSString *)fwName
+    usingGetSelector:(SEL)getSelector
+    subnodeTag:(NSString *)subnodeTag
+{
+    [self _writeDividerWithString:fwName string:frameworkSection];
+    [self _openXMLElement:frameworkSection];
+
+        [self
+            _performSelector:@selector(exportGroupNode:usingSubnodeTag:)
+            onNodes:[_database performSelector:getSelector withObject:fwName]
+            with:subnodeTag];
+
+    [self _closeXMLElement:frameworkSection];
+}
+
+- (void)exportFrameworkNamed:(NSString *)fwName
+{
+    [self _writeLongDividerWithString:fwName];
+    [self _openXMLElement:@"framework" nameAttribute:fwName];
+
+        [self
+            exportNodesInSection:@"classes"
+            ofFramework:fwName
+            usingGetSelector:@selector(classesForFramework:)
+            exportSelector:@selector(exportClass:)];
+        [self exportProtocolsForFramework:fwName];
+        [self
+            exportGroupNodesInSection:@"functions"
+            ofFramework:fwName
+            usingGetSelector:@selector(functionsGroupsForFramework:)
+            subnodeTag:@"function"];
+        [self
+            exportGroupNodesInSection:@"globals"
+            ofFramework:fwName
+            usingGetSelector:@selector(globalsGroupsForFramework:)
+            subnodeTag:@"global"];
+
+    [self _closeXMLElement:@"framework"];
+    [self _writeLine:@""];
+}
+
 //-------------------------------------------------------------------------
 // Low-level utility methods
 //-------------------------------------------------------------------------
-
-- (void)_writeLine:(NSString *)s
-{
-    int i;
-
-    for (i = 0; i < _indent; i++)
-    {
-        s = [@"    " stringByAppendingString:s];
-    }
-
-    [super _writeLine:s];
-}
 
 @end
 
 
 @implementation AKDatabaseXMLExporter (Private)
+
+- (void)_performSelector:(SEL)aSelector onStrings:(NSArray *)strings
+{
+    NSEnumerator *arrayEnum =
+        [[strings sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]
+            objectEnumerator];
+    NSObject *element;
+
+    while ((element = [arrayEnum nextObject]))
+    {
+        [self performSelector:aSelector withObject:element];
+    }
+}
+
+- (void)_performSelector:(SEL)aSelector onNodes:(NSArray *)nodes
+{
+    NSEnumerator *arrayEnum =
+        [[AKSortUtils arrayBySortingArray:nodes] objectEnumerator];
+    NSObject *element;
+
+    while ((element = [arrayEnum nextObject]))
+    {
+        [self performSelector:aSelector withObject:element];
+    }
+}
+
+- (void)_performSelector:(SEL)aSelector
+    onNodes:(NSArray *)nodes
+    with:(id)arg
+{
+    NSEnumerator *arrayEnum =
+        [[AKSortUtils arrayBySortingArray:nodes] objectEnumerator];
+    NSObject *element;
+
+    while ((element = [arrayEnum nextObject]))
+    {
+        [self performSelector:aSelector withObject:element withObject:arg];
+    }
+}
 
 - (void)_openXMLElement:(NSString *)xmlElementName
     nameAttribute:(NSString *)nameAttribute
@@ -471,6 +438,91 @@
 {
     _indent--;
     [self _writeLine:[NSString stringWithFormat:@"</%@>", xmlElementName]];
+}
+
+- (NSString *)_spreadString:(NSString *)s
+{
+    NSMutableString *result = [NSMutableString string];
+    int numChars = [s length];
+    int i;
+
+    for (i = 0; i < numChars; i++)
+    {
+        if (i > 0)
+        {
+            [result appendString:@" "];
+        }
+
+        NSRange range = NSMakeRange(i, 1);
+
+        [result appendString:[s substringWithRange:range]];
+    }
+
+    return result;
+}
+
+- (void)_writeLine:(NSString *)s
+{
+    int i;
+
+    for (i = 0; i < _indent; i++)
+    {
+        s = [@"    " stringByAppendingString:s];
+    }
+
+    s = [s stringByAppendingString:@"\n"];
+
+    [_outfile writeData:[s dataUsingEncoding:NSASCIIStringEncoding]];
+}
+
+- (void)_writeLine
+{
+    [_outfile writeData:[@"\n" dataUsingEncoding:NSASCIIStringEncoding]];
+}
+
+- (void)_writeLongDividerWithString:(NSString *)aString
+{
+    [self
+         _writeLine:
+            [NSString
+                stringWithFormat:@"<!-- ========== [ %@ ] ========== -->",
+                [self _spreadString:aString]]];
+}
+
+- (void)_writeDividerWithString:(NSString *)aString
+{
+    [self
+        _writeLine:
+            [NSString
+                stringWithFormat:
+                    @"<!-- ===== %@ ===== -->",
+                    aString]];
+}
+
+- (void)_writeAltDividerWithString:(NSString *)aString
+{
+    [self
+        _writeLine:
+            [NSString
+                stringWithFormat:
+                    @"<!-- ===== [%@] ===== -->",
+                    aString]];
+}
+
+- (void)_writeDividerWithString:(NSString *)string1
+    string:(NSString *)string2
+{
+    [self
+        _writeLine:
+            [NSString
+                stringWithFormat:
+                    @"<!-- ===== %@ %@ ===== -->",
+                    string1, string2]];
+}
+
+- (void)_writeShortDividerWithString:(NSString *)aString
+{
+    [self _writeLine:[NSString stringWithFormat:@"<!-- ## %@ ## -->", aString]];
 }
 
 @end

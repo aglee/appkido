@@ -627,8 +627,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     AKDatabaseXMLExporter *exporter =
-        [AKDatabaseXMLExporter exporterWithDefaultDatabase];
-    [exporter exportToFileHandle:fh];
+        [[[AKDatabaseXMLExporter alloc]
+            initWithDatabase:[AKDatabase defaultDatabase]
+            fileHandle:fh] autorelease];
+    [exporter doExport];
     [fh closeFile];
 }
 
