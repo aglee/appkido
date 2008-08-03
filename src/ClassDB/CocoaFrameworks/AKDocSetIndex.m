@@ -28,6 +28,11 @@
     orType:(NSString *)tokenType2
     orType:(NSString *)tokenType3
     forFramework:(NSString *)frameworkName;
+- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
+    orType:(NSString *)tokenType2
+    orType:(NSString *)tokenType3
+    orType:(NSString *)tokenType4
+    forFramework:(NSString *)frameworkName;
 - (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames;
 
 @end
@@ -47,7 +52,7 @@ static NSString *s_objectiveCFrameworkNamesQuery =
  * types within the specified framework.
  */
 static NSString *s_docPathsQueryTemplate =
-    @"select distinct filePath.ZPATH as docPath from ZTOKEN token, ZTOKENTYPE tokenType, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header, ZFILEPATH filePath where token.ZTOKENTYPE = tokenType.Z_PK and token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and tokenMeta.ZFILE = filePath.Z_PK and (tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ?) and header.ZFRAMEWORKNAME = ?";
+    @"select distinct filePath.ZPATH as docPath from ZTOKEN token, ZTOKENTYPE tokenType, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header, ZFILEPATH filePath where token.ZTOKENTYPE = tokenType.Z_PK and token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and tokenMeta.ZFILE = filePath.Z_PK and (tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ?) and header.ZFRAMEWORKNAME = ?";
 
 static NSString *s_headerPathsQueryTemplate =
     @"select distinct header.ZHEADERPATH as headerPath from ZTOKEN token, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header where token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and header.ZFRAMEWORKNAME = ?";
@@ -234,17 +239,12 @@ static NSString *s_headerPathsQueryTemplate =
 
 - (NSArray *)behaviorDocPathsForFramework:(NSString *)frameworkName
 {
-//    return
-//        [self
-//            _docPathsForTokensOfType:@"instm"  // note instm, not cl, to pick up "XXX Additions Reference"
-//            orType:@"clm"
-//            orType:@"intfm"
-//            forFramework:frameworkName];
-    return  // [agl] review
+    return
         [self
             _docPathsForTokensOfType:@"cl"
             orType:@"intf"
-            orType:@"instm"  // to pick up "XXX Additions Reference" [agl] should check for @"clm" too
+            orType:@"clm"
+            orType:@"instm"  // to pick up "XXX Additions Reference"
             forFramework:frameworkName];
 }
 
@@ -326,21 +326,36 @@ static NSString *s_headerPathsQueryTemplate =
             forFramework:frameworkName];
 }
 
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
+- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
     orType:(NSString *)tokenType2
     forFramework:(NSString *)frameworkName
 {
     return
         [self
-            _docPathsForTokensOfType:tokenType
+            _docPathsForTokensOfType:tokenType1
             orType:tokenType2
             orType:nil
             forFramework:frameworkName];
 }
 
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
+- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
     orType:(NSString *)tokenType2
     orType:(NSString *)tokenType3
+    forFramework:(NSString *)frameworkName
+{
+    return
+        [self
+            _docPathsForTokensOfType:tokenType1
+            orType:tokenType2
+            orType:tokenType3
+            orType:nil
+            forFramework:frameworkName];
+}
+
+- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
+    orType:(NSString *)tokenType2
+    orType:(NSString *)tokenType3
+    orType:(NSString *)tokenType4
     forFramework:(NSString *)frameworkName
 {
     // Open the database.
@@ -353,20 +368,26 @@ static NSString *s_headerPathsQueryTemplate =
     // Do the query and process the results.
     if (tokenType2 == nil)
     {
-        tokenType2 = tokenType;
+        tokenType2 = tokenType1;
     }
 
     if (tokenType3 == nil)
     {
-        tokenType3 = tokenType;
+        tokenType3 = tokenType1;
+    }
+
+    if (tokenType4 == nil)
+    {
+        tokenType4 = tokenType1;
     }
 
     NSMutableArray *docPaths = [NSMutableArray array];
     FMResultSet *rs =
         [db executeQuery:s_docPathsQueryTemplate,
-            tokenType,
+            tokenType1,
             tokenType2,
             tokenType3,
+            tokenType4,
             frameworkName];
 
     while ([rs next])
