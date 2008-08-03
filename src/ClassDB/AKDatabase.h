@@ -7,8 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class AKDocSetIndex;
 @class AKFileSection;
-@class AKFramework;
 @class AKDatabaseNode;
 @class AKClassNode;
 @class AKProtocolNode;
@@ -22,11 +22,11 @@
 // subnodes.
 
 
-// [agl] TODO -- The class comment has to be rewriten.  It's up to
+// [agl] TODO -- The class comment has to be rewritten.  It's up to
 // subclasses to *populate* the ivars in the abstract class via the
 // -populateDatabase method, which needs to be called after instantiating
 // the database and before trying to use it.  Also, there should be no more default
-// database.  Also, mention the delegate.
+// database.  Also, mention the delegate.  Also, this is now a class cluster.
 
 /*!
  * @class       AKDatabase
@@ -69,6 +69,7 @@
     // added to the database.  There are constants in AKFrameworkConstants.h
     // for the names of some frameworks that need to be treated specially.
     NSMutableArray *_frameworkNames;
+    NSMutableArray *_namesOfAvailableFrameworks;
 
     // --- Classes ---
 
@@ -132,7 +133,7 @@
 }
 
 //-------------------------------------------------------------------------
-// Factory methods
+// Class methods
 //-------------------------------------------------------------------------
 
 /*!
@@ -142,11 +143,24 @@
  */
 + (AKDatabase *)defaultDatabase;
 
+/*! Uses prefs to get the Dev Tools path. */
++ (id)databaseForMacSDK;
+
+/*! Uses prefs to get the Dev Tools path. */
++ (id)databaseForLatestIPhoneSDK;
+
++ (id)databaseForMacSDKInDevToolsPath:(NSString *)devToolsPath;
+
++ (id)databaseWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
+
 //-------------------------------------------------------------------------
 // Populating
 //-------------------------------------------------------------------------
 
-/*! Do not override.  Calls -loadTokensForFrameworkNamed:. */
+/*!
+ * Calls -loadTokensForFrameworkNamed:.  Sends delegate message for each
+ * framework loaded.
+ */
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames;
 
 /*!
@@ -162,15 +176,16 @@
 //-------------------------------------------------------------------------
 
 /*!
- * @method      frameworkNames
- * @discussion  Returns a list of framework names, in the order in which
- *              the frameworks were added.
+ * Returns the names of frameworks that have been loaded, in no guaranteed
+ * order.
  */
 - (NSArray *)frameworkNames;
 
 - (NSArray *)sortedFrameworkNames;
 
 - (BOOL)hasFrameworkWithName:(NSString *)fwName;
+
+- (NSArray *)namesOfAvailableFrameworks;
 
 //-------------------------------------------------------------------------
 // Getters and setters -- classes

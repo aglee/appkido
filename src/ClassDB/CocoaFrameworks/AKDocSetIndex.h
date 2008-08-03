@@ -27,22 +27,45 @@
     // to find the UIKit headers.  That prefix is was goes in _basePathForHeaders.
     //
     // I *think* I can get away with using the plain /System/Library/Frameworks
-    // header paths for the Core Reference docs, so this can be nil or
-    // @"/" when the docset is a Core Reference docset.  Otherwise, the
-    // tricky thing is that there can be multiple SDKs for regular Mac OS;
-    // for example, under /(DEVTOOLS)/SDKs I have MacOSX10.4u.sdk and
-    // MacOSX10.5.sdk.  but I'll assume the user's actual OS will be the
-    // latest of these, and that the documentation is the same for all.
+    // header paths for the Core Reference docs, so this can be @"/" when
+    // the docset is a Core Reference docset.  Otherwise, the tricky thing
+    // is that there can be multiple SDKs for regular Mac OS; for example,
+    // under /(DEVTOOLS)/SDKs I have MacOSX10.4u.sdk and MacOSX10.5.sdk.
+    // I'll assume the user's actual OS will be the latest of these, and
+    //  that the documentation is the same for all.
     NSString *_basePathForHeaders;
 }
+
+//-------------------------------------------------------------------------
+// Factory methods
+//-------------------------------------------------------------------------
+
+/*!
+ * Looks for the docset index file at a specific subpath of the Dev Tools
+ * path, which so far has always been the same for the Mac OS Core Reference
+ * docset.  Returns nil if there is no docset index file at that location.
+ */
++ (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath;
+
+/*!
+ * Returns nil if we can't find an iPhoneSDK...dsIdx file.
+ *
+ * [agl] FIXME Should we search in the Shared directory as well?
+ */
++ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
 /*!
- * Designated initializer.  Argument is a path to a .docset bundle.
- * Returns nil if there is no docset at the given path.
+ * Designated initializer.  docSetPath is the path to a .docset bundle
+ * (i.e., should end with .docset).  basePathForHeaders is the path to the
+ * path that the header paths in the docset index (as given by the sqlite
+ * file) should be relative to.
+ *
+ * Returns nil if the docset path or base path for headers is missing or
+ * not a directory.
  */
 - (id)initWithDocSetPath:(NSString *)docSetPath
     basePathForHeaders:(NSString *)basePathForHeaders;
@@ -60,7 +83,7 @@
 /*!
  * Returns list of all frameworks that have an Objective-C token, with
  * "essential" frameworks forced to the beginning of the list.  (See
- * +[AKFramework namesOfEssentialFrameworks].)
+ * AKNamesOfEssentialFrameworks().)
  */
 - (NSArray *)objectiveCFrameworkNames;
 

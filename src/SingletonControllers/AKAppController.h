@@ -7,7 +7,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AKFrameworkSetup;
 @class AKDocLocator;
 @class AKWindowController;
 
@@ -26,8 +25,6 @@
 @interface AKAppController : NSObject
 {
     BOOL _finishedInitializing;  // Becomes true when -awakeFromNib finishes.
-
-    AKFrameworkSetup *_frameworkSetup;
 
     // Elements are AKWindowControllers.
     NSMutableArray *_windowControllers;
@@ -50,12 +47,6 @@
 
 + (id)sharedInstance;
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
-
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
-
-- (AKFrameworkSetup *)frameworkSetup;
 
 //-------------------------------------------------------------------------
 // Navigation

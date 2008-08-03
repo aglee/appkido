@@ -9,7 +9,6 @@
 
 #import <DIGSLog.h>
 #import "AKDatabase.h"
-#import "AKCocoaFramework.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
@@ -18,7 +17,6 @@
 @interface AKFrameworkInfo (Private)
 
 - (NSString *)_findExistingDirInArray:(NSArray *)dirNames;
-- (void)_checkNodeClass:(NSString *)fwClassName for:(NSString *)fwName;
 - (void)_extractFrameworkInfo:(NSDictionary *)fwInfo;
 
 @end
@@ -123,7 +121,7 @@
     return _allPossibleFrameworkNames;
 }
 
-- (NSString *)frameworkClassForFrameworkNamed:(NSString *)fwName
+- (NSString *)frameworkClassNameForFrameworkNamed:(NSString *)fwName
 {
     return [_frameworkClassNamesByFrameworkName objectForKey:fwName];
 }
@@ -181,50 +179,6 @@
     return nil;
 }
 
-- (void)_checkNodeClass:(NSString *)fwClassName for:(NSString *)fwName
-{
-	// If we weren't given a framework class name, use AKCocoaFramework.
-    if (fwClassName == nil)
-    {
-        fwClassName = [AKCocoaFramework className];
-   }
-
-    Class frameworkClass = NSClassFromString(fwClassName);
-    if (frameworkClass == nil)
-    {
-        DIGSLogDebug(@"[%@] is not the name of a class", fwClassName);
-    }
-    else
-    {
-        Class cl = frameworkClass;
-
-        while (cl)
-        {
-            if (cl == [AKCocoaFramework class])
-            {
-                break;
-            }
-            else
-            {
-                cl = [cl superclass];
-            }
-        }
-
-        if (cl == nil)
-        {
-            DIGSLogWarning(
-                @"%@ is not a descendant class of AKCocoaFramework",
-                fwClassName);
-        }
-        else
-        {
-            [_frameworkClassNamesByFrameworkName
-                setObject:fwClassName
-                forKey:fwName];
-        }
-    }
-}
-
 - (void)_extractFrameworkInfo:(NSDictionary *)fwInfo
 {
     NSString *fwName = [fwInfo objectForKey:@"FrameworkName"];
@@ -273,9 +227,6 @@
 
     // Remember the framework location.
     [_frameworkPathsByFrameworkName setObject:frameworkPath forKey:fwName];
-
-    // Was a valid class name given?
-    [self _checkNodeClass:fwClassName for:fwName];
 
     // Can we find a doc dir for this framework?
     NSString *docDir = [self _findExistingDirInArray:possibleDocDirs];

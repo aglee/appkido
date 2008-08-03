@@ -11,11 +11,9 @@
 #import <DIGSLog.h>
 #import <DIGSFindBuffer.h>
 
-#import "AKFrameworkSetup.h"
-
 #import "AKDocSetIndex.h"
-#import "AKDocSetBasedFramework.h"
 #import "AKFrameworkConstants.h"
+#import "AKFileUtils.h"
 #import "AKTextUtils.h"
 #import "AKViewUtils.h"
 #import "AKPrefUtils.h"
@@ -23,7 +21,6 @@
 #import "AKDebugUtils.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
-#import "AKCocoaFramework.h"
 #import "AKDocLocator.h"
 #import "AKPrefPanelController.h"
 #import "AKQuicklistController.h"
@@ -70,7 +67,6 @@
 //-------------------------------------------------------------------------
 
 - (void)_initAboutPanel;
-- (BOOL)_containsRequiredFrameworks:(AKFrameworkSetup *)fwSetup;
 - (void)_initGoMenu;
 - (void)_maybeAddDebugMenu;  // [agl] uses AKDebugUtils
 
@@ -191,6 +187,36 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return self;
 }
 
+
+// [agl] FIXME Move these private methods down.
+- (BOOL)_directory:(NSString *)dir hasSubdirectory:(NSString *)subdir
+{
+    BOOL subdirExists =
+        [AKFileUtils
+            directoryExistsAtPath:
+                [dir stringByAppendingPathComponent:subdir]];
+
+    if (!subdirExists)
+    {
+        DIGSLogDebug(
+            @"%@ doesn't seem to be a valid Dev Tools path"
+                " -- it doesn't have a subdirectory %@",
+            dir, subdir);
+    }
+
+    return subdirExists;
+}
+
+- (BOOL)_looksLikeValidDevToolsPath:(NSString *)devToolsPath
+{
+    return
+        [self _directory:devToolsPath hasSubdirectory:@"Applications"]
+        && [self _directory:devToolsPath hasSubdirectory:@"Examples"];
+}
+
+
+
+
 - (void)awakeFromNib
 {
     // Initialize the About panel.
@@ -199,14 +225,13 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Get the list of supported frameworks, using the user's prefs to
     // figure out where to get that list.  Prompt the user repeatedly if
     // necessary to either get valid values for those prefs or quit the app.
-    while ((_frameworkSetup = [AKFrameworkSetup frameworkSetupBasedOnPrefs]) == nil)
+    while (![self _looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
     {
         if (![[AKDocPathsPrefPanelController sharedInstance] runPanel])
         {
             [NSApp terminate:nil];
         }
     }
-    [_frameworkSetup retain];
 
     // Put up the splash window.
     [_splashVersionField setStringValue:[self _appVersion]];
@@ -228,23 +253,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     [db setDelegate:self];
     [db loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
-
-/* [agl] REMOVE -- replacing this
-    NSEnumerator *en = [[AKPrefUtils selectedFrameworkNamesPref] objectEnumerator];
-    NSString *fwName;
-    while ((fwName = [en nextObject]))
-    {
-        AKFramework *fw = [_frameworkSetup frameworkNamed:fwName];
-        
-        if (fw)
-        {
-            [_splashMessage2Field setStringValue:fwName];
-            [_splashMessage2Field display];
-
-            [fw populateDatabase:db];
-        }
-    }
-*/
 
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
@@ -290,20 +298,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [_frameworkSetup release];
     [_windowControllers release];
     [_favoritesList release];
 
     [super dealloc];
-}
-
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
-
-- (AKFrameworkSetup *)frameworkSetup
-{
-    return _frameworkSetup;
 }
 
 //-------------------------------------------------------------------------
@@ -751,50 +749,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
             autorelease];
 
     [[_aboutCreditsView textStorage] setAttributedString:creditsString];
-}
-
-// If we can't find files for either Foundation or AppKit, offer the user the
-// choice of either quitting or re-specifying the location of the Dev Tools.
-// Returns YES if Foundation and AppKit were found, NO if one of them was
-// not found.
-- (BOOL)_containsRequiredFrameworks:(AKFrameworkSetup *)fwSetup
-{
-    NSArray *namesOfAvailableFrameworks =
-        [fwSetup namesOfAvailableFrameworks];
-
-    if ([namesOfAvailableFrameworks containsObject:AKFoundationFrameworkName]
-        && [namesOfAvailableFrameworks containsObject:AKAppKitFrameworkName])
-    {
-        return YES;
-    }
-    else
-    {
-        int alertResult =
-            NSRunAlertPanel(
-                @"Missing documentation", // title,
-                @"Either Foundation or AppKit documentation is missing from %@."
-                @"\n"
-                @"You may need to either:\n"
-                @"\n"
-                @"* go into Xcode's Documentation window and update the"
-                @" Core Reference docset, or\n"
-                @"\n"
-                @"* specify the correct location of your Dev Tools.", // msg
-                @"Quit AppKiDo", // defaultButton
-                @"Locate Dev Tools", // alternateButton
-                nil, // otherButton
-                [AKPrefUtils devToolsPathPref]);
-
-        if (alertResult == NSAlertDefaultReturn)
-        {
-            [NSApp terminate:nil];
-            return NO;
-        }
-        else
-        {
-            return NO;
-        }
-    }
 }
 
 - (void)_initGoMenu

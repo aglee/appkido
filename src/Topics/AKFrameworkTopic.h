@@ -7,8 +7,6 @@
 
 #import "AKTopic.h"
 
-#import "AKFramework.h"
-
 // represents one framework; subclasses represent different kinds of fw
 // provides implementations for several AKTopic abstract methods, but not
 // -childTopics, because that depends on the type of fw

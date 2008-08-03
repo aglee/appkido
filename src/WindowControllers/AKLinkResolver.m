@@ -23,7 +23,6 @@
 #import "AKNotificationNode.h"
 #import "AKFunctionNode.h"
 #import "AKGlobalsNode.h"
-#import "AKCocoaFramework.h"
 
 #import "AKDocLocator.h"
 
@@ -33,9 +32,6 @@
 #import "AKFunctionsTopic.h"
 #import "AKGlobalsTopic.h"
 #import "AKOverviewDoc.h"
-
-#import "AKAppController.h"
-#import "AKFrameworkSetup.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods

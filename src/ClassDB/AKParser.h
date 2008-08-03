@@ -7,10 +7,7 @@
 
 #import <DIGSFileProcessor.h>
 
-#import "AKFramework.h"
-
 @class AKDatabase;
-@class AKFramework;
 
 // [agl] add checks for buffer overflow
 #define AKTokenBufferSize 1024

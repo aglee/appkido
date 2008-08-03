@@ -9,6 +9,14 @@
 
 @interface AKOldDatabase : AKDatabase
 {
+@private
+    NSString *_devToolsPath;
 }
+
+//-------------------------------------------------------------------------
+// Init/awake/dealloc
+//-------------------------------------------------------------------------
+
+- (id)initWithDevToolsPath:(NSString *)devToolsPath;
 
 @end
