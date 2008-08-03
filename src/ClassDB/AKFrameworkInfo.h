@@ -52,7 +52,7 @@
 - (NSArray *)allPossibleFrameworkNames;
 
 /*! Returns AKCocoaFramework or a descendant thereof. */
-- (NSString *)frameworkClassForFrameworkNamed:(NSString *)fwName;
+- (NSString *)frameworkClassNameForFrameworkNamed:(NSString *)fwName;
 
 - (NSString *)headerDirForFrameworkNamed:(NSString *)fwName;
 

@@ -21,6 +21,51 @@
 @implementation AKOldDatabase
 
 //-------------------------------------------------------------------------
+// Init/awake/dealloc
+//-------------------------------------------------------------------------
+
+- (id)initWithDevToolsPath:(NSString *)devToolsPath
+{
+    if ((self = [super init]))
+    {
+        _devToolsPath = [devToolsPath retain];
+
+        [_namesOfAvailableFrameworks release];
+        _namesOfAvailableFrameworks = [[NSMutableArray array] retain];
+
+        NSArray *namesOfPossibleFrameworks =
+            [[AKFrameworkInfo sharedInstance] allPossibleFrameworkNames];
+
+        NSEnumerator *fwNameEnum = [namesOfPossibleFrameworks objectEnumerator];
+        NSString *fwName;
+
+        while ((fwName = [fwNameEnum nextObject]))
+        {
+            if ([[AKFrameworkInfo sharedInstance] frameworkDirsExist:fwName])
+            {
+                [_namesOfAvailableFrameworks addObject:fwName];
+            }
+        }
+    }
+
+    return self;
+}
+
+- (id)init
+{
+    DIGSLogNondesignatedInitializer();
+    [self release];
+    return nil;
+}
+
+- (void)dealloc
+{
+    [_devToolsPath release];
+
+    [super dealloc];
+}
+
+//-------------------------------------------------------------------------
 // AKDatabase methods
 //-------------------------------------------------------------------------
 
@@ -32,7 +77,8 @@
     // We also use header info to distinguish formal protocols from informal
     // ones -- informal ones do not have an associated header.
     // ([agl] Is this a reliable test for informal protocols?)
-    NSString *_headerDir = [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:fwName];
+    NSString *_headerDir =
+        [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:fwName];
     DIGSLogDebug(@"parsing headers in %@", _headerDir);
     [AKObjCHeaderParser
         recursivelyParseDirectory:_headerDir
@@ -46,7 +92,7 @@
     NSString *constantsDocDir = nil;
     NSString *datatypesDocDir = nil;
 
-    if ([[[AKFrameworkInfo sharedInstance] frameworkClassForFrameworkNamed:fwName]
+    if ([[[AKFrameworkInfo sharedInstance] frameworkClassNameForFrameworkNamed:fwName]
             isEqualToString:@"AKCocoaFramework22"])
     {
         functionsDocDir =

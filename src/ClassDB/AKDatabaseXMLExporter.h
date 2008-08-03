@@ -10,6 +10,7 @@
 
 @class AKDatabase;
 
+// [agl] TODO Should consider using NSXMLDocument for this.
 /*!
  * class        AKDatabaseXMLExporter
  * @discussion  Support for exporting an AKDatabase to an XML file.

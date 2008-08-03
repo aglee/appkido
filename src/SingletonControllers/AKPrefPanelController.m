@@ -7,10 +7,9 @@
 
 #import "AKPrefPanelController.h"
 
-#import "AKFrameworkSetup.h"
 #import "AKFrameworkConstants.h"
-#import "AKFramework.h"
 #import "AKPrefUtils.h"
+#import "AKDatabase.h"
 #import "AKAppController.h"
 
 //-------------------------------------------------------------------------
@@ -375,9 +374,7 @@ NSLog(@"new devToolsPath: [%@]", devToolsPath);  // [agl] REMOVE
 
 - (NSArray *)_namesOfAvailableFrameworks
 {
-    return
-        [[(AKAppController *)[NSApp delegate] frameworkSetup]
-            namesOfAvailableFrameworks];
+    return [[AKDatabase defaultDatabase] namesOfAvailableFrameworks];
 }
 
 @end

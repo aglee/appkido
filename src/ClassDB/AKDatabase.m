@@ -9,16 +9,19 @@
 
 #import "DIGSLog.h"
 
+#import "AKPrefUtils.h"
+
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
 #import "AKGroupNode.h"
 
-#import "AKDatabaseWithDocSet.h"  // [agl] REMOVE
-#import "AKDocSetIndex.h"  // [agl] REMOVE
+#import "AKDocSetIndex.h"
+#import "AKOldDatabase.h"
+#import "AKDatabaseWithDocSet.h"
 
 
 @interface AKDatabase (Private)
-- (void)_seeIfFrameworkIsNew:(NSString *)fwName;
+- (void)_seeIfFrameworkIsNew:(NSString *)fwName;  // [agl] FIXME Do we need this?
 - (NSArray *)_allProtocolsForFramework:(NSString *)fwName;
 @end
 
@@ -26,56 +29,74 @@
 @implementation AKDatabase
 
 //-------------------------------------------------------------------------
-// Factory methods
+// Class methods
 //-------------------------------------------------------------------------
 
 + (AKDatabase *)defaultDatabase  // [agl] REMOVE get rid of the global database; use individual instances
 {
     static AKDatabase *s_defaultDatabase = nil;
 
-    if (!s_defaultDatabase)
+    if (s_defaultDatabase == nil)
     {
-//        s_defaultDatabase = [[self alloc] init];
-NSString *devToolsPath = @"/Developer";
-NSString *docSetPath;
-NSString *basePathForHeaders;
 BOOL isForIPhone = NO;  // [agl] REMOVE
 if (isForIPhone)
 {
-        docSetPath =
-            [devToolsPath
-                stringByAppendingPathComponent:
-                    @"Platforms/iPhoneOS.platform/"
-                    "Developer/Documentation/DocSets/"
-                    "com.apple.adc.documentation.AppleiPhone2_0.iPhoneLibrary.docset"];
-        basePathForHeaders =
-            [devToolsPath
-                stringByAppendingPathComponent:
-                    @"Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator2.0.sdk"];
+        s_defaultDatabase = [[self databaseForLatestIPhoneSDK] retain];
 }
 else
 {
-        docSetPath =
-            [devToolsPath
-                stringByAppendingPathComponent:
-                    @"Documentation/DocSets/"
-                    "com.apple.ADC_Reference_Library.CoreReference.docset"];
-        basePathForHeaders = @"/";
+        s_defaultDatabase = [[self databaseForMacSDK] retain];
 }
-
-        AKDocSetIndex *docSetIndex =
-            [[[AKDocSetIndex alloc]
-                initWithDocSetPath:docSetPath
-                basePathForHeaders:basePathForHeaders] autorelease];
-
-        s_defaultDatabase =
-            [[AKDatabaseWithDocSet alloc]
-                initWithDocSetIndex:docSetIndex];
-
-
     }
 
     return s_defaultDatabase;
+}
+
++ (id)databaseForMacSDK
+{
+    return
+        [self databaseForMacSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]];
+}
+
++ (id)databaseForLatestIPhoneSDK
+{
+    AKDocSetIndex *docSetIndex =
+        [AKDocSetIndex
+            indexForLatestIPhoneSDKInDevToolsPath:
+                [AKPrefUtils devToolsPathPref]];
+
+    return [self databaseWithDocSetIndex:docSetIndex];
+}
+
++ (id)databaseForMacSDKInDevToolsPath:(NSString *)devToolsPath
+{
+    AKDocSetIndex *docSetIndex =
+        [AKDocSetIndex indexForMacSDKInDevToolsPath:devToolsPath];
+
+    if (docSetIndex)
+    {
+        return [self databaseWithDocSetIndex:docSetIndex];
+    }
+    else
+    {
+        return
+            [[[AKOldDatabase alloc]
+                initWithDevToolsPath:devToolsPath] autorelease];
+    }
+}
+
++ (id)databaseWithDocSetIndex:(AKDocSetIndex *)docSetIndex
+{
+    if (docSetIndex == nil)
+    {
+        return nil;
+    }
+    else
+    {
+        return
+            [[[AKDatabaseWithDocSet alloc]
+                initWithDocSetIndex:docSetIndex] autorelease];
+    }
 }
 
 //-------------------------------------------------------------------------
@@ -87,6 +108,7 @@ else
     if ((self = [super init]))
     {
         _frameworkNames = [[NSMutableArray alloc] init];
+        _namesOfAvailableFrameworks = nil;
 
         _classNodesByName = [[NSMutableDictionary alloc] init];
         _classListsByFramework = [[NSMutableDictionary alloc] init];
@@ -189,6 +211,11 @@ else
     return [_frameworkNames containsObject:fwName];
 }
 
+- (NSArray *)namesOfAvailableFrameworks
+{
+    return _namesOfAvailableFrameworks;
+}
+
 //-------------------------------------------------------------------------
 // Getters and setters -- classes
 //-------------------------------------------------------------------------
@@ -252,7 +279,7 @@ else
     [classNodes addObject:classNode];
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];
+    [self _seeIfFrameworkIsNew:fwName];  // [agl] FIXME Do we need this?
 }
 
 //-------------------------------------------------------------------------
@@ -329,7 +356,7 @@ else
     [protocolNodes addObject:protocolNode];
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];
+    [self _seeIfFrameworkIsNew:fwName];  // [agl] FIXME Do we need this?
 }
 
 //-------------------------------------------------------------------------

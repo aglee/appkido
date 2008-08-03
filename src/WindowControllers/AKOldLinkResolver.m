@@ -18,7 +18,6 @@
 #import "AKFileSection.h"
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
-#import "AKCocoaFramework.h"
 
 #import "AKDocLocator.h"
 
@@ -28,9 +27,6 @@
 #import "AKFunctionsTopic.h"
 #import "AKGlobalsTopic.h"
 #import "AKOverviewDoc.h"
-
-#import "AKAppController.h"
-#import "AKFrameworkSetup.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
@@ -202,9 +198,9 @@
         }
     }
 
+/*
     // Is it a path name with a framework's mainDocDir as a prefix?
-    en = [[[(AKAppController *)[NSApp delegate] frameworkSetup]
-            availableFrameworks] objectEnumerator];
+    en = [[_database namesOfAvailableFrameworks] objectEnumerator];
     id fw;
     while ((fw = [en nextObject]))
     {
@@ -213,6 +209,12 @@
         {
             return [fw frameworkName];
         }
+    }
+*/
+    fwName = [_database frameworkForHTMLFile:aString];
+    if (fwName)
+    {
+        return fwName;
     }
 
     // If we got this far, we don't have a match.

@@ -17,7 +17,7 @@
 @interface AKDocSetIndex (Private)
 
 - (NSString *)_resourcesPath;
-- (NSString *)_dsidxPath;
+- (NSString *)_pathToSqliteFile;
 - (FMDatabase *)_openSQLiteDB;
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
     forFramework:(NSString *)frameworkName;
@@ -52,6 +52,45 @@ static NSString *s_docPathsQueryTemplate =
 static NSString *s_headerPathsQueryTemplate =
     @"select distinct header.ZHEADERPATH as headerPath from ZTOKEN token, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header where token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and header.ZFRAMEWORKNAME = ?";
 
+
+//-------------------------------------------------------------------------
+// Factory methods
+//-------------------------------------------------------------------------
+
++ (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath
+{
+    NSString *docSetPath =
+        [devToolsPath
+            stringByAppendingPathComponent:
+                @"Documentation/DocSets/"
+                "com.apple.ADC_Reference_Library.CoreReference.docset"];
+    NSString *basePathForHeaders = @"/";
+
+    return
+        [[[AKDocSetIndex alloc]
+            initWithDocSetPath:docSetPath
+            basePathForHeaders:basePathForHeaders] autorelease];
+}
+
++ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
+{
+    NSString *docSetPath =
+        [devToolsPath
+            stringByAppendingPathComponent:
+                @"Platforms/iPhoneOS.platform/"
+                "Developer/Documentation/DocSets/"
+                "com.apple.adc.documentation.AppleiPhone2_0.iPhoneLibrary.docset"];
+    NSString *basePathForHeaders =  // [agl] FIXME Look for the latest, not just 2.0.
+        [devToolsPath
+            stringByAppendingPathComponent:
+                @"Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator2.0.sdk"];
+
+    return
+        [[[AKDocSetIndex alloc]
+            initWithDocSetPath:docSetPath
+            basePathForHeaders:basePathForHeaders] autorelease];
+}
+
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
@@ -64,16 +103,33 @@ static NSString *s_headerPathsQueryTemplate =
         _docSetPath = [docSetPath retain];
         _basePathForHeaders = [basePathForHeaders retain];
 
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[self _dsidxPath]])
+        BOOL isDir;
+        if (![[NSFileManager defaultManager]
+                fileExistsAtPath:[self _pathToSqliteFile]
+                isDirectory:&isDir])
         {
-            DIGSLogWarning(@"AKDocSetIndex -- There is no docset at [%@]", docSetPath);
+            DIGSLogDebug(@"AKDocSetIndex -- There is no docset at [%@]", _docSetPath);
+            [self release];
+            return nil;
+        }
+        else if (isDir)
+        {
+            DIGSLogDebug(@"AKDocSetIndex -- Dsidx path [%@] is a directory, not a file", [self _pathToSqliteFile]);
             [self release];
             return nil;
         }
 
-        if (![[NSFileManager defaultManager] fileExistsAtPath:_basePathForHeaders])
+        if (![[NSFileManager defaultManager]
+                fileExistsAtPath:_basePathForHeaders
+                isDirectory:&isDir])
         {
             DIGSLogWarning(@"AKDocSetIndex -- There is no directory [%@]", _basePathForHeaders);
+            [self release];
+            return nil;
+        }
+        else if (!isDir)
+        {
+            DIGSLogDebug(@"AKDocSetIndex -- Header path [%@] is a file, not a directory", _basePathForHeaders);
             [self release];
             return nil;
         }
@@ -241,14 +297,14 @@ static NSString *s_headerPathsQueryTemplate =
     return [_docSetPath stringByAppendingPathComponent:@"Contents/Resources"];
 }
 
-- (NSString *)_dsidxPath
+- (NSString *)_pathToSqliteFile
 {
     return [[self _resourcesPath] stringByAppendingPathComponent:@"docSet.dsidx"];
 }
 
 - (FMDatabase *)_openSQLiteDB
 {
-    FMDatabase* db = [FMDatabase databaseWithPath:[self _dsidxPath]];
+    FMDatabase* db = [FMDatabase databaseWithPath:[self _pathToSqliteFile]];
 
     if (![db open])
     {

@@ -48,6 +48,9 @@
     if ((self = [super init]))
     {
         _docSetIndex = [docSetIndex retain];
+
+        [_namesOfAvailableFrameworks release];
+        _namesOfAvailableFrameworks = [[docSetIndex objectiveCFrameworkNames] copy];
     }
 
     return self;
