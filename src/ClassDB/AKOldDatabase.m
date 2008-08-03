@@ -77,6 +77,10 @@
     // We also use header info to distinguish formal protocols from informal
     // ones -- informal ones do not have an associated header.
     // ([agl] Is this a reliable test for informal protocols?)
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing headers for framework %@", fwName);
+    DIGSLogDebug(@"---------------------------------------------------");
+
     NSString *_headerDir =
         [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:fwName];
     DIGSLogDebug(@"parsing headers in %@", _headerDir);
@@ -126,7 +130,11 @@
                 withNameEndingWith:@"Datatypes"];
     }
 
-    // Parse the doc files in the directories we figured out.
+    // Parse the doc files in those directories.
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing HTML docs for framework %@", fwName);
+    DIGSLogDebug(@"---------------------------------------------------");
+
     DIGSLogDebug(@"parsing behavior docs for %@", fwName);
     [AKCocoaBehaviorDocParser
         recursivelyParseDirectory:behaviorsDocDir
