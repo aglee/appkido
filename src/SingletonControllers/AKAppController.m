@@ -29,7 +29,7 @@
 #import "AKSavedWindowState.h"
 #import "AKTopic.h"
 
-#import "AKDocPathsPrefPanelController.h"
+#import "AKDevToolsPathController.h"
 
 
 // [agl] working on parse performance
@@ -187,51 +187,31 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return self;
 }
 
-
-// [agl] FIXME Move these private methods down.
-- (BOOL)_directory:(NSString *)dir hasSubdirectory:(NSString *)subdir
-{
-    BOOL subdirExists =
-        [AKFileUtils
-            directoryExistsAtPath:
-                [dir stringByAppendingPathComponent:subdir]];
-
-    if (!subdirExists)
-    {
-        DIGSLogDebug(
-            @"%@ doesn't seem to be a valid Dev Tools path"
-                " -- it doesn't have a subdirectory %@",
-            dir, subdir);
-    }
-
-    return subdirExists;
-}
-
-- (BOOL)_looksLikeValidDevToolsPath:(NSString *)devToolsPath
-{
-    return
-        [self _directory:devToolsPath hasSubdirectory:@"Applications"]
-        && [self _directory:devToolsPath hasSubdirectory:@"Examples"];
-}
-
-
-
-
 - (void)awakeFromNib
 {
     // Initialize the About panel.
     [self _initAboutPanel];
 
-    // Get the list of supported frameworks, using the user's prefs to
-    // figure out where to get that list.  Prompt the user repeatedly if
-    // necessary to either get valid values for those prefs or quit the app.
-    while (![self _looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
+    // If necessary, prompt the user repeatedly for a valid Dev Tools path.
+    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
+/*
+devToolsPath = nil;  // [agl] REMOVE
+    if (![AKDevToolsPathController looksLikeValidDevToolsPath:devToolsPath])
     {
-        if (![[AKDocPathsPrefPanelController sharedInstance] runPanel])
+        devToolsPath =
+            [[AKDevToolsPathController sharedInstance]
+                promptForDevToolsPath:devToolsPath];
+        if (devToolsPath == nil)
         {
             [NSApp terminate:nil];
         }
+        else
+        {
+            [AKPrefUtils setDevToolsPathPref:devToolsPath];
+        }
     }
+*/
+    DIGSLogDebug(@"dev tools path is [%@]", devToolsPath);
 
     // Put up the splash window.
     [_splashVersionField setStringValue:[self _appVersion]];
@@ -262,10 +242,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessage2Field setStringValue:@""];
     [_splashMessage2Field display];
 
-    // Update the "Go" menu.
+    // Set up the "Go" menu.
     [self _initGoMenu];
 
-    // Grab the Favorites list from the user preferences.
+    // Update the UI with the Favorites list from the user preferences.
     [self _getFavoritesFromPrefs];
 
     // Take down the splash window.
@@ -981,12 +961,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (NSDictionary *)_latestAppVersion
 {
     NSURL *latestAppVersionURL = [NSURL URLWithString:_AKVersionURL];
-/*
-    NSString *pathString =
-        @"file://Users/alee/_Programming/AppKiDo-0.90/AppKiDo.version";
-    NSURL *latestAppVersionURL = [NSURL URLWithString:pathString];
-*/
-
     NSString *latestAppVersionString =
         [[NSString stringWithContentsOfURL:latestAppVersionURL]
             ak_trimWhitespace];

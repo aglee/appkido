@@ -11,6 +11,7 @@
 #import "AKPrefUtils.h"
 #import "AKDatabase.h"
 #import "AKAppController.h"
+#import "AKDevToolsPathController.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
@@ -92,45 +93,6 @@ static AKPrefPanelController *s_sharedInstance = nil;
 }
 
 //-------------------------------------------------------------------------
-// Establishing the Dev Tools location
-//-------------------------------------------------------------------------
-
-- (void)selectDevToolsPath
-{
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-
-    [openPanel setPrompt:@"Select Dev Tools Location"];
-    [openPanel setAllowsMultipleSelection:NO];
-    [openPanel setCanChooseDirectories:YES];
-    [openPanel setCanChooseFiles:NO];
-    [openPanel setResolvesAliases:YES];
-
-    [openPanel
-        beginSheetForDirectory:nil
-        file:nil
-        types:nil
-        modalForWindow:[_prefsTabView window]
-        modalDelegate:self
-        didEndSelector:@selector(_devToolsOpenPanelDidEnd:returnCode:contextInfo:)
-        contextInfo:(void *)NULL];
-}
-
-- (void)_devToolsOpenPanelDidEnd:(NSOpenPanel *)panel
-    returnCode:(int)returnCode
-    contextInfo:(void *)contextInfo
-{
-    if ((returnCode != NSOKButton) || ([[panel filenames] count] == 0))
-    {
-        return;
-    }
-
-    NSString *devToolsPath = [[panel filenames] objectAtIndex:0];
-    [_devToolsPathField setStringValue:devToolsPath];
-NSLog(@"new devToolsPath: [%@]", devToolsPath);  // [agl] REMOVE
-//    [AKPrefUtils setDevToolsPathPref:devToolsPath];
-}
-
-//-------------------------------------------------------------------------
 // Action methods
 //-------------------------------------------------------------------------
 
@@ -155,7 +117,9 @@ NSLog(@"new devToolsPath: [%@]", devToolsPath);  // [agl] REMOVE
 
 - (IBAction)selectDevToolsPath:(id)sender
 {
-    [self selectDevToolsPath];
+    AKDevToolsPathController *pathPrompt =
+        [AKDevToolsPathController controllerWithTextField:_devToolsPathField];
+    [pathPrompt runOpenPanel:self];
 }
 
 - (IBAction)doFrameworksListAction:(id)sender
