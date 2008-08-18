@@ -5,50 +5,6 @@
 	<key>IBClasses</key>
 	<array>
 		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>applyAppearancePrefs</key>
-				<string>id</string>
-				<key>deselectAllFrameworks</key>
-				<string>id</string>
-				<key>doFrameworksListAction</key>
-				<string>id</string>
-				<key>openPrefsPanel</key>
-				<string>id</string>
-				<key>selectAllFrameworks</key>
-				<string>id</string>
-				<key>selectDevToolsPath</key>
-				<string>id</string>
-				<key>useDefaultAppearancePrefs</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>AKPrefPanelController</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>_devToolsPathField</key>
-				<string>NSTextField</string>
-				<key>_frameworksTable</key>
-				<string>NSTableView</string>
-				<key>_headerFontNameChoice</key>
-				<string>NSPopUpButton</string>
-				<key>_headerFontSizeCombo</key>
-				<string>NSComboBox</string>
-				<key>_listFontNameChoice</key>
-				<string>NSPopUpButton</string>
-				<key>_listFontSizeCombo</key>
-				<string>NSComboBox</string>
-				<key>_magnificationChoice</key>
-				<string>NSPopUpButton</string>
-				<key>_prefsTabView</key>
-				<string>NSTabView</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
 			<key>CLASS</key>
 			<string>AKDocView</string>
 			<key>LANGUAGE</key>

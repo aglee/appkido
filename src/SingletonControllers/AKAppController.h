@@ -9,6 +9,7 @@
 
 @class AKDocLocator;
 @class AKWindowController;
+@class AKPrefPanelController;
 
 /*!
  * @class       AKAppController
@@ -25,6 +26,7 @@
 @interface AKAppController : NSObject
 {
     BOOL _finishedInitializing;  // Becomes true when -awakeFromNib finishes.
+    AKPrefPanelController *_prefPanelController;  // Lazily instantiated.
 
     // Elements are AKWindowControllers.
     NSMutableArray *_windowControllers;

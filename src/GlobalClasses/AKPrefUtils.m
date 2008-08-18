@@ -64,7 +64,7 @@
     // particular, required frameworks can be missing from the prefs setting.
     // Thanks to Gerriet for pointing this out.
     NSEnumerator *essentialFrameworkNamesEnum =
-        [AKNamesOfEssentialFrameworks() objectEnumerator];
+        [AKNamesOfEssentialFrameworks objectEnumerator];
     NSString *essentialFrameworkName;
 
     while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
@@ -239,7 +239,7 @@
         forKey:AKFavoritesPrefName];
 
     [defaultPrefsDictionary
-        setObject:AKNamesOfEssentialFrameworks()
+        setObject:AKNamesOfEssentialFrameworks
         forKey:AKSelectedFrameworksPrefName];
 
     [[NSUserDefaults standardUserDefaults]
