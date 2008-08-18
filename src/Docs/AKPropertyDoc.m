@@ -8,6 +8,7 @@
 
 #import "AKPropertyDoc.h"
 
+#import "AKBehaviorNode.h"
 #import "AKMethodNode.h"
 
 @implementation AKPropertyDoc
@@ -51,21 +52,42 @@
     }
     else
     {
-        // We inherited this property from an ancestor class.
+        // We inherited this property from an ancestor class or protocol.
         if (methodIsInSameFramework)
         {
-            return
-                [NSString stringWithFormat:
-                    @"This property is inherited from class %@.",
-                    [ownerOfMethod nodeName]];
+            if ([ownerOfMethod isClassNode])
+            {
+                return
+                    [NSString stringWithFormat:
+                        @"This property is inherited from class %@.",
+                        [ownerOfMethod nodeName]];
+            }
+            else
+            {
+                return
+                    [NSString stringWithFormat:
+                        @"This property is declared in protocol <%@>.",
+                        [ownerOfMethod nodeName]];
+            }
         }
         else
         {
-            return
-                [NSString stringWithFormat:
-                    @"This property is inherited from %@ class %@.",
-                    methodFrameworkName,
-                    [ownerOfMethod nodeName]];
+            if ([ownerOfMethod isClassNode])
+            {
+                return
+                    [NSString stringWithFormat:
+                        @"This property is inherited from @% class %@.",
+                        methodFrameworkName,
+                        [ownerOfMethod nodeName]];
+            }
+            else
+            {
+                return
+                    [NSString stringWithFormat:
+                        @"This property is declared in %@ protocol <%@>.",
+                        methodFrameworkName,
+                        [ownerOfMethod nodeName]];
+            }
         }
     }
 }
