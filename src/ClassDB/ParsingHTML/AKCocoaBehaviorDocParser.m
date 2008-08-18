@@ -123,9 +123,8 @@
 
 @implementation AKCocoaBehaviorDocParser (Private)
 
-// [agl] KLUDGE
-// If there is a "Programming Topics" minor section, raise it to the
-// level of a major section so it will get listed in the doc list.
+// [agl] KLUDGE -- If there is a "Programming Topics" minor section, raise
+// it to the level of a major section so it will get listed in the doc list.
 - (void)_tweakRootSection
 {
     int numMajorSections = [_rootSectionOfCurrentFile numberOfChildSections];
