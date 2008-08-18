@@ -194,8 +194,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _initAboutPanel];
 
     // If necessary, prompt the user repeatedly for a valid Dev Tools path.
-[AKPrefUtils setDevToolsPathPref:@"xxx"];  // [agl] REMOVE
-//[AKPrefUtils setDevToolsPathPref:@"/Developer"];  // [agl] REMOVE
     while (![AKDevToolsPathController looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
     {
         [[AKDevToolsPanelController controller] promptForDevToolsPath];
