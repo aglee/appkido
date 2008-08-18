@@ -18,7 +18,7 @@ NSString *AKCoreDataFrameworkName    = @"CoreData";
 NSString *AKCoreImageFrameworkName   = @"CoreImage";
 NSString *AKQuartzCoreFrameworkName  = @"QuartzCore";
 
-NSArray *AKNamesOfEssentialFrameworks()
+NSArray *_AKNamesOfEssentialFrameworks()
 {
     static NSArray *s_namesOfEssentialFrameworks = nil;
 
@@ -32,6 +32,7 @@ NSArray *AKNamesOfEssentialFrameworks()
                 AKCoreDataFrameworkName,
                 AKCoreImageFrameworkName,
                 AKQuartzCoreFrameworkName,
+                //@"ApplicationServices",
                 nil] retain];
     }
 

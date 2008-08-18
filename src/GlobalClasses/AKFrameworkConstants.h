@@ -26,5 +26,6 @@ extern NSString *AKQuartzCoreFrameworkName;
  * first framework seen for a node is considered to be the node's primary
  * framework.
  */
-extern NSArray *AKNamesOfEssentialFrameworks();
+extern NSArray *_AKNamesOfEssentialFrameworks();
 
+#define AKNamesOfEssentialFrameworks _AKNamesOfEssentialFrameworks()
