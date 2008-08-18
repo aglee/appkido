@@ -9,6 +9,7 @@
 
 #import <DIGSLog.h>
 
+#import "AKTextUtils.h"
 #import "AKDatabase.h"
 #import "AKFileSection.h"
 #import "AKGroupNode.h"
@@ -19,7 +20,11 @@
 //-------------------------------------------------------------------------
 
 @interface AKCocoaGlobalsDocParser (Private)
-- (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)minorSection;
+- (void)_parseGlobalsFromDataTypesSection:(AKFileSection *)dataTypesSection;
+- (void)_parseGlobalsFromMajorSections;
+- (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection
+    usingGroupName:(NSString *)groupName;
+- (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)fileSection;
 - (NSSet *)_parseNamesOfGlobalsInFileSection:(AKFileSection *)fileSection;
 - (BOOL)_privatelyParseNonMarkupToken;
 @end
@@ -52,53 +57,19 @@
 
 - (void)applyParseResults
 {
-    NSEnumerator *majorSectionEnum =
-        [_rootSectionOfCurrentFile childSectionEnumerator];
-    AKFileSection *majorSection;
+    // Guess the structure of the file, and parse accordingly, based on
+    // whether there is a "Data Types" major section (as in
+    // CGGeometry/Reference/reference.html).
+    AKFileSection *dataTypesSection =
+        [_rootSectionOfCurrentFile childSectionWithName:@"Data Types"];
 
-    // Iterate through major sections.  Each major section corresponds
-    // to a group of types/constants.
-    while ((majorSection = [majorSectionEnum nextObject]))
+//    if (dataTypesSection)
+//    {
+//        [self _parseGlobalsFromDataTypesSection:dataTypesSection];  // [agl] REMOVE?
+//    }
+//    else
     {
-        if ([[majorSection sectionName] isEqualToString:@"Overview"])
-        {
-            continue;  // kludge until globals parsing is fixed properly
-        }
-
-        // Get the globals group node corresponding to this major section.
-        // Create it if necessary.
-        NSString *groupName = [majorSection sectionName];
-        AKGroupNode *groupNode =
-            [_databaseBeingPopulated
-                globalsGroupWithName:groupName
-                inFramework:_frameworkName];
-
-        if (!groupNode)
-        {
-            groupNode =
-                [[AKGroupNode alloc]
-                    initWithNodeName:groupName
-                    owningFramework:_frameworkName];
-            // [agl] FIXME -- There is a slight flaw in this reasoning: the
-            // nodes in a globals group may come from multiple files, so it's
-            // not quite right to assign the group a single doc file section.
-            [groupNode setNodeDocumentation:majorSection];
-            [_databaseBeingPopulated addGlobalsGroup:groupNode];
-        }
-
-        // Iterate through minor sections.  Each minor section corresponds
-        // to a type/constant within the group.
-        NSEnumerator *minorSectionEnum = [majorSection childSectionEnumerator];
-        AKFileSection *minorSection;
-        while ((minorSection = [minorSectionEnum nextObject]))
-        {
-            // Create a globals node and add it to the group.
-            AKGlobalsNode *globalsNode =
-                [self _globalsNodeFromFileSection:minorSection];
-
-            [globalsNode setNodeDocumentation:minorSection];
-            [groupNode addSubnode:globalsNode];
-        }
+        [self _parseGlobalsFromMajorSections];
     }
 }
 
@@ -110,17 +81,104 @@
 
 @implementation AKCocoaGlobalsDocParser (Private)
 
-- (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)minorSection
+// Parse the file in the case where there is a major section that contains
+// all the globals in subsections.
+- (void)_parseGlobalsFromDataTypesSection:(AKFileSection *)dataTypesSection
+{
+    NSString *groupName =
+            [@"Data Types - "
+                stringByAppendingString:
+                    [[_rootSectionOfCurrentFile sectionName] ak_firstWord]];
+    [self
+        _parseGlobalsGroupFromFileSection:dataTypesSection
+        usingGroupName:groupName];
+}
+
+// Parse the file in the case where each major section corresponds to a
+// group of types/constants.
+- (void)_parseGlobalsFromMajorSections
+{
+    NSEnumerator *majorSectionEnum =
+        [_rootSectionOfCurrentFile childSectionEnumerator];
+    AKFileSection *majorSection;
+
+    // Iterate through major sections.  Each major section corresponds
+    // to a group of types/constants.
+    while ((majorSection = [majorSectionEnum nextObject]))
+    {
+        if ([[majorSection sectionName] isEqualToString:@"Overview"]
+            || [[majorSection sectionName] isEqualToString:@"Functions"])
+        {
+            continue;  // kludge until globals parsing is fixed properly
+        }
+
+        // Get the globals nodes from the minor sections.
+        NSString *groupName = [majorSection sectionName];
+
+        if ([groupName isEqualToString:@"Data Types"])
+        {
+            groupName =
+                [@"Data Types - "
+                    stringByAppendingString:
+                        [[_rootSectionOfCurrentFile sectionName] ak_firstWord]];
+        }
+
+        [self
+            _parseGlobalsGroupFromFileSection:majorSection
+            usingGroupName:[majorSection sectionName]];
+    }
+}
+
+// Each subsection of the given section contains one global.
+- (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection
+    usingGroupName:(NSString *)groupName
+{
+    // Get the globals group node corresponding to this major section.
+    // Create it if necessary.
+    AKGroupNode *groupNode =
+        [_databaseBeingPopulated
+            globalsGroupWithName:groupName
+            inFramework:_frameworkName];
+
+    if (!groupNode)
+    {
+        groupNode =
+            [[AKGroupNode alloc]
+                initWithNodeName:groupName
+                owningFramework:_frameworkName];
+        // [agl] FIXME -- There is a slight flaw in this reasoning: the
+        // nodes in a globals group may come from multiple files, so it's
+        // not quite right to assign the group a single doc file section.
+        [groupNode setNodeDocumentation:groupSection];
+        [_databaseBeingPopulated addGlobalsGroup:groupNode];
+    }
+
+    // Iterate through child sections.  Each child section corresponds
+    // to a type/constant within the group.
+    NSEnumerator *childSectionEnum = [groupSection childSectionEnumerator];
+    AKFileSection *childSection;
+    while ((childSection = [childSectionEnum nextObject]))
+    {
+        // Create a globals node and add it to the group.
+        AKGlobalsNode *globalsNode =
+            [self _globalsNodeFromFileSection:childSection];
+
+        [globalsNode setNodeDocumentation:childSection];
+        [groupNode addSubnode:globalsNode];
+    }
+}
+
+- (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)fileSection
 {
     // Create a node.
     AKGlobalsNode *globalsNode =
         [[[AKGlobalsNode alloc]
-            initWithNodeName:[minorSection sectionName]
+            initWithNodeName:[fileSection sectionName]
             owningFramework:_frameworkName] autorelease];
 
     // Add any individual names we find in the minor section.
     NSEnumerator *namesOfGlobalsEnum =
-        [[self _parseNamesOfGlobalsInFileSection:minorSection]
+        [[self _parseNamesOfGlobalsInFileSection:fileSection]
             objectEnumerator];
     NSString *nameOfGlobal;
 
