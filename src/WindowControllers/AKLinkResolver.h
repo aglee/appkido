@@ -10,6 +10,12 @@
 @class AKDatabase;
 @class AKDocLocator;
 
+/*!
+ * First steps toward more reliable resolving of hyperlinks, i.e., figuring
+ * out what database node a given hyperlink points to.  I think this should
+ * get simpler when (a) I drop support for pre-3.0 Xcode, and (b) I
+ * overhaul the low-level parsing.
+ */
 @interface AKLinkResolver : NSObject
 {
     AKDatabase *_database;
