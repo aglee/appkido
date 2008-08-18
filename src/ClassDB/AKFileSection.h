@@ -102,6 +102,7 @@
 - (void)insertChildSection:(AKFileSection *)childSection
     atIndex:(int)index;
 - (void)removeChildSectionAtIndex:(int)index;
+- (AKFileSection *)childSectionContainingString:(NSString *)name; // thanks Gerriet
 
 
 //-------------------------------------------------------------------------

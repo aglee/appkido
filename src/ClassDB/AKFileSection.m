@@ -296,6 +296,26 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     [_childSections removeObjectAtIndex:index];
 }
 
+- (AKFileSection *)childSectionContainingString:(NSString *)name  // thanks Gerriet
+{
+   NSEnumerator *en = [_childSections objectEnumerator];
+   AKFileSection *childSection;
+
+   while ((childSection = [en nextObject]))
+   {
+		NSData *data = [childSection sectionData];
+		NSString *d = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSRange rr = [d rangeOfString:name];
+		[d release];
+		if (rr.location != NSNotFound)
+        {
+            return childSection;
+        }
+   }
+
+   return nil;
+}
+
 //-------------------------------------------------------------------------
 // AKSortable methods
 //-------------------------------------------------------------------------
