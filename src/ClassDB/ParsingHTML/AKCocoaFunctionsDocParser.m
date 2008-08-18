@@ -42,13 +42,7 @@
     }
 
 //NSLog(@"\n\n\n---------- %@ ----------", [self currentPath]);  // [agl] REMOVE
-    // Scan the "Functions by Task" section, and remember what group each
-    // function belongs to.
-    // Note that there may not *be* a "Functions by Task" section.  For example,
-    // as of now, there isn't one in the AddressBook functions doc.  In that
-    // case, we create a group named "Functions".
-    // Note also that in theory the functions in a group may be spread across
-    // multiple files.
+    // Map function names to the names of the groups they belong to.
     NSDictionary *groupNamesByFunctionName = [self _mapFunctionNamesToGroupNames];
     NSString *defaultGroupName = nil;
 
@@ -74,6 +68,7 @@
             defaultGroupName
             ? defaultGroupName
             : [groupNamesByFunctionName objectForKey:functionName];
+//NSLog(@"function name '%@', group name '%@'", functionName, groupName);  // [agl] REMOVE
 
         if (groupName == nil)
         {
@@ -117,8 +112,17 @@
 
 @implementation AKCocoaFunctionsDocParser (Private)
 
-// Keys of the returned dictionary will be function names, values will be
-// the group node the function needs to be added to.
+// Scan the "Functions by Task" section, and remember what group each
+// function belongs to.  Keys of the returned dictionary will be function
+// names, values will be the name of the group the function belongs to.
+//
+// Note that there may not *be* a "Functions by Task" section in the file
+// we're looking at.  For example, as of now, there isn't one in the
+// AddressBook functions doc.  In that case, we create a group named
+// "Functions".
+//
+// Note also that in theory the functions in a group may be spread across
+// multiple files.
 - (NSDictionary *)_mapFunctionNamesToGroupNames
 {
     NSMutableDictionary *groupNamesByFunctionName = [NSMutableDictionary dictionary];
