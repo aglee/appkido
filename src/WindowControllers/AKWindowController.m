@@ -67,10 +67,19 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)init
+- (id)initWithPlatformName:(NSString *)platformName
 {
     if ((self = [super init]))
     {
+        if (platformName)
+        {
+            _database = [AKDatabase databaseForPlatform:platformName];
+        }
+        else
+        {
+            _database = [AKDatabase databaseForPlatform:AKMacOSPlatform];
+        }
+
         int maxHistory =
             [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
@@ -81,6 +90,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     return self;
+}
+
+- (id)init
+{
+    DIGSLogNondesignatedInitializer();
+    [self release];
+    return nil;
 }
 
 - (void)awakeFromNib
@@ -103,14 +119,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Select NSObject.
     _windowHistoryIndex = -1;
     [_windowHistory removeAllObjects];
-    AKClassNode *objectNode =
-        [[AKDatabase defaultDatabase] classWithName:@"NSObject"];
-    [self jumpToTopic:
-        [AKClassTopic topicWithClassNode:objectNode]];
+    AKClassNode *classNode = [_database classWithName:@"NSObject"];
+    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode inDatabase:_database]];
 }
 
 - (void)dealloc
 {
+    [_database release];
+
     [_windowHistory release];
 
     [_topicBrowserController release];
@@ -122,6 +138,15 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_forwardMenu release];
 
     [super dealloc];
+}
+
+//-------------------------------------------------------------------------
+// Getters and setters
+//-------------------------------------------------------------------------
+
+- (AKDatabase *)database
+{
+    return _database;
 }
 
 //-------------------------------------------------------------------------
@@ -244,14 +269,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // If the link can be converted to an AKDocLocator, jump to that
     // locator.  Otherwise, try opening the file in the user's browser.
     AKDocLocator *linkDestination =
-        [[AKLinkResolver linkResolverWithDatabase:[AKDatabase defaultDatabase]]
+        [[AKLinkResolver linkResolverWithDatabase:_database]
             docLocatorForURL:linkURL];
 
     if (linkDestination == nil)
     {
         DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
         linkDestination =
-            [[AKOldLinkResolver linkResolverWithDatabase:[AKDatabase defaultDatabase]]
+            [[AKOldLinkResolver linkResolverWithDatabase:_database]
                 docLocatorForURL:linkURL];
     }
 
@@ -685,11 +710,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)jumpToSuperclass:(id)sender
 {
-    AKClassNode *node = [[self _currentTopic] parentClassOfTopic];
+    AKClassNode *superclassNode = [[self _currentTopic] parentClassOfTopic];
 
-    if (node)
+    if (superclassNode)
     {
-        [self jumpToTopic:[AKClassTopic topicWithClassNode:node]];
+        [self jumpToTopic:[AKClassTopic topicWithClassNode:superclassNode inDatabase:_database]];
     }
 }
 
@@ -715,7 +740,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Do the jump.
-    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
+    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode inDatabase:_database]];
 }
 
 - (IBAction)jumpToFrameworkFormalProtocols:(id)sender
@@ -724,7 +749,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFormalProtocolsTopic topicWithFrameworkName:fwName]];
+        [self jumpToTopic:[AKFormalProtocolsTopic topicWithFramework:fwName inDatabase:_database]];
 
         [self showBrowser:nil];
     }
@@ -736,7 +761,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKInformalProtocolsTopic topicWithFrameworkName:fwName]];
+        [self jumpToTopic:[AKInformalProtocolsTopic topicWithFramework:fwName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -747,7 +772,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFunctionsTopic topicWithFrameworkName:fwName]];
+        [self jumpToTopic:[AKFunctionsTopic topicWithFramework:fwName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -758,7 +783,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKGlobalsTopic topicWithFrameworkName:fwName]];
+        [self jumpToTopic:[AKGlobalsTopic topicWithFramework:fwName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -949,50 +974,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)windowDidBecomeKey:(NSNotification *)aNotification
 {
     [(NSWindow *)[aNotification object] orderFront:nil];
-}
-
-//-------------------------------------------------------------------------
-// NSTextView delegate methods
-//-------------------------------------------------------------------------
-
-// [agl] FIXME Can probably remove this, since we always use WebView now.
-- (BOOL)textView:(NSTextView *)textView clickedOnLink:(id)linkObj
-    atIndex:(unsigned)charIndex
-{
-    NSEvent *currentEvent = [NSApp currentEvent];
-    AKWindowController *wc =
-        ([currentEvent modifierFlags] & NSCommandKeyMask)
-        ? [[NSApp delegate] openNewWindow]
-        : self;
-
-    // Convert linkObj to a string if it isn't one already.
-    if (linkObj == nil)
-    {
-        DIGSLogWarning(@"&@ -- linkObj is nil", NSStringFromSelector(_cmd));
-        return NO;
-    }
-    else if ([linkObj isKindOfClass:[NSURL class]])
-    {
-        linkObj = [[linkObj absoluteURL] absoluteString];
-    }
-    else if (![linkObj isKindOfClass:[NSString class]])
-    {
-        DIGSLogWarning(
-            @"&@ -- linkObj is neither a string nor an NSURL",
-            NSStringFromSelector(_cmd));
-        return NO;
-    }
-
-    // Convert the string to an NSURL.
-    AKDocLocator *whereFrom = [self currentHistoryItem];
-    NSString *filePath =
-        [[[whereFrom docToDisplay] fileSection] filePath];
-    NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
-    NSURL *linkURL = [NSURL URLWithString:linkObj relativeToURL:docFileURL];
-
-    // Traverse the link to that URL.
-    // [agl] NOTE this might have to be a delayed perform.
-    return [wc jumpToLinkURL:linkURL];
 }
 
 @end

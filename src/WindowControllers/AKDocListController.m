@@ -10,6 +10,7 @@
 #import <WebKit/WebKit.h>
 #import <DIGSLog.h>
 #import "AKFileSection.h"
+#import "AKDatabase.h"
 #import "AKWindowController.h"
 #import "AKAppController.h"
 #import "AKTableView.h"
@@ -197,7 +198,7 @@
         NSEvent *currentEvent = [NSApp currentEvent];
         AKWindowController *wc =
             ([currentEvent modifierFlags] & NSCommandKeyMask)
-            ? [[NSApp delegate] openNewWindow]
+            ? [[NSApp delegate] openNewWindowForPlatform:[[_windowController database] platformName]]
             : _windowController;
 
         // Use a delayed perform to avoid mucking with the WebView's
@@ -249,7 +250,12 @@
             // browser window.
             [menuItem setAction:@selector(openLinkInNewWindow:)];
             [menuItem setTarget:nil];  // will go to first responder
-            [menuItem setRepresentedObject:linkURL];
+            [menuItem
+                setRepresentedObject:
+                    [NSArray arrayWithObjects:
+                        linkURL,
+                        _windowController,
+                        nil]];
 
             [newMenuItems addObject:menuItem];
         }

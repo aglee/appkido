@@ -9,6 +9,7 @@
 
 #import "DIGSLog.h"
 
+#import "AKFrameworkConstants.h"
 #import "AKPrefUtils.h"
 
 #import "AKClassNode.h"
@@ -29,73 +30,72 @@
 @implementation AKDatabase
 
 //-------------------------------------------------------------------------
-// Class methods
+// Platform names used to identify database instances
 //-------------------------------------------------------------------------
 
-+ (AKDatabase *)defaultDatabase  // [agl] REMOVE get rid of the global database; use individual instances
-{
-    static AKDatabase *s_defaultDatabase = nil;
+NSString *AKMacOSPlatform = @"MacOSPlatform";
+NSString *AKIPhonePlatform = @"IPhonePlatform";
 
-    if (s_defaultDatabase == nil)
+//-------------------------------------------------------------------------
+// Factory methods
+//-------------------------------------------------------------------------
+
++ (id)databaseForPlatform:(NSString *)platformName
+{
+    if (platformName == nil)
     {
-BOOL isForIPhone = NO;  // [agl] REMOVE
-if (isForIPhone)
-{
-        s_defaultDatabase = [[self databaseForLatestIPhoneSDK] retain];
-}
-else
-{
-        s_defaultDatabase = [[self databaseForMacSDK] retain];
-}
+        platformName = AKMacOSPlatform;
     }
 
-    return s_defaultDatabase;
-}
+    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
 
-+ (id)databaseForMacSDK
-{
-    return
-        [self databaseForMacSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]];
-}
-
-+ (id)databaseForLatestIPhoneSDK
-{
-    AKDocSetIndex *docSetIndex =
-        [AKDocSetIndex
-            indexForLatestIPhoneSDKInDevToolsPath:
-                [AKPrefUtils devToolsPathPref]];
-
-    return [self databaseWithDocSetIndex:docSetIndex];
-}
-
-+ (id)databaseForMacSDKInDevToolsPath:(NSString *)devToolsPath
-{
-    AKDocSetIndex *docSetIndex =
-        [AKDocSetIndex indexForMacSDKInDevToolsPath:devToolsPath];
-
-    if (docSetIndex)
+    if ([platformName isEqualToString:AKMacOSPlatform])
     {
-        return [self databaseWithDocSetIndex:docSetIndex];
+        static AKDatabase *s_macOSDatabase = nil;
+
+        if (s_macOSDatabase == nil)
+        {
+            AKDocSetIndex *docSetIndex =
+                [AKDocSetIndex indexForMacSDKInDevToolsPath:devToolsPath];
+
+            if (docSetIndex)
+            {
+                s_macOSDatabase =
+                    [[AKDatabaseWithDocSet alloc]
+                        initWithPlatformName:AKMacOSPlatform
+                        docSetIndex:docSetIndex];
+            }
+            else
+            {
+                s_macOSDatabase =
+                    [[AKOldDatabase alloc] initWithDevToolsPath:devToolsPath];
+            }
+        }
+
+        return s_macOSDatabase;
+    }
+    else if ([platformName isEqualToString:AKIPhonePlatform])
+    {
+        static AKDatabase *s_iPhoneDatabase = nil;
+
+        if (s_iPhoneDatabase == nil)
+        {
+            AKDocSetIndex *docSetIndex =
+                [AKDocSetIndex
+                    indexForLatestIPhoneSDKInDevToolsPath:devToolsPath];
+
+            s_iPhoneDatabase =
+                [[AKDatabaseWithDocSet alloc]
+                    initWithPlatformName:AKIPhonePlatform
+                    docSetIndex:docSetIndex];
+        }
+
+        return s_iPhoneDatabase;
     }
     else
     {
-        return
-            [[[AKOldDatabase alloc]
-                initWithDevToolsPath:devToolsPath] autorelease];
-    }
-}
-
-+ (id)databaseWithDocSetIndex:(AKDocSetIndex *)docSetIndex
-{
-    if (docSetIndex == nil)
-    {
+        DIGSLogWarning(@"Unexpected platform name [%@]", platformName);
         return nil;
-    }
-    else
-    {
-        return
-            [[[AKDatabaseWithDocSet alloc]
-                initWithDocSetIndex:docSetIndex] autorelease];
     }
 }
 
@@ -103,10 +103,13 @@ else
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)init
+/*! Designated initializer. */
+- (id)initWithPlatformName:(NSString *)platformName
 {
     if ((self = [super init]))
     {
+        _platformName = [platformName retain];
+
         _frameworkNames = [[NSMutableArray alloc] init];
         _namesOfAvailableFrameworks = nil;
 
@@ -135,8 +138,17 @@ else
     return self;
 }
 
+- (id)init
+{
+    DIGSLogNondesignatedInitializer();
+    [self release];
+    return nil;
+}
+
 - (void)dealloc
 {
+    [_platformName release];
+
     [_frameworkNames release];
 
     [_classNodesByName release];
@@ -168,6 +180,11 @@ else
 
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames
 {
+    if (frameworkNames == nil)
+    {
+        frameworkNames = AKNamesOfEssentialFrameworks;
+    }
+
     NSEnumerator *fwNameEnum = [frameworkNames objectEnumerator];
     NSString *fwName;
 
@@ -199,6 +216,11 @@ else
 //-------------------------------------------------------------------------
 // Getters and setters -- frameworks
 //-------------------------------------------------------------------------
+
+- (NSString *)platformName
+{
+    return _platformName;
+}
 
 - (NSArray *)frameworkNames
 {

@@ -7,6 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class AKDatabase;
 @class AKTopic;
 @class AKDocLocator;
 @class AKDocLocator;
@@ -38,6 +39,8 @@
 // to subcontrollers
 @interface AKWindowController : NSObject
 {
+    AKDatabase *_database;
+
     // The window's navigation history.  Elements are AKDocLocators.
     // Elements are added to the end.
     NSMutableArray *_windowHistory;
@@ -84,6 +87,19 @@
     // _quicklistController.
     IBOutlet NSDrawer *_quicklistDrawer;
 }
+
+//-------------------------------------------------------------------------
+// Init/awake/dealloc
+//-------------------------------------------------------------------------
+
+/*! Designated initializer. */
+- (id)initWithPlatformName:(NSString *)platformName;
+
+//-------------------------------------------------------------------------
+// Getters and setters
+//-------------------------------------------------------------------------
+
+- (AKDatabase *)database;
 
 //-------------------------------------------------------------------------
 // User preferences

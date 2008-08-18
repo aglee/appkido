@@ -17,6 +17,7 @@
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
+/*! Designated initializer. */
 - (id)initWithDevToolsPath:(NSString *)devToolsPath;
 
 @end

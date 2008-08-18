@@ -10,6 +10,7 @@
 #import "AKSubcontroller.h"
 
 @class AKWindowController;
+@class AKDatabase;
 
 /*!
  * @class       AKWindowSubcontroller

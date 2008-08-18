@@ -24,9 +24,7 @@
 
 - (int)numberOfSubtopics
 {
-    return
-        [[AKDatabase defaultDatabase]
-            numberOfFunctionsGroupsForFramework:_topicFramework];
+    return [_database numberOfFunctionsGroupsForFramework:_topicFramework];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
@@ -39,8 +37,7 @@
     NSArray *groupNodes =
         [AKSortUtils
             arrayBySortingArray:
-                [[AKDatabase defaultDatabase]
-                    functionsGroupsForFramework:_topicFramework]];
+                [_database functionsGroupsForFramework:_topicFramework]];
 
     if ((unsigned)subtopicIndex >= [groupNodes count])
     {

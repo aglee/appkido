@@ -23,18 +23,20 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKFrameworkTopic *)topicWithFrameworkName:(NSString *)fwName
++ (AKFrameworkTopic *)topicWithFramework:(NSString *)fwName
+    inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithFrameworkName:fwName] autorelease];
+    return [[[self alloc] initWithFramework:fwName inDatabase:database] autorelease];
 }
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithFrameworkName:(NSString *)fwName
+- (id)initWithFramework:(NSString *)fwName
+    inDatabase:(AKDatabase *)database
 {
-    if ((self = [super init]))
+    if ((self = [super initWithDatabase:database]))
     {
         _topicFramework = [fwName retain];
     }
@@ -42,7 +44,7 @@
     return self;
 }
 
-- (id)init
+- (id)initWithDatabase:(AKDatabase *)database
 {
     DIGSLogNondesignatedInitializer();
     [self dealloc];
@@ -67,11 +69,22 @@
         return nil;
     }
 
-    // Get the framework name.  Note that in older versions of AppKiDo,
-    // "AppKit" was saved as "ApplicationKit" in prefs.
+    // Get a database instance based on the platform name.
+    NSString *platformName = [prefDict objectForKey:AKPlatformNamePrefKey];
+    
+    if (platformName == nil)
+    {
+        platformName = AKMacOSPlatform;
+    }
+
+    AKDatabase *db = [AKDatabase databaseForPlatform:platformName];
+
+    // Get the framework name.
     NSString *fwName = [prefDict objectForKey:AKFrameworkNamePrefKey];
+
     if ([fwName isEqualToString:@"ApplicationKit"])
     {
+        // In older versions of AppKiDo, "AppKit" was saved as "ApplicationKit" in prefs.
         fwName = AKAppKitFrameworkName;
     }
 
@@ -83,8 +96,7 @@
         return nil;
     }
 
-    // Get the framework.
-    if (![[AKDatabase defaultDatabase] hasFrameworkWithName:fwName])
+    if (![db hasFrameworkWithName:fwName])
     {
         DIGSLogWarning(
             @"framework %@ named in pref dict for %@ doesn't exist",
@@ -93,7 +105,7 @@
     }
 
     // If we got this far, we have what we need to create an instance.
-    return [self topicWithFrameworkName:fwName];
+    return [self topicWithFramework:fwName inDatabase:db];
 }
 
 - (NSDictionary *)asPrefDictionary
@@ -126,31 +138,30 @@
 
 - (NSArray *)childTopics
 {
-    AKDatabase *db = [AKDatabase defaultDatabase];
     NSMutableArray *columnValues = [NSMutableArray array];
 
-    if ([db numberOfFunctionsGroupsForFramework:_topicFramework] > 0)
+    if ([_database numberOfFunctionsGroupsForFramework:_topicFramework] > 0)
     {
         [columnValues
-            addObject:[AKFunctionsTopic topicWithFrameworkName:_topicFramework]];
+            addObject:[AKFunctionsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
-    if ([db numberOfGlobalsGroupsForFramework:_topicFramework] > 0)
+    if ([_database numberOfGlobalsGroupsForFramework:_topicFramework] > 0)
     {
         [columnValues
-            addObject:[AKGlobalsTopic topicWithFrameworkName:_topicFramework]];
+            addObject:[AKGlobalsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
-    if ([[db formalProtocolsForFramework:_topicFramework] count] > 0)
+    if ([[_database formalProtocolsForFramework:_topicFramework] count] > 0)
     {
         [columnValues
-            addObject:[AKFormalProtocolsTopic topicWithFrameworkName:_topicFramework]];
+            addObject:[AKFormalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
-    if ([[db informalProtocolsForFramework:_topicFramework] count] > 0)
+    if ([[_database informalProtocolsForFramework:_topicFramework] count] > 0)
     {
         [columnValues
-            addObject:[AKInformalProtocolsTopic topicWithFrameworkName:_topicFramework]];
+            addObject:[AKInformalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
     return columnValues;

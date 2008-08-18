@@ -43,9 +43,10 @@
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex
+- (id)initWithPlatformName:(NSString *)platformName
+    docSetIndex:(AKDocSetIndex *)docSetIndex
 {
-    if ((self = [super init]))
+    if ((self = [super initWithPlatformName:platformName]))
     {
         _docSetIndex = [docSetIndex retain];
 
@@ -56,7 +57,7 @@
     return self;
 }
 
-- (id)init
+- (id)initWithPlatformName:(NSString *)platformName
 {
     DIGSLogNondesignatedInitializer();
     [self release];
@@ -76,6 +77,11 @@
 
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames
 {
+    if (frameworkNames == nil)
+    {
+        frameworkNames = [_docSetIndex objectiveCFrameworkNames];
+    }
+
     [super loadTokensForFrameworks:frameworkNames];
 
     // Now that all nodes have been added to the database, index them.

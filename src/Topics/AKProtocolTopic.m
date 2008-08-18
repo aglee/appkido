@@ -27,8 +27,9 @@
 //-------------------------------------------------------------------------
 
 + (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
+    inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
+    return [[[self alloc] initWithProtocolNode:protocolNode inDatabase:database] autorelease];
 }
 
 //-------------------------------------------------------------------------
@@ -36,8 +37,9 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
+    inDatabase:(AKDatabase *)database
 {
-    if ((self = [super init]))
+    if ((self = [super initWithDatabase:database]))
     {
         _protocolNode = [protocolNode retain];
     }
@@ -45,7 +47,7 @@
     return self;
 }
 
-- (id)init
+- (id)initWithDatabase:(AKDatabase *)database
 {
     DIGSLogNondesignatedInitializer();
     [self dealloc];
@@ -82,8 +84,15 @@
     }
     else
     {
-        AKProtocolNode *protocolNode =
-            [[AKDatabase defaultDatabase] protocolWithName:protocolName];
+        NSString *platformName = [prefDict objectForKey:AKPlatformNamePrefKey];
+
+        if (platformName == nil)
+        {
+            platformName = AKMacOSPlatform;
+        }
+
+        AKDatabase *db = [AKDatabase databaseForPlatform:platformName];
+        AKProtocolNode *protocolNode = [db protocolWithName:protocolName];
 
         if (!protocolNode)
         {
@@ -93,7 +102,7 @@
             return nil;
         }
 
-        return [self topicWithProtocolNode:protocolNode];
+        return [self topicWithProtocolNode:protocolNode inDatabase:db];
     }
 }
 

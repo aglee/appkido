@@ -27,15 +27,14 @@
 {
     NSMutableArray *columnValues = [NSMutableArray array];
     NSEnumerator *en =
-        [[[AKDatabase defaultDatabase]
-            formalProtocolsForFramework:_topicFramework]
+        [[_database formalProtocolsForFramework:_topicFramework]
             objectEnumerator];
     AKProtocolNode *protocolNode;
 
     while ((protocolNode = [en nextObject]))
     {
         [columnValues addObject:
-            [AKProtocolTopic topicWithProtocolNode:protocolNode]];
+            [AKProtocolTopic topicWithProtocolNode:protocolNode inDatabase:_database]];
     }
 
     return [AKSortUtils arrayBySortingArray:columnValues];

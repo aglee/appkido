@@ -8,6 +8,7 @@
 #import "AKSavedWindowState.h"
 
 #import "AKPrefUtils.h"
+#import "AKDatabase.h"
 #import "AKWindowLayout.h"
 #import "AKDocLocator.h"
 
@@ -25,6 +26,16 @@
     }
 
     AKSavedWindowState *windowState = [[[self alloc] init] autorelease];
+
+    // Get the platform name.
+    NSString *platformName = [prefDict objectForKey:AKPlatformNamePrefKey];
+
+    if (platformName == nil)
+    {
+        platformName = AKMacOSPlatform;
+    }
+
+    [windowState setPlatformName:platformName];
 
     // Get the window layout.
     NSDictionary *windowLayoutPrefDict =
@@ -49,6 +60,13 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
+    if (_platformName)
+    {
+        [prefDict
+            setObject:_platformName
+            forKey:AKPlatformNamePrefKey];
+    }
+
     [prefDict
         setObject:[_savedWindowLayout asPrefDictionary]
         forKey:AKWindowLayoutPrefKey];
@@ -62,6 +80,18 @@
 //-------------------------------------------------------------------------
 // Getters and setters
 //-------------------------------------------------------------------------
+
+- (NSString *)platformName
+{
+    return _platformName;
+}
+
+- (void)setPlatformName:(NSString *)platformName
+{
+    [platformName retain];
+    [_platformName release];
+    _platformName = platformName;
+}
 
 - (AKWindowLayout *)savedWindowLayout
 {

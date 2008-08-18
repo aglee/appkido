@@ -63,10 +63,11 @@
 @interface AKDatabase : NSObject
 {
 @protected
-    id _delegate;  // *NOT* retained
+    NSString *_platformName;
 
-    // Elements are NSStrings, in the order in which the frameworks are
-    // added to the database.  There are constants in AKFrameworkConstants.h
+    id _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
+
+    // Elements are NSStrings.  There are constants in AKFrameworkConstants.h
     // for the names of some frameworks that need to be treated specially.
     NSMutableArray *_frameworkNames;
     NSMutableArray *_namesOfAvailableFrameworks;
@@ -133,25 +134,24 @@
 }
 
 //-------------------------------------------------------------------------
-// Class methods
+// Platform names used to identify database instances
 //-------------------------------------------------------------------------
 
-/*!
- * @method      defaultDatabase
- * @discussion  Returns a global instance.  This is merely a convenience;
- *              it's perfectly okay to create other instances.
- */
-+ (AKDatabase *)defaultDatabase;
+extern NSString *AKMacOSPlatform;
+extern NSString *AKIPhonePlatform;
 
-/*! Uses prefs to get the Dev Tools path. */
-+ (id)databaseForMacSDK;
+//-------------------------------------------------------------------------
+// Factory methods
+//-------------------------------------------------------------------------
 
-/*! Uses prefs to get the Dev Tools path. */
-+ (id)databaseForLatestIPhoneSDK;
++ (id)databaseForPlatform:(NSString *)platformName;
 
-+ (id)databaseForMacSDKInDevToolsPath:(NSString *)devToolsPath;
+//-------------------------------------------------------------------------
+// Init/awake/dealloc
+//-------------------------------------------------------------------------
 
-+ (id)databaseWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
+/*! Designated initializer. */
+- (id)initWithPlatformName:(NSString *)platformName;
 
 //-------------------------------------------------------------------------
 // Populating
@@ -159,7 +159,8 @@
 
 /*!
  * Calls -loadTokensForFrameworkNamed:.  Sends delegate message for each
- * framework loaded.
+ * framework loaded.  frameworkNames can be nil; by default, this causes
+ * all "essential" frameworks to be loaded.
  */
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames;
 
@@ -174,6 +175,8 @@
 //-------------------------------------------------------------------------
 // Getters and setters -- frameworks
 //-------------------------------------------------------------------------
+
+- (NSString *)platformName;
 
 /*!
  * Returns the names of frameworks that have been loaded, in no guaranteed
