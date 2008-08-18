@@ -207,7 +207,7 @@
         forKey:AKIgnoreCasePrefKey];
 
     [defaultPrefsDictionary
-        setObject:@"Helvetica"
+        setObject:@"Lucida Grande"
         forKey:AKListFontNamePrefName];
 
     [defaultPrefsDictionary
