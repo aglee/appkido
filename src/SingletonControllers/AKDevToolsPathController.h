@@ -9,9 +9,15 @@
 #import <Cocoa/Cocoa.h>
 
 
+/*!
+ * Controller that is attached to a text field that displays the user's
+ * preference for the Dev Tools location.  Calling -runOpenPanel starts
+ * an open panel sheet in the window that contains that text field,
+ * allowing the user to select a different Dev Tools path.
+ */
 @interface AKDevToolsPathController : NSObject
 {
-    IBOutlet NSTextField *_devToolsPathField;
+    NSTextField *_devToolsPathField;
 }
 
 //-------------------------------------------------------------------------
@@ -19,19 +25,14 @@
 //-------------------------------------------------------------------------
 
 /*! Returns an instance attached to a pre-existing UI via textField. */
-+ (AKDevToolsPathController *)controllerWithTextField:(NSTextField *)textField;
-
-+ (AKDevToolsPathController *)controllerWithNib;
++ (id)controllerWithTextField:(NSTextField *)textField;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-/*!  This is not the designated initializer -- -init is. */
+/*! Designated initializer. */
 - (id)initWithTextField:(NSTextField *)textField;
-
-/*!  This is not the designated initializer -- -init is. */
-- (id)initWithNib;
 
 //-------------------------------------------------------------------------
 // Running the panel
@@ -43,14 +44,11 @@
  */
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
-
-- (IBAction)runOpenPanel:(id)sender;
-
-- (IBAction)ok:(id)sender;
-
-- (IBAction)cancel:(id)sender;
+/*!
+ * Displays an open panel that prompts the user for the Dev Tools location.
+ * The open panel is opened as a sheet on the window containing
+ * _devToolsPathField.
+ */
+- (void)runOpenPanel;
 
 @end

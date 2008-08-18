@@ -30,6 +30,7 @@
 #import "AKTopic.h"
 
 #import "AKDevToolsPathController.h"
+#import "AKDevToolsPanelController.h"
 
 
 // [agl] working on parse performance
@@ -193,25 +194,13 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _initAboutPanel];
 
     // If necessary, prompt the user repeatedly for a valid Dev Tools path.
-    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
-/*
-devToolsPath = nil;  // [agl] REMOVE
-    if (![AKDevToolsPathController looksLikeValidDevToolsPath:devToolsPath])
+[AKPrefUtils setDevToolsPathPref:@"xxx"];  // [agl] REMOVE
+//[AKPrefUtils setDevToolsPathPref:@"/Developer"];  // [agl] REMOVE
+    while (![AKDevToolsPathController looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
     {
-        devToolsPath =
-            [[AKDevToolsPathController sharedInstance]
-                promptForDevToolsPath:devToolsPath];
-        if (devToolsPath == nil)
-        {
-            [NSApp terminate:nil];
-        }
-        else
-        {
-            [AKPrefUtils setDevToolsPathPref:devToolsPath];
-        }
+        [[AKDevToolsPanelController controller] promptForDevToolsPath];
     }
-*/
-    DIGSLogDebug(@"dev tools path is [%@]", devToolsPath);
+    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
 
     // Put up the splash window.
     [_splashVersionField setStringValue:[self _appVersion]];
@@ -279,6 +268,7 @@ devToolsPath = nil;  // [agl] REMOVE
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [_windowControllers release];
+    [_prefPanelController release];
     [_favoritesList release];
 
     [super dealloc];
@@ -531,7 +521,13 @@ devToolsPath = nil;  // [agl] REMOVE
 
 - (IBAction)openPrefsPanel:(id)sender
 {
-    [[AKPrefPanelController sharedInstance] openPrefsPanel:sender];
+    if (_prefPanelController == nil)
+    {
+        _prefPanelController = [[AKPrefPanelController alloc] init];
+        [NSBundle loadNibNamed:@"Prefs" owner:_prefPanelController];
+    }
+
+    [_prefPanelController openPrefsPanel:sender];
 }
 
 - (IBAction)openNewWindow:(id)sender

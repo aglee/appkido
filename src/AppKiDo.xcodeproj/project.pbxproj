@@ -229,6 +229,9 @@
 		7368B9B00E0EFB2200AFEA2D /* AKCollectionOfNodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfNodes.m */; };
 		7395580F0D29CA83008105BD /* AKDatabaseXMLExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */; };
 		739558100D29CA83008105BD /* AKDatabaseXMLExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */; };
+		739E1C800E4F453900119B06 /* AKDevToolsPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */; };
+		739E1C810E4F453900119B06 /* AKDevToolsPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */; };
+		739E1EDC0E59190C00119B06 /* Prefs.nib in Resources */ = {isa = PBXBuildFile; fileRef = 739E1EDA0E59190B00119B06 /* Prefs.nib */; };
 		73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */; };
 		73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */; };
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
@@ -439,6 +442,9 @@
 		7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseXMLExporter.m; sourceTree = "<group>"; };
 		739D82000682A1FE00C03E01 /* AKDocView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKDocView.h; path = CustomViews/AKDocView.h; sourceTree = "<group>"; };
 		739D82010682A1FE00C03E01 /* AKDocView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKDocView.m; path = CustomViews/AKDocView.m; sourceTree = "<group>"; };
+		739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsPanelController.h; sourceTree = "<group>"; };
+		739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsPanelController.m; sourceTree = "<group>"; };
+		739E1EDB0E59190C00119B06 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Prefs.nib; sourceTree = "<group>"; };
 		73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefConstants.h; sourceTree = "<group>"; };
 		73A1B5BD061B6947002C95F1 /* AKPrefConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPrefConstants.m; sourceTree = "<group>"; };
 		73A1B627061B6AF5002C95F1 /* AKFrameworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkConstants.h; sourceTree = "<group>"; };
@@ -593,6 +599,7 @@
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				73D322980E464E2A0062E277 /* DevToolsPath.nib */,
 				733ACB340498486200A80007 /* AppKiDo.nib */,
+				739E1EDA0E59190B00119B06 /* Prefs.nib */,
 				73B9158706133DBF00066E17 /* Credits.html */,
 				73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */,
 				733ACAF20498483100A80007 /* app-icon.icns */,
@@ -818,6 +825,8 @@
 				732BD5D605ED8FBE0055715D /* AKAppController.m */,
 				73B914930E089D180012C16F /* AKDevToolsPathController.h */,
 				73B914940E089D180012C16F /* AKDevToolsPathController.m */,
+				739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */,
+				739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */,
 				73C74137066BFAEF00A76FEE /* AKFindPanelController.h */,
 				73C74138066BFAEF00A76FEE /* AKFindPanelController.m */,
 				73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */,
@@ -1331,6 +1340,7 @@
 				73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */,
 				731D74310E42B83300C54AD5 /* AKOldDatabase.h in Headers */,
 				731D74370E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h in Headers */,
+				739E1C800E4F453900119B06 /* AKDevToolsPanelController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1406,6 +1416,7 @@
 				73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */,
 				73D2370E0D4561C300EF7503 /* README-fmdb.txt in Resources */,
 				73D3229A0E464E2A0062E277 /* DevToolsPath.nib in Resources */,
+				739E1EDC0E59190C00119B06 /* Prefs.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1528,6 +1539,7 @@
 				73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */,
 				731D74320E42B83300C54AD5 /* AKOldDatabase.m in Sources */,
 				731D74380E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m in Sources */,
+				739E1C810E4F453900119B06 /* AKDevToolsPanelController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1557,6 +1569,14 @@
 			);
 			name = AppKiDo.nib;
 			sourceTree = SOURCE_ROOT;
+		};
+		739E1EDA0E59190B00119B06 /* Prefs.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				739E1EDB0E59190C00119B06 /* English */,
+			);
+			name = Prefs.nib;
+			sourceTree = "<group>";
 		};
 		73B9158706133DBF00066E17 /* Credits.html */ = {
 			isa = PBXVariantGroup;

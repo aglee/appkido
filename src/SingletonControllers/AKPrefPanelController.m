@@ -99,6 +99,16 @@ static AKPrefPanelController *s_sharedInstance = nil;
 - (IBAction)openPrefsPanel:(id)sender
 {
     [self _updateAppearanceTabFromPrefs];
+
+    if ([AKPrefUtils devToolsPathPref])
+    {
+        [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
+    }
+    else
+    {
+        [_devToolsPathField setStringValue:@""];
+    }
+
     [[_prefsTabView window] makeKeyAndOrderFront:nil];
 }
 
@@ -119,7 +129,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
 {
     AKDevToolsPathController *pathPrompt =
         [AKDevToolsPathController controllerWithTextField:_devToolsPathField];
-    [pathPrompt runOpenPanel:self];
+    [pathPrompt runOpenPanel];
 }
 
 - (IBAction)doFrameworksListAction:(id)sender
@@ -161,7 +171,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
 - (IBAction)deselectAllFrameworks:(id)sender
 {
-    [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks()];
+    [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
     [_frameworksTable reloadData];
 }
 
@@ -199,7 +209,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
     if ([columnID isEqualToString:_AKCheckboxesColumnID])
     {
-        if ([AKNamesOfEssentialFrameworks() containsObject:fwName])
+        if ([AKNamesOfEssentialFrameworks containsObject:fwName])
         {
             // Do not allow the user to remove "essential" frameworks.
             [aCell setEnabled:NO];

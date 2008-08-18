@@ -12,39 +12,24 @@
 #import "AKFileUtils.h"
 #import "AKPrefUtils.h"
 
-
-// [agl] TODO Don't need this object around after user makes successful
-// selection.
-
 @implementation AKDevToolsPathController
 
 //-------------------------------------------------------------------------
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKDevToolsPathController *)controllerWithTextField:(NSTextField *)textField
++ (id)controllerWithTextField:(NSTextField *)textField
 {
     return [[[self alloc] initWithTextField:textField] autorelease];
-}
-
-+ (AKDevToolsPathController *)controllerWithNib
-{
-    return [[[self alloc] initWithNib] autorelease];
 }
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-// Designated initializer.
-- (id)init
-{
-    return [super init];
-}
-
 - (id)initWithTextField:(NSTextField *)textField
 {
-    if ((self = [self init]))
+    if ((self = [super init]))
     {
         _devToolsPathField = [textField retain];
     }
@@ -52,35 +37,20 @@
     return self;
 }
 
-- (id)initWithNib
+- (id)init
 {
-    if ((self = [self init]))
-    {
-        if (![NSBundle loadNibNamed:@"DevToolsPath" owner:self])
-        {
-            DIGSLogDebug(@"Failed to load DevToolsPath");
-            [self release];
-            return nil;
-        }
-    }
-
-    return self;
+    DIGSLogNondesignatedInitializer();
+    [self release];
+    return nil;
 }
 
 - (void)dealloc
 {
+    DIGSLogEnteringMethod();
+
     [_devToolsPathField release];
 
     [super dealloc];
-}
-
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
-
-- (void)runModalPromptWindow
-{
-    // [agl] FIXME fill this in
 }
 
 //-------------------------------------------------------------------------
@@ -113,40 +83,14 @@
         && [self _directory:devToolsPath hasSubdirectory:@"Examples"];
 }
 
-- (NSString *)promptForDevToolsPath:(NSString *)oldPath
-{
-    if (oldPath == nil)
-    {
-        [_devToolsPathField setStringValue:@""];
-    }
-    else
-    {
-        [_devToolsPathField setStringValue:oldPath];
-    }
-
-    NSInteger result =
-        [[NSApplication sharedApplication]
-            runModalForWindow:[_devToolsPathField window]];
-
-    if (result == NSRunAbortedResponse)
-    {
-        return nil;
-    }
-    else
-    {
-        return [_devToolsPathField stringValue];
-    }
-}
-
-//-------------------------------------------------------------------------
-// Establishing the Dev Tools location
-//-------------------------------------------------------------------------
-
 - (void)runOpenPanel
 {
+    DIGSLogEnteringMethod();
+
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 
-    [openPanel setPrompt:@"Select Dev Tools Location"];
+    [openPanel setTitle:@"Select Dev Tools directory"];
+    [openPanel setPrompt:@"Select"];
     [openPanel setAllowsMultipleSelection:NO];
     [openPanel setCanChooseDirectories:YES];
     [openPanel setCanChooseFiles:NO];
@@ -157,84 +101,98 @@
         file:nil
         types:nil
         modalForWindow:[_devToolsPathField window]
-        modalDelegate:[self retain]  // will release when the open panel is dismissed
+        modalDelegate:[self retain]  // will release later
         didEndSelector:@selector(_devToolsOpenPanelDidEnd:returnCode:contextInfo:)
         contextInfo:(void *)NULL];
 }
 
 //-------------------------------------------------------------------------
-// Action methods
+// Modal delegate methods and support for them
 //-------------------------------------------------------------------------
 
-- (IBAction)runOpenPanel:(id)sender
+// Called when the user has selected a (seemingly) valid Dev Tools path.
+- (void)_acceptDevToolsPath:(NSString *)selectedDir
 {
-    [self runOpenPanel];
+    DIGSLogObject(@"selectedDir", selectedDir);
+    [_devToolsPathField setStringValue:selectedDir];
+    [AKPrefUtils setDevToolsPathPref:selectedDir];
 }
 
-- (IBAction)ok:(id)sender
+// Called by -_devToolsOpenPanelDidEnd:returnCode:contextInfo: if the user
+// selects a directory that does not look like a valid Dev Tools directory.
+- (void)_showBadPathAlert:(NSString *)selectedDir
 {
-    [[NSApplication sharedApplication] stopModal];
+    DIGSLogEnteringMethod();
+
+    NSBeginAlertSheet(
+        @"Invalid Dev Tools path",  // title
+        @"OK",  // defaultButton
+        @"Cancel",  // alternateButton
+        nil,  // otherButton
+        [_devToolsPathField window],  // docWindow
+        [self retain],  // modalDelegate -- will release when alert ends
+        @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
+        (SEL)NULL,  // didDismissSelector
+        (void *)NULL,  // contextInfo
+        @"'%@' doesn't look like a valid Dev Tools path.  Would you like to select another?",  // msg
+        selectedDir
+    );
 }
 
-- (IBAction)cancel:(id)sender
-{
-    [[NSApplication sharedApplication] abortModal];
-}
-
-//-------------------------------------------------------------------------
-// Modal delegate methods
-//-------------------------------------------------------------------------
-
+// Called when the open panel sheet opened by -runOpenPanel is dismissed.
 - (void)_devToolsOpenPanelDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
+    DIGSLogEnteringMethod();
+
+    [self autorelease];  // was retained by -runOpenPanel
+
     if (returnCode == NSOKButton)
     {
         NSString *selectedDir = [panel directory];
-NSLog(@"AKDevToolsPathController -- selectedDir: [%@]", selectedDir);  // [agl] REMOVE
 
-//    [AKPrefUtils setDevToolsPathPref:selectedDir];
-
-        if (![[self class] looksLikeValidDevToolsPath:selectedDir])
+        if ([[self class] looksLikeValidDevToolsPath:selectedDir])
         {
-            NSBeginAlertSheet(
-                @"Invalid Dev Tools path",  // title
-                @"OK",  // defaultButton
-                @"Cancel",  // alternateButton
-                nil,  // otherButton
-                [_devToolsPathField window],  // docWindow
-                [self retain],  // modalDelegate
-                @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
-                (SEL)NULL,  // didDismissSelector,
-                (void *)[selectedDir retain],  // contextInfo,
-                @"'%@' doesn't look like a valid Dev Tools path.  Are you sure it's what you want?",  // msg
-                selectedDir
-            );
+            [self _acceptDevToolsPath:selectedDir];
         }
-
-        [_devToolsPathField setStringValue:selectedDir];
+        else
+        {
+            [self
+                performSelector:@selector(_showBadPathAlert:)
+                withObject:selectedDir
+                afterDelay:(NSTimeInterval)0.0
+                inModes:
+                    [NSArray arrayWithObjects:
+                        NSDefaultRunLoopMode,
+                        NSModalPanelRunLoopMode,
+                        nil]];
+        }
     }
 }
 
+// Weird, there's no -performSelector:afterDelay: (without a withObject:).
+- (void)_runOpenPanel:(id)ignore
+{
+    [self runOpenPanel];
+}
+
+// Called when the alert sheet opened by -_showBadPathAlert is dismissed.
 - (void)_badPathAlertDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-//    [panel orderOut:nil];
+    DIGSLogEnteringMethod();
 
-    NSString *selectedDir = [(NSString *)contextInfo retain];
+    [self autorelease];  // was retained by -_showBadPathAlert
 
-    if (returnCode == NSOKButton)
+    if (returnCode == NSOKButton)  // "OK" means try the open panel again
     {
-        [_devToolsPathField setStringValue:selectedDir];
+        [self
+            performSelector:@selector(_runOpenPanel:)
+            withObject:nil
+            afterDelay:(NSTimeInterval)0.0];
     }
-    else
-    {
-        DIGSLogDebug(@"user said not to accept bogus-looking Dev Tools path [%@]", selectedDir);
-    }
-
-    [self release];  // was retained by -_devToolsOpenPanelDidEnd:returnCode:contextInfo:
 }
 
 @end
