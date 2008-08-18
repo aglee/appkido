@@ -21,6 +21,7 @@
 //-------------------------------------------------------------------------
 
 /*! Designated initializer. */
-- (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
+- (id)initWithPlatformName:(NSString *)platformName
+    docSetIndex:(AKDocSetIndex *)docSetIndex;
 
 @end

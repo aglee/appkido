@@ -389,7 +389,7 @@ g_UTF8Comparisons++;
         if ([self _matchesNode:classNode])
         {
             AKClassTopic *topic =
-                [AKClassTopic topicWithClassNode:classNode];
+                [AKClassTopic topicWithClassNode:classNode inDatabase:_database];
 
             [_searchResults
                 addObject:
@@ -411,7 +411,7 @@ g_UTF8Comparisons++;
         if ([self _matchesNode:protocolNode])
         {
             AKProtocolTopic *topic =
-                [AKProtocolTopic topicWithProtocolNode:protocolNode];
+                [AKProtocolTopic topicWithProtocolNode:protocolNode inDatabase:_database];
 
             [_searchResults
                 addObject:
@@ -430,7 +430,7 @@ g_UTF8Comparisons++;
 
     while ((classNode = [en nextObject]))
     {
-        AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
+        AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode inDatabase:_database];
 
         // Search the class's properties.
         [self
@@ -472,7 +472,7 @@ g_UTF8Comparisons++;
     while ((protocolNode = [en nextObject]))
     {
         AKProtocolTopic *topic =
-            [AKProtocolTopic topicWithProtocolNode:protocolNode];
+            [AKProtocolTopic topicWithProtocolNode:protocolNode inDatabase:_database];
 
         // Search the protocol's properties.
         [self
@@ -517,7 +517,7 @@ g_UTF8Comparisons++;
             {
                 if ([self _matchesNode:subnode])
                 {
-                    AKTopic *topic = [AKFunctionsTopic topicWithFrameworkName:fwName];
+                    AKTopic *topic = [AKFunctionsTopic topicWithFramework:fwName inDatabase:_database];
 
                     [_searchResults
                         addObject:
@@ -579,7 +579,7 @@ g_UTF8Comparisons++;
 
                 if (matchFound)
                 {
-                    AKTopic *topic = [AKGlobalsTopic topicWithFrameworkName:fwName];
+                    AKTopic *topic = [AKGlobalsTopic topicWithFramework:fwName inDatabase:_database];
 
                     [_searchResults
                         addObject:

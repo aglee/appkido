@@ -19,13 +19,15 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode;
++ (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
+    inDatabase:(AKDatabase *)database;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
 // Designated initializer
-- (id)initWithProtocolNode:(AKProtocolNode *)protocolNode;
+- (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
+    inDatabase:(AKDatabase *)database;
 
 @end

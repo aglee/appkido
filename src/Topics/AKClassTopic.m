@@ -27,8 +27,9 @@
 //-------------------------------------------------------------------------
 
 + (id)topicWithClassNode:(AKClassNode *)classNode
+    inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithClassNode:classNode] autorelease];
+    return [[[self alloc] initWithClassNode:classNode inDatabase:database] autorelease];
 }
 
 //-------------------------------------------------------------------------
@@ -36,8 +37,9 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithClassNode:(AKClassNode *)classNode
+    inDatabase:(AKDatabase *)database
 {
-    if ((self = [super init]))
+    if ((self = [super initWithDatabase:database]))
     {
         _classNode = [classNode retain];
     }
@@ -45,7 +47,7 @@
     return self;
 }
 
-- (id)init
+- (id)initWithDatabase:(AKDatabase *)database
 {
     DIGSLogNondesignatedInitializer();
     [self dealloc];
@@ -82,8 +84,15 @@
     }
     else
     {
-        AKClassNode *classNode =
-            [[AKDatabase defaultDatabase] classWithName:className];
+        NSString *platformName = [prefDict objectForKey:AKPlatformNamePrefKey];
+
+        if (platformName == nil)
+        {
+            platformName = AKMacOSPlatform;
+        }
+
+        AKDatabase *db = [AKDatabase databaseForPlatform:platformName];
+        AKClassNode *classNode = [db classWithName:className];
 
         if (!classNode)
         {
@@ -93,7 +102,7 @@
             return nil;
         }
 
-        return [self topicWithClassNode:classNode];
+        return [self topicWithClassNode:classNode inDatabase:db];
     }
 }
 
@@ -152,7 +161,7 @@
     while ((subclassNode = [en nextObject]))
     {
         [columnValues addObject:
-            [AKClassTopic topicWithClassNode:subclassNode]];
+            [AKClassTopic topicWithClassNode:subclassNode inDatabase:_database]];
     }
 
     return columnValues;

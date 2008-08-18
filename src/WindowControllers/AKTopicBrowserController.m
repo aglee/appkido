@@ -298,7 +298,7 @@
 - (void)_setUpTopicsForZeroethBrowserColumn
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *db = [AKDatabase defaultDatabase];
+    AKDatabase *db = [_windowController database];
     NSEnumerator *classEnum =
         [[AKSortUtils arrayBySortingArray:[db rootClasses]]
             objectEnumerator];
@@ -310,7 +310,7 @@
 
     while ((classNode = [classEnum nextObject]))
     {
-        [columnValues addObject:[AKClassTopic topicWithClassNode:classNode]];
+        [columnValues addObject:[AKClassTopic topicWithClassNode:classNode inDatabase:db]];
     }
 
     // Set up the ":: other topics ::" section of this browser column.
@@ -322,7 +322,8 @@
 
     while ((fwName = [fwNameEnum nextObject]))
     {
-        [columnValues addObject:[AKFrameworkTopic topicWithFrameworkName:fwName]];
+        [columnValues
+            addObject:[AKFrameworkTopic topicWithFramework:fwName inDatabase:db]];
     }
 
     [_topicListsForBrowserColumns addObject:columnValues];

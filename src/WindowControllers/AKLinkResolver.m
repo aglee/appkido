@@ -90,8 +90,8 @@
 {
     return
         [behaviorNode isClassNode]
-        ? [AKClassTopic topicWithClassNode:(AKClassNode *)behaviorNode]
-        : [AKProtocolTopic topicWithProtocolNode:(AKProtocolNode *)behaviorNode];
+        ? [AKClassTopic topicWithClassNode:(AKClassNode *)behaviorNode inDatabase:_database]
+        : [AKProtocolTopic topicWithProtocolNode:(AKProtocolNode *)behaviorNode inDatabase:_database];
 }
 
 - (AKDocLocator *)_docLocatorForBehavior:(AKBehaviorNode *)behaviorNode

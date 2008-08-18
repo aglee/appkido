@@ -19,6 +19,7 @@
  */
 @interface AKSavedWindowState : NSObject
 {
+    NSString *_platformName;
     AKWindowLayout *_savedWindowLayout;
     AKDocLocator *_savedDocLocator;
 }
@@ -34,6 +35,9 @@
 //-------------------------------------------------------------------------
 // Getters and setters
 //-------------------------------------------------------------------------
+
+- (NSString *)platformName;
+- (void)setPlatformName:(NSString *)platformName;
 
 - (AKWindowLayout *)savedWindowLayout;
 - (void)setSavedWindowLayout:(AKWindowLayout *)windowLayout;

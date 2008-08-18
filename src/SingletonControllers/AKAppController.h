@@ -68,11 +68,11 @@
 - (AKWindowController *)frontmostWindowController;
 
 /*!
- * @method      openNewWindow
- * @discussion  Opens a new browser window and returns its window
- *              controller.
+ * @method      openNewWindowForPlatform:
+ * @discussion  Opens a new browser window displaying the APIs for the
+ *              specified platform.  Returns the new window controller.
  */
-- (AKWindowController *)openNewWindow;
+- (AKWindowController *)openNewWindowForPlatform:(NSString *)platformName;
 
 //-------------------------------------------------------------------------
 // Preferences

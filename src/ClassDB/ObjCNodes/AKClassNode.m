@@ -306,7 +306,7 @@
                     substringFromIndex:3]
                     uppercaseString];
             NSEnumerator *protocolEnum =
-                [[[AKDatabase defaultDatabase]
+                [[[AKDatabase databaseForPlatform:AKMacOSPlatform]  // [agl] FIXME -- IMPORTANT Not necessarily MacOS!
                     allProtocols] objectEnumerator];
             AKProtocolNode *protocolNode;
 

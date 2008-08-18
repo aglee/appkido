@@ -348,7 +348,9 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
 - (NSArray *)_namesOfAvailableFrameworks
 {
-    return [[AKDatabase defaultDatabase] namesOfAvailableFrameworks];
+    return
+        [[AKDatabase databaseForPlatform:AKMacOSPlatform]
+            namesOfAvailableFrameworks];
 }
 
 @end

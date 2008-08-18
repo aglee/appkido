@@ -106,7 +106,7 @@ enum
         _indexWithinSearchResults = -1;
         _searchQuery =
             [[AKSearchQuery alloc]
-                initWithDatabase:[AKDatabase defaultDatabase]];
+                initWithDatabase:[_windowController database]];
         _pastSearchStrings = [[NSMutableArray alloc] init];
 
         [[DIGSFindBuffer sharedInstance]
@@ -409,7 +409,7 @@ enum
     [_frameworkPopup setAutoenablesItems:NO];
 
     NSEnumerator *fwEnum =
-        [[[AKDatabase defaultDatabase] sortedFrameworkNames] objectEnumerator];
+        [[[_windowController database] sortedFrameworkNames] objectEnumerator];
     NSString *fwName;
 
     while ((fwName = [fwEnum nextObject]))
@@ -799,8 +799,7 @@ enum
     if (!s_classesWithDelegates)
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
-        NSArray *classNodes =
-            [[AKDatabase defaultDatabase] allClasses];
+        NSArray *classNodes = [[_windowController database] allClasses];
         NSEnumerator *en = [classNodes objectEnumerator];
         AKClassNode *classNode;
 
@@ -852,36 +851,6 @@ enum
     return s_classesWithDelegates;
 }
 
-// Getting rid of "Delegate protocols" in Quicklist.
-/*
-- (NSArray *)_delegateProtocols
-{
-    static NSArray *s_delegateProtocols = nil;
-
-    if (!s_delegateProtocols)
-    {
-        NSEnumerator *en =
-            [[[AKDatabase defaultDatabase] allProtocols]
-                objectEnumerator];
-        AKProtocolNode *protocolNode;
-        NSMutableArray *protocolNodes = [NSMutableArray array];
-
-        while ((protocolNode = [en nextObject]))
-        {
-            if ([[protocolNode nodeName] hasSuffix:@"Delegate"])
-            {
-                [protocolNodes addObject:protocolNode];
-            }
-        }
-
-        s_delegateProtocols =
-            [[self _sortedDocLocatorsForProtocols:protocolNodes] retain];
-    }
-
-    return s_delegateProtocols;
-}
-*/
-
 - (NSArray *)_classesWithDataSources
 {
     static NSArray *s_classesWithDataSources = nil;
@@ -889,8 +858,7 @@ enum
     if (!s_classesWithDataSources)
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
-        NSArray *classNodes =
-            [[AKDatabase defaultDatabase] allClasses];
+        NSArray *classNodes = [[_windowController database] allClasses];
         NSEnumerator *en = [classNodes objectEnumerator];
         AKClassNode *classNode;
 
@@ -928,7 +896,7 @@ enum
     if (!s_dataSourceProtocols)
     {
         NSEnumerator *en =
-            [[[AKDatabase defaultDatabase] allProtocols]
+            [[[_windowController database] allProtocols]
                 objectEnumerator];
         AKProtocolNode *protocolNode;
         NSMutableArray *protocolNodes = [NSMutableArray array];
@@ -951,7 +919,7 @@ enum
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
     NSArray *classNodes =
-        [[AKDatabase defaultDatabase] classesForFramework:fwName];
+        [[_windowController database] classesForFramework:fwName];
 
     return [self _sortedDocLocatorsForClasses:classNodes];
 }
@@ -969,7 +937,10 @@ enum
         // documented yet or intended for Apple's internal use.
         if ([classNode nodeDocumentation])
         {
-            AKTopic *topic = [AKClassTopic topicWithClassNode:classNode];
+            AKTopic *topic =
+                [AKClassTopic
+                    topicWithClassNode:classNode
+                    inDatabase:[_windowController database]];
 
             [quicklistItems
                 addObject:
@@ -997,7 +968,9 @@ enum
         if ([protocolNode nodeDocumentation])
         {
             AKTopic *topic =
-                [AKProtocolTopic topicWithProtocolNode:protocolNode];
+                [AKProtocolTopic
+                    topicWithProtocolNode:protocolNode
+                    inDatabase:[_windowController database]];
 
             [quicklistItems
                 addObject:
@@ -1014,7 +987,7 @@ enum
 - (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames
 {
     NSMutableSet *nodeSet = [NSMutableSet setWithCapacity:100];
-    AKDatabase *db = [AKDatabase defaultDatabase];
+    AKDatabase *db = [_windowController database];
     NSEnumerator *en = [classNames objectEnumerator];
     NSString *name;
 
