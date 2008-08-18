@@ -21,7 +21,7 @@
 
 
 @interface AKDatabase (Private)
-- (void)_seeIfFrameworkIsNew:(NSString *)fwName;  // [agl] FIXME Do we need this?
+- (void)_seeIfFrameworkIsNew:(NSString *)fwName;
 - (NSArray *)_allProtocolsForFramework:(NSString *)fwName;
 @end
 
@@ -283,7 +283,7 @@ else
     [classNodes addObject:classNode];
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];  // [agl] FIXME Do we need this?
+    [self _seeIfFrameworkIsNew:fwName];
 }
 
 //-------------------------------------------------------------------------
@@ -360,7 +360,7 @@ else
     [protocolNodes addObject:protocolNode];
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];  // [agl] FIXME Do we need this?
+    [self _seeIfFrameworkIsNew:fwName];
 }
 
 //-------------------------------------------------------------------------
@@ -419,6 +419,9 @@ else
         [groupList addObject:groupNode];
         [groupsByName setObject:groupNode forKey:[groupNode nodeName]];
     }
+
+    // Add the framework to our framework list if it's not there already.
+    [self _seeIfFrameworkIsNew:fwName];
 }
 
 - (AKGroupNode *)functionsGroupContainingFunction:functionName
@@ -503,6 +506,9 @@ else
         [groupList addObject:groupNode];
         [groupsByName setObject:groupNode forKey:[groupNode nodeName]];
     }
+
+    // Add the framework to our framework list if it's not there already.
+    [self _seeIfFrameworkIsNew:fwName];
 }
 
 - (AKGroupNode *)globalsGroupContainingGlobal:nameOfGlobal
@@ -657,6 +663,9 @@ else
 
 @implementation AKDatabase (Private)
 
+// Adds a framework if we haven't seen it before.  We call this each time
+// we actually add a bit of API to the database, so that only frameworks
+// that we find tokens in are in our list of framework names.
 - (void)_seeIfFrameworkIsNew:(NSString *)fwName
 {
     if (![_frameworkNames containsObject:fwName])
