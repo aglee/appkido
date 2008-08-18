@@ -184,12 +184,12 @@ static NSString *s_headerPathsQueryTemplate =
     while ([rs next])
     {
         NSString *fwName = [rs stringForColumnIndex:0];
-        if (![fwName isEqualToString:@"Carbon"])  // [agl] REMOVE why is carbon returned by the query?
-        {
-            [frameworkNames addObject:fwName];
-        }
+        [frameworkNames addObject:fwName];
     }
-    [rs close];  
+    [rs close];
+
+[frameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
+[frameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
 
     // Close the database.
     [db close];
@@ -413,8 +413,8 @@ static NSString *s_headerPathsQueryTemplate =
         if ([fwNames containsObject:essentialFrameworkName])
         {
             [fwNames removeObject:essentialFrameworkName];
-            [fwNames insertObject:essentialFrameworkName atIndex:0];
         }
+        [fwNames insertObject:essentialFrameworkName atIndex:0];
     }
 }
 
