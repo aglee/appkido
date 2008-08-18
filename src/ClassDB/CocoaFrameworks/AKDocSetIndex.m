@@ -188,8 +188,8 @@ static NSString *s_headerPathsQueryTemplate =
     }
     [rs close];
 
-[frameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
-[frameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
+    [frameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
+    //[frameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
 
     // Close the database.
     [db close];
@@ -259,6 +259,14 @@ static NSString *s_headerPathsQueryTemplate =
 
 - (NSArray *)globalsDocPathsForFramework:(NSString *)frameworkName
 {
+    return
+        [self
+            _docPathsForTokensOfType:@"econst"
+            orType:@"data"
+            orType:@"tdef"
+            forFramework:frameworkName];
+
+/* [agl] I don't think we need to filter globals file names when we have a docset.
     // KLUDGE -- Globals are declared in many files, but currently we only
     // know how to parse the kind that have "Constants" or "DataTypes" in
     // their path, e.g.,
@@ -281,6 +289,7 @@ static NSString *s_headerPathsQueryTemplate =
     }
 
     return result;
+*/
 }
 
 @end
@@ -405,7 +414,7 @@ static NSString *s_headerPathsQueryTemplate =
 - (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames
 {
     NSEnumerator *essentialFrameworkNamesEnum =
-        [AKNamesOfEssentialFrameworks() reverseObjectEnumerator];
+        [AKNamesOfEssentialFrameworks reverseObjectEnumerator];
     NSString *essentialFrameworkName;
 
     while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
