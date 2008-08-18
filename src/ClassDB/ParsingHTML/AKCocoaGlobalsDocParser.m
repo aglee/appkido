@@ -20,7 +20,6 @@
 //-------------------------------------------------------------------------
 
 @interface AKCocoaGlobalsDocParser (Private)
-- (void)_parseGlobalsFromDataTypesSection:(AKFileSection *)dataTypesSection;
 - (void)_parseGlobalsFromMajorSections;
 - (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection
     usingGroupName:(NSString *)groupName;
@@ -57,20 +56,9 @@
 
 - (void)applyParseResults
 {
-    // Guess the structure of the file, and parse accordingly, based on
-    // whether there is a "Data Types" major section (as in
-    // CGGeometry/Reference/reference.html).
-    AKFileSection *dataTypesSection =
-        [_rootSectionOfCurrentFile childSectionWithName:@"Data Types"];
+    // [agl] TODO Handle files structured like CGGeometry/Reference/reference.html.
 
-//    if (dataTypesSection)
-//    {
-//        [self _parseGlobalsFromDataTypesSection:dataTypesSection];  // [agl] REMOVE?
-//    }
-//    else
-    {
-        [self _parseGlobalsFromMajorSections];
-    }
+    [self _parseGlobalsFromMajorSections];
 }
 
 @end
@@ -80,19 +68,6 @@
 //-------------------------------------------------------------------------
 
 @implementation AKCocoaGlobalsDocParser (Private)
-
-// Parse the file in the case where there is a major section that contains
-// all the globals in subsections.
-- (void)_parseGlobalsFromDataTypesSection:(AKFileSection *)dataTypesSection
-{
-    NSString *groupName =
-            [@"Data Types - "
-                stringByAppendingString:
-                    [[_rootSectionOfCurrentFile sectionName] ak_firstWord]];
-    [self
-        _parseGlobalsGroupFromFileSection:dataTypesSection
-        usingGroupName:groupName];
-}
 
 // Parse the file in the case where each major section corresponds to a
 // group of types/constants.
