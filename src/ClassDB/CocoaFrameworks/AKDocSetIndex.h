@@ -83,7 +83,7 @@
 /*!
  * Returns list of all frameworks that have an Objective-C token, with
  * "essential" frameworks forced to the beginning of the list.  (See
- * AKNamesOfEssentialFrameworks().)
+ * AKNamesOfEssentialFrameworks.)
  */
 - (NSArray *)objectiveCFrameworkNames;
 
