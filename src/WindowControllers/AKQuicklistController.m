@@ -104,9 +104,7 @@ enum
 
         // Initialize search variables.
         _indexWithinSearchResults = -1;
-        _searchQuery =
-            [[AKSearchQuery alloc]
-                initWithDatabase:[_windowController database]];
+        _searchQuery = nil;  // Wait for -doAwakeFromNib to set this.
         _pastSearchStrings = [[NSMutableArray alloc] init];
 
         [[DIGSFindBuffer sharedInstance]
@@ -396,11 +394,15 @@ enum
 
 - (void)doAwakeFromNib
 {
+    // Set our _searchQuery ivar.  We do it here instead of in -init
+    // because we need to be sure [_windowController database] has been set.
+    _searchQuery =
+        [[AKSearchQuery alloc]
+            initWithDatabase:[_windowController database]];
+
     // Set up _quicklistTable to do drag and drop.
     [_quicklistTable registerForDraggedTypes:
-        [NSArray arrayWithObjects:
-            _AKQuicklistPasteboardType,
-            nil]];
+        [NSArray arrayWithObject:_AKQuicklistPasteboardType]];
 
     // Set up the popup menu of frameworks for the "Classes in framework:"
     // quicklist item.
