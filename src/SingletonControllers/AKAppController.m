@@ -214,14 +214,15 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
 
+#ifdef APPKIDO_FOR_IPHONE
+    [self
+        _loadFrameworks:[AKPrefUtils selectedFrameworkNamesPref]
+        forPlatform:AKIPhonePlatform];
+#else
     [self
         _loadFrameworks:[AKPrefUtils selectedFrameworkNamesPref]
         forPlatform:AKMacOSPlatform];
-
-    if (NO)  // [agl] REMOVE Use a pref to indicate whether to include iPhone
-    {
-        [self _loadFrameworks:nil forPlatform:AKIPhonePlatform];
-    }
+#endif
 
     // Set up the "Go" menu.
     [self _initGoMenu];
@@ -853,6 +854,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     [db setDelegate:self];
     [db loadTokensForFrameworks:frameworkNames];
+    [db setDelegate:nil];
 
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
