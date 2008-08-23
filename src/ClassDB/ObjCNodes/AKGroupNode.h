@@ -33,10 +33,7 @@
 
 - (int)numberOfSubnodes;
 
-/*!
- * @method      subnodes
- * @discussion  Returns a sorted array.
- */
+/*! Order of returned nodes is not guaranteed. */
 - (NSArray *)subnodes;
 
 - (AKDatabaseNode *)subnodeWithName:(NSString *)nodeName;
