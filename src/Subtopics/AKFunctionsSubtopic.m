@@ -7,6 +7,7 @@
 
 #import "AKFunctionsSubtopic.h"
 
+#import "AKSortUtils.h"
 #import "AKFileSection.h"
 #import "AKGroupNode.h"
 #import "AKFunctionDoc.h"
@@ -19,10 +20,12 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    NSEnumerator *functionEnum = [[_groupNode subnodes] objectEnumerator];
+    NSEnumerator *subnodesEnum =
+        [[AKSortUtils arrayBySortingArray:[_groupNode subnodes]]
+            objectEnumerator];
     AKDatabaseNode *functionNode;
 
-    while ((functionNode = [functionEnum nextObject]))
+    while ((functionNode = [subnodesEnum nextObject]))
     {
         AKFileSection *functionSection = [functionNode nodeDocumentation];
 
