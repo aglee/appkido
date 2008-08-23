@@ -81,26 +81,13 @@
     // to a group of types/constants.
     while ((majorSection = [majorSectionEnum nextObject]))
     {
-        if ([[majorSection sectionName] isEqualToString:@"Overview"]
-            || [[majorSection sectionName] isEqualToString:@"Functions"])
+        if ([[majorSection sectionName] isEqualToString:@"Constants"]
+             || [[majorSection sectionName] isEqualToString:@"Data Types"])
         {
-            continue;  // kludge until globals parsing is fixed properly
+            [self
+                _parseGlobalsGroupFromFileSection:majorSection
+                usingGroupName:[majorSection sectionName]];
         }
-
-        // Get the globals nodes from the minor sections.
-        NSString *groupName = [majorSection sectionName];
-
-        if ([groupName isEqualToString:@"Data Types"])
-        {
-            groupName =
-                [@"Data Types - "
-                    stringByAppendingString:
-                        [[_rootSectionOfCurrentFile sectionName] ak_firstWord]];
-        }
-
-        [self
-            _parseGlobalsGroupFromFileSection:majorSection
-            usingGroupName:[majorSection sectionName]];
     }
 }
 
