@@ -422,8 +422,8 @@ static NSString *s_headerPathsQueryTemplate =
         if ([fwNames containsObject:essentialFrameworkName])
         {
             [fwNames removeObject:essentialFrameworkName];
+            [fwNames insertObject:essentialFrameworkName atIndex:0];
         }
-        [fwNames insertObject:essentialFrameworkName atIndex:0];
     }
 }
 
