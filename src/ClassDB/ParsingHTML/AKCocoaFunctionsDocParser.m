@@ -51,7 +51,7 @@
         defaultGroupName =
             [@"Functions - "
                 stringByAppendingString:
-                    [[_rootSectionOfCurrentFile sectionName] ak_firstWord]];
+                    [_rootSectionOfCurrentFile sectionName]];
 //NSLog(@"using default '%@' group name", defaultGroupName);  // [agl] REMOVE
     }
 
