@@ -127,7 +127,7 @@
         datatypesDocDir =
             [AKFileUtils
                 subdirectoryOf:miscPath
-                withNameEndingWith:@"Datatypes"];
+                withNameEndingWith:@"DataTypes"];
     }
 
     // Parse the doc files in those directories.
