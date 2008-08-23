@@ -42,6 +42,12 @@
 			<string>NSView</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>addBrowserColumn</key>
@@ -97,6 +103,14 @@
 			<string>NSBrowser</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>AKTableView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>doDocListTableAction</key>
@@ -117,14 +131,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>AKWindowSubcontroller</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>AKTableView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTableView</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
