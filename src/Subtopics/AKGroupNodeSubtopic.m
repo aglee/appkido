@@ -9,6 +9,7 @@
 
 #import <DIGSLog.h>
 
+#import "AKSortUtils.h"
 #import "AKFileSection.h"
 #import "AKGlobalsNode.h"
 #import "AKGroupNode.h"
@@ -55,10 +56,12 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    NSEnumerator *en = [[_groupNode subnodes] objectEnumerator];
+    NSEnumerator *subnodesEnum =
+        [[AKSortUtils arrayBySortingArray:[_groupNode subnodes]]
+            objectEnumerator];
     AKGlobalsNode *globalsNode;
 
-    while ((globalsNode = [en nextObject]))
+    while ((globalsNode = [subnodesEnum nextObject]))
     {
         AKDoc *newDoc =
             [[[AKFileSectionDoc alloc]
