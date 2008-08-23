@@ -36,6 +36,10 @@
  *                  Use DIGS_VERBOSITY_DEBUG to log information that is
  *                  only needed for debugging and should not be logged
  *                  by a deployed version of the app.
+ * @constant    DIGS_VERBOSITY_DEBUG2
+ *                  Like DIGS_VERBOSITY_DEBUG, but more verbose.
+ * @constant    DIGS_VERBOSITY_DEBUG3
+ *                  Like DIGS_VERBOSITY_DEBUG2, but more verbose.
  * @constant    DIGS_VERBOSITY_ALL
  *                  Use DIGS_VERBOSITY_ALL to turn on all logging.
  */
@@ -46,6 +50,8 @@ enum
     DIGS_VERBOSITY_WARNING = 20,
     DIGS_VERBOSITY_INFO = 30,
     DIGS_VERBOSITY_DEBUG = 40,
+    DIGS_VERBOSITY_DEBUG2 = 50,
+    DIGS_VERBOSITY_DEBUG3 = 60,
     DIGS_VERBOSITY_ALL = 99,
 };
 
@@ -118,6 +124,34 @@ do {\
 #define DIGSLogDebug(format, ...)\
 do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
+    {\
+        NSLog(\
+            [@"[_DEBUG_] " stringByAppendingString:(format)],\
+            ## __VA_ARGS__);\
+    }\
+} while (0)
+
+/*!
+ * @function    DIGSLogDebug2
+ * @discussion  Logs output if verbosity level >= DIGS_VERBOSITY_DEBUG2.
+ */
+#define DIGSLogDebug2(format, ...)\
+do {\
+    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG2)\
+    {\
+        NSLog(\
+            [@"[_DEBUG_] " stringByAppendingString:(format)],\
+            ## __VA_ARGS__);\
+    }\
+} while (0)
+
+/*!
+ * @function    DIGSLogDebug3
+ * @discussion  Logs output if verbosity level >= DIGS_VERBOSITY_DEBUG3.
+ */
+#define DIGSLogDebug3(format, ...)\
+do {\
+    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG3)\
     {\
         NSLog(\
             [@"[_DEBUG_] " stringByAppendingString:(format)],\
