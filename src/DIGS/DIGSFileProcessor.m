@@ -71,7 +71,7 @@
     // Apply our filter to the file path.
     if ([self shouldProcessFile:filePath])
     {
-        DIGSLogDebug(@"processing file [%@]", filePath);
+        DIGSLogDebug2(@"processing file [%@]", filePath);
     }
     else
     {
