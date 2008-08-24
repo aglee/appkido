@@ -38,41 +38,6 @@
             [docList addObject:newDoc];
         }
     }
-
-
-// In the Feb 2007 doc update (and maybe earlier), it's no longer the case
-// that subsections of the group section contain individual function docs.
-/*
-    AKFileSection *fileSection = [_groupNode nodeDocumentation];
-    int numChildSections = [fileSection numberOfChildSections];
- 
-    // In older versions of the ScreenSaver framework's Function docs,
-    // the functions were not grouped -- each function was a section
-    // unto itself.
-    if (numChildSections == 0)
-    {
-        AKDoc *newDoc =
-            [[[AKFunctionDoc alloc] initWithFileSection:fileSection]
-                autorelease];
-
-        [docList addObject:newDoc];
-    }
-    else
-    {
-        int i;
-
-        for (i = 0; i < numChildSections; i++)
-        {
-            AKFileSection *childSection =
-                [fileSection childSectionAtIndex:i];
-            AKDoc *newDoc =
-                [[[AKFunctionDoc alloc] initWithFileSection:childSection]
-                    autorelease];
-
-            [docList addObject:newDoc];
-        }
-    }
-*/
 }
 
 @end
