@@ -151,6 +151,11 @@
     return [_protocolNode nodeName];
 }
 
+- (AKDatabaseNode *)topicNode
+{
+    return _protocolNode;
+}
+
 - (NSArray *)createSubtopicsArray
 {
     AKProtocolOverviewSubtopic *overviewSubtopic =

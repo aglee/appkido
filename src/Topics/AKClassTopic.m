@@ -176,6 +176,11 @@
     return [_classNode nodeName];
 }
 
+- (AKDatabaseNode *)topicNode
+{
+    return _classNode;
+}
+
 - (NSArray *)createSubtopicsArray
 {
     AKClassOverviewSubtopic *overviewSubtopic =
