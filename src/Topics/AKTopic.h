@@ -10,6 +10,7 @@
 
 @class AKSubtopic;
 @class AKDatabase;
+@class AKDatabaseNode;
 @class AKClassNode;
 @class AKSubtopic;
 @class AKDoc;
@@ -88,6 +89,12 @@ extern NSString *AKGlobalsTopicName;
 
 // [agl] KLUDGE
 - (AKClassNode *)parentClassOfTopic;
+
+/*!
+ * Returns nil by default.  Subclasses return a node, if one is relevant.
+ * Specifically, AKBehaviorTopics return AKBehaviorNodes.
+ */
+- (AKDatabaseNode *)topicNode;
 
 //-------------------------------------------------------------------------
 // Names for various display contexts

@@ -120,6 +120,11 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
+- (AKDatabaseNode *)topicNode
+{
+    return nil;
+}
+
 //-------------------------------------------------------------------------
 // Names for various display contexts
 //-------------------------------------------------------------------------
