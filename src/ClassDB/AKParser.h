@@ -58,6 +58,11 @@
     forFramework:(NSString *)frameworkName
     inDatabase:(AKDatabase *)database;
 
++ (void)parseFilesInPaths:(NSArray *)docPaths
+    underBaseDir:(NSString *)baseDir
+    forFramework:(NSString *)fwName
+    inDatabase:(AKDatabase *)database;
+
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
