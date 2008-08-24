@@ -319,6 +319,7 @@ enum
     [_searchQuery
         setIgnoresCase:
             ([_ignoreCaseItem state] == NSOnState)];
+    [_searchQuery setSearchComparison:AKSearchSubstring];
 
     // This will clear the quicklist table and thus force it to reload
     // When we select Search Results mode.
