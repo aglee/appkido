@@ -7,6 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    AKSearchSubstring = 0,
+    AKSearchExactMatch = 1,
+    AKSearchPrefix = 2,
+} AKSearchComparison;
+
 @class AKDatabase;
 
 /*!
@@ -42,6 +48,7 @@
     BOOL _includesFunctions;
     BOOL _includesGlobals;
     BOOL _ignoresCase;
+    AKSearchComparison _searchComparison;
 
     // Cached search results.  The cache is cleared whenever the search
     // string or a search flag changes.
@@ -79,6 +86,9 @@
 
 - (BOOL)ignoresCase;
 - (void)setIgnoresCase:(BOOL)flag;
+
+- (AKSearchComparison)searchComparison;
+- (void)setSearchComparison:(AKSearchComparison)searchComparison;
 
 //-------------------------------------------------------------------------
 // Searching
