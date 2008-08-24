@@ -77,6 +77,8 @@
         _includesFunctions = NO;
         _includesGlobals = NO;
         _ignoresCase = YES;
+        _searchComparison = AKSearchSubstring;
+
         _searchResults = [[NSMutableArray array] retain];
     }
 
@@ -242,6 +244,20 @@
     }
 }
 
+- (AKSearchComparison)searchComparison
+{
+    return _searchComparison;
+}
+
+- (void)setSearchComparison:(AKSearchComparison)searchComparison
+{
+    if (_searchComparison != searchComparison)
+    {
+        _searchComparison = searchComparison;
+        [self _clearSearchResults];
+    }
+}
+
 //-------------------------------------------------------------------------
 // Searching
 //-------------------------------------------------------------------------
@@ -353,10 +369,35 @@ static NSTimeInterval g_checkpointTime = 0.0;
 g_NSStringComparisons++;
 #endif MEASURE_SEARCH_SPEED
 
-    return
-        _ignoresCase
-        ? [[s lowercaseString] ak_contains:_lowercaseSearchString]
-        : [s ak_contains:_searchString];
+    switch (_searchComparison)
+    {
+        case AKSearchSubstring: {
+            return
+                _ignoresCase
+                ? [s ak_containsCaseInsensitive:_lowercaseSearchString]
+                : [s ak_contains:_searchString];
+        }
+
+        case AKSearchExactMatch: {
+            return
+                _ignoresCase
+                ? ([s compare:_lowercaseSearchString options:NSCaseInsensitiveSearch] == 0)
+                : [s isEqualToString:_searchString];
+        }
+
+        case AKSearchPrefix: {
+            return
+                _ignoresCase
+                ? [[s lowercaseString] hasPrefix:_searchString]
+                : [s hasPrefix:_searchString];
+        }
+
+        default: {
+            DIGSLogDebug(@"Unexpected search comparison mode %d",
+                _searchComparison);
+            return NO;
+        }
+    }
 }
 
 - (BOOL)_matchesNode:(AKDatabaseNode *)node
@@ -556,7 +597,9 @@ g_UTF8Comparisons++;
 
 // [agl] ak_stripHTML is too expensive -- bogging down the search
 //                if ([self _matchesString:[[subnode nodeName] ak_stripHTML]])
-                if ([self _matchesNode:subnode])
+// [agl] I don't think we actually need to strip any HTML -- no node seems to contain & or <
+//                if ([self _matchesNode:subnode])
+                if ([self _matchesString:[subnode nodeName]])
                 {
                     matchFound = YES;
                 }
