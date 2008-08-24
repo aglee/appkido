@@ -82,7 +82,10 @@
 
 - (NSString *)stringToDisplayInDocList
 {
-    return [[self docName] ak_stripHTML];
+// Calling ak_stripHTML makes the display sluggish when the doc list
+// contains hundreds of entries (e.g., Foundation -> Types & Constants).
+//    return [[self docName] ak_stripHTML];
+    return [self docName];
 }
 
 - (NSString *)commentString
