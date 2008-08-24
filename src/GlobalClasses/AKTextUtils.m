@@ -35,6 +35,14 @@ extern char *ak_copystr(const char *s)
     return (r.location != NSNotFound);
 }
 
+- (BOOL)ak_containsCaseInsensitive:(NSString *)searchString
+{
+    NSRange r =
+        [self rangeOfString:searchString options:NSCaseInsensitiveSearch];
+
+    return (r.location != NSNotFound);
+}
+
 - (int)ak_positionOf:(NSString *)searchString
 {
     NSRange r = [self rangeOfString:searchString];
