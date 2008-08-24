@@ -20,10 +20,4 @@
 // Designated initializer
 - (id)initWithFileSection:(AKFileSection *)fileSection;
 
-//-------------------------------------------------------------------------
-// AKDoc methods
-//-------------------------------------------------------------------------
-
-- (AKFileSection *)fileSection;
-
 @end

@@ -5,9 +5,9 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKFileSectionDoc.h"
+#import "AKNodeDoc.h"
 
-@interface AKFunctionDoc : AKFileSectionDoc
+@interface AKFunctionDoc : AKNodeDoc
 {
 }
 

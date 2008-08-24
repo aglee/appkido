@@ -12,6 +12,7 @@
 #import "AKTextUtils.h"
 #import "AKDatabase.h"
 #import "AKFileSection.h"
+#import "AKBehaviorNode.h"
 #import "AKGroupNode.h"
 #import "AKGlobalsNode.h"
 
@@ -132,10 +133,43 @@
 
 - (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)fileSection
 {
+    // See if the file we're parsing is a behavior doc.  Relies on the
+    // assumption that if so, the doc was already parsed as such and is
+    // therefore known to the database.
+    id behaviorNode =
+        [_databaseBeingPopulated
+            classDocumentedInHTMLFile:[fileSection filePath]];
+
+    if (behaviorNode == nil)
+    {
+        behaviorNode =
+            [_databaseBeingPopulated
+                protocolDocumentedInHTMLFile:[fileSection filePath]];
+    }
+
     // Create a node.
+    NSString *globalsNodeName;
+
+    if (behaviorNode == nil)
+    {
+        globalsNodeName = [fileSection sectionName];
+    }
+    else if ([behaviorNode isClassNode])
+    {
+        globalsNodeName =
+            [NSString stringWithFormat:@"%@ [%@]",
+                [fileSection sectionName], [behaviorNode nodeName]];
+    }
+    else
+    {
+        globalsNodeName =
+            [NSString stringWithFormat:@"%@ <%@>",
+                [fileSection sectionName], [behaviorNode nodeName]];
+    }
+
     AKGlobalsNode *globalsNode =
         [[[AKGlobalsNode alloc]
-            initWithNodeName:[fileSection sectionName]
+            initWithNodeName:globalsNodeName
             owningFramework:_frameworkName] autorelease];
 
     // Add any individual names we find in the minor section.
