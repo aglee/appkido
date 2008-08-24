@@ -29,6 +29,12 @@ extern char *ak_copystr(const char *s);
 - (BOOL)ak_contains:(NSString *)searchString;
 
 /*!
+ * @method      ak_contains:
+ * @discussion  Does a case-insensitive substring search.
+ */
+- (BOOL)ak_containsCaseInsensitive:(NSString *)searchString;
+
+/*!
  * @method      ak_positionOf:
  * @discussion  Does a case-sensitive substring search, and returns the
  *              position of the found string, or -1 if the string
