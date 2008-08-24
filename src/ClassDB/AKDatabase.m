@@ -131,7 +131,6 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
         _offsetsOfAnchorStringsInHTMLFiles =
             [[NSMutableDictionary alloc] initWithCapacity:30000];
 
-        _nodesByHTMLPathAndTokenName = [[NSMutableDictionary alloc] init];
         _frameworkNamesByHTMLPath = [[NSMutableDictionary alloc] init];
     }
 
@@ -168,7 +167,6 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
     [_rootSectionsByHTMLPath release];
     [_offsetsOfAnchorStringsInHTMLFiles release];
 
-    [_nodesByHTMLPathAndTokenName release];
     [_frameworkNamesByHTMLPath release];
 
     [super dealloc];
@@ -560,8 +558,13 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 }
 
 //-------------------------------------------------------------------------
-// Getters and setters -- DEPRECATED hyperlink support
+// Getters and setters -- hyperlink support
 //-------------------------------------------------------------------------
+
+- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath
+{
+    return [_frameworkNamesByHTMLPath objectForKey:htmlFilePath];
+}
 
 - (void)rememberFramework:(NSString *)frameworkName
     forHTMLFile:(NSString *)htmlFilePath
@@ -644,40 +647,6 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
     [offsetsByFilePath
         setObject:offsetValue
         forKey:filePath];
-}
-
-//-------------------------------------------------------------------------
-// Getters and setters -- FUTURE hyperlink support
-//-------------------------------------------------------------------------
-
-- (AKDatabaseNode *)nodeForTokenName:(NSString *)tokenName
-    inHTMLFile:(NSString *)htmlFilePath
-{
-    NSMutableArray *nodeList =
-        [_nodesByHTMLPathAndTokenName objectForKey:htmlFilePath];
-
-    if (nodeList == nil)
-    {
-        return nil;
-    }
-
-    NSEnumerator *nodeEnum = [nodeList objectEnumerator];
-    AKDatabaseNode *node;
-    while ((node = [nodeEnum nextObject]))
-    {
-        if ([[node nodeName] isEqualToString:tokenName])
-        {
-            return node;
-        }
-    }
-
-    // If we got this far, we couldn't find the node.
-    return nil;
-}
-
-- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath
-{
-    return [_frameworkNamesByHTMLPath objectForKey:htmlFilePath];
 }
 
 @end

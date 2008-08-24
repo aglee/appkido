@@ -25,18 +25,6 @@
 #import "AKCocoaGlobalsDocParser.h"
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
-
-@interface AKDatabaseWithDocSet (Private)
-- (void)_useParserClass:(Class)parserClass
-    toParseFilesInPaths:(NSArray *)docPaths
-    forFramework:(NSString *)fwName;
-- (void)_buildMasterIndex;
-@end
-
-
 @implementation AKDatabaseWithDocSet
 
 //-------------------------------------------------------------------------
@@ -83,9 +71,6 @@
     }
 
     [super loadTokensForFrameworks:frameworkNames];
-
-    // Now that all nodes have been added to the database, index them.
-    [self _buildMasterIndex];
 }
 
 - (void)loadTokensForFrameworkNamed:(NSString *)fwName
@@ -122,146 +107,29 @@
     DIGSLogDebug(@"Parsing HTML docs for framework %@", fwName);
     DIGSLogDebug(@"---------------------------------------------------");
 
+    NSString *baseDir = [_docSetIndex baseDirForDocPaths];
+
     DIGSLogDebug(@"Parsing behavior docs for framework %@", fwName);
-    [self
-        _useParserClass:[AKCocoaBehaviorDocParser class]
-        toParseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:fwName]
-        forFramework:fwName];
+    [AKCocoaBehaviorDocParser
+        parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:fwName]
+        underBaseDir:baseDir
+        forFramework:fwName
+        inDatabase:self];
 
     DIGSLogDebug(@"Parsing functions docs for framework %@", fwName);
-    [self
-        _useParserClass:[AKCocoaFunctionsDocParser class]
-        toParseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:fwName]
-        forFramework:fwName];
+    [AKCocoaFunctionsDocParser
+        parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:fwName]
+        underBaseDir:baseDir
+        forFramework:fwName
+        inDatabase:self];
 
     DIGSLogDebug(@"Parsing globals docs for framework %@", fwName);
-    [self
-        _useParserClass:[AKCocoaGlobalsDocParser class]
-        toParseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:fwName]
-        forFramework:fwName];
+    [AKCocoaGlobalsDocParser
+        parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:fwName]
+        underBaseDir:baseDir
+        forFramework:fwName
+        inDatabase:self];
 }
 
 @end
 
-
-@implementation AKDatabaseWithDocSet (Private)
-
-- (void)_useParserClass:(Class)parserClass
-    toParseFilesInPaths:(NSArray *)docPaths
-    forFramework:(NSString *)fwName
-{
-    int numDocs = [docPaths count];
-    int i;
-    for (i = 0; i < numDocs; i++)
-    {
-        NSString *docPath =
-            [[_docSetIndex baseDirForDocPaths]
-                stringByAppendingPathComponent:[docPaths objectAtIndex:i]];
-
-        id parser =
-            [[parserClass alloc]  // no autorelease
-                initWithDatabase:self
-                frameworkName:fwName];
-
-        [parser processFile:docPath];
-        [parser release];  // release here
-    }
-}
-
-- (void)_addNodeToMasterIndex:(id)node
-{
-    // We only want documented nodes in the master index.
-    if ([node nodeDocumentation] == nil)
-    {
-        return;
-    }
-
-    // Remember what framework this doc file is for.
-    NSString *htmlPath = [[node nodeDocumentation] filePath];
-    [_frameworkNamesByHTMLPath
-        setObject:[node owningFramework]
-        forKey:htmlPath];
-
-    // Register the node under its own name.
-    NSMutableDictionary *nodesByTokenName =
-        [_nodesByHTMLPathAndTokenName objectForKey:htmlPath];
-
-    if (nodesByTokenName == nil)
-    {
-        nodesByTokenName = [NSMutableDictionary dictionary];
-        [_nodesByHTMLPathAndTokenName
-            setObject:nodesByTokenName
-            forKey:htmlPath];
-    }
-
-    [nodesByTokenName setObject:node forKey:[node nodeName]];
-
-    // Register the node under the names of any other tokens it covers.
-    if ([node isKindOfClass:[AKGlobalsNode class]])
-    {
-        NSEnumerator *globalsEnum =
-            [[node namesOfGlobals] objectEnumerator];
-        NSString *nameOfGlobal;
-
-        while ((nameOfGlobal = [globalsEnum nextObject]))
-        {
-            [nodesByTokenName setObject:node forKey:nameOfGlobal];
-        }
-    }
-}
-
-- (void)_addToMasterIndexFromCollection:(id)nodeCollection
-{
-    NSEnumerator *collectionEnum = [nodeCollection objectEnumerator];
-    id element;
-
-    while ((element = [collectionEnum nextObject]))
-    {
-        // [agl] TODO -- Should I be bothered by all the -isKindOfClass: calls?
-        if ([element isKindOfClass:[NSArray class]])
-        {
-            [self _addToMasterIndexFromCollection:element];
-        }
-        else if ([element isKindOfClass:[AKGroupNode class]])
-        {
-            [self _addToMasterIndexFromCollection:[element subnodes]];
-        }
-        else if ([element isKindOfClass:[AKDatabaseNode class]])
-        {
-            // Add the node itself to the master index.
-            [self _addNodeToMasterIndex:element];
-
-            // If the node is a behavior node, add its member nodes.
-            if ([element isKindOfClass:[AKBehaviorNode class]])
-            {
-                [self _addToMasterIndexFromCollection:[element documentedProperties]];
-                [self _addToMasterIndexFromCollection:[element documentedClassMethods]];
-                [self _addToMasterIndexFromCollection:[element documentedInstanceMethods]];
-
-                if ([element isClassNode])
-                {
-                    [self _addToMasterIndexFromCollection:[element documentedDelegateMethods]];
-                    [self _addToMasterIndexFromCollection:[element documentedNotifications]];
-                }
-            }
-        }
-        else
-        {
-            DIGSLogWarning(@"unexpected class %@ for node collection",
-                [nodeCollection class]);
-        }
-    }
-}
-
-- (void)_buildMasterIndex
-{
-    [_nodesByHTMLPathAndTokenName removeAllObjects];
-    [_frameworkNamesByHTMLPath removeAllObjects];
-
-    [self _addToMasterIndexFromCollection:_classNodesByName];
-    [self _addToMasterIndexFromCollection:_protocolNodesByName];
-    [self _addToMasterIndexFromCollection:_functionsGroupListsByFramework];
-    [self _addToMasterIndexFromCollection:_globalsGroupListsByFramework];
-}
-
-@end

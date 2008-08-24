@@ -104,7 +104,10 @@
     // (framework name) -> ((group name) -> AKGroupNode)
     NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;
 
-    // --- DEPRECATED Hyperlink support ---
+    // --- Hyperlink support ---
+
+    // (path to HTML file) -> (name of framework)
+    NSMutableDictionary *_frameworkNamesByHTMLPath;
 
     // (path to HTML file) -> (AKClassNode)
     NSMutableDictionary *_classNodesByHTMLPath;
@@ -123,14 +126,6 @@
     // See the comment for -offsetOfAnchorString:inHTMLFile: to see what
     // is meant by "anchor strings."
     NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
-
-    // --- FUTURE Hyperlink support ---
-
-    // (path to HTML file) -> (dictionary of nodes keyed by token name)
-    NSMutableDictionary *_nodesByHTMLPathAndTokenName;
-
-    // (path to HTML file) -> (name of framework)
-    NSMutableDictionary *_frameworkNamesByHTMLPath;
 }
 
 //-------------------------------------------------------------------------
@@ -270,8 +265,10 @@ extern NSString *AKIPhonePlatform;
     inFramework:(NSString *)fwName;
 
 //-------------------------------------------------------------------------
-// Getters and setters -- DEPRECATED hyperlink support
+// Getters and setters -- hyperlink support
 //-------------------------------------------------------------------------
+
+- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
 
 - (void)rememberFramework:(NSString *)frameworkName
     forHTMLFile:(NSString *)htmlFilePath;
@@ -305,15 +302,6 @@ extern NSString *AKIPhonePlatform;
 - (void)rememberOffset:(int)anchorOffset
     ofAnchorString:(NSString *)anchorString
     inHTMLFile:(NSString *)filePath;
-
-//-------------------------------------------------------------------------
-// Getters and setters -- FUTURE hyperlink support
-//-------------------------------------------------------------------------
-
-- (AKDatabaseNode *)nodeForTokenName:(NSString *)tokenName
-    inHTMLFile:(NSString *)htmlFilePath;
-
-- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
 
 @end
 
