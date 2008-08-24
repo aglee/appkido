@@ -97,10 +97,7 @@
     AKSearchQuery *searchQuery =
         [[[AKSearchQuery alloc] initWithDatabase:_database] autorelease];
     [searchQuery setSearchString:tokenName];
-    [searchQuery setIncludesClassesAndProtocols:YES];
-    [searchQuery setIncludesMembers:YES];
-    [searchQuery setIncludesFunctions:YES];
-    [searchQuery setIncludesGlobals:YES];
+    [searchQuery setIncludesEverything];
     [searchQuery setIgnoresCase:YES];
     [searchQuery setSearchComparison:AKSearchExactMatch];
     NSEnumerator *searchResultsEnum =

@@ -36,11 +36,6 @@ typedef enum {
 @private
     AKDatabase *_database;
     NSString *_searchString;
-    NSString *_lowercaseSearchString;
-
-    // Cached C-string versions of the search string, for speed.
-    char *_utf8SearchString;
-    char *_utf8LowercaseSearchString;
 
     // Search flags.
     BOOL _includesClassesAndProtocols;
@@ -83,6 +78,9 @@ typedef enum {
 
 - (BOOL)includesGlobals;
 - (void)setIncludesGlobals:(BOOL)flag;
+
+/*! Sends all the -setIncludesXXX: messages with YES as the flag. */
+- (void)setIncludesEverything;
 
 - (BOOL)ignoresCase;
 - (void)setIgnoresCase:(BOOL)flag;

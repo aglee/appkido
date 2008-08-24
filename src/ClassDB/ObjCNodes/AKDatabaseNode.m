@@ -41,10 +41,6 @@
         _owningFramework = [fwName retain];
         _nodeDocumentation = nil;
         _isDeprecated = NO;
-
-        _utf8Name = ak_copystr([_nodeName UTF8String]);
-        _utf8LowercaseName =
-            ak_copystr([[_nodeName lowercaseString] UTF8String]);
     }
 
     return self;
@@ -63,9 +59,6 @@
     [_owningFramework release];
     [_nodeDocumentation release];
 
-    free(_utf8Name);
-    free(_utf8LowercaseName);
-
     [super dealloc];
 }
 
@@ -76,16 +69,6 @@
 - (NSString *)nodeName
 {
     return _nodeName;
-}
-
-- (const char *)utf8Name
-{
-    return _utf8Name;
-}
-
-- (const char *)utf8LowercaseName
-{
-    return _utf8LowercaseName;
 }
 
 - (NSString *)owningFramework

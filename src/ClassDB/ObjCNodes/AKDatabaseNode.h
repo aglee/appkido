@@ -43,10 +43,6 @@
     NSString *_owningFramework;
     AKFileSection *_nodeDocumentation;
     BOOL _isDeprecated;
-
-    // Cached C-string versions of the node name, to make searches faster.
-    char *_utf8Name;
-    char *_utf8LowercaseName;
 }
 
 //-------------------------------------------------------------------------
@@ -84,19 +80,6 @@
  *              the method, etc.
  */
 - (NSString *)nodeName;
-
-/*!
- * @method      utf8Name
- * @discussion  Returns the node name as a C string.
- */
-- (const char *)utf8Name;
-
-/*!
- * @method      utf8LowercaseName
- * @discussion  Returns the node name, converted to lowercase, as a C
- *              string.
- */
-- (const char *)utf8LowercaseName;
 
 /*!
  * @method      owningFramework
