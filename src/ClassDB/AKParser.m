@@ -34,6 +34,28 @@
     [parser release];  // release here
 }
 
++ (void)parseFilesInPaths:(NSArray *)docPaths
+    underBaseDir:(NSString *)baseDir
+    forFramework:(NSString *)fwName
+    inDatabase:(AKDatabase *)database
+{
+    int numDocs = [docPaths count];
+    int i;
+    for (i = 0; i < numDocs; i++)
+    {
+        NSString *docPath =
+            [baseDir stringByAppendingPathComponent:[docPaths objectAtIndex:i]];
+
+        id parser =
+            [[self alloc]  // no autorelease
+                initWithDatabase:database
+                frameworkName:fwName];
+
+        [parser processFile:docPath];
+        [parser release];  // release here
+    }
+}
+
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
