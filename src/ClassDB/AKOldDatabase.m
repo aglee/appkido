@@ -152,6 +152,10 @@
         recursivelyParseDirectory:constantsDocDir
         forFramework:fwName
         inDatabase:self];
+    [AKCocoaGlobalsDocParser
+        recursivelyParseDirectory:behaviorsDocDir  // [agl] class docs can contain "Constants" sections
+        forFramework:fwName
+        inDatabase:self];
 
     DIGSLogDebug(@"parsing datatypes docs for %@", fwName);
     [AKCocoaGlobalsDocParser
