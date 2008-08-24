@@ -13,7 +13,7 @@
 #import "AKFileSection.h"
 #import "AKGlobalsNode.h"
 #import "AKGroupNode.h"
-#import "AKFileSectionDoc.h"
+#import "AKNodeDoc.h"
 
 @implementation AKGroupNodeSubtopic
 
@@ -64,9 +64,7 @@
     while ((globalsNode = [subnodesEnum nextObject]))
     {
         AKDoc *newDoc =
-            [[[AKFileSectionDoc alloc]
-                initWithFileSection:[globalsNode nodeDocumentation]]
-                autorelease];
+            [[[AKNodeDoc alloc] initWithNode:globalsNode] autorelease];
 
         [docList addObject:newDoc];
     }
