@@ -67,15 +67,11 @@
         _database = [db retain];
 
         _searchString = nil;
-        _lowercaseSearchString = nil;
-
-        _utf8SearchString = NULL;
-        _utf8LowercaseSearchString = NULL;
 
         _includesClassesAndProtocols = YES;
         _includesMembers = YES;
-        _includesFunctions = NO;
-        _includesGlobals = NO;
+        _includesFunctions = YES;
+        _includesGlobals = YES;
         _ignoresCase = YES;
         _searchComparison = AKSearchSubstring;
 
@@ -96,17 +92,6 @@
 {
     [_database release];
     [_searchString release];
-    [_lowercaseSearchString release];
-
-    if (_utf8SearchString)  // defensive -- should never be NULL
-    {
-        free(_utf8SearchString);
-    }
-
-    if (_utf8LowercaseSearchString)  // defensive -- should never be NULL
-    {
-        free(_utf8LowercaseSearchString);
-    }
 
     [_searchResults release];
 
@@ -133,42 +118,6 @@
     [s retain];
     [_searchString release];
     _searchString = s;
-
-    // Update the _lowercaseSearchString ivar.
-    [_lowercaseSearchString release];
-    _lowercaseSearchString = [[s lowercaseString] retain];
-
-    // Update the _utf8SearchString ivar.
-    if (_utf8SearchString)
-    {
-        free(_utf8SearchString);
-    }
-
-    if (s)
-    {
-        _utf8SearchString = ak_copystr([s UTF8String]);
-    }
-    else
-    {
-        _utf8SearchString = NULL;
-    }
-
-    // Update the _utf8LowercaseSearchString ivar.
-    if (_utf8LowercaseSearchString)
-    {
-        free(_utf8LowercaseSearchString);
-    }
-
-    if (s)
-    {
-        _utf8LowercaseSearchString =
-            ak_copystr([[s lowercaseString] UTF8String]);
-    }
-    else
-    {
-        _utf8LowercaseSearchString = NULL;
-    }
-
 
     // Update the _searchResults ivar.
     [self _clearSearchResults];
@@ -230,6 +179,14 @@
     }
 }
 
+- (void)setIncludesEverything
+{
+    [self setIncludesClassesAndProtocols:YES];
+    [self setIncludesMembers:YES];
+    [self setIncludesFunctions:YES];
+    [self setIncludesGlobals:YES];
+}
+
 - (BOOL)ignoresCase
 {
     return _ignoresCase;
@@ -266,14 +223,12 @@
 // [agl] working on performance
 #if MEASURE_SEARCH_SPEED
 static int g_NSStringComparisons = 0;
-static int g_UTF8Comparisons = 0;
 static NSTimeInterval g_startTime = 0.0;
 static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_timeSearchStart
 {
     g_NSStringComparisons = 0;
-    g_UTF8Comparisons = 0;
     g_startTime = [NSDate timeIntervalSinceReferenceDate];
     g_checkpointTime = g_startTime;
     NSLog(@"---------------------------------");
@@ -284,10 +239,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
     NSLog(@"...CHECKPOINT: %@", description);
-    NSLog(@"               compared %d strings cumulative (%d/%d);",
-        g_NSStringComparisons + g_UTF8Comparisons,
-        g_NSStringComparisons,
-        g_UTF8Comparisons);
+    NSLog(@"               compared %d strings", g_NSStringComparisons);
     NSLog(@"               %.3f seconds since last checkpoint",
         now - g_checkpointTime);
     g_checkpointTime = now;
@@ -374,14 +326,14 @@ g_NSStringComparisons++;
         case AKSearchSubstring: {
             return
                 _ignoresCase
-                ? [s ak_containsCaseInsensitive:_lowercaseSearchString]
+                ? [s ak_containsCaseInsensitive:_searchString]
                 : [s ak_contains:_searchString];
         }
 
         case AKSearchExactMatch: {
             return
                 _ignoresCase
-                ? ([s compare:_lowercaseSearchString options:NSCaseInsensitiveSearch] == 0)
+                ? ([s compare:_searchString options:NSCaseInsensitiveSearch] == 0)
                 : [s isEqualToString:_searchString];
         }
 
@@ -402,22 +354,7 @@ g_NSStringComparisons++;
 
 - (BOOL)_matchesNode:(AKDatabaseNode *)node
 {
-// [agl] working on performance
-#if MEASURE_SEARCH_SPEED
-g_UTF8Comparisons++;
-#endif MEASURE_SEARCH_SPEED
-
-    if (_ignoresCase)
-    {
-        return
-            (strstr(
-                [node utf8LowercaseName],
-                _utf8LowercaseSearchString) != NULL);
-    }
-    else
-    {
-        return (strstr([node utf8Name], _utf8SearchString) != NULL);
-    }
+    return [self _matchesString:[node nodeName]];
 }
 
 - (void)_searchClassNames
@@ -596,18 +533,16 @@ g_UTF8Comparisons++;
                 BOOL matchFound = NO;
 
 // [agl] ak_stripHTML is too expensive -- bogging down the search
+// [agl] 0.978 I don't think we actually need to strip any HTML -- no node seems to contain & or <
 //                if ([self _matchesString:[[subnode nodeName] ak_stripHTML]])
-// [agl] I don't think we actually need to strip any HTML -- no node seems to contain & or <
-//                if ([self _matchesNode:subnode])
-                if ([self _matchesString:[subnode nodeName]])
+                if ([self _matchesNode:subnode])
                 {
                     matchFound = YES;
                 }
                 else
                 {
                     NSEnumerator *globalNameEnum =
-                        [[subnode namesOfGlobals]
-                            objectEnumerator];
+                        [[subnode namesOfGlobals] objectEnumerator];
                     NSString *globalName;
 
                     while ((globalName = [globalNameEnum nextObject]))
@@ -622,7 +557,10 @@ g_UTF8Comparisons++;
 
                 if (matchFound)
                 {
-                    AKTopic *topic = [AKGlobalsTopic topicWithFramework:fwName inDatabase:_database];
+                    AKTopic *topic =
+                        [AKGlobalsTopic
+                            topicWithFramework:fwName
+                            inDatabase:_database];
 
                     [_searchResults
                         addObject:
