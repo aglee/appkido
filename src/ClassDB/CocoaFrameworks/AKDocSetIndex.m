@@ -146,7 +146,7 @@ static NSString *s_headerPathsQueryTemplate =
 - (id)init
 {
     DIGSLogNondesignatedInitializer();
-    [self dealloc];
+    [self release];
     return nil;
 }
 

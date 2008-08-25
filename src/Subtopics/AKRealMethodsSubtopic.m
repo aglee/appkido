@@ -46,7 +46,7 @@
 - (id)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogNondesignatedInitializer();
-    [self dealloc];
+    [self release];
     return nil;
 }
 
