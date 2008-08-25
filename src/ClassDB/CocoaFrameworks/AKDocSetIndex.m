@@ -189,7 +189,7 @@ static NSString *s_headerPathsQueryTemplate =
     [rs close];
 
     [frameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
-    //[frameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
+    [frameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
 
     // Close the database.
     [db close];
