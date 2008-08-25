@@ -29,7 +29,7 @@ extern char *ak_copystr(const char *s);
 - (BOOL)ak_contains:(NSString *)searchString;
 
 /*!
- * @method      ak_contains:
+ * @method      ak_containsCaseInsensitive:
  * @discussion  Does a case-insensitive substring search.
  */
 - (BOOL)ak_containsCaseInsensitive:(NSString *)searchString;
