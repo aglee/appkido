@@ -8,7 +8,7 @@
 #import "AKAppController.h"
 
 #import <CoreFoundation/CoreFoundation.h>
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 #import <DIGSFindBuffer.h>
 
 #import "AKDocSetIndex.h"

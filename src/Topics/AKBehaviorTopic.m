@@ -7,7 +7,7 @@
 
 #import "AKBehaviorTopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods

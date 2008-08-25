@@ -7,7 +7,7 @@
 
 #import "AKSubtopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKDoc.h"
 

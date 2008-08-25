@@ -7,7 +7,7 @@
 
 #import "AKProtocolOverviewSubtopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKProtocolNode.h"
 

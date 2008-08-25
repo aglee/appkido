@@ -5,7 +5,7 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 
-    #import <DIGSLog.h>
+    #import "DIGSLog.h"
     #import <DIGSFileProcessor.h>
     #import <DIGSFindBuffer.h>
     #import <DIGSTextSelection.h>

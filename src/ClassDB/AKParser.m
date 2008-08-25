@@ -7,7 +7,7 @@
 
 #import "AKParser.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 #import "AKDatabase.h"
 
 @implementation AKParser

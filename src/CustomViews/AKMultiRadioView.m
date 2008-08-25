@@ -7,7 +7,7 @@
 
 #import "AKMultiRadioView.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 @implementation AKMultiRadioView
 

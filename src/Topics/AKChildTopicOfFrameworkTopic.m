@@ -7,7 +7,7 @@
 
 #import "AKChildTopicOfFrameworkTopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 @implementation AKChildTopicOfFrameworkTopic
 

@@ -8,7 +8,7 @@
 #import "AKDoc.h"
 
 #import <WebKit/WebKit.h>
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 #import "AKTextUtils.h"
 #import "AKFileSection.h"
 #import "AKDocParser.h"

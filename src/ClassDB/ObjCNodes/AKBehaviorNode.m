@@ -7,7 +7,7 @@
 
 #import "AKBehaviorNode.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 #import "AKProtocolNode.h"
 #import "AKPropertyNode.h"
 #import "AKMethodNode.h"

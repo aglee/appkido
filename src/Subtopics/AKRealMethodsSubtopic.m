@@ -7,7 +7,7 @@
 
 #import "AKRealMethodsSubtopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKClassNode.h"
 #import "AKMethodNode.h"

@@ -7,7 +7,7 @@
 
 #import "AKSearchQuery.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKSortUtils.h"
 #import "AKTextUtils.h"

@@ -7,7 +7,7 @@
 
 #import "AKMemberDoc.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKFrameworkConstants.h"
 #import "AKProtocolNode.h"
