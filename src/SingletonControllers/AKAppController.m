@@ -214,14 +214,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #define APPKIDO_FOR_IPHONE 0
 #if APPKIDO_FOR_IPHONE
     _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
-    if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
-    {
-        [AKPrefUtils
-            setSelectedFrameworkNamesPref:
-                [[AKDocSetIndex
-                    indexForLatestIPhoneSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]]
-                        objectiveCFrameworkNames]];
-    }
+
+    [AKPrefUtils
+        setSelectedFrameworkNamesPref:
+            [[AKDocSetIndex
+                indexForLatestIPhoneSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]]
+                    objectiveCFrameworkNames]];
 #else
     _appDatabase = [[AKDatabase databaseForPlatform:AKMacOSPlatform] retain];
 #endif
