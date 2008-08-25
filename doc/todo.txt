@@ -8,8 +8,6 @@
 	[ ] create two targets in Xcode
 	[ ] have two different identifiers (com.appkido... ?)
 
-[ ] look for [agl] REMOVE
-
 [ ] make sure mailing list has latest people who asked to be on it
 
 [ ] write release notes:
@@ -21,10 +19,11 @@
 	* keyboard shortcuts have changed (command-(number))
 	* Select All/Deselect All in frameworks prefs
 	* prefix searches
+	* iPhone!  NB you'll get all frameworks regardless of prefs panel
 	* nb code has changed a lot and more big changes are in store
 
 ----------------------------------------------------------
-*** 0.99 stuff (Xcode 3.x only) ***
+*** 0.99 stuff (Xcode 3.x only?) ***
 
 ===== efficiency =====
 
@@ -142,6 +141,10 @@
 -------------------------------------------------
 
 ===== 0.978: done =====
+
+[x] look for [agl] REMOVE
+
+[x] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
 
 [x] WebKit formal protocol WebPlugInViewFactory appears in 971, not 980
 
