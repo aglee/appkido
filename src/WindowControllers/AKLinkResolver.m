@@ -99,7 +99,7 @@
     [searchQuery setSearchString:tokenName];
     [searchQuery setIncludesEverything];
     [searchQuery setIgnoresCase:YES];
-    [searchQuery setSearchComparison:AKSearchExactMatch];
+    [searchQuery setSearchComparison:AKSearchForExactMatch];
     NSEnumerator *searchResultsEnum =
         [[searchQuery queryResults] objectEnumerator];
     AKDocLocator *docLocator;
