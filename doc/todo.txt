@@ -1,31 +1,23 @@
 :--- APPKIDO TO-DO ---:
 
+[ ] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
+
 [ ] generate separate "AppKiDo for iPhone"
-	[ ] add check for *latest* docset, e.g., iPhone 2.0 vs. iPhone 2.1
 	[ ] create two targets in Xcode
 	[ ] have two different identifiers (com.appkido... ?)
-	[ ] somehow parametrize the UI (different background colors, etc.)
-	[ ] create alternate icon for the iPhone version
-
-[ ] bump version to 0.98 for release
-
-[ ] clean up credits
-	[ ] bold names and list them alphabetically (perhaps with version number?)
-	[ ] add Gus Mueller to credits
-	[ ] remember to thank Gerriet yet again
 
 [ ] look for [agl] REMOVE
 
 [ ] make sure mailing list has latest people who asked to be on it
 
 [ ] write release notes:
-	* can set dev tools location
+	* can/must set dev tools location
 	* more supported frameworks if you use xcode 3
-	* open doc url in browser
+	* "open doc url in browser" in contextual menu
+	* improved hyperlinks (go to the right place; don't open browser; thanks to Gerriet)
 	* better leopard support -- gets all classes, does properties
 	* keyboard shortcuts have changed (command-(number))
 	* Select All/Deselect All in frameworks prefs
-	* gerriet's fix
 	* prefix searches
 
 ----------------------------------------------------------
@@ -56,6 +48,10 @@
 [ ] new icons
 [ ] clean up window layout -- overlapping views, etc.
 	[ ] put a splitter in the middle section
+[ ] make the iPhone version visually distinctive
+	[ ] somehow parametrize the UI (different background colors, etc.)
+	[ ] create alternate icon for the iPhone version
+[ ] nicer credits: bold names and list them alphabetically (perhaps with version number?)
 
 
 ===== dev stuff =====
@@ -66,6 +62,8 @@
 
 
 ----------------------------------------------------------
+
+[ ] remember scroll position in history
 
 [ ] in topic browser, select NSWindow and then NSViewController -- does a weird sideways scrolling thing, and the horizontal scroller doesn't update
 
@@ -111,9 +109,6 @@
 
 [ ] in splash screen, don't say parsing framework unless it exists (e.g. UIKit for Mac OS)
 
-[ ] add support for "Constants" section (see UIImagePickerController or CALayer)
-	[ ] deal with the fact that there are constants in class docs *and* in framework-level docs
-
 [ ] review behaviorDocPathsForFramework
 
 [ ] AKPropertiesSubtopic should be an AKRealMethodsSubtopic (for behavior, not just class)
@@ -144,6 +139,12 @@
 -------------------------------------------------
 
 ===== 0.978: done =====
+
+[x] update credits
+	[x] add Gus Mueller to credits
+	[x] remember to thank Gerriet yet again
+
+[x] bump version to 0.98 for release
 
 [x] replace [self dealloc] with [self release]
 
@@ -226,6 +227,15 @@
 [x] withClassNode etc. should be topicWithClassNode
 
 ------------------
+
+[ ] go back to [AKDatabase defaultDatabase]
+	* possibly pull _database out of AKTopic
+
+[ ] cell classes are n/a for iPhone (UITableViewCell is actually a view)
+
+[ ] add some way to choose which iPhone SDK to use
+
+[ ] subtopic list should scroll to visible, e.g., if you search for NSNextMapEnumeratorPair, "Managing Map Tables" is far down the subtopic list and isn't visible
 
 [ ] script to go through and make sure all imports are actually necessary
 
