@@ -67,18 +67,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithPlatformName:(NSString *)platformName
+- (id)initWithDatabase:(AKDatabase *)database
 {
     if ((self = [super init]))
     {
-        if (platformName)
-        {
-            _database = [AKDatabase databaseForPlatform:platformName];
-        }
-        else
-        {
-            _database = [AKDatabase databaseForPlatform:AKMacOSPlatform];
-        }
+        _database = [database retain];
 
         int maxHistory =
             [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];

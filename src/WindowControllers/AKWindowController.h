@@ -93,7 +93,7 @@
 //-------------------------------------------------------------------------
 
 /*! Designated initializer. */
-- (id)initWithPlatformName:(NSString *)platformName;
+- (id)initWithDatabase:(AKDatabase *)database;
 
 //-------------------------------------------------------------------------
 // Getters and setters

@@ -70,8 +70,6 @@
 - (void)_initAboutPanel;
 - (void)_initGoMenu;
 - (void)_maybeAddDebugMenu;  // [agl] uses AKDebugUtils
-- (void)_loadFrameworks:(NSArray *)frameworkNames
-    forPlatform:(NSString *)platformName;
 
 //-------------------------------------------------------------------------
 // Private methods -- version management
@@ -94,8 +92,7 @@
 // Private methods -- window management
 //-------------------------------------------------------------------------
 
-- (AKWindowController *)_newWindowControllerForPlatform:(NSString *)platformName
-    withLayout:(AKWindowLayout *)windowLayout;
+- (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout;
 - (void)_handleWindowWillCloseNotification:(NSNotification *)notification;
 - (void)_openInitialWindows;
 - (NSArray *)_allWindowsAsPrefArray;
@@ -214,15 +211,31 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
 
-#ifdef APPKIDO_FOR_IPHONE
-    [self
-        _loadFrameworks:[AKPrefUtils selectedFrameworkNamesPref]
-        forPlatform:AKIPhonePlatform];
+#define APPKIDO_FOR_IPHONE 0
+//#define APPKIDO_FOR_IPHONE 1
+#if APPKIDO_FOR_IPHONE
+    _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
 #else
-    [self
-        _loadFrameworks:[AKPrefUtils selectedFrameworkNamesPref]
-        forPlatform:AKMacOSPlatform];
+    _appDatabase = [[AKDatabase databaseForPlatform:AKMacOSPlatform] retain];
 #endif
+
+// [agl] working on performance
+#if MEASURE_PARSE_SPEED
+[self _timeParseStart];
+#endif MEASURE_PARSE_SPEED
+
+    [_appDatabase setDelegate:self];
+    [_appDatabase
+        loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
+    [_appDatabase setDelegate:nil];
+
+// [agl] working on performance
+#if MEASURE_PARSE_SPEED
+[self _timeParseEnd];
+#endif MEASURE_PARSE_SPEED
+
+    [_splashMessage2Field setStringValue:@""];
+    [_splashMessage2Field display];
 
     // Set up the "Go" menu.
     [self _initGoMenu];
@@ -259,6 +272,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [_appDatabase release];
 
     [_windowControllers release];
     [_prefPanelController release];
@@ -308,7 +323,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return nil;
 }
 
-- (AKWindowController *)openNewWindowForPlatform:(NSString *)platformName
+- (AKWindowController *)controllerForNewWindow
 {
     NSDictionary *prefDict =
         [AKPrefUtils
@@ -316,9 +331,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     AKWindowLayout *windowLayout =
         [AKWindowLayout fromPrefDictionary:prefDict];
     AKWindowController *windowController =
-        [self
-            _newWindowControllerForPlatform:platformName
-            withLayout:windowLayout];
+        [self _controllerForNewWindowWithLayout:windowLayout];
 
     [windowController
         openWindowWithQuicklistDrawer:
@@ -359,7 +372,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    AKWindowController *wc = [self openNewWindowForPlatform:AKMacOSPlatform];
+    AKWindowController *wc = [self controllerForNewWindow];
     [wc searchForString:[aCommand directParameter]];
     return nil;
 }
@@ -527,7 +540,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (IBAction)openNewWindow:(id)sender
 {
-    (void)[self openNewWindowForPlatform:AKMacOSPlatform];
+    (void)[self controllerForNewWindow];
 }
 
 // This is only called from the doc view's contextual menu, so it's
@@ -536,10 +549,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSArray *info = (NSArray *)[sender representedObject];
-        NSURL *linkURL = (NSURL *)[info objectAtIndex:0];
-        AKWindowController *fromWC = (AKWindowController *)[info objectAtIndex:1];
-        AKWindowController *wc = [self openNewWindowForPlatform:[[fromWC database] platformName]];
+        NSURL *linkURL = (NSURL *)[sender representedObject];
+        AKWindowController *wc = [self controllerForNewWindow];
 
         (void)[wc jumpToLinkURL:linkURL];
     }
@@ -668,7 +679,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
         if (wc == nil)
         {
-            [self openNewWindowForPlatform:AKMacOSPlatform];
+            (void)[self controllerForNewWindow];
         }
     }
 }
@@ -731,17 +742,16 @@ static NSTimeInterval g_checkpointTime = 0.0;
     NSMenu *goMenu = [_firstGoMenuDivider menu];
     int menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
 
-    AKDatabase *db = [[self frontmostWindowController] database];
-    NSEnumerator *fwNameEnum = [[db sortedFrameworkNames] objectEnumerator];
+    NSEnumerator *fwNameEnum = [[_appDatabase sortedFrameworkNames] objectEnumerator];
     NSString *fwName;
 
     while ((fwName = [fwNameEnum nextObject]))
     {
         // See what information we have for this framework.
-        NSArray *formalProtocolNodes = [db formalProtocolsForFramework:fwName];
-        NSArray *informalProtocolNodes = [db informalProtocolsForFramework:fwName];
-        NSArray *functionsGroupNodes = [db functionsGroupsForFramework:fwName];
-        NSArray *globalsGroupNodes = [db globalsGroupsForFramework:fwName];
+        NSArray *formalProtocolNodes = [_appDatabase formalProtocolsForFramework:fwName];
+        NSArray *informalProtocolNodes = [_appDatabase informalProtocolsForFramework:fwName];
+        NSArray *functionsGroupNodes = [_appDatabase functionsGroupsForFramework:fwName];
+        NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFramework:fwName];
 
         // Construct the submenu of framework-related topics.
         NSMenu *fwTopicSubmenu =
@@ -845,40 +855,16 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)_loadFrameworks:(NSArray *)frameworkNames
     forPlatform:(NSString *)platformName
 {
-// [agl] working on performance
-#if MEASURE_PARSE_SPEED
-[self _timeParseStart];
-#endif MEASURE_PARSE_SPEED
-
-    AKDatabase *db = [AKDatabase databaseForPlatform:platformName];
-
-    [db setDelegate:self];
-    [db loadTokensForFrameworks:frameworkNames];
-    [db setDelegate:nil];
-
-// [agl] working on performance
-#if MEASURE_PARSE_SPEED
-[self _timeParseEnd];
-#endif MEASURE_PARSE_SPEED
-
-    [_splashMessage2Field setStringValue:@""];
-    [_splashMessage2Field display];
 }
 
 //-------------------------------------------------------------------------
 // Private methods -- window management
 //-------------------------------------------------------------------------
 
-- (AKWindowController *)_newWindowControllerForPlatform:(NSString *)platformName
-    withLayout:(AKWindowLayout *)windowLayout
+- (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout
 {
-    if (platformName == nil)
-    {
-        platformName = AKMacOSPlatform;
-    }
-
     AKWindowController *windowController =
-        [[[AKWindowController alloc] initWithPlatformName:platformName] autorelease];
+        [[[AKWindowController alloc] initWithDatabase:_appDatabase] autorelease];
 
     [_windowControllers addObject:windowController];
     if (windowLayout)
@@ -906,7 +892,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if ([savedWindows count] == 0)
     {
-        (void)[self openNewWindowForPlatform:AKMacOSPlatform];
+        (void)[self controllerForNewWindow];
     }
     else
     {
@@ -918,16 +904,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
             NSDictionary *prefDict = [savedWindows objectAtIndex:i];
             AKSavedWindowState *savedWindowState =
                 [AKSavedWindowState fromPrefDictionary:prefDict];
-            NSString *platformName =
-                [savedWindowState platformName]
-                ? [savedWindowState platformName]
-                : AKMacOSPlatform;
             AKWindowLayout *windowLayout =
                 [savedWindowState savedWindowLayout];
             AKWindowController *wc =
-                [self
-                    _newWindowControllerForPlatform:platformName
-                    withLayout:windowLayout];
+                [self _controllerForNewWindowWithLayout:windowLayout];
 
             [wc jumpToDocLocator:[savedWindowState savedDocLocator]];
             [wc openWindowWithQuicklistDrawer:
