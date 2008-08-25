@@ -16,6 +16,7 @@
 
 @interface AKDocSetIndex (Private)
 
++ (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath;
 - (NSString *)_resourcesPath;
 - (NSString *)_pathToSqliteFile;
 - (FMDatabase *)_openSQLiteDB;
@@ -79,16 +80,17 @@ static NSString *s_headerPathsQueryTemplate =
 
 + (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
 {
-    NSString *docSetPath =
+    NSString *docSetsDir =
         [devToolsPath
             stringByAppendingPathComponent:
-                @"Platforms/iPhoneOS.platform/"
-                "Developer/Documentation/DocSets/"
-                "com.apple.adc.documentation.AppleiPhone2_0.iPhoneLibrary.docset"];
-    NSString *basePathForHeaders =  // [agl] FIXME Look for the latest, not just 2.0.
+                @"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"];
+    NSString *sdksDir =
         [devToolsPath
             stringByAppendingPathComponent:
-                @"Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator2.0.sdk"];
+                @"Platforms/iPhoneSimulator.platform/Developer/SDKs/"];
+
+    NSString *docSetPath = [self _latestIPhonePathInDirectory:docSetsDir];
+    NSString *basePathForHeaders = [self _latestIPhonePathInDirectory:sdksDir];
 
     return
         [[[AKDocSetIndex alloc]
@@ -300,6 +302,42 @@ static NSString *s_headerPathsQueryTemplate =
 //-------------------------------------------------------------------------
 
 @implementation AKDocSetIndex (Private)
+
++ (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath
+{
+    NSEnumerator *dirContentsEnum =
+        [[[NSFileManager defaultManager]
+            directoryContentsAtPath:dirPath]
+            objectEnumerator];
+    NSString *fileName;
+    NSDate *latestDate = nil;
+    NSString *latestFile = nil;
+
+    while ((fileName = [dirContentsEnum nextObject]))
+    {
+        if ([fileName ak_containsCaseInsensitive:@"iPhone"])
+        {
+            NSDictionary *fileAttributes =
+                [[NSFileManager defaultManager]
+                    fileAttributesAtPath:
+                        [dirPath stringByAppendingPathComponent:fileName]
+                    traverseLink:YES];
+            NSDate *modDate = [fileAttributes fileModificationDate];
+
+            if (latestDate == nil ||
+                [modDate compare:latestDate] == NSOrderedDescending)
+            {
+                latestDate = modDate;
+                latestFile = fileName;
+            }
+
+            DIGSLogDebug(@"[%@] -- [%@]", modDate, fileName);
+        }
+    }
+
+    DIGSLogDebug(@"[%@] ** [%@]", latestDate, latestFile);
+    return [dirPath stringByAppendingPathComponent:latestFile];
+}
 
 - (NSString *)_resourcesPath
 {
