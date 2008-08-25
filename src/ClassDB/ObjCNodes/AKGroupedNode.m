@@ -32,7 +32,7 @@
     owningFramework:(NSString *)fwName
 {
     DIGSLogNondesignatedInitializer();
-    [self dealloc];
+    [self release];
     return nil;
 }
 

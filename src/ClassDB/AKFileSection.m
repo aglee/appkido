@@ -104,7 +104,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 - (id)init
 {
     DIGSLogNondesignatedInitializer();
-    [self dealloc];
+    [self release];
     return nil;
 }
 

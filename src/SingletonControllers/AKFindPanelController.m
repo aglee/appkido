@@ -50,7 +50,7 @@ static AKFindPanelController *s_sharedInstance = nil;
 {
     if (s_sharedInstance)
     {
-        [self dealloc];
+        [self release];
         return s_sharedInstance;
     }
 
