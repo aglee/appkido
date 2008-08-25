@@ -1,5 +1,7 @@
 :--- APPKIDO TO-DO ---:
 
+[ ] NSResponder -> acceptsFirstResponder -> YES opens browser window
+
 [ ] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
 
 [ ] generate separate "AppKiDo for iPhone"
@@ -19,6 +21,7 @@
 	* keyboard shortcuts have changed (command-(number))
 	* Select All/Deselect All in frameworks prefs
 	* prefix searches
+	* nb code has changed a lot and more big changes are in store
 
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only) ***
@@ -140,6 +143,8 @@
 
 ===== 0.978: done =====
 
+[x] WebKit formal protocol WebPlugInViewFactory appears in 971, not 980
+
 [x] update credits
 	[x] add Gus Mueller to credits
 	[x] remember to thank Gerriet yet again
@@ -233,7 +238,7 @@
 
 [ ] cell classes are n/a for iPhone (UITableViewCell is actually a view)
 
-[ ] add some way to choose which iPhone SDK to use
+[ ] add some UI to choose which iPhone SDK to use -- a tab in the prefs panel that only appears in iPhone mode
 
 [ ] subtopic list should scroll to visible, e.g., if you search for NSNextMapEnumeratorPair, "Managing Map Tables" is far down the subtopic list and isn't visible
 
@@ -283,10 +288,6 @@ rename digitalspokes plist
 
 AddressBook constants not appearing in 980, but they do in 971
 
-informal protocols NSObjCTypeSerializationCallBack and NSURLClient show up in 971, not 980
-
-WebKit formal protocol WebPlugInViewFactory appears in 971, not 980
-
 QTKit types and constants contains only a "Constants" group in 980, only a "Data Types" group in 971; the subnodes of the two groups are disjoint
 
 weirdness if browsing e.g. CoreData Constants and click on one of the clickable constants -- see what happens to topic browser
@@ -295,17 +296,9 @@ use NSUInteger
 
 search for "::" doesn't find -[CIImageProvider provideImageData:bytesPerRow:origin::size::userInfo:]
 
-some links eg IK... open in browser
-
-search is slow now; show progress and/or make faster; show # results?
-
 hm, *Carbon* is showing up, with two protocols: IMKTextInput and IMKUnicodeTextInput; and the -insertText: method for the latter is not showing up (not documented, I assume)
 
 omit frameworks with no classes from the quicklist popup
-
-add thanks to Gus Mueller
-
-bump version to 0.98
 
 use tabview for the doc view
 
