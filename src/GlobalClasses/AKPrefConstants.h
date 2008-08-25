@@ -77,7 +77,6 @@ extern NSString *AKTopicClassNamePrefKey;       // string
 extern NSString *AKLabelStringPrefKey;          // string
 extern NSString *AKBehaviorNamePrefKey;         // string
 extern NSString *AKFrameworkNamePrefKey;        // string
-extern NSString *AKPlatformNamePrefKey;        // string
 extern NSString *AKParentBrowserPathPrefKey;    // string
 
 // For storing an AKDocLocator as a pref dictionary

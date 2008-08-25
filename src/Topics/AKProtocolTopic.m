@@ -13,6 +13,7 @@
 #import "AKDatabase.h"
 #import "AKProtocolNode.h"
 
+#import "AKAppController.h"
 #import "AKProtocolOverviewSubtopic.h"
 #import "AKPropertiesSubtopic.h"
 #import "AKClassMethodsSubtopic.h"
@@ -84,14 +85,7 @@
     }
     else
     {
-        NSString *platformName = [prefDict objectForKey:AKPlatformNamePrefKey];
-
-        if (platformName == nil)
-        {
-            platformName = AKMacOSPlatform;
-        }
-
-        AKDatabase *db = [AKDatabase databaseForPlatform:platformName];
+        AKDatabase *db = [[NSApp delegate] appDatabase];
         AKProtocolNode *protocolNode = [db protocolWithName:protocolName];
 
         if (!protocolNode)
