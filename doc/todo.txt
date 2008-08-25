@@ -1,19 +1,11 @@
 :--- APPKIDO TO-DO ---:
 
-[ ] fix "go" menu
-
-[ ] Handle files structured like CGGeometry/Reference/reference.html.
-	* note that it's a functions, constants, _and_ data types doc
-	* similarly, class docs can also contain constants
-
 [ ] generate separate "AppKiDo for iPhone"
 	[ ] add check for *latest* docset, e.g., iPhone 2.0 vs. iPhone 2.1
-	[ ] SubEthaEdit search Service -- how would it work?
 	[ ] create two targets in Xcode
 	[ ] have two different identifiers (com.appkido... ?)
 	[ ] somehow parametrize the UI (different background colors, etc.)
 	[ ] create alternate icon for the iPhone version
-	[ ] iPhone version should have different criteria for "looks like valid dev tools path"
 
 [ ] bump version to 0.98 for release
 
@@ -34,8 +26,7 @@
 	* keyboard shortcuts have changed (command-(number))
 	* Select All/Deselect All in frameworks prefs
 	* gerriet's fix
-	* CGPoint is a known issue
-	* note: next release will require Xcode 3.x
+	* prefix searches
 
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only) ***
@@ -76,15 +67,27 @@
 
 ----------------------------------------------------------
 
+[ ] in topic browser, select NSWindow and then NSViewController -- does a weird sideways scrolling thing, and the horizontal scroller doesn't update
+
+[ ] iPhone version could have different criteria for "looks like valid dev tools path"
+
+[ ] SubEthaEdit search Service only hits Mac OS ("classic") AppKiDo
+
+[ ] why does it take so long to load AddressBook -> Protocols -> <ABImageClient>?
+
+[ ] why do some searches take so long?  "cursor" is slow, yet "o" is fast even though it returns a superset of results
+
 [ ] odd -- the small dividers for the split views aren't small
+
+[ ] fuzzy table contents -- double drawing?
+	* seems to have been fixed when I stopped using ak_stripHTML on the strings we display in the doc list
+	* oops, that didn't really fix the bug, yet for some reason it seems better
 
 [ ] AddressBook -> Types & Constants -> shows a "Constants" subtopic with no docs
 
 [ ] possible confusion: in AppKit Constants, there's "Cell Types [NSCell]" and "NSCellType [NSCell]"; perhaps no more confusing than the NSCell doc itself -- except they're so far apart in the doc list it may not be clear they're related; maybe should reorg so "Constants" and "Data Types" are separate topics -- this would allow another level of subdivisions
 
 [ ] show progress indicator during search, number of results when done
-
-[ ] change <DIGSLog.h> to "DIGSLog.h"
 
 [ ] lower the memory profile
 
@@ -98,17 +101,6 @@
 
 [ ] make sure breaking delegate and notification connections in dealloc, as I argued one should
 [ ] check for memory leaks in general
-
-[ ] fuzzy table contents -- double drawing?
-
-[ ] figure out //.../doc/c_ref links
-	* like NSMutableString replaceCharactersInRange:withString: -> NSRange
-
-[ ] what framework do I need to get CGPoint?  e.g. CALayer -> Instance methods -> containsPoint:
-	* seems to be ApplicationServices?
-	* seems like CF is also needed
-	* postpone to after 0.98 and new parsing model; drags too much stuff in
-	* also tricky stuff like links to CGAffineTransform / "Transform"
 
 [ ] prefs "use default appearance" is buggy
 
@@ -126,16 +118,13 @@
 
 [ ] AKPropertiesSubtopic should be an AKRealMethodsSubtopic (for behavior, not just class)
 
-[ ] support NSFoo* for prefix searches
-
 [ ] equivalent of "view classes" is what for uikit?
 
 [ ] rename fromPrefDictionary: to xxxFromPrefDictionary: in various classes
 
 [ ] why is Carbon showing up???
 
-[ ] replace [self dealloc] with [self release]
-[ ] should [self dealloc] be [[super init] dealloc]?
+[ ] should [self release] be [[super init] release]?
 
 [ ] ping Cathy re: subversion, and UI question re: iPhone support
 
@@ -155,6 +144,28 @@
 -------------------------------------------------
 
 ===== 0.978: done =====
+
+[x] replace [self dealloc] with [self release]
+
+[x] change <DIGSLog.h> to "DIGSLog.h"
+
+[x] support NSFoo* for prefix searches
+
+[x] fix "go" menu
+	* go back to the model of a single app-wide database, but this time as an ivar of AKAppController
+
+[x] Handle files structured like CGGeometry/Reference/reference.html.
+	* note that it's a functions, constants, _and_ data types doc
+	* similarly, class docs can also contain constants
+
+[x] what framework do I need to get CGPoint?  e.g. CALayer -> Instance methods -> containsPoint:
+	* seems to be ApplicationServices?
+	* seems like CF is also needed
+	* also tricky stuff like links to CGAffineTransform / "Transform"
+
+[x] figure out //.../doc/c_ref links
+	* like NSMutableString replaceCharactersInRange:withString: -> NSRange
+	* seems to be solved by new approach in AKLinkResolver, using AKSearchQuery
 
 [x] Foundation has two Constants nodes called "Input and Output Options" from two different class docs: the one for NSXMLDocument and the one for NSXMLNode.
 
@@ -218,8 +229,6 @@
 
 [ ] script to go through and make sure all imports are actually necessary
 
-[ ] what *is* the correct value for a null selector?
-
 [ ] in Xcode, search for "setTimeOffset:" finds the *property* timeOffset
 
 [ ] can DIGSLogExitingMethodPrematurely take varargs?
@@ -252,7 +261,6 @@ show feedback during search
 	show number of search results
 
 * akd prefs frameworks space bar doesn't work to toggle selection
-	* "select all" button would be nice
 
 get latest fmdb
 
@@ -262,8 +270,6 @@ make sure parsing class extensions
 
 rename digitalspokes plist
 	maybe try to get the domain name back?
-
-do I care about the method names beginning with an underscore?
 
 AddressBook constants not appearing in 980, but they do in 971
 
