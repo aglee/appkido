@@ -63,14 +63,11 @@
 // AKDatabase methods
 //-------------------------------------------------------------------------
 
-- (void)loadTokensForFrameworks:(NSArray *)frameworkNames
+- (BOOL)frameworkNameIsValid:(NSString *)frameworkName
 {
-    if (frameworkNames == nil)
-    {
-        frameworkNames = [_docSetIndex objectiveCFrameworkNames];
-    }
-
-    [super loadTokensForFrameworks:frameworkNames];
+    return
+        [[_docSetIndex objectiveCFrameworkNames]
+            containsObject:frameworkName];
 }
 
 - (void)loadTokensForFrameworkNamed:(NSString *)fwName
