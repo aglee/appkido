@@ -211,9 +211,17 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
 
-#define APPKIDO_FOR_IPHONE 1
+#define APPKIDO_FOR_IPHONE 0
 #if APPKIDO_FOR_IPHONE
     _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
+    if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
+    {
+        [AKPrefUtils
+            setSelectedFrameworkNamesPref:
+                [[AKDocSetIndex
+                    indexForLatestIPhoneSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]]
+                        objectiveCFrameworkNames]];
+    }
 #else
     _appDatabase = [[AKDatabase databaseForPlatform:AKMacOSPlatform] retain];
 #endif
@@ -223,7 +231,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 [self _timeParseStart];
 #endif MEASURE_PARSE_SPEED
 
-    [_appDatabase setDelegate:self];
+    [_appDatabase setDelegate:self];  // So we can update the splash screen.
     [_appDatabase
         loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
     [_appDatabase setDelegate:nil];
