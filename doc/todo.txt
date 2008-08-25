@@ -1,0 +1,299 @@
+:--- APPKIDO TO-DO ---:
+
+[ ] fix "go" menu
+
+[ ] Handle files structured like CGGeometry/Reference/reference.html.
+	* note that it's a functions, constants, _and_ data types doc
+	* similarly, class docs can also contain constants
+
+[ ] generate separate "AppKiDo for iPhone"
+	[ ] add check for *latest* docset, e.g., iPhone 2.0 vs. iPhone 2.1
+	[ ] SubEthaEdit search Service -- how would it work?
+	[ ] create two targets in Xcode
+	[ ] have two different identifiers (com.appkido... ?)
+	[ ] somehow parametrize the UI (different background colors, etc.)
+	[ ] create alternate icon for the iPhone version
+	[ ] iPhone version should have different criteria for "looks like valid dev tools path"
+
+[ ] bump version to 0.98 for release
+
+[ ] clean up credits
+	[ ] bold names and list them alphabetically (perhaps with version number?)
+	[ ] add Gus Mueller to credits
+	[ ] remember to thank Gerriet yet again
+
+[ ] look for [agl] REMOVE
+
+[ ] make sure mailing list has latest people who asked to be on it
+
+[ ] write release notes:
+	* can set dev tools location
+	* more supported frameworks if you use xcode 3
+	* open doc url in browser
+	* better leopard support -- gets all classes, does properties
+	* keyboard shortcuts have changed (command-(number))
+	* Select All/Deselect All in frameworks prefs
+	* gerriet's fix
+	* CGPoint is a known issue
+	* note: next release will require Xcode 3.x
+
+----------------------------------------------------------
+*** 0.99 stuff (Xcode 3.x only) ***
+
+===== efficiency =====
+
+[ ] parse faster
+	* write new pure-C parser, use different strategy
+	* have list of HTML tags I care about, and attributes within those tags, and in the special case of tags that I designate as "header" tags (h1, h2, etc. but could also include 
+	* pluck out byte offsets of where those tags begin and end, and their values for those attributes (in particular, the "name" attribute for anchor tags)
+	* output of parsing one file is an ordered list of these byte offsets
+	* create a mini-language for querying this list for a range of bytes satisfying some criterion (in particular, the range of bytes containing the documentation for a token that is identified by a given anchor string)
+
+[ ] parse less stuff
+	* among HTML files, only need to parse class docs (to get delegate methods and notifications); everything else we can tell from the docset index
+	* can we count on the doc file itself to tell us a protocol is informal?  if so, may not need to parse headers
+
+[ ] store stuff on disk so it doesn't have to be reparsed
+	* use CoreData to store
+
+[ ] save less stuff in memory
+	* query on an as-needed basis from the docset index and the CoreData storage instead of storing everything in memory
+
+
+===== cosmetics =====
+
+[ ] new icons
+[ ] clean up window layout -- overlapping views, etc.
+	[ ] put a splitter in the middle section
+
+
+===== dev stuff =====
+
+[ ] prune away code that supported the old way of parsing
+[ ] clean up copyrights
+[ ] change hosting?
+
+
+----------------------------------------------------------
+
+[ ] odd -- the small dividers for the split views aren't small
+
+[ ] AddressBook -> Types & Constants -> shows a "Constants" subtopic with no docs
+
+[ ] possible confusion: in AppKit Constants, there's "Cell Types [NSCell]" and "NSCellType [NSCell]"; perhaps no more confusing than the NSCell doc itself -- except they're so far apart in the doc list it may not be clear they're related; maybe should reorg so "Constants" and "Data Types" are separate topics -- this would allow another level of subdivisions
+
+[ ] show progress indicator during search, number of results when done
+
+[ ] change <DIGSLog.h> to "DIGSLog.h"
+
+[ ] lower the memory profile
+
+[ ] look into Spaces bug
+
+[ ] Use RBSplitView.
+
+[ ] if you hide quicklist, move window near left edge of screen, and restore quicklist, the window should be pushed right to make room for the whole quicklist to be visible
+
+[ ] Favorites menu shouldn't just say "add Functions to favorites"; should be "add AppKit Functions to favorites"
+
+[ ] make sure breaking delegate and notification connections in dealloc, as I argued one should
+[ ] check for memory leaks in general
+
+[ ] fuzzy table contents -- double drawing?
+
+[ ] figure out //.../doc/c_ref links
+	* like NSMutableString replaceCharactersInRange:withString: -> NSRange
+
+[ ] what framework do I need to get CGPoint?  e.g. CALayer -> Instance methods -> containsPoint:
+	* seems to be ApplicationServices?
+	* seems like CF is also needed
+	* postpone to after 0.98 and new parsing model; drags too much stuff in
+	* also tricky stuff like links to CGAffineTransform / "Transform"
+
+[ ] prefs "use default appearance" is buggy
+
+[ ] possible radar: request performSelector:afterDelay: (without a withObject:)
+[ ] report objective c typo in text submenu
+
+[ ] why isn't "NSAttributedString Application Kit Additions Reference" showing up in the General doc list for NSAttributedString?  (It doesn't in 0.971 either)
+
+[ ] in splash screen, don't say parsing framework unless it exists (e.g. UIKit for Mac OS)
+
+[ ] add support for "Constants" section (see UIImagePickerController or CALayer)
+	[ ] deal with the fact that there are constants in class docs *and* in framework-level docs
+
+[ ] review behaviorDocPathsForFramework
+
+[ ] AKPropertiesSubtopic should be an AKRealMethodsSubtopic (for behavior, not just class)
+
+[ ] support NSFoo* for prefix searches
+
+[ ] equivalent of "view classes" is what for uikit?
+
+[ ] rename fromPrefDictionary: to xxxFromPrefDictionary: in various classes
+
+[ ] why is Carbon showing up???
+
+[ ] replace [self dealloc] with [self release]
+[ ] should [self dealloc] be [[super init] dealloc]?
+
+[ ] ping Cathy re: subversion, and UI question re: iPhone support
+
+[ ] could CoreFoundation work?
+
+[ ] had an idea once upon a time to offer the option of small-style contextual menus
+
+[ ] quicklist includes NSButton among classes with delegates, but it doesn't technically have one
+	[ ] WebView does not appear in list of classes with delegates
+
+[ ] maybe force-exclude XgridFoundation from frameworks, as with Carbon?
+
+[ ] put web site into svn
+
+[ ] maybe move hosting to Dreamhost to get better stats etc.?
+
+-------------------------------------------------
+
+===== 0.978: done =====
+
+[x] Foundation has two Constants nodes called "Input and Output Options" from two different class docs: the one for NSXMLDocument and the one for NSXMLNode.
+
+[x] NSString -> instance methods -> boundingRectWithSize:options:attributes: (an AppKit method) -> NSStringDrawingOptions -> on Tiger, opens web page (note: was the same in 971); on Leopard, works okay; it's because the old-style parsing doesn't pick up the "Constants" sections in behavior docs
+
+[x] Foundation constants -> Personality Options -> click on NSMapTableStrongMemory -- is a c_ref link, wants to go to class doc file
+	* file:///Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/NSMapTable_class/Reference/NSMapTable.html#//apple_ref/doc/c_ref/NSMapTableStrongMemory
+	* can be smarter in AKLinkResolver -- use AKSearchQuery (and add "exact match" as option in AKSearchQuery)
+
+[x] add another level of debug, and use *that* for the super-verbose output during parsing
+
+[x] test with Xcode 2.5, using the Mini
+	* compared XML dumps -- not getting "Data Types" for Foundation or AppKit
+	* fixed: it was a typo: "Datatypes" instead of "DataTypes" when looking at file name to decide whether to parse it
+
+[x] on Leopard, not picking up NSURLClient whereas 971 does
+	* that's okay -- it's a "not recommended" informal protocol, and the doc lists no methods for it
+
+[x] make sure Control-(number) works on Tiger/2.5
+
+[x] add Gerriet's changes to link handling
+
+[x] make _database an AKWindowController ivar (no more single +defaultDatabase)
+
+[x] get dev tools path working in prefs panel
+
+[x] establish dev tools path during startup
+
+[x] use the new-style anchors to resolve links where possible
+
+[x] Prefs -> Frameworks -- add buttons to select/deselect all
+
+[x] CALayer -> Delegate Methods -> -displayLayer: -> click the "display" link -> nothing happens (it's an instance method of CALayer)
+
+[x] CALayer -> Properties -> actions -> click "actionForKey:" link -> opens HTML in browser (it's an instance method of CALayer)
+
+[x] interfaces can have properties too (e.g., CAMediaTiming)
+
+[x] require QuartzCore so that CIImage, CIColor don't end up as top-level classes
+	[x] make un-deselectable in the prefs panel
+	[x] move it to the top of the list in the prefs panel
+
+[x] sort framework names in popup in quicklist drawer
+
+[x] don't list appkit if not available (i.e., for iPhone; likewise UIKit)
+
+[x] bump version to 0.972 during dev
+	* seems to suffice to replace string in Info.plist and InfoPlist.strings?
+
+[x] add support for "Properties" section (see UIImagePickerController or CALayer)
+
+[x] change key equivalents for subtopics and favorites
+
+[x] make sure search handles properties
+
+[x] not picking up WebView delegate methods
+
+[x] withClassNode etc. should be topicWithClassNode
+
+------------------
+
+[ ] script to go through and make sure all imports are actually necessary
+
+[ ] what *is* the correct value for a null selector?
+
+[ ] in Xcode, search for "setTimeOffset:" finds the *property* timeOffset
+
+[ ] can DIGSLogExitingMethodPrematurely take varargs?
+
+[ ] shouldn't use Command-+ to add column; it's standard for increasing font size
+
+[ ] check whether .h parser handles class extensions
+	* _are_ there any extensions I need to parse?
+
+[ ] add the ability to look things up / do searches in the Xcode doc window
+
+[ ] I think can stop parsing headers when docset queries fully fleshed out
+
+[ ] why sometimes slow to jump to a favorite?
+
+[ ] do a screencast
+
+[ ] technical meaning of "member"?
+
+[ ] make the splash panel a cancellable modal panel
+
+[ ] get rid of "shadowing" warnings
+
+look into log4cocoa
+
+support wildcards in search string
+	support multiple search strings?
+
+show feedback during search
+	show number of search results
+
+* akd prefs frameworks space bar doesn't work to toggle selection
+	* "select all" button would be nice
+
+get latest fmdb
+
+show which OS version deprecated methods were deprecated in
+
+make sure parsing class extensions
+
+rename digitalspokes plist
+	maybe try to get the domain name back?
+
+do I care about the method names beginning with an underscore?
+
+AddressBook constants not appearing in 980, but they do in 971
+
+informal protocols NSObjCTypeSerializationCallBack and NSURLClient show up in 971, not 980
+
+WebKit formal protocol WebPlugInViewFactory appears in 971, not 980
+
+QTKit types and constants contains only a "Constants" group in 980, only a "Data Types" group in 971; the subnodes of the two groups are disjoint
+
+weirdness if browsing e.g. CoreData Constants and click on one of the clickable constants -- see what happens to topic browser
+
+use NSUInteger
+
+search for "::" doesn't find -[CIImageProvider provideImageData:bytesPerRow:origin::size::userInfo:]
+
+some links eg IK... open in browser
+
+search is slow now; show progress and/or make faster; show # results?
+
+hm, *Carbon* is showing up, with two protocols: IMKTextInput and IMKUnicodeTextInput; and the -insertText: method for the latter is not showing up (not documented, I assume)
+
+omit frameworks with no classes from the quicklist popup
+
+add thanks to Gus Mueller
+
+bump version to 0.98
+
+use tabview for the doc view
+
+check out latest fmdb
+
+open link in new window doesn't work (e.g., runModalForWindow: links to stopModal)
+	- New window doesn't do anything either
