@@ -752,7 +752,18 @@ enum
 
     if (!s_viewClasses)
     {
-        NSArray *arr = [NSArray arrayWithObjects:@"NSView", nil];
+        NSString *nameOfRootViewClass;
+
+        if ([[_windowController database] classWithName:@"UIView"] != nil)
+        {
+            nameOfRootViewClass = @"UIView";
+        }
+        else
+        {
+            nameOfRootViewClass = @"NSView";
+        }
+
+        NSArray *arr = [NSArray arrayWithObjects:nameOfRootViewClass, nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
         s_viewClasses =
