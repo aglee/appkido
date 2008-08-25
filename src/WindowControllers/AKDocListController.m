@@ -198,7 +198,7 @@
         NSEvent *currentEvent = [NSApp currentEvent];
         AKWindowController *wc =
             ([currentEvent modifierFlags] & NSCommandKeyMask)
-            ? [[NSApp delegate] openNewWindowForPlatform:[[_windowController database] platformName]]
+            ? [[NSApp delegate] controllerForNewWindow]
             : _windowController;
 
         // Use a delayed perform to avoid mucking with the WebView's
@@ -250,12 +250,7 @@
             // browser window.
             [menuItem setAction:@selector(openLinkInNewWindow:)];
             [menuItem setTarget:nil];  // will go to first responder
-            [menuItem
-                setRepresentedObject:
-                    [NSArray arrayWithObjects:
-                        linkURL,
-                        _windowController,
-                        nil]];
+            [menuItem setRepresentedObject:linkURL];
 
             [newMenuItems addObject:menuItem];
         }

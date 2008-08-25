@@ -7,6 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class AKDatabase;
 @class AKDocLocator;
 @class AKWindowController;
 @class AKPrefPanelController;
@@ -25,6 +26,8 @@
  */
 @interface AKAppController : NSObject
 {
+    AKDatabase *_appDatabase;
+
     BOOL _finishedInitializing;  // Becomes true when -awakeFromNib finishes.
     AKPrefPanelController *_prefPanelController;  // Lazily instantiated.
 
@@ -68,11 +71,11 @@
 - (AKWindowController *)frontmostWindowController;
 
 /*!
- * @method      openNewWindowForPlatform:
- * @discussion  Opens a new browser window displaying the APIs for the
- *              specified platform.  Returns the new window controller.
+ * @method      openNewWindow
+ * @discussion  Opens a new browser window.  Returns the newly created
+ *              window controller.
  */
-- (AKWindowController *)openNewWindowForPlatform:(NSString *)platformName;
+- (AKWindowController *)controllerForNewWindow;
 
 //-------------------------------------------------------------------------
 // Preferences
