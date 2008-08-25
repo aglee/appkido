@@ -73,7 +73,7 @@
         _includesFunctions = YES;
         _includesGlobals = YES;
         _ignoresCase = YES;
-        _searchComparison = AKSearchSubstring;
+        _searchComparison = AKSearchForSubstring;
 
         _searchResults = [[NSMutableArray array] retain];
     }
@@ -119,7 +119,8 @@
     [_searchString release];
     _searchString = s;
 
-    // Update the _searchResults ivar.
+    // Update other ivars.
+    _rangeForEntireSearchString = NSMakeRange(0, [s length]);
     [self _clearSearchResults];
 }
 
@@ -323,25 +324,35 @@ g_NSStringComparisons++;
 
     switch (_searchComparison)
     {
-        case AKSearchSubstring: {
+        case AKSearchForSubstring: {
             return
                 _ignoresCase
                 ? [s ak_containsCaseInsensitive:_searchString]
                 : [s ak_contains:_searchString];
         }
 
-        case AKSearchExactMatch: {
+        case AKSearchForExactMatch: {
             return
                 _ignoresCase
                 ? ([s compare:_searchString options:NSCaseInsensitiveSearch] == 0)
                 : [s isEqualToString:_searchString];
         }
 
-        case AKSearchPrefix: {
-            return
-                _ignoresCase
-                ? [[s lowercaseString] hasPrefix:_searchString]
-                : [s hasPrefix:_searchString];
+        case AKSearchForPrefix: {
+            if (_ignoresCase)
+            {
+                return
+                    ([s length] >= _rangeForEntireSearchString.length)
+                    &&
+                    ([s
+                        compare:_searchString
+                        options:NSCaseInsensitiveSearch
+                        range:_rangeForEntireSearchString] == 0);
+            }
+            else
+            {
+                return [s hasPrefix:_searchString];
+            }
         }
 
         default: {

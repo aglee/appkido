@@ -61,6 +61,8 @@
 
 - (void)_updateSearchOptionsPopup;
 
+- (void)_updateSearchQuery;
+
 @end
 
 //-------------------------------------------------------------------------
@@ -303,23 +305,7 @@ enum
     [[DIGSFindBuffer sharedInstance] setFindString:searchString];
 
     // Update the search query.
-    [_searchQuery setSearchString:searchString];
-    [_searchQuery
-        setIncludesClassesAndProtocols:
-            ([_includeClassesItem state] == NSOnState)];
-    [_searchQuery
-        setIncludesMembers:
-            ([_includeMethodsItem state] == NSOnState)];
-    [_searchQuery
-        setIncludesFunctions:
-            ([_includeFunctionsItem state] == NSOnState)];
-    [_searchQuery
-        setIncludesGlobals:
-            ([_includeGlobalsItem state] == NSOnState)];
-    [_searchQuery
-        setIgnoresCase:
-            ([_ignoreCaseItem state] == NSOnState)];
-    [_searchQuery setSearchComparison:AKSearchSubstring];
+    [self _updateSearchQuery];
 
     // This will clear the quicklist table and thus force it to reload
     // When we select Search Results mode.
@@ -693,10 +679,7 @@ enum
 
         case _AKSearchResultsQuicklistMode:
         {
-            NSString *searchString =
-                [[_searchField stringValue] ak_trimWhitespace];
-
-            [_searchQuery setSearchString:searchString];
+            [self _updateSearchQuery];
             tableValues = [_searchQuery queryResults];
             break;
         }
@@ -1085,6 +1068,40 @@ enum
     {
         [_searchOptionsPopup addItemWithTitle:searchString];
     }
+}
+
+- (void)_updateSearchQuery
+{
+    NSString *searchString = [[_searchField stringValue] ak_trimWhitespace];
+
+    if ([searchString hasSuffix:@"*"])
+    {
+        [_searchQuery
+            setSearchString:
+                [searchString substringToIndex:([searchString length] - 1)]];
+        [_searchQuery setSearchComparison:AKSearchForPrefix];
+    }
+    else
+    {
+        [_searchQuery setSearchString:searchString];
+        [_searchQuery setSearchComparison:AKSearchForSubstring];
+    }
+
+    [_searchQuery
+        setIncludesClassesAndProtocols:
+            ([_includeClassesItem state] == NSOnState)];
+    [_searchQuery
+        setIncludesMembers:
+            ([_includeMethodsItem state] == NSOnState)];
+    [_searchQuery
+        setIncludesFunctions:
+            ([_includeFunctionsItem state] == NSOnState)];
+    [_searchQuery
+        setIncludesGlobals:
+            ([_includeGlobalsItem state] == NSOnState)];
+    [_searchQuery
+        setIgnoresCase:
+            ([_ignoreCaseItem state] == NSOnState)];
 }
 
 @end

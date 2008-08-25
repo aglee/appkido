@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    AKSearchSubstring = 0,
-    AKSearchExactMatch = 1,
-    AKSearchPrefix = 2,
+    AKSearchForSubstring = 0,
+    AKSearchForExactMatch = 1,
+    AKSearchForPrefix = 2,
 } AKSearchComparison;
 
 @class AKDatabase;
@@ -36,6 +36,8 @@ typedef enum {
 @private
     AKDatabase *_database;
     NSString *_searchString;
+    NSRange _rangeForEntireSearchString;  // used for prefix searches;
+                                          //  saves calls to NSMakeRange()
 
     // Search flags.
     BOOL _includesClassesAndProtocols;
