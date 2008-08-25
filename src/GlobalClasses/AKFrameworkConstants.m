@@ -32,7 +32,7 @@ NSArray *_AKNamesOfEssentialFrameworks()
                 AKCoreDataFrameworkName,
                 AKCoreImageFrameworkName,
                 AKQuartzCoreFrameworkName,
-                @"ApplicationServices",
+                @"ApplicationServices",  // [agl] KLUDGE -- to get CGPoint etc.
                 nil] retain];
     }
 
