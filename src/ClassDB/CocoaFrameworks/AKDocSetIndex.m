@@ -7,7 +7,7 @@
 
 #import "AKDocSetIndex.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 #import "FMDatabase.h"
 #import "AKFrameworkConstants.h"
 #import "AKTextUtils.h"

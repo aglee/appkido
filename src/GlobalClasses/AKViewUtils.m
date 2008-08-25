@@ -7,7 +7,7 @@
 
 #import "AKViewUtils.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 
 //-------------------------------------------------------------------------

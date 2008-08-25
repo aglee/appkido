@@ -7,7 +7,7 @@
 
 #import "AKFileSectionDoc.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKFileSection.h"
 

@@ -7,7 +7,7 @@
 
 #import "AKLabelTopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 @implementation AKLabelTopic
 

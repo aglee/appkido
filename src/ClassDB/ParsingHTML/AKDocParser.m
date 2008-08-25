@@ -7,7 +7,7 @@
 
 #import "AKDocParser.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 #import "AKTextUtils.h"
 #import "AKDatabase.h"
 #import "AKFileSection.h"

@@ -7,7 +7,7 @@
 
 #import "AKLinkResolver.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKFrameworkConstants.h"
 #import "AKHTMLConstants.h"

@@ -7,7 +7,7 @@
 
 #import <DIGSFileProcessor.h>
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 @implementation DIGSFileProcessor
 

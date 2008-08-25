@@ -7,7 +7,7 @@
 
 #import "AKCocoaBehaviorDocParser.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKTextUtils.h"
 #import "AKHTMLConstants.h"

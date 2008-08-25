@@ -7,7 +7,7 @@
 
 #import "AKClassOverviewSubtopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKClassNode.h"
 #import "AKHTMLConstants.h"

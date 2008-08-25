@@ -9,7 +9,7 @@
 
 #import <AppKit/NSFileWrapper.h>
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKTextUtils.h"
 #import "AKFileSection.h"

@@ -7,7 +7,7 @@
 
 #import "AKProtocolTopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKFrameworkConstants.h"
 #import "AKDatabase.h"

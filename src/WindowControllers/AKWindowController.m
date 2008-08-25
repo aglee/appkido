@@ -7,7 +7,7 @@
 
 #import "AKWindowController.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKFindPanelController.h"
 #import "AKDocLocator.h"

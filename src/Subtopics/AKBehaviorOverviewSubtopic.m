@@ -7,7 +7,7 @@
 
 #import "AKBehaviorOverviewSubtopic.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKHTMLConstants.h"
 

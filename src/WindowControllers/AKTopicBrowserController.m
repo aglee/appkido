@@ -7,7 +7,7 @@
 
 #import "AKTopicBrowserController.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKPrefUtils.h"
 #import "AKSortUtils.h"

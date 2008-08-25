@@ -7,7 +7,7 @@
 
 #import "AKDatabaseNode.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKTextUtils.h"
 #import "AKClassNode.h"

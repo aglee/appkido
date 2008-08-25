@@ -7,7 +7,7 @@
 
 #import "AKObjCHeaderParser.h"
 
-#import <DIGSLog.h>
+#import "DIGSLog.h"
 
 #import "AKDatabase.h"
 #import "AKClassNode.h"
