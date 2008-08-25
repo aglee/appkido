@@ -544,7 +544,7 @@ g_NSStringComparisons++;
                 BOOL matchFound = NO;
 
 // [agl] ak_stripHTML is too expensive -- bogging down the search
-// [agl] 0.978 I don't think we actually need to strip any HTML -- no node seems to contain & or <
+// [agl] I don't think we actually need to strip any HTML -- no node seems to contain & or <
 //                if ([self _matchesString:[[subnode nodeName] ak_stripHTML]])
                 if ([self _matchesNode:subnode])
                 {
