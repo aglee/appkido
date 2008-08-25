@@ -50,8 +50,17 @@
     IBOutlet NSMenuItem *_firstGoMenuDivider;
 }
 
+//-------------------------------------------------------------------------
+// Factory methods
+//-------------------------------------------------------------------------
+
 + (id)sharedInstance;
-- (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
+
+//-------------------------------------------------------------------------
+// Getters and setters
+//-------------------------------------------------------------------------
+
+- (AKDatabase *)appDatabase;
 
 //-------------------------------------------------------------------------
 // Navigation
@@ -87,6 +96,12 @@
  *              user's preference settings to the things they control.
  */
 - (void)applyUserPreferences;
+
+//-------------------------------------------------------------------------
+// AppleScript support
+//-------------------------------------------------------------------------
+
+- (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
 
 //-------------------------------------------------------------------------
 // Managing the user's Favorites list

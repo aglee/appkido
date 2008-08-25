@@ -12,6 +12,7 @@
 #import "AKFrameworkConstants.h"
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
+#import "AKAppController.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKInformalProtocolsTopic.h"
 #import "AKFunctionsTopic.h"
@@ -69,16 +70,6 @@
         return nil;
     }
 
-    // Get a database instance based on the platform name.
-    NSString *platformName = [prefDict objectForKey:AKPlatformNamePrefKey];
-    
-    if (platformName == nil)
-    {
-        platformName = AKMacOSPlatform;
-    }
-
-    AKDatabase *db = [AKDatabase databaseForPlatform:platformName];
-
     // Get the framework name.
     NSString *fwName = [prefDict objectForKey:AKFrameworkNamePrefKey];
 
@@ -96,6 +87,7 @@
         return nil;
     }
 
+    AKDatabase *db = [[NSApp delegate] appDatabase];
     if (![db hasFrameworkWithName:fwName])
     {
         DIGSLogWarning(

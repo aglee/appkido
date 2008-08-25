@@ -42,7 +42,6 @@ NSString *AKTopicClassNamePrefKey       = @"TopicClassName";
 NSString *AKLabelStringPrefKey          = @"LabelString";
 NSString *AKBehaviorNamePrefKey         = @"InterfaceName";
 NSString *AKFrameworkNamePrefKey        = @"FrameworkName";
-NSString *AKPlatformNamePrefKey         = @"PlatformName";
 NSString *AKParentBrowserPathPrefKey    = @"ParentBrowserPath";
 
 // For storing instances of various AKDocLocator classes as pref dictionaries.

@@ -16,6 +16,8 @@
 #import "AKNotificationNode.h"
 #import "AKCollectionOfNodes.h"
 
+#import "AKAppController.h"  // [agl] doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
+
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
 //-------------------------------------------------------------------------
@@ -306,8 +308,8 @@
                     substringFromIndex:3]
                     uppercaseString];
             NSEnumerator *protocolEnum =
-                [[[AKDatabase databaseForPlatform:AKMacOSPlatform]  // [agl] FIXME -- IMPORTANT Not necessarily MacOS!
-                    allProtocols] objectEnumerator];
+                [[[[NSApp delegate] appDatabase] allProtocols]
+                    objectEnumerator];
             AKProtocolNode *protocolNode;
 
             while ((protocolNode = [protocolEnum nextObject]))

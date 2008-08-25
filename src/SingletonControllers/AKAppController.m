@@ -211,8 +211,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
 
-#define APPKIDO_FOR_IPHONE 0
-//#define APPKIDO_FOR_IPHONE 1
+#define APPKIDO_FOR_IPHONE 1
 #if APPKIDO_FOR_IPHONE
     _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
 #else
@@ -280,6 +279,15 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_favoritesList release];
 
     [super dealloc];
+}
+
+//-------------------------------------------------------------------------
+// Getters and setters
+//-------------------------------------------------------------------------
+
+- (AKDatabase *)appDatabase
+{
+    return _appDatabase;
 }
 
 //-------------------------------------------------------------------------
@@ -612,7 +620,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     AKDatabaseXMLExporter *exporter =
         [[[AKDatabaseXMLExporter alloc]
-            initWithDatabase:[AKDatabase databaseForPlatform:AKMacOSPlatform]
+            initWithDatabase:_appDatabase
             fileHandle:fh] autorelease];
     [exporter doExport];
     [fh closeFile];
