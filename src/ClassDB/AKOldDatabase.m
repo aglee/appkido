@@ -69,6 +69,13 @@
 // AKDatabase methods
 //-------------------------------------------------------------------------
 
+- (BOOL)frameworkNameIsValid:(NSString *)frameworkName
+{
+    return
+        [[AKFrameworkInfo sharedInstance]
+            frameworkDirsExist:frameworkName];
+}
+
 - (void)loadTokensForFrameworkNamed:(NSString *)fwName
 {
     // Parse header files before HTML files, so that later when we parse a

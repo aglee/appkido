@@ -176,6 +176,11 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 // Populating
 //-------------------------------------------------------------------------
 
+- (BOOL)frameworkNameIsValid:(NSString *)frameworkName
+{
+    return YES;
+}
+
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames
 {
     if (frameworkNames == nil)
@@ -188,16 +193,19 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
     while ((fwName = [fwNameEnum nextObject]))
     {
-        DIGSLogDebug(@"===================================================");
-        DIGSLogDebug(@"Loading tokens for framework %@", fwName);
-        DIGSLogDebug(@"===================================================");
-
-        if ([_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
+        if ([self frameworkNameIsValid:fwName])
         {
-            [_delegate database:self willLoadTokensForFramework:fwName];
-        }
+            DIGSLogDebug(@"===================================================");
+            DIGSLogDebug(@"Loading tokens for framework %@", fwName);
+            DIGSLogDebug(@"===================================================");
 
-        [self loadTokensForFrameworkNamed:fwName];
+            if ([_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
+            {
+                [_delegate database:self willLoadTokensForFramework:fwName];
+            }
+
+            [self loadTokensForFrameworkNamed:fwName];
+        }
     }
 }
 

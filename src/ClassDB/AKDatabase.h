@@ -153,6 +153,11 @@ extern NSString *AKIPhonePlatform;
 //-------------------------------------------------------------------------
 
 /*!
+ * Is there a framework with the given name on the receiver's platform?
+ */
+- (BOOL)frameworkNameIsValid:(NSString *)frameworkName;
+
+/*!
  * Calls -loadTokensForFrameworkNamed:.  Sends delegate message for each
  * framework loaded.  frameworkNames can be nil; by default, this causes
  * all "essential" frameworks to be loaded.
