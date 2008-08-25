@@ -579,8 +579,6 @@ g_NSStringComparisons++;
                                 withTopic:topic
                                 subtopicName:[groupNode nodeName]
                                 docName:[subnode nodeName]]];
-
-                    break;
                 }
             }
         }
@@ -591,20 +589,19 @@ g_NSStringComparisons++;
     forSubtopic:(NSString *)subtopicName
     ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
-    NSEnumerator *methodEnum;
-    AKMethodNode *methodNode;
+    NSEnumerator *nodeEnum = [nodeArray objectEnumerator];
+    AKDatabaseNode *node;
 
-    methodEnum = [nodeArray objectEnumerator];
-    while ((methodNode = [methodEnum nextObject]))
+    while ((node = [nodeEnum nextObject]))
     {
-        if ([self _matchesNode:methodNode])
+        if ([self _matchesNode:node])
         {
             [_searchResults
                 addObject:
                     [AKDocLocator
                         withTopic:topic
                         subtopicName:subtopicName
-                        docName:[methodNode nodeName]]];
+                        docName:[node nodeName]]];
         }
     }
 }
