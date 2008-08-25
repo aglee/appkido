@@ -2,7 +2,7 @@
 
 [ ] NSResponder -> acceptsFirstResponder -> YES opens browser window
 
-[ ] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
+[ ] look for [agl] REMOVE
 
 [ ] generate separate "AppKiDo for iPhone"
 	[ ] create two targets in Xcode
@@ -65,6 +65,8 @@
 
 ----------------------------------------------------------
 
+[ ] CGDisplayCurrentMode -> CFDictionaryRef opens browser (CoreFoundation)
+
 [ ] remember scroll position in history
 
 [ ] in topic browser, select NSWindow and then NSViewController -- does a weird sideways scrolling thing, and the horizontal scroller doesn't update
@@ -76,6 +78,7 @@
 [ ] why does it take so long to load AddressBook -> Protocols -> <ABImageClient>?
 
 [ ] why do some searches take so long?  "cursor" is slow, yet "o" is fast even though it returns a superset of results
+	* clue: I think it's the "<<" characters that get drawn in the search results
 
 [ ] odd -- the small dividers for the split views aren't small
 
@@ -142,7 +145,10 @@
 
 ===== 0.978: done =====
 
-[x] look for [agl] REMOVE
+[x] search for CGRect doesn't find it even though it's there in ApplicationServices -> Data Types and clicking on a link to it works (eg from CGRectContainsPoint); but search for CGPoint *does* find it, and so does cgsize
+	* found it: was breaking from loop prematurely in _searchNamesOfGlobals
+
+[x] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
 
 [x] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
 
