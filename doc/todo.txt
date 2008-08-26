@@ -1,5 +1,7 @@
 :--- APPKIDO TO-DO ---:
 
+[ ] 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
+
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
 
 [ ] look for [agl] REMOVE
@@ -71,6 +73,14 @@
 
 
 ----------------------------------------------------------
+
+[ ] consider giving AKGlobalsNode an ivar indication the behavior it's associated with (if any) instead of shoving the behavior name into the AKGlobalsNode name
+
+[ ] reconcile use of platform names as parameters with use of APPKIDO_FOR_IPHONE macro
+
+[ ] [AKDocParser parseToken] treats bytes with high bit set as whitespace; works for now, but may someday have to properly handle charsets and encodings
+
+[ ] would startup be noticeably faster if AKDocSetIndex kept the database open all the time instead of opening and closing for each query?
 
 [ ] NSResponder -> acceptsFirstResponder -> YES opens browser window
 
@@ -153,6 +163,9 @@
 -------------------------------------------------
 
 ===== 0.978: done =====
+
+[x] again with a search bug -- in AppKiDo-for-iPhone, searching for CGRect or CGPoint doesn't find them
+	* it was because I had to add CoreGraphics as a required framework in A4i, just as I had to add ApplicationServices in AKD
 
 [x] search for CGRect doesn't find it even though it's there in ApplicationServices -> Data Types and clicking on a link to it works (eg from CGRectContainsPoint); but search for CGPoint *does* find it, and so does cgsize
 	* found it: was breaking from loop prematurely in _searchNamesOfGlobals
