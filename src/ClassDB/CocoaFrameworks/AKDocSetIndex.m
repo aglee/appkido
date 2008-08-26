@@ -185,9 +185,7 @@ static NSString *s_headerPathsQueryTemplate =
     if (s_selectableFrameworkNames == nil)
     {
 #if APPKIDO_FOR_IPHONE
-        s_selectableFrameworkNames = [[self _objectiveCFrameworkNames] retain];
-
-        [s_selectableFrameworkNames addObject:@"CoreGraphics"];  // [agl] KLUDGE -- to get CGPoint etc.
+        s_selectableFrameworkNames = [[self _allFrameworkNames] retain];
 #else
         s_selectableFrameworkNames = [[self _objectiveCFrameworkNames] retain];
 
