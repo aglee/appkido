@@ -80,12 +80,12 @@
  */
 - (NSString *)baseDirForDocPaths;
 
-/*!
- * Returns list of all frameworks that have an Objective-C token, with
- * "essential" frameworks forced to the beginning of the list.  (See
- * AKNamesOfEssentialFrameworks.)
+/*! 
+ * Names of frameworks the user can choose from, with "essential"
+ * frameworks forced to the beginning of the list but otherwise in
+ * alphabetical order.  (See AKNamesOfEssentialFrameworks.)
  */
-- (NSArray *)objectiveCFrameworkNames;
+- (NSArray *)selectableFrameworkNames;
 
 /*! Returns absolute directories containing header files. */
 - (NSSet *)headerDirsForFramework:(NSString *)frameworkName;

@@ -155,7 +155,7 @@ extern NSString *AKIPhonePlatform;
 /*!
  * Is there a framework with the given name on the receiver's platform?
  */
-- (BOOL)frameworkNameIsValid:(NSString *)frameworkName;
+- (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName;
 
 /*!
  * Calls -loadTokensForFrameworkNamed:.  Sends delegate message for each

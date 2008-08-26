@@ -220,13 +220,13 @@ static NSTimeInterval g_checkpointTime = 0.0;
     _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
 
     // I'm going to assume anyone using AppKiDo for iPhone is going to want
-    // all the frameworks in the iPhone SDK.  There are so few of them it
+    // all possible frameworks in the iPhone SDK.  There are so few of them it
     // doesn't make sense to leave any out.
     [AKPrefUtils
         setSelectedFrameworkNamesPref:
             [[AKDocSetIndex
                 indexForLatestIPhoneSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]]
-                    objectiveCFrameworkNames]];
+                    selectableFrameworkNames]];
 #else
     _appDatabase = [[AKDatabase databaseForPlatform:AKMacOSPlatform] retain];
 #endif

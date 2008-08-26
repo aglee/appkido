@@ -176,7 +176,7 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 // Populating
 //-------------------------------------------------------------------------
 
-- (BOOL)frameworkNameIsValid:(NSString *)frameworkName
+- (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
     return YES;
 }
@@ -193,7 +193,7 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
     while ((fwName = [fwNameEnum nextObject]))
     {
-        if ([self frameworkNameIsValid:fwName])
+        if ([self frameworkNameIsSelectable:fwName])
         {
             DIGSLogDebug(@"===================================================");
             DIGSLogDebug(@"Loading tokens for framework %@", fwName);
