@@ -218,15 +218,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 #if APPKIDO_FOR_IPHONE
     _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
-
-    // I'm going to assume anyone using AppKiDo for iPhone is going to want
-    // all possible frameworks in the iPhone SDK.  There are so few of them it
-    // doesn't make sense to leave any out.
-    [AKPrefUtils
-        setSelectedFrameworkNamesPref:
-            [[AKDocSetIndex
-                indexForLatestIPhoneSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]]
-                    selectableFrameworkNames]];
 #else
     _appDatabase = [[AKDatabase databaseForPlatform:AKMacOSPlatform] retain];
 #endif
