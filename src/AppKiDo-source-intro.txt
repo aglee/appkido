@@ -2,7 +2,8 @@ ABOUT THIS DOCUMENT
 ===================
 This is a hastily written draft introduction to the implementation internals of AppKiDo.  There are many more topics to cover.
 
-[TODO: This may need to be updated for 0.98.]
+[agl] TODO: This will need to be updated for 0.98.
+[agl] Mention concept of "selectable" frameworks.
 
 
 
