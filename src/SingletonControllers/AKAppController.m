@@ -119,8 +119,13 @@ static NSString *_AKHomePageURL =
                             @"http://homepage.mac.com/aglee/downloads";
 
 // URL of the file from which to get the latest version number.
+#if APPKIDO_FOR_IPHONE
+static NSString *_AKVersionURL =
+            @"http://homepage.mac.com/aglee/downloads/AppKiDo-for-iPhone.version";
+#else
 static NSString *_AKVersionURL =
             @"http://homepage.mac.com/aglee/downloads/AppKiDo.version";
+#endif
 
 // Dictionary keys.
 static NSString *_AKMajorNumberKey      = @"major";
@@ -211,7 +216,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
 
-#define APPKIDO_FOR_IPHONE 0
 #if APPKIDO_FOR_IPHONE
     _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
 

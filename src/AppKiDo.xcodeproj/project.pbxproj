@@ -231,6 +231,268 @@
 		739558100D29CA83008105BD /* AKDatabaseXMLExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */; };
 		7399AFBC0E621E27001AE672 /* AKNodeDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7399AFBA0E621E27001AE672 /* AKNodeDoc.h */; };
 		7399AFBD0E621E27001AE672 /* AKNodeDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399AFBB0E621E27001AE672 /* AKNodeDoc.m */; };
+		7399B2B50E632A5C001AE672 /* AKBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A70498501500A80007 /* AKBrowser.h */; };
+		7399B2B60E632A5C001AE672 /* AKTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A90498501500A80007 /* AKTableView.h */; };
+		7399B2B70E632A5C001AE672 /* AKSortable.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030DD0498501500A80007 /* AKSortable.h */; };
+		7399B2B80E632A5C001AE672 /* AKSubcontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030DE0498501500A80007 /* AKSubcontroller.h */; };
+		7399B2B90E632A5C001AE672 /* AKTopicBrowserController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031010498501500A80007 /* AKTopicBrowserController.h */; };
+		7399B2BA0E632A5C001AE672 /* AKDocListController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031030498501500A80007 /* AKDocListController.h */; };
+		7399B2BB0E632A5C001AE672 /* AKSubtopicListController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031060498501500A80007 /* AKSubtopicListController.h */; };
+		7399B2BC0E632A5C001AE672 /* AKWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7300310A0498501500A80007 /* AKWindowController.h */; };
+		7399B2BD0E632A5C001AE672 /* AKWindowSubcontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 7300310D0498501500A80007 /* AKWindowSubcontroller.h */; };
+		7399B2BE0E632A5C001AE672 /* AKWindowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 73AE0907049B71D800A80007 /* AKWindowLayout.h */; };
+		7399B2BF0E632A5C001AE672 /* AKSavedWindowState.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C96E23049CA60200A87B79 /* AKSavedWindowState.h */; };
+		7399B2C00E632A5C001AE672 /* AKPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E104A391D600A80003 /* AKPrefUtils.h */; };
+		7399B2C10E632A5C001AE672 /* AKSortUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E704A3A04F00A80003 /* AKSortUtils.h */; };
+		7399B2C20E632A5C001AE672 /* AKTextUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409EE04A3A1EB00A80003 /* AKTextUtils.h */; };
+		7399B2C30E632A5C001AE672 /* AKColoredBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B722C104B5FF1900A80003 /* AKColoredBox.h */; };
+		7399B2C40E632A5C001AE672 /* AKQuicklistController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7306485D04CC7D760013934B /* AKQuicklistController.h */; };
+		7399B2C50E632A5C001AE672 /* AKViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */; };
+		7399B2C60E632A5C001AE672 /* AKClassMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */; };
+		7399B2C70E632A5C001AE672 /* AKDelegateMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25C04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.h */; };
+		7399B2C80E632A5C001AE672 /* AKInstanceMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26004EDC6AE00A80003 /* AKInstanceMethodsSubtopic.h */; };
+		7399B2C90E632A5C001AE672 /* AKMembersSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */; };
+		7399B2CA0E632A5C001AE672 /* AKNotificationsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26604EDC6AE00A80003 /* AKNotificationsSubtopic.h */; };
+		7399B2CB0E632A5C001AE672 /* AKSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */; };
+		7399B2CC0E632A5C001AE672 /* AKClassTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1704EDCF3B00A80003 /* AKClassTopic.h */; };
+		7399B2CD0E632A5C001AE672 /* AKFormalProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1904EDCF3B00A80003 /* AKFormalProtocolsTopic.h */; };
+		7399B2CE0E632A5C001AE672 /* AKFrameworkTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1D04EDCF3B00A80003 /* AKFrameworkTopic.h */; };
+		7399B2CF0E632A5C001AE672 /* AKFunctionsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1F04EDCF3B00A80003 /* AKFunctionsTopic.h */; };
+		7399B2D00E632A5C001AE672 /* AKInformalProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2104EDCF3B00A80003 /* AKInformalProtocolsTopic.h */; };
+		7399B2D10E632A5C001AE672 /* AKLabelTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2504EDCF3B00A80003 /* AKLabelTopic.h */; };
+		7399B2D20E632A5C001AE672 /* AKProtocolTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2704EDCF3B00A80003 /* AKProtocolTopic.h */; };
+		7399B2D30E632A5C001AE672 /* AKTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2904EDCF3B00A80003 /* AKTopic.h */; };
+		7399B2D40E632A5C001AE672 /* AKGlobalsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2B04EDCF3B00A80003 /* AKGlobalsTopic.h */; };
+		7399B2D50E632A5C001AE672 /* AKCategoryNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55205ED8DC50055715D /* AKCategoryNode.h */; };
+		7399B2D60E632A5C001AE672 /* AKClassNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55405ED8DC50055715D /* AKClassNode.h */; };
+		7399B2D70E632A5C001AE672 /* AKMethodNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55805ED8DC50055715D /* AKMethodNode.h */; };
+		7399B2D80E632A5C001AE672 /* AKProtocolNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55C05ED8DC60055715D /* AKProtocolNode.h */; };
+		7399B2D90E632A5C001AE672 /* AKObjCHeaderParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD56C05ED8DC60055715D /* AKObjCHeaderParser.h */; };
+		7399B2DA0E632A5C001AE672 /* AKAppController.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD5D505ED8FBE0055715D /* AKAppController.h */; };
+		7399B2DB0E632A5C001AE672 /* AKDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CC2AD705EDAF5F006D882D /* AKDocParser.h */; };
+		7399B2DC0E632A5C001AE672 /* AKLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 7370170405FBA7B300C74AA7 /* AKLinkResolver.h */; };
+		7399B2DD0E632A5C001AE672 /* AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976020606A280002E4E83 /* AKDoc.h */; };
+		7399B2DE0E632A5C001AE672 /* AKFunctionDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976B90606C1F0002E4E83 /* AKFunctionDoc.h */; };
+		7399B2DF0E632A5C001AE672 /* AKMemberDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7319772E0606C3F6002E4E83 /* AKMemberDoc.h */; };
+		7399B2E00E632A5C001AE672 /* AKHeaderFileDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73197A840606E025002E4E83 /* AKHeaderFileDoc.h */; };
+		7399B2E10E632A5C001AE672 /* AKInheritanceDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */; };
+		7399B2E20E632A5C001AE672 /* AKDocLocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 732EE0F7060E10E600B5EDA7 /* AKDocLocator.h */; };
+		7399B2E30E632A5C001AE672 /* AKOverviewDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7369B7F5060E3D9E00E0C9B6 /* AKOverviewDoc.h */; };
+		7399B2E40E632A5C001AE672 /* AKClassMethodDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3706060E772F00ABA5E5 /* AKClassMethodDoc.h */; };
+		7399B2E50E632A5C001AE672 /* AKInstanceMethodDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3715060E773B00ABA5E5 /* AKInstanceMethodDoc.h */; };
+		7399B2E60E632A5C001AE672 /* AKDelegateMethodDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3724060E774900ABA5E5 /* AKDelegateMethodDoc.h */; };
+		7399B2E70E632A5C001AE672 /* AKNotificationDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3733060E775600ABA5E5 /* AKNotificationDoc.h */; };
+		7399B2E80E632A5C001AE672 /* AKSearchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362064706169C7D0007F07A /* AKSearchQuery.h */; };
+		7399B2E90E632A5C001AE672 /* AKGlobalsNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362078A0616C02F0007F07A /* AKGlobalsNode.h */; };
+		7399B2EA0E632A5C001AE672 /* AKGroupNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B313A90617441B006C9BA7 /* AKGroupNode.h */; };
+		7399B2EB0E632A5C001AE672 /* AKGroupNodeSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B315450617A3F3006C9BA7 /* AKGroupNodeSubtopic.h */; };
+		7399B2EC0E632A5C001AE672 /* AKCocoaFunctionsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B316320617B04E006C9BA7 /* AKCocoaFunctionsDocParser.h */; };
+		7399B2ED0E632A5C001AE672 /* AKPrefConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */; };
+		7399B2EE0E632A5C001AE672 /* AKFrameworkConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B627061B6AF5002C95F1 /* AKFrameworkConstants.h */; };
+		7399B2EF0E632A5C001AE672 /* AKHTMLConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B675061B6CC8002C95F1 /* AKHTMLConstants.h */; };
+		7399B2F00E632A5C001AE672 /* AKFunctionsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CD36C6066AAB6200011DE5 /* AKFunctionsSubtopic.h */; };
+		7399B2F10E632A5C001AE672 /* AKFindPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74137066BFAEF00A76FEE /* AKFindPanelController.h */; };
+		7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */; };
+		7399B2F30E632A5C001AE672 /* AKDocView.h in Headers */ = {isa = PBXBuildFile; fileRef = 739D82000682A1FE00C03E01 /* AKDocView.h */; };
+		7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73EE9E3D06856D120008CBEC /* AKDatabase.h */; };
+		7399B2F50E632A5C001AE672 /* AKParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BACC00068573870016B38E /* AKParser.h */; };
+		7399B2F60E632A5C001AE672 /* AKDatabaseNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 730FCBD00685758B0083160A /* AKDatabaseNode.h */; };
+		7399B2F70E632A5C001AE672 /* AKBehaviorNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */; };
+		7399B2F80E632A5C001AE672 /* AKBehaviorTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */; };
+		7399B2F90E632A5C001AE672 /* AKBehaviorOverviewSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A35920688A09B00699C6D /* AKBehaviorOverviewSubtopic.h */; };
+		7399B2FA0E632A5C001AE672 /* AKRealMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A36520688A49900699C6D /* AKRealMethodsSubtopic.h */; };
+		7399B2FB0E632A5C001AE672 /* AKPseudoMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A36F20688A81D00699C6D /* AKPseudoMethodsSubtopic.h */; };
+		7399B2FC0E632A5C001AE672 /* AKClassOverviewSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A37BA0688ADF400699C6D /* AKClassOverviewSubtopic.h */; };
+		7399B2FD0E632A5C001AE672 /* AKProtocolOverviewSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A38420688B09F00699C6D /* AKProtocolOverviewSubtopic.h */; };
+		7399B2FE0E632A5C001AE672 /* AKFileSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 73793575068B3D75008B63F4 /* AKFileSection.h */; };
+		7399B2FF0E632A5C001AE672 /* AKFileSectionDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7379357C068B3D8B008B63F4 /* AKFileSectionDoc.h */; };
+		7399B3000E632A5C001AE672 /* DIGSFileProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D900810C882001D5F3A /* DIGSFileProcessor.h */; };
+		7399B3010E632A5C001AE672 /* DIGSFindBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D920810C882001D5F3A /* DIGSFindBuffer.h */; };
+		7399B3020E632A5C001AE672 /* DIGSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D940810C882001D5F3A /* DIGSLog.h */; };
+		7399B3030E632A5C001AE672 /* DIGSMarginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D960810C882001D5F3A /* DIGSMarginView.h */; };
+		7399B3040E632A5C001AE672 /* DIGSMatchingBackgroundView.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D980810C882001D5F3A /* DIGSMatchingBackgroundView.h */; };
+		7399B3050E632A5C001AE672 /* DIGSTextSelection.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9A0810C882001D5F3A /* DIGSTextSelection.h */; };
+		7399B3060E632A5C001AE672 /* DIGSTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9C0810C882001D5F3A /* DIGSTextView.h */; };
+		7399B3070E632A5C001AE672 /* DIGSWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9E0810C882001D5F3A /* DIGSWindow.h */; };
+		7399B3080E632A5C001AE672 /* AKDebugUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73026980082FD33700D5198D /* AKDebugUtils.h */; };
+		7399B3090E632A5C001AE672 /* AKFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323C9C108313881002E8D7D /* AKFileUtils.h */; };
+		7399B30A0E632A5C001AE672 /* AKCocoaBehaviorDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 734115030831B3BD0010896B /* AKCocoaBehaviorDocParser.h */; };
+		7399B30B0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7330D5B6083667540007FBD0 /* AKChildTopicOfFrameworkTopic.h */; };
+		7399B30C0E632A5C001AE672 /* AKMultiRadioView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */; };
+		7399B30D0E632A5C001AE672 /* AppKiDo_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 73DA45FD0966583A00BFD67E /* AppKiDo_Prefix.pch */; };
+		7399B30E0E632A5C001AE672 /* AKTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7359EABF0BADAAD900574728 /* AKTextView.h */; };
+		7399B30F0E632A5C001AE672 /* AKApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 7359EB2B0BADB68100574728 /* AKApplication.h */; };
+		7399B3100E632A5C001AE672 /* AKDatabaseXMLExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */; };
+		7399B3110E632A5C001AE672 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237010D4561C300EF7503 /* FMDatabase.h */; };
+		7399B3120E632A5C001AE672 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237030D4561C300EF7503 /* FMDatabaseAdditions.h */; };
+		7399B3130E632A5C001AE672 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237050D4561C300EF7503 /* FMResultSet.h */; };
+		7399B3140E632A5C001AE672 /* AKDevToolsUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D239CA0D4ABBA000EF7503 /* AKDevToolsUtils.h */; };
+		7399B3150E632A5C001AE672 /* DIGSPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23ACE0D4C45B500EF7503 /* DIGSPrefUtils.h */; };
+		7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */; };
+		7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */; };
+		7399B3180E632A5C001AE672 /* AKFrameworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C237170D550CE600DFA6A5 /* AKFrameworkInfo.h */; };
+		7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
+		7399B31A0E632A5C001AE672 /* AKGroupedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C90DC1D264004FB7ED /* AKGroupedNode.h */; };
+		7399B31B0E632A5C001AE672 /* AKDevToolsPathController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsPathController.h */; };
+		7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7368B9AD0E0EFB2200AFEA2D /* AKCollectionOfNodes.h */; };
+		7399B31D0E632A5C001AE672 /* AKPropertyNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F3B0E396A71002AFB76 /* AKPropertyNode.h */; };
+		7399B31E0E632A5C001AE672 /* AKMemberNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F400E3974E1002AFB76 /* AKMemberNode.h */; };
+		7399B31F0E632A5C001AE672 /* AKNotificationNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F480E397760002AFB76 /* AKNotificationNode.h */; };
+		7399B3200E632A5C001AE672 /* AKPropertiesSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 734879D10E3AB45000A3B12F /* AKPropertiesSubtopic.h */; };
+		7399B3210E632A5C001AE672 /* AKPropertyDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 734879FA0E3AB59800A3B12F /* AKPropertyDoc.h */; };
+		7399B3220E632A5C001AE672 /* AKOldLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */; };
+		7399B3230E632A5C001AE672 /* AKOldDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 731D742F0E42B83300C54AD5 /* AKOldDatabase.h */; };
+		7399B3240E632A5C001AE672 /* AKDatabaseWithDocSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 731D74350E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h */; };
+		7399B3250E632A5C001AE672 /* AKDevToolsPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */; };
+		7399B3260E632A5C001AE672 /* AKNodeDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7399AFBA0E621E27001AE672 /* AKNodeDoc.h */; };
+		7399B3280E632A5C001AE672 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		7399B3290E632A5C001AE672 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		7399B32B0E632A5C001AE672 /* AppKiDo.nib in Resources */ = {isa = PBXBuildFile; fileRef = 733ACB340498486200A80007 /* AppKiDo.nib */; };
+		7399B32C0E632A5C001AE672 /* back-tool-tiny.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300304F04984FF600A80007 /* back-tool-tiny.tiff */; };
+		7399B32D0E632A5C001AE672 /* down-triangle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305004984FF600A80007 /* down-triangle.tiff */; };
+		7399B32E0E632A5C001AE672 /* forward-tool-tiny.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305104984FF600A80007 /* forward-tool-tiny.tiff */; };
+		7399B32F0E632A5C001AE672 /* superclass-tool-tiny.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305204984FF600A80007 /* superclass-tool-tiny.tiff */; };
+		7399B3300E632A5C001AE672 /* up-triangle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305304984FF600A80007 /* up-triangle.tiff */; };
+		7399B3310E632A5C001AE672 /* x.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305404984FF600A80007 /* x.tiff */; };
+		7399B3320E632A5C001AE672 /* handcursor.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305604984FF600A80007 /* handcursor.tiff */; };
+		7399B3330E632A5C001AE672 /* icon-128.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305904984FF600A80007 /* icon-128.tiff */; };
+		7399B3340E632A5C001AE672 /* icon-16.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305A04984FF600A80007 /* icon-16.tiff */; };
+		7399B3350E632A5C001AE672 /* icon-32.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305B04984FF600A80007 /* icon-32.tiff */; };
+		7399B3360E632A5C001AE672 /* icon-48.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300305C04984FF600A80007 /* icon-48.tiff */; };
+		7399B3370E632A5C001AE672 /* add-column-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306004984FF600A80007 /* add-column-tool.tiff */; };
+		7399B3380E632A5C001AE672 /* back-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306204984FF600A80007 /* back-tool.tiff */; };
+		7399B3390E632A5C001AE672 /* browser-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306304984FF600A80007 /* browser-tool.tiff */; };
+		7399B33A0E632A5C001AE672 /* forward-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306404984FF600A80007 /* forward-tool.tiff */; };
+		7399B33B0E632A5C001AE672 /* quicklist-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306604984FF600A80007 /* quicklist-tool.tiff */; };
+		7399B33C0E632A5C001AE672 /* remove-column-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306704984FF600A80007 /* remove-column-tool.tiff */; };
+		7399B33D0E632A5C001AE672 /* search-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306804984FF600A80007 /* search-tool.tiff */; };
+		7399B33E0E632A5C001AE672 /* superclass-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306904984FF600A80007 /* superclass-tool.tiff */; };
+		7399B33F0E632A5C001AE672 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 73B9158706133DBF00066E17 /* Credits.html */; };
+		7399B3400E632A5C001AE672 /* FrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73C7099306979F0E00509711 /* FrameworkInfo.plist */; };
+		7399B3410E632A5C001AE672 /* AppKiDo-source-intro.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */; };
+		7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
+		7399B3430E632A5C001AE672 /* README-fmdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 73D237070D4561C300EF7503 /* README-fmdb.txt */; };
+		7399B3440E632A5C001AE672 /* DevToolsPath.nib in Resources */ = {isa = PBXBuildFile; fileRef = 73D322980E464E2A0062E277 /* DevToolsPath.nib */; };
+		7399B3450E632A5C001AE672 /* Prefs.nib in Resources */ = {isa = PBXBuildFile; fileRef = 739E1EDA0E59190B00119B06 /* Prefs.nib */; };
+		7399B3470E632A5C001AE672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
+		7399B3490E632A5C001AE672 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
+		7399B34A0E632A5C001AE672 /* AKSubcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030DF0498501500A80007 /* AKSubcontroller.m */; };
+		7399B34B0E632A5C001AE672 /* AKTopicBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031020498501500A80007 /* AKTopicBrowserController.m */; };
+		7399B34C0E632A5C001AE672 /* AKDocListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031040498501500A80007 /* AKDocListController.m */; };
+		7399B34D0E632A5C001AE672 /* AKSubtopicListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031070498501500A80007 /* AKSubtopicListController.m */; };
+		7399B34E0E632A5C001AE672 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310B0498501500A80007 /* AKWindowController.m */; };
+		7399B34F0E632A5C001AE672 /* AKWindowController_Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310C0498501500A80007 /* AKWindowController_Toolbar.m */; };
+		7399B3500E632A5C001AE672 /* AKWindowSubcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310E0498501500A80007 /* AKWindowSubcontroller.m */; };
+		7399B3510E632A5C001AE672 /* AKWindowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AE0908049B71D800A80007 /* AKWindowLayout.m */; };
+		7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C96E24049CA60200A87B79 /* AKSavedWindowState.m */; };
+		7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E204A391D600A80003 /* AKPrefUtils.m */; };
+		7399B3540E632A5C001AE672 /* AKSortUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E804A3A04F00A80003 /* AKSortUtils.m */; };
+		7399B3550E632A5C001AE672 /* AKTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409EF04A3A1EB00A80003 /* AKTextUtils.m */; };
+		7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B722C204B5FF1900A80003 /* AKColoredBox.m */; };
+		7399B3570E632A5C001AE672 /* AKQuicklistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306485E04CC7D760013934B /* AKQuicklistController.m */; };
+		7399B3580E632A5C001AE672 /* AKViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */; };
+		7399B3590E632A5C001AE672 /* AKClassMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25B04EDC6AE00A80003 /* AKClassMethodsSubtopic.m */; };
+		7399B35A0E632A5C001AE672 /* AKDelegateMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */; };
+		7399B35B0E632A5C001AE672 /* AKInstanceMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26104EDC6AE00A80003 /* AKInstanceMethodsSubtopic.m */; };
+		7399B35C0E632A5C001AE672 /* AKMembersSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */; };
+		7399B35D0E632A5C001AE672 /* AKNotificationsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26704EDC6AE00A80003 /* AKNotificationsSubtopic.m */; };
+		7399B35E0E632A5C001AE672 /* AKSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */; };
+		7399B35F0E632A5C001AE672 /* AKClassTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1804EDCF3B00A80003 /* AKClassTopic.m */; };
+		7399B3600E632A5C001AE672 /* AKFormalProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1A04EDCF3B00A80003 /* AKFormalProtocolsTopic.m */; };
+		7399B3610E632A5C001AE672 /* AKFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1E04EDCF3B00A80003 /* AKFrameworkTopic.m */; };
+		7399B3620E632A5C001AE672 /* AKFunctionsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2004EDCF3B00A80003 /* AKFunctionsTopic.m */; };
+		7399B3630E632A5C001AE672 /* AKInformalProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2204EDCF3B00A80003 /* AKInformalProtocolsTopic.m */; };
+		7399B3640E632A5C001AE672 /* AKLabelTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2604EDCF3B00A80003 /* AKLabelTopic.m */; };
+		7399B3650E632A5C001AE672 /* AKProtocolTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2804EDCF3B00A80003 /* AKProtocolTopic.m */; };
+		7399B3660E632A5C001AE672 /* AKTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2A04EDCF3B00A80003 /* AKTopic.m */; };
+		7399B3670E632A5C001AE672 /* AKGlobalsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2C04EDCF3B00A80003 /* AKGlobalsTopic.m */; };
+		7399B3680E632A5C001AE672 /* AKCategoryNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55305ED8DC50055715D /* AKCategoryNode.m */; };
+		7399B3690E632A5C001AE672 /* AKClassNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55505ED8DC50055715D /* AKClassNode.m */; };
+		7399B36A0E632A5C001AE672 /* AKMethodNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55905ED8DC60055715D /* AKMethodNode.m */; };
+		7399B36B0E632A5C001AE672 /* AKProtocolNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55D05ED8DC60055715D /* AKProtocolNode.m */; };
+		7399B36C0E632A5C001AE672 /* AKObjCHeaderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */; };
+		7399B36D0E632A5C001AE672 /* AKAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD5D605ED8FBE0055715D /* AKAppController.m */; };
+		7399B36E0E632A5C001AE672 /* AKDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CC2AD805EDAF5F006D882D /* AKDocParser.m */; };
+		7399B36F0E632A5C001AE672 /* AKLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7370170505FBA7B300C74AA7 /* AKLinkResolver.m */; };
+		7399B3700E632A5C001AE672 /* AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976030606A280002E4E83 /* AKDoc.m */; };
+		7399B3710E632A5C001AE672 /* AKFunctionDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */; };
+		7399B3720E632A5C001AE672 /* AKMemberDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7319772F0606C3F6002E4E83 /* AKMemberDoc.m */; };
+		7399B3730E632A5C001AE672 /* AKHeaderFileDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73197A850606E025002E4E83 /* AKHeaderFileDoc.m */; };
+		7399B3740E632A5C001AE672 /* AKInheritanceDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */; };
+		7399B3750E632A5C001AE672 /* AKDocLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 732EE0F8060E10E600B5EDA7 /* AKDocLocator.m */; };
+		7399B3760E632A5C001AE672 /* AKOverviewDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7369B7F6060E3D9E00E0C9B6 /* AKOverviewDoc.m */; };
+		7399B3770E632A5C001AE672 /* AKClassMethodDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3707060E772F00ABA5E5 /* AKClassMethodDoc.m */; };
+		7399B3780E632A5C001AE672 /* AKInstanceMethodDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3716060E773B00ABA5E5 /* AKInstanceMethodDoc.m */; };
+		7399B3790E632A5C001AE672 /* AKDelegateMethodDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3725060E774900ABA5E5 /* AKDelegateMethodDoc.m */; };
+		7399B37A0E632A5C001AE672 /* AKNotificationDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3734060E775600ABA5E5 /* AKNotificationDoc.m */; };
+		7399B37B0E632A5C001AE672 /* AKSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362064806169C7D0007F07A /* AKSearchQuery.m */; };
+		7399B37C0E632A5C001AE672 /* AKGlobalsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362078B0616C02F0007F07A /* AKGlobalsNode.m */; };
+		7399B37D0E632A5C001AE672 /* AKGroupNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B313AA0617441B006C9BA7 /* AKGroupNode.m */; };
+		7399B37E0E632A5C001AE672 /* AKGroupNodeSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B315460617A3F3006C9BA7 /* AKGroupNodeSubtopic.m */; };
+		7399B37F0E632A5C001AE672 /* AKCocoaFunctionsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B316330617B04E006C9BA7 /* AKCocoaFunctionsDocParser.m */; };
+		7399B3800E632A5C001AE672 /* AKPrefConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B5BD061B6947002C95F1 /* AKPrefConstants.m */; };
+		7399B3810E632A5C001AE672 /* AKFrameworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B628061B6AF5002C95F1 /* AKFrameworkConstants.m */; };
+		7399B3820E632A5C001AE672 /* AKHTMLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B676061B6CC8002C95F1 /* AKHTMLConstants.m */; };
+		7399B3830E632A5C001AE672 /* AKFunctionsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD36C7066AAB6200011DE5 /* AKFunctionsSubtopic.m */; };
+		7399B3840E632A5C001AE672 /* AKFindPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C74138066BFAEF00A76FEE /* AKFindPanelController.m */; };
+		7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */; };
+		7399B3860E632A5C001AE672 /* AKDocView.m in Sources */ = {isa = PBXBuildFile; fileRef = 739D82010682A1FE00C03E01 /* AKDocView.m */; };
+		7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE9E3E06856D120008CBEC /* AKDatabase.m */; };
+		7399B3880E632A5C001AE672 /* AKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BACC01068573870016B38E /* AKParser.m */; };
+		7399B3890E632A5C001AE672 /* AKDatabaseNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 730FCBD10685758B0083160A /* AKDatabaseNode.m */; };
+		7399B38A0E632A5C001AE672 /* AKBehaviorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */; };
+		7399B38B0E632A5C001AE672 /* AKBehaviorTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */; };
+		7399B38C0E632A5C001AE672 /* AKBehaviorOverviewSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A35930688A09B00699C6D /* AKBehaviorOverviewSubtopic.m */; };
+		7399B38D0E632A5C001AE672 /* AKRealMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A36530688A49900699C6D /* AKRealMethodsSubtopic.m */; };
+		7399B38E0E632A5C001AE672 /* AKPseudoMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A36F30688A81D00699C6D /* AKPseudoMethodsSubtopic.m */; };
+		7399B38F0E632A5C001AE672 /* AKClassOverviewSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A37BB0688ADF400699C6D /* AKClassOverviewSubtopic.m */; };
+		7399B3900E632A5C001AE672 /* AKProtocolOverviewSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A38430688B09F00699C6D /* AKProtocolOverviewSubtopic.m */; };
+		7399B3910E632A5C001AE672 /* AKFileSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 73793576068B3D75008B63F4 /* AKFileSection.m */; };
+		7399B3920E632A5C001AE672 /* AKFileSectionDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7379357D068B3D8B008B63F4 /* AKFileSectionDoc.m */; };
+		7399B3930E632A5C001AE672 /* DIGSFileProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D910810C882001D5F3A /* DIGSFileProcessor.m */; };
+		7399B3940E632A5C001AE672 /* DIGSFindBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D930810C882001D5F3A /* DIGSFindBuffer.m */; };
+		7399B3950E632A5C001AE672 /* DIGSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D950810C882001D5F3A /* DIGSLog.m */; };
+		7399B3960E632A5C001AE672 /* DIGSMarginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D970810C882001D5F3A /* DIGSMarginView.m */; };
+		7399B3970E632A5C001AE672 /* DIGSMatchingBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D990810C882001D5F3A /* DIGSMatchingBackgroundView.m */; };
+		7399B3980E632A5C001AE672 /* DIGSTextSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9B0810C882001D5F3A /* DIGSTextSelection.m */; };
+		7399B3990E632A5C001AE672 /* DIGSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9D0810C882001D5F3A /* DIGSTextView.m */; };
+		7399B39A0E632A5C001AE672 /* DIGSWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9F0810C882001D5F3A /* DIGSWindow.m */; };
+		7399B39B0E632A5C001AE672 /* AKDebugUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73026981082FD33700D5198D /* AKDebugUtils.m */; };
+		7399B39C0E632A5C001AE672 /* AKFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323C9C208313881002E8D7D /* AKFileUtils.m */; };
+		7399B39D0E632A5C001AE672 /* AKCocoaBehaviorDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 734115040831B3BD0010896B /* AKCocoaBehaviorDocParser.m */; };
+		7399B39E0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7330D5B7083667540007FBD0 /* AKChildTopicOfFrameworkTopic.m */; };
+		7399B39F0E632A5C001AE672 /* AKMultiRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */; };
+		7399B3A00E632A5C001AE672 /* AKTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359EAC00BADAAD900574728 /* AKTextView.m */; };
+		7399B3A10E632A5C001AE672 /* AKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359EB2C0BADB68100574728 /* AKApplication.m */; };
+		7399B3A20E632A5C001AE672 /* AKDatabaseXMLExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */; };
+		7399B3A30E632A5C001AE672 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237020D4561C300EF7503 /* FMDatabase.m */; };
+		7399B3A40E632A5C001AE672 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237040D4561C300EF7503 /* FMDatabaseAdditions.m */; };
+		7399B3A50E632A5C001AE672 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237060D4561C300EF7503 /* FMResultSet.m */; };
+		7399B3A60E632A5C001AE672 /* AKDevToolsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D239CB0D4ABBA000EF7503 /* AKDevToolsUtils.m */; };
+		7399B3A70E632A5C001AE672 /* DIGSPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23ACF0D4C45B500EF7503 /* DIGSPrefUtils.m */; };
+		7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */; };
+		7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */; };
+		7399B3AA0E632A5C001AE672 /* AKFrameworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C237180D550CE700DFA6A5 /* AKFrameworkInfo.m */; };
+		7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
+		7399B3AC0E632A5C001AE672 /* AKGroupedNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6CA0DC1D264004FB7ED /* AKGroupedNode.m */; };
+		7399B3AD0E632A5C001AE672 /* AKDevToolsPathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsPathController.m */; };
+		7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfNodes.m */; };
+		7399B3AF0E632A5C001AE672 /* AKPropertyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F3C0E396A71002AFB76 /* AKPropertyNode.m */; };
+		7399B3B00E632A5C001AE672 /* AKMemberNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F410E3974E1002AFB76 /* AKMemberNode.m */; };
+		7399B3B10E632A5C001AE672 /* AKNotificationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F490E397760002AFB76 /* AKNotificationNode.m */; };
+		7399B3B20E632A5C001AE672 /* AKPropertiesSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */; };
+		7399B3B30E632A5C001AE672 /* AKPropertyDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 734879FB0E3AB59800A3B12F /* AKPropertyDoc.m */; };
+		7399B3B40E632A5C001AE672 /* AKOldLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */; };
+		7399B3B50E632A5C001AE672 /* AKOldDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 731D74300E42B83300C54AD5 /* AKOldDatabase.m */; };
+		7399B3B60E632A5C001AE672 /* AKDatabaseWithDocSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 731D74360E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m */; };
+		7399B3B70E632A5C001AE672 /* AKDevToolsPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */; };
+		7399B3B80E632A5C001AE672 /* AKNodeDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399AFBB0E621E27001AE672 /* AKNodeDoc.m */; };
+		7399B3BA0E632A5C001AE672 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		7399B3BB0E632A5C001AE672 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734168FA0841F59C0027E6BD /* WebKit.framework */; };
+		7399B3BC0E632A5C001AE672 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D237260D4562BA00EF7503 /* libsqlite3.dylib */; };
+		7399B3FB0E638B54001AE672 /* app-icon-iphone.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */; };
+		7399B40F0E638BDE001AE672 /* app-icon-iphone.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */; };
 		739E1C800E4F453900119B06 /* AKDevToolsPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */; };
 		739E1C810E4F453900119B06 /* AKDevToolsPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */; };
 		739E1EDC0E59190C00119B06 /* Prefs.nib in Resources */ = {isa = PBXBuildFile; fileRef = 739E1EDA0E59190B00119B06 /* Prefs.nib */; };
@@ -444,6 +706,9 @@
 		7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseXMLExporter.m; sourceTree = "<group>"; };
 		7399AFBA0E621E27001AE672 /* AKNodeDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNodeDoc.h; sourceTree = "<group>"; };
 		7399AFBB0E621E27001AE672 /* AKNodeDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNodeDoc.m; sourceTree = "<group>"; };
+		7399B3C10E632A5C001AE672 /* AppKiDo-for-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppKiDo-for-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7399B3C30E632A5C001AE672 /* Info-iPhone.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iPhone.plist"; sourceTree = "<group>"; };
+		7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "app-icon-iphone.icns"; path = "images/app-icon-iphone.icns"; sourceTree = "<group>"; };
 		739D82000682A1FE00C03E01 /* AKDocView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKDocView.h; path = CustomViews/AKDocView.h; sourceTree = "<group>"; };
 		739D82010682A1FE00C03E01 /* AKDocView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKDocView.m; path = CustomViews/AKDocView.m; sourceTree = "<group>"; };
 		739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsPanelController.h; sourceTree = "<group>"; };
@@ -549,6 +814,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7399B3B90E632A5C001AE672 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7399B3BA0E632A5C001AE672 /* Cocoa.framework in Frameworks */,
+				7399B3BB0E632A5C001AE672 /* WebKit.framework in Frameworks */,
+				7399B3BC0E632A5C001AE672 /* libsqlite3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -575,6 +850,7 @@
 			isa = PBXGroup;
 			children = (
 				65B10A4B09D7B6C300A8A637 /* AppKiDo.app */,
+				7399B3C10E632A5C001AE672 /* AppKiDo-for-iPhone.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -607,6 +883,7 @@
 				73B9158706133DBF00066E17 /* Credits.html */,
 				73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */,
 				733ACAF20498483100A80007 /* app-icon.icns */,
+				7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */,
 				65B10A4A09D7B6C300A8A637 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				73C7099306979F0E00509711 /* FrameworkInfo.plist */,
@@ -614,6 +891,7 @@
 				7300305504984FF600A80007 /* cursors */,
 				7300305704984FF600A80007 /* support */,
 				7300305F04984FF600A80007 /* toolbar */,
+				7399B3C30E632A5C001AE672 /* Info-iPhone.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1351,6 +1629,127 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7399B2B40E632A5C001AE672 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7399B2B50E632A5C001AE672 /* AKBrowser.h in Headers */,
+				7399B2B60E632A5C001AE672 /* AKTableView.h in Headers */,
+				7399B2B70E632A5C001AE672 /* AKSortable.h in Headers */,
+				7399B2B80E632A5C001AE672 /* AKSubcontroller.h in Headers */,
+				7399B2B90E632A5C001AE672 /* AKTopicBrowserController.h in Headers */,
+				7399B2BA0E632A5C001AE672 /* AKDocListController.h in Headers */,
+				7399B2BB0E632A5C001AE672 /* AKSubtopicListController.h in Headers */,
+				7399B2BC0E632A5C001AE672 /* AKWindowController.h in Headers */,
+				7399B2BD0E632A5C001AE672 /* AKWindowSubcontroller.h in Headers */,
+				7399B2BE0E632A5C001AE672 /* AKWindowLayout.h in Headers */,
+				7399B2BF0E632A5C001AE672 /* AKSavedWindowState.h in Headers */,
+				7399B2C00E632A5C001AE672 /* AKPrefUtils.h in Headers */,
+				7399B2C10E632A5C001AE672 /* AKSortUtils.h in Headers */,
+				7399B2C20E632A5C001AE672 /* AKTextUtils.h in Headers */,
+				7399B2C30E632A5C001AE672 /* AKColoredBox.h in Headers */,
+				7399B2C40E632A5C001AE672 /* AKQuicklistController.h in Headers */,
+				7399B2C50E632A5C001AE672 /* AKViewUtils.h in Headers */,
+				7399B2C60E632A5C001AE672 /* AKClassMethodsSubtopic.h in Headers */,
+				7399B2C70E632A5C001AE672 /* AKDelegateMethodsSubtopic.h in Headers */,
+				7399B2C80E632A5C001AE672 /* AKInstanceMethodsSubtopic.h in Headers */,
+				7399B2C90E632A5C001AE672 /* AKMembersSubtopic.h in Headers */,
+				7399B2CA0E632A5C001AE672 /* AKNotificationsSubtopic.h in Headers */,
+				7399B2CB0E632A5C001AE672 /* AKSubtopic.h in Headers */,
+				7399B2CC0E632A5C001AE672 /* AKClassTopic.h in Headers */,
+				7399B2CD0E632A5C001AE672 /* AKFormalProtocolsTopic.h in Headers */,
+				7399B2CE0E632A5C001AE672 /* AKFrameworkTopic.h in Headers */,
+				7399B2CF0E632A5C001AE672 /* AKFunctionsTopic.h in Headers */,
+				7399B2D00E632A5C001AE672 /* AKInformalProtocolsTopic.h in Headers */,
+				7399B2D10E632A5C001AE672 /* AKLabelTopic.h in Headers */,
+				7399B2D20E632A5C001AE672 /* AKProtocolTopic.h in Headers */,
+				7399B2D30E632A5C001AE672 /* AKTopic.h in Headers */,
+				7399B2D40E632A5C001AE672 /* AKGlobalsTopic.h in Headers */,
+				7399B2D50E632A5C001AE672 /* AKCategoryNode.h in Headers */,
+				7399B2D60E632A5C001AE672 /* AKClassNode.h in Headers */,
+				7399B2D70E632A5C001AE672 /* AKMethodNode.h in Headers */,
+				7399B2D80E632A5C001AE672 /* AKProtocolNode.h in Headers */,
+				7399B2D90E632A5C001AE672 /* AKObjCHeaderParser.h in Headers */,
+				7399B2DA0E632A5C001AE672 /* AKAppController.h in Headers */,
+				7399B2DB0E632A5C001AE672 /* AKDocParser.h in Headers */,
+				7399B2DC0E632A5C001AE672 /* AKLinkResolver.h in Headers */,
+				7399B2DD0E632A5C001AE672 /* AKDoc.h in Headers */,
+				7399B2DE0E632A5C001AE672 /* AKFunctionDoc.h in Headers */,
+				7399B2DF0E632A5C001AE672 /* AKMemberDoc.h in Headers */,
+				7399B2E00E632A5C001AE672 /* AKHeaderFileDoc.h in Headers */,
+				7399B2E10E632A5C001AE672 /* AKInheritanceDoc.h in Headers */,
+				7399B2E20E632A5C001AE672 /* AKDocLocator.h in Headers */,
+				7399B2E30E632A5C001AE672 /* AKOverviewDoc.h in Headers */,
+				7399B2E40E632A5C001AE672 /* AKClassMethodDoc.h in Headers */,
+				7399B2E50E632A5C001AE672 /* AKInstanceMethodDoc.h in Headers */,
+				7399B2E60E632A5C001AE672 /* AKDelegateMethodDoc.h in Headers */,
+				7399B2E70E632A5C001AE672 /* AKNotificationDoc.h in Headers */,
+				7399B2E80E632A5C001AE672 /* AKSearchQuery.h in Headers */,
+				7399B2E90E632A5C001AE672 /* AKGlobalsNode.h in Headers */,
+				7399B2EA0E632A5C001AE672 /* AKGroupNode.h in Headers */,
+				7399B2EB0E632A5C001AE672 /* AKGroupNodeSubtopic.h in Headers */,
+				7399B2EC0E632A5C001AE672 /* AKCocoaFunctionsDocParser.h in Headers */,
+				7399B2ED0E632A5C001AE672 /* AKPrefConstants.h in Headers */,
+				7399B2EE0E632A5C001AE672 /* AKFrameworkConstants.h in Headers */,
+				7399B2EF0E632A5C001AE672 /* AKHTMLConstants.h in Headers */,
+				7399B2F00E632A5C001AE672 /* AKFunctionsSubtopic.h in Headers */,
+				7399B2F10E632A5C001AE672 /* AKFindPanelController.h in Headers */,
+				7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */,
+				7399B2F30E632A5C001AE672 /* AKDocView.h in Headers */,
+				7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */,
+				7399B2F50E632A5C001AE672 /* AKParser.h in Headers */,
+				7399B2F60E632A5C001AE672 /* AKDatabaseNode.h in Headers */,
+				7399B2F70E632A5C001AE672 /* AKBehaviorNode.h in Headers */,
+				7399B2F80E632A5C001AE672 /* AKBehaviorTopic.h in Headers */,
+				7399B2F90E632A5C001AE672 /* AKBehaviorOverviewSubtopic.h in Headers */,
+				7399B2FA0E632A5C001AE672 /* AKRealMethodsSubtopic.h in Headers */,
+				7399B2FB0E632A5C001AE672 /* AKPseudoMethodsSubtopic.h in Headers */,
+				7399B2FC0E632A5C001AE672 /* AKClassOverviewSubtopic.h in Headers */,
+				7399B2FD0E632A5C001AE672 /* AKProtocolOverviewSubtopic.h in Headers */,
+				7399B2FE0E632A5C001AE672 /* AKFileSection.h in Headers */,
+				7399B2FF0E632A5C001AE672 /* AKFileSectionDoc.h in Headers */,
+				7399B3000E632A5C001AE672 /* DIGSFileProcessor.h in Headers */,
+				7399B3010E632A5C001AE672 /* DIGSFindBuffer.h in Headers */,
+				7399B3020E632A5C001AE672 /* DIGSLog.h in Headers */,
+				7399B3030E632A5C001AE672 /* DIGSMarginView.h in Headers */,
+				7399B3040E632A5C001AE672 /* DIGSMatchingBackgroundView.h in Headers */,
+				7399B3050E632A5C001AE672 /* DIGSTextSelection.h in Headers */,
+				7399B3060E632A5C001AE672 /* DIGSTextView.h in Headers */,
+				7399B3070E632A5C001AE672 /* DIGSWindow.h in Headers */,
+				7399B3080E632A5C001AE672 /* AKDebugUtils.h in Headers */,
+				7399B3090E632A5C001AE672 /* AKFileUtils.h in Headers */,
+				7399B30A0E632A5C001AE672 /* AKCocoaBehaviorDocParser.h in Headers */,
+				7399B30B0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.h in Headers */,
+				7399B30C0E632A5C001AE672 /* AKMultiRadioView.h in Headers */,
+				7399B30D0E632A5C001AE672 /* AppKiDo_Prefix.pch in Headers */,
+				7399B30E0E632A5C001AE672 /* AKTextView.h in Headers */,
+				7399B30F0E632A5C001AE672 /* AKApplication.h in Headers */,
+				7399B3100E632A5C001AE672 /* AKDatabaseXMLExporter.h in Headers */,
+				7399B3110E632A5C001AE672 /* FMDatabase.h in Headers */,
+				7399B3120E632A5C001AE672 /* FMDatabaseAdditions.h in Headers */,
+				7399B3130E632A5C001AE672 /* FMResultSet.h in Headers */,
+				7399B3140E632A5C001AE672 /* AKDevToolsUtils.h in Headers */,
+				7399B3150E632A5C001AE672 /* DIGSPrefUtils.h in Headers */,
+				7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */,
+				7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */,
+				7399B3180E632A5C001AE672 /* AKFrameworkInfo.h in Headers */,
+				7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */,
+				7399B31A0E632A5C001AE672 /* AKGroupedNode.h in Headers */,
+				7399B31B0E632A5C001AE672 /* AKDevToolsPathController.h in Headers */,
+				7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */,
+				7399B31D0E632A5C001AE672 /* AKPropertyNode.h in Headers */,
+				7399B31E0E632A5C001AE672 /* AKMemberNode.h in Headers */,
+				7399B31F0E632A5C001AE672 /* AKNotificationNode.h in Headers */,
+				7399B3200E632A5C001AE672 /* AKPropertiesSubtopic.h in Headers */,
+				7399B3210E632A5C001AE672 /* AKPropertyDoc.h in Headers */,
+				7399B3220E632A5C001AE672 /* AKOldLinkResolver.h in Headers */,
+				7399B3230E632A5C001AE672 /* AKOldDatabase.h in Headers */,
+				7399B3240E632A5C001AE672 /* AKDatabaseWithDocSet.h in Headers */,
+				7399B3250E632A5C001AE672 /* AKDevToolsPanelController.h in Headers */,
+				7399B3260E632A5C001AE672 /* AKNodeDoc.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -1372,6 +1771,24 @@
 			productReference = 65B10A4B09D7B6C300A8A637 /* AppKiDo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7399B2B30E632A5C001AE672 /* AppKiDo-for-iPhone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7399B3BD0E632A5C001AE672 /* Build configuration list for PBXNativeTarget "AppKiDo-for-iPhone" */;
+			buildPhases = (
+				7399B2B40E632A5C001AE672 /* Headers */,
+				7399B3270E632A5C001AE672 /* Resources */,
+				7399B3460E632A5C001AE672 /* Sources */,
+				7399B3B90E632A5C001AE672 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AppKiDo-for-iPhone";
+			productName = HierKnowledge;
+			productReference = 7399B3C10E632A5C001AE672 /* AppKiDo-for-iPhone.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1385,6 +1802,7 @@
 			projectRoot = "";
 			targets = (
 				65B1095509D7B6C300A8A637 /* AppKiDo */,
+				7399B2B30E632A5C001AE672 /* AppKiDo-for-iPhone */,
 			);
 		};
 /* End PBXProject section */
@@ -1424,6 +1842,44 @@
 				73D2370E0D4561C300EF7503 /* README-fmdb.txt in Resources */,
 				73D3229A0E464E2A0062E277 /* DevToolsPath.nib in Resources */,
 				739E1EDC0E59190C00119B06 /* Prefs.nib in Resources */,
+				7399B3FB0E638B54001AE672 /* app-icon-iphone.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7399B3270E632A5C001AE672 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7399B3280E632A5C001AE672 /* MainMenu.nib in Resources */,
+				7399B3290E632A5C001AE672 /* InfoPlist.strings in Resources */,
+				7399B40F0E638BDE001AE672 /* app-icon-iphone.icns in Resources */,
+				7399B32B0E632A5C001AE672 /* AppKiDo.nib in Resources */,
+				7399B32C0E632A5C001AE672 /* back-tool-tiny.tiff in Resources */,
+				7399B32D0E632A5C001AE672 /* down-triangle.tiff in Resources */,
+				7399B32E0E632A5C001AE672 /* forward-tool-tiny.tiff in Resources */,
+				7399B32F0E632A5C001AE672 /* superclass-tool-tiny.tiff in Resources */,
+				7399B3300E632A5C001AE672 /* up-triangle.tiff in Resources */,
+				7399B3310E632A5C001AE672 /* x.tiff in Resources */,
+				7399B3320E632A5C001AE672 /* handcursor.tiff in Resources */,
+				7399B3330E632A5C001AE672 /* icon-128.tiff in Resources */,
+				7399B3340E632A5C001AE672 /* icon-16.tiff in Resources */,
+				7399B3350E632A5C001AE672 /* icon-32.tiff in Resources */,
+				7399B3360E632A5C001AE672 /* icon-48.tiff in Resources */,
+				7399B3370E632A5C001AE672 /* add-column-tool.tiff in Resources */,
+				7399B3380E632A5C001AE672 /* back-tool.tiff in Resources */,
+				7399B3390E632A5C001AE672 /* browser-tool.tiff in Resources */,
+				7399B33A0E632A5C001AE672 /* forward-tool.tiff in Resources */,
+				7399B33B0E632A5C001AE672 /* quicklist-tool.tiff in Resources */,
+				7399B33C0E632A5C001AE672 /* remove-column-tool.tiff in Resources */,
+				7399B33D0E632A5C001AE672 /* search-tool.tiff in Resources */,
+				7399B33E0E632A5C001AE672 /* superclass-tool.tiff in Resources */,
+				7399B33F0E632A5C001AE672 /* Credits.html in Resources */,
+				7399B3400E632A5C001AE672 /* FrameworkInfo.plist in Resources */,
+				7399B3410E632A5C001AE672 /* AppKiDo-source-intro.txt in Resources */,
+				7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */,
+				7399B3430E632A5C001AE672 /* README-fmdb.txt in Resources */,
+				7399B3440E632A5C001AE672 /* DevToolsPath.nib in Resources */,
+				7399B3450E632A5C001AE672 /* Prefs.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1551,6 +2007,127 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7399B3460E632A5C001AE672 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7399B3470E632A5C001AE672 /* main.m in Sources */,
+				7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */,
+				7399B3490E632A5C001AE672 /* AKTableView.m in Sources */,
+				7399B34A0E632A5C001AE672 /* AKSubcontroller.m in Sources */,
+				7399B34B0E632A5C001AE672 /* AKTopicBrowserController.m in Sources */,
+				7399B34C0E632A5C001AE672 /* AKDocListController.m in Sources */,
+				7399B34D0E632A5C001AE672 /* AKSubtopicListController.m in Sources */,
+				7399B34E0E632A5C001AE672 /* AKWindowController.m in Sources */,
+				7399B34F0E632A5C001AE672 /* AKWindowController_Toolbar.m in Sources */,
+				7399B3500E632A5C001AE672 /* AKWindowSubcontroller.m in Sources */,
+				7399B3510E632A5C001AE672 /* AKWindowLayout.m in Sources */,
+				7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */,
+				7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */,
+				7399B3540E632A5C001AE672 /* AKSortUtils.m in Sources */,
+				7399B3550E632A5C001AE672 /* AKTextUtils.m in Sources */,
+				7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */,
+				7399B3570E632A5C001AE672 /* AKQuicklistController.m in Sources */,
+				7399B3580E632A5C001AE672 /* AKViewUtils.m in Sources */,
+				7399B3590E632A5C001AE672 /* AKClassMethodsSubtopic.m in Sources */,
+				7399B35A0E632A5C001AE672 /* AKDelegateMethodsSubtopic.m in Sources */,
+				7399B35B0E632A5C001AE672 /* AKInstanceMethodsSubtopic.m in Sources */,
+				7399B35C0E632A5C001AE672 /* AKMembersSubtopic.m in Sources */,
+				7399B35D0E632A5C001AE672 /* AKNotificationsSubtopic.m in Sources */,
+				7399B35E0E632A5C001AE672 /* AKSubtopic.m in Sources */,
+				7399B35F0E632A5C001AE672 /* AKClassTopic.m in Sources */,
+				7399B3600E632A5C001AE672 /* AKFormalProtocolsTopic.m in Sources */,
+				7399B3610E632A5C001AE672 /* AKFrameworkTopic.m in Sources */,
+				7399B3620E632A5C001AE672 /* AKFunctionsTopic.m in Sources */,
+				7399B3630E632A5C001AE672 /* AKInformalProtocolsTopic.m in Sources */,
+				7399B3640E632A5C001AE672 /* AKLabelTopic.m in Sources */,
+				7399B3650E632A5C001AE672 /* AKProtocolTopic.m in Sources */,
+				7399B3660E632A5C001AE672 /* AKTopic.m in Sources */,
+				7399B3670E632A5C001AE672 /* AKGlobalsTopic.m in Sources */,
+				7399B3680E632A5C001AE672 /* AKCategoryNode.m in Sources */,
+				7399B3690E632A5C001AE672 /* AKClassNode.m in Sources */,
+				7399B36A0E632A5C001AE672 /* AKMethodNode.m in Sources */,
+				7399B36B0E632A5C001AE672 /* AKProtocolNode.m in Sources */,
+				7399B36C0E632A5C001AE672 /* AKObjCHeaderParser.m in Sources */,
+				7399B36D0E632A5C001AE672 /* AKAppController.m in Sources */,
+				7399B36E0E632A5C001AE672 /* AKDocParser.m in Sources */,
+				7399B36F0E632A5C001AE672 /* AKLinkResolver.m in Sources */,
+				7399B3700E632A5C001AE672 /* AKDoc.m in Sources */,
+				7399B3710E632A5C001AE672 /* AKFunctionDoc.m in Sources */,
+				7399B3720E632A5C001AE672 /* AKMemberDoc.m in Sources */,
+				7399B3730E632A5C001AE672 /* AKHeaderFileDoc.m in Sources */,
+				7399B3740E632A5C001AE672 /* AKInheritanceDoc.m in Sources */,
+				7399B3750E632A5C001AE672 /* AKDocLocator.m in Sources */,
+				7399B3760E632A5C001AE672 /* AKOverviewDoc.m in Sources */,
+				7399B3770E632A5C001AE672 /* AKClassMethodDoc.m in Sources */,
+				7399B3780E632A5C001AE672 /* AKInstanceMethodDoc.m in Sources */,
+				7399B3790E632A5C001AE672 /* AKDelegateMethodDoc.m in Sources */,
+				7399B37A0E632A5C001AE672 /* AKNotificationDoc.m in Sources */,
+				7399B37B0E632A5C001AE672 /* AKSearchQuery.m in Sources */,
+				7399B37C0E632A5C001AE672 /* AKGlobalsNode.m in Sources */,
+				7399B37D0E632A5C001AE672 /* AKGroupNode.m in Sources */,
+				7399B37E0E632A5C001AE672 /* AKGroupNodeSubtopic.m in Sources */,
+				7399B37F0E632A5C001AE672 /* AKCocoaFunctionsDocParser.m in Sources */,
+				7399B3800E632A5C001AE672 /* AKPrefConstants.m in Sources */,
+				7399B3810E632A5C001AE672 /* AKFrameworkConstants.m in Sources */,
+				7399B3820E632A5C001AE672 /* AKHTMLConstants.m in Sources */,
+				7399B3830E632A5C001AE672 /* AKFunctionsSubtopic.m in Sources */,
+				7399B3840E632A5C001AE672 /* AKFindPanelController.m in Sources */,
+				7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */,
+				7399B3860E632A5C001AE672 /* AKDocView.m in Sources */,
+				7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */,
+				7399B3880E632A5C001AE672 /* AKParser.m in Sources */,
+				7399B3890E632A5C001AE672 /* AKDatabaseNode.m in Sources */,
+				7399B38A0E632A5C001AE672 /* AKBehaviorNode.m in Sources */,
+				7399B38B0E632A5C001AE672 /* AKBehaviorTopic.m in Sources */,
+				7399B38C0E632A5C001AE672 /* AKBehaviorOverviewSubtopic.m in Sources */,
+				7399B38D0E632A5C001AE672 /* AKRealMethodsSubtopic.m in Sources */,
+				7399B38E0E632A5C001AE672 /* AKPseudoMethodsSubtopic.m in Sources */,
+				7399B38F0E632A5C001AE672 /* AKClassOverviewSubtopic.m in Sources */,
+				7399B3900E632A5C001AE672 /* AKProtocolOverviewSubtopic.m in Sources */,
+				7399B3910E632A5C001AE672 /* AKFileSection.m in Sources */,
+				7399B3920E632A5C001AE672 /* AKFileSectionDoc.m in Sources */,
+				7399B3930E632A5C001AE672 /* DIGSFileProcessor.m in Sources */,
+				7399B3940E632A5C001AE672 /* DIGSFindBuffer.m in Sources */,
+				7399B3950E632A5C001AE672 /* DIGSLog.m in Sources */,
+				7399B3960E632A5C001AE672 /* DIGSMarginView.m in Sources */,
+				7399B3970E632A5C001AE672 /* DIGSMatchingBackgroundView.m in Sources */,
+				7399B3980E632A5C001AE672 /* DIGSTextSelection.m in Sources */,
+				7399B3990E632A5C001AE672 /* DIGSTextView.m in Sources */,
+				7399B39A0E632A5C001AE672 /* DIGSWindow.m in Sources */,
+				7399B39B0E632A5C001AE672 /* AKDebugUtils.m in Sources */,
+				7399B39C0E632A5C001AE672 /* AKFileUtils.m in Sources */,
+				7399B39D0E632A5C001AE672 /* AKCocoaBehaviorDocParser.m in Sources */,
+				7399B39E0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.m in Sources */,
+				7399B39F0E632A5C001AE672 /* AKMultiRadioView.m in Sources */,
+				7399B3A00E632A5C001AE672 /* AKTextView.m in Sources */,
+				7399B3A10E632A5C001AE672 /* AKApplication.m in Sources */,
+				7399B3A20E632A5C001AE672 /* AKDatabaseXMLExporter.m in Sources */,
+				7399B3A30E632A5C001AE672 /* FMDatabase.m in Sources */,
+				7399B3A40E632A5C001AE672 /* FMDatabaseAdditions.m in Sources */,
+				7399B3A50E632A5C001AE672 /* FMResultSet.m in Sources */,
+				7399B3A60E632A5C001AE672 /* AKDevToolsUtils.m in Sources */,
+				7399B3A70E632A5C001AE672 /* DIGSPrefUtils.m in Sources */,
+				7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */,
+				7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */,
+				7399B3AA0E632A5C001AE672 /* AKFrameworkInfo.m in Sources */,
+				7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */,
+				7399B3AC0E632A5C001AE672 /* AKGroupedNode.m in Sources */,
+				7399B3AD0E632A5C001AE672 /* AKDevToolsPathController.m in Sources */,
+				7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */,
+				7399B3AF0E632A5C001AE672 /* AKPropertyNode.m in Sources */,
+				7399B3B00E632A5C001AE672 /* AKMemberNode.m in Sources */,
+				7399B3B10E632A5C001AE672 /* AKNotificationNode.m in Sources */,
+				7399B3B20E632A5C001AE672 /* AKPropertiesSubtopic.m in Sources */,
+				7399B3B30E632A5C001AE672 /* AKPropertyDoc.m in Sources */,
+				7399B3B40E632A5C001AE672 /* AKOldLinkResolver.m in Sources */,
+				7399B3B50E632A5C001AE672 /* AKOldDatabase.m in Sources */,
+				7399B3B60E632A5C001AE672 /* AKDatabaseWithDocSet.m in Sources */,
+				7399B3B70E632A5C001AE672 /* AKDevToolsPanelController.m in Sources */,
+				7399B3B80E632A5C001AE672 /* AKNodeDoc.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -1633,6 +2210,47 @@
 				OTHER_CFLAGS = "-Wall";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = AppKiDo;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
+		7399B3BE0E632A5C001AE672 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = "APPKIDO_FOR_IPHONE=1";
+				INFOPLIST_FILE = "Info-iPhone.plist";
+				PRODUCT_NAME = "AppKiDo-for-iPhone";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Development;
+		};
+		7399B3BF0E632A5C001AE672 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = "APPKIDO_FOR_IPHONE=1";
+				INFOPLIST_FILE = "Info-iPhone.plist";
+				PRODUCT_NAME = "AppKiDo-for-iPhone";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Deployment;
+		};
+		7399B3C00E632A5C001AE672 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "APPKIDO_FOR_IPHONE=1";
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "Info-iPhone.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "-Wall";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "AppKiDo-for-iPhone";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -1749,6 +2367,16 @@
 				65B10A4709D7B6C300A8A637 /* Development */,
 				65B10A4809D7B6C300A8A637 /* Deployment */,
 				65B10A4909D7B6C300A8A637 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		7399B3BD0E632A5C001AE672 /* Build configuration list for PBXNativeTarget "AppKiDo-for-iPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7399B3BE0E632A5C001AE672 /* Development */,
+				7399B3BF0E632A5C001AE672 /* Deployment */,
+				7399B3C00E632A5C001AE672 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
