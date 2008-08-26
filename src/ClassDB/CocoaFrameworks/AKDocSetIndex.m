@@ -16,6 +16,10 @@
 
 @interface AKDocSetIndex (Private)
 
+- (NSMutableArray *)_allFrameworkNames;
+- (NSMutableArray *)_objectiveCFrameworkNames;
+- (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString;
+
 + (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath;
 - (NSString *)_resourcesPath;
 - (NSString *)_pathToSqliteFile;
@@ -45,8 +49,13 @@
 // SQL queries
 //-------------------------------------------------------------------------
 
+static NSString *s_allFrameworkNamesQuery =
+    @"select distinct header.ZFRAMEWORKNAME from ZHEADER header order by header.ZFRAMEWORKNAME";
+
+// Selects frameworks containing Objective-C tokens.
 static NSString *s_objectiveCFrameworkNamesQuery =
     @"select distinct header.ZFRAMEWORKNAME from ZTOKEN token, ZTOKENTYPE tokenType, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header, ZAPILANGUAGE language where token.ZLANGUAGE = language.Z_PK and language.ZFULLNAME = 'Objective-C' and token.ZTOKENTYPE = tokenType.Z_PK and token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and tokenType.ZTYPENAME in ('cl', 'intf') order by header.ZFRAMEWORKNAME";
+
 
 /*!
  * Returns a single column containing distinct doc paths for up to three token
@@ -169,37 +178,28 @@ static NSString *s_headerPathsQueryTemplate =
     return [[self _resourcesPath] stringByAppendingPathComponent: @"Documents"];
 }
 
-- (NSArray *)objectiveCFrameworkNames
+- (NSArray *)selectableFrameworkNames
 {
-    // Open the database.
-    FMDatabase* db = [self _openSQLiteDB];
-    if (db == nil)
+    static NSMutableArray *s_selectableFrameworkNames = nil;
+
+    if (s_selectableFrameworkNames == nil)
     {
-        return nil;
+#if APPKIDO_FOR_IPHONE
+        s_selectableFrameworkNames = [[self _objectiveCFrameworkNames] retain];
+
+        [s_selectableFrameworkNames addObject:@"CoreGraphics"];  // [agl] KLUDGE -- to get CGPoint etc.
+#else
+        s_selectableFrameworkNames = [[self _objectiveCFrameworkNames] retain];
+
+        [s_selectableFrameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
+        [s_selectableFrameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
+#endif
+
+        // Force essential framework names to the top of the list.
+        [self _forceEssentialFrameworkNamesToTopOfList:s_selectableFrameworkNames];
     }
 
-    // Do the query and process the results.
-    NSMutableArray *frameworkNames = [NSMutableArray array];
-    FMResultSet *rs =
-        [db executeQuery:s_objectiveCFrameworkNamesQuery];
-
-    while ([rs next])
-    {
-        NSString *fwName = [rs stringForColumnIndex:0];
-        [frameworkNames addObject:fwName];
-    }
-    [rs close];
-
-    [frameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
-    [frameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
-
-    // Close the database.
-    [db close];
-
-    // Force essential framework names to the top of the list.
-    [self _forceEssentialFrameworkNamesToTopOfList:frameworkNames];
-
-    return frameworkNames;
+    return s_selectableFrameworkNames;
 }
 
 - (NSSet *)headerDirsForFramework:(NSString *)frameworkName
@@ -302,6 +302,42 @@ static NSString *s_headerPathsQueryTemplate =
 //-------------------------------------------------------------------------
 
 @implementation AKDocSetIndex (Private)
+
+- (NSMutableArray *)_allFrameworkNames
+{
+    return [self _stringArrayFromQuery:s_allFrameworkNamesQuery];
+}
+
+- (NSMutableArray *)_objectiveCFrameworkNames
+{
+    return [self _stringArrayFromQuery:s_objectiveCFrameworkNamesQuery];
+}
+
+- (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString
+{
+    NSMutableArray *stringArray = [NSMutableArray array];
+
+    // Open the database.
+    FMDatabase* db = [self _openSQLiteDB];
+    if (db == nil)
+    {
+        return nil;
+    }
+
+    // Query the database and process the results.
+    FMResultSet *rs = [db executeQuery:queryString];
+    while ([rs next])
+    {
+        NSString *fwName = [rs stringForColumnIndex:0];
+        [stringArray addObject:fwName];
+    }
+    [rs close];
+
+    // Close the database.
+    [db close];
+
+    return stringArray;
+}
 
 + (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath
 {

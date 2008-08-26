@@ -69,7 +69,7 @@
 // AKDatabase methods
 //-------------------------------------------------------------------------
 
-- (BOOL)frameworkNameIsValid:(NSString *)frameworkName
+- (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
     return
         [[AKFrameworkInfo sharedInstance]

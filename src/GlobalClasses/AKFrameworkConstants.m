@@ -27,12 +27,19 @@ NSArray *_AKNamesOfEssentialFrameworks()
         s_namesOfEssentialFrameworks =
             [[NSArray arrayWithObjects:
                 AKFoundationFrameworkName,
-                AKAppKitFrameworkName,
+#if APPKIDO_FOR_IPHONE
                 AKUIKitFrameworkName,
+#else
+                AKAppKitFrameworkName,
                 AKCoreDataFrameworkName,
+#endif
                 AKCoreImageFrameworkName,
                 AKQuartzCoreFrameworkName,
+#if APPKIDO_FOR_IPHONE
+                @"CoreGraphics",  // [agl] KLUDGE -- to get CGPoint etc.
+#else
                 @"ApplicationServices",  // [agl] KLUDGE -- to get CGPoint etc.
+#endif
                 nil] retain];
     }
 

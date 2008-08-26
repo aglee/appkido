@@ -322,6 +322,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 g_NSStringComparisons++;
 #endif MEASURE_SEARCH_SPEED
 
+//DIGSLogDebug(@"[%@] (%@)", _searchString, s);  // [agl] REMOVE
+
     switch (_searchComparison)
     {
         case AKSearchForSubstring: {

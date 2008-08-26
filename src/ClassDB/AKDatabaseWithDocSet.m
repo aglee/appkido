@@ -38,8 +38,8 @@
     {
         _docSetIndex = [docSetIndex retain];
 
-        [_namesOfAvailableFrameworks release];
-        _namesOfAvailableFrameworks = [[docSetIndex objectiveCFrameworkNames] copy];
+        [_namesOfAvailableFrameworks release];  // [agl] think about this
+        _namesOfAvailableFrameworks = [[docSetIndex selectableFrameworkNames] copy];
     }
 
     return self;
@@ -63,10 +63,10 @@
 // AKDatabase methods
 //-------------------------------------------------------------------------
 
-- (BOOL)frameworkNameIsValid:(NSString *)frameworkName
+- (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
     return
-        [[_docSetIndex objectiveCFrameworkNames]
+        [[_docSetIndex selectableFrameworkNames]
             containsObject:frameworkName];
 }
 
