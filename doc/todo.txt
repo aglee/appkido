@@ -2,11 +2,15 @@
 
 [ ] NSResponder -> acceptsFirstResponder -> YES opens browser window
 
+[ ] install Xcode 2.5 and 3.1 at home and on Flint
+
 [ ] look for [agl] REMOVE
 
 [ ] generate separate "AppKiDo for iPhone"
-	[ ] create two targets in Xcode
-	[ ] have two different identifiers (com.appkido... ?)
+	[x] create two targets in Xcode
+	[x] have two different identifiers (com.appkido... ?)
+	[x] create different icon
+	[ ] use separate xml file for "check for update"
 
 [ ] make sure mailing list has latest people who asked to be on it
 
@@ -20,7 +24,7 @@
 	* Select All/Deselect All in frameworks prefs
 	* prefix searches
 	* iPhone!  NB you'll get all frameworks regardless of prefs panel
-	* nb code has changed a lot and more big changes are in store
+	* nb code has changed a lot (docs not caught up) and more big changes are in store
 
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
@@ -244,6 +248,7 @@
 
 [ ] go back to [AKDatabase defaultDatabase]
 	* possibly pull _database out of AKTopic
+	* hm -- why did I want to do this?  it was to prevent AKClassNode from having to know about AKAppController
 
 [ ] cell classes are n/a for iPhone (UITableViewCell is actually a view)
 
