@@ -45,10 +45,17 @@
 
 + (NSArray *)selectedFrameworkNamesPref
 {
-    NSMutableArray *fwNames =
-        [NSMutableArray
-            arrayWithArray:
-                [self arrayValueForPref:AKSelectedFrameworksPrefName]];
+    // Note that if you pass nil to -arrayWithArray:, it returns an empty
+    // array rather than nil.
+    NSArray *prefArray =
+        [self arrayValueForPref:AKSelectedFrameworksPrefName];
+
+    if (prefArray == nil)
+    {
+        return nil;
+    }
+
+    NSMutableArray *fwNames = [NSMutableArray arrayWithArray:prefArray];
     
     // In older versions, "AppKit" was saved as "ApplicationKit" in prefs.
     unsigned index = [fwNames indexOfObject:@"ApplicationKit"];
@@ -238,9 +245,12 @@
         setObject:[NSArray array]
         forKey:AKFavoritesPrefName];
 
-    [defaultPrefsDictionary
-        setObject:AKNamesOfEssentialFrameworks
-        forKey:AKSelectedFrameworksPrefName];
+// Don't register a default for the selected-frameworks pref.  We'll set it
+// in -[AKAppController awakeFromNib] if it hasn't been set.  We do it there
+// because we may have to query the AKDatabase for the frameworks to use.
+//    [defaultPrefsDictionary
+//        setObject:AKNamesOfEssentialFrameworks
+//        forKey:AKSelectedFrameworksPrefName];
 
     [[NSUserDefaults standardUserDefaults]
         registerDefaults:defaultPrefsDictionary];
