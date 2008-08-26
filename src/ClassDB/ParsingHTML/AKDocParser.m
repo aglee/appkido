@@ -86,7 +86,9 @@
     }
 
     // Skip whitespace.
-    while (isspace(*_current))
+    // [agl] TODO -- Currently treating bytes with high bit set as whitespace.
+    // Might want to properly handle charsets and encodings some time.
+    while (isspace(*_current) || (*_current & 0x80))
     {
         _current++;
         if (_current >= _dataEnd)
