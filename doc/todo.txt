@@ -1,7 +1,5 @@
 :--- APPKIDO TO-DO ---:
 
-[ ] NSResponder -> acceptsFirstResponder -> YES opens browser window
-
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
 
 [ ] look for [agl] REMOVE
@@ -25,6 +23,7 @@
 	* prefix searches
 	* iPhone!  NB you'll get all frameworks regardless of prefs panel
 	* nb code has changed a lot (docs not caught up) and more big changes are in store
+	* known issue: NSResponder -> acceptsFirstResponder -> YES opens browser window
 
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
@@ -42,6 +41,9 @@
 	* among HTML files, only need to parse class docs (to get delegate methods and notifications); everything else we can tell from the docset index
 	* can we count on the doc file itself to tell us a protocol is informal?  if so, may not need to parse headers
 
+[ ] parse _more_ stuff
+	* CoreFoundation?
+
 [ ] store stuff on disk so it doesn't have to be reparsed
 	* use CoreData to store
 
@@ -58,6 +60,7 @@
 	[ ] somehow parametrize the UI (different background colors, etc.)
 	[ ] create alternate icon for the iPhone version
 [ ] nicer credits: bold names and list them alphabetically (perhaps with version number?)
+[ ] progress indicator during search
 
 
 ===== dev stuff =====
@@ -68,6 +71,8 @@
 
 
 ----------------------------------------------------------
+
+[ ] NSResponder -> acceptsFirstResponder -> YES opens browser window
 
 [ ] CGDisplayCurrentMode -> CFDictionaryRef opens browser (CoreFoundation)
 
