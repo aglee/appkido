@@ -13,7 +13,11 @@
 
 NSString *AKFoundationFrameworkName  = @"Foundation";
 NSString *AKAppKitFrameworkName      = @"AppKit";
+
+#if APPKIDO_FOR_IPHONE
 NSString *AKUIKitFrameworkName       = @"UIKit";
+#endif
+
 NSString *AKCoreDataFrameworkName    = @"CoreData";
 NSString *AKCoreImageFrameworkName   = @"CoreImage";
 NSString *AKQuartzCoreFrameworkName  = @"QuartzCore";
