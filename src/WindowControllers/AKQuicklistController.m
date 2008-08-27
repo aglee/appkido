@@ -754,11 +754,13 @@ enum
     {
         NSString *nameOfRootViewClass;
 
+#if APPKIDO_FOR_IPHONE
         if ([[_windowController database] classWithName:@"UIView"] != nil)
         {
             nameOfRootViewClass = @"UIView";
         }
         else
+#endif
         {
             nameOfRootViewClass = @"NSView";
         }
