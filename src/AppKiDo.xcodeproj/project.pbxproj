@@ -6,6 +6,21 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		7399B51D0E647250001AE672 /* All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7399B5270E647272001AE672 /* Build configuration list for PBXAggregateTarget "All" */;
+			buildPhases = (
+			);
+			dependencies = (
+				7399B5290E6472AC001AE672 /* PBXTargetDependency */,
+				7399B52B0E6472AC001AE672 /* PBXTargetDependency */,
+			);
+			name = All;
+			productName = All;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		65B1095709D7B6C300A8A637 /* AKBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A70498501500A80007 /* AKBrowser.h */; };
 		65B1095809D7B6C300A8A637 /* AKTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A90498501500A80007 /* AKTableView.h */; };
@@ -531,6 +546,23 @@
 		73E86F4A0E397760002AFB76 /* AKNotificationNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F480E397760002AFB76 /* AKNotificationNode.h */; };
 		73E86F4B0E397760002AFB76 /* AKNotificationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F490E397760002AFB76 /* AKNotificationNode.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7399B5280E6472AC001AE672 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65B1095509D7B6C300A8A637;
+			remoteInfo = AppKiDo;
+		};
+		7399B52A0E6472AC001AE672 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7399B2B30E632A5C001AE672;
+			remoteInfo = "AppKiDo-for-iPhone";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1801,6 +1833,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				7399B51D0E647250001AE672 /* All */,
 				65B1095509D7B6C300A8A637 /* AppKiDo */,
 				7399B2B30E632A5C001AE672 /* AppKiDo-for-iPhone */,
 			);
@@ -2130,6 +2163,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7399B5290E6472AC001AE672 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65B1095509D7B6C300A8A637 /* AppKiDo */;
+			targetProxy = 7399B5280E6472AC001AE672 /* PBXContainerItemProxy */;
+		};
+		7399B52B0E6472AC001AE672 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7399B2B30E632A5C001AE672 /* AppKiDo-for-iPhone */;
+			targetProxy = 7399B52A0E6472AC001AE672 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -2261,6 +2307,34 @@
 			};
 			name = Default;
 		};
+		7399B51E0E647251001AE672 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = All;
+			};
+			name = Development;
+		};
+		7399B51F0E647251001AE672 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = All;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		7399B5200E647251001AE672 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = All;
+			};
+			name = Default;
+		};
 		73DA1ED1089AEA560016F230 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2377,6 +2451,16 @@
 				7399B3BE0E632A5C001AE672 /* Development */,
 				7399B3BF0E632A5C001AE672 /* Deployment */,
 				7399B3C00E632A5C001AE672 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		7399B5270E647272001AE672 /* Build configuration list for PBXAggregateTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7399B51E0E647251001AE672 /* Development */,
+				7399B51F0E647251001AE672 /* Deployment */,
+				7399B5200E647251001AE672 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
