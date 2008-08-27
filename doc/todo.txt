@@ -1,8 +1,10 @@
 :--- APPKIDO TO-DO ---:
 
-[ ] 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
+[ ] review: 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
 
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
+
+[ ] install iPhone 2.1 SDK on Flint
 
 [ ] look for [agl] REMOVE
 
@@ -90,8 +92,6 @@
 
 [ ] in topic browser, select NSWindow and then NSViewController -- does a weird sideways scrolling thing, and the horizontal scroller doesn't update
 
-[ ] iPhone version could have different criteria for "looks like valid dev tools path"
-
 [ ] SubEthaEdit search Service only hits Mac OS ("classic") AppKiDo
 
 [ ] why does it take so long to load AddressBook -> Protocols -> <ABImageClient>?
@@ -162,7 +162,9 @@
 
 -------------------------------------------------
 
-===== 0.978: done =====
+===== 0.98: done =====
+
+[x] iPhone version should have different criteria for "looks like valid dev tools path"
 
 [x] again with a search bug -- in AppKiDo-for-iPhone, searching for CGRect or CGPoint doesn't find them
 	* it was because I had to add CoreGraphics as a required framework in A4i, just as I had to add ApplicationServices in AKD
