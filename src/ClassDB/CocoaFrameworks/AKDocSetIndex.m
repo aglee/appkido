@@ -20,7 +20,10 @@
 - (NSMutableArray *)_objectiveCFrameworkNames;
 - (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString;
 
+#if APPKIDO_FOR_IPHONE
 + (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath;
+#endif
+
 - (NSString *)_resourcesPath;
 - (NSString *)_pathToSqliteFile;
 - (FMDatabase *)_openSQLiteDB;
@@ -87,6 +90,7 @@ static NSString *s_headerPathsQueryTemplate =
             basePathForHeaders:basePathForHeaders] autorelease];
 }
 
+#if APPKIDO_FOR_IPHONE
 + (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
 {
     NSString *docSetsDir =
@@ -106,6 +110,7 @@ static NSString *s_headerPathsQueryTemplate =
             initWithDocSetPath:docSetPath
             basePathForHeaders:basePathForHeaders] autorelease];
 }
+#endif
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
@@ -337,6 +342,7 @@ static NSString *s_headerPathsQueryTemplate =
     return stringArray;
 }
 
+#if APPKIDO_FOR_IPHONE
 + (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath
 {
     NSEnumerator *dirContentsEnum =
@@ -372,6 +378,7 @@ static NSString *s_headerPathsQueryTemplate =
     DIGSLogDebug(@"[%@] ** [%@]", latestDate, latestFile);
     return [dirPath stringByAppendingPathComponent:latestFile];
 }
+#endif
 
 - (NSString *)_resourcesPath
 {
