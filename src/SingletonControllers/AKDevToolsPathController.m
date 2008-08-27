@@ -77,6 +77,18 @@
 
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath
 {
+#if APPKIDO_FOR_IPHONE
+    if (![self _directory:devToolsPath hasSubdirectory:@"Platforms/iPhoneOS.platform"])
+    {
+        return NO;
+    }
+
+    if (![self _directory:devToolsPath hasSubdirectory:@"Platforms/iPhoneSimulator.platform"])
+    {
+        return NO;
+    }
+#endif
+
     return
         [self _directory:devToolsPath hasSubdirectory:@"Applications/Xcode.app"]
         && [self _directory:devToolsPath hasSubdirectory:@"Documentation"]
