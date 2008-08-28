@@ -219,19 +219,34 @@
 
 - (NSMutableData *)loadDataToBeParsed
 {
-    NSMutableData *originalData = [super loadDataToBeParsed];
+//    NSMutableData *originalData = [super loadDataToBeParsed];
+    NSMutableData *originalData =
+        [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
 
     // Add a NULL terminator so strstr() will work.
     [originalData setLength:([originalData length] + 1)];
 
     // Perform the kludge.
-    NSMutableData *kludgedData =
-        [[self class] kludgeHTMLForTiger:originalData];
+//    NSMutableData *kludgedData =
+//        [[self class] kludgeHTMLForTiger:originalData];
+
+    NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
+    NSMutableData *afterFirstKludge = [[self class] _kludgeDivTagsToH3:originalData];
+    [afterFirstKludge retain];
+    [tempPool release];
+    [originalData release];
+
+    tempPool = [[NSAutoreleasePool alloc] init];
+    NSMutableData *afterSecondKludge = [[self class] _kludgeSpanTagsToH1:afterFirstKludge];
+    [afterSecondKludge retain];
+    [tempPool release];
+    [afterFirstKludge release];
 
     // Remove the NULL terminator, which was copied by the kludge.
-    [kludgedData setLength:([kludgedData length] - 1)];
+    [afterSecondKludge setLength:([afterSecondKludge length] - 1)];
+    [afterSecondKludge autorelease];
 
-    return kludgedData;
+    return afterSecondKludge;
 }
 
 - (void)parseCurrentFile

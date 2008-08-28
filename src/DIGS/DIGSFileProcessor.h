@@ -22,7 +22,7 @@
 {
 @private
     NSString *_basePath;
-    NSString *_currentRelativePath;  // Relative to basePath.
+    NSString *_currentPath;
 }
 
 //-------------------------------------------------------------------------
@@ -45,14 +45,6 @@
  *              Default is the empty string.
  */
 - (NSString *)basePath;
-
-/*!
- * @method      currentRelativePath
- * @discussion  Returns nil if I am not in the middle of processing files.
- *              Otherwise, returns the relative path of the file I am
- *              currently processing, relative to my base path.
- */
-- (NSString *)currentRelativePath;
 
 /*!
  * @method      currentPath

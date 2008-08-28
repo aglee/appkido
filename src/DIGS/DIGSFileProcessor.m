@@ -19,6 +19,7 @@
 {
     if ((self = [super init]))
     {
+        // [agl] TODO handle case where basePath is nil
         _basePath = [basePath retain];
     }
     
@@ -33,7 +34,7 @@
 - (void)dealloc
 {
     [_basePath release];
-    [_currentRelativePath release];
+    [_currentPath release];
 
     [super dealloc];
 }
@@ -47,14 +48,9 @@
     return _basePath;
 }
 
-- (NSString *)currentRelativePath
-{
-    return _currentRelativePath;
-}
-
 - (NSString *)currentPath
 {
-    return [_basePath stringByAppendingPathComponent:_currentRelativePath];
+    return _currentPath;
 }
 
 //-------------------------------------------------------------------------
@@ -80,14 +76,14 @@
     }
 
     // Remember the current file.
-    _currentRelativePath = [filePath retain];
+    _currentPath = [[_basePath stringByAppendingPathComponent:filePath] retain];
 
     // Do the job.
     [self processCurrentFile];
 
     // Un-remember the current file.
-    [_currentRelativePath release];
-    _currentRelativePath = nil;
+    [_currentPath release];
+    _currentPath = nil;
 }
 
 - (void)processDirectory:(NSString *)dirPath recursively:(BOOL)recurseFlag
