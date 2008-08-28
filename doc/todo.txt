@@ -1,5 +1,7 @@
 :--- APPKIDO TO-DO ---:
 
+[ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
+
 [ ] review: 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
 
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
@@ -75,6 +77,8 @@
 
 
 ----------------------------------------------------------
+
+[ ] instead of kludging around css stuff, use the Apple stylesheet
 
 [ ] consider giving AKGlobalsNode an ivar indication the behavior it's associated with (if any) instead of shoving the behavior name into the AKGlobalsNode name
 
