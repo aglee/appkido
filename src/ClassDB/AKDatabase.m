@@ -200,6 +200,8 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
     {
         if ([self frameworkNameIsSelectable:fwName])
         {
+            NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
+
             DIGSLogDebug(@"===================================================");
             DIGSLogDebug(@"Loading tokens for framework %@", fwName);
             DIGSLogDebug(@"===================================================");
@@ -210,6 +212,8 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
             }
 
             [self loadTokensForFrameworkNamed:fwName];
+
+            [tempPool release];
         }
     }
 }
