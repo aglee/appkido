@@ -218,8 +218,8 @@
     // Assume we have a class's main doc file if it's somewhere in a ...Classes
     // directory and the file name matches the name of the root section.
     NSString *filenameSansExtension =
-        [[[self currentRelativePath] lastPathComponent] stringByDeletingPathExtension];
-    if ([[self currentRelativePath] ak_contains:@"Classes"]
+        [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+    if ([[self currentPath] ak_contains:@"Classes"]
         && [rootSectionName isEqualToString:filenameSansExtension])
     {
         *isMainClassReference = YES;
@@ -253,8 +253,8 @@
     // directory and the file name matches the name of the root section.
     NSString *rootSectionName = [_rootSectionOfCurrentFile sectionName];
     NSString *filenameSansExtension =
-        [[[self currentRelativePath] lastPathComponent] stringByDeletingPathExtension];
-    if ([[self currentRelativePath] ak_contains:@"Protocols"]
+        [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+    if ([[self currentPath] ak_contains:@"Protocols"]
         && [rootSectionName isEqualToString:filenameSansExtension])
     {
         return YES;
