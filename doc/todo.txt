@@ -1,12 +1,16 @@
 :--- APPKIDO TO-DO ---:
 
-[ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
+[ ] figure out discrepancies between 972j and 972k
 
 [ ] review: 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
 
+[ ] bug Ron Hayden again
+
+[ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
+
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
 
-[ ] install iPhone 2.1 SDK on Flint
+[ ] install iPhone 2.1 SDK on Flint?
 
 [ ] look for [agl] REMOVE
 
@@ -67,6 +71,7 @@
 	[ ] create alternate icon for the iPhone version
 [ ] nicer credits: bold names and list them alphabetically (perhaps with version number?)
 [ ] progress indicator during search
+[ ] "Open Page in Browser" should be "Open Page In Browser"
 
 
 ===== dev stuff =====
@@ -78,11 +83,15 @@
 
 ----------------------------------------------------------
 
+[ ] consider putting declarations of private methods at the bottom of the public .h instead of the top of the .m, where they get in the way
+
+[ ] put overrides in .h and give them headerdoc comments
+
 [ ] instead of kludging around css stuff, use the Apple stylesheet
 
 [ ] consider giving AKGlobalsNode an ivar indication the behavior it's associated with (if any) instead of shoving the behavior name into the AKGlobalsNode name
 
-[ ] reconcile use of platform names as parameters with use of APPKIDO_FOR_IPHONE macro
+[ ] reconcile use of platform names as parameters with use of APPKIDO_FOR_IPHONE macro -- do I need to do both?
 
 [ ] [AKDocParser parseToken] treats bytes with high bit set as whitespace; works for now, but may someday have to properly handle charsets and encodings
 
