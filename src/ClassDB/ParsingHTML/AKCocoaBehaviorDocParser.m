@@ -25,6 +25,7 @@
 
 @interface AKCocoaBehaviorDocParser (Private)
 
+- (void)_parseMethodsAndProperties;
 - (void)_tweakRootSection;
 - (BOOL)_currentFileIsClassReference:(BOOL *)isMainClassReference;
 - (BOOL)_currentFileIsProtocolReference;
@@ -50,6 +51,22 @@
 //-------------------------------------------------------------------------
 
 - (void)applyParseResults
+{
+    [self _parseMethodsAndProperties];
+
+    // Parse the "Constants" section if there is one.
+    [super applyParseResults];
+}
+
+@end
+
+//-------------------------------------------------------------------------
+// Private methods
+//-------------------------------------------------------------------------
+
+@implementation AKCocoaBehaviorDocParser (Private)
+
+- (void)_parseMethodsAndProperties
 {
     // If there is a "Programming Topics" minor section, raise it to the
     // level of a major section so it will get listed in the doc list.
@@ -114,14 +131,6 @@
         [self _addMethodsToBehaviorNode:behaviorNode];
     }
 }
-
-@end
-
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
-
-@implementation AKCocoaBehaviorDocParser (Private)
 
 // [agl] KLUDGE -- If there is a "Programming Topics" minor section, raise
 // it to the level of a major section so it will get listed in the doc list.

@@ -62,6 +62,25 @@
     [self _parseGlobalsFromMajorSections];
 }
 
+//-------------------------------------------------------------------------
+// DIGSFileProcessor methods
+//-------------------------------------------------------------------------
+
+- (BOOL)shouldProcessFile:(NSString *)filePath
+{
+    if ([_databaseBeingPopulated classDocumentedInHTMLFile:filePath]
+        || [_databaseBeingPopulated protocolDocumentedInHTMLFile:filePath])
+    {
+        // Don't process the file if it's already been processed as a
+        // behavior doc.  This is to catch the case where the docset index
+        // categorizes a file as both a class doc and a globals doc because
+        // it contains a "Constants" section.
+        return NO;
+    }
+
+    return [super shouldProcessFile:filePath];
+}
+
 @end
 
 //-------------------------------------------------------------------------
