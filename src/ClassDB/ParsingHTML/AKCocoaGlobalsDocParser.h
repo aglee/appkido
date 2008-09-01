@@ -16,7 +16,7 @@
 @interface AKCocoaGlobalsDocParser : AKDocParser
 {
 @private
-    // These ivars are only used during _parseTCNamesInMinorSection.
+    // These ivars are only used during _parseNamesOfGlobalsInFileSection:.
     char _prevToken[AKTokenBufferSize];
     const char *_currTokenStart;
     const char *_currTokenEnd;
