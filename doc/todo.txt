@@ -72,6 +72,7 @@
 [ ] nicer credits: bold names and list them alphabetically (perhaps with version number?)
 [ ] progress indicator during search
 [ ] "Open Page in Browser" should be "Open Page In Browser"
+[ ] disable contextual menu items when there is no doc
 
 
 ===== dev stuff =====
