@@ -4,41 +4,30 @@
 
 [ ] review: 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
 
-[ ] bug Ron Hayden again
-
 [ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
 
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
+
+[ ] install iPhone SDK at home
 
 [ ] install iPhone 2.1 SDK on Flint?
 
 [ ] look for [agl] REMOVE
 
-[ ] generate separate "AppKiDo for iPhone"
-	[x] create two targets in Xcode
-	[x] have two different identifiers (com.appkido... ?)
-	[x] create different icon
-	[ ] use separate xml file for "check for update"
-
 [ ] make sure mailing list has latest people who asked to be on it
-
-[ ] write release notes:
-	* can/must set dev tools location
-	* more supported frameworks if you use xcode 3
-	* "open doc url in browser" in contextual menu
-	* improved hyperlinks (go to the right place; don't open browser; thanks to Gerriet)
-	* better leopard support -- gets all classes, does properties
-	* keyboard shortcuts have changed (command-(number))
-	* Select All/Deselect All in frameworks prefs
-	* prefix searches
-	* iPhone!  NB you'll get all frameworks regardless of prefs panel
-	* nb code has changed a lot (docs not caught up) and more big changes are in store
-	* known issue: NSResponder -> acceptsFirstResponder -> YES opens browser window
 
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
 
+===== bugs =====
+
+[ ] when populating "classes with delegates/datasources", check for classes that have *properties* named "delegate"/"datasource"
+
 ===== efficiency =====
+
+[ ] store stuff on disk so it doesn't have to be reparsed
+	* overhaul data model to be more CoreData-friendly (and possibly more generic so it can be applied to other languages/frameworks someday)
+	* use CoreData to store
 
 [ ] parse faster
 	* write new pure-C parser, use different strategy
@@ -53,9 +42,6 @@
 
 [ ] parse _more_ stuff
 	* CoreFoundation?
-
-[ ] store stuff on disk so it doesn't have to be reparsed
-	* use CoreData to store
 
 [ ] save less stuff in memory
 	* query on an as-needed basis from the docset index and the CoreData storage instead of storing everything in memory
@@ -84,6 +70,7 @@
 
 ----------------------------------------------------------
 
+[ ] ApplicationServices -> Types & Constants -> Constants -- "Color Modes" appears twice, as does "Color Constants"
 [ ] consider putting declarations of private methods at the bottom of the public .h instead of the top of the .m, where they get in the way
 
 [ ] put overrides in .h and give them headerdoc comments
@@ -174,110 +161,6 @@
 
 [ ] maybe move hosting to Dreamhost to get better stats etc.?
 
--------------------------------------------------
-
-===== 0.98: done =====
-
-[x] iPhone version should have different criteria for "looks like valid dev tools path"
-
-[x] again with a search bug -- in AppKiDo-for-iPhone, searching for CGRect or CGPoint doesn't find them
-	* it was because I had to add CoreGraphics as a required framework in A4i, just as I had to add ApplicationServices in AKD
-
-[x] search for CGRect doesn't find it even though it's there in ApplicationServices -> Data Types and clicking on a link to it works (eg from CGRectContainsPoint); but search for CGPoint *does* find it, and so does cgsize
-	* found it: was breaking from loop prematurely in _searchNamesOfGlobals
-
-[x] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
-
-[x] add check for *latest* iPhone docset, e.g., iPhone 2.0 vs. iPhone 2.1
-
-[x] WebKit formal protocol WebPlugInViewFactory appears in 971, not 980
-
-[x] update credits
-	[x] add Gus Mueller to credits
-	[x] remember to thank Gerriet yet again
-
-[x] bump version to 0.98 for release
-
-[x] replace [self dealloc] with [self release]
-
-[x] change <DIGSLog.h> to "DIGSLog.h"
-
-[x] support NSFoo* for prefix searches
-
-[x] fix "go" menu
-	* go back to the model of a single app-wide database, but this time as an ivar of AKAppController
-
-[x] Handle files structured like CGGeometry/Reference/reference.html.
-	* note that it's a functions, constants, _and_ data types doc
-	* similarly, class docs can also contain constants
-
-[x] what framework do I need to get CGPoint?  e.g. CALayer -> Instance methods -> containsPoint:
-	* seems to be ApplicationServices?
-	* seems like CF is also needed
-	* also tricky stuff like links to CGAffineTransform / "Transform"
-
-[x] figure out //.../doc/c_ref links
-	* like NSMutableString replaceCharactersInRange:withString: -> NSRange
-	* seems to be solved by new approach in AKLinkResolver, using AKSearchQuery
-
-[x] Foundation has two Constants nodes called "Input and Output Options" from two different class docs: the one for NSXMLDocument and the one for NSXMLNode.
-
-[x] NSString -> instance methods -> boundingRectWithSize:options:attributes: (an AppKit method) -> NSStringDrawingOptions -> on Tiger, opens web page (note: was the same in 971); on Leopard, works okay; it's because the old-style parsing doesn't pick up the "Constants" sections in behavior docs
-
-[x] Foundation constants -> Personality Options -> click on NSMapTableStrongMemory -- is a c_ref link, wants to go to class doc file
-	* file:///Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/NSMapTable_class/Reference/NSMapTable.html#//apple_ref/doc/c_ref/NSMapTableStrongMemory
-	* can be smarter in AKLinkResolver -- use AKSearchQuery (and add "exact match" as option in AKSearchQuery)
-
-[x] add another level of debug, and use *that* for the super-verbose output during parsing
-
-[x] test with Xcode 2.5, using the Mini
-	* compared XML dumps -- not getting "Data Types" for Foundation or AppKit
-	* fixed: it was a typo: "Datatypes" instead of "DataTypes" when looking at file name to decide whether to parse it
-
-[x] on Leopard, not picking up NSURLClient whereas 971 does
-	* that's okay -- it's a "not recommended" informal protocol, and the doc lists no methods for it
-
-[x] make sure Control-(number) works on Tiger/2.5
-
-[x] add Gerriet's changes to link handling
-
-[x] make _database an AKWindowController ivar (no more single +defaultDatabase)
-
-[x] get dev tools path working in prefs panel
-
-[x] establish dev tools path during startup
-
-[x] use the new-style anchors to resolve links where possible
-
-[x] Prefs -> Frameworks -- add buttons to select/deselect all
-
-[x] CALayer -> Delegate Methods -> -displayLayer: -> click the "display" link -> nothing happens (it's an instance method of CALayer)
-
-[x] CALayer -> Properties -> actions -> click "actionForKey:" link -> opens HTML in browser (it's an instance method of CALayer)
-
-[x] interfaces can have properties too (e.g., CAMediaTiming)
-
-[x] require QuartzCore so that CIImage, CIColor don't end up as top-level classes
-	[x] make un-deselectable in the prefs panel
-	[x] move it to the top of the list in the prefs panel
-
-[x] sort framework names in popup in quicklist drawer
-
-[x] don't list appkit if not available (i.e., for iPhone; likewise UIKit)
-
-[x] bump version to 0.972 during dev
-	* seems to suffice to replace string in Info.plist and InfoPlist.strings?
-
-[x] add support for "Properties" section (see UIImagePickerController or CALayer)
-
-[x] change key equivalents for subtopics and favorites
-
-[x] make sure search handles properties
-
-[x] not picking up WebView delegate methods
-
-[x] withClassNode etc. should be topicWithClassNode
-
 ------------------
 
 [ ] go back to [AKDatabase defaultDatabase]
@@ -314,6 +197,8 @@
 [ ] make the splash panel a cancellable modal panel
 
 [ ] get rid of "shadowing" warnings
+
+[ ] use Sparkle for updates
 
 look into log4cocoa
 
