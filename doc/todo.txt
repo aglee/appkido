@@ -66,9 +66,20 @@
 [ ] prune away code that supported the old way of parsing
 [ ] clean up copyrights
 [ ] change hosting?
+[ ] use that other method for opening in browser (it's in NSWorkspace)
 
 
 ----------------------------------------------------------
+
+[ ] "Classes in AppKit" doesn't include NSString
+
+[ ] NSObject -> Instance Methods shows [Foundation] next to every method
+
+[ ] would be nice to see header file containing functions / globals
+
+[ ] some way to convert between file:// URLs and http:// URLs
+	* could drag from doc list into email and get the http:// URL
+	* could drag from cocoa-dev message into AppKiDo and navigate to the right doc
 
 [ ] ApplicationServices -> Types & Constants -> Constants -- "Color Modes" appears twice, as does "Color Constants"
 [ ] consider putting declarations of private methods at the bottom of the public .h instead of the top of the .m, where they get in the way
