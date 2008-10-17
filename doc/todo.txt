@@ -1,8 +1,7 @@
 :--- APPKIDO TO-DO ---:
 
-[ ] figure out discrepancies between 972j and 972k
-
-[ ] review: 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
+----------------------------------------------------------
+*** 0.99 stuff (Xcode 3.x only?) ***
 
 [ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
 
@@ -15,9 +14,6 @@
 [ ] look for [agl] REMOVE
 
 [ ] make sure mailing list has latest people who asked to be on it
-
-----------------------------------------------------------
-*** 0.99 stuff (Xcode 3.x only?) ***
 
 ===== bugs =====
 
@@ -66,10 +62,23 @@
 [ ] prune away code that supported the old way of parsing
 [ ] clean up copyrights
 [ ] change hosting?
+[ ] put the TESTING_PERFORMANCE #ifdef (or whatever it's called) in the Xcode "Development" configuration instead of hand-toggling it
 [ ] use that other method for opening in browser (it's in NSWorkspace)
 
 
 ----------------------------------------------------------
+
+[ ] QCComposition -> instance methods -> protocols -> link to "Standard Protocols" opens web page; maybe because of the space which gets converted to an underscore in the URL?
+
+[ ] make sure handling errors querying sqlite -- note Tony Cate's problem
+
+[ ] fix splitview problems reported by Gerriet
+
+[ ] figure out discrepancies between 972j and 972k
+
+[ ] review: 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
+
+[ ] have new windows cascade
 
 [ ] "Classes in AppKit" doesn't include NSString
 
@@ -82,6 +91,7 @@
 	* could drag from cocoa-dev message into AppKiDo and navigate to the right doc
 
 [ ] ApplicationServices -> Types & Constants -> Constants -- "Color Modes" appears twice, as does "Color Constants"
+
 [ ] consider putting declarations of private methods at the bottom of the public .h instead of the top of the .m, where they get in the way
 
 [ ] put overrides in .h and give them headerdoc comments
