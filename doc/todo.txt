@@ -1,6 +1,5 @@
 :--- APPKIDO TO-DO ---:
 
-
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
 
@@ -19,6 +18,10 @@
 ===== bugs =====
 
 [ ] when populating "classes with delegates/datasources", check for classes that have *properties* named "delegate"/"datasource"
+
+[ ] iPhone: "Datasource protocols" is missing
+
+[ ] better handling if the user needs to update their docs
 
 ===== efficiency =====
 
