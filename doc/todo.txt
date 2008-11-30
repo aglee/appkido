@@ -17,6 +17,8 @@
 
 ===== bugs =====
 
+[ ] Guillaume writes: "In NSIndexPath, there is a NSIndexPath UI Kit Additions.  It's not listed in AppKido."
+
 [ ] when populating "classes with delegates/datasources", check for classes that have *properties* named "delegate"/"datasource"
 
 [ ] iPhone: "Datasource protocols" is missing
@@ -43,8 +45,10 @@
 [ ] parse _more_ stuff
 	* CoreFoundation?
 
+[ ] parse more correctly -- create better unit tests for detecting when a token is missing (like the NSIndexPath UI Kit Additions Guillaume reported)
+
 [ ] save less stuff in memory
-	* query on an as-needed basis from the docset index and the CoreData storage instead of storing everything in memory
+	* query as needed from the docset index and the CoreData storage instead of storing everything in memory
 
 
 ===== cosmetics =====
@@ -63,11 +67,17 @@
 
 ===== dev stuff =====
 
+[ ] Couldn't I be smarter about telling whether a deprecated method is a class or instance method?  Although if it's an instance method, can I tell if it's a delegate method?
+[ ] Test against Snow Leopard.
+[ ] AKDatabaseWithDocSet -- instead of deriving header dirs and recursing, just process a list of header _files_.
 [ ] prune away code that supported the old way of parsing
 [ ] clean up copyrights
 [ ] change hosting?
 [ ] put the TESTING_PERFORMANCE #ifdef (or whatever it's called) in the Xcode "Development" configuration instead of hand-toggling it
 [ ] use that other method for opening in browser (it's in NSWorkspace)
+
+
+===== features =====
 
 
 ----------------------------------------------------------
