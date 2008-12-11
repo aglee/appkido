@@ -703,19 +703,16 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // NSApplication delegate methods
 //-------------------------------------------------------------------------
 
-- (void)applicationDidBecomeActive:(NSNotification *)aNotification
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
 {
-    // Open a browser window if none is open.  Only do so if we've
-    // finished setting up the database and other initialization we
-    // need for the UI to work.
-    if (_finishedInitializing)
+    if (!flag && _finishedInitializing)
     {
-        AKWindowController *wc = [self frontmostWindowController];
-
-        if (wc == nil)
-        {
-            (void)[self controllerForNewWindow];
-        }
+        (void)[self controllerForNewWindow];
+        return NO;
+    }
+    else
+    {
+        return YES;
     }
 }
 
