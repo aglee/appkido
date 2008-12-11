@@ -34,10 +34,7 @@
 //-------------------------------------------------------------------------
 
 NSString *AKMacOSPlatform = @"MacOSPlatform";
-
-#if APPKIDO_FOR_IPHONE
 NSString *AKIPhonePlatform = @"IPhonePlatform";
-#endif
 
 //-------------------------------------------------------------------------
 // Factory methods
@@ -77,7 +74,6 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
         return s_macOSDatabase;
     }
-#if APPKIDO_FOR_IPHONE
     else if ([platformName isEqualToString:AKIPhonePlatform])
     {
         static AKDatabase *s_iPhoneDatabase = nil;
@@ -96,7 +92,6 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
         return s_iPhoneDatabase;
     }
-#endif
     else
     {
         DIGSLogWarning(@"Unexpected platform name [%@]", platformName);

@@ -47,14 +47,12 @@
  */
 + (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath;
 
-#if APPKIDO_FOR_IPHONE
 /*!
  * Returns nil if we can't find an iPhoneSDK...dsIdx file.
  *
  * [agl] FIXME Should we search in the Shared directory as well?
  */
 + (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath;
-#endif
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc

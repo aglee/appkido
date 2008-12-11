@@ -133,10 +133,7 @@
 //-------------------------------------------------------------------------
 
 extern NSString *AKMacOSPlatform;
-
-#if APPKIDO_FOR_IPHONE
 extern NSString *AKIPhonePlatform;
-#endif
 
 //-------------------------------------------------------------------------
 // Factory methods
