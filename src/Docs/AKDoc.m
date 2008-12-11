@@ -26,7 +26,6 @@
 
 - (NSData *)_kludgeHTML:(NSData *)htmlData;
 - (NSMutableData *)_kludgeOne:(NSData *)sourceData;
-- (NSMutableData *)_kludgeTwo:(NSData *)sourceData;
 - (void)_kludgeThree:(NSMutableData *)sourceData;
 - (void)_kludgeFour:(NSMutableData *)sourceData;
 - (NSMutableData *)_kludgeFive:(NSData *)sourceData;
@@ -266,40 +265,6 @@
         appendBytes:endOfPreElement
         length:((char *)[sourceData bytes] + [sourceData length]
                     - endOfPreElement)];
-
-    return newHTMLData;
-}
-
-// This is a workaround for an attr string bug introduced in a Panther beta
-// [agl] REMOVE if latest beta fixes
-- (NSMutableData *)_kludgeTwo:(NSData *)sourceData
-{
-    NSMutableData *newHTMLData =
-        [NSMutableData dataWithCapacity:([sourceData length] + 32)];
-
-    char *endOfAA = (char *)[sourceData bytes];
-    char *startOfAA = strstr(endOfAA, "/a><a");
-    while (startOfAA)
-    {
-        // Append the good text we just skipped to the new HTML.
-        [newHTMLData
-            appendBytes:endOfAA
-            length:(startOfAA - endOfAA)];
-
-        // Append "/a> <a" to the new HTML to replace the "/a><a".
-        [newHTMLData appendBytes:"/a> <a" length:6];
-
-        // Prepare for next loop iteration.
-        endOfAA = startOfAA + 5;  // skip over the "/a><a"
-        startOfAA = strstr(endOfAA, "/a><a");  // find the next "/a><a"
-    }
-
-    // Add the remaining good text.  There will be at least one byte
-    // of good text, namely the NULL terminator.
-    [newHTMLData
-        appendBytes:endOfAA
-        length:((char *)[sourceData bytes] + [sourceData length]
-                    - endOfAA)];
 
     return newHTMLData;
 }
