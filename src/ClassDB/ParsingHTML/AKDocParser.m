@@ -219,17 +219,18 @@
 
 - (NSMutableData *)loadDataToBeParsed
 {
-//    NSMutableData *originalData = [super loadDataToBeParsed];
     NSMutableData *originalData =
         [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
+    if (!originalData)
+    {
+        DIGSLogWarning(@"could not load contents of file [%@]", [self currentPath]);
+        return nil;
+    }
 
     // Add a NULL terminator so strstr() will work.
     [originalData setLength:([originalData length] + 1)];
 
     // Perform the kludge.
-//    NSMutableData *kludgedData =
-//        [[self class] kludgeHTMLForTiger:originalData];
-
     NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
     NSMutableData *afterFirstKludge = [[self class] _kludgeDivTagsToH3:originalData];
     [afterFirstKludge retain];
@@ -701,6 +702,12 @@
 
 + (NSMutableData *)_kludgeDivTagsToH3:(NSData *)sourceData
 {
+    if (!sourceData)
+    {
+        DIGSLogWarning(@"_kludgeDivTagsToH3: -- sourceData is nil");
+        return nil;
+    }
+
     NSMutableData *newHTMLData =
         [NSMutableData dataWithCapacity:([sourceData length] + 32)];
     static char *divOpenTag = "<div class=\"mach4\">";
