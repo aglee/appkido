@@ -8,6 +8,7 @@
 
 #import "AKMemberNode.h"
 
+#import "DIGSLog.h"
 #import "AKBehaviorNode.h"
 
 @implementation AKMemberNode
@@ -15,6 +16,26 @@
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
+
+- (id)initWithNodeName:(NSString *)nodeName
+    owningFramework:(NSString *)fwName
+    owningBehavior:(AKBehaviorNode *)behaviorNode
+{
+    if ((self = [super initWithNodeName:nodeName owningFramework:fwName]))
+    {
+        _owningBehavior = [behaviorNode retain];
+    }
+
+    return self;
+}
+
+- (id)initWithNodeName:(NSString *)nodeName
+    owningFramework:(NSString *)fwName
+{
+    DIGSLogNondesignatedInitializer();
+    [self release];
+    return nil;
+}
 
 - (void)dealloc
 {
@@ -30,13 +51,6 @@
 - (AKBehaviorNode *)owningBehavior
 {
     return _owningBehavior;
-}
-
-- (void)setOwningBehavior:(AKBehaviorNode *)behaviorNode
-{
-    [behaviorNode retain];
-    [_owningBehavior release];
-    _owningBehavior = behaviorNode;
 }
 
 @end
