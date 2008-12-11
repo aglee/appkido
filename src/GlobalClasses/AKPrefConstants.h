@@ -46,7 +46,7 @@ extern NSString *AKDocMagnificationPrefName;
 
 // Value is a boolean that specifies whether to use textured windows.
 // If not, Aqua windows are used.
-extern NSString *AKUseTexturedWindowsPrefName;
+extern NSString *AKUseTexturedWindowsPrefName;  // [agl] NOTE: This option is no longer offered.
 
 // Value is an int that specifies the maximum number of items to store in
 // each window's navigation history.
