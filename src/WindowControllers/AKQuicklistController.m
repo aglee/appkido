@@ -804,6 +804,9 @@ enum
 
         while ((classNode = [en nextObject]))
         {
+            BOOL classHasDelegate = NO;
+
+            // See if the class doc contains a "Delegate Methods" section.
             AKFileSection *delegateMethodsSection =
                 [[classNode nodeDocumentation]
                     childSectionWithName:
@@ -819,9 +822,11 @@ enum
 
             if (delegateMethodsSection)
             {
-                [nodeSet addObject:classNode];
+                classHasDelegate = YES;
             }
-            else
+
+            // If not, see if the class has a method with a name like setFooDelegate:.
+            if (!classHasDelegate)
             {
                 NSEnumerator *methodEnum =
                     [[classNode documentedInstanceMethods]
@@ -835,10 +840,45 @@ enum
                     if ([methodName hasPrefix:@"set"]
                         && [methodName hasSuffix:@"Delegate:"])
                     {
-                        [nodeSet addObject:classNode];
+                        classHasDelegate = YES;
                         break;
                     }
                 }
+            }
+
+            // If not, see if the class has a property named "delegate" or "fooDelegate".
+            if (!classHasDelegate)
+            {
+                NSEnumerator *propertyEnum =
+                    [[classNode documentedProperties]
+                        objectEnumerator];
+                AKPropertyNode *propertyNode;
+
+                while ((propertyNode = [propertyEnum nextObject]))
+                {
+                    NSString *propertyName = [propertyNode nodeName];
+
+                    if ([propertyName isEqual:@"delegate"]
+                        || [propertyName hasSuffix:@"Delegate:"])
+                    {
+                        classHasDelegate = YES;
+                        break;
+                    }
+                }
+            }
+
+            // If not, see if there's a protocol named thisClassDelegate.
+            NSString *possibleDelegateProtocolName =
+                [[classNode nodeName] stringByAppendingString:@"Delegate"];
+            if ([[_windowController database] protocolWithName:possibleDelegateProtocolName])
+            {
+                classHasDelegate = YES;
+            }
+
+            // We've checked all the ways we can tell if a class has a delegate.
+            if (classHasDelegate)
+            {
+                [nodeSet addObject:classNode];
             }
         }
 
@@ -863,6 +903,9 @@ enum
 
         while ((classNode = [en nextObject]))
         {
+            BOOL classHasDataSource = NO;
+
+            // See if the class has a -setDataSource: method.
             NSEnumerator *methodEnum =
                 [[classNode documentedInstanceMethods]
                     objectEnumerator];
@@ -874,9 +917,43 @@ enum
 
                 if ([methodName isEqualToString:@"setDataSource:"])
                 {
-                    [nodeSet addObject:classNode];
+                    classHasDataSource = YES;
                     break;
                 }
+            }
+
+            // If not, see if the class has a property named "dataSource".
+            if (!classHasDataSource)
+            {
+                NSEnumerator *propertyEnum =
+                    [[classNode documentedProperties]
+                        objectEnumerator];
+                AKPropertyNode *propertyNode;
+
+                while ((propertyNode = [propertyEnum nextObject]))
+                {
+                    NSString *propertyName = [propertyNode nodeName];
+
+                    if ([propertyName isEqual:@"dataSource"])
+                    {
+                        classHasDataSource = YES;
+                        break;
+                    }
+                }
+            }
+
+            // If not, see if there's a protocol named thisClassDataSource.
+            NSString *possibleDataSourceProtocolName =
+                [[classNode nodeName] stringByAppendingString:@"DataSource"];
+            if ([[_windowController database] protocolWithName:possibleDataSourceProtocolName])
+            {
+                classHasDataSource = YES;
+            }
+
+            // We've checked all the ways we can tell if a class has a datasource.
+            if (classHasDataSource)
+            {
+                [nodeSet addObject:classNode];
             }
         }
 

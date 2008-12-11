@@ -89,7 +89,7 @@
         [_databaseBeingPopulated
             rememberThatClass:classNode
             isDocumentedInHTMLFile:[self currentPath]];
-        if (isMainClassReference)
+        if (isMainClassReference)  // [agl] REMOVE why only if main?
         {
             [classNode
                 setNodeDocumentation:_rootSectionOfCurrentFile
@@ -177,6 +177,7 @@
     }
 }
 
+// [agl] FIXME -- I think the idiom is to return void and have both args returned by reference.
 - (BOOL)_currentFileIsClassReference:(BOOL *)isMainClassReference
 {
     // Exclude table-of-contents files, which can look deceptively like class
@@ -190,7 +191,8 @@
     // See if the current file contains methods added to a class by a framework
     // other than the class's main framework, like the NSAttributedString
     // methods added by AppKit.
-    if ([[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions Reference"])
+    if ([[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions Reference"]
+            || [[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions"])
     {
         *isMainClassReference = NO;
         return YES;
@@ -335,6 +337,8 @@
         [_databaseBeingPopulated protocolWithName:protocolName];
 
     // We assume the database has already been populated from header files.
+    // [agl] FIXME -- I don't like this assumption -- presumes class knows
+    // order in which it is used.
     // This means we've seen all the *formal* protocols we're going to see.
     // However, it's possible we're looking at the doc for an *informal* protocol.
     if (!protocolNode)
@@ -371,10 +375,10 @@
         if (memberNode == nil)
         {
             memberNode =
-                [methodNodeClass
-                    nodeWithNodeName:memberName
-                    owningFramework:_frameworkName];
-            [memberNode setOwningBehavior:behaviorNode];
+                [[[methodNodeClass alloc]
+                    initWithNodeName:memberName
+                    owningFramework:_frameworkName
+                    owningBehavior:behaviorNode] autorelease];;
             [behaviorNode
                 performSelector:selectorForAddingNode
                 withObject:memberNode];

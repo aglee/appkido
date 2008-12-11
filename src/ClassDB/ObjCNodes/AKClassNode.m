@@ -16,7 +16,7 @@
 #import "AKNotificationNode.h"
 #import "AKCollectionOfNodes.h"
 
-#import "AKAppController.h"  // [agl] doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
+#import "AKAppController.h"  // [agl] KLUDGE doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
 
 //-------------------------------------------------------------------------
 // Forward declarations of private methods
@@ -242,9 +242,10 @@
         if ([methodName ak_contains:@":"])
         {
             methodNode =
-                [AKMethodNode
-                    nodeWithNodeName:methodName
-                    owningFramework:owningFramework];
+                [[[AKMethodNode alloc]
+                    initWithNodeName:methodName
+                    owningFramework:owningFramework
+                    owningBehavior:self] autorelease];
             [methodNode setIsDeprecated:YES];
             [self addDelegateMethod:methodNode];
         }
@@ -287,13 +288,26 @@
     }
 }
 
+// [agl] KLUDGE Look for method names of the form setFooDelegate:.
+// [agl] KLUDGE Look for a protocol named ThisClassDelegate.
 - (void)_addExtraDelegateMethodsTo:(NSMutableArray *)methodsList
 {
     NSEnumerator *methodEnum =
         [[_indexOfInstanceMethods allNodes] objectEnumerator];
     AKMethodNode *methodNode;
 
-    // [agl] KLUDGE Look for method names of the form setFooDelegate:.
+    // Look for a protocol named ThisClassDelegate.
+    AKProtocolNode *delegateProtocol =
+        [[[NSApp delegate] appDatabase]
+            protocolWithName:
+                [[self nodeName] stringByAppendingString:@"Delegate"]];
+    if (delegateProtocol)
+    {
+        [methodsList
+            addObjectsFromArray:[delegateProtocol documentedInstanceMethods]];
+    }
+
+    // Look for instance method names of the form setFooDelegate:.
     while ((methodNode = [methodEnum nextObject]))
     {
         NSString *methodName = [methodNode nodeName];
@@ -302,6 +316,7 @@
             && [methodName hasSuffix:@"Delegate:"]
             && ![methodName isEqualToString:@"setDelegate:"])
         {
+            // [agl] FIXME Can't I just look for protocol FooDelegate?
             NSString *protocolSuffix =
                 [[[methodName
                     substringToIndex:([methodName length] - 1)]

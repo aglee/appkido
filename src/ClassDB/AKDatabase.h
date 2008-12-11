@@ -69,8 +69,8 @@
 
     // Elements are NSStrings.  There are constants in AKFrameworkConstants.h
     // for the names of some frameworks that need to be treated specially.
-    NSMutableArray *_frameworkNames;
-    NSMutableArray *_namesOfAvailableFrameworks;
+    NSMutableArray *_frameworkNames;  // frameworks that have been loaded
+    NSMutableArray *_namesOfAvailableFrameworks;  // frameworks that the user could choose to load
 
     // --- Classes ---
 

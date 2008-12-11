@@ -1,5 +1,24 @@
 :--- APPKIDO TO-DO ---:
 
+*** Done in 0.982 ***
+
+[x] Added nil check in case couldn't load a file, e.g., if there's a bug in the sqlite database and it has an incorrect wrong file path, or if the sqlite database somehow gets out of sync with what's on disk.  Might there also be a problem if the user has only just installed AppKiDo and hasn't downloaded all the local files yet?
+
+[x] Guillaume writes: "In NSIndexPath, there is a NSIndexPath UI Kit Additions.  It's not listed in AppKido."
+	* The fix was to tweak the logic in AKCocoaBehaviorDocParser for deciding whether a file contains the class's "main" reference.  I was checking for "...Additions Reference" in the title, and the doc Guillaume referred to is called "NSIndexPath UIKit Additions" (without the word "Reference").
+
+[x] When populating "classes with delegates/datasources", check for classes that have *properties* named "delegate"/"datasource", and also whether protocol ThisClassDelegate/ThisClassDataSource exists.
+
+[x] iPhone: "Datasource protocols" is missing
+	* ? I see two datasource protocols.
+
+[x] UITextField's delegate methods aren't documented in the class doc file -- they're in the doc for UITextFieldDelegate.
+	* Fix: added logic to _addExtraDelegateMethodsTo: to see if there exists a protocol named ThisClassDelegate.
+
+[x] application:printFiles: -- doc list shows "application:printFiles: <(null)>"
+	* Fix: was missing a call to setOwningBehavior: when adding deprecated delegate method.  Changed AKMemberNode to take owningBehavior in its designated initializer, and got rid of setOwningBehavior:.
+
+
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
 
@@ -9,19 +28,38 @@
 
 [ ] install iPhone SDK at home
 
-[ ] install iPhone 2.1 SDK on Flint?
-
 [ ] look for [agl] REMOVE
 
 [ ] make sure mailing list has latest people who asked to be on it
 
 ===== bugs =====
 
-[ ] Guillaume writes: "In NSIndexPath, there is a NSIndexPath UI Kit Additions.  It's not listed in AppKido."
+[ ] There's a bunch of methods that fail my heuristic for deciding whether a deprecated method is a class/instance/delegate method.  For example, deserializeAlignedBytesLengthAtCursor: is a deprecated instance method of NSData which is declared in NSSerialization.h -- which is only in the 10.4u SDK, so in 10.5 I won't parse that file and I'll assume that method is a delegate method.  Considered moving all deprecated methods, regardless of type, to a separate subtopic, but that's too many subtopics -- *unless* I put an "ALL" button in subtopic cells for "Instance Methods", "Class Methods", etc.  Hm.
 
-[ ] when populating "classes with delegates/datasources", check for classes that have *properties* named "delegate"/"datasource"
+2008-12-07 14:15:24.453 AppKiDo[6882:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
+2008-12-07 14:15:24.473 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeAlignedBytesLengthAtCursor: while processing deprecated methods for behavior NSData
+2008-12-07 14:15:24.475 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeBytes:length:atCursor: while processing deprecated methods for behavior NSData
+2008-12-07 14:15:24.479 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeDataAt:ofObjCType:atCursor:context: while processing deprecated methods for behavior NSData
+2008-12-07 14:15:24.480 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeIntAtCursor: while processing deprecated methods for behavior NSData
+2008-12-07 14:15:24.480 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeIntAtIndex: while processing deprecated methods for behavior NSData
+2008-12-07 14:15:24.481 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeInts:count:atCursor: while processing deprecated methods for behavior NSData
+2008-12-07 14:15:24.481 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeInts:count:atIndex: while processing deprecated methods for behavior NSData
 
-[ ] iPhone: "Datasource protocols" is missing
+
+2008-12-07 14:15:25.826 AppKiDo[6882:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/Foundation/Classes/NSMutableData_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
+2008-12-07 14:15:25.828 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeAlignedBytesLength: while processing deprecated methods for behavior NSMutableData
+2008-12-07 14:15:25.831 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeDataAt:ofObjCType:context: while processing deprecated methods for behavior NSMutableData
+2008-12-07 14:15:25.832 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInt: while processing deprecated methods for behavior NSMutableData
+2008-12-07 14:15:25.832 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInt:atIndex: while processing deprecated methods for behavior NSMutableData
+2008-12-07 14:15:25.833 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInts:count: while processing deprecated methods for behavior NSMutableData
+2008-12-07 14:15:25.833 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInts:count:atIndex: while processing deprecated methods for behavior NSMutableData
+
+
+2008-12-07 14:35:20.001 AppKiDo[7111:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/ApplicationKit/Classes/NSApplication_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
+2008-12-07 14:35:30.791 AppKiDo[7111:813] [_INFO_] Couldn't find class method or instance method named application:printFiles: while processing deprecated methods for behavior NSApplication
+
+
+[ ] Spaces bug.
 
 [ ] better handling if the user needs to update their docs
 
@@ -32,7 +70,7 @@
 	* use CoreData to store
 
 [ ] parse faster
-	* write new pure-C parser, use different strategy
+	* write new pure-C parser, use different strategy; or should I use DOM classes?
 	* have list of HTML tags I care about, and attributes within those tags, and in the special case of tags that I designate as "header" tags (h1, h2, etc. but could also include 
 	* pluck out byte offsets of where those tags begin and end, and their values for those attributes (in particular, the "name" attribute for anchor tags)
 	* output of parsing one file is an ordered list of these byte offsets
@@ -67,11 +105,25 @@
 
 ===== dev stuff =====
 
-[ ] Couldn't I be smarter about telling whether a deprecated method is a class or instance method?  Although if it's an instance method, can I tell if it's a delegate method?
+[ ] Add more debug statements.
+[ ] "Truncate the text at the copyright symbol" -- violating copyright or something?
+[ ] Rename _namesOfAvailableFrameworks to _namesOfLoadableFrameworks?
+[ ] I wonder -- if the file doesn't exist at the location indicated by the sqlite database, does Xcode then take that as an indication to go to the web, using the same documentation/... path?
+	[ ] Reinstall 2.2, make a copy of the partial docset, *then* download update.
+[ ] Maybe steal Gus Mueller's idea of a downloadable "latest build"?
+[ ] Document the validation process to go through when there's a new doc update or a new SDK version: dump file, do a dump diff,
+[ ] Can get rid of some of the #ifdef's on APPKIDO_FOR_IPHONE -- the ones that were to honor the NDA.
+[ ] Can I get rid of these methods in AKDatabase?  They never seem to be called.
+	* -functionsGroupContainingFunction:inFramework:
+	* -globalsGroupContainingGlobal:inFramework: in AKDatabase
+[ ] Maybe get rid of these methods in AKDatabase, for brevity (can send -count to the array).
+	* -numberOfFunctionsGroupsForFramework:
+	* -numberOfGlobalsGroupsForFramework:
+[ ] Can I be smarter about knowing when the user only has a partial docset?  How does Xcode do it?
+[ ] Can I be smarter about telling whether a deprecated method is a class or instance method?  Although if it's an instance method, can I tell if it's a delegate method?
 [ ] Test against Snow Leopard.
-[ ] AKDatabaseWithDocSet -- instead of deriving header dirs and recursing, just process a list of header _files_.
 [ ] prune away code that supported the old way of parsing
-[ ] clean up copyrights
+[ ] clean up copyrights in source files
 [ ] change hosting?
 [ ] put the TESTING_PERFORMANCE #ifdef (or whatever it's called) in the Xcode "Development" configuration instead of hand-toggling it
 [ ] use that other method for opening in browser (it's in NSWorkspace)

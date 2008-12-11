@@ -21,11 +21,21 @@
 }
 
 //-------------------------------------------------------------------------
+// Init/awake/dealloc
+//-------------------------------------------------------------------------
+
+/*!
+ * @method      initWithNodeName:owningFramework:owningBehavior:
+ * @discussion  Designated initializer.
+ */
+- (id)initWithNodeName:(NSString *)nodeName
+    owningFramework:(NSString *)fwName
+    owningBehavior:(AKBehaviorNode *)behaviorNode;
+
+//-------------------------------------------------------------------------
 // Getters and setters
 //-------------------------------------------------------------------------
 
-// [agl] TODO should really set owningBehavior in init method.
 - (AKBehaviorNode *)owningBehavior;
-- (void)setOwningBehavior:(AKBehaviorNode *)behaviorNode;
 
 @end
