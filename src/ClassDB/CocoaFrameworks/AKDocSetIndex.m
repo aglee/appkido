@@ -119,6 +119,9 @@ static NSString *s_headerPathsQueryTemplate =
 - (id)initWithDocSetPath:(NSString *)docSetPath
     basePathForHeaders:(NSString *)basePathForHeaders
 {
+    DIGSLogDebug(@"initWithDocSetPath:basePathForHeaders: -- [%@], [%@]",
+        docSetPath, basePathForHeaders);
+
     if ((self = [super init]))
     {
         _docSetPath = [docSetPath retain];
