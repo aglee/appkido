@@ -24,7 +24,7 @@ fi
 
 
 AKD_VERSION=${1}
-RELEASE_TAG=release-`echo $AKD_VERSION | sed -e "s/\./-/g"`
+RELEASE_TAG=release-$AKD_VERSION
 SVN_ROOT=http://svn.appkido.com/svn/appkido
 
 echo
