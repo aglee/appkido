@@ -1,0 +1,44 @@
+#!/bin/bash
+
+if [ ! "${1}" ]; then
+    echo "USAGE:"
+    echo "  `basename ${0}` <releasenumber>"
+    echo
+    echo "  This script should be called from the top level of an AppKiDo"
+    echo "  source directory that has been checked out from CVS.  The script"
+    echo "  force-tags the files in the directory with the specified release"
+    echo "  number."
+    echo
+    echo "  Dots in the release number will be converted to dashes, and"
+    echo "  \"release-\" will be prepended.  If you pass 0.95 for the release"
+    echo "  number, the tag used will be release-0-95, because tags can't"
+    echo "  contain dots."
+    echo
+    echo "EXAMPLE:"
+    echo "  cd ~/_Developer/CocoaProjects/AppKiDo"
+    echo "  `basename ${0}` 0.95"
+    exit
+fi
+
+if [ ! -d "AppKiDo.xcodeproj" ] ; then
+    echo "Error: we don't seem to be in a top-level source directory."
+    exit
+fi
+
+
+
+AKD_VERSION=${1}
+RELEASE_TAG=release-`echo $AKD_VERSION | sed -e "s/\./-/g"`
+
+echo
+echo Tagging source with tag $RELEASE_TAG...
+cvs tag -F "$RELEASE_TAG"
+
+echo
+echo "...Done tagging.  If you need to remove the tag, you can do this:"
+echo "  cvs rtag -d release-#-## AppKiDo"
+
+echo
+echo ===== DONE =====
+echo
+
