@@ -9,12 +9,6 @@ if [ ! "${1}" ]; then
     echo "  Builds release tarballs for AppKiDo, AppKiDo-for-iPhone, and the"
     echo "  AppKiDo source, using $BUILD_DIR as a staging area."
     echo
-    echo "  Dots in <releasenumber> will be converted to dashes, and"
-    echo "  \"release-\" will be prepended.  If you pass 0.95 for the release"
-    echo "  number, the tag used will be release-0-95.  This is a historical"
-    echo "  artifact, due to the fact that AppKiDo used to be in CVS, and CVS"
-    echo "  tags can't contain dots."
-    echo
     echo "  Make sure <releasenumber> is a nicely formed release number."
     echo "  This script doesn't check for whitespace or any other characters"
     echo "  that are special to the shell."
