@@ -1,0 +1,78 @@
+#!/bin/bash
+
+###BUILD_DIR=~/_Developer/CocoaProjects/AKDBUILD
+BUILD_DIR=~/AKDBUILD
+
+if [ ! "${1}" ]; then
+    echo "USAGE:"
+    echo "  `basename ${0}` <releasenumber>"
+    echo
+    echo "  This script builds AppKiDo release tarballs from a fresh checkout."
+    echo "  If you pass 0.95 for the release number, it will check out the"
+    echo "  version tagged as release-0-95 and create tarballs with '0.95' in"
+    echo "  their names.  This script uses $BUILD_DIR as a staging area."
+    echo
+    echo "  Dots in the release number will be converted to dashes, and"
+    echo "  \"release-\" will be prepended.  If you pass 0.95 for the release"
+    echo "  number, the tag used will be release-0-95, because tags can't"
+    echo "  contain dots."
+    echo
+    echo "EXAMPLE:"
+    echo "  `basename ${0}` 0.95"
+    exit
+fi
+
+AKD_VERSION=${1}
+RELEASE_TAG=release-`echo $AKD_VERSION | sed -e "s/\./-/g"`
+DEPLOYMENT_BUILD_DIR=$BUILD_DIR/AppKiDo/build/Deployment
+AKD_EXECUTABLE=$DEPLOYMENT_BUILD_DIR/AppKiDo.app/Contents/MacOS/AppKiDo
+APP_TARBALL_PATH=$BUILD_DIR/AppKiDo-$AKD_VERSION.tgz
+SRC_TARBALL_PATH=$BUILD_DIR/AppKiDo-$AKD_VERSION-src.tgz
+
+echo
+echo ===== BUILDING APPKIDO =====
+
+echo
+echo Preparing staging area $BUILD_DIR...
+mkdir -p $BUILD_DIR
+cd $BUILD_DIR
+rm -rf $BUILD_DIR/AppKiDo
+
+echo
+echo Checking out the source tree using tag $RELEASE_TAG...
+###cvs export -D now AppKiDo
+cvs export -r "$RELEASE_TAG" AppKiDo || exit
+
+echo
+echo Tarring up the source...
+tar -C $BUILD_DIR -czf $SRC_TARBALL_PATH AppKiDo
+
+echo
+echo Building the app...
+cd $BUILD_DIR/AppKiDo
+##xcodebuild -target AppKiDo -configuration Deployment || exit
+xcodebuild -activetarget -configuration Deployment || exit
+
+echo
+echo Stripping the executable...
+echo   -- size BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`
+strip $AKD_EXECUTABLE
+echo   -- size AFTER  is `stat -n -f "%z" $AKD_EXECUTABLE`
+
+echo
+echo Tarring up the application...
+tar -C $DEPLOYMENT_BUILD_DIR -czf $APP_TARBALL_PATH AppKiDo.app
+
+echo
+echo Sizes:
+echo   -- app tarball is $APP_TARBALL_PATH
+##echo   -- size of app tarball is `stat -n -f "%z" $APP_TARBALL_PATH`
+echo   -- size of app tarball is `du -h "$APP_TARBALL_PATH" | cut -f 1`
+echo   -- source tarball is $SRC_TARBALL_PATH
+##echo   -- size of source tarball is `stat -n -f "%z" $SRC_TARBALL_PATH`
+echo   -- size of source tarball is `du -h "$SRC_TARBALL_PATH" | cut -f 1`
+
+echo
+echo ===== DONE =====
+echo
+
