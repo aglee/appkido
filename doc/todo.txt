@@ -18,6 +18,9 @@
 [x] application:printFiles: -- doc list shows "application:printFiles: <(null)>"
 	* Fix: was missing a call to setOwningBehavior: when adding deprecated delegate method.  Changed AKMemberNode to take owningBehavior in its designated initializer, and got rid of setOwningBehavior:.
 
+[x] Spaces bug: always creates a new window when switch to AppKiDo and it's in a different space.
+	* Fix: replaced applicationDidBecomeActive: with applicationShouldHandleReopen:hasVisibleWindows: (as suggested by Christiaan Hofman) because it seems more in line with what other apps do, though personally I think it's odd because it only handles reopening by relaunching or clicking on Dock, and not Command-Tab switching as applicationDidBecomeActive: does.
+
 
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
@@ -33,6 +36,8 @@
 [ ] make sure mailing list has latest people who asked to be on it
 
 ===== bugs =====
+
+[ ] Move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
 
 [ ] There's a bunch of methods that fail my heuristic for deciding whether a deprecated method is a class/instance/delegate method.  For example, deserializeAlignedBytesLengthAtCursor: is a deprecated instance method of NSData which is declared in NSSerialization.h -- which is only in the 10.4u SDK, so in 10.5 I won't parse that file and I'll assume that method is a delegate method.  Considered moving all deprecated methods, regardless of type, to a separate subtopic, but that's too many subtopics -- *unless* I put an "ALL" button in subtopic cells for "Instance Methods", "Class Methods", etc.  Hm.
 
@@ -58,8 +63,6 @@
 2008-12-07 14:35:20.001 AppKiDo[7111:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/ApplicationKit/Classes/NSApplication_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
 2008-12-07 14:35:30.791 AppKiDo[7111:813] [_INFO_] Couldn't find class method or instance method named application:printFiles: while processing deprecated methods for behavior NSApplication
 
-
-[ ] Spaces bug.
 
 [ ] better handling if the user needs to update their docs
 
@@ -200,8 +203,6 @@
 [ ] show progress indicator during search, number of results when done
 
 [ ] lower the memory profile
-
-[ ] look into Spaces bug
 
 [ ] Use RBSplitView.
 
