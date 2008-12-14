@@ -4,41 +4,38 @@ if [ ! "${1}" ]; then
     echo "USAGE:"
     echo "  `basename ${0}` <releasenumber>"
     echo
-    echo "  This script should be called from the top level of an AppKiDo"
-    echo "  source directory that has been checked out from CVS.  The script"
-    echo "  force-tags the files in the directory with the specified release"
-    echo "  number."
+    echo "  Tags the AppKiDo trunk with the specified release number."
     echo
-    echo "  Dots in the release number will be converted to dashes, and"
+    echo "  Dots in <releasenumber> will be converted to dashes, and"
     echo "  \"release-\" will be prepended.  If you pass 0.95 for the release"
-    echo "  number, the tag used will be release-0-95, because tags can't"
-    echo "  contain dots."
+    echo "  number, the tag used will be release-0-95.  This is a historical"
+    echo "  artifact, due to the fact that AppKiDo used to be in CVS, and CVS"
+    echo "  tags can't contain dots."
+    echo
+    echo "  Make sure <releasenumber> is a nicely formed release number."
+    echo "  This script doesn't check for whitespace or any other characters"
+    echo "  that are special to the shell."
+    echo
     echo
     echo "EXAMPLE:"
-    echo "  cd ~/_Developer/CocoaProjects/AppKiDo"
     echo "  `basename ${0}` 0.95"
     exit
 fi
 
-if [ ! -d "AppKiDo.xcodeproj" ] ; then
-    echo "Error: we don't seem to be in a top-level source directory."
-    exit
-fi
-
-
 
 AKD_VERSION=${1}
 RELEASE_TAG=release-`echo $AKD_VERSION | sed -e "s/\./-/g"`
+SVN_ROOT=http://svn.appkido.com/svn/appkido
 
 echo
-echo Tagging source with tag $RELEASE_TAG...
-cvs tag -F "$RELEASE_TAG"
+echo "Tagging trunk with tag $RELEASE_TAG..."
+svn copy -m "Tagging $RELEASE_TAG." $SVN_ROOT/trunk $SVN_ROOT/tags/$RELEASE_TAG
 
 echo
 echo "...Done tagging.  If you need to remove the tag, you can do this:"
-echo "  cvs rtag -d release-#-## AppKiDo"
+echo "  svn rm $SVN_ROOT/tags/$RELEASE_TAG"
 
 echo
-echo ===== DONE =====
+echo "===== DONE ====="
 echo
 
