@@ -67,17 +67,26 @@ xcodebuild -target All -configuration Deployment || exit
 ##xcodebuild -activetarget -configuration Deployment || exit
 
 #---------------------------------------------------------------------------
-# Strip
+# Strip (unless we're making a sneakypeek)
 #---------------------------------------------------------------------------
 
-echo
-echo "Stripping the executables..."
-echo "  -- size of AppKiDo BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`"
-strip $AKD_EXECUTABLE
-echo "  -- size of AppKiDo AFTER  is `stat -n -f "%z" $AKD_EXECUTABLE`"
-echo "  -- size of AppKiDo-for-iPhone BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`"
-strip $AKD_FOR_IPHONE_EXECUTABLE
-echo "  -- size of AppKiDo-for-iPhone AFTER  is `stat -n -f "%z" $AKD_FOR_IPHONE_EXECUTABLE`"
+if [ "$SNEAKYPEEK" == "" ] ; then
+
+	echo
+	echo "Stripping the executables..."
+	echo "  -- size of AppKiDo BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`"
+	strip $AKD_EXECUTABLE
+	echo "  -- size of AppKiDo AFTER  is `stat -n -f "%z" $AKD_EXECUTABLE`"
+	echo "  -- size of AppKiDo-for-iPhone BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`"
+	strip $AKD_FOR_IPHONE_EXECUTABLE
+	echo "  -- size of AppKiDo-for-iPhone AFTER  is `stat -n -f "%z" $AKD_FOR_IPHONE_EXECUTABLE`"
+
+else
+
+	echo
+	echo "This is a sneakypeek, so won't strip the executables..."
+
+fi
 
 #---------------------------------------------------------------------------
 # Create tarballs
