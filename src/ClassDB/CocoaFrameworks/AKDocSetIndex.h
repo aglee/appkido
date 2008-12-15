@@ -74,12 +74,6 @@
 // Getters and setters
 //-------------------------------------------------------------------------
 
-/*!
- * The doc paths returned by the xxxDocPathsForFramework: methods are relative
- * to this directory.
- */
-- (NSString *)baseDirForDocPaths;
-
 /*! 
  * Names of frameworks the user can choose from, with "essential"
  * frameworks forced to the beginning of the list but otherwise in
@@ -87,19 +81,33 @@
  */
 - (NSArray *)selectableFrameworkNames;
 
-/*! Returns absolute directories containing header files. */
-- (NSSet *)headerDirsForFramework:(NSString *)frameworkName;
+/*!
+ * The header paths returned by the headerPathsForFramework: are relative
+ * to this directory.
+ */
+- (NSString *)basePathForHeaders;
+
+/*! Returns paths relative to -basePathForHeaders. */
+- (NSArray *)headerPathsForFramework:(NSString *)frameworkName;
+
+/*!
+ * The doc paths returned by the xxxDocPathsForFramework: methods are relative
+ * to this directory.
+ */
+- (NSString *)baseDirForDocPaths;
 
 /*!
  * Class docs, protocol docs, "FrameworkX ClassY Additions" docs, deprecated
- * method/class docs.  Returns paths (NSStrings) relative to +baseDirForDocPaths.
+ * method/class docs.
+ *
+ * Returns paths relative to -baseDirForDocPaths.
  */
 - (NSArray *)behaviorDocPathsForFramework:(NSString *)frameworkName;
 
-/*! Returns paths (NSStrings) relative to +baseDirForDocPaths. */
+/*! Returns paths relative to -baseDirForDocPaths. */
 - (NSArray *)functionsDocPathsForFramework:(NSString *)frameworkName;
 
-/*! Returns paths (NSStrings) relative to +baseDirForDocPaths. */
+/*! Returns paths relative to -baseDirForDocPaths. */
 - (NSArray *)globalsDocPathsForFramework:(NSString *)frameworkName;
 
 @end

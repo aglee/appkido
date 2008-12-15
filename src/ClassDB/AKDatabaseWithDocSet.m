@@ -88,16 +88,11 @@
     DIGSLogDebug(@"Parsing headers for framework %@", fwName);
     DIGSLogDebug(@"---------------------------------------------------");
 
-    NSSet *headerDirs = [_docSetIndex headerDirsForFramework:fwName];
-    NSEnumerator *headerDirEnum = [headerDirs objectEnumerator];
-    NSString *headerDir;
-    while ((headerDir = [headerDirEnum nextObject]) != nil)
-    {
-        [AKObjCHeaderParser
-            recursivelyParseDirectory:headerDir
-            forFramework:fwName
-            inDatabase:self];
-    }
+    [AKObjCHeaderParser
+        parseFilesInPaths:[_docSetIndex headerPathsForFramework:fwName]
+        underBaseDir:[_docSetIndex basePathForHeaders]
+        forFramework:fwName
+        inDatabase:self];
 
     // Parse HTML files.
     DIGSLogDebug(@"---------------------------------------------------");
