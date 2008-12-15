@@ -57,6 +57,14 @@ echo "Checking out the source tree using tag $RELEASE_TAG..."
 svn export $SVN_ROOT/tags/$RELEASE_TAG/src AppKiDo || exit
 
 #---------------------------------------------------------------------------
+# Create a tarball of the source without any build products in it.
+#---------------------------------------------------------------------------
+
+echo
+echo "Tarring up the source..."
+tar -C $BUILD_DIR -czf $SRC_TARBALL_PATH AppKiDo
+
+#---------------------------------------------------------------------------
 # Build
 #---------------------------------------------------------------------------
 
@@ -89,12 +97,8 @@ else
 fi
 
 #---------------------------------------------------------------------------
-# Create tarballs
+# Create tarballs of the binaries
 #---------------------------------------------------------------------------
-
-echo
-echo "Tarring up the source..."
-tar -C $BUILD_DIR -czf $SRC_TARBALL_PATH AppKiDo
 
 echo
 echo "Tarring up the applications..."
