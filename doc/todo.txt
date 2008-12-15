@@ -1,13 +1,22 @@
 :--- APPKIDO TO-DO ---:
 
+*** Fixed in 0.983sp1 ***
+
+[x] Jeff Laing reported that NSTask showed up in A4i -- it exists in the iPhone Simulator, not the iPhone.
+	* Problem was that +[AKDocSetIndex shouldn't be looking in iPhoneSimulator.platform for headers, but rather in /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS2.2.sdk/Developer/System/Library/Frameworks/xxx.framework.
+	* While fixing this, took the opportunity to change the logic that was deriving header directories from a list of header file paths and then iterating through those directories to find the files it just had a list of, along with other header files we might not want.  Now simply iterates through the files we had in the first place.  Compared before-and-after XML dumps and found that in WebKit, this got rid of 104 DOM classes and protocols that I'd been unnecessarily creating nodes for in the database (possibly would have been more if I'd included more frameworks in my prefs).
+
+[x] Added the nil check from Tony Cate that fixed his crash: "I made a tiny change to AKWindowController: - (void)_refreshBackButton  .....  if ( menuItemName ) [_backMenu addItemWithTitle:menuItemName action:@selector(doBackMenuAction:) keyEquivalent:@""];  .....  MenuItemName was nil, causing the crash."
+
+[x] Set up a sneakypeeks web page and created the akdsneakypeek script to build tarballs without stripping debug symbols.
+
+
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
 
 [ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
 
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
-
-[ ] install iPhone SDK at home
 
 [ ] look for [agl] REMOVE
 
