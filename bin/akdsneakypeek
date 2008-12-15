@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ ! "${1}" ]; then
+    echo "USAGE:"
+    echo "  `basename ${0}` <releasenumber>"
+    echo
+    echo "  Builds sneakypeek tarballs for AppKiDo, AppKiDo-for-iPhone, and the"
+    echo "  AppKiDo source, using $BUILD_DIR as a staging area.  Calls akdrelease"
+    echo "  with SNEAKYPEEK=1 so that debug symbols don't get stripped."
+    echo
+    echo "  Make sure <releasenumber> is a nicely formed release number that"
+    echo "  ends with 'sp<sneakypeeknumber>' -- see the examples below."
+    echo "  This script doesn't check for whitespace or any other characters"
+    echo "  that are special to the shell."
+    echo
+    echo "EXAMPLE:"
+    echo "  `basename ${0}` 0.983sp1"
+    echo "  `basename ${0}` 0.99sp5"
+    exit
+fi
+
+SNEAKYPEEK=1 `dirname ${0}`/akdrelease $@
+
