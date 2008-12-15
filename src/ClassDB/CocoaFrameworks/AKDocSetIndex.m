@@ -97,7 +97,7 @@ static NSString *s_headerPathsQueryTemplate =
     NSString *sdksDir =
         [devToolsPath
             stringByAppendingPathComponent:
-                @"Platforms/iPhoneSimulator.platform/Developer/SDKs/"];
+                @"Platforms/iPhoneOS.platform/Developer/SDKs/"];
 
     NSString *docSetPath = [self _latestIPhonePathInDirectory:docSetsDir];
     NSString *basePathForHeaders = [self _latestIPhonePathInDirectory:sdksDir];
@@ -177,11 +177,6 @@ static NSString *s_headerPathsQueryTemplate =
 // Getters and setters
 //-------------------------------------------------------------------------
 
-- (NSString *)baseDirForDocPaths
-{
-    return [[self _resourcesPath] stringByAppendingPathComponent: @"Documents"];
-}
-
 - (NSArray *)selectableFrameworkNames
 {
     static NSMutableArray *s_selectableFrameworkNames = nil;
@@ -204,7 +199,12 @@ static NSString *s_headerPathsQueryTemplate =
     return s_selectableFrameworkNames;
 }
 
-- (NSSet *)headerDirsForFramework:(NSString *)frameworkName
+- (NSString *)basePathForHeaders
+{
+    return _basePathForHeaders;
+}
+
+- (NSArray *)headerPathsForFramework:(NSString *)frameworkName
 {
     // Open the database.
     FMDatabase* db = [self _openSQLiteDB];
@@ -214,31 +214,25 @@ static NSString *s_headerPathsQueryTemplate =
     }
 
     // Do the query and process the results.
-    NSMutableSet *headerDirs = [NSMutableSet set];
+    NSMutableArray *headerFiles = [NSMutableArray array];
     FMResultSet *rs =
         [db executeQuery:s_headerPathsQueryTemplate, frameworkName];
 
     while ([rs next])
     {
-        NSString *headerFilePath = [rs stringForColumnIndex:0];
-        NSString *headerDirPath =
-            [headerFilePath stringByDeletingLastPathComponent];
-
-        if (_basePathForHeaders)
-        {
-            headerDirPath =
-                [_basePathForHeaders
-                    stringByAppendingPathComponent:headerDirPath];
-        }
-        
-        [headerDirs addObject:headerDirPath];
+        [headerFiles addObject:[rs stringForColumnIndex:0]];
     }
     [rs close];  
 
     // Close the database.
     [db close];
 
-    return headerDirs;
+    return headerFiles;
+}
+
+- (NSString *)baseDirForDocPaths
+{
+    return [[self _resourcesPath] stringByAppendingPathComponent: @"Documents"];
 }
 
 - (NSArray *)behaviorDocPathsForFramework:(NSString *)frameworkName
