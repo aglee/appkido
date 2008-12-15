@@ -1155,6 +1155,17 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return [lhsValue compare:rhsValue];
 }
 
+// The required format of a version string is X.YY{P}{spZ} where:
+//  X  (possibly multidigit)            is the "major version number"
+//  YY (exactly two digits)             is the "minor version number"
+//  P  (exactly one digit if present)   is the "patch number"
+//  Z  (possibly multidigit if present) is the "sneakypeak number"
+//
+// Examples:
+//  0.98
+//  0.981
+//  12.34sp3
+//  12.345sp3
 - (NSDictionary *)_versionDictionaryFromString:(NSString *)versionString
 {
     NSArray *versionParts = nil;
