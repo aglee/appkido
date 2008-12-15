@@ -916,6 +916,7 @@
 				73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */,
 				733ACAF20498483100A80007 /* app-icon.icns */,
 				7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */,
+				7399B3C30E632A5C001AE672 /* Info-iPhone.plist */,
 				65B10A4A09D7B6C300A8A637 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				73C7099306979F0E00509711 /* FrameworkInfo.plist */,
@@ -923,7 +924,6 @@
 				7300305504984FF600A80007 /* cursors */,
 				7300305704984FF600A80007 /* support */,
 				7300305F04984FF600A80007 /* toolbar */,
-				7399B3C30E632A5C001AE672 /* Info-iPhone.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
