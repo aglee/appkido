@@ -1029,9 +1029,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         AKDocLocator *historyItem = [_windowHistory objectAtIndex:i];
         NSString *menuItemName = [historyItem stringToDisplayInLists];
 
-        [_backMenu addItemWithTitle:menuItemName
-            action:@selector(doBackMenuAction:)
-            keyEquivalent:@""];
+        if (menuItemName)
+        {
+            [_backMenu addItemWithTitle:menuItemName
+                action:@selector(doBackMenuAction:)
+                keyEquivalent:@""];
+        }
     }
 }
 
