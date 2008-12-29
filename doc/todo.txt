@@ -1,6 +1,6 @@
 :--- APPKIDO TO-DO ---:
 
-*** Fixed in 0.983sp1 ***
+*** Done in 0.983sp1 ***
 
 [x] Jeff Laing reported that NSTask showed up in A4i -- it exists in the iPhone Simulator, not the iPhone.
 	* Problem was that +[AKDocSetIndex shouldn't be looking in iPhoneSimulator.platform for headers, but rather in /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS2.2.sdk/Developer/System/Library/Frameworks/xxx.framework.
@@ -9,6 +9,10 @@
 [x] Added the nil check from Tony Cate that fixed his crash: "I made a tiny change to AKWindowController: - (void)_refreshBackButton  .....  if ( menuItemName ) [_backMenu addItemWithTitle:menuItemName action:@selector(doBackMenuAction:) keyEquivalent:@""];  .....  MenuItemName was nil, causing the crash."
 
 [x] Set up a sneakypeeks web page and created the akdsneakypeek script to build tarballs without stripping debug symbols.
+
+*** Done in 0.983sp2 ***
+
+[x] DOM classes are now showing up as root classes -- probably because I thought I was being smart by only parsing the headers I "had to" parse.  There's actually a comment in AKDatabaseWithDocSet, which I overlooked, about how I specifically need to parse all the headers in the directory, including the ones not referenced by the docset index.  Fixed by going back to the old way of traversing headers.
 
 
 ----------------------------------------------------------
@@ -23,6 +27,16 @@
 [ ] make sure mailing list has latest people who asked to be on it
 
 ===== bugs =====
+
+[ ] The related-sample-code links (e.g., in +stringWithString:) don't work.
+
+[ ] Suggestion from Jeff Laing: "One niggle: would it be possible to select which version of the SDK you use?  At th moment, I'm trying to concentrate on 2.1 rather than 2.2 (for what is probably not a good reason since you'd expect everyone would just upgrade, but some people just don't)"
+
+
+
+[ ] should handle better if user needs to update their docs: either the initial web download by subscribing in Xcode, or subsequent updates
+
+[ ] Provide some help dealing with the quarantines.
 
 [ ] Move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
 
@@ -50,8 +64,6 @@
 2008-12-07 14:35:20.001 AppKiDo[7111:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/ApplicationKit/Classes/NSApplication_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
 2008-12-07 14:35:30.791 AppKiDo[7111:813] [_INFO_] Couldn't find class method or instance method named application:printFiles: while processing deprecated methods for behavior NSApplication
 
-
-[ ] better handling if the user needs to update their docs
 
 ===== efficiency =====
 
