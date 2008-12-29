@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>AppKiDo-for-iPhone</string>
 	<key>CFBundleGetInfoString</key>
-	<string>0.983sp1</string>
+	<string>0.983sp2</string>
 	<key>CFBundleIconFile</key>
 	<string>app-icon-iphone</string>
 	<key>CFBundleIdentifier</key>
@@ -19,11 +19,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.983sp1</string>
+	<string>0.983sp2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.983sp1</string>
+	<string>0.983sp2</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
 	<key>NSMainNibFile</key>
