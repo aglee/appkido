@@ -75,50 +75,54 @@
     // Parse header files before HTML files, so that later when we parse a
     // "Deprecated Methods" HTML file we can distinguish between instance
     // methods, class methods, and delegate methods by querying the database.
-// Note that we have to parse all headers in the dir, not just headers
-// directly associated with ZTOKENs, because there may be things declared
-// in headers that are needed but not associated with any ZTOKEN.  ([agl] The
-// example that drives this was the DOMxxx classes, like DOMComment, which
-// ended up as root classes in AppKiDo because apparently there is some base
-// class declared in a header I wasn't parsing.  *But* those classes are kind
-// of weird -- they have no documentation -- so maybe I shouldn't be displaying
-// them at all and should go back to the logic where I parsed an array of
-// header file paths rather than header dirs.)
+    // [agl] FIXME Any way to remove this dependence on parse order?
     DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing headers for framework %@", fwName);
+    DIGSLogDebug(@"Parsing headers for framework %@, in base dir %@",
+        fwName, [_docSetIndex basePathForHeaders]);
     DIGSLogDebug(@"---------------------------------------------------");
 
-    [AKObjCHeaderParser
-        parseFilesInPaths:[_docSetIndex headerPathsForFramework:fwName]
-        underBaseDir:[_docSetIndex basePathForHeaders]
-        forFramework:fwName
-        inDatabase:self];
+    // NOTE that we have to parse all headers in each directory, not just
+    // headers that the docset index explicitly associates with ZTOKENs.  For
+    // example, several DOMxxx classes, such as DOMComment, will be displayed
+    // as root classes if I don't parse their headers.  The ideal thing would
+    // be to be able to follow #imports, but I'm not being that smart.
+    NSSet *headerDirs = [_docSetIndex headerDirsForFramework:fwName];
+    NSEnumerator *headerDirEnum = [headerDirs objectEnumerator];
+    NSString *headerDir;
+    while ((headerDir = [headerDirEnum nextObject]) != nil)
+    {
+        [AKObjCHeaderParser
+            recursivelyParseDirectory:headerDir
+            forFramework:fwName
+            inDatabase:self];
+    }
 
     // Parse HTML files.
-    DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing HTML docs for framework %@", fwName);
-    DIGSLogDebug(@"---------------------------------------------------");
+    NSString *baseDirForDocs = [_docSetIndex baseDirForDocs];
 
-    NSString *baseDir = [_docSetIndex baseDirForDocPaths];
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing HTML docs for framework %@, in base dir %@",
+        fwName, baseDirForDocs);
+    DIGSLogDebug(@"---------------------------------------------------");
 
     DIGSLogDebug(@"Parsing behavior docs for framework %@", fwName);
     [AKCocoaBehaviorDocParser
         parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:fwName]
-        underBaseDir:baseDir
+        underBaseDir:baseDirForDocs
         forFramework:fwName
         inDatabase:self];
 
     DIGSLogDebug(@"Parsing functions docs for framework %@", fwName);
     [AKCocoaFunctionsDocParser
         parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:fwName]
-        underBaseDir:baseDir
+        underBaseDir:baseDirForDocs
         forFramework:fwName
         inDatabase:self];
 
     DIGSLogDebug(@"Parsing globals docs for framework %@", fwName);
     [AKCocoaGlobalsDocParser
         parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:fwName]
-        underBaseDir:baseDir
+        underBaseDir:baseDirForDocs
         forFramework:fwName
         inDatabase:self];
 }

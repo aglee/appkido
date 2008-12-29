@@ -230,7 +230,44 @@ static NSString *s_headerPathsQueryTemplate =
     return headerFiles;
 }
 
-- (NSString *)baseDirForDocPaths
+- (NSSet *)headerDirsForFramework:(NSString *)frameworkName
+{
+    // Open the database.
+    FMDatabase* db = [self _openSQLiteDB];
+    if (db == nil)
+    {
+        return nil;
+    }
+
+    // Do the query and process the results.
+    NSMutableSet *headerDirs = [NSMutableSet set];
+    FMResultSet *rs =
+        [db executeQuery:s_headerPathsQueryTemplate, frameworkName];
+
+    while ([rs next])
+    {
+        NSString *headerFilePath = [rs stringForColumnIndex:0];
+        NSString *headerDirPath =
+            [headerFilePath stringByDeletingLastPathComponent];
+
+        if (_basePathForHeaders)
+        {
+            headerDirPath =
+                [_basePathForHeaders
+                    stringByAppendingPathComponent:headerDirPath];
+        }
+        
+        [headerDirs addObject:headerDirPath];
+    }
+    [rs close];  
+
+    // Close the database.
+    [db close];
+
+    return headerDirs;
+}
+
+- (NSString *)baseDirForDocs
 {
     return [[self _resourcesPath] stringByAppendingPathComponent: @"Documents"];
 }
