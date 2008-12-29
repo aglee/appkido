@@ -91,7 +91,7 @@
                         | NSResizableWindowMask)
                 backing:NSBackingStoreBuffered
                 defer:NO]
-                retain];
+                retain];  // [agl] Am I over-retaining?
         _parseInfoTextView =
             [[[NSTextView alloc]
                 initWithFrame:NSMakeRect(10, 10, 10, 10)]  // will be reset
