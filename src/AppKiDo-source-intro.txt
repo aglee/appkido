@@ -28,7 +28,7 @@ AppKiDo lets you navigate logical relationships among API constructs -- for exam
 
     * .h files in framework directories under /System/Library/Frameworks, such as Foundation.framework and AppKit.framework.
 
-The locations and internal structure of these files are almost entirely invisible to the user.
+The locations and internal structure of these files are almost entirely invisible to the user.  The information derived from the files is stored in a data structure called "the database."
 
 An AppKiDo session has three phases: the launch phase, the browse phase, and the quit phase.
 
@@ -36,8 +36,8 @@ An AppKiDo session has three phases: the launch phase, the browse phase, and the
 The Launch Phase
 ----------------
 (a) Load user preferences
-(b) Load any window state that was saved from the previous launch
-(c) Populate the database
+(b) Populate the database
+(c) Load any window state that was saved from the previous launch
 
 
 The Browse Phase
@@ -73,18 +73,21 @@ The fundamental model object in AppKiDo is an API construct.  There are several 
 
 AppKiDo keeps track of these constructs and relationships using a data structure called the "framework database," or just "the database."  Each entry in the database contains information about an API construct.
 
-The database is an instance of the class AKDatabase.  The result of a database query is zero or more instances of AKDatabaseNode classes.
+The database is an instance of the abstract class AKDatabase, which has two concrete subclasses: AKDatabaseWithDocSet and AKOldDatabase.  AKDatabaseWithDocSet is used with the documentation in Xcode 3 or later, which is organized into a bundle called a docset.  AKOldDatabase is used with older versions of Xcode, which organize the documentation into directories using rough conventions.
+
+The database is populated when AppKiDo is launched, and is read-only thereafter.  The result of a database query is zero or more instances of AKDatabaseNode and its descendant classes.
 
 
 CONTROLLERS AND THEIR VIEWS -- ANATOMY OF THE UI
 ================================================
+
 Here are the major parts of an AppKiDo browser window, and the controller classes attached to them.
 
 * The topic browser.  The topic browser displays (1) the class inheritance hierarchy and (2) for each framework, the available types of API constructs that are not classes -- protocols, functions, and types and constants.  Each item in the topic browser is called a topic.
 
     NOTE: When you select a topic in the topic browser, the items that appear in the next column are, confusingly, NOT called subtopics.  I haven't figured out what to call them.  The term "subtopic" is used for the subtopic list.
 
-* The subtopic list.  The subtopic list displays categories of documentation that are available for the topic that is selected in the topic browser.  The subtopic list refreshes when you select something in the topic browser.  What gets listed depends on what type of topic you selected.  For example, if you go to the topic browser and select a class, the subtopics include "Class Methods", "Instance Methods", "Delegate Methods", and "Notifications".  If you select the "Protocols" topic for a framework,
+* The subtopic list.  The subtopic list displays categories of documentation that are available for the topic that is selected in the topic browser.  For example, if you select a class in the topic browser, the subtopics include "Class Methods", "Instance Methods", "Delegate Methods", and "Notifications".  If you select a framework in the topic browser and then the "Functions" topic for that framework, the subtopics are named groups of functions.
 
 * The doc list.  The doc list is refreshed when you select something in the subtopic list.
 
