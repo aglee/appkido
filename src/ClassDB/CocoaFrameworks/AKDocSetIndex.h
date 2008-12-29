@@ -87,6 +87,9 @@
  */
 - (NSString *)basePathForHeaders;
 
+/*! Returns absolute directories containing header files. */
+- (NSSet *)headerDirsForFramework:(NSString *)frameworkName;
+
 /*! Returns paths relative to -basePathForHeaders. */
 - (NSArray *)headerPathsForFramework:(NSString *)frameworkName;
 
@@ -94,20 +97,20 @@
  * The doc paths returned by the xxxDocPathsForFramework: methods are relative
  * to this directory.
  */
-- (NSString *)baseDirForDocPaths;
+- (NSString *)baseDirForDocs;
 
 /*!
  * Class docs, protocol docs, "FrameworkX ClassY Additions" docs, deprecated
  * method/class docs.
  *
- * Returns paths relative to -baseDirForDocPaths.
+ * Returns paths relative to -baseDirForDocs.
  */
 - (NSArray *)behaviorDocPathsForFramework:(NSString *)frameworkName;
 
-/*! Returns paths relative to -baseDirForDocPaths. */
+/*! Returns paths relative to -baseDirForDocs. */
 - (NSArray *)functionsDocPathsForFramework:(NSString *)frameworkName;
 
-/*! Returns paths relative to -baseDirForDocPaths. */
+/*! Returns paths relative to -baseDirForDocs. */
 - (NSArray *)globalsDocPathsForFramework:(NSString *)frameworkName;
 
 @end
