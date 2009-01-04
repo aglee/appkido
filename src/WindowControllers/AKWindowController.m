@@ -252,27 +252,27 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
     linkURL = [NSURL URLWithString:[linkURL relativeString] relativeToURL:docFileURL];
 
-    // Let somebody else handle the URL if it's not a "file:/" URL.
-    if (![linkURL isFileURL])
+    // If the link URL is a "file:" URL, try to convert it to an AKDocLocator.
+    AKDocLocator *linkDestination = nil;
+    if ([linkURL isFileURL])
     {
-        DIGSLogDebug(@"let somebody else handle non-file url %@", linkURL);
-        return NO;
-    }
-
-    // If the link can be converted to an AKDocLocator, jump to that
-    // locator.  Otherwise, try opening the file in the user's browser.
-    AKDocLocator *linkDestination =
-        [[AKLinkResolver linkResolverWithDatabase:_database]
-            docLocatorForURL:linkURL];
-
-    if (linkDestination == nil)
-    {
-        DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
+        // If the link can be converted to an AKDocLocator, jump to that
+        // locator.  Otherwise, try opening the file in the user's browser.
         linkDestination =
-            [[AKOldLinkResolver linkResolverWithDatabase:_database]
+            [[AKLinkResolver linkResolverWithDatabase:_database]
                 docLocatorForURL:linkURL];
+
+        if (linkDestination == nil)
+        {
+            DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
+            linkDestination =
+                [[AKOldLinkResolver linkResolverWithDatabase:_database]
+                    docLocatorForURL:linkURL];
+        }
     }
 
+    // Now we know whether we can follow the link within the app or we have to
+    // use NSWorkspace.
     if (linkDestination)
     {
         [self jumpToDocLocator:linkDestination];

@@ -141,6 +141,8 @@
     docName:(NSString *)docName;
 
 // linkObj must be either an NSURL or a string containing an absolute URL.
+// Returns YES if we are able to jump to the URL, either within the app if
+// possible or, if necessary, via NSWorkspace.
 - (BOOL)jumpToLinkURL:(NSURL *)linkURL;
 
 /*!
