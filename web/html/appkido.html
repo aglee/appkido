@@ -8,8 +8,7 @@ img { border: solid #DDDDDD 1px; }
 
 .donationBox
 {
-	border: solid #AAAAAA 1px;
-	margin-bottom: 4px;
+	border: solid #888888 1px;
 	text-align: center;
 	font-size: 90%;
 	width: 100%;
@@ -19,13 +18,31 @@ img { border: solid #DDDDDD 1px; }
 .donationBoxHeading
 {
 	padding: 4px 2px 4px 2px;
-	margin: 4px;
+	margin: 2px;
 	text-align: center;
 	font-weight: bold;
 	font-family: sans-serif;
 	background-color: #DDDDDD;
 }
 </style>
+
+<script type="text/javascript">
+<!--
+// check that they entered an amount tested, an amount passed,
+// and that they didn't pass units than they more than tested
+
+function validateGoogleCheckout(form)
+{
+	var enteredAmount = form.item_price_1.value;
+	if ((! /^-?\d+(\.\d+)?$/.test(enteredAmount)) || (enteredAmount <= 0)) {
+		alert("Please enter an amount to donate via Google Checkout.");
+		return false;
+	} else {
+		return true;
+	}
+}
+// -->
+</script>
 
 </head>
 
@@ -70,7 +87,7 @@ img { border: solid #DDDDDD 1px; }
 <!-- --- Intro --- -->
 <p>This is the home page for AppKiDo and AppKiDo-for-iPhone.</p>
 
-<p>I announce new releases on my <a href="http://www.notesfromandy.com/">blog</a> and on the <a href="http://lists.apple.com/mailman/listinfo/cocoa-dev">cocoa-dev</a> mailing list.  If you would like to be personally notified of new releases, or if you have feedback of any kind, let me know at <a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">aglee@earthlink.net</a>.  Many thanks to those who have contributed comments, bug reports, and code.</p>
+<p>I announce new releases on my <a href="http://www.notesfromandy.com/">blog</a> and on the <a href="http://lists.apple.com/mailman/listinfo/cocoa-dev">cocoa-dev</a> mailing list.  If you would like to be personally notified of new releases, or if you have feedback of any kind, you can email me (Andy Lee) at <a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">aglee@earthlink.net</a>.  Many thanks to those who have contributed comments, bug reports, and code.</p>
 
 <p>AppKiDo is completely free, but donations are appreciated if you find that it saves you time or effort on a regular basis.</p>
 </td>
@@ -79,7 +96,7 @@ img { border: solid #DDDDDD 1px; }
 <td align="center">
 
 <!-- --- PayPal donate button --- -->
-<table class="donationBox">
+<table class="donationBox" style="margin-bottom: 8px;">
 <tr><td class="donationBoxHeading"><nobr>Donate using PayPal</nobr></td></tr>
 
 <tr valign="top">
@@ -100,7 +117,7 @@ img { border: solid #DDDDDD 1px; }
 <!-- --- end of PayPal donate button --- -->
 
 <!-- --- Google Checkout donate button --- -->
-<table class="donationBox">
+<table class="donationBox" style="margin-bottom: 0px;">
 <tr><td class="donationBoxHeading"><nobr>Donate using Google Checkout</nobr></td></tr>
 
 <tr valign="top">
@@ -108,7 +125,7 @@ img { border: solid #DDDDDD 1px; }
 <td>
 <form method="POST"
   action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/207980577642519"
-      accept-charset="utf-8" style="margin-bottom: 0px;">
+      accept-charset="utf-8" style="margin-bottom: 0px;" onSubmit="return validateGoogleCheckout(this);">
 
   <label>Donation Amount: $</label><input type="text" name="item_price_1" value="" size="5"/>
 
