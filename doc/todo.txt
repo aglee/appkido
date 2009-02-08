@@ -12,7 +12,14 @@
 
 *** Done in 0.983sp2 ***
 
-[x] DOM classes are now showing up as root classes -- probably because I thought I was being smart by only parsing the headers I "had to" parse.  There's actually a comment in AKDatabaseWithDocSet, which I overlooked, about how I specifically need to parse all the headers in the directory, including the ones not referenced by the docset index.  Fixed by going back to the old way of traversing headers.
+[x] DOM classes were showing up as root classes -- probably because I thought I was being smart by only parsing the headers I "had to" parse.  There's actually a comment in AKDatabaseWithDocSet, which I overlooked, about how I specifically need to parse all the headers in the directory, including the ones not referenced by the docset index.  Fixed by going back to the old way of traversing headers.
+
+[x] The related-sample-code links (e.g., in +stringWithString:) don't work.
+	* Fixed by cleaning up the logic in -[AKWindowController jumpToLinkURL:] in the case of http: links.  Needed to explicitly handle those links instead of simply returning NO (which made sense for the old NSTextView-based implementation, but not the current WebView-based implementation).
+
+[x] Fix that thing Gerriet reported: "In decimalNumberWithDecimal: there is a link NSDecimal.  Clicking this I get to NSDecimal which has further down a link: Used by the functions described in "Decimals".  When I control-click "Decimals" and select copy link and paste this into Safari all is fine.  So the link seems to be ok.  But when I click on it, I get to the very top of the Foundation classes: "Adding Classes" instead of "Decimals" further down.
+	* Seems it was fixed already in 0.983sp1.
+
 
 
 ----------------------------------------------------------
@@ -28,11 +35,20 @@
 
 ===== bugs =====
 
-[ ] The related-sample-code links (e.g., in +stringWithString:) don't work.
-
 [ ] Suggestion from Jeff Laing: "One niggle: would it be possible to select which version of the SDK you use?  At th moment, I'm trying to concentrate on 2.1 rather than 2.2 (for what is probably not a good reason since you'd expect everyone would just upgrade, but some people just don't)"
+	* Rustam Muginov asked about selecting the version too.
+	* Hm -- on the MBP I have the 2.2 SDK installed; only that .docset is there, but SDKs for 2.0, 2.1, and 2.2 show up.  I see in Xcode's doc window that I can get/subscribe to 2.0/2.1
+	* Maybe use values in the ZDISTRIBUTIONVERSION table?
+
+[ ] Reported by Rustam Muginov: "For example, 2.2 did introduced new class, AVAudioPlayer, which was not present in 2.1 and 2.0.  By the way, i can not find it in the current 0,982 version of AppKiDo."
+
+[ ] Fix the stuff Paul Kim found with clang.
+
+[ ] Use NSTabView for doc view.
 
 
+
+[ ] Speed: try NSUncachedRead or NSMappedRead (search cocoa-dev mailbox for Wil Shipley's suggestion on 2009-01-27).
 
 [ ] should handle better if user needs to update their docs: either the initial web download by subscribing in Xcode, or subsequent updates
 
@@ -91,7 +107,12 @@
 	* query as needed from the docset index and the CoreData storage instead of storing everything in memory
 
 
-===== cosmetics =====
+===== cosmetics/ui =====
+
+[ ] Instead of a separate subtopic for "ALL Instance Methods" etc., put an "ALL" button in the "Instance Methods" subtopic cell.
+
+[ ] Add subtopic for deprecated methods.  Lump 'em all together since that's what Apple (sometimes) does.
+	[ ] *OR* leave it broken for now and file a bug with Apple asking for deprecated class methods/instance methods/etc. to be in distinguishable subsections.
 
 [ ] new icons
 [ ] clean up window layout -- overlapping views, etc.
@@ -136,15 +157,14 @@
 
 ----------------------------------------------------------
 
+[ ] show feedback during search
+	[ ] show number of search results
+
 [ ] QCComposition -> instance methods -> protocols -> link to "Standard Protocols" opens web page; maybe because of the space which gets converted to an underscore in the URL?
 
 [ ] make sure handling errors querying sqlite -- note Tony Cate's problem
 
 [ ] fix splitview problems reported by Gerriet
-
-[ ] figure out discrepancies between 972j and 972k
-
-[ ] review: 972j.xml has substantial differences from 972g.xml, and ABAddressBookRef shows up twice
 
 [ ] have new windows cascade
 
@@ -289,12 +309,6 @@
 
 look into log4cocoa
 
-support wildcards in search string
-	support multiple search strings?
-
-show feedback during search
-	show number of search results
-
 * akd prefs frameworks space bar doesn't work to toggle selection
 
 get latest fmdb
@@ -319,8 +333,6 @@ search for "::" doesn't find -[CIImageProvider provideImageData:bytesPerRow:orig
 hm, *Carbon* is showing up, with two protocols: IMKTextInput and IMKUnicodeTextInput; and the -insertText: method for the latter is not showing up (not documented, I assume)
 
 omit frameworks with no classes from the quicklist popup
-
-use tabview for the doc view
 
 check out latest fmdb
 
