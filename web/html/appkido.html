@@ -106,12 +106,13 @@ img { border: solid #DDDDDD 1px; }
 <tr valign="top">
 
 <td>
-  <label>Donation Amount: $</label><input type="text" name="item_price_1" value="" size="5" xxxstyle="margin-bottom: 0px;"/>
 <form method="POST"
   action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/207980577642519"
       accept-charset="utf-8" style="margin-bottom: 0px;">
 
-  <input type="hidden" name="item_name_1" value="Donation"/>
+  <label>Donation Amount: $</label><input type="text" name="item_price_1" value="" size="5"/>
+
+  <input type="hidden" name="item_name_1" value="AppKiDo"/>
   <input type="hidden" name="item_description_1" value="Donation to Andy Lee -- thank you!"/>
   <input type="hidden" name="item_quantity_1" value="1"/>
   <input type="hidden" name="item_currency_1" value="USD"/>
