@@ -4,7 +4,35 @@
 <title>AppKiDo</title>
 
 <style type="text/css">
+h1 { margin-bottom: 4px; }
+
+h2
+{
+	margin-top: 24px;
+	margin-bottom: 4px;
+}
+
 img { border: solid #DDDDDD 1px; }
+
+.navButton
+{
+	color: black;
+	border: solid gray 1px;
+	/*padding: 2px 8px 2px 8px;*/
+	padding: 0px 8px 0px 8px;
+	margin-bottom: 4px;
+	background-color: white;
+	text-decoration: none;
+}
+
+.navButton:hover
+{
+	background-color: #DDDDDD;
+}
+
+.featuresTable { }
+
+.featuresTable tr td { padding-bottom: 16px; }
 
 .donationBox
 {
@@ -15,26 +43,40 @@ img { border: solid #DDDDDD 1px; }
 	color: #444444;
 }
 
+.donationBoxTest
+{
+	border: solid #888888 1px;
+	text-align: center;
+	font-size: 90%;
+	/*width: 100%;*/
+	color: #444444;
+}
+
 .donationBoxHeading
 {
-	padding: 4px 2px 4px 2px;
+	padding: 2px 6px 2px 6px;
 	margin: 2px;
 	text-align: center;
 	font-weight: bold;
 	font-family: sans-serif;
-	background-color: #DDDDDD;
+	background-color: #EEEE88;
+}
+
+.featureHighlight
+{
+	font-weight: bold;
+	color: #CC0000;
 }
 </style>
 
 <script type="text/javascript">
 <!--
-// check that they entered an amount tested, an amount passed,
-// and that they didn't pass units than they more than tested
-
 function validateGoogleCheckout(form)
 {
 	var enteredAmount = form.item_price_1.value;
-	if ((! /^-?\d+(\.\d+)?$/.test(enteredAmount)) || (enteredAmount <= 0)) {
+
+	// Regex checks for a valid non-negative decimal number.
+	if ((! /^\d+(\.\d+)?$/.test(enteredAmount)) || (enteredAmount <= 0)) {
 		alert("Please enter an amount to donate via Google Checkout.");
 		return false;
 	} else {
@@ -50,24 +92,51 @@ function validateGoogleCheckout(form)
 
 <h1>AppKiDo and AppKiDo-for-iPhone</h1>
 
+<!-- ========== LINKS ========== -->
 
-<!-- ========== LINKS AND PREFACE ========== -->
-
-[ <a href="AppKiDo-0.982.tgz">download <b>AppKiDo</b> 0.982</a> ]
-[ <a href="AppKiDo-for-iPhone-0.982.tgz">download <b>AppKiDo-for-iPhone</b> 0.982</a> ]
-[ <a href="AppKiDo-src-0.982.tgz">download the <b>source</b></a> ]
+<!--
+<a href="AppKiDo-0.982.tgz" class="navButton"><nobr>download <b>AppKiDo</b> 0.982</nobr></a>
+<a href="AppKiDo-for-iPhone-0.982.tgz" class="navButton"><nobr>download <b>AppKiDo-for-iPhone</b> 0.982</nobr></a>
+<a href="AppKiDo-src-0.982.tgz" class="navButton"><nobr>download the <b>source</b></nobr></a>
 <br/>
-[ <a href="release-notes.html">release notes</a> ]
-[ <a href="screenshot.html">screenshot</a> ]
-[ <a href="sneakypeeks.html">sneakypeeks</a> ]
-[ <a href="faq.html">FAQ</a> ]
+<a href="release-notes.html" class="navButton"><nobr>release notes</nobr></a>
+<a href="screenshot.html" class="navButton"><nobr>screenshot</nobr></a>
+<a href="sneakypeeks.html" class="navButton"><nobr>sneakypeeks</nobr></a>
+<a href="faq.html" class="navButton"><nobr>FAQ</nobr></a>
+-->
+<table border="0">
+<tr valign="top">
+
+<td>
+<ul style="margin-bottom: 8px;">
+<li><a href="AppKiDo-0.982.tgz">download <b>AppKiDo</b> 0.982</a>
+<li><a href="AppKiDo-for-iPhone-0.982.tgz">download <b>AppKiDo-for-iPhone</b> 0.982</a>
+<li><a href="AppKiDo-src-0.982.tgz">download the <b>source</b></a>
+</ul>
+</td>
+
+<td>
+<ul>
+<li><a href="release-notes.html">release notes</a>
+<li><a href="sneakypeeks.html">sneakypeeks</a>
+</ul>
+</td>
+
+<td>
+<ul>
+<li><a href="screenshot.html">screenshot</a>
+<li><a href="faq.html">FAQ</a>
+</ul>
+</td>
+
+</tr>
+</table>
 
 
-<div style="width:800px;">
+<div style="width: 800px;">
 
 
 <!-- ========== INTRO ========== -->
-<br/>
 <table border="0" width="100%">
 <tr valign="top">
 
@@ -75,7 +144,7 @@ function validateGoogleCheckout(form)
 <!-- --- Intro --- -->
 <p>This is the home page for AppKiDo and AppKiDo-for-iPhone.</p>
 
-<p>I announce new releases on my <a href="http://www.notesfromandy.com/">blog</a> and on the <a href="http://lists.apple.com/mailman/listinfo/cocoa-dev">cocoa-dev</a> mailing list.  If you would like to be personally notified of new releases, or if you have feedback of any kind, you can email me (Andy Lee) at <a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">aglee@earthlink.net</a>.  Many thanks to those who have contributed comments, bug reports, and code.</p>
+<p>I announce new releases on my <a href="http://www.notesfromandy.com/">blog</a> and <b>sometimes</b> on the <a href="http://lists.apple.com/mailman/listinfo/cocoa-dev">cocoa-dev</a> mailing list.  You are welcome to send feedback to me (Andy Lee) at <a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">aglee@earthlink.net</a>.  Many thanks to those who have contributed comments, bug reports, and code.</p>
 
 <p>AppKiDo is free, but donations are appreciated if you find that it saves you time or effort on a regular basis.</p>
 </td>
@@ -105,6 +174,7 @@ function validateGoogleCheckout(form)
 <!-- --- end of PayPal donate button --- -->
 
 <!-- --- Google Checkout donate button --- -->
+<!-- ========== Actually this is not allowed because I'm not tax-exempt. ==========
 <table class="donationBox" style="margin-bottom: 0px;">
 <tr><td class="donationBoxHeading"><nobr>Donate using Google Checkout</nobr></td></tr>
 
@@ -131,6 +201,7 @@ height="46" width="180"/>
 
 </tr>
 </table>
+================================================================================= -->
 <!-- --- end of Google Checkout donate button --- -->
 
 </td>
@@ -139,13 +210,13 @@ height="46" width="180"/>
 
 
 <!-- ========== WHAT IS APPKIDO? ========== -->
-<h2 style="margin-top: 4px;">What is AppKiDo?</h2>
+<h2>What is AppKiDo?</h2>
 
 <table>
-<tr valign="TOP">
+<tr valign="top">
 
 <td>
-<p><b>AppKiDo</b> is an API documentation browser for Cocoa and iPhone programmers.  It helps you quickly <font color="RED"><b>find the doc you want</b></font>, whether it's for a class, protocol, function, type, or constant.  AppKiDo parses the headers and HTML doc files that were installed with your Developer Tools.  It presents the results in a form that is <font color="RED"><b>easy to navigate</b></font>.</p>
+<p><b>AppKiDo</b> is an API documentation browser for Cocoa and iPhone programmers.  It helps you quickly <span class="featureHighlight">find the doc you want</span>, whether it's for a class, protocol, function, type, or constant.  AppKiDo parses the headers and HTML doc files that were installed with your Developer Tools.  It presents the results in a form that is <span class="featureHighlight">easy to navigate</span>.</p>
 
 <p><b>AppKiDo-for-iPhone</b> is just like AppKiDo (and is built from the same code base), but for iPhone developers.</p>
 
@@ -157,7 +228,7 @@ height="46" width="180"/>
 </ul>
 </td>
 
-<td><!-- <img src="docs.png"></img> --><img src="screenshot-smaller.png" width="390"></img><br></br></td>
+<td><!-- <img src="docs.png"></img> --><img src="screenshot-smaller.png" width="390"></img><br/></td>
 
 </tr>
 </table>
@@ -165,41 +236,43 @@ height="46" width="180"/>
 <!-- ========== FEATURES ========== -->
 <h2 style="margin-top: 4px;">Features</h2>
 
-<table>
+<table class="featuresTable">
 
 <!-- --- class hierarchy --- -->
-<tr valign="TOP">
-    <td>AppKiDo presents the <font color="RED"><b>class hierarchy</b></font> in a browser view.  You can explore a superclass or subclass with a single click.  If you are new to Cocoa, browse the class hierarchy to get acquainted with what's there and how it's organized.  If you are more experienced, you can explore branches of the hierarchy you never paid attention to before.<br></br></td>
+<tr valign="top">
+    <td><p>AppKiDo presents the <span class="featureHighlight">class hierarchy</span> in a browser view.  You can see sibling classes at a glance and go up and down the hierarchy with a single click.  This is convenient because the method you're looking for is often in a superclass.</p>
+    
+    <p>If you are new to Cocoa, browse the class hierarchy to get acquainted with what's there and how it's organized.  If you are more experienced, you can explore branches of the hierarchy you never paid attention to before.</p></td>
 
-    <td><img src="browser.png"></img><br></br></td>
+    <td><img src="browser.png"></img></td>
 </tr>
 
 <!-- --- consolidated list --- -->
-<tr valign="TOP">
-    <td>AppKiDo can display a <font color="RED"><b>consolidated list</b></font> of <font color="RED"><b>all methods</b></font> a class implements, including inherited methods, methods that satisfy a protocol, and methods added by a framework other than the class's main framework (for example, the drawing methods that AppKit adds to NSAttributedString).  This can help you understand the complete behavior of a class.<br></br></td>
+<tr valign="top">
+    <td><p>AppKiDo can display a <span class="featureHighlight">consolidated list</span> of <span class="featureHighlight">all methods</span> a class implements, including inherited methods, methods that satisfy a protocol, and methods added by a framework other than the class's main framework (for example, the drawing methods that AppKit adds to NSAttributedString).  This can help you understand the complete behavior of a class, and it's another quick way to find methods that are in a superclass.</p></td>
 
-    <td><img src="consolidated.png"></img><br></br></td>
+    <td><img src="consolidated.png"></img></td>
 </tr>
 
 <!-- --- quicklists --- -->
-<tr valign="TOP">
-    <td>AppKiDo provides handy "<font color="RED"><b>quicklists</b></font>" of logically related groups of classes.  This puts many <font color="RED"><b>frequently used classes</b></font> a click or two away.<br></br></td>
+<tr valign="top">
+    <td><p>AppKiDo provides handy "<span class="featureHighlight">quicklists</span>" of logically related groups of classes.  This puts many <span class="featureHighlight">frequently used classes</span> a click or two away.  It can also help you understand some concepts.  For example, if you find delegates confusing, it may help to browse "Classes with delegates" to see all the ways a delegate is used.</p></td>
 
-    <td><img src="quicklists.png"></img><br></br></td>
+    <td><img src="quicklists.png"></img></td>
 </tr>
 
 <!-- --- search --- -->
-<tr valign="TOP">
-    <td>If you're not quite sure what you're looking for, AppKiDo can <font color="RED"><b>search for names</b></font> of API constructs.  So, for example, if you're wondering how to manage cursors, search for "cursor".  Apple has conveniently put the word "cursor" in the names of most things related to cursors.<br></br></td>
+<tr valign="top">
+    <td><p>If you're not sure what you're looking for, AppKiDo can <span class="featureHighlight">search for names</span> of API constructs.  For example, if you're wondering how to manage cursors, search for "cursor".  Apple has conveniently put the word "cursor" in the names of most things related to cursors.</p></td>
 
-    <td><img src="search.png"></img><br></br></td>
+    <td><img src="search.png"></img></td>
 </tr>
 
 <!-- --- header files --- -->
-<tr valign="TOP">
-    <td>AppKiDo can open the <font color="RED"><b>header file</b></font> for any Cocoa class.<br></br></td>
+<tr valign="top">
+    <td><p>AppKiDo can open the <span class="featureHighlight">header file</span> for any Cocoa class.</p></td>
 
-    <td><img src="header.png"></img><br></br></td>
+    <td><img src="header.png"></img></td>
 </tr>
 
 </table>
