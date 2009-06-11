@@ -54,6 +54,15 @@
  */
 + (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath;
 
+/*!
+ * docSetName should be xxx.docset.  If you leave off the .docset it will
+ * be added for you.
+ *
+ * Pass nil for docSetName to get the latest available version.
+ */
++ (id)indexForIPhoneSDKWithDocSetNamed:(NSString *)docSetName
+    inDevToolsPath:(NSString *)devToolsPath;
+
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------

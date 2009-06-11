@@ -522,6 +522,10 @@
 		73B914960E089D180012C16F /* AKDevToolsPathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsPathController.m */; };
 		73C237190D550CE700DFA6A5 /* AKFrameworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C237170D550CE600DFA6A5 /* AKFrameworkInfo.h */; };
 		73C2371A0D550CE700DFA6A5 /* AKFrameworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C237180D550CE700DFA6A5 /* AKFrameworkInfo.m */; };
+		73C735A70F43C65D00EC86AF /* AKIPhoneDirectories.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDirectories.h */; };
+		73C735A80F43C65D00EC86AF /* AKIPhoneDirectories.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDirectories.m */; };
+		73C735A90F43C65D00EC86AF /* AKIPhoneDirectories.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDirectories.h */; };
+		73C735AA0F43C65D00EC86AF /* AKIPhoneDirectories.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDirectories.m */; };
 		73D237080D4561C300EF7503 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237010D4561C300EF7503 /* FMDatabase.h */; };
 		73D237090D4561C300EF7503 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237020D4561C300EF7503 /* FMDatabase.m */; };
 		73D2370A0D4561C300EF7503 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237030D4561C300EF7503 /* FMDatabaseAdditions.h */; };
@@ -791,6 +795,8 @@
 		73C237170D550CE600DFA6A5 /* AKFrameworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkInfo.h; sourceTree = "<group>"; };
 		73C237180D550CE700DFA6A5 /* AKFrameworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkInfo.m; sourceTree = "<group>"; };
 		73C7099306979F0E00509711 /* FrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = FrameworkInfo.plist; sourceTree = "<group>"; };
+		73C735A50F43C65D00EC86AF /* AKIPhoneDirectories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKIPhoneDirectories.h; path = CocoaFrameworks/AKIPhoneDirectories.h; sourceTree = "<group>"; };
+		73C735A60F43C65D00EC86AF /* AKIPhoneDirectories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKIPhoneDirectories.m; path = CocoaFrameworks/AKIPhoneDirectories.m; sourceTree = "<group>"; };
 		73C74137066BFAEF00A76FEE /* AKFindPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFindPanelController.h; sourceTree = "<group>"; };
 		73C74138066BFAEF00A76FEE /* AKFindPanelController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKFindPanelController.m; sourceTree = "<group>"; };
 		73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKPrefPanelController.h; sourceTree = "<group>"; };
@@ -1335,6 +1341,8 @@
 				73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */,
 				731D74350E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h */,
 				731D74360E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m */,
+				73C735A50F43C65D00EC86AF /* AKIPhoneDirectories.h */,
+				73C735A60F43C65D00EC86AF /* AKIPhoneDirectories.m */,
 			);
 			name = "docset-based database";
 			sourceTree = "<group>";
@@ -1658,6 +1666,7 @@
 				731D74370E42BBCA00C54AD5 /* AKDatabaseWithDocSet.h in Headers */,
 				739E1C800E4F453900119B06 /* AKDevToolsPanelController.h in Headers */,
 				7399AFBC0E621E27001AE672 /* AKNodeDoc.h in Headers */,
+				73C735A70F43C65D00EC86AF /* AKIPhoneDirectories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1779,6 +1788,7 @@
 				7399B3240E632A5C001AE672 /* AKDatabaseWithDocSet.h in Headers */,
 				7399B3250E632A5C001AE672 /* AKDevToolsPanelController.h in Headers */,
 				7399B3260E632A5C001AE672 /* AKNodeDoc.h in Headers */,
+				73C735A90F43C65D00EC86AF /* AKIPhoneDirectories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2037,6 +2047,7 @@
 				731D74380E42BBCA00C54AD5 /* AKDatabaseWithDocSet.m in Sources */,
 				739E1C810E4F453900119B06 /* AKDevToolsPanelController.m in Sources */,
 				7399AFBD0E621E27001AE672 /* AKNodeDoc.m in Sources */,
+				73C735A80F43C65D00EC86AF /* AKIPhoneDirectories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2158,6 +2169,7 @@
 				7399B3B60E632A5C001AE672 /* AKDatabaseWithDocSet.m in Sources */,
 				7399B3B70E632A5C001AE672 /* AKDevToolsPanelController.m in Sources */,
 				7399B3B80E632A5C001AE672 /* AKNodeDoc.m in Sources */,
+				73C735AA0F43C65D00EC86AF /* AKIPhoneDirectories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
