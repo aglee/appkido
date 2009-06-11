@@ -12,15 +12,14 @@
 #import "AKFrameworkConstants.h"
 #import "AKTextUtils.h"
 #import "AKFileUtils.h"
+#import "AKIPhoneDirectories.h"
 
 
-@interface AKDocSetIndex (Private)
+@interface AKDocSetIndex ()
 
 - (NSMutableArray *)_allFrameworkNames;
 - (NSMutableArray *)_objectiveCFrameworkNames;
 - (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString;
-
-+ (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath;
 
 - (NSString *)_resourcesPath;
 - (NSString *)_pathToSqliteFile;
@@ -75,12 +74,43 @@ static NSString *s_headerPathsQueryTemplate =
 
 + (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath
 {
-    NSString *docSetPath =
-        [devToolsPath
-            stringByAppendingPathComponent:
-                @"Documentation/DocSets/"
-                "com.apple.ADC_Reference_Library.CoreReference.docset"];
-    NSString *basePathForHeaders = @"/";
+    NSString *docSetPath = nil;
+    NSString *docSetsDirPath = [devToolsPath stringByAppendingPathComponent:@"Documentation/DocSets/"];
+	NSError *fileManagerError = nil;
+    NSArray *allDocSetPaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docSetsDirPath error:&fileManagerError];
+
+    if (fileManagerError)
+    {
+    	DIGSLogWarning(@"error looking for doc set in dev tools path [%@]: %@", devToolsPath, fileManagerError);
+    }
+
+	for (NSString *file in allDocSetPaths)
+    {
+        if ([file hasSuffix:@"CoreReference.docset"])
+        {
+            docSetPath = [docSetsDirPath stringByAppendingPathComponent:file];
+            break;
+        }
+    }
+
+    if (docSetPath == nil)
+    {
+        DIGSLogWarning(@"couldn't find anything named xxx.CoreReference.docset in [%@]", docSetsDirPath);
+        return nil;
+    }
+
+    return
+        [[[AKDocSetIndex alloc]
+            initWithDocSetPath:docSetPath
+            basePathForHeaders:@"/"] autorelease];
+}
+
++ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
+{
+    AKIPhoneDirectories *iPhoneDirs =
+        [AKIPhoneDirectories iPhoneDirectoriesWithDevToolsPath:devToolsPath];
+    NSString *docSetPath = [iPhoneDirs pathToLatestDocSet];
+    NSString *basePathForHeaders = [iPhoneDirs pathToLatestHeadersDir];
 
     return
         [[[AKDocSetIndex alloc]
@@ -88,19 +118,24 @@ static NSString *s_headerPathsQueryTemplate =
             basePathForHeaders:basePathForHeaders] autorelease];
 }
 
-+ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
++ (id)indexForIPhoneSDKWithDocSetNamed:(NSString *)docSetName
+    inDevToolsPath:(NSString *)devToolsPath
 {
-    NSString *docSetsDir =
-        [devToolsPath
-            stringByAppendingPathComponent:
-                @"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"];
-    NSString *sdksDir =
-        [devToolsPath
-            stringByAppendingPathComponent:
-                @"Platforms/iPhoneOS.platform/Developer/SDKs/"];
+    if (docSetName == nil)
+        return [self indexForLatestIPhoneSDKInDevToolsPath:devToolsPath];
 
-    NSString *docSetPath = [self _latestIPhonePathInDirectory:docSetsDir];
-    NSString *basePathForHeaders = [self _latestIPhonePathInDirectory:sdksDir];
+    AKIPhoneDirectories *iPhoneDirs =
+        [AKIPhoneDirectories iPhoneDirectoriesWithDevToolsPath:devToolsPath];
+    NSString *docSetsDir = [iPhoneDirs docSetsDir];
+
+    if (![[docSetName pathExtension] isEqualToString:@"docset"])
+    {
+        docSetName = [docSetName stringByAppendingPathExtension:@"docset"];
+    }
+
+    NSString *docSetPath =
+        [docSetsDir stringByAppendingPathComponent:docSetName];
+    NSString *basePathForHeaders = [iPhoneDirs pathToLatestHeadersDir];
 
     return
         [[[AKDocSetIndex alloc]
@@ -327,15 +362,6 @@ static NSString *s_headerPathsQueryTemplate =
 */
 }
 
-@end
-
-
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
-
-@implementation AKDocSetIndex (Private)
-
 - (NSMutableArray *)_allFrameworkNames
 {
     return [self _stringArrayFromQuery:s_allFrameworkNamesQuery];
@@ -370,42 +396,6 @@ static NSString *s_headerPathsQueryTemplate =
     [db close];
 
     return stringArray;
-}
-
-+ (NSString *)_latestIPhonePathInDirectory:(NSString *)dirPath
-{
-    NSEnumerator *dirContentsEnum =
-        [[[NSFileManager defaultManager]
-            directoryContentsAtPath:dirPath]
-            objectEnumerator];
-    NSString *fileName;
-    NSDate *latestDate = nil;
-    NSString *latestFile = nil;
-
-    while ((fileName = [dirContentsEnum nextObject]))
-    {
-        if ([fileName ak_containsCaseInsensitive:@"iPhone"])
-        {
-            NSDictionary *fileAttributes =
-                [[NSFileManager defaultManager]
-                    fileAttributesAtPath:
-                        [dirPath stringByAppendingPathComponent:fileName]
-                    traverseLink:YES];
-            NSDate *modDate = [fileAttributes fileModificationDate];
-
-            if (latestDate == nil ||
-                [modDate compare:latestDate] == NSOrderedDescending)
-            {
-                latestDate = modDate;
-                latestFile = fileName;
-            }
-
-            DIGSLogDebug(@"[%@] -- [%@]", modDate, fileName);
-        }
-    }
-
-    DIGSLogDebug(@"[%@] ** [%@]", latestDate, latestFile);
-    return [dirPath stringByAppendingPathComponent:latestFile];
 }
 
 - (NSString *)_resourcesPath
