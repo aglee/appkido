@@ -74,35 +74,25 @@ static NSString *s_headerPathsQueryTemplate =
 
 + (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath
 {
-    NSString *docSetPath = nil;
     NSString *docSetsDirPath = [devToolsPath stringByAppendingPathComponent:@"Documentation/DocSets/"];
-	NSError *fileManagerError = nil;
-    NSArray *allDocSetPaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docSetsDirPath error:&fileManagerError];
+    NSArray *allDocSetNames = [[NSFileManager defaultManager] directoryContentsAtPath:docSetsDirPath];  // [agl] Deprecated.
+    NSEnumerator *docSetEnum = [allDocSetNames objectEnumerator];
+    NSString *docSetName;
 
-    if (fileManagerError)
+	while ((docSetName = [docSetEnum nextObject]))
     {
-    	DIGSLogWarning(@"error looking for doc set in dev tools path [%@]: %@", devToolsPath, fileManagerError);
-    }
-
-	for (NSString *file in allDocSetPaths)
-    {
-        if ([file hasSuffix:@"CoreReference.docset"])
+        if ([docSetName hasSuffix:@"CoreReference.docset"])
         {
-            docSetPath = [docSetsDirPath stringByAppendingPathComponent:file];
-            break;
+            return
+                [[[AKDocSetIndex alloc]
+                    initWithDocSetPath:[docSetsDirPath stringByAppendingPathComponent:docSetName]
+                    basePathForHeaders:@"/"] autorelease];
         }
     }
 
-    if (docSetPath == nil)
-    {
-        DIGSLogWarning(@"couldn't find anything named xxx.CoreReference.docset in [%@]", docSetsDirPath);
-        return nil;
-    }
-
-    return
-        [[[AKDocSetIndex alloc]
-            initWithDocSetPath:docSetPath
-            basePathForHeaders:@"/"] autorelease];
+    // If we got this far, we couldn't find a docset named xxx.CoreReference.docset.
+    DIGSLogWarning(@"couldn't find anything named xxx.CoreReference.docset in [%@]", docSetsDirPath);
+    return nil;
 }
 
 + (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
