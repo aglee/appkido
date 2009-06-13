@@ -25,6 +25,16 @@
 ----------------------------------------------------------
 *** 0.99 stuff (Xcode 3.x only?) ***
 
+[ ] Open a document online instead of locally.  Copy that URL to the pasteboard.
+
+[ ] Search the Examples directory for an example of the method.
+
+[ ] Add a "Controller classes" option to the quicklist.
+
+[ ] Add "Donate..." menu item and a link on the About box.
+
+[ ] Add a Bindings subtopic?  (See "Cocoa Bindings Reference".  There's a list of classes that have bindings -- mostly view classes, but not all - and what those bindings are.)
+
 [ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
 
 [ ] install Xcode 2.5 and 3.1 at home and on Flint
@@ -34,6 +44,14 @@
 [ ] make sure mailing list has latest people who asked to be on it
 
 ===== bugs =====
+
+[ ] Noticed AppKiDo prompted for location of dev tools although it had already parsed the docs found in /Developer.
+
+[ ] regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
+
+[ ] From Jeff Johnson 2009-03-10: "I have a suggestion for a minor code change in AKAppController.m. I recommend implementing -applicationDidFinishLaunching: and moving everything in -awakeFromNib starting with [_splashMessage2Field setStringValue:@""] to the new method.    I'll explain the reason for this. As we know, AppKit is not thread-safe. Of relevance here is that the NSApplication isActive state only gets updated on the main thread. The AppKiDo database parsing in awakeFromNib is an expensive, blocking operation. Thus, what often happens is that I launch AppKiDo, perhaps at the beginning of the day, and then switch to another application before it's finished launching. When the database parsing is done, the app is no longer active, but the isActive state hasn't been updated yet, applicationDidResignActive hasn't been called yet, and so forth, because that all happens only on the main thread, which was blocked in awakeFromNib. When [self _openInitialWindows] is called in awakeFromNib, the app still thinks it's active, and the window appears in front of the active app rather than in the background, which is confusing and bothersome.    Moving the window opening code out of awakeFromNib gives the app a chance to update the isActive state after the database parsing is done, and then the correct window ordering behavior occurs."
+
+[ ] CGRectMake is in both CoreGraphics functions and QuartzCore functions??
 
 [ ] Suggestion from Jeff Laing: "One niggle: would it be possible to select which version of the SDK you use?  At th moment, I'm trying to concentrate on 2.1 rather than 2.2 (for what is probably not a good reason since you'd expect everyone would just upgrade, but some people just don't)"
 	* Rustam Muginov asked about selecting the version too.
