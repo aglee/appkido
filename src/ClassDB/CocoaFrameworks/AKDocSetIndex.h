@@ -47,21 +47,11 @@
  */
 + (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath;
 
-/*!
- * Returns nil if we can't find an iPhoneSDK...dsIdx file.
- *
- * [agl] FIXME Should we search in the Shared directory as well?
- */
-+ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath;
+/*! Uses the AKIPhoneDirectories class. */
++ (id)indexForIPhoneSDKVersion:(NSString *)sdkVersion inDevToolsPath:(NSString *)devToolsPath;
 
-/*!
- * docSetName should be xxx.docset.  If you leave off the .docset it will
- * be added for you.
- *
- * Pass nil for docSetName to get the latest available version.
- */
-+ (id)indexForIPhoneSDKWithDocSetNamed:(NSString *)docSetName
-    inDevToolsPath:(NSString *)devToolsPath;
+/*! Uses the AKIPhoneDirectories class. */
++ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
