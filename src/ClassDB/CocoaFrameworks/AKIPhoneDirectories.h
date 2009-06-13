@@ -18,29 +18,37 @@
 {
 @private
     NSString *_devToolsPath;
+    NSMutableArray *_sdkVersions;
+    NSMutableDictionary *_docSetPathsByVersion;
+    NSMutableDictionary *_headersPathsByVersion;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)iPhoneDirectoriesWithDevToolsPath:(NSString *)devToolsPath;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDevToolsPath:(NSString *)devToolsPath;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
 
-- (NSString *)docSetsDir;
-- (NSString *)sdksDir;
+#pragma mark -
+#pragma mark Getters and setters
 
-- (NSString *)pathToLatestDocSet;
-- (NSString *)pathToLatestHeadersDir;
+- (NSString *)devToolsPath;
+
+/*! Returns an array sorted naturally for version strings, i.e., the last indicates the latest version. */
+- (NSArray *)sdkVersions;
+
+- (NSString *)docSetPathForVersion:(NSString *)sdkVersion;
+- (NSString *)headersPathForVersion:(NSString *)sdkVersion;
+
+- (NSString *)docSetPathForLatestVersion;
+- (NSString *)headersPathForLatestVersion;
 
 @end

@@ -95,12 +95,14 @@ static NSString *s_headerPathsQueryTemplate =
     return nil;
 }
 
-+ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
++ (id)indexForIPhoneSDKVersion:(NSString *)sdkVersion inDevToolsPath:(NSString *)devToolsPath
 {
-    AKIPhoneDirectories *iPhoneDirs =
-        [AKIPhoneDirectories iPhoneDirectoriesWithDevToolsPath:devToolsPath];
-    NSString *docSetPath = [iPhoneDirs pathToLatestDocSet];
-    NSString *basePathForHeaders = [iPhoneDirs pathToLatestHeadersDir];
+    AKIPhoneDirectories *iPhoneDirs = [AKIPhoneDirectories iPhoneDirectoriesWithDevToolsPath:devToolsPath];
+    NSString *docSetPath = [iPhoneDirs docSetPathForVersion:sdkVersion];
+    NSString *basePathForHeaders = [iPhoneDirs headersPathForVersion:sdkVersion];
+
+    if (docSetPath == nil || basePathForHeaders == nil)
+        return nil;
 
     return
         [[[AKDocSetIndex alloc]
@@ -108,24 +110,15 @@ static NSString *s_headerPathsQueryTemplate =
             basePathForHeaders:basePathForHeaders] autorelease];
 }
 
-+ (id)indexForIPhoneSDKWithDocSetNamed:(NSString *)docSetName
-    inDevToolsPath:(NSString *)devToolsPath
++ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
 {
-    if (docSetName == nil)
-        return [self indexForLatestIPhoneSDKInDevToolsPath:devToolsPath];
-
     AKIPhoneDirectories *iPhoneDirs =
         [AKIPhoneDirectories iPhoneDirectoriesWithDevToolsPath:devToolsPath];
-    NSString *docSetsDir = [iPhoneDirs docSetsDir];
+    NSString *docSetPath = [iPhoneDirs docSetPathForLatestVersion];
+    NSString *basePathForHeaders = [iPhoneDirs headersPathForLatestVersion];
 
-    if (![[docSetName pathExtension] isEqualToString:@"docset"])
-    {
-        docSetName = [docSetName stringByAppendingPathExtension:@"docset"];
-    }
-
-    NSString *docSetPath =
-        [docSetsDir stringByAppendingPathComponent:docSetName];
-    NSString *basePathForHeaders = [iPhoneDirs pathToLatestHeadersDir];
+    if (docSetPath == nil || basePathForHeaders == nil)
+        return nil;
 
     return
         [[[AKDocSetIndex alloc]
