@@ -14,29 +14,22 @@
  * preference for the Dev Tools location.  Calling -runOpenPanel starts
  * an open panel sheet in the window that contains that text field,
  * allowing the user to select a different Dev Tools path.
+ *
+ * Before calling -runOpenPanel, call -setDevToolsPathField: and
+ * -setDocSetsPopUpButton: to get the UI hooked up.
  */
 @interface AKDevToolsPathController : NSObject
 {
     NSTextField *_devToolsPathField;
+    NSPopUpButton *_docSetsPopUpButton;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
 
-/*! Returns an instance attached to a pre-existing UI via textField. */
-+ (id)controllerWithTextField:(NSTextField *)textField;
+#pragma mark -
+#pragma mark Getters and setters
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
-
-/*! Designated initializer. */
-- (id)initWithTextField:(NSTextField *)textField;
-
-//-------------------------------------------------------------------------
-// Running the panel
-//-------------------------------------------------------------------------
+- (void)setDevToolsPathField:(NSTextField *)textField;
+- (void)setDocSetsPopUpButton:(NSPopUpButton *)popUpButton;
 
 /*!
  * Does a rough sanity check on a directory that is claimed to be a
@@ -44,9 +37,13 @@
  */
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath;
 
+
+#pragma mark -
+#pragma mark Running the panel
+
 /*!
  * Displays an open panel that prompts the user for the Dev Tools location.
- * The open panel is opened as a sheet on the window containing
+ * The open panel is opened as a sheet on the window that contains
  * _devToolsPathField.
  */
 - (void)runOpenPanel;

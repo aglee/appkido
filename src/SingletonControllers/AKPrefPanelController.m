@@ -127,8 +127,9 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
 - (IBAction)selectDevToolsPath:(id)sender
 {
-    AKDevToolsPathController *pathPrompt =
-        [AKDevToolsPathController controllerWithTextField:_devToolsPathField];
+    AKDevToolsPathController *pathPrompt = [[[AKDevToolsPathController alloc] init] autorelease];
+    [pathPrompt setDevToolsPathField:_devToolsPathField];
+    [pathPrompt setDocSetsPopUpButton:_docSetsPopUpButton];
     [pathPrompt runOpenPanel];
 }
 

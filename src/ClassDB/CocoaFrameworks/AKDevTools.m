@@ -1,21 +1,22 @@
 //
-//  AKIPhoneDirectories.m
+//  AKDevTools.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 2/11/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "AKIPhoneDirectories.h"
+#import "AKDevTools.h"
 
 #import "DIGSLog.h"
 #import "AKTextUtils.h"
+#import "AKDocSetIndex.h"
 
 
 #pragma mark -
 #pragma mark Forward declarations of private methods
 
-@interface AKIPhoneDirectories ()
+@interface AKDevTools ()
 - (void)_initDocSetPathsByVersion;
 - (void)_initHeadersPathsByVersion;
 @end
@@ -23,11 +24,9 @@
 
 #pragma mark -
 
-@implementation AKIPhoneDirectories
+@implementation AKDevTools
 
-#pragma mark -
-#pragma mark Function for sorting version strings
-
+// Used for sorting the version strings in _sdkVersions.
 static NSInteger _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
 {
     NSArray *leftComponents = [(NSString *)leftVersionString componentsSeparatedByString:@"."];
@@ -59,9 +58,9 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)iPhoneDirectoriesWithDevToolsPath:(NSString *)devToolsPath
++ (id)devToolsWithPath:(NSString *)devToolsPath
 {
-    return [[[self alloc] initWithDevToolsPath:devToolsPath] autorelease];
+    return [[[self alloc] initWithPath:devToolsPath] autorelease];
 }
 
 
@@ -69,7 +68,7 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithDevToolsPath:(NSString *)devToolsPath
+- (id)initWithPath:(NSString *)devToolsPath
 {
     if ((self = [super init]))
     {
@@ -81,9 +80,9 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
         [self _initDocSetPathsByVersion];
         [self _initHeadersPathsByVersion];
         [_sdkVersions sortUsingFunction:_versionSortFunction context:NULL];
-        //NSLog(@"_sdkVersions = %@", _sdkVersions);
-        //NSLog(@"_docSetPathsByVersion = %@", _docSetPathsByVersion);
-        //NSLog(@"_headersPathsByVersion = %@", _headersPathsByVersion);
+//        NSLog(@"_sdkVersions = %@", _sdkVersions);
+//        NSLog(@"_docSetPathsByVersion = %@", _docSetPathsByVersion);
+//        NSLog(@"_headersPathsByVersion = %@", _headersPathsByVersion);
     }
 
     return self;
@@ -108,6 +107,24 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
     return _devToolsPath;
 }
 
+- (NSString *)relativePathToDocSetsDir
+{
+    DIGSLogMissingOverride();
+    return nil;
+}
+
+- (NSString *)relativePathToHeadersDir
+{
+    DIGSLogMissingOverride();
+    return nil;
+}
+
+- (BOOL)isValidDocSetName:(NSString *)fileName
+{
+    DIGSLogMissingOverride();
+    return NO;
+}
+
 - (NSArray *)sdkVersions
 {
     return _sdkVersions;
@@ -115,59 +132,79 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
 
 - (NSString *)docSetPathForVersion:(NSString *)sdkVersion
 {
+    if (sdkVersion == nil)
+        sdkVersion = [_sdkVersions lastObject];
     return [_docSetPathsByVersion objectForKey:sdkVersion];
 }
 
 - (NSString *)headersPathForVersion:(NSString *)sdkVersion
 {
+    if (sdkVersion == nil)
+        sdkVersion = [_sdkVersions lastObject];
     return [_headersPathsByVersion objectForKey:sdkVersion];
 }
 
-- (NSString *)docSetPathForLatestVersion
-{
-    return [_docSetPathsByVersion objectForKey:[_sdkVersions lastObject]];
-}
 
-- (NSString *)headersPathForLatestVersion
+#pragma mark -
+#pragma mark Creating a docset index
+
+- (AKDocSetIndex *)docSetIndexForSDKVersion:(NSString *)sdkVersion
 {
-    return [_headersPathsByVersion objectForKey:[_sdkVersions lastObject]];
+    NSString *docSetPath = [self docSetPathForVersion:sdkVersion];
+    NSString *basePathForHeaders = [self headersPathForVersion:sdkVersion];
+
+    if (docSetPath == nil || basePathForHeaders == nil)
+        return nil;
+
+    return
+        [[[AKDocSetIndex alloc]
+            initWithDocSetPath:docSetPath
+            basePathForHeaders:basePathForHeaders] autorelease];
 }
 
 
 #pragma mark -
 #pragma mark Private methods
 
-// Called by -initWithDevToolsPath: to populate _docSetPathsByVersion by locating all available
+// Called by -initWithPath: to populate _docSetPathsByVersion by locating all available
 // docsets.  Adds to _sdkVersions as it goes.  Must be called before _initHeadersPathsByVersion,
 // because the latter depends on _sdkVersions having been populated.
 - (void)_initDocSetPathsByVersion
 {
-    NSString *docSetsDir = [_devToolsPath stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"];
+    NSString *docSetsDir = [_devToolsPath stringByAppendingPathComponent:[self relativePathToDocSetsDir]];
     NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] directoryContentsAtPath:docSetsDir] objectEnumerator];
     NSString *fileName;
 
     while ((fileName = [dirContentsEnum nextObject]))
     {
-        if ([[fileName pathExtension] isEqualToString:@"docset"])
+        if ([self isValidDocSetName:fileName])
         {
             NSString *docSetPath = [docSetsDir stringByAppendingPathComponent:fileName];
             NSString *plistPath = [docSetPath stringByAppendingPathComponent:@"Contents/Info.plist"];
             NSDictionary *docSetPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-            NSString *sdkVersion = [docSetPlist objectForKey:@"DocSetPlatformVersion"];
 
-            if (![_sdkVersions containsObject:sdkVersion])
-                [_sdkVersions addObject:sdkVersion];
+            if (docSetPlist == nil)
+            {
+                DIGSLogInfo(@"couldn't read plist at location %@", plistPath);
+            }
+            else
+            {
+                NSString *sdkVersion = [docSetPlist objectForKey:@"DocSetPlatformVersion"];
 
-            [_docSetPathsByVersion setObject:docSetPath forKey:sdkVersion];
+                if (![_sdkVersions containsObject:sdkVersion])
+                    [_sdkVersions addObject:sdkVersion];
+
+                [_docSetPathsByVersion setObject:docSetPath forKey:sdkVersion];
+            }
         }
     }
 }
 
-// Called by -initWithDevToolsPath: to populate _headersPathsByVersion by locating all
+// Called by -initWithPath: to populate _headersPathsByVersion by locating all
 // SDK directories whose versions have corresponding docs, as indicated by _sdkVersions.
 - (void)_initHeadersPathsByVersion
 {
-    NSString *sdksDir = [_devToolsPath stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/SDKs/"];
+    NSString *sdksDir = [_devToolsPath stringByAppendingPathComponent:[self relativePathToHeadersDir]];
     NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] directoryContentsAtPath:sdksDir] objectEnumerator];
     NSString *fileName;
 

@@ -12,7 +12,8 @@
 #import "AKFrameworkConstants.h"
 #import "AKTextUtils.h"
 #import "AKFileUtils.h"
-#import "AKIPhoneDirectories.h"
+#import "AKMacDevTools.h"
+#import "AKIPhoneDevTools.h"
 
 
 @interface AKDocSetIndex ()
@@ -42,12 +43,12 @@
 
 @end
 
+#pragma mark -
 
 @implementation AKDocSetIndex
 
-//-------------------------------------------------------------------------
-// SQL queries
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark SQL queries
 
 static NSString *s_allFrameworkNamesQuery =
     @"select distinct header.ZFRAMEWORKNAME from ZHEADER header order by header.ZFRAMEWORKNAME";
@@ -68,67 +69,8 @@ static NSString *s_headerPathsQueryTemplate =
     @"select distinct header.ZHEADERPATH as headerPath from ZTOKEN token, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header where token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and header.ZFRAMEWORKNAME = ?";
 
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
-
-+ (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath
-{
-    NSString *docSetsDirPath = [devToolsPath stringByAppendingPathComponent:@"Documentation/DocSets/"];
-    NSArray *allDocSetNames = [[NSFileManager defaultManager] directoryContentsAtPath:docSetsDirPath];  // [agl] Deprecated.
-    NSEnumerator *docSetEnum = [allDocSetNames objectEnumerator];
-    NSString *docSetName;
-
-	while ((docSetName = [docSetEnum nextObject]))
-    {
-        if ([docSetName hasSuffix:@"CoreReference.docset"])
-        {
-            return
-                [[[AKDocSetIndex alloc]
-                    initWithDocSetPath:[docSetsDirPath stringByAppendingPathComponent:docSetName]
-                    basePathForHeaders:@"/"] autorelease];
-        }
-    }
-
-    // If we got this far, we couldn't find a docset named xxx.CoreReference.docset.
-    DIGSLogWarning(@"couldn't find anything named xxx.CoreReference.docset in [%@]", docSetsDirPath);
-    return nil;
-}
-
-+ (id)indexForIPhoneSDKVersion:(NSString *)sdkVersion inDevToolsPath:(NSString *)devToolsPath
-{
-    AKIPhoneDirectories *iPhoneDirs = [AKIPhoneDirectories iPhoneDirectoriesWithDevToolsPath:devToolsPath];
-    NSString *docSetPath = [iPhoneDirs docSetPathForVersion:sdkVersion];
-    NSString *basePathForHeaders = [iPhoneDirs headersPathForVersion:sdkVersion];
-
-    if (docSetPath == nil || basePathForHeaders == nil)
-        return nil;
-
-    return
-        [[[AKDocSetIndex alloc]
-            initWithDocSetPath:docSetPath
-            basePathForHeaders:basePathForHeaders] autorelease];
-}
-
-+ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath
-{
-    AKIPhoneDirectories *iPhoneDirs =
-        [AKIPhoneDirectories iPhoneDirectoriesWithDevToolsPath:devToolsPath];
-    NSString *docSetPath = [iPhoneDirs docSetPathForLatestVersion];
-    NSString *basePathForHeaders = [iPhoneDirs headersPathForLatestVersion];
-
-    if (docSetPath == nil || basePathForHeaders == nil)
-        return nil;
-
-    return
-        [[[AKDocSetIndex alloc]
-            initWithDocSetPath:docSetPath
-            basePathForHeaders:basePathForHeaders] autorelease];
-}
-
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithDocSetPath:(NSString *)docSetPath
     basePathForHeaders:(NSString *)basePathForHeaders
@@ -191,9 +133,9 @@ static NSString *s_headerPathsQueryTemplate =
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSArray *)selectableFrameworkNames
 {
@@ -344,6 +286,10 @@ static NSString *s_headerPathsQueryTemplate =
     return result;
 */
 }
+
+
+#pragma mark -
+#pragma mark Private methods
 
 - (NSMutableArray *)_allFrameworkNames
 {

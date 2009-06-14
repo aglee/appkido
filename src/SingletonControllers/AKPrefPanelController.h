@@ -27,11 +27,12 @@
 
     IBOutlet NSPopUpButton *_magnificationChoice;
 
-    // Controls in the Docsets tab.
-    IBOutlet NSTextField *_devToolsPathField;
-
     // Controls in the Frameworks tab.
     IBOutlet NSTableView *_frameworksTable;
+
+    // Controls in the Docsets tab.
+    IBOutlet NSTextField *_devToolsPathField;
+    IBOutlet NSPopUpButton *_docSetsPopUpButton;
 }
 
 //-------------------------------------------------------------------------

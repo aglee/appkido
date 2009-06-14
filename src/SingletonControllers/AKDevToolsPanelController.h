@@ -19,6 +19,7 @@
     AKDevToolsPathController *_textFieldController;
 
     IBOutlet NSTextField *_devToolsPathField;
+    IBOutlet NSPopUpButton *_docSetsPopUpButton;
 }
 
 //-------------------------------------------------------------------------

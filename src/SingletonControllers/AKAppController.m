@@ -12,6 +12,7 @@
 #import <DIGSFindBuffer.h>
 
 #import "AKDocSetIndex.h"
+#import "AKIPhoneDevTools.h"
 #import "AKFrameworkConstants.h"
 #import "AKFileUtils.h"
 #import "AKTextUtils.h"
@@ -225,11 +226,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // ones they don't want.  The docset is small enough that we can do this.
     if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
     {
-        [AKPrefUtils
-            setSelectedFrameworkNamesPref:
-                [[AKDocSetIndex
-                    indexForLatestIPhoneSDKInDevToolsPath:[AKPrefUtils devToolsPathPref]]
-                        selectableFrameworkNames]];
+        NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
+        AKIPhoneDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
+        AKDocSetIndex *docSetIndex = [devTools docSetIndexForSDKVersion:nil];
+        [AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
     }
 #else
     _appDatabase = [[AKDatabase databaseForPlatform:AKMacOSPlatform] retain];

@@ -8,9 +8,8 @@
 #import <Cocoa/Cocoa.h>
 
 /*!
- * Provides read-only access to the SQLite database of API tokens that Apple
- * started providing with Leopard.  The database is in a file called
- * docSet.dsidx in the documentation directory.
+ * Provides read-only access to the SQLite database of API tokens that can be
+ * found inside a .docset bundle.  The database is in a file called docSet.dsidx.
  */
 @interface AKDocSetIndex : NSObject
 {
@@ -36,26 +35,8 @@
     NSString *_basePathForHeaders;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
-
-/*!
- * Looks for the docset index file at a specific subpath of the Dev Tools
- * path, which so far has always been the same for the Mac OS Core Reference
- * docset.  Returns nil if there is no docset index file at that location.
- */
-+ (id)indexForMacSDKInDevToolsPath:(NSString *)devToolsPath;
-
-/*! Uses the AKIPhoneDirectories class. */
-+ (id)indexForIPhoneSDKVersion:(NSString *)sdkVersion inDevToolsPath:(NSString *)devToolsPath;
-
-/*! Uses the AKIPhoneDirectories class. */
-+ (id)indexForLatestIPhoneSDKInDevToolsPath:(NSString *)devToolsPath;
-
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * Designated initializer.  docSetPath is the path to a .docset bundle
@@ -69,9 +50,9 @@
 - (id)initWithDocSetPath:(NSString *)docSetPath
     basePathForHeaders:(NSString *)basePathForHeaders;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 /*! 
  * Names of frameworks the user can choose from, with "essential"

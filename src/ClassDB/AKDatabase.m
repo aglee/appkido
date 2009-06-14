@@ -16,6 +16,8 @@
 #import "AKProtocolNode.h"
 #import "AKGroupNode.h"
 
+#import "AKMacDevTools.h"
+#import "AKIPhoneDevTools.h"
 #import "AKDocSetIndex.h"
 #import "AKOldDatabase.h"
 #import "AKDatabaseWithDocSet.h"
@@ -55,8 +57,7 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
         if (s_macOSDatabase == nil)
         {
-            AKDocSetIndex *docSetIndex =
-                [AKDocSetIndex indexForMacSDKInDevToolsPath:devToolsPath];
+            AKDocSetIndex *docSetIndex = [[AKMacDevTools devToolsWithPath:devToolsPath] docSetIndexForSDKVersion:nil];
 
             if (docSetIndex)
             {
@@ -80,9 +81,7 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
         if (s_iPhoneDatabase == nil)
         {
-            AKDocSetIndex *docSetIndex =
-                [AKDocSetIndex
-                    indexForLatestIPhoneSDKInDevToolsPath:devToolsPath];
+            AKDocSetIndex *docSetIndex = [[AKIPhoneDevTools devToolsWithPath:devToolsPath] docSetIndexForSDKVersion:nil];
 
             s_iPhoneDatabase =
                 [[AKDatabaseWithDocSet alloc]
