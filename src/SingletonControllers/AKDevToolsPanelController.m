@@ -38,9 +38,9 @@
             return nil;
         }
 
-        _textFieldController =
-            [[AKDevToolsPathController alloc]
-                initWithTextField:_devToolsPathField];
+        _textFieldController = [[AKDevToolsPathController alloc] init];
+        [_textFieldController setDevToolsPathField:_devToolsPathField];
+        [_textFieldController setDocSetsPopUpButton:_docSetsPopUpButton];
     }
 
     return self;

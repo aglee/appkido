@@ -14,90 +14,77 @@
 
 @implementation AKDevToolsPathController
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
-
-+ (id)controllerWithTextField:(NSTextField *)textField
-{
-    return [[[self alloc] initWithTextField:textField] autorelease];
-}
-
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
-
-- (id)initWithTextField:(NSTextField *)textField
-{
-    if ((self = [super init]))
-    {
-        _devToolsPathField = [textField retain];
-    }
-
-    return self;
-}
-
-- (id)init
-{
-    DIGSLogNondesignatedInitializer();
-    [self release];
-    return nil;
-}
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)dealloc
 {
     DIGSLogEnteringMethod();
 
     [_devToolsPathField release];
+    [_docSetsPopUpButton release];
 
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Running the panel
-//-------------------------------------------------------------------------
 
-+ (BOOL)_directory:(NSString *)dir hasSubdirectory:(NSString *)subdir
+#pragma mark -
+#pragma mark Getters and setters
+
+- (void)setDevToolsPathField:(NSTextField *)textField
 {
-    BOOL subdirExists =
-        [AKFileUtils
-            directoryExistsAtPath:
-                [dir stringByAppendingPathComponent:subdir]];
+    [textField retain];
+    [_devToolsPathField release];
+    _devToolsPathField = textField;
+}
 
-    if (!subdirExists)
-    {
-        DIGSLogDebug(
-            @"%@ doesn't seem to be a valid Dev Tools path"
-                " -- it doesn't have a subdirectory %@",
-            dir, subdir);
-    }
-
-    return subdirExists;
+- (void)setDocSetsPopUpButton:(NSPopUpButton *)popUpButton
+{
+    [popUpButton retain];
+    [_docSetsPopUpButton release];
+    _docSetsPopUpButton = popUpButton;
 }
 
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath
 {
+    NSEnumerator *expectedSubdirsEnum = [[NSArray arrayWithObjects:
 #if APPKIDO_FOR_IPHONE
-    if (![self _directory:devToolsPath hasSubdirectory:@"Platforms/iPhoneOS.platform"])
-    {
-        return NO;
-    }
-
-    if (![self _directory:devToolsPath hasSubdirectory:@"Platforms/iPhoneSimulator.platform"])
-    {
-        return NO;
-    }
+        @"Platforms/iPhoneOS.platform",
+        @"Platforms/iPhoneSimulator.platform",
 #endif
+        @"Applications/Xcode.app",
+        @"Documentation",
+        @"Examples",
+        nil] objectEnumerator];
+    NSString *subdir;
 
-    return
-        [self _directory:devToolsPath hasSubdirectory:@"Applications/Xcode.app"]
-        && [self _directory:devToolsPath hasSubdirectory:@"Documentation"]
-        && [self _directory:devToolsPath hasSubdirectory:@"Examples"];
+    while ((subdir = [expectedSubdirsEnum nextObject]))
+    {
+        NSString *expectedSubdirPath = [devToolsPath stringByAppendingPathComponent:subdir];
+
+        if (![AKFileUtils directoryExistsAtPath:expectedSubdirPath])
+        {
+            DIGSLogDebug(@"%@ doesn't seem to be a valid Dev Tools path -- it doesn't have a subdirectory %@",
+                devToolsPath, subdir);
+            return NO;
+        }
+    }
+
+    // If we got this far, we're going to assume the path is a valid Dev Tools path.
+    return YES;
 }
+
+
+#pragma mark -
+#pragma mark Running the panel
 
 - (void)runOpenPanel
 {
     DIGSLogEnteringMethod();
+    if (_devToolsPathField == nil)
+        DIGSLogError(@"_devToolsPathField should not be nil");
+    if (_docSetsPopUpButton == nil)
+        DIGSLogError(@"_docSetsPopUpButton should not be nil");
 
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 
@@ -118,9 +105,9 @@
         contextInfo:(void *)NULL];
 }
 
-//-------------------------------------------------------------------------
-// Modal delegate methods and support for them
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Modal delegate support
 
 // Called when the user has selected a (seemingly) valid Dev Tools path.
 - (void)_acceptDevToolsPath:(NSString *)selectedDir
