@@ -100,6 +100,16 @@
     [self setStringValue:dir forPref:AKDevToolsPathPrefName];
 }
 
++ (NSString *)sdkVersionPref
+{
+    return [self stringValueForPref:AKSDKVersionPrefName];
+}
+
++ (void)setSDKVersionPref:(NSString *)dir
+{
+    [self setStringValue:dir forPref:AKSDKVersionPrefName];
+}
+
 //-------------------------------------------------------------------------
 // Clearing preferences
 //-------------------------------------------------------------------------

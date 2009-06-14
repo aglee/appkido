@@ -14,18 +14,18 @@
 
 @implementation AKDevToolsPanelController
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)controller
 {
     return [[[self alloc] init] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -37,10 +37,6 @@
             [self release];
             return nil;
         }
-
-        _textFieldController = [[AKDevToolsPathController alloc] init];
-        [_textFieldController setDevToolsPathField:_devToolsPathField];
-        [_textFieldController setDocSetsPopUpButton:_docSetsPopUpButton];
     }
 
     return self;
@@ -50,30 +46,19 @@
 {
     DIGSLogDebug_EnteringMethod();
 
-    [_textFieldController release];
+    [_devToolsPathController release];
     [[_devToolsPathField window] release];
 
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Running the panel
-//-------------------------------------------------------------------------
 
-- (void)promptForDevToolsPath
+#pragma mark -
+#pragma mark Running the panel
+
+- (void)runDevToolsSetupPanel
 {
     DIGSLogDebug_EnteringMethod();
-
-    NSString *oldPath = [AKPrefUtils devToolsPathPref];
-
-    if (oldPath == nil)
-    {
-        [_devToolsPathField setStringValue:@""];
-    }
-    else
-    {
-        [_devToolsPathField setStringValue:oldPath];
-    }
 
     int result =
         [[NSApplication sharedApplication]
@@ -83,15 +68,9 @@
     [[_devToolsPathField window] orderOut:self];
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
 
-- (IBAction)runOpenPanel:(id)sender
-{
-    DIGSLogDebug_EnteringMethod();
-    [_textFieldController runOpenPanel];
-}
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)ok:(id)sender
 {

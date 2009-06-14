@@ -17,8 +17,6 @@
 				<string>id</string>
 				<key>selectAllFrameworks</key>
 				<string>id</string>
-				<key>selectDevToolsPath</key>
-				<string>id</string>
 				<key>useDefaultAppearancePrefs</key>
 				<string>id</string>
 			</dict>
@@ -28,6 +26,8 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
+				<key>_devToolsPathController</key>
+				<string>AKDevToolsPathController</string>
 				<key>_devToolsPathField</key>
 				<string>NSTextField</string>
 				<key>_frameworksTable</key>
@@ -44,6 +44,8 @@
 				<string>NSPopUpButton</string>
 				<key>_prefsTabView</key>
 				<string>NSTabView</string>
+				<key>_sdkVersionsPopUpButton</key>
+				<string>NSPopUpButton</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
@@ -61,6 +63,28 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>runOpenPanel</key>
+				<string>id</string>
+				<key>selectSDKVersion</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>AKDevToolsPathController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>_devToolsPathField</key>
+				<string>NSTextField</string>
+				<key>_sdkVersionsPopUpButton</key>
+				<string>NSPopUpButton</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>

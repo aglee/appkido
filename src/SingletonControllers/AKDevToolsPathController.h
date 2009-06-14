@@ -14,22 +14,16 @@
  * preference for the Dev Tools location.  Calling -runOpenPanel starts
  * an open panel sheet in the window that contains that text field,
  * allowing the user to select a different Dev Tools path.
- *
- * Before calling -runOpenPanel, call -setDevToolsPathField: and
- * -setDocSetsPopUpButton: to get the UI hooked up.
  */
 @interface AKDevToolsPathController : NSObject
 {
-    NSTextField *_devToolsPathField;
-    NSPopUpButton *_docSetsPopUpButton;
+    IBOutlet NSTextField *_devToolsPathField;
+    IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
 }
 
 
 #pragma mark -
 #pragma mark Getters and setters
-
-- (void)setDevToolsPathField:(NSTextField *)textField;
-- (void)setDocSetsPopUpButton:(NSPopUpButton *)popUpButton;
 
 /*!
  * Does a rough sanity check on a directory that is claimed to be a
@@ -39,13 +33,26 @@
 
 
 #pragma mark -
-#pragma mark Running the panel
+#pragma mark Action methods
 
 /*!
  * Displays an open panel that prompts the user for the Dev Tools location.
  * The open panel is opened as a sheet on the window that contains
  * _devToolsPathField.
  */
-- (void)runOpenPanel;
+- (IBAction)runOpenPanel:(id)sender;
+
+/*! Called by the SDK popup button. */
+- (IBAction)selectSDKVersion:(id)sender;
+
+
+#pragma mark -
+#pragma mark Running the panel
+
+/*!
+ * Fills in the SDK popup menu based on the Dev Tools path specified in
+ * the text field.
+ */
+- (void)populateSDKPopUpButton;
 
 @end

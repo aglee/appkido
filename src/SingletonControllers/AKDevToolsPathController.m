@@ -11,18 +11,35 @@
 #import "DIGSLog.h"
 #import "AKFileUtils.h"
 #import "AKPrefUtils.h"
+#import "AKMacDevTools.h"
+#import "AKIPhoneDevTools.h"
 
 @implementation AKDevToolsPathController
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
+- (void)awakeFromNib
+{
+    if ([AKPrefUtils devToolsPathPref])
+    {
+        [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
+    }
+    else
+    {
+        [_devToolsPathField setStringValue:@""];
+    }
+
+    [self populateSDKPopUpButton];
+    [_sdkVersionsPopUpButton selectItemWithTitle:[AKPrefUtils sdkVersionPref]];
+}
+
 - (void)dealloc
 {
     DIGSLogDebug_EnteringMethod();
 
     [_devToolsPathField release];
-    [_docSetsPopUpButton release];
+    [_sdkVersionsPopUpButton release];
 
     [super dealloc];
 }
@@ -30,20 +47,6 @@
 
 #pragma mark -
 #pragma mark Getters and setters
-
-- (void)setDevToolsPathField:(NSTextField *)textField
-{
-    [textField retain];
-    [_devToolsPathField release];
-    _devToolsPathField = textField;
-}
-
-- (void)setDocSetsPopUpButton:(NSPopUpButton *)popUpButton
-{
-    [popUpButton retain];
-    [_docSetsPopUpButton release];
-    _docSetsPopUpButton = popUpButton;
-}
 
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath
 {
@@ -75,18 +78,18 @@
 
 
 #pragma mark -
-#pragma mark Running the panel
+#pragma mark Action methods
 
-- (void)runOpenPanel
+- (IBAction)runOpenPanel:(id)sender
 {
     DIGSLogDebug_EnteringMethod();
     if (_devToolsPathField == nil)
         DIGSLogError(@"_devToolsPathField should not be nil");
-    if (_docSetsPopUpButton == nil)
+    if (_sdkVersionsPopUpButton == nil)
         DIGSLogError(@"_docSetsPopUpButton should not be nil");
-
+    
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-
+    
     [openPanel setTitle:@"Select Dev Tools directory"];
     [openPanel setPrompt:@"Select"];
     [openPanel setAllowsMultipleSelection:NO];
@@ -95,13 +98,40 @@
     [openPanel setResolvesAliases:YES];
     
     [openPanel
-        beginSheetForDirectory:[_devToolsPathField stringValue]
-        file:nil
-        types:nil
-        modalForWindow:[_devToolsPathField window]
-        modalDelegate:[self retain]  // will release later
-        didEndSelector:@selector(_devToolsOpenPanelDidEnd:returnCode:contextInfo:)
-        contextInfo:(void *)NULL];
+         beginSheetForDirectory:[_devToolsPathField stringValue]
+         file:nil
+         types:nil
+         modalForWindow:[_devToolsPathField window]
+         modalDelegate:[self retain]  // will release later
+         didEndSelector:@selector(_devToolsOpenPanelDidEnd:returnCode:contextInfo:)
+         contextInfo:(void *)NULL];
+}
+
+- (IBAction)selectSDKVersion:(id)sender
+{
+    DIGSLogInfo_ObjectDescription(@"selectSDKVersion", [[(NSPopUpButton *)sender selectedItem] title]);
+    [AKPrefUtils setSDKVersionPref:[[(NSPopUpButton *)sender selectedItem] title]];
+}
+
+
+#pragma mark -
+#pragma mark Running the panel
+
+- (void)populateSDKPopUpButton
+{
+#if APPKIDO_FOR_IPHONE
+    AKIPhoneDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:[_devToolsPathField stringValue]];
+#else
+    AKMacDevTools *devTools = [AKMacDevTools devToolsWithPath:[_devToolsPathField stringValue]];
+#endif
+    NSEnumerator *sdkVersionsEnum = [[devTools sdkVersions] objectEnumerator];
+    NSString *sdkVersion;
+
+    [_sdkVersionsPopUpButton removeAllItems];
+    while ((sdkVersion = [sdkVersionsEnum nextObject]))
+    {
+        [_sdkVersionsPopUpButton addItemWithTitle:sdkVersion];
+    }
 }
 
 
@@ -114,6 +144,7 @@
     DIGSLogInfo_ObjectDescription(@"selectedDir", selectedDir);
     [_devToolsPathField setStringValue:selectedDir];
     [AKPrefUtils setDevToolsPathPref:selectedDir];
+    [self populateSDKPopUpButton];
 }
 
 // Called by -_devToolsOpenPanelDidEnd:returnCode:contextInfo: if the user
@@ -169,12 +200,6 @@
     }
 }
 
-// Weird, there's no -performSelector:afterDelay: (without a withObject:).
-- (void)_runOpenPanel:(id)ignore
-{
-    [self runOpenPanel];
-}
-
 // Called when the alert sheet opened by -_showBadPathAlert is dismissed.
 - (void)_badPathAlertDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
@@ -187,7 +212,7 @@
     if (returnCode == NSOKButton)  // "OK" means try the open panel again
     {
         [self
-            performSelector:@selector(_runOpenPanel:)
+            performSelector:@selector(runOpenPanel:)
             withObject:nil
             afterDelay:(NSTimeInterval)0.0];
     }

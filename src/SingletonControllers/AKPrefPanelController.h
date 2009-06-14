@@ -7,6 +7,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class AKDevToolsPathController;
+
 /*!
  * @class       AKPrefPanelController
  * @abstract    Controller for the application-wide Preferences panel.
@@ -30,14 +32,15 @@
     // Controls in the Frameworks tab.
     IBOutlet NSTableView *_frameworksTable;
 
-    // Controls in the Docsets tab.
+    // Controls in the Dev Tools tab.
+    IBOutlet AKDevToolsPathController *_devToolsPathController;
     IBOutlet NSTextField *_devToolsPathField;
-    IBOutlet NSPopUpButton *_docSetsPopUpButton;
+    IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 /*!
  * @method      sharedInstance
@@ -45,17 +48,15 @@
  */
 + (AKPrefPanelController *)sharedInstance;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)openPrefsPanel:(id)sender;
 
 - (IBAction)applyAppearancePrefs:(id)sender;
 
 - (IBAction)useDefaultAppearancePrefs:(id)sender;
-
-- (IBAction)selectDevToolsPath:(id)sender;
 
 - (IBAction)doFrameworksListAction:(id)sender;
 

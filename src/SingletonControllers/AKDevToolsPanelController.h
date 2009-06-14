@@ -16,29 +16,27 @@
  */
 @interface AKDevToolsPanelController : NSObject
 {
-    AKDevToolsPathController *_textFieldController;
+    IBOutlet AKDevToolsPathController *_devToolsPathController;
 
     IBOutlet NSTextField *_devToolsPathField;
-    IBOutlet NSPopUpButton *_docSetsPopUpButton;
+    IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
+    IBOutlet NSButton *_okButton;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)controller;
 
-//-------------------------------------------------------------------------
-// Running the panel
-//-------------------------------------------------------------------------
 
-- (void)promptForDevToolsPath;
+#pragma mark -
+#pragma mark Running the panel
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+- (void)runDevToolsSetupPanel;
 
-- (IBAction)runOpenPanel:(id)sender;
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)ok:(id)sender;
 
