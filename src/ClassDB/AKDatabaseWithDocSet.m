@@ -31,10 +31,9 @@
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithPlatformName:(NSString *)platformName
-    docSetIndex:(AKDocSetIndex *)docSetIndex
+- (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex
 {
-    if ((self = [super initWithPlatformName:platformName]))
+    if ((self = [super init]))
     {
         _docSetIndex = [docSetIndex retain];
 
@@ -45,7 +44,7 @@
     return self;
 }
 
-- (id)initWithPlatformName:(NSString *)platformName
+- (id)init
 {
     DIGSLogError_NondesignatedInitializer();
     [self release];

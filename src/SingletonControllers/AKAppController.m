@@ -220,30 +220,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessageField display];
 
 #if APPKIDO_FOR_IPHONE
-    _appDatabase = [[AKDatabase databaseForPlatform:AKIPhonePlatform] retain];
-
-    // Assume anyone using AppKiDo for iPhone is going to want all possible
-    // frameworks in the iPhone SDK by default, and will deselect whichever
-    // ones they don't want.  The docset is small enough that we can do this.
-    if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
-    {
-        NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
-        AKIPhoneDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
-        AKDocSetIndex *docSetIndex = [devTools docSetIndexForSDKVersion:nil];
-        [AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
-    }
+    _appDatabase = [[AKDatabase databaseForIPhonePlatform] retain];
 #else
-    _appDatabase = [[AKDatabase databaseForPlatform:AKMacOSPlatform] retain];
-
-    // For a new user of AppKiDo for Mac OS, only load the "essential"
-    // frameworks by default and leave it up to them to add more as needed.
-    // It would be nice to simply provide everything, but until we cut down
-    // the amount of startup time used by parsing, that will take too long.
-    if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
-    {
-        [AKPrefUtils
-            setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
-    }
+    _appDatabase = [[AKDatabase databaseForMacPlatform] retain];
 #endif
 
 // [agl] working on performance

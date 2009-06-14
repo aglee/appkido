@@ -62,12 +62,6 @@
 
 
 #pragma mark -
-#pragma mark Creating a docset index
-
-- (AKDocSetIndex *)docSetIndexForSDKVersion:(NSString *)sdkVersion;
-
-
-#pragma mark -
 #pragma mark For internal use only
 
 - (NSString *)relativePathToDocSetsDir;  // Subclasses must override.

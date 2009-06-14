@@ -161,24 +161,6 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
 
 
 #pragma mark -
-#pragma mark Creating a docset index
-
-- (AKDocSetIndex *)docSetIndexForSDKVersion:(NSString *)sdkVersion
-{
-    NSString *docSetPath = [self docSetPathForVersion:sdkVersion];
-    NSString *basePathForHeaders = [self headersPathForVersion:sdkVersion];
-
-    if (docSetPath == nil || basePathForHeaders == nil)
-        return nil;
-
-    return
-        [[[AKDocSetIndex alloc]
-            initWithDocSetPath:docSetPath
-            basePathForHeaders:basePathForHeaders] autorelease];
-}
-
-
-#pragma mark -
 #pragma mark Private methods
 
 // Called by -initWithPath: to populate _docSetPathsByVersion by locating all available

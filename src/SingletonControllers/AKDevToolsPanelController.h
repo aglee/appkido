@@ -32,6 +32,11 @@
 #pragma mark -
 #pragma mark Running the panel
 
+/*!
+ * Either gets a valid Dev Tools path from the user or exits the application.
+ * If a Dev Tools path is selected, updates the AKDevToolsPathPrefName and
+ * AKSDKVersionPrefName user prefs.
+ */
 - (void)runDevToolsSetupPanel;
 
 
