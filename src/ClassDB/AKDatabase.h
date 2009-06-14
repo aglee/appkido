@@ -63,8 +63,6 @@
 @interface AKDatabase : NSObject
 {
 @protected
-    NSString *_platformName;
-
     id _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
 
     // Elements are NSStrings.  There are constants in AKFrameworkConstants.h
@@ -129,24 +127,11 @@
 }
 
 //-------------------------------------------------------------------------
-// Platform names used to identify database instances
-//-------------------------------------------------------------------------
-
-extern NSString *AKMacOSPlatform;
-extern NSString *AKIPhonePlatform;
-
-//-------------------------------------------------------------------------
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)databaseForPlatform:(NSString *)platformName;
-
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
-
-/*! Designated initializer. */
-- (id)initWithPlatformName:(NSString *)platformName;
++ (id)databaseForMacPlatform;
++ (id)databaseForIPhonePlatform;
 
 //-------------------------------------------------------------------------
 // Populating
@@ -175,8 +160,6 @@ extern NSString *AKIPhonePlatform;
 //-------------------------------------------------------------------------
 // Getters and setters -- frameworks
 //-------------------------------------------------------------------------
-
-- (NSString *)platformName;
 
 /*!
  * Returns the names of frameworks that have been loaded, in no guaranteed

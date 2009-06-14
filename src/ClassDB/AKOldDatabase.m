@@ -26,7 +26,7 @@
 
 - (id)initWithDevToolsPath:(NSString *)devToolsPath
 {
-    if ((self = [super initWithPlatformName:AKMacOSPlatform]))
+    if ((self = [super init]))
     {
         _devToolsPath = [devToolsPath retain];
 
@@ -51,7 +51,7 @@
     return self;
 }
 
-- (id)initWithPlatformName:(NSString *)platformName
+- (id)init
 {
     DIGSLogError_NondesignatedInitializer();
     [self release];

@@ -32,83 +32,84 @@
 @implementation AKDatabase
 
 //-------------------------------------------------------------------------
-// Platform names used to identify database instances
-//-------------------------------------------------------------------------
-
-NSString *AKMacOSPlatform = @"MacOSPlatform";
-NSString *AKIPhonePlatform = @"IPhonePlatform";
-
-//-------------------------------------------------------------------------
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)databaseForPlatform:(NSString *)platformName
+#pragma mark -
+#pragma mark Factory methods
+
++ (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools
 {
-    if (platformName == nil)
-    {
-        platformName = AKMacOSPlatform;
-    }
+    NSString *sdkVersion = [AKPrefUtils sdkVersionPref];
+    NSString *docSetPath = [devTools docSetPathForVersion:sdkVersion];
+    NSString *basePathForHeaders = [devTools headersPathForVersion:sdkVersion];
 
-    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
-
-    if ([platformName isEqualToString:AKMacOSPlatform])
-    {
-        static AKDatabase *s_macOSDatabase = nil;
-
-        if (s_macOSDatabase == nil)
-        {
-            AKDocSetIndex *docSetIndex = [[AKMacDevTools devToolsWithPath:devToolsPath] docSetIndexForSDKVersion:nil];
-
-            if (docSetIndex)
-            {
-                s_macOSDatabase =
-                    [[AKDatabaseWithDocSet alloc]
-                        initWithPlatformName:AKMacOSPlatform
-                        docSetIndex:docSetIndex];
-            }
-            else
-            {
-                s_macOSDatabase =
-                    [[AKOldDatabase alloc] initWithDevToolsPath:devToolsPath];
-            }
-        }
-
-        return s_macOSDatabase;
-    }
-    else if ([platformName isEqualToString:AKIPhonePlatform])
-    {
-        static AKDatabase *s_iPhoneDatabase = nil;
-
-        if (s_iPhoneDatabase == nil)
-        {
-            AKDocSetIndex *docSetIndex = [[AKIPhoneDevTools devToolsWithPath:devToolsPath] docSetIndexForSDKVersion:nil];
-
-            s_iPhoneDatabase =
-                [[AKDatabaseWithDocSet alloc]
-                    initWithPlatformName:AKIPhonePlatform
-                    docSetIndex:docSetIndex];
-        }
-
-        return s_iPhoneDatabase;
-    }
-    else
-    {
-        DIGSLogWarning(@"Unexpected platform name [%@]", platformName);
+    if (docSetPath == nil || basePathForHeaders == nil)
         return nil;
+
+    return
+        [[[AKDocSetIndex alloc]
+            initWithDocSetPath:docSetPath
+            basePathForHeaders:basePathForHeaders] autorelease];
+}
+
+
++ (id)databaseForMacPlatform
+{
+    static AKDatabase *s_macOSDatabase = nil;
+
+    if (s_macOSDatabase == nil)
+    {
+        NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
+        AKDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
+        AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools];
+
+        if (docSetIndex)
+            s_macOSDatabase = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
+        else
+            s_macOSDatabase = [[AKOldDatabase alloc] initWithDevToolsPath:devToolsPath];
+
+        // For a new user of AppKiDo for Mac OS, only load the "essential"
+        // frameworks by default and leave it up to them to add more as needed.
+        // It would be nice to simply provide everything, but until we cut down
+        // the amount of startup time used by parsing, that will take too long.
+        if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
+            [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
     }
+
+    return s_macOSDatabase;
+}
+
++ (id)databaseForIPhonePlatform
+{
+    static AKDatabase *s_iPhoneDatabase = nil;
+
+    if (s_iPhoneDatabase == nil)
+    {
+        NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
+        AKDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
+        AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools];
+
+        s_iPhoneDatabase = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
+
+        // Assume anyone using AppKiDo for iPhone is going to want all possible
+        // frameworks in the iPhone SDK by default, and will deselect whichever
+        // ones they don't want.  The docset is small enough that we can do this.
+        if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
+            [AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
+    }
+
+    return s_iPhoneDatabase;
 }
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-/*! Designated initializer. */
-- (id)initWithPlatformName:(NSString *)platformName
+- (id)init
 {
     if ((self = [super init]))
     {
-        _platformName = [platformName retain];
-
         _frameworkNames = [[NSMutableArray alloc] init];
         _namesOfAvailableFrameworks = nil;
 
@@ -136,17 +137,8 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
     return self;
 }
 
-- (id)init
-{
-    DIGSLogError_NondesignatedInitializer();
-    [self release];
-    return nil;
-}
-
 - (void)dealloc
 {
-    [_platformName release];
-
     [_frameworkNames release];
 
     [_classNodesByName release];
@@ -225,11 +217,6 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 //-------------------------------------------------------------------------
 // Getters and setters -- frameworks
 //-------------------------------------------------------------------------
-
-- (NSString *)platformName
-{
-    return _platformName;
-}
 
 - (NSArray *)frameworkNames
 {
