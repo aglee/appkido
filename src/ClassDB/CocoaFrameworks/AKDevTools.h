@@ -45,11 +45,7 @@
 
 - (NSString *)devToolsPath;
 
-- (NSString *)relativePathToDocSetsDir;  // For internal use.  Subclasses must override.
-- (NSString *)relativePathToHeadersDir;  // For internal use.  Subclasses must override.
-- (BOOL)isValidDocSetName:(NSString *)fileName;  // For internal use.  Subclasses must override.
-
-- (NSArray *)sdkVersions;  // Returns a sorted array.
+- (NSArray *)sdkVersions;  // Returns a sorted array in order of version number.
 
 - (NSString *)docSetPathForVersion:(NSString *)sdkVersion;  // Uses latest version if sdkVersion is nil.
 - (NSString *)headersPathForVersion:(NSString *)sdkVersion;  // Uses latest version if sdkVersion is nil.
@@ -69,5 +65,13 @@
 #pragma mark Creating a docset index
 
 - (AKDocSetIndex *)docSetIndexForSDKVersion:(NSString *)sdkVersion;
+
+
+#pragma mark -
+#pragma mark For internal use only
+
+- (NSString *)relativePathToDocSetsDir;  // Subclasses must override.
+- (NSString *)relativePathToHeadersDir;  // Subclasses must override.
+- (BOOL)isValidDocSetName:(NSString *)fileName;  // Subclasses must override.
 
 @end
