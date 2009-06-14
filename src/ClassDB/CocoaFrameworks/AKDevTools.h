@@ -52,7 +52,7 @@
 
 
 #pragma mark -
-#pragma mark validation
+#pragma mark Validation
 
 /*!
  * Does a rough sanity check on a directory that is claimed to be a
