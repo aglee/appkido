@@ -47,7 +47,7 @@
 
 - (id)initWithPlatformName:(NSString *)platformName
 {
-    DIGSLogNondesignatedInitializer();
+    DIGSLogError_NondesignatedInitializer();
     [self release];
     return nil;
 }

@@ -140,7 +140,7 @@ do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG2)\
     {\
         NSLog(\
-            [@"[_DEBUG_] " stringByAppendingString:(format)],\
+            [@"[_DEBUG2_] " stringByAppendingString:(format)],\
             ## __VA_ARGS__);\
     }\
 } while (0)
@@ -154,35 +154,35 @@ do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG3)\
     {\
         NSLog(\
-            [@"[_DEBUG_] " stringByAppendingString:(format)],\
+            [@"[_DEBUG3_] " stringByAppendingString:(format)],\
             ## __VA_ARGS__);\
     }\
 } while (0)
 
 /*!
- * @function    DIGSLogObject
+ * @function    DIGSLogInfo_ObjectDescription
  * @discussion  Call this to write a message displaying the specified value.
  *              This must be called from inside an Objective-C method, since
  *              it uses [self class] and _cmd.
  */
-#define DIGSLogObject(description, object)\
+#define DIGSLogInfo_ObjectDescription(context, object)\
 do {\
     {\
-        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
-            DIGSLogError(\
-                @"%@ -- %@ -- %@ = [%@]",\
+        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_INFO)\
+            DIGSLogInfo(\
+                @"%@ method %@ in context '%@' using object [%@]",\
                 [self class],\
                 NSStringFromSelector(_cmd),\
-                (description),\
+                (context),\
                 (object));\
     }\
 } while (0)
 
 /*!
- * @function    DIGSLogMissingOverride
+ * @function    DIGSLogError_MissingOverride
  * @discussion  Stick this in implementations of abstract methods.
  */
-#define DIGSLogMissingOverride()\
+#define DIGSLogError_MissingOverride()\
 do {\
     {\
         if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
@@ -194,27 +194,27 @@ do {\
 } while (0)
 
 /*!
- * @function    DIGSLogEnteringMethod
+ * @function    DIGSLogDebug_EnteringMethod
  * @discussion  Stick this at the beginning of a method to log the fact
  *              that it is being entered.
  */
-#define DIGSLogEnteringMethod()\
+#define DIGSLogDebug_EnteringMethod()\
 do {\
     {\
         if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
             DIGSLogDebug(\
-                @"%@ -- entering %@",\
+                @"%@ -- entering method %@",\
                 [self class],\
                 NSStringFromSelector(_cmd));\
     }\
 } while (0)
 
 /*!
- * @function    DIGSLogExitingMethodPrematurely
+ * @function    DIGSLogError_ExitingMethodPrematurely
  * @discussion  Call this to log the fact that you are about to return
  *              from a method prematurely due to an error condition.
  */
-#define DIGSLogExitingMethodPrematurely(msgString)\
+#define DIGSLogError_ExitingMethodPrematurely(msgString)\
 do {\
     {\
         if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
@@ -227,11 +227,11 @@ do {\
 } while (0)
 
 /*!
- * @function    DIGSLogExitingMethod
+ * @function    DIGSLogDebug_ExitingMethod
  * @discussion  Stick this at the end of a method to log the fact that it
  *              is being exited.
  */
-#define DIGSLogExitingMethod()\
+#define DIGSLogDebug_ExitingMethod()\
 do {\
     {\
         if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
@@ -243,12 +243,12 @@ do {\
 } while (0)
 
 /*!
- * @function    DIGSLogNondesignatedInitializer
+ * @function    DIGSLogError_NondesignatedInitializer
  * @discussion  Call this in the implementation of an initializer that
  *              should never be called because it is not the designated
  *              initializer.
  */
-#define DIGSLogNondesignatedInitializer()\
+#define DIGSLogError_NondesignatedInitializer()\
 do {\
     {\
         if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\

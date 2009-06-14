@@ -41,7 +41,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (id)init
 {
-    DIGSLogNondesignatedInitializer();
+    DIGSLogError_NondesignatedInitializer();
     [self release];
     return nil;
 }
@@ -107,7 +107,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (NSDictionary *)asPrefDictionary
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
@@ -131,7 +131,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return @"??";
 }
 
@@ -151,7 +151,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (NSString *)pathInTopicBrowser
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
@@ -181,7 +181,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 

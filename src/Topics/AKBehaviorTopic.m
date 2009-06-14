@@ -37,7 +37,7 @@
 
 - (NSString *)behaviorName
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
@@ -81,7 +81,7 @@
 
 - (NSArray *)createSubtopicsArray
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 

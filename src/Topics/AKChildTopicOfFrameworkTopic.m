@@ -17,7 +17,7 @@
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 

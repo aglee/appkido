@@ -100,7 +100,7 @@
 
     if ([subviews count] != 2)
     {
-        DIGSLogExitingMethodPrematurely(
+        DIGSLogError_ExitingMethodPrematurely(
             @"expected splitview to have exactly two subviews");
         return;
     }
@@ -127,7 +127,7 @@
 
     if ([subviews count] != 2)
     {
-        DIGSLogExitingMethodPrematurely(
+        DIGSLogError_ExitingMethodPrematurely(
             @"expected splitview to have exactly two subviews");
         return nil;
     }
@@ -142,7 +142,7 @@
     }
     else
     {
-        DIGSLogExitingMethodPrematurely(
+        DIGSLogError_ExitingMethodPrematurely(
             @"the given view is not a subview of this splitview");
         return nil;
     }

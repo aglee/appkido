@@ -87,7 +87,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (id)init
 {
-    DIGSLogNondesignatedInitializer();
+    DIGSLogError_NondesignatedInitializer();
     [self release];
     return nil;
 }
