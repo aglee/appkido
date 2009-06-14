@@ -108,24 +108,6 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
     return _devToolsPath;
 }
 
-- (NSString *)relativePathToDocSetsDir
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
-- (NSString *)relativePathToHeadersDir
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
-- (BOOL)isValidDocSetName:(NSString *)fileName
-{
-    DIGSLogError_MissingOverride();
-    return NO;
-}
-
 - (NSArray *)sdkVersions
 {
     return _sdkVersions;
@@ -268,6 +250,28 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
             [_docSetPathsByVersion removeObjectForKey:sdkVersion];
         }
     }
+}
+
+
+#pragma mark -
+#pragma mark For internal use only
+
+- (NSString *)relativePathToDocSetsDir
+{
+    DIGSLogError_MissingOverride();
+    return nil;
+}
+
+- (NSString *)relativePathToHeadersDir
+{
+    DIGSLogError_MissingOverride();
+    return nil;
+}
+
+- (BOOL)isValidDocSetName:(NSString *)fileName
+{
+    DIGSLogError_MissingOverride();
+    return NO;
 }
 
 @end
