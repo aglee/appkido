@@ -22,15 +22,11 @@
 {
     // Put initial value in _devToolsPathField.
     if ([AKPrefUtils devToolsPathPref])
-    {
         [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
-    }
     else
-    {
         [_devToolsPathField setStringValue:@""];
-    }
 
-    // Put initial value in _sdkVersionsPopUpButton.
+    // Put initial values in _sdkVersionsPopUpButton.
     [self populateSDKPopUpButton];
 }
 
@@ -54,6 +50,7 @@
 
     if (_devToolsPathField == nil)
         DIGSLogError(@"_devToolsPathField should not be nil");
+
     if (_sdkVersionsPopUpButton == nil)
         DIGSLogError(@"_docSetsPopUpButton should not be nil");
     
@@ -118,37 +115,6 @@
 #pragma mark -
 #pragma mark Modal delegate support
 
-// Called when the user has selected a (seemingly) valid Dev Tools path.
-- (void)_acceptDevToolsPath:(NSString *)selectedDir
-{
-    DIGSLogDebug_EnteringMethod();
-
-    [_devToolsPathField setStringValue:selectedDir];
-    [AKPrefUtils setDevToolsPathPref:selectedDir];
-    [self populateSDKPopUpButton];
-}
-
-// Called by -_devToolsOpenPanelDidEnd:returnCode:contextInfo: if the user
-// selects a directory that does not look like a valid Dev Tools directory.
-- (void)_showBadPathAlert:(NSString *)selectedDir
-{
-    DIGSLogDebug_EnteringMethod();
-
-    NSBeginAlertSheet(
-        @"Invalid Dev Tools path",  // title
-        @"OK",  // defaultButton
-        @"Cancel",  // alternateButton
-        nil,  // otherButton
-        [_devToolsPathField window],  // docWindow
-        [self retain],  // modalDelegate -- will release when alert ends
-        @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
-        (SEL)NULL,  // didDismissSelector
-        (void *)NULL,  // contextInfo
-        @"'%@' doesn't look like a valid Dev Tools path.  Would you like to select another?",  // msg
-        selectedDir
-    );
-}
-
 // Called when the open panel sheet opened by -runOpenPanel is dismissed.
 - (void)_devToolsOpenPanelDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
@@ -164,7 +130,9 @@
 
         if ([AKDevTools looksLikeValidDevToolsPath:selectedDir])
         {
-            [self _acceptDevToolsPath:selectedDir];
+            [_devToolsPathField setStringValue:selectedDir];
+            [AKPrefUtils setDevToolsPathPref:selectedDir];
+            [self populateSDKPopUpButton];
         }
         else
         {
@@ -181,6 +149,27 @@
     }
 }
 
+// Called by -_devToolsOpenPanelDidEnd:returnCode:contextInfo: if the user
+// selects a directory that does not look like a valid Dev Tools directory.
+- (void)_showBadPathAlert:(NSString *)selectedDir
+{
+    DIGSLogDebug_EnteringMethod();
+
+    NSBeginAlertSheet(
+        @"Invalid Dev Tools path",  // title
+        @"OK",  // defaultButton
+        nil,  // alternateButton
+        nil,  // otherButton
+        [_devToolsPathField window],  // docWindow
+        [self retain],  // modalDelegate -- will release when alert ends
+        @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
+        (SEL)NULL,  // didDismissSelector
+        (void *)NULL,  // contextInfo
+        @"'%@' doesn't look like a valid Dev Tools path.",  // msg
+        selectedDir
+    );
+}
+
 // Called when the alert sheet opened by -_showBadPathAlert is dismissed.
 - (void)_badPathAlertDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
@@ -190,13 +179,15 @@
 
     [self autorelease];  // was retained by -_showBadPathAlert
 
-    if (returnCode == NSOKButton)  // "OK" means try the open panel again
-    {
-        [self
-            performSelector:@selector(runOpenPanel:)
-            withObject:nil
-            afterDelay:(NSTimeInterval)0.0];
-    }
+    [self
+        performSelector:@selector(runOpenPanel:)
+        withObject:nil
+        afterDelay:(NSTimeInterval)0.0
+        inModes:
+            [NSArray arrayWithObjects:
+                NSDefaultRunLoopMode,
+                NSModalPanelRunLoopMode,
+                nil]];
 }
 
 @end
