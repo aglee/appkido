@@ -10,10 +10,14 @@
 
 
 /*!
- * Controller that is attached to a text field that displays the user's
- * preference for the Dev Tools location.  Calling -runOpenPanel starts
- * an open panel sheet in the window that contains that text field,
- * allowing the user to select a different Dev Tools path.
+ * Manages the UI used for specifying which docset the application should load.
+ * The user selects a Dev Tools path (e.g., /Developer) and an SDK version
+ * (e.g., 10.5 for Mac OS or 3.0 for iPhone SDK).  The choice of SDK versions
+ * depends on what we find in the Dev Tools path.
+ *
+ * This UI is used in two places: (1) the modal window that appears on
+ * application launch if we can't find the docset specified by the user's prefs,
+ * and (2) the Dev Tools tab of the preferences window.
  */
 @interface AKDevToolsPathController : NSObject
 {
@@ -23,26 +27,17 @@
 
 
 #pragma mark -
-#pragma mark Getters and setters
-
-/*!
- * Does a rough sanity check on a directory that is claimed to be a
- * Dev Tools directory.
- */
-+ (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath;
-
-
-#pragma mark -
 #pragma mark Action methods
 
 /*!
- * Displays an open panel that prompts the user for the Dev Tools location.
- * The open panel is opened as a sheet on the window that contains
- * _devToolsPathField.
+ * Repeatedly displays an open panel sheet until the user either cancels or
+ * selects a valid Dev Tools directory.
  */
 - (IBAction)runOpenPanel:(id)sender;
 
-/*! Called by the SDK popup button. */
+/*!
+ * Called by the popup button that lists available SDK versions.
+ */
 - (IBAction)selectSDKVersion:(id)sender;
 
 
@@ -50,8 +45,8 @@
 #pragma mark Running the panel
 
 /*!
- * Fills in the SDK popup menu based on the Dev Tools path specified in
- * the text field.
+ * Fills in the popup button that lists available SDK versions.  Gets this list
+ * by looking in the directory specified by the AKDevToolsPathPrefName user pref.
  */
 - (void)populateSDKPopUpButton;
 

@@ -9,6 +9,7 @@
 #import "AKDevTools.h"
 
 #import "DIGSLog.h"
+#import "AKFileUtils.h"
 #import "AKTextUtils.h"
 #import "AKDocSetIndex.h"
 
@@ -142,6 +143,38 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
     if (sdkVersion == nil)
         sdkVersion = [_sdkVersions lastObject];
     return [_headersPathsByVersion objectForKey:sdkVersion];
+}
+
+
+#pragma mark -
+#pragma mark Validation
+
++ (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath
+{
+    NSEnumerator *expectedSubdirsEnum = [[NSArray arrayWithObjects:
+#if APPKIDO_FOR_IPHONE
+        @"Platforms/iPhoneOS.platform",
+        @"Platforms/iPhoneSimulator.platform",
+#endif
+        @"Applications/Xcode.app",
+        @"Documentation",
+        @"Examples",
+        nil] objectEnumerator];
+    NSString *subdir;
+
+    while ((subdir = [expectedSubdirsEnum nextObject]))
+    {
+        NSString *expectedSubdirPath = [devToolsPath stringByAppendingPathComponent:subdir];
+        if (![AKFileUtils directoryExistsAtPath:expectedSubdirPath])
+        {
+            DIGSLogDebug(@"%@ doesn't seem to be a valid Dev Tools path -- it doesn't have a subdirectory %@",
+                devToolsPath, subdir);
+            return NO;
+        }
+    }
+
+    // If we got this far, we're going to assume the path is a valid Dev Tools path.
+    return YES;
 }
 
 

@@ -56,6 +56,16 @@
 
 
 #pragma mark -
+#pragma mark validation
+
+/*!
+ * Does a rough sanity check on a directory that is claimed to be a
+ * Dev Tools directory.
+ */
++ (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath;
+
+
+#pragma mark -
 #pragma mark Creating a docset index
 
 - (AKDocSetIndex *)docSetIndexForSDKVersion:(NSString *)sdkVersion;
