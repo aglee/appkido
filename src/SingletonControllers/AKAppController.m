@@ -30,6 +30,7 @@
 #import "AKSavedWindowState.h"
 #import "AKTopic.h"
 
+#import "AKDevTools.h"
 #import "AKDevToolsPathController.h"
 #import "AKDevToolsPanelController.h"
 
@@ -199,9 +200,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Initialize the About panel.
     [self _initAboutPanel];
 
-    // If necessary, prompt the user repeatedly for a valid Dev Tools path.
-    // When we're done, [AKPrefUtils devToolsPathPref] will have a valid value.
-    while (![AKDevToolsPathController looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
+    // If necessary, prompt the user repeatedly for a valid Dev Tools path and
+    // SDK version.
+    while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
     {
         [[AKDevToolsPanelController controller] runDevToolsSetupPanel];
     }

@@ -9,7 +9,6 @@
 #import "AKDevToolsPathController.h"
 
 #import "DIGSLog.h"
-#import "AKFileUtils.h"
 #import "AKPrefUtils.h"
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
@@ -21,6 +20,7 @@
 
 - (void)awakeFromNib
 {
+    // Put initial value in _devToolsPathField.
     if ([AKPrefUtils devToolsPathPref])
     {
         [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
@@ -30,8 +30,8 @@
         [_devToolsPathField setStringValue:@""];
     }
 
+    // Put initial value in _sdkVersionsPopUpButton.
     [self populateSDKPopUpButton];
-    [_sdkVersionsPopUpButton selectItemWithTitle:[AKPrefUtils sdkVersionPref]];
 }
 
 - (void)dealloc
@@ -46,43 +46,12 @@
 
 
 #pragma mark -
-#pragma mark Getters and setters
-
-+ (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath
-{
-    NSEnumerator *expectedSubdirsEnum = [[NSArray arrayWithObjects:
-#if APPKIDO_FOR_IPHONE
-        @"Platforms/iPhoneOS.platform",
-        @"Platforms/iPhoneSimulator.platform",
-#endif
-        @"Applications/Xcode.app",
-        @"Documentation",
-        @"Examples",
-        nil] objectEnumerator];
-    NSString *subdir;
-
-    while ((subdir = [expectedSubdirsEnum nextObject]))
-    {
-        NSString *expectedSubdirPath = [devToolsPath stringByAppendingPathComponent:subdir];
-        if (![AKFileUtils directoryExistsAtPath:expectedSubdirPath])
-        {
-            DIGSLogDebug(@"%@ doesn't seem to be a valid Dev Tools path -- it doesn't have a subdirectory %@",
-                devToolsPath, subdir);
-            return NO;
-        }
-    }
-
-    // If we got this far, we're going to assume the path is a valid Dev Tools path.
-    return YES;
-}
-
-
-#pragma mark -
 #pragma mark Action methods
 
 - (IBAction)runOpenPanel:(id)sender
 {
     DIGSLogDebug_EnteringMethod();
+
     if (_devToolsPathField == nil)
         DIGSLogError(@"_devToolsPathField should not be nil");
     if (_sdkVersionsPopUpButton == nil)
@@ -109,7 +78,8 @@
 
 - (IBAction)selectSDKVersion:(id)sender
 {
-    DIGSLogInfo_ObjectDescription(@"selectSDKVersion", [[(NSPopUpButton *)sender selectedItem] title]);
+    DIGSLogDebug_EnteringMethod();
+
     [AKPrefUtils setSDKVersionPref:[[(NSPopUpButton *)sender selectedItem] title]];
 }
 
@@ -119,10 +89,11 @@
 
 - (void)populateSDKPopUpButton
 {
+    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
 #if APPKIDO_FOR_IPHONE
-    AKIPhoneDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:[_devToolsPathField stringValue]];
+    AKIPhoneDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
 #else
-    AKMacDevTools *devTools = [AKMacDevTools devToolsWithPath:[_devToolsPathField stringValue]];
+    AKMacDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
 #endif
     NSEnumerator *sdkVersionsEnum = [[devTools sdkVersions] objectEnumerator];
     NSString *sdkVersion;
@@ -132,6 +103,15 @@
     {
         [_sdkVersionsPopUpButton addItemWithTitle:sdkVersion];
     }
+
+    NSString *selectedSDKVersion = [AKPrefUtils sdkVersionPref];
+    if (selectedSDKVersion == nil
+        || ![[devTools sdkVersions] containsObject:selectedSDKVersion])
+    {
+        selectedSDKVersion = [[devTools sdkVersions] lastObject];
+        [AKPrefUtils setSDKVersionPref:selectedSDKVersion];
+    }
+    [_sdkVersionsPopUpButton selectItemWithTitle:selectedSDKVersion];
 }
 
 
@@ -141,7 +121,8 @@
 // Called when the user has selected a (seemingly) valid Dev Tools path.
 - (void)_acceptDevToolsPath:(NSString *)selectedDir
 {
-    DIGSLogInfo_ObjectDescription(@"selectedDir", selectedDir);
+    DIGSLogDebug_EnteringMethod();
+
     [_devToolsPathField setStringValue:selectedDir];
     [AKPrefUtils setDevToolsPathPref:selectedDir];
     [self populateSDKPopUpButton];
@@ -181,7 +162,7 @@
     {
         NSString *selectedDir = [panel directory];
 
-        if ([[self class] looksLikeValidDevToolsPath:selectedDir])
+        if ([AKDevTools looksLikeValidDevToolsPath:selectedDir])
         {
             [self _acceptDevToolsPath:selectedDir];
         }

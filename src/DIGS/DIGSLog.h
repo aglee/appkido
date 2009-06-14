@@ -160,25 +160,6 @@ do {\
 } while (0)
 
 /*!
- * @function    DIGSLogInfo_ObjectDescription
- * @discussion  Call this to write a message displaying the specified value.
- *              This must be called from inside an Objective-C method, since
- *              it uses [self class] and _cmd.
- */
-#define DIGSLogInfo_ObjectDescription(context, object)\
-do {\
-    {\
-        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_INFO)\
-            DIGSLogInfo(\
-                @"%@ method %@ in context '%@' using object [%@]",\
-                [self class],\
-                NSStringFromSelector(_cmd),\
-                (context),\
-                (object));\
-    }\
-} while (0)
-
-/*!
  * @function    DIGSLogError_MissingOverride
  * @discussion  Stick this in implementations of abstract methods.
  */
