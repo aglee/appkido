@@ -6,46 +6,6 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>DIGSWindow</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSWindow</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>cancel</key>
-				<string>id</string>
-				<key>ok</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>AKDevToolsPanelController</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>_devToolsPathController</key>
-				<string>AKDevToolsPathController</string>
-				<key>_devToolsPathField</key>
-				<string>NSTextField</string>
-				<key>_okButton</key>
-				<string>NSButton</string>
-				<key>_sdkVersionsPopUpButton</key>
-				<string>NSPopUpButton</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>NSView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -130,6 +90,46 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DIGSWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>cancel</key>
+				<string>id</string>
+				<key>ok</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>AKDevToolsPanelController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>_devToolsPathController</key>
+				<string>AKDevToolsPathController</string>
+				<key>_devToolsPathField</key>
+				<string>NSTextField</string>
+				<key>_okButton</key>
+				<string>NSButton</string>
+				<key>_sdkVersionsPopUpButton</key>
+				<string>NSPopUpButton</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>
