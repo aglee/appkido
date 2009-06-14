@@ -74,7 +74,7 @@
 
 - (id)init
 {
-    DIGSLogNondesignatedInitializer();
+    DIGSLogError_NondesignatedInitializer();
     [self release];
     return nil;
 }
@@ -98,7 +98,7 @@
 
 - (void)parseCurrentFile
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
 }
 
 //-------------------------------------------------------------------------

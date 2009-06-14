@@ -51,19 +51,19 @@
 
 - (AKBehaviorNode *)behaviorNode
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
 - (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
 + (id)memberDocClass
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 

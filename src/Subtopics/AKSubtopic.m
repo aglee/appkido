@@ -50,7 +50,7 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 
 - (NSString *)subtopicName
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
@@ -121,7 +121,7 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
 }
 
 //-------------------------------------------------------------------------

@@ -47,7 +47,7 @@
 
 - (id)initWithDatabase:(AKDatabase *)database
 {
-    DIGSLogNondesignatedInitializer();
+    DIGSLogError_NondesignatedInitializer();
     [self release];
     return nil;
 }

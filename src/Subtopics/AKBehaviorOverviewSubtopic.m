@@ -25,19 +25,19 @@
 
 - (AKBehaviorNode *)behaviorNode
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
 - (NSString *)htmlNameOfDescriptionSection
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
 - (NSString *)altHtmlNameOfDescriptionSection
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 

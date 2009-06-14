@@ -48,7 +48,7 @@
 
 - (void)dealloc
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
 
     [_textFieldController release];
     [[_devToolsPathField window] release];
@@ -62,7 +62,7 @@
 
 - (void)promptForDevToolsPath
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
 
     NSString *oldPath = [AKPrefUtils devToolsPathPref];
 
@@ -89,19 +89,19 @@
 
 - (IBAction)runOpenPanel:(id)sender
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
     [_textFieldController runOpenPanel];
 }
 
 - (IBAction)ok:(id)sender
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] stopModal];
 }
 
 - (IBAction)cancel:(id)sender
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] terminate:self];
 }
 

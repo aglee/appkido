@@ -626,7 +626,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if (!fileOK)
     {
-        DIGSLogExitingMethodPrematurely(
+        DIGSLogError_ExitingMethodPrematurely(
             ([NSString
                 stringWithFormat:@"failed to get create file at [%@]",
                     [savePanel filename]]));
@@ -638,7 +638,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if (fh == nil)
     {
-        DIGSLogExitingMethodPrematurely(
+        DIGSLogError_ExitingMethodPrematurely(
             ([NSString
                 stringWithFormat:@"failed to get file handle for [%@]",
                     [savePanel filename]]));

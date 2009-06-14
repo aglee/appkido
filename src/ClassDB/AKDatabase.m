@@ -138,7 +138,7 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
 - (id)init
 {
-    DIGSLogNondesignatedInitializer();
+    DIGSLogError_NondesignatedInitializer();
     [self release];
     return nil;
 }
@@ -214,7 +214,7 @@ NSString *AKIPhonePlatform = @"IPhonePlatform";
 
 - (void)loadTokensForFrameworkNamed:(NSString *)fwName
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
 }
 
 - (void)setDelegate:(id)delegate

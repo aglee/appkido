@@ -98,7 +98,7 @@
         // Update the topic browser.
         if (![_topicBrowser setPath:newBrowserPath])
         {
-            DIGSLogExitingMethodPrematurely(
+            DIGSLogError_ExitingMethodPrematurely(
                 ([NSString stringWithFormat:
                     @"can't navigate to browser path [%@]",
                     newBrowserPath]));

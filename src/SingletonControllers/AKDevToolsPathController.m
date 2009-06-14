@@ -19,7 +19,7 @@
 
 - (void)dealloc
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
 
     [_devToolsPathField release];
     [_docSetsPopUpButton release];
@@ -61,7 +61,6 @@
     while ((subdir = [expectedSubdirsEnum nextObject]))
     {
         NSString *expectedSubdirPath = [devToolsPath stringByAppendingPathComponent:subdir];
-
         if (![AKFileUtils directoryExistsAtPath:expectedSubdirPath])
         {
             DIGSLogDebug(@"%@ doesn't seem to be a valid Dev Tools path -- it doesn't have a subdirectory %@",
@@ -80,7 +79,7 @@
 
 - (void)runOpenPanel
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
     if (_devToolsPathField == nil)
         DIGSLogError(@"_devToolsPathField should not be nil");
     if (_docSetsPopUpButton == nil)
@@ -112,7 +111,7 @@
 // Called when the user has selected a (seemingly) valid Dev Tools path.
 - (void)_acceptDevToolsPath:(NSString *)selectedDir
 {
-    DIGSLogObject(@"selectedDir", selectedDir);
+    DIGSLogInfo_ObjectDescription(@"selectedDir", selectedDir);
     [_devToolsPathField setStringValue:selectedDir];
     [AKPrefUtils setDevToolsPathPref:selectedDir];
 }
@@ -121,7 +120,7 @@
 // selects a directory that does not look like a valid Dev Tools directory.
 - (void)_showBadPathAlert:(NSString *)selectedDir
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
 
     NSBeginAlertSheet(
         @"Invalid Dev Tools path",  // title
@@ -143,7 +142,7 @@
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
 
     [self autorelease];  // was retained by -runOpenPanel
 
@@ -181,7 +180,7 @@
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-    DIGSLogEnteringMethod();
+    DIGSLogDebug_EnteringMethod();
 
     [self autorelease];  // was retained by -_showBadPathAlert
 

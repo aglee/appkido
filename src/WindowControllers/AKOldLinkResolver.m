@@ -358,7 +358,7 @@
 
     if (offset < 0)
     {
-        DIGSLogExitingMethodPrematurely(
+        DIGSLogError_ExitingMethodPrematurely(
             ([NSString stringWithFormat:
                 @"couldn't find anchor \"%@\" in file %@",
                 linkAnchor, [rootSection filePath]]));

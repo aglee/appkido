@@ -41,7 +41,7 @@
 
 - (AKFileSection *)fileSection
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 

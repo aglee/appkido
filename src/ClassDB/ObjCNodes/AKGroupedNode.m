@@ -31,7 +31,7 @@
 - (id)initWithNodeName:(NSString *)nodeName
     owningFramework:(NSString *)fwName
 {
-    DIGSLogNondesignatedInitializer();
+    DIGSLogError_NondesignatedInitializer();
     [self release];
     return nil;
 }

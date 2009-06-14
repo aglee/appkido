@@ -109,19 +109,19 @@ static NSInteger _versionSortFunction(id leftVersionString, id rightVersionStrin
 
 - (NSString *)relativePathToDocSetsDir
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
 - (NSString *)relativePathToHeadersDir
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return nil;
 }
 
 - (BOOL)isValidDocSetName:(NSString *)fileName
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
     return NO;
 }
 

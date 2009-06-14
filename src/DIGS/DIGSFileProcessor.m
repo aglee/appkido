@@ -126,7 +126,7 @@
 
 - (void)processCurrentFile
 {
-    DIGSLogMissingOverride();
+    DIGSLogError_MissingOverride();
 }
 
 @end
