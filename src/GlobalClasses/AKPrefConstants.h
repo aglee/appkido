@@ -65,6 +65,10 @@ extern NSString *AKSelectedFrameworksPrefName;
 // @"/Developer".
 extern NSString *AKDevToolsPathPrefName;
 
+// Value is version number of the SDK for which we should get all our data --
+// see AKDevTools.
+extern NSString *AKSDKVersionPrefName;
+
 //-------------------------------------------------------------------------
 // AKXyzPrefKey
 //

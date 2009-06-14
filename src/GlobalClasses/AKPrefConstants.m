@@ -31,6 +31,7 @@ NSString *AKFavoritesPrefName = @"AKFavorites";
 
 NSString *AKSelectedFrameworksPrefName = @"AKSelectedFrameworks";
 NSString *AKDevToolsPathPrefName = @"AKDevToolsPath";
+NSString *AKSDKVersionPrefName = @"AKSDKVersion";
 
 //-------------------------------------------------------------------------
 // AKXyzPrefKey

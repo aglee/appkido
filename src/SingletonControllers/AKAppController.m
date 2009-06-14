@@ -203,7 +203,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // When we're done, [AKPrefUtils devToolsPathPref] will have a valid value.
     while (![AKDevToolsPathController looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
     {
-        [[AKDevToolsPanelController controller] promptForDevToolsPath];
+        [[AKDevToolsPanelController controller] runDevToolsSetupPanel];
     }
     DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
 

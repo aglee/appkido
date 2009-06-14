@@ -30,6 +30,10 @@
 + (NSString *)devToolsPathPref;
 + (void)setDevToolsPathPref:(NSString *)dir;
 
+/*! See AKDevTools for where the SDK version comes from. */
++ (NSString *)sdkVersionPref;
++ (void)setSDKVersionPref:(NSString *)dir;
+
 //-------------------------------------------------------------------------
 // Clearing preferences
 //-------------------------------------------------------------------------

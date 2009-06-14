@@ -13,9 +13,9 @@
 #import "AKAppController.h"
 #import "AKDevToolsPathController.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKPrefPanelController (Private)
 
@@ -27,16 +27,16 @@
 
 @implementation AKPrefPanelController
 
-//-------------------------------------------------------------------------
-// Private constants
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private constants
 
 static NSString *_AKCheckboxesColumnID     = @"checkboxes";
 static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 static AKPrefPanelController *s_sharedInstance = nil;
 
@@ -50,9 +50,9 @@ static AKPrefPanelController *s_sharedInstance = nil;
     return s_sharedInstance;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -92,23 +92,13 @@ static AKPrefPanelController *s_sharedInstance = nil;
     }
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)openPrefsPanel:(id)sender
 {
     [self _updateAppearanceTabFromPrefs];
-
-    if ([AKPrefUtils devToolsPathPref])
-    {
-        [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
-    }
-    else
-    {
-        [_devToolsPathField setStringValue:@""];
-    }
-
     [[_prefsTabView window] makeKeyAndOrderFront:nil];
 }
 
@@ -123,14 +113,6 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [AKPrefUtils resetAppearancePrefsToDefaults];
     [self _updateAppearanceTabFromPrefs];
     [(AKAppController *)[NSApp delegate] applyUserPreferences];
-}
-
-- (IBAction)selectDevToolsPath:(id)sender
-{
-    AKDevToolsPathController *pathPrompt = [[[AKDevToolsPathController alloc] init] autorelease];
-    [pathPrompt setDevToolsPathField:_devToolsPathField];
-    [pathPrompt setDocSetsPopUpButton:_docSetsPopUpButton];
-    [pathPrompt runOpenPanel];
 }
 
 - (IBAction)doFrameworksListAction:(id)sender
@@ -176,9 +158,9 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_frameworksTable reloadData];
 }
 
-//-------------------------------------------------------------------------
-// NSTableView datasource methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTableView datasource methods
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -194,9 +176,9 @@ static AKPrefPanelController *s_sharedInstance = nil;
             objectAtIndex:rowIndex];
 }
 
-//-------------------------------------------------------------------------
-// NSTableView delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTableView delegate methods
 
 - (void)tableView:(NSTableView *)aTableView
     willDisplayCell:(id)aCell
@@ -243,9 +225,9 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKPrefPanelController (Private)
 
