@@ -38,9 +38,9 @@
 // [agl] working on parse performance
 #define MEASURE_PARSE_SPEED 1
 
-//-------------------------------------------------------------------------
-// Forwarding of applescript commands
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forwarding of applescript commands
 
 // Thanks to Dominik Wagner for AppleScript support!
 
@@ -59,23 +59,21 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKAppController (Private)
 
-//-------------------------------------------------------------------------
-// Private methods -- steps during launch
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Private methods -- steps during launch
 
 - (void)_initAboutPanel;
 - (void)_initGoMenu;
 - (void)_maybeAddDebugMenu;  // [agl] uses AKDebugUtils
 
-//-------------------------------------------------------------------------
-// Private methods -- version management
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods -- version management
 
 - (NSString *)_appVersion;
 
@@ -90,18 +88,18 @@
 - (NSDictionary *)_versionDictionaryFromString:(NSString *)versionString;
 - (NSString *)_displayStringForVersion:(NSDictionary *)versionDictionary;
 
-//-------------------------------------------------------------------------
-// Private methods -- window management
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods -- window management
 
 - (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout;
 - (void)_handleWindowWillCloseNotification:(NSNotification *)notification;
 - (void)_openInitialWindows;
 - (NSArray *)_allWindowsAsPrefArray;
 
-//-------------------------------------------------------------------------
-// Private methods -- Favorites
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods -- Favorites
 
 - (void)_getFavoritesFromPrefs;
 - (void)_putFavoritesIntoPrefs;
@@ -111,9 +109,8 @@
 
 @implementation AKAppController
 
-//-------------------------------------------------------------------------
-// Private constants
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Private constants
 
 // [agl] handle the possibility of hosting elsewhere; make a pref?
 // URL of the downloads page for AppKiDo.
@@ -135,9 +132,9 @@ static NSString *_AKMinorNumberKey      = @"minor";
 static NSString *_AKPatchNumberKey      = @"patch";
 static NSString *_AKSneakyPeekNumberKey = @"sneakypeek";
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 static id s_sharedInstance = nil;  // Value will be set by -init.
 
@@ -146,10 +143,9 @@ static id s_sharedInstance = nil;  // Value will be set by -init.
     return s_sharedInstance;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
 
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
@@ -265,14 +261,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Force the DIGSFindBuffer to initialize.
     // [agl] ??? Why not in DIGSFindBuffer's +initialize?
     (void)[DIGSFindBuffer sharedInstance];
-
-    // Proceed to our main business.
-    [self _openInitialWindows];
-
-    // Add the Debug menu if certain conditions are met.
-    [self _maybeAddDebugMenu];  // [agl] uses AKDebugUtils
-
-    _finishedInitializing = YES;
 }
 
 - (void)dealloc
@@ -288,18 +276,18 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKDatabase *)appDatabase
 {
     return _appDatabase;
 }
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 // [agl] what about using [NSView +focusView]?
 - (NSTextView *)selectedTextView
@@ -357,9 +345,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return windowController;
 }
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 - (void)applyUserPreferences
 {
@@ -381,9 +369,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-//-------------------------------------------------------------------------
-// AppleScript support
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AppleScript support
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
@@ -392,9 +380,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// Managing the user's Favorites list
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Managing the user's Favorites list
 
 - (NSArray *)favoritesList
 {
@@ -442,9 +430,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self applyUserPreferences];
 }
 
-//-------------------------------------------------------------------------
-// UI item validation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI item validation
 
 - (BOOL)validateItem:(id)anItem
 {
@@ -482,9 +470,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)openAboutPanel:(id)sender
 {
@@ -661,27 +649,38 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-//-------------------------------------------------------------------------
-// NSMenuValidation protocol methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSMenuValidation protocol methods
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aCell
 {
     return [self validateItem:aCell];
 }
 
-//-------------------------------------------------------------------------
-// NSToolbarItemValidation protocol methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSToolbarItemValidation protocol methods
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
     return [self validateItem:theItem];
 }
 
-//-------------------------------------------------------------------------
-// NSApplication delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSApplication delegate methods
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    // Reopen windows from the previous session.
+    [self _openInitialWindows];
+
+    // Add the Debug menu if certain conditions are met.
+    [self _maybeAddDebugMenu];  // [agl] uses AKDebugUtils
+
+    _finishedInitializing = YES;
+}
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
 {
@@ -704,9 +703,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
         forPref:AKSavedWindowStatesPrefName];
 }
 
-//-------------------------------------------------------------------------
-// AKDatabase delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDatabase delegate methods
 
 - (void)database:(AKDatabase *)database
     willLoadTokensForFramework:(NSString *)frameworkName
@@ -715,18 +714,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashMessage2Field display];
 }
 
-@end
 
-
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
-
-@implementation AKAppController (Private)
-
-//-------------------------------------------------------------------------
-// Private methods -- steps during launch
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Private methods -- steps during launch
 
 - (void)_initAboutPanel
 {
@@ -864,14 +854,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-- (void)_loadFrameworks:(NSArray *)frameworkNames
-    forPlatform:(NSString *)platformName
-{
-}
 
-//-------------------------------------------------------------------------
-// Private methods -- window management
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Private methods -- window management
 
 - (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout
 {
@@ -962,9 +947,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return result;
 }
 
-//-------------------------------------------------------------------------
-// Private methods -- version management
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods -- version management
 
 - (NSString *)_appVersion
 {
@@ -1250,9 +1235,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return versionString;
 }
 
-//-------------------------------------------------------------------------
-// Private methods -- Favorites
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods -- Favorites
 
 - (void)_getFavoritesFromPrefs
 {
