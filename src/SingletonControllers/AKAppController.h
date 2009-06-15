@@ -50,21 +50,21 @@
     IBOutlet NSMenuItem *_firstGoMenuDivider;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)sharedInstance;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKDatabase *)appDatabase;
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 /*!
  * @method      selectedTextView
@@ -86,9 +86,9 @@
  */
 - (AKWindowController *)controllerForNewWindow;
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 /*!
  * @method      applyUserPreferences
@@ -97,15 +97,15 @@
  */
 - (void)applyUserPreferences;
 
-//-------------------------------------------------------------------------
-// AppleScript support
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AppleScript support
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
 
-//-------------------------------------------------------------------------
-// Managing the user's Favorites list
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Managing the user's Favorites list
 
 /*!
  * @method      favoritesList
@@ -120,9 +120,9 @@
 
 - (void)moveFavoriteFromIndex:(int)fromIndex toIndex:(int)toIndex;
 
-//-------------------------------------------------------------------------
-// UI item validation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI item validation
 
 /*!
  * @method      validateItem:
@@ -133,9 +133,9 @@
  */
 - (BOOL)validateItem:(id)anItem;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 /*!
  * @method      openAboutPanel:
@@ -177,6 +177,10 @@
  *              the framework database to a text file.
  */
 - (IBAction)exportDatabase:(id)sender;
+
+
+#pragma mark -
+#pragma mark Private action methods (for debugging only)
 
 /*!
  * @method      _testParser:
