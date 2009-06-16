@@ -28,19 +28,19 @@
 @implementation AKDevTools
 
 // Used for sorting the version strings in _sdkVersions.
-static NSInteger _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
+static int _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
 {
     NSArray *leftComponents = [(NSString *)leftVersionString componentsSeparatedByString:@"."];
     NSArray *rightComponents = [(NSString *)rightVersionString componentsSeparatedByString:@"."];
-    NSUInteger i;
+    unsigned int i;
 
     for (i = 0; i < [leftComponents count]; i++)
     {
         if (i >= [rightComponents count])
             return NSOrderedDescending;  // leftVersionString is greater than rightVersionString
 
-        NSInteger leftNumber = [[leftComponents objectAtIndex:i] intValue];
-        NSInteger rightNumber = [[rightComponents objectAtIndex:i] intValue];
+        int leftNumber = [[leftComponents objectAtIndex:i] intValue];
+        int rightNumber = [[rightComponents objectAtIndex:i] intValue];
 
         if (leftNumber < rightNumber)
             return NSOrderedAscending;
