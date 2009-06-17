@@ -45,6 +45,12 @@
 
 ===== bugs =====
 
+[ ] regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
+
+[x] From Jeff Johnson 2009-03-10: "I have a suggestion for a minor code change in AKAppController.m. I recommend implementing -applicationDidFinishLaunching: and moving everything in -awakeFromNib starting with [_splashMessage2Field setStringValue:@""] to the new method.    I'll explain the reason for this. As we know, AppKit is not thread-safe. Of relevance here is that the NSApplication isActive state only gets updated on the main thread. The AppKiDo database parsing in awakeFromNib is an expensive, blocking operation. Thus, what often happens is that I launch AppKiDo, perhaps at the beginning of the day, and then switch to another application before it's finished launching. When the database parsing is done, the app is no longer active, but the isActive state hasn't been updated yet, applicationDidResignActive hasn't been called yet, and so forth, because that all happens only on the main thread, which was blocked in awakeFromNib. When [self _openInitialWindows] is called in awakeFromNib, the app still thinks it's active, and the window appears in front of the active app rather than in the background, which is confusing and bothersome.    Moving the window opening code out of awakeFromNib gives the app a chance to update the isActive state after the database parsing is done, and then the correct window ordering behavior occurs."
+
+[ ] CGRectMake is in both CoreGraphics functions and QuartzCore functions??
+
 [ ] Noticed AppKiDo prompted for location of dev tools although it had already parsed the docs found in /Developer.
 
 [ ] regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
