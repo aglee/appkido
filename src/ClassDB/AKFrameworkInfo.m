@@ -8,6 +8,7 @@
 #import "AKFrameworkInfo.h"
 
 #import "DIGSLog.h"
+#import "AKPrefUtils.h"
 #import "AKDatabase.h"
 
 //-------------------------------------------------------------------------
@@ -158,7 +159,6 @@
 
 @implementation AKFrameworkInfo (Private)
 
-// [agl] TODO Should this be in AKFileUtils?
 - (NSString *)_findExistingDirInArray:(NSArray *)dirNames
 {
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -167,8 +167,17 @@
 
     while ((dirName = [dirNameEnum nextObject]))
     {
-        BOOL isDir;
+        // Tweak the path, replacing /Developer with the Dev Tools location specified in prefs.
+        if ([dirName hasPrefix:@"/Developer/"])
+        {
+            dirName =
+                [[AKPrefUtils devToolsPathPref]
+                    stringByAppendingPathComponent:
+                        [dirName substringFromIndex:[@"/Developer/" length]]];
+        }
 
+        // See if a directory exists there.
+        BOOL isDir;
         if ([fm fileExistsAtPath:dirName isDirectory:&isDir] && isDir)
         {
             return dirName;

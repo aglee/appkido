@@ -64,48 +64,37 @@
 
 @interface AKAppController (Private)
 
-#pragma mark -
-#pragma mark Private methods -- steps during launch
-
+// Private methods -- steps during launch
 - (void)_initAboutPanel;
 - (void)_initGoMenu;
 - (void)_maybeAddDebugMenu;  // [agl] uses AKDebugUtils
 
-
-#pragma mark -
-#pragma mark Private methods -- version management
-
+// Private methods -- version management
 - (NSString *)_appVersion;
-
 - (NSDictionary *)_latestAppVersion;
-
 - (BOOL)_version:(NSDictionary *)lhs isNewerThan:(NSDictionary *)rhs;
 - (NSComparisonResult)_compareValuesForKey:(NSString *)key
     forLHS:(NSDictionary *)lhs
     andRHS:(NSDictionary *)rhs
     nilIsGreatest:(BOOL)nilIsGreatest;
-
 - (NSDictionary *)_versionDictionaryFromString:(NSString *)versionString;
 - (NSString *)_displayStringForVersion:(NSDictionary *)versionDictionary;
 
-
-#pragma mark -
-#pragma mark Private methods -- window management
-
+// Private methods -- window management
 - (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout;
 - (void)_handleWindowWillCloseNotification:(NSNotification *)notification;
 - (void)_openInitialWindows;
 - (NSArray *)_allWindowsAsPrefArray;
 
-
-#pragma mark -
-#pragma mark Private methods -- Favorites
-
+// Private methods -- Favorites
 - (void)_getFavoritesFromPrefs;
 - (void)_putFavoritesIntoPrefs;
 - (void)_updateFavoritesMenu;
 
 @end
+
+
+#pragma mark -
 
 @implementation AKAppController
 
@@ -114,16 +103,13 @@
 
 // [agl] handle the possibility of hosting elsewhere; make a pref?
 // URL of the downloads page for AppKiDo.
-static NSString *_AKHomePageURL =
-                            @"http://homepage.mac.com/aglee/downloads";
+static NSString *_AKHomePageURL = @"http://homepage.mac.com/aglee/downloads";
 
 // URL of the file from which to get the latest version number.
 #if APPKIDO_FOR_IPHONE
-static NSString *_AKVersionURL =
-            @"http://homepage.mac.com/aglee/downloads/AppKiDo-for-iPhone.version";
+static NSString *_AKVersionURL = @"http://homepage.mac.com/aglee/downloads/AppKiDo-for-iPhone.version";
 #else
-static NSString *_AKVersionURL =
-            @"http://homepage.mac.com/aglee/downloads/AppKiDo.version";
+static NSString *_AKVersionURL = @"http://homepage.mac.com/aglee/downloads/AppKiDo.version";
 #endif
 
 // Dictionary keys.
@@ -227,8 +213,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #endif MEASURE_PARSE_SPEED
 
     [_appDatabase setDelegate:self];  // So we can update the splash screen.
-    [_appDatabase
-        loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
+    [_appDatabase loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
     [_appDatabase setDelegate:nil];
 
 // [agl] working on performance
