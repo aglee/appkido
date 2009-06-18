@@ -18,10 +18,10 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
     owningBehavior:(AKBehaviorNode *)behaviorNode
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:fwName]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
         _owningBehavior = [behaviorNode retain];
     }
@@ -30,7 +30,7 @@
 }
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
 {
     DIGSLogError_NondesignatedInitializer();
     [self release];

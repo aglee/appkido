@@ -33,9 +33,7 @@
         [_namesOfAvailableFrameworks release];
         _namesOfAvailableFrameworks = [[NSMutableArray array] retain];
 
-        NSArray *namesOfPossibleFrameworks =
-            [[AKFrameworkInfo sharedInstance] allPossibleFrameworkNames];
-
+        NSArray *namesOfPossibleFrameworks = [[AKFrameworkInfo sharedInstance] allPossibleFrameworkNames];
         NSEnumerator *fwNameEnum = [namesOfPossibleFrameworks objectEnumerator];
         NSString *fwName;
 
@@ -71,12 +69,10 @@
 
 - (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
-    return
-        [[AKFrameworkInfo sharedInstance]
-            frameworkDirsExist:frameworkName];
+    return [[AKFrameworkInfo sharedInstance] frameworkDirsExist:frameworkName];
 }
 
-- (void)loadTokensForFrameworkNamed:(NSString *)fwName
+- (void)loadTokensForFrameworkNamed:(NSString *)frameworkName
 {
     // Parse header files before HTML files, so that later when we parse a
     // "Deprecated Methods" HTML file we can distinguish between instance
@@ -85,25 +81,25 @@
     // ones -- informal ones do not have an associated header.
     // ([agl] Is this a reliable test for informal protocols?)
     DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing headers for framework %@", fwName);
+    DIGSLogDebug(@"Parsing headers for framework %@", frameworkName);
     DIGSLogDebug(@"---------------------------------------------------");
 
     NSString *_headerDir =
-        [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:fwName];
+        [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:frameworkName];
     DIGSLogDebug(@"parsing headers in %@", _headerDir);
     [AKObjCHeaderParser
         recursivelyParseDirectory:_headerDir
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
     
     // Figure out which directories contain the doc files.
-    NSString *_mainDocDir = [[AKFrameworkInfo sharedInstance] docDirForFrameworkNamed:fwName];
+    NSString *_mainDocDir = [[AKFrameworkInfo sharedInstance] docDirForFrameworkNamed:frameworkName];
     NSString *behaviorsDocDir = _mainDocDir;
     NSString *functionsDocDir = nil;
     NSString *constantsDocDir = nil;
     NSString *datatypesDocDir = nil;
 
-    if ([[[AKFrameworkInfo sharedInstance] frameworkClassNameForFrameworkNamed:fwName]
+    if ([[[AKFrameworkInfo sharedInstance] frameworkClassNameForFrameworkNamed:frameworkName]
             isEqualToString:@"AKCocoaFramework22"])
     {
         functionsDocDir =
@@ -120,50 +116,40 @@
     }
     else
     {
-        NSString *miscPath =
-            [_mainDocDir stringByAppendingPathComponent:@"Miscellaneous"];
+        NSString *miscPath = [_mainDocDir stringByAppendingPathComponent:@"Miscellaneous"];
 
-        functionsDocDir =
-            [AKFileUtils
-                subdirectoryOf:miscPath
-                withNameEndingWith:@"Functions"];
-        constantsDocDir =
-            [AKFileUtils
-                subdirectoryOf:miscPath
-                withNameEndingWith:@"Constants"];
-        datatypesDocDir =
-            [AKFileUtils
-                subdirectoryOf:miscPath
-                withNameEndingWith:@"DataTypes"];
+        functionsDocDir = [AKFileUtils subdirectoryOf:miscPath withNameEndingWith:@"Functions"];
+        constantsDocDir = [AKFileUtils subdirectoryOf:miscPath withNameEndingWith:@"Constants"];
+        datatypesDocDir = [AKFileUtils subdirectoryOf:miscPath withNameEndingWith:@"DataTypes"];
     }
 
     // Parse the doc files in those directories.
     DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing HTML docs for framework %@", fwName);
+    DIGSLogDebug(@"Parsing HTML docs for framework %@", frameworkName);
     DIGSLogDebug(@"---------------------------------------------------");
 
-    DIGSLogDebug(@"parsing behavior docs for %@", fwName);
+    DIGSLogDebug(@"parsing behavior docs for %@", frameworkName);
     [AKCocoaBehaviorDocParser
         recursivelyParseDirectory:behaviorsDocDir
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
 
-    DIGSLogDebug(@"parsing functions docs for %@", fwName);
+    DIGSLogDebug(@"parsing functions docs for %@", frameworkName);
     [AKCocoaFunctionsDocParser
         recursivelyParseDirectory:functionsDocDir
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
 
-    DIGSLogDebug(@"parsing constants docs for %@", fwName);
+    DIGSLogDebug(@"parsing constants docs for %@", frameworkName);
     [AKCocoaGlobalsDocParser
         recursivelyParseDirectory:constantsDocDir
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
 
-    DIGSLogDebug(@"parsing datatypes docs for %@", fwName);
+    DIGSLogDebug(@"parsing datatypes docs for %@", frameworkName);
     [AKCocoaGlobalsDocParser
         recursivelyParseDirectory:datatypesDocDir
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
 }
 

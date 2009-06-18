@@ -68,8 +68,8 @@
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    if ([_databaseBeingPopulated classDocumentedInHTMLFile:filePath]
-        || [_databaseBeingPopulated protocolDocumentedInHTMLFile:filePath])
+    if ([[_parserFW fwDatabase] classDocumentedInHTMLFile:filePath]
+        || [[_parserFW fwDatabase] protocolDocumentedInHTMLFile:filePath])
     {
         // Don't process the file if it's already been processed as a
         // behavior doc.  This is to catch the case where the docset index
@@ -117,22 +117,16 @@
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKGroupNode *groupNode =
-        [_databaseBeingPopulated
-            globalsGroupWithName:groupName
-            inFramework:_frameworkName];
+    AKGroupNode *groupNode = [[_parserFW fwDatabase] globalsGroupNamed:groupName inFrameworkNamed:_parserFW];
 
     if (!groupNode)
     {
-        groupNode =
-            [[AKGroupNode alloc]
-                initWithNodeName:groupName
-                owningFramework:_frameworkName];
+        groupNode = [[AKGroupNode alloc] initWithNodeName:groupName owningFramework:_parserFW];
         // [agl] FIXME -- There is a slight flaw in this reasoning: the
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
         [groupNode setNodeDocumentation:groupSection];
-        [_databaseBeingPopulated addGlobalsGroup:groupNode];
+        [[_parserFW fwDatabase] addGlobalsGroup:groupNode];
     }
 
     // Iterate through child sections.  Each child section corresponds
@@ -142,8 +136,7 @@
     while ((childSection = [childSectionEnum nextObject]))
     {
         // Create a globals node and add it to the group.
-        AKGlobalsNode *globalsNode =
-            [self _globalsNodeFromFileSection:childSection];
+        AKGlobalsNode *globalsNode = [self _globalsNodeFromFileSection:childSection];
 
         [globalsNode setNodeDocumentation:childSection];
         [groupNode addSubnode:globalsNode];
@@ -155,15 +148,11 @@
     // See if the file we're parsing is a behavior doc.  Relies on the
     // assumption that if so, the doc was already parsed as such and is
     // therefore known to the database.
-    id behaviorNode =
-        [_databaseBeingPopulated
-            classDocumentedInHTMLFile:[fileSection filePath]];
+    id behaviorNode = [[_parserFW fwDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
 
     if (behaviorNode == nil)
     {
-        behaviorNode =
-            [_databaseBeingPopulated
-                protocolDocumentedInHTMLFile:[fileSection filePath]];
+        behaviorNode = [[_parserFW fwDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
     }
 
     // Create a node.
@@ -175,26 +164,18 @@
     }
     else if ([behaviorNode isClassNode])
     {
-        globalsNodeName =
-            [NSString stringWithFormat:@"%@ [%@]",
-                [fileSection sectionName], [behaviorNode nodeName]];
+        globalsNodeName = [NSString stringWithFormat:@"%@ [%@]", [fileSection sectionName], [behaviorNode nodeName]];
     }
     else
     {
-        globalsNodeName =
-            [NSString stringWithFormat:@"%@ <%@>",
-                [fileSection sectionName], [behaviorNode nodeName]];
+        globalsNodeName = [NSString stringWithFormat:@"%@ <%@>", [fileSection sectionName], [behaviorNode nodeName]];
     }
 
     AKGlobalsNode *globalsNode =
-        [[[AKGlobalsNode alloc]
-            initWithNodeName:globalsNodeName
-            owningFramework:_frameworkName] autorelease];
+        [[[AKGlobalsNode alloc] initWithNodeName:globalsNodeName owningFramework:_parserFW] autorelease];
 
     // Add any individual names we find in the minor section.
-    NSEnumerator *namesOfGlobalsEnum =
-        [[self _parseNamesOfGlobalsInFileSection:fileSection]
-            objectEnumerator];
+    NSEnumerator *namesOfGlobalsEnum = [[self _parseNamesOfGlobalsInFileSection:fileSection] objectEnumerator];
     NSString *nameOfGlobal;
 
     while ((nameOfGlobal = [namesOfGlobalsEnum nextObject]))

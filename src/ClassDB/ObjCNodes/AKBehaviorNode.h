@@ -57,14 +57,18 @@
     // Keys are names of frameworks I belong to.  Values are the
     // root file sections containing documentation specific to the
     // framework.
-    NSMutableDictionary *_nodeDocumentationByFramework;
+    NSMutableDictionary *_nodeDocumentationByFrameworkName;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- general
-//-------------------------------------------------------------------------
 
-// The first one in the returned array is the node's -owningFramework.
+#pragma mark -
+#pragma mark Getters and setters -- general
+
+/*!
+ * @method      allOwningFrameworks
+ * @discussion  Returned elements are instances of AKFramework.  The first
+ *              one in the returned array is the node's -owningFramework.
+ */
 - (NSArray *)allOwningFrameworks;
 
 - (BOOL)isClassNode;
@@ -85,14 +89,13 @@
 - (NSArray *)implementedProtocols;
 
 // frameworkName can be the main framework or an extra one
-- (AKFileSection *)nodeDocumentationForFramework:(NSString *)frameworkName;
+- (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName;
 
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-    forFramework:(NSString *)frameworkName;
+- (void)setNodeDocumentation:(AKFileSection *)fileSection forFrameworkNamed:(NSString *)frameworkName;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- properties
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- properties
 
 /** Returns only properties that are in this class's documentation. */
 - (NSArray *)documentedProperties;
@@ -102,9 +105,9 @@
 /*! Does nothing if a property with the same name already exists. */
 - (void)addPropertyNode:(AKPropertyNode *)propertyNode;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- class methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- class methods
 
 /*!
  * Returns AKMethodNodes for class methods that have documentation
@@ -117,9 +120,9 @@
 /*! Does nothing if a class method with the same name already exists. */
 - (void)addClassMethod:(AKMethodNode *)methodNode;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- instance methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- instance methods
 
 /*!
  * Returns AKMethodNodes for instance methods that have documentation
@@ -132,15 +135,15 @@
 /*! Does nothing if an instance method with the same name already exists. */
 - (void)addInstanceMethod:(AKMethodNode *)methodNode;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- deprecated methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- deprecated methods
 
 /*!
  * We have to guess whether it's a class method or instance method,
  * because the docs lump all deprecated methods together.
  */
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-    owningFramework:(NSString *)owningFramework;
+    owningFramework:(AKFramework *)nodeOwningFW;
 
 @end

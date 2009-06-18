@@ -16,9 +16,9 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:fwName]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
         _subnodes = [[NSMutableArray alloc] init];
     }

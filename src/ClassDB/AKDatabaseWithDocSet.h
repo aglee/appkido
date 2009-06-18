@@ -16,10 +16,6 @@
     AKDocSetIndex *_docSetIndex;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
-
 /*! Designated initializer. */
 - (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
 

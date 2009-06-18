@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class AKFramework;
 @class AKDocSetIndex;
 @class AKFileSection;
 @class AKDatabaseNode;
@@ -65,8 +66,12 @@
 @protected
     id _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
 
-    // Elements are NSStrings.  There are constants in AKFrameworkConstants.h
-    // for the names of some frameworks that need to be treated specially.
+    // --- Frameworks ---
+
+    NSMutableDictionary *_frameworksByName;  // (NSString) -> (AKFramework)
+
+    // There are constants in AKFrameworkConstants.h for the names of some frameworks
+    // that need to be treated specially.
     NSMutableArray *_frameworkNames;  // frameworks that have been loaded
     NSMutableArray *_namesOfAvailableFrameworks;  // frameworks that the user could choose to load
 
@@ -126,58 +131,74 @@
     NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark - Factory methods
 
 + (id)databaseForMacPlatform;
 + (id)databaseForIPhonePlatform;
 
-//-------------------------------------------------------------------------
-// Populating
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Populating the database
 
 /*!
- * Is there a framework with the given name on the receiver's platform?
+ * @method      frameworkNameIsSelectable:
+ * @discussion  Is there a framework with the given name on the receiver's platform?
  */
 - (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName;
 
 /*!
- * Calls -loadTokensForFrameworkNamed:.  Sends delegate message for each
- * framework loaded.  frameworkNames can be nil; by default, this causes
- * all "essential" frameworks to be loaded.
+ * @method      loadTokensForFrameworks:
+ * @discussion  Calls -loadTokensForFrameworkNamed:.  Sends delegate message for each
+ *              framework loaded.  frameworkNames can be nil; by default, this causes
+ *              all "essential" frameworks to be loaded.
  */
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames;
 
 /*!
- * Must override.  Called by -loadTokensForFrameworks:. Do not call directly.
+ * @method      loadTokensForFrameworkNamed:
+ * @discussion  Must override.  Called by -loadTokensForFrameworks:. Do not call directly.
  */
-- (void)loadTokensForFrameworkNamed:(NSString *)fwName;
-
-/*! Is notified when a framework is about to be loaded. */
-- (void)setDelegate:(id)delegate;
-
-//-------------------------------------------------------------------------
-// Getters and setters -- frameworks
-//-------------------------------------------------------------------------
+- (void)loadTokensForFrameworkNamed:(NSString *)frameworkName;
 
 /*!
- * Returns the names of frameworks that have been loaded, in no guaranteed
- * order.
+ * @method      setDelegate:
+ * @discussion  The delegate is notified when a framework is about to be loaded.
+ */
+- (void)setDelegate:(id)delegate;
+
+
+#pragma mark -
+#pragma mark Getters and setters -- frameworks
+
+/*
+ * @method      frameworkWithName:
+ * @discussion  Creates the AKFramework instance if it doesn't exist.
+ */
+- (AKFramework *)frameworkWithName:(NSString *)frameworkName;
+
+/*!
+ * @method      frameworkNames
+ * @discussion  Returns the names of all frameworks that have been loaded, in no guaranteed order.
  */
 - (NSArray *)frameworkNames;
 
 - (NSArray *)sortedFrameworkNames;
 
-- (BOOL)hasFrameworkWithName:(NSString *)fwName;
+- (BOOL)hasFrameworkWithName:(NSString *)frameworkName;
 
 - (NSArray *)namesOfAvailableFrameworks;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- classes
-//-------------------------------------------------------------------------
 
-- (NSArray *)classesForFramework:(NSString *)fwName;
+#pragma mark -
+#pragma mark Getters and setters -- classes
+
+/*!
+ * @method      classesForFramework:
+ * @discussion  Elements of the returned array are AKClassNodes.  Order is undefined.
+ */
+- (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
 
 /*!
  * @method      rootClasses
@@ -193,7 +214,7 @@
  */
 - (NSArray *)allClasses;
 
-- (AKClassNode *)classWithName:(NSString *)name;
+- (AKClassNode *)classWithName:(NSString *)className;
 
 /*!
  * @method      addClassNode:
@@ -202,13 +223,13 @@
  */
 - (void)addClassNode:(AKClassNode *)classNode;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- protocols
-//-------------------------------------------------------------------------
 
-- (NSArray *)formalProtocolsForFramework:(NSString *)fwName;
+#pragma mark -
+#pragma mark Getters and setters -- protocols
 
-- (NSArray *)informalProtocolsForFramework:(NSString *)fwName;
+- (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName;
+
+- (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
 
 /*!
  * @method      allProtocols
@@ -226,52 +247,46 @@
  */
 - (void)addProtocolNode:(AKProtocolNode *)classNode;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- functions
-//-------------------------------------------------------------------------
 
-- (int)numberOfFunctionsGroupsForFramework:(NSString *)fwName;
-- (NSArray *)functionsGroupsForFramework:(NSString *)fwName;
-- (AKGroupNode *)functionsGroupWithName:(NSString *)groupName
-    inFramework:(NSString *)fwName;
+#pragma mark -
+#pragma mark Getters and setters -- functions
+
+- (int)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName;
+- (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName;
+- (AKGroupNode *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName;
 - (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
 
-- (AKGroupNode *)functionsGroupContainingFunction:functionName
-    inFramework:(NSString *)fwName;
+- (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
+    inFrameworkNamed:(NSString *)frameworkName;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- globals
-//-------------------------------------------------------------------------
 
-- (int)numberOfGlobalsGroupsForFramework:(NSString *)fwName;
-- (NSArray *)globalsGroupsForFramework:(NSString *)fwName;
-- (AKGroupNode *)globalsGroupWithName:(NSString *)groupName
-    inFramework:(NSString *)fwName;
+#pragma mark -
+#pragma mark Getters and setters -- globals
+
+- (int)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName;
+- (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName;
+- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName;
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
 
-- (AKGroupNode *)globalsGroupContainingGlobal:nameOfGlobal
-    inFramework:(NSString *)fwName;
+- (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
+    inFrameworkNamed:(NSString *)frameworkName;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- hyperlink support
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- hyperlink support
 
 - (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
 
-- (void)rememberFramework:(NSString *)frameworkName
-    forHTMLFile:(NSString *)htmlFilePath;
+- (void)rememberFramework:(AKFramework *)aFramework forHTMLFile:(NSString *)htmlFilePath;
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
-- (void)rememberThatClass:(AKClassNode *)classNode
-    isDocumentedInHTMLFile:(NSString *)htmlFilePath;
+- (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
 
 - (AKProtocolNode *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath;
-- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode
-    isDocumentedInHTMLFile:(NSString *)htmlFilePath;
+- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
 
 - (AKFileSection *)rootSectionForHTMLFile:(NSString *)filePath;
-- (void)rememberRootSection:(AKFileSection *)rootSection
-    forHTMLFile:(NSString *)filePath;
+- (void)rememberRootSection:(AKFileSection *)rootSection forHTMLFile:(NSString *)filePath;
 
 /*!
  * @method      offsetOfAnchorString:inHTMLFile:
@@ -285,18 +300,16 @@
  *              This method returns the byte offset of the given anchor
  *              string within the given file, or -1 if it is not present.
  */
-- (int)offsetOfAnchorString:(NSString *)anchorString
-    inHTMLFile:(NSString *)filePath;
-- (void)rememberOffset:(int)anchorOffset
-    ofAnchorString:(NSString *)anchorString
-    inHTMLFile:(NSString *)filePath;
+- (int)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
+- (void)rememberOffset:(int)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
 
 @end
 
 
+#pragma mark -
+#pragma mark Delegate methods
 
 @interface NSObject (AKDatabaseDelegate)
-- (void)database:(AKDatabase *)database
-    willLoadTokensForFramework:(NSString *)frameworkName;
+- (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName;
 @end
 

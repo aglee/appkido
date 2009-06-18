@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 #import "AKSortable.h"
+#import "AKFramework.h"
 
 @class AKFileSection;
 
@@ -40,33 +41,30 @@
 {
 @private
     NSString *_nodeName;
-    NSString *_owningFramework;
+    AKFramework *_owningFramework;
     AKFileSection *_nodeDocumentation;
     BOOL _isDeprecated;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Factory methods
 
 /*!
  * @method      nodeWithNodeName:owningFramework:
  * @discussion  Returns an instance of the receiver containing the minimum
  *              information it needs to make sense.
  */
-+ (id)nodeWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName;
++ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      initWithNodeName:owningFramework:
  * @discussion  Designated initializer.
  */
-- (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName;
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework;
 
 //-------------------------------------------------------------------------
 // Getters and setters
@@ -87,9 +85,9 @@
  *              Most nodes belong to exactly one framework.  The exception
  *              is AKClassNodes, which can belong to more than one.
  */
-- (NSString *)owningFramework;
+- (AKFramework *)owningFramework;
 
-- (void)setOwningFramework:(NSString *)frameworkName;
+- (void)setOwningFramework:(AKFramework *)aFramework;
 
 /*!
  * @method      nodeDocumentation
@@ -108,9 +106,9 @@
 - (BOOL)isDeprecated;
 - (void)setIsDeprecated:(BOOL)isDeprecated;
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 /*!
  * @method      sortName

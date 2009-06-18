@@ -64,20 +64,17 @@
 
 - (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
-    return
-        [[_docSetIndex selectableFrameworkNames]
-            containsObject:frameworkName];
+    return [[_docSetIndex selectableFrameworkNames] containsObject:frameworkName];
 }
 
-- (void)loadTokensForFrameworkNamed:(NSString *)fwName
+- (void)loadTokensForFrameworkNamed:(NSString *)frameworkName
 {
     // Parse header files before HTML files, so that later when we parse a
     // "Deprecated Methods" HTML file we can distinguish between instance
     // methods, class methods, and delegate methods by querying the database.
     // [agl] FIXME Any way to remove this dependence on parse order?
     DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing headers for framework %@, in base dir %@",
-        fwName, [_docSetIndex basePathForHeaders]);
+    DIGSLogDebug(@"Parsing headers for framework %@, in base dir %@", frameworkName, [_docSetIndex basePathForHeaders]);
     DIGSLogDebug(@"---------------------------------------------------");
 
     // NOTE that we have to parse all headers in each directory, not just
@@ -85,14 +82,14 @@
     // example, several DOMxxx classes, such as DOMComment, will be displayed
     // as root classes if I don't parse their headers.  The ideal thing would
     // be to be able to follow #imports, but I'm not being that smart.
-    NSSet *headerDirs = [_docSetIndex headerDirsForFramework:fwName];
+    NSSet *headerDirs = [_docSetIndex headerDirsForFramework:frameworkName];
     NSEnumerator *headerDirEnum = [headerDirs objectEnumerator];
     NSString *headerDir;
     while ((headerDir = [headerDirEnum nextObject]) != nil)
     {
         [AKObjCHeaderParser
             recursivelyParseDirectory:headerDir
-            forFramework:fwName
+            forFrameworkNamed:frameworkName
             inDatabase:self];
     }
 
@@ -100,29 +97,28 @@
     NSString *baseDirForDocs = [_docSetIndex baseDirForDocs];
 
     DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing HTML docs for framework %@, in base dir %@",
-        fwName, baseDirForDocs);
+    DIGSLogDebug(@"Parsing HTML docs for framework %@, in base dir %@", frameworkName, baseDirForDocs);
     DIGSLogDebug(@"---------------------------------------------------");
 
-    DIGSLogDebug(@"Parsing behavior docs for framework %@", fwName);
+    DIGSLogDebug(@"Parsing behavior docs for framework %@", frameworkName);
     [AKCocoaBehaviorDocParser
-        parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:fwName]
+        parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
         underBaseDir:baseDirForDocs
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
 
-    DIGSLogDebug(@"Parsing functions docs for framework %@", fwName);
+    DIGSLogDebug(@"Parsing functions docs for framework %@", frameworkName);
     [AKCocoaFunctionsDocParser
-        parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:fwName]
+        parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
         underBaseDir:baseDirForDocs
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
 
-    DIGSLogDebug(@"Parsing globals docs for framework %@", fwName);
+    DIGSLogDebug(@"Parsing globals docs for framework %@", frameworkName);
     [AKCocoaGlobalsDocParser
-        parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:fwName]
+        parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
         underBaseDir:baseDirForDocs
-        forFramework:fwName
+        forFrameworkNamed:frameworkName
         inDatabase:self];
 }
 

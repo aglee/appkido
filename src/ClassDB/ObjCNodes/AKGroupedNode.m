@@ -17,10 +17,10 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
     groupName:(NSString *)groupName
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:fwName]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
         _groupName = [groupName retain];
     }
@@ -29,7 +29,7 @@
 }
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
 {
     DIGSLogError_NondesignatedInitializer();
     [self release];

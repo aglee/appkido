@@ -18,9 +18,8 @@
 
 #import "AKAppController.h"  // [agl] KLUDGE doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKClassNode (Private)
 
@@ -32,16 +31,17 @@
 @end
 
 
+#pragma mark -
+
 @implementation AKClassNode
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:fwName]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
         _childClassNodes = [[NSMutableArray alloc] init];
         _categoryNodes = [[NSMutableArray alloc] init];
@@ -64,9 +64,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- general
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- general
 
 - (AKClassNode *)parentClass
 {
@@ -81,9 +81,7 @@
     // NSAnimation was given as NSAnimation.
     if (node == self)
     {
-        DIGSLogDebug(
-            @"ignoring attempt to make %@ a subclass of itself",
-            [self nodeName]);
+        DIGSLogDebug(@"ignoring attempt to make %@ a subclass of itself", [self nodeName]);
         return;
     }
 
@@ -161,16 +159,14 @@
     return result;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- delegate methods
 
 - (NSArray *)documentedDelegateMethods
 {
     NSMutableArray *methodList =
-        [NSMutableArray
-            arrayWithArray:
-                [_indexOfDelegateMethods nodesWithDocumentation]];
+        [NSMutableArray arrayWithArray:[_indexOfDelegateMethods nodesWithDocumentation]];
 
     // Handle classes like WebView that have different *kinds* of delegates.
     [self _addExtraDelegateMethodsTo:methodList];
@@ -188,9 +184,9 @@
     [_indexOfDelegateMethods addNode:methodNode];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- notifications
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- notifications
 
 - (NSArray *)documentedNotifications
 {
@@ -207,9 +203,9 @@
     [_indexOfNotifications addNode:notificationNode];
 }
 
-//-------------------------------------------------------------------------
-// AKBehaviorNode methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKBehaviorNode methods
 
 - (BOOL)isClassNode
 {
@@ -219,8 +215,7 @@
 // Overrides inherited method.
 - (NSArray *)implementedProtocols
 {
-    NSMutableArray *result =
-        [NSMutableArray arrayWithArray:[super implementedProtocols]];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:[super implementedProtocols]];
 
     // Get protocols from ancestor classes.
     [result addObjectsFromArray:[_parentClassNode implementedProtocols]];
@@ -229,10 +224,10 @@
 }
 
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-    owningFramework:(NSString *)owningFramework
+    owningFramework:(AKFramework *)nodeOwningFW
 {
     AKMethodNode *methodNode =
-        [super addDeprecatedMethodIfAbsentWithName:methodName owningFramework:owningFramework];
+        [super addDeprecatedMethodIfAbsentWithName:methodName owningFramework:nodeOwningFW];
 
     // If it's neither an instance method nor a class method, but it looks
     // like it might be a delegate method, assume it is one.
@@ -244,7 +239,7 @@
             methodNode =
                 [[[AKMethodNode alloc]
                     initWithNodeName:methodName
-                    owningFramework:owningFramework
+                    owningFramework:nodeOwningFW
                     owningBehavior:self] autorelease];
             [methodNode setIsDeprecated:YES];
             [self addDelegateMethod:methodNode];
@@ -260,14 +255,9 @@
     return methodNode;
 }
 
-@end
 
-
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
-
-@implementation AKClassNode (Private)
+#pragma mark -
+#pragma mark Private methods
 
 - (void)_setParentClass:(AKClassNode *)node
 {
@@ -292,8 +282,7 @@
 // [agl] KLUDGE Look for a protocol named ThisClassDelegate.
 - (void)_addExtraDelegateMethodsTo:(NSMutableArray *)methodsList
 {
-    NSEnumerator *methodEnum =
-        [[_indexOfInstanceMethods allNodes] objectEnumerator];
+    NSEnumerator *methodEnum = [[_indexOfInstanceMethods allNodes] objectEnumerator];
     AKMethodNode *methodNode;
 
     // Look for a protocol named ThisClassDelegate.
@@ -303,8 +292,7 @@
                 [[self nodeName] stringByAppendingString:@"Delegate"]];
     if (delegateProtocol)
     {
-        [methodsList
-            addObjectsFromArray:[delegateProtocol documentedInstanceMethods]];
+        [methodsList addObjectsFromArray:[delegateProtocol documentedInstanceMethods]];
     }
 
     // Look for instance method names of the form setFooDelegate:.
@@ -322,20 +310,16 @@
                     substringToIndex:([methodName length] - 1)]
                     substringFromIndex:3]
                     uppercaseString];
-            NSEnumerator *protocolEnum =
-                [[[[NSApp delegate] appDatabase] allProtocols]
-                    objectEnumerator];
+            NSEnumerator *protocolEnum = [[[[NSApp delegate] appDatabase] allProtocols] objectEnumerator];
             AKProtocolNode *protocolNode;
 
             while ((protocolNode = [protocolEnum nextObject]))
             {
-                NSString *protocolName =
-                    [[protocolNode nodeName] uppercaseString];
+                NSString *protocolName = [[protocolNode nodeName] uppercaseString];
 
                 if ([protocolName hasSuffix:protocolSuffix])
                 {
-                    NSArray *protocolMethods =
-                        [protocolNode documentedInstanceMethods];
+                    NSArray *protocolMethods = [protocolNode documentedInstanceMethods];
 
                     [methodsList addObjectsFromArray:protocolMethods];
                     break;

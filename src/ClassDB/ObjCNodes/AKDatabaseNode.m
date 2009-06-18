@@ -15,30 +15,24 @@
 
 @implementation AKDatabaseNode
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
++ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)aFramework
 {
-    return
-        [[[self alloc]
-            initWithNodeName:nodeName
-            owningFramework:fwName] autorelease];
+    return [[[self alloc] initWithNodeName:nodeName owningFramework:aFramework] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
 
-- (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)aFramework
 {
     if ((self = [super init]))
     {
         _nodeName = [nodeName retain];
-        _owningFramework = [fwName retain];
+        _owningFramework = [aFramework retain];
         _nodeDocumentation = nil;
         _isDeprecated = NO;
     }
@@ -62,25 +56,25 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)nodeName
 {
     return _nodeName;
 }
 
-- (NSString *)owningFramework
+- (AKFramework *)owningFramework
 {
     return _owningFramework;
 }
 
-- (void)setOwningFramework:(NSString *)frameworkName
+- (void)setOwningFramework:(AKFramework *)aFramework
 {
-    [frameworkName retain];
+    [aFramework retain];
     [_owningFramework release];
-    _owningFramework = frameworkName;
+    _owningFramework = aFramework;
 }
 
 - (AKFileSection *)nodeDocumentation
@@ -105,26 +99,22 @@
     _isDeprecated = isDeprecated;
 }
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 - (NSString *)sortName
 {
     return _nodeName;
 }
 
-//-------------------------------------------------------------------------
-// NSObject methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSObject methods
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:
-            @"<%@: nodeName=%@>",
-            [self className],
-            _nodeName];
+    return [NSString stringWithFormat:@"<%@: nodeName=%@>", [self className], _nodeName];
 }
 
 @end

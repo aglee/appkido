@@ -16,12 +16,12 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
 {
     if ((self =
             [super
                 initWithNodeName:nodeName
-                owningFramework:fwName]))
+                owningFramework:theFramework]))
     {
         _namesOfGlobals = [[NSMutableArray alloc] init];
     }

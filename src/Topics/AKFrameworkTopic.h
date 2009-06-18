@@ -8,6 +8,7 @@
 #import "AKTopic.h"
 
 @class AKDatabase;
+@class AKFramework;
 
 // represents one framework; subclasses represent different kinds of fw
 // provides implementations for several AKTopic abstract methods, but not
@@ -18,22 +19,20 @@
 @interface AKFrameworkTopic : AKTopic
 {
 @protected
-    NSString *_topicFramework;
+    AKFramework *_topicFramework;
 }
 
 //-------------------------------------------------------------------------
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKFrameworkTopic *)topicWithFramework:(NSString *)fwName
-    inDatabase:(AKDatabase *)database;
++ (AKFrameworkTopic *)topicWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
 /*! Designated initializer. */
-- (id)initWithFramework:(NSString *)fwName
-    inDatabase:(AKDatabase *)database;
+- (id)initWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database;
 
 @end

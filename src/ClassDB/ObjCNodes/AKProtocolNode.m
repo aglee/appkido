@@ -9,10 +9,6 @@
 
 @implementation AKProtocolNode
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
-
 - (BOOL)isInformal
 {
     // ([agl] Is this a reliable test for informal protocols?)
