@@ -104,24 +104,21 @@
         }
         else if ([upperPathComponent isEqualToString:@"CLASSES"])
         {
-            AKClassNode *classNode =
-                [_database classDocumentedInHTMLFile:filePath];
+            AKClassNode *classNode = [_database classDocumentedInHTMLFile:filePath];
 
             behaviorNode = classNode;
-            rootSection =
-                [classNode nodeDocumentationForFrameworkNamed:fwName];
-            docTopic = [AKClassTopic topicWithClassNode:classNode inDatabase:_database];
+            rootSection = [classNode nodeDocumentationForFrameworkNamed:fwName];
+            docTopic = [AKClassTopic topicWithClassNode:classNode];
 
             break;
         }
         else if ([upperPathComponent isEqualToString:@"PROTOCOLS"])
         {
-            AKProtocolNode *protocolNode =
-                [_database protocolDocumentedInHTMLFile:filePath];
+            AKProtocolNode *protocolNode = [_database protocolDocumentedInHTMLFile:filePath];
 
             behaviorNode = protocolNode;
             rootSection = [protocolNode nodeDocumentation];
-            docTopic = [AKProtocolTopic topicWithProtocolNode:protocolNode inDatabase:_database];
+            docTopic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
             break;
         }
@@ -133,7 +130,7 @@
         {
             behaviorNode = nil;
             rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKFunctionsTopic topicWithFramework:fwName inDatabase:_database];
+            docTopic = [AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:_database];
 
             break;
         }
@@ -146,7 +143,7 @@
         {
             behaviorNode = nil;
             rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKGlobalsTopic topicWithFramework:fwName inDatabase:_database];
+            docTopic = [AKGlobalsTopic topicWithFrameworkNamed:fwName inDatabase:_database];
 
             break;
         }
@@ -189,8 +186,7 @@
     NSString *fwName;
     while ((fwName = [en nextObject]))
     {
-        NSString *fwDirName =
-            [fwName stringByAppendingString:@".framework"];
+        NSString *fwDirName = [fwName stringByAppendingString:@".framework"];
 
         if ([aString isEqualToString:fwDirName])
         {
@@ -324,13 +320,11 @@
 
     for (i = 0; i < numStrings; i += 2)
     {
-        NSString *sectionNameConstant =
-            [[namePairs objectAtIndex:i] uppercaseString];
+        NSString *sectionNameConstant = [[namePairs objectAtIndex:i] uppercaseString];
         NSString *subtopicNameConstant = [namePairs objectAtIndex:(i + 1)];
 
         // Do substring test instead of equality just in case.
-        NSRange loc =
-            [uppercaseSectionName rangeOfString:sectionNameConstant];
+        NSRange loc = [uppercaseSectionName rangeOfString:sectionNameConstant];
         if (loc.location != NSNotFound)
         {
             return subtopicNameConstant;
@@ -353,8 +347,7 @@
         return nil;
     }
 
-    int offset =
-        [self _offsetOfAnchor:linkAnchor inFileSection:rootSection];
+    int offset = [self _offsetOfAnchor:linkAnchor inFileSection:rootSection];
 
     if (offset < 0)
     {
@@ -365,10 +358,8 @@
         return nil;
     }
 
-    AKFileSection *majorSection =
-        [self _childSectionOf:rootSection containingOffset:offset];
-    AKFileSection *minorSection =
-        [self _childSectionOf:majorSection containingOffset:offset];
+    AKFileSection *majorSection = [self _childSectionOf:rootSection containingOffset:offset];
+    AKFileSection *minorSection = [self _childSectionOf:majorSection containingOffset:offset];
 
     // What subtopic name and doc name do the major and minor section
     // names imply?

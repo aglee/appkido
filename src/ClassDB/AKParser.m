@@ -16,40 +16,29 @@
 // Class methods
 //-------------------------------------------------------------------------
 
-+ (void)recursivelyParseDirectory:(NSString *)dirPath
-    forFrameworkNamed:(NSString *)frameworkName
-    inDatabase:(AKDatabase *)database
++ (void)recursivelyParseDirectory:(NSString *)dirPath forFramework:(AKFramework *)aFramework
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:dirPath])
     {
         return;
     }
 
-    AKParser *parser =
-        [[self alloc]  // no autorelease
-            initWithDatabase:database frameworkName:frameworkName];
+    AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
 
     [parser processDirectory:dirPath recursively:YES];
-
     [parser release];  // release here
 }
 
 + (void)parseFilesInPaths:(NSArray *)docPaths
     underBaseDir:(NSString *)baseDir
-    forFrameworkNamed:(NSString *)fwName
-    inDatabase:(AKDatabase *)database
+    forFramework:(AKFramework *)aFramework
 {
     int numDocs = [docPaths count];
     int i;
     for (i = 0; i < numDocs; i++)
     {
-        NSString *docPath =
-            [baseDir stringByAppendingPathComponent:[docPaths objectAtIndex:i]];
-
-        id parser =
-            [[self alloc]  // no autorelease
-                initWithDatabase:database
-                frameworkName:fwName];
+        NSString *docPath = [baseDir stringByAppendingPathComponent:[docPaths objectAtIndex:i]];
+        AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
 
         [parser processFile:docPath];
         [parser release];  // release here
@@ -60,12 +49,11 @@
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithDatabase:(AKDatabase *)db
-    frameworkName:(NSString *)frameworkName
+- (id)initWithFramework:(AKFramework *)aFramework
 {
     if ((self = [super init]))
     {
-        _parserFW = [db frameworkWithName:frameworkName];
+        _parserFW = [aFramework retain];
     }
 
     return self;

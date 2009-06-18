@@ -26,13 +26,13 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKFrameworkTopic *)topicWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database;
++ (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
 /*! Designated initializer. */
-- (id)initWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database;
+- (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
 
 @end

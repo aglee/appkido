@@ -299,9 +299,7 @@
 {
     NSMutableArray *columnValues = [NSMutableArray array];
     AKDatabase *db = [_windowController database];
-    NSEnumerator *classEnum =
-        [[AKSortUtils arrayBySortingArray:[db rootClasses]]
-            objectEnumerator];
+    NSEnumerator *classEnum = [[AKSortUtils arrayBySortingArray:[db rootClasses]] objectEnumerator];
     AKClassNode *classNode;
 
     // Set up the ":: classes ::" section of this browser column.  We want
@@ -310,7 +308,7 @@
 
     while ((classNode = [classEnum nextObject]))
     {
-        [columnValues addObject:[AKClassTopic topicWithClassNode:classNode inDatabase:db]];
+        [columnValues addObject:[AKClassTopic topicWithClassNode:classNode]];
     }
 
     // Set up the ":: other topics ::" section of this browser column.
@@ -322,8 +320,7 @@
 
     while ((fwName = [fwNameEnum nextObject]))
     {
-        [columnValues
-            addObject:[AKFrameworkTopic topicWithFramework:fwName inDatabase:db]];
+        [columnValues addObject:[AKFrameworkTopic topicWithFrameworkNamed:fwName inDatabase:db]];
     }
 
     [_topicListsForBrowserColumns addObject:columnValues];

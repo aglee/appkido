@@ -28,9 +28,8 @@
 //-------------------------------------------------------------------------
 
 + (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
-    inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithProtocolNode:protocolNode inDatabase:database] autorelease];
+    return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
 }
 
 //-------------------------------------------------------------------------
@@ -38,9 +37,8 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
-    inDatabase:(AKDatabase *)database
 {
-    if ((self = [super initWithDatabase:database]))
+    if ((self = [super initWithDatabase:[[protocolNode owningFramework] fwDatabase]]))
     {
         _protocolNode = [protocolNode retain];
     }
@@ -78,9 +76,7 @@
 
     if (protocolName == nil)
     {
-        DIGSLogWarning(
-            @"malformed pref dictionary for class %@",
-            [self className]);
+        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
         return nil;
     }
     else
@@ -90,13 +86,11 @@
 
         if (!protocolNode)
         {
-            DIGSLogInfo(
-                @"couldn't find a protocol in the database named %@",
-                protocolName);
+            DIGSLogInfo(@"couldn't find a protocol in the database named %@", protocolName);
             return nil;
         }
 
-        return [self topicWithProtocolNode:protocolNode inDatabase:db];
+        return [self topicWithProtocolNode:protocolNode];
     }
 }
 
@@ -112,9 +106,7 @@
         ? @"%@ INFORMAL protocol <%@>"
         : @"%@ protocol <%@>";
 
-    return
-        [NSString stringWithFormat:stringFormat,
-            [_protocolNode owningFramework], [_protocolNode nodeName]];
+    return [NSString stringWithFormat:stringFormat, [_protocolNode owningFramework], [_protocolNode nodeName]];
 }
 
 - (NSString *)pathInTopicBrowser

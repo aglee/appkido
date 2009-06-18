@@ -103,13 +103,9 @@
 
         NSView *contentView = [_windowForTestParse contentView];
         NSScrollView *scrollView =
-            [[[NSScrollView alloc]
-                initWithFrame:NSMakeRect(0, 0, bigWidth, bigHeight - 48)]
-                autorelease];
+            [[[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, bigWidth, bigHeight - 48)] autorelease];
         NSButton *chooseButton =
-            [[[NSButton alloc]
-                initWithFrame:NSMakeRect(10, bigHeight - 40, 200, 18)]
-                autorelease];
+            [[[NSButton alloc] initWithFrame:NSMakeRect(10, bigHeight - 40, 200, 18)] autorelease];
 
         [_windowForTestParse setMinSize:NSMakeSize(bigWidth, bigHeight - 80)];
         [_windowForTestParse setReleasedWhenClosed:NO];
@@ -119,33 +115,25 @@
         [chooseButton setBezelStyle:NSRoundedBezelStyle];
         [chooseButton setTitle:@"Select HTML Documentation File..."];
         [chooseButton sizeToFit];
-        [chooseButton
-            setAutoresizingMask:
-                (NSViewMaxXMargin | NSViewMinYMargin)];
+        [chooseButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
         NSRect buttonFrame = [chooseButton frame];
         buttonFrame.origin.x = 10;
         [chooseButton setFrame:buttonFrame];
 
         NSRect textFieldFrame = buttonFrame;
-        textFieldFrame.size.width =
-            bigWidth - NSWidth(buttonFrame) - 32;
-        textFieldFrame.origin.x =
-            bigWidth - NSWidth(textFieldFrame) - 16;
+        textFieldFrame.size.width = bigWidth - NSWidth(buttonFrame) - 32;
+        textFieldFrame.origin.x = bigWidth - NSWidth(textFieldFrame) - 16;
         [_filePathField setFrame:textFieldFrame];
         [_filePathField setBordered:YES];
         [_filePathField setBezelStyle:NSTextFieldSquareBezel];
         [_filePathField setEditable:NO];
         [_filePathField setSelectable:YES];
-        [_filePathField
-            setAutoresizingMask:
-                (NSViewWidthSizable | NSViewMinYMargin)];
+        [_filePathField setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];
 
         [scrollView setHasHorizontalScroller:YES];
         [scrollView setHasVerticalScroller:YES];
         [scrollView setDocumentView:_parseInfoTextView];
-        [scrollView
-            setAutoresizingMask:
-                (NSViewWidthSizable | NSViewHeightSizable)];
+        [scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
         [scrollView tile];
 
         [_parseInfoTextView setFrame:[[scrollView contentView] bounds]];
@@ -153,9 +141,7 @@
         [_parseInfoTextView setSelectable:YES];
         [_parseInfoTextView setEditable:NO];
         [_parseInfoTextView setFont:[NSFont fontWithName:@"Courier" size:12]];
-        [_parseInfoTextView
-            setAutoresizingMask:
-                (NSViewWidthSizable | NSViewHeightSizable)];
+        [_parseInfoTextView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 
         [contentView addSubview:chooseButton];
         [contentView addSubview:_filePathField];
@@ -199,14 +185,10 @@
     }
 
     NSString *fname = [filenames objectAtIndex:0];
-    AKDocParser *dp =
-        [[[AKDocParser alloc]
-            initWithDatabase:nil frameworkName:nil]
-            autorelease];
+    AKDocParser *dp = [[[AKDocParser alloc] initWithFramework:nil] autorelease];
     [dp processFile:fname];
     [_filePathField setStringValue:fname];
-    [_parseInfoTextView
-        setString:[[dp rootSectionOfCurrentFile] _treeAsString]];
+    [_parseInfoTextView setString:[[dp rootSectionOfCurrentFile] _treeAsString]];
 }
 
 - (void)_doTestParse

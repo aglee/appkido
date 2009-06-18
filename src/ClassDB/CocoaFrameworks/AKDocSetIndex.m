@@ -72,11 +72,9 @@ static NSString *s_headerPathsQueryTemplate =
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDocSetPath:(NSString *)docSetPath
-    basePathForHeaders:(NSString *)basePathForHeaders
+- (id)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders
 {
-    DIGSLogDebug(@"initWithDocSetPath:basePathForHeaders: -- [%@], [%@]",
-        docSetPath, basePathForHeaders);
+    DIGSLogDebug(@"initWithDocSetPath:basePathForHeaders: -- [%@], [%@]", docSetPath, basePathForHeaders);
 
     if ((self = [super init]))
     {
@@ -84,9 +82,7 @@ static NSString *s_headerPathsQueryTemplate =
         _basePathForHeaders = [basePathForHeaders retain];
 
         BOOL isDir;
-        if (![[NSFileManager defaultManager]
-                fileExistsAtPath:[self _pathToSqliteFile]
-                isDirectory:&isDir])
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[self _pathToSqliteFile] isDirectory:&isDir])
         {
             DIGSLogDebug(@"AKDocSetIndex -- There is no docset at [%@]", _docSetPath);
             [self release];
@@ -99,9 +95,7 @@ static NSString *s_headerPathsQueryTemplate =
             return nil;
         }
 
-        if (![[NSFileManager defaultManager]
-                fileExistsAtPath:_basePathForHeaders
-                isDirectory:&isDir])
+        if (![[NSFileManager defaultManager] fileExistsAtPath:_basePathForHeaders isDirectory:&isDir])
         {
             DIGSLogWarning(@"AKDocSetIndex -- There is no directory [%@]", _basePathForHeaders);
             [self release];
@@ -167,16 +161,15 @@ static NSString *s_headerPathsQueryTemplate =
 - (NSArray *)headerPathsForFramework:(NSString *)frameworkName
 {
     // Open the database.
-    FMDatabase* db = [self _openSQLiteDB];
-    if (db == nil)
+    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    if (sqliteDB == nil)
     {
         return nil;
     }
 
     // Do the query and process the results.
     NSMutableArray *headerFiles = [NSMutableArray array];
-    FMResultSet *rs =
-        [db executeQuery:s_headerPathsQueryTemplate, frameworkName];
+    FMResultSet *rs = [sqliteDB executeQuery:s_headerPathsQueryTemplate, frameworkName];
 
     while ([rs next])
     {
@@ -185,7 +178,7 @@ static NSString *s_headerPathsQueryTemplate =
     [rs close];  
 
     // Close the database.
-    [db close];
+    [sqliteDB close];
 
     return headerFiles;
 }
@@ -193,28 +186,24 @@ static NSString *s_headerPathsQueryTemplate =
 - (NSSet *)headerDirsForFramework:(NSString *)frameworkName
 {
     // Open the database.
-    FMDatabase* db = [self _openSQLiteDB];
-    if (db == nil)
+    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    if (sqliteDB == nil)
     {
         return nil;
     }
 
     // Do the query and process the results.
     NSMutableSet *headerDirs = [NSMutableSet set];
-    FMResultSet *rs =
-        [db executeQuery:s_headerPathsQueryTemplate, frameworkName];
+    FMResultSet *rs = [sqliteDB executeQuery:s_headerPathsQueryTemplate, frameworkName];
 
     while ([rs next])
     {
         NSString *headerFilePath = [rs stringForColumnIndex:0];
-        NSString *headerDirPath =
-            [headerFilePath stringByDeletingLastPathComponent];
+        NSString *headerDirPath = [headerFilePath stringByDeletingLastPathComponent];
 
         if (_basePathForHeaders)
         {
-            headerDirPath =
-                [_basePathForHeaders
-                    stringByAppendingPathComponent:headerDirPath];
+            headerDirPath = [_basePathForHeaders stringByAppendingPathComponent:headerDirPath];
         }
         
         [headerDirs addObject:headerDirPath];
@@ -222,7 +211,7 @@ static NSString *s_headerPathsQueryTemplate =
     [rs close];  
 
     // Close the database.
-    [db close];
+    [sqliteDB close];
 
     return headerDirs;
 }
@@ -306,14 +295,14 @@ static NSString *s_headerPathsQueryTemplate =
     NSMutableArray *stringArray = [NSMutableArray array];
 
     // Open the database.
-    FMDatabase* db = [self _openSQLiteDB];
-    if (db == nil)
+    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    if (sqliteDB == nil)
     {
         return nil;
     }
 
     // Query the database and process the results.
-    FMResultSet *rs = [db executeQuery:queryString];
+    FMResultSet *rs = [sqliteDB executeQuery:queryString];
     while ([rs next])
     {
         NSString *fwName = [rs stringForColumnIndex:0];
@@ -322,7 +311,7 @@ static NSString *s_headerPathsQueryTemplate =
     [rs close];
 
     // Close the database.
-    [db close];
+    [sqliteDB close];
 
     return stringArray;
 }
@@ -339,15 +328,15 @@ static NSString *s_headerPathsQueryTemplate =
 
 - (FMDatabase *)_openSQLiteDB
 {
-    FMDatabase* db = [FMDatabase databaseWithPath:[self _pathToSqliteFile]];
+    FMDatabase* sqliteDB = [FMDatabase databaseWithPath:[self _pathToSqliteFile]];
 
-    if (![db open])
+    if (![sqliteDB open])
     {
         DIGSLogError(@"%@", @"Could not open db.");
         return nil;
     }
 
-    return db;
+    return sqliteDB;
 }
 
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
@@ -394,8 +383,8 @@ static NSString *s_headerPathsQueryTemplate =
     forFramework:(NSString *)frameworkName
 {
     // Open the database.
-    FMDatabase* db = [self _openSQLiteDB];
-    if (db == nil)
+    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    if (sqliteDB == nil)
     {
         return nil;
     }
@@ -418,7 +407,7 @@ static NSString *s_headerPathsQueryTemplate =
 
     NSMutableArray *docPaths = [NSMutableArray array];
     FMResultSet *rs =
-        [db executeQuery:s_docPathsQueryTemplate,
+        [sqliteDB executeQuery:s_docPathsQueryTemplate,
             tokenType1,
             tokenType2,
             tokenType3,
@@ -432,15 +421,14 @@ static NSString *s_headerPathsQueryTemplate =
     [rs close];  
 
     // Close the database.
-    [db close];
+    [sqliteDB close];
 
     return docPaths;
 }
 
 - (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames
 {
-    NSEnumerator *essentialFrameworkNamesEnum =
-        [AKNamesOfEssentialFrameworks reverseObjectEnumerator];
+    NSEnumerator *essentialFrameworkNamesEnum = [AKNamesOfEssentialFrameworks reverseObjectEnumerator];
     NSString *essentialFrameworkName;
 
     while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))

@@ -8,6 +8,7 @@
 #import "AKFunctionsTopic.h"
 
 #import "AKDatabase.h"
+#import "AKFramework.h"
 #import "AKSortUtils.h"
 #import "AKFunctionsSubtopic.h"
 
@@ -24,7 +25,7 @@
 
 - (int)numberOfSubtopics
 {
-    return [_database numberOfFunctionsGroupsForFrameworkNamed:_topicFramework];
+    return [_database numberOfFunctionsGroupsForFrameworkNamed:[_topicFramework frameworkName]];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
@@ -35,9 +36,7 @@
     }
 
     NSArray *groupNodes =
-        [AKSortUtils
-            arrayBySortingArray:
-                [_database functionsGroupsForFrameworkNamed:_topicFramework]];
+        [AKSortUtils arrayBySortingArray: [_database functionsGroupsForFrameworkNamed:[_topicFramework frameworkName]]];
 
     if ((unsigned)subtopicIndex >= [groupNodes count])
     {
@@ -47,10 +46,7 @@
     {
         AKGroupNode *groupNode = [groupNodes objectAtIndex:subtopicIndex];
 
-        return
-            [[[AKFunctionsSubtopic alloc]
-                initWithGroupNode:groupNode]
-                autorelease];
+        return [[[AKFunctionsSubtopic alloc] initWithGroupNode:groupNode] autorelease];
     }
 }
 

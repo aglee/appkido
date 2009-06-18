@@ -49,13 +49,8 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict
-        setObject:[self className]
-        forKey:AKTopicClassNamePrefKey];
-
-    [prefDict
-        setObject:[self behaviorName]
-        forKey:AKBehaviorNamePrefKey];
+    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
+    [prefDict setObject:[self behaviorName] forKey:AKBehaviorNamePrefKey];
 
     return prefDict;
 }

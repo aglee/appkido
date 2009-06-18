@@ -47,8 +47,7 @@
  * Returns nil if the docset path or base path for headers is missing or
  * not a directory.
  */
-- (id)initWithDocSetPath:(NSString *)docSetPath
-    basePathForHeaders:(NSString *)basePathForHeaders;
+- (id)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders;
 
 
 #pragma mark -

@@ -28,9 +28,8 @@
 //-------------------------------------------------------------------------
 
 + (id)topicWithClassNode:(AKClassNode *)classNode
-    inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithClassNode:classNode inDatabase:database] autorelease];
+    return [[[self alloc] initWithClassNode:classNode] autorelease];
 }
 
 //-------------------------------------------------------------------------
@@ -38,9 +37,8 @@
 //-------------------------------------------------------------------------
 
 - (id)initWithClassNode:(AKClassNode *)classNode
-    inDatabase:(AKDatabase *)database
 {
-    if ((self = [super initWithDatabase:database]))
+    if ((self = [super initWithDatabase:[[classNode owningFramework] fwDatabase]]))
     {
         _classNode = [classNode retain];
     }
@@ -78,9 +76,7 @@
 
     if (className == nil)
     {
-        DIGSLogWarning(
-            @"malformed pref dictionary for class %@",
-            [self className]);
+        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
         return nil;
     }
     else
@@ -90,13 +86,11 @@
 
         if (!classNode)
         {
-            DIGSLogInfo(
-                @"couldn't find a class in the database named %@",
-                className);
+            DIGSLogInfo(@"couldn't find a class in the database named %@", className);
             return nil;
         }
 
-        return [self topicWithClassNode:classNode inDatabase:db];
+        return [self topicWithClassNode:classNode];
     }
 }
 
@@ -124,9 +118,7 @@
         return nil;
     }
 
-    NSString *path =
-        [AKTopicBrowserPathSeparator
-            stringByAppendingString:[_classNode nodeName]];
+    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:[_classNode nodeName]];
     AKClassNode *superNode = _classNode;
 
     while ((superNode = [superNode parentClass]))
@@ -147,15 +139,12 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    NSEnumerator *en =
-        [[AKSortUtils arrayBySortingArray:[_classNode childClasses]]
-            objectEnumerator];
+    NSEnumerator *en = [[AKSortUtils arrayBySortingArray:[_classNode childClasses]] objectEnumerator];
     AKClassNode *subclassNode;
 
     while ((subclassNode = [en nextObject]))
     {
-        [columnValues addObject:
-            [AKClassTopic topicWithClassNode:subclassNode inDatabase:_database]];
+        [columnValues addObject:[AKClassTopic topicWithClassNode:subclassNode]];
     }
 
     return columnValues;

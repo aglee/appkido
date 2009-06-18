@@ -131,7 +131,6 @@
     NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
 }
 
-
 #pragma mark -
 #pragma mark - Factory methods
 
@@ -195,7 +194,7 @@
 #pragma mark Getters and setters -- classes
 
 /*!
- * @method      classesForFramework:
+ * @method      classesForFrameworkNamed:
  * @discussion  Elements of the returned array are AKClassNodes.  Order is undefined.
  */
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
@@ -218,8 +217,7 @@
 
 /*!
  * @method      addClassNode:
- * @discussion  Does nothing if the receiver already contains a class
- *              with the same name.
+ * @discussion  Does nothing if the receiver already contains a class with the same name.
  */
 - (void)addClassNode:(AKClassNode *)classNode;
 
@@ -233,8 +231,7 @@
 
 /*!
  * @method      allProtocols
- * @discussion  Returns a list of all protocols known to the receiver, in
- *              no guaranteed order.
+ * @discussion  Returns a list of all protocols known to the receiver, in no guaranteed order.
  */
 - (NSArray *)allProtocols;
 
@@ -242,8 +239,7 @@
 
 /*!
  * @method      addProtocolNode:
- * @discussion  Does nothing if the receiver already contains a protocol
- *              with the same name.
+ * @discussion  Does nothing if the receiver already contains a protocol with the same name.
  */
 - (void)addProtocolNode:(AKProtocolNode *)classNode;
 
@@ -277,7 +273,7 @@
 
 - (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
 
-- (void)rememberFramework:(AKFramework *)aFramework forHTMLFile:(NSString *)htmlFilePath;
+- (void)rememberFrameworkName:(NSString *)frameworkName forHTMLFile:(NSString *)htmlFilePath;
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;

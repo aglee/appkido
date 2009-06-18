@@ -138,15 +138,11 @@ static BOOL isPunctuation(char c)
     // sitting on.
     (void)[self _parseTokenIntoBuffer:token];
     NSString *className = [NSString stringWithUTF8String:token];
-    AKClassNode *classNode =
-        [[_parserFW fwDatabase] classWithName:className];
+    AKClassNode *classNode = [[_parserFW fwDatabase] classWithName:className];
 
     if (!classNode)
     {
-        classNode =
-            [AKClassNode
-                nodeWithNodeName:className
-                owningFramework:_parserFW];
+        classNode = [AKClassNode nodeWithNodeName:className owningFramework:_parserFW];
     }
     [[_parserFW fwDatabase] addClassNode:classNode];
 
@@ -163,15 +159,11 @@ static BOOL isPunctuation(char c)
             // we've come across the specification of its superclass.
             (void)[self _parseTokenIntoBuffer:token];
             NSString *parentClassName = [NSString stringWithUTF8String:token];
-            AKClassNode *parentClassNode =
-                [[_parserFW fwDatabase] classWithName:parentClassName];
+            AKClassNode *parentClassNode = [[_parserFW fwDatabase] classWithName:parentClassName];
 
             if (!parentClassNode)
             {
-                parentClassNode =
-                    [AKClassNode
-                        nodeWithNodeName:parentClassName
-                        owningFramework:_parserFW];
+                parentClassNode = [AKClassNode nodeWithNodeName:parentClassName owningFramework:_parserFW];
                 [[_parserFW fwDatabase] addClassNode:parentClassNode];
             }
 
@@ -195,15 +187,11 @@ static BOOL isPunctuation(char c)
             // we've come across the specification of the category name.
             (void)[self _parseTokenIntoBuffer:token];
             NSString *catName = [NSString stringWithUTF8String:token];
-            AKCategoryNode *categoryNode =
-                [classNode categoryNamed:catName];
+            AKCategoryNode *categoryNode = [classNode categoryNamed:catName];
 
             if (categoryNode == nil)
             {
-                categoryNode =
-                    [AKCategoryNode
-                        nodeWithNodeName:catName
-                        owningFramework:_parserFW];
+                categoryNode = [AKCategoryNode nodeWithNodeName:catName owningFramework:_parserFW];
                 [classNode addCategory:categoryNode];
             }
 
@@ -290,15 +278,11 @@ static BOOL isPunctuation(char c)
     char token[AKTokenBufferSize];
     (void)[self _parseTokenIntoBuffer:token];
     NSString *protocolName = [NSString stringWithUTF8String:token];
-    AKProtocolNode *resultNode =
-        [[_parserFW fwDatabase] protocolWithName:protocolName];
+    AKProtocolNode *resultNode = [[_parserFW fwDatabase] protocolWithName:protocolName];
 
     if (!resultNode)
     {
-        resultNode =
-            [AKProtocolNode
-                nodeWithNodeName:protocolName
-                owningFramework:_parserFW];
+        resultNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
         [[_parserFW fwDatabase] addProtocolNode:resultNode];
     }
 
@@ -359,15 +343,11 @@ static BOOL isPunctuation(char c)
         else
         {
             NSString *protocolName = [NSString stringWithUTF8String:token];
-            AKProtocolNode *protocolNode =
-                [[_parserFW fwDatabase] protocolWithName:protocolName];
+            AKProtocolNode *protocolNode = [[_parserFW fwDatabase] protocolWithName:protocolName];
 
             if (!protocolNode)
             {
-                protocolNode =
-                    [AKProtocolNode
-                        nodeWithNodeName:protocolName
-                        owningFramework:_parserFW];
+                protocolNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
                 [[_parserFW fwDatabase] addProtocolNode:protocolNode];
             }
 
@@ -401,9 +381,7 @@ static BOOL isPunctuation(char c)
         if (strcmp(token, ";") == 0)
         {
             AKMethodNode *methodNode =
-                [behaviorNode
-                    performSelector:selectorForGettingNode
-                    withObject:methodName];
+                [behaviorNode performSelector:selectorForGettingNode withObject:methodName];
 
             if (methodNode == nil)
             {
@@ -412,9 +390,7 @@ static BOOL isPunctuation(char c)
                         initWithNodeName:methodName
                         owningFramework:_parserFW
                         owningBehavior:behaviorNode] autorelease];
-                [behaviorNode
-                    performSelector:selectorForAddingNode
-                    withObject:methodNode];
+                [behaviorNode performSelector:selectorForAddingNode withObject:methodNode];
             }
 
             [methodNode setArgumentTypes:argTypes];
@@ -460,8 +436,7 @@ static BOOL isPunctuation(char c)
                         [argType appendString:@" "];
                     }
 
-                    [argType
-                        appendString:[NSString stringWithUTF8String:argTok]];
+                    [argType appendString:[NSString stringWithUTF8String:argTok]];
                     (void)[self _parseTokenIntoBuffer:argTok];
                 }
                 [argTypes addObject:argType];
@@ -479,8 +454,7 @@ static BOOL isPunctuation(char c)
             // the DEPRECATED_IN_MAC_OS_X_VERSION_10_4_AND_LATER macro that's in
             // NSATSTypesetter.h.  Or possibly the comma and ellipsis in a
             // method that takes varargs.
-            if (([methodName length] == 0)
-                || ((_current < _dataEnd) && (*_current == ':')))
+            if (([methodName length] == 0) || ((_current < _dataEnd) && (*_current == ':')))
             {
                 [methodName appendString:[NSString stringWithUTF8String:token]];
             }

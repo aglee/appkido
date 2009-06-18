@@ -19,15 +19,13 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (id)topicWithClassNode:(AKClassNode *)classNode
-    inDatabase:(AKDatabase *)database;
++ (id)topicWithClassNode:(AKClassNode *)classNode;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
 // Designated initializer
-- (id)initWithClassNode:(AKClassNode *)classNode
-    inDatabase:(AKDatabase *)database;
+- (id)initWithClassNode:(AKClassNode *)classNode;
 
 @end

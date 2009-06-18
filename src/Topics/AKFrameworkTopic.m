@@ -12,6 +12,7 @@
 #import "AKFrameworkConstants.h"
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
+#import "AKFramework.h"
 #import "AKAppController.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKInformalProtocolsTopic.h"
@@ -24,20 +25,20 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKFrameworkTopic *)topicWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database
++ (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithFramework:theTopicFramework inDatabase:database] autorelease];
+    return [[[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database] autorelease];
 }
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database
+- (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
     if ((self = [super initWithDatabase:database]))
     {
-        _topicFramework = [theTopicFramework retain];
+        _topicFramework = [[_database frameworkWithName:frameworkName] retain];
     }
 
     return self;
@@ -91,7 +92,7 @@
     }
 
     // If we got this far, we have what we need to create an instance.
-    return [self topicWithFramework:fwName inDatabase:db];
+    return [self topicWithFrameworkNamed:fwName inDatabase:db];
 }
 
 - (NSDictionary *)asPrefDictionary
@@ -106,7 +107,7 @@
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return _topicFramework;
+    return [_topicFramework frameworkName];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -117,25 +118,26 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
+    NSString *frameworkName = [_topicFramework frameworkName];
 
-    if ([_database numberOfFunctionsGroupsForFrameworkNamed:_topicFramework] > 0)
+    if ([_database numberOfFunctionsGroupsForFrameworkNamed:frameworkName] > 0)
     {
-        [columnValues addObject:[AKFunctionsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
     }
 
-    if ([_database numberOfGlobalsGroupsForFrameworkNamed:_topicFramework] > 0)
+    if ([_database numberOfGlobalsGroupsForFrameworkNamed:frameworkName] > 0)
     {
-        [columnValues addObject:[AKGlobalsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
     }
 
-    if ([[_database formalProtocolsForFrameworkNamed:_topicFramework] count] > 0)
+    if ([[_database formalProtocolsForFrameworkNamed:frameworkName] count] > 0)
     {
-        [columnValues addObject:[AKFormalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
     }
 
-    if ([[_database informalProtocolsForFrameworkNamed:_topicFramework] count] > 0)
+    if ([[_database informalProtocolsForFrameworkNamed:frameworkName] count] > 0)
     {
-        [columnValues addObject:[AKInformalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
     }
 
     return columnValues;

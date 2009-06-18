@@ -18,9 +18,9 @@
 }
 
 - (AKDatabase *)fwDatabase;
-- (void)setFWDatabase:(AKDatabase *)theDatabase;
+- (void)setFWDatabase:(AKDatabase *)aDatabase;
 
 - (NSString *)frameworkName;
-- (void)setFrameworkName:(NSString *)name;
+- (void)setFrameworkName:(NSString *)frameworkName;
 
 @end

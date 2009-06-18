@@ -12,13 +12,6 @@
 
 #import "AKDocSetIndex.h"
 
-#import "AKFileSection.h"
-
-#import "AKBehaviorNode.h"
-#import "AKClassNode.h"
-#import "AKGlobalsNode.h"
-#import "AKGroupNode.h"
-
 #import "AKObjCHeaderParser.h"
 #import "AKCocoaBehaviorDocParser.h"
 #import "AKCocoaFunctionsDocParser.h"
@@ -82,15 +75,13 @@
     // example, several DOMxxx classes, such as DOMComment, will be displayed
     // as root classes if I don't parse their headers.  The ideal thing would
     // be to be able to follow #imports, but I'm not being that smart.
+    AKFramework *aFramework = [self frameworkWithName:frameworkName];
     NSSet *headerDirs = [_docSetIndex headerDirsForFramework:frameworkName];
     NSEnumerator *headerDirEnum = [headerDirs objectEnumerator];
     NSString *headerDir;
     while ((headerDir = [headerDirEnum nextObject]) != nil)
     {
-        [AKObjCHeaderParser
-            recursivelyParseDirectory:headerDir
-            forFrameworkNamed:frameworkName
-            inDatabase:self];
+        [AKObjCHeaderParser recursivelyParseDirectory:headerDir forFramework:aFramework];
     }
 
     // Parse HTML files.
@@ -104,22 +95,19 @@
     [AKCocoaBehaviorDocParser
         parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
         underBaseDir:baseDirForDocs
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+        forFramework:aFramework];
 
     DIGSLogDebug(@"Parsing functions docs for framework %@", frameworkName);
     [AKCocoaFunctionsDocParser
         parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
         underBaseDir:baseDirForDocs
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+        forFramework:aFramework];
 
     DIGSLogDebug(@"Parsing globals docs for framework %@", frameworkName);
     [AKCocoaGlobalsDocParser
         parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
         underBaseDir:baseDirForDocs
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+        forFramework:aFramework];
 }
 
 @end
