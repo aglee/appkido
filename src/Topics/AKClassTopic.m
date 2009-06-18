@@ -38,7 +38,7 @@
 
 - (id)initWithClassNode:(AKClassNode *)classNode
 {
-    if ((self = [super initWithDatabase:[[classNode owningFramework] fwDatabase]]))
+    if ((self = [super init]))
     {
         _classNode = [classNode retain];
     }
@@ -46,7 +46,7 @@
     return self;
 }
 
-- (id)initWithDatabase:(AKDatabase *)database
+- (id)init
 {
     DIGSLogError_NondesignatedInitializer();
     [self release];
@@ -71,8 +71,7 @@
         return nil;
     }
 
-    NSString *className =
-        [prefDict objectForKey:AKBehaviorNamePrefKey];
+    NSString *className = [prefDict objectForKey:AKBehaviorNamePrefKey];
 
     if (className == nil)
     {

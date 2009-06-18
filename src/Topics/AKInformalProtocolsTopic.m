@@ -26,7 +26,9 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    NSEnumerator *en = [[_database informalProtocolsForFrameworkNamed:[_topicFramework frameworkName]] objectEnumerator];
+    NSEnumerator *en =
+        [[[_topicFramework fwDatabase]
+            informalProtocolsForFrameworkNamed:[_topicFramework frameworkName]] objectEnumerator];
     AKProtocolNode *protocolNode;
 
     while ((protocolNode = [en nextObject]))

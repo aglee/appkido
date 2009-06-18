@@ -17,7 +17,7 @@
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
-    AKLabelTopic *obj = [[[self alloc] initWithDatabase:nil] autorelease];
+    AKLabelTopic *obj = [[[self alloc] init] autorelease];
 
     [obj setLabel:label];
 
