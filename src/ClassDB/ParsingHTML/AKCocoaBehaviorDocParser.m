@@ -86,14 +86,14 @@
         
         // Store bits of information about the class node relating it to its
         // HTML documentation file.
-        [_databaseBeingPopulated
+        [[_parserFW fwDatabase]
             rememberThatClass:classNode
             isDocumentedInHTMLFile:[self currentPath]];
         if (isMainClassReference)  // [agl] REMOVE why only if main?
         {
             [classNode
                 setNodeDocumentation:_rootSectionOfCurrentFile
-                forFramework:_frameworkName];
+                forFrameworkNamed:_parserFW];
         }
 
         behaviorNode = classNode;
@@ -107,12 +107,12 @@
         
         // Store bits of information about the protocol node relating it to its
         // HTML documentation file.
-        [_databaseBeingPopulated
+        [[_parserFW fwDatabase]
             rememberThatProtocol:protocolNode
             isDocumentedInHTMLFile:[self currentPath]];
         [protocolNode
             setNodeDocumentation:_rootSectionOfCurrentFile
-            forFramework:_frameworkName];
+            forFrameworkNamed:_parserFW];
         
         behaviorNode = protocolNode;
     }
@@ -304,7 +304,7 @@
     // Get our hands on the node for the class whose documentation is
     // in _rootSectionOfCurrentFile.
     NSString *className = [self _parseBehaviorName];
-    AKClassNode *classNode = [_databaseBeingPopulated classWithName:className];
+    AKClassNode *classNode = [[_parserFW fwDatabase] classWithName:className];
 
     // We assume the database has already been populated from header files.
     // If a class isn't already in the database, we assume it's an accident
@@ -334,7 +334,7 @@
     NSString *protocolName = [self _parseBehaviorName];
 
     AKProtocolNode *protocolNode =
-        [_databaseBeingPopulated protocolWithName:protocolName];
+        [[_parserFW fwDatabase] protocolWithName:protocolName];
 
     // We assume the database has already been populated from header files.
     // [agl] FIXME -- I don't like this assumption -- presumes class knows
@@ -346,8 +346,8 @@
         protocolNode =
             [AKProtocolNode
                 nodeWithNodeName:protocolName
-                owningFramework:_frameworkName];
-        [_databaseBeingPopulated addProtocolNode:protocolNode];
+                owningFramework:_parserFW];
+        [[_parserFW fwDatabase] addProtocolNode:protocolNode];
     }
 
     return protocolNode;
@@ -377,7 +377,7 @@
             memberNode =
                 [[[methodNodeClass alloc]
                     initWithNodeName:memberName
-                    owningFramework:_frameworkName
+                    owningFramework:_parserFW
                     owningBehavior:behaviorNode] autorelease];;
             [behaviorNode
                 performSelector:selectorForAddingNode
@@ -428,7 +428,7 @@
                 AKMethodNode *methodNode =
                     [behaviorNode
                         addDeprecatedMethodIfAbsentWithName:methodName
-                        owningFramework:_frameworkName];
+                        owningFramework:_parserFW];
 
                 if (methodNode != nil)
                 {

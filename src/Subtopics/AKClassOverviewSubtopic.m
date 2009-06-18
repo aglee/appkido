@@ -73,18 +73,15 @@
 
     // If we're looking at a class that spans multiple frameworks, add
     // doc names for those frameworks.
-    NSString *classFramework = [_classNode owningFramework];
-    NSEnumerator *fwNameEnum =
-        [[_classNode allOwningFrameworks] objectEnumerator];
+    AKFramework *classFramework = [_classNode owningFramework];
+    NSEnumerator *fwNameEnum = [[_classNode allOwningFrameworks] objectEnumerator];
     NSString *extraFrameworkName;
 
     while ((extraFrameworkName = [fwNameEnum nextObject]))
     {
         if (![classFramework isEqualToString:extraFrameworkName])
         {
-            [self
-                _addDocsForExtraFramework:extraFrameworkName
-                toList:docList];
+            [self _addDocsForExtraFramework:extraFrameworkName toList:docList];
         }
     }
 }
@@ -120,7 +117,7 @@
     toList:(NSMutableArray *)docList
 {
     AKFileSection *extraRootSection =
-        [_classNode nodeDocumentationForFramework:extraFrameworkName];
+        [_classNode nodeDocumentationForFrameworkNamed:extraFrameworkName];
 
     if (extraRootSection)
     {

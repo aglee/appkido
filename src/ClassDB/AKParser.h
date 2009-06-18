@@ -8,6 +8,7 @@
 #import <DIGSFileProcessor.h>
 
 @class AKDatabase;
+@class AKFramework;
 
 // [agl] add checks for buffer overflow
 #define AKTokenBufferSize 1024
@@ -39,8 +40,7 @@
 @interface AKParser : DIGSFileProcessor
 {
 @protected
-    AKDatabase *_databaseBeingPopulated;
-    NSString *_frameworkName;
+    AKFramework *_parserFW;
 
     // These protected ivars are only used during parsing.  They point to
     // various positions in the data being parsed.
@@ -55,12 +55,12 @@
 
 /*! Convenience method. */
 + (void)recursivelyParseDirectory:(NSString *)dirPath
-    forFramework:(NSString *)frameworkName
+    forFrameworkNamed:(NSString *)frameworkName
     inDatabase:(AKDatabase *)database;
 
 + (void)parseFilesInPaths:(NSArray *)docPaths
     underBaseDir:(NSString *)baseDir
-    forFramework:(NSString *)fwName
+    forFrameworkNamed:(NSString *)fwName
     inDatabase:(AKDatabase *)database;
 
 //-------------------------------------------------------------------------

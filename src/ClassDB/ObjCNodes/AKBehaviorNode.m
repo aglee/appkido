@@ -15,14 +15,13 @@
 
 @implementation AKBehaviorNode
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
 
-- (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:fwName]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
         _protocolNodes = [[NSMutableArray alloc] init];
         _protocolNodeNames = [[NSMutableSet alloc] init];
@@ -31,10 +30,9 @@
         _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
         _indexOfInstanceMethods = [[AKCollectionOfNodes alloc] init];
 
-        _allOwningFrameworks =
-            [[NSMutableArray arrayWithObject:fwName] retain];
+        _allOwningFrameworks = [[NSMutableArray arrayWithObject:theFramework] retain];
 
-        _nodeDocumentationByFramework = [[NSMutableDictionary alloc] init];
+        _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
     }
 
     return self;
@@ -53,14 +51,14 @@
 
     [_allOwningFrameworks release];
 
-    [_nodeDocumentationByFramework release];
+    [_nodeDocumentationByFrameworkName release];
 
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- general
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- general
 
 - (NSArray *)allOwningFrameworks
 {
@@ -101,8 +99,7 @@
 
 - (NSArray *)implementedProtocols
 {
-    NSMutableArray *result =
-        [NSMutableArray arrayWithArray:_protocolNodes];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolNodes];
     NSEnumerator *en = [_protocolNodes objectEnumerator];
     AKProtocolNode *protocolNode;
 
@@ -114,16 +111,14 @@
     return result;
 }
 
-- (AKFileSection *)nodeDocumentationForFramework:(NSString *)frameworkName
+- (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName
 {
-    return [_nodeDocumentationByFramework objectForKey:frameworkName];
+    return [_nodeDocumentationByFrameworkName objectForKey:frameworkName];
 }
 
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-    forFramework:(NSString *)frameworkName
+- (void)setNodeDocumentation:(AKFileSection *)fileSection forFrameworkNamed:(NSString *)frameworkName
 {
-    if ((frameworkName == nil)
-        || [frameworkName isEqualToString:[self owningFramework]])
+    if ((frameworkName == nil) || [frameworkName isEqualToString:[[self owningFramework] frameworkName]])
     {
         [super setNodeDocumentation:fileSection];
     }
@@ -133,13 +128,12 @@
         [_allOwningFrameworks addObject:frameworkName];
     }
 
-    [_nodeDocumentationByFramework
-        setObject:fileSection forKey:frameworkName];
+    [_nodeDocumentationByFrameworkName setObject:fileSection forKey:frameworkName];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- properties
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- properties
 
 - (NSArray *)documentedProperties
 {
@@ -156,9 +150,9 @@
     [_indexOfProperties addNode:propertyNode];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- class methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- class methods
 
 - (NSArray *)documentedClassMethods
 {
@@ -175,9 +169,9 @@
     [_indexOfClassMethods addNode:methodNode];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- instance methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- instance methods
 
 - (NSArray *)documentedInstanceMethods
 {
@@ -194,12 +188,12 @@
     [_indexOfInstanceMethods addNode:methodNode];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- deprecated methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- deprecated methods
 
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-    owningFramework:(NSString *)owningFramework
+    owningFramework:(AKFramework *)nodeOwningFW
 {
     // Is this an instance method or a class method?  Note this assumes a
     // a method node for the method already exists, presumably because we
@@ -224,31 +218,27 @@
     return methodNode;
 }
 
-//-------------------------------------------------------------------------
-// AKDatabaseNode methods
-//-------------------------------------------------------------------------
 
-- (void)setOwningFramework:(NSString *)frameworkName
+#pragma mark -
+#pragma mark AKDatabaseNode methods
+
+- (void)setOwningFramework:(AKFramework *)aFramework
 {
-    [super setOwningFramework:frameworkName];
+    [super setOwningFramework:aFramework];
 
     // Move this framework name to the beginning of _allOwningFrameworks.
-    if (frameworkName)
+    if (aFramework)
     {
-        [_allOwningFrameworks removeObject:frameworkName];
-        [_allOwningFrameworks insertObject:frameworkName atIndex:0];
+        [_allOwningFrameworks removeObject:aFramework];
+        [_allOwningFrameworks insertObject:aFramework atIndex:0];
     }
 }
 
 - (void)setNodeDocumentation:(AKFileSection *)fileSection
 {
-    DIGSLogDebug(
-        @"Unexpected: behavior node %@ getting a -setNodeDocumentation: message",
-        [self nodeName]);
+    DIGSLogDebug(@"Unexpected: behavior node %@ getting a -setNodeDocumentation: message", [self nodeName]);
     [super setNodeDocumentation:fileSection];
-    [self
-        setNodeDocumentation:fileSection
-        forFramework:[self owningFramework]];
+    [self setNodeDocumentation:fileSection forFrameworkNamed:[[self owningFramework] frameworkName]];
 }
 
 @end

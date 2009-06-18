@@ -27,10 +27,8 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [_memberNode owningFramework];
-    BOOL methodIsInSameFramework = 
-        [methodFrameworkName
-            isEqualToString:[_behaviorNode owningFramework]];
+    AKFramework *methodFramework = [_memberNode owningFramework];
+    BOOL methodIsInSameFramework = [methodFramework isEqual:[_behaviorNode owningFramework]];
     AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
 
     if (_behaviorNode == ownerOfMethod)
@@ -42,11 +40,7 @@
         }
         else
         {
-            return
-                [NSString
-                    stringWithFormat:
-                        @"This notification comes from the %@ framework.",
-                        methodFrameworkName];
+            return [NSString stringWithFormat: @"This notification comes from the %@ framework.", methodFramework];
         }
     }
     else
@@ -64,7 +58,7 @@
             return
                 [NSString stringWithFormat:
                     @"This notification is delivered by %@ class %@.",
-                    methodFrameworkName,
+                    methodFramework,
                     [ownerOfMethod nodeName]];
         }
     }

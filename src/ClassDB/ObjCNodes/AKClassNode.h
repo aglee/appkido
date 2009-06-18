@@ -51,9 +51,8 @@
     AKCollectionOfNodes *_indexOfNotifications;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- general
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Getters and setters -- general
 
 - (AKClassNode *)parentClass;
 
@@ -68,9 +67,9 @@
 - (AKCategoryNode *)categoryNamed:(NSString *)catName;
 - (NSArray *)allCategories;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- delegate methods
 
 /** Returns only methods that are in this class's documentation. */
 - (NSArray *)documentedDelegateMethods;
@@ -80,9 +79,9 @@
 /*! Does nothing if a delegate method with the same name already exists. */
 - (void)addDelegateMethod:(AKMethodNode *)methodNode;
 
-//-------------------------------------------------------------------------
-// Getters and setters -- notifications
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- notifications
 
 /** Returns only methods that are in this class's documentation. */
 - (NSArray *)documentedNotifications;

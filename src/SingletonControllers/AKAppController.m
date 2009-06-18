@@ -735,10 +735,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
     while ((fwName = [fwNameEnum nextObject]))
     {
         // See what information we have for this framework.
-        NSArray *formalProtocolNodes = [_appDatabase formalProtocolsForFramework:fwName];
-        NSArray *informalProtocolNodes = [_appDatabase informalProtocolsForFramework:fwName];
-        NSArray *functionsGroupNodes = [_appDatabase functionsGroupsForFramework:fwName];
-        NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFramework:fwName];
+        NSArray *formalProtocolNodes = [_appDatabase formalProtocolsForFrameworkNamed:fwName];
+        NSArray *informalProtocolNodes = [_appDatabase informalProtocolsForFrameworkNamed:fwName];
+        NSArray *functionsGroupNodes = [_appDatabase functionsGroupsForFrameworkNamed:fwName];
+        NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFrameworkNamed:fwName];
 
         // Construct the submenu of framework-related topics.
         NSMenu *fwTopicSubmenu =

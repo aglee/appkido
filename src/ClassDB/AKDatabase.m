@@ -12,6 +12,7 @@
 #import "AKFrameworkConstants.h"
 #import "AKPrefUtils.h"
 
+#import "AKFramework.h"
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
 #import "AKGroupNode.h"
@@ -30,10 +31,6 @@
 
 
 @implementation AKDatabase
-
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
 
 #pragma mark -
 #pragma mark Factory methods
@@ -102,9 +99,9 @@
     return s_iPhoneDatabase;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -128,8 +125,7 @@
         _classNodesByHTMLPath = [[NSMutableDictionary alloc] init];
         _protocolNodesByHTMLPath = [[NSMutableDictionary alloc] init];
         _rootSectionsByHTMLPath = [[NSMutableDictionary alloc] init];
-        _offsetsOfAnchorStringsInHTMLFiles =
-            [[NSMutableDictionary alloc] initWithCapacity:30000];
+        _offsetsOfAnchorStringsInHTMLFiles = [[NSMutableDictionary alloc] initWithCapacity:30000];
 
         _frameworkNamesByHTMLPath = [[NSMutableDictionary alloc] init];
     }
@@ -163,9 +159,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Populating
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Populating the database
 
 - (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
@@ -204,7 +200,7 @@
     }
 }
 
-- (void)loadTokensForFrameworkNamed:(NSString *)fwName
+- (void)loadTokensForFrameworkNamed:(NSString *)frameworkName
 {
     DIGSLogError_MissingOverride();
 }
@@ -214,9 +210,14 @@
     _delegate = delegate;  // note this is NOT retained
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- frameworks
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- frameworks
+
+- (AKFramework *)frameworkWithName:(NSString *)frameworkName
+{
+    return nil;
+}
 
 - (NSArray *)frameworkNames
 {
@@ -228,9 +229,9 @@
     return [_frameworkNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
-- (BOOL)hasFrameworkWithName:(NSString *)fwName
+- (BOOL)hasFrameworkWithName:(NSString *)frameworkName
 {
-    return [_frameworkNames containsObject:fwName];
+    return [_frameworkNames containsObject:frameworkName];
 }
 
 - (NSArray *)namesOfAvailableFrameworks
@@ -238,13 +239,13 @@
     return _namesOfAvailableFrameworks;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- classes
-//-------------------------------------------------------------------------
 
-- (NSArray *)classesForFramework:(NSString *)fwName
+#pragma mark -
+#pragma mark Getters and setters -- classes
+
+- (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName
 {
-    return [_classListsByFramework objectForKey:fwName];
+    return [_classListsByFramework objectForKey:frameworkName];
 }
 
 - (NSArray *)rootClasses
@@ -270,9 +271,9 @@
     return [_classNodesByName allValues];
 }
 
-- (AKClassNode *)classWithName:(NSString *)name
+- (AKClassNode *)classWithName:(NSString *)className
 {
-    return [_classNodesByName objectForKey:name];
+    return [_classNodesByName objectForKey:className];
 }
 
 - (void)addClassNode:(AKClassNode *)classNode
@@ -289,29 +290,29 @@
     [_classNodesByName setObject:classNode forKey:className];
 
     // Add the class to our lookup by framework name.
-    NSString *fwName = [classNode owningFramework];
-    NSMutableArray *classNodes = [_classListsByFramework objectForKey:fwName];
+    NSString *frameworkName = [[classNode owningFramework] frameworkName];
+    NSMutableArray *classNodes = [_classListsByFramework objectForKey:frameworkName];
 
     if (classNodes == nil)
     {
         classNodes = [NSMutableArray array];
-        [_classListsByFramework setObject:classNodes forKey:fwName];
+        [_classListsByFramework setObject:classNodes forKey:frameworkName];
     }
 
     [classNodes addObject:classNode];
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];
+    [self _seeIfFrameworkIsNew:frameworkName];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- protocols
-//-------------------------------------------------------------------------
 
-- (NSArray *)formalProtocolsForFramework:(NSString *)fwName
+#pragma mark -
+#pragma mark Getters and setters -- protocols
+
+- (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [[self _allProtocolsForFramework:fwName] objectEnumerator];
+    NSEnumerator *en = [[self _allProtocolsForFramework:frameworkName] objectEnumerator];
     AKProtocolNode *protocolNode;
 
     while ((protocolNode = [en nextObject]))
@@ -325,10 +326,10 @@
     return result;
 }
 
-- (NSArray *)informalProtocolsForFramework:(NSString *)fwName
+- (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [[self _allProtocolsForFramework:fwName] objectEnumerator];
+    NSEnumerator *en = [[self _allProtocolsForFramework:frameworkName] objectEnumerator];
     AKProtocolNode *protocolNode;
 
     while ((protocolNode = [en nextObject]))
@@ -366,63 +367,60 @@
     [_protocolNodesByName setObject:protocolNode forKey:protocolName];
 
     // Add the class to our lookup by framework name.
-    NSString *fwName = [protocolNode owningFramework];
-    NSMutableArray *protocolNodes = [_protocolListsByFramework objectForKey:fwName];
+    NSString *frameworkName = [[protocolNode owningFramework] frameworkName];
+    NSMutableArray *protocolNodes = [_protocolListsByFramework objectForKey:frameworkName];
 
     if (protocolNodes == nil)
     {
         protocolNodes = [NSMutableArray array];
-        [_protocolListsByFramework setObject:protocolNodes forKey:fwName];
+        [_protocolListsByFramework setObject:protocolNodes forKey:frameworkName];
     }
 
     [protocolNodes addObject:protocolNode];
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];
+    [self _seeIfFrameworkIsNew:frameworkName];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- functions
-//-------------------------------------------------------------------------
 
-- (int)numberOfFunctionsGroupsForFramework:(NSString *)fwName
+#pragma mark -
+#pragma mark Getters and setters -- functions
+
+- (int)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [[_functionsGroupListsByFramework objectForKey:fwName] count];
+    return [[_functionsGroupListsByFramework objectForKey:frameworkName] count];
 }
 
-- (NSArray *)functionsGroupsForFramework:(NSString *)fwName
+- (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [_functionsGroupListsByFramework objectForKey:fwName];
+    return [_functionsGroupListsByFramework objectForKey:frameworkName];
 }
 
-- (AKGroupNode *)functionsGroupWithName:(NSString *)groupName
-    inFramework:(NSString *)fwName
+- (AKGroupNode *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
 {
-    return
-        [[_functionsGroupsByFrameworkAndGroup objectForKey:fwName]
-            objectForKey:groupName];
+    return [[_functionsGroupsByFrameworkAndGroup objectForKey:frameworkName] objectForKey:groupName];
 }
 
 - (void)addFunctionsGroup:(AKGroupNode *)groupNode
 {
-    NSString *fwName = [groupNode owningFramework];
+    NSString *frameworkName = [[groupNode owningFramework] frameworkName];
 
     // See if we have any functions groups in the framework yet.
     NSMutableArray *groupList = nil;
     NSMutableDictionary *groupsByName =
-        [_functionsGroupsByFrameworkAndGroup objectForKey:fwName];
+        [_functionsGroupsByFrameworkAndGroup objectForKey:frameworkName];
 
     if (groupsByName)
     {
-        groupList = [_functionsGroupListsByFramework objectForKey:fwName];
+        groupList = [_functionsGroupListsByFramework objectForKey:frameworkName];
     }
     else
     {
         groupsByName = [NSMutableDictionary dictionary];
-        [_functionsGroupsByFrameworkAndGroup setObject:groupsByName forKey:fwName];
+        [_functionsGroupsByFrameworkAndGroup setObject:groupsByName forKey:frameworkName];
 
         groupList = [NSMutableArray array];
-        [_functionsGroupListsByFramework setObject:groupList forKey:fwName];
+        [_functionsGroupListsByFramework setObject:groupList forKey:frameworkName];
     }
 
     // Add the functions group if it isn't already in the framework.
@@ -439,14 +437,14 @@
     }
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];
+    [self _seeIfFrameworkIsNew:frameworkName];
 }
 
-- (AKGroupNode *)functionsGroupContainingFunction:functionName
-    inFramework:(NSString *)fwName
+- (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
+    inFrameworkNamed:(NSString *)frameworkName
 {
     // Get the functions groups for the given framework.
-    NSMutableArray *groupList = [_functionsGroupListsByFramework objectForKey:fwName];
+    NSMutableArray *groupList = [_functionsGroupListsByFramework objectForKey:frameworkName];
     if (groupList == nil)
     {
         return nil;
@@ -468,48 +466,44 @@
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- globals
-//-------------------------------------------------------------------------
 
-- (int)numberOfGlobalsGroupsForFramework:(NSString *)fwName
+#pragma mark -
+#pragma mark Getters and setters -- globals
+
+- (int)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [[_globalsGroupListsByFramework objectForKey:fwName] count];
+    return [[_globalsGroupListsByFramework objectForKey:frameworkName] count];
 }
 
-- (NSArray *)globalsGroupsForFramework:(NSString *)fwName
+- (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [_globalsGroupListsByFramework objectForKey:fwName];
+    return [_globalsGroupListsByFramework objectForKey:frameworkName];
 }
 
-- (AKGroupNode *)globalsGroupWithName:(NSString *)groupName
-    inFramework:(NSString *)fwName
+- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
 {
-    return
-        [[_globalsGroupsByFrameworkAndGroup objectForKey:fwName]
-            objectForKey:groupName];
+    return [[_globalsGroupsByFrameworkAndGroup objectForKey:frameworkName] objectForKey:groupName];
 }
 
 - (void)addGlobalsGroup:(AKGroupNode *)groupNode
 {
-    NSString *fwName = [groupNode owningFramework];
+    NSString *frameworkName = [[groupNode owningFramework] frameworkName];
 
     // See if we have any globals groups in the framework yet.
     NSMutableArray *groupList = nil;
-    NSMutableDictionary *groupsByName =
-        [_globalsGroupsByFrameworkAndGroup objectForKey:fwName];
+    NSMutableDictionary *groupsByName = [_globalsGroupsByFrameworkAndGroup objectForKey:frameworkName];
 
     if (groupsByName)
     {
-        groupList = [_globalsGroupListsByFramework objectForKey:fwName];
+        groupList = [_globalsGroupListsByFramework objectForKey:frameworkName];
     }
     else
     {
         groupsByName = [NSMutableDictionary dictionary];
-        [_globalsGroupsByFrameworkAndGroup setObject:groupsByName forKey:fwName];
+        [_globalsGroupsByFrameworkAndGroup setObject:groupsByName forKey:frameworkName];
 
         groupList = [NSMutableArray array];
-        [_globalsGroupListsByFramework setObject:groupList forKey:fwName];
+        [_globalsGroupListsByFramework setObject:groupList forKey:frameworkName];
     }
 
     // Add the globals group if it isn't already in the framework.
@@ -526,14 +520,14 @@
     }
 
     // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:fwName];
+    [self _seeIfFrameworkIsNew:frameworkName];
 }
 
-- (AKGroupNode *)globalsGroupContainingGlobal:nameOfGlobal
-    inFramework:(NSString *)fwName
+- (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
+    inFrameworkNamed:(NSString *)frameworkName
 {
     // Get the globals groups for the given framework.
-    NSMutableArray *groupList = [_globalsGroupListsByFramework objectForKey:fwName];
+    NSMutableArray *groupList = [_globalsGroupListsByFramework objectForKey:frameworkName];
     if (groupList == nil)
     {
         return nil;
@@ -555,19 +549,18 @@
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters -- hyperlink support
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters -- hyperlink support
 
 - (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath
 {
     return [_frameworkNamesByHTMLPath objectForKey:htmlFilePath];
 }
 
-- (void)rememberFramework:(NSString *)frameworkName
-    forHTMLFile:(NSString *)htmlFilePath
+- (void)rememberFramework:(AKFramework *)aFramework forHTMLFile:(NSString *)htmlFilePath
 {
-    [_frameworkNamesByHTMLPath setObject:frameworkName forKey:htmlFilePath];
+    [_frameworkNamesByHTMLPath setObject:[aFramework frameworkName] forKey:htmlFilePath];
 }
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
@@ -575,8 +568,7 @@
     return [_classNodesByHTMLPath objectForKey:htmlFilePath];
 }
 
-- (void)rememberThatClass:(AKClassNode *)classNode
-    isDocumentedInHTMLFile:(NSString *)htmlFilePath
+- (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
     [_classNodesByHTMLPath setObject:classNode forKey:htmlFilePath];
 }
@@ -586,8 +578,7 @@
     return [_protocolNodesByHTMLPath objectForKey:htmlFilePath];
 }
 
-- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode
-    isDocumentedInHTMLFile:(NSString *)htmlFilePath
+- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
     [_protocolNodesByHTMLPath setObject:protocolNode forKey:htmlFilePath];
 }
@@ -597,17 +588,14 @@
     return [_rootSectionsByHTMLPath objectForKey:filePath];
 }
 
-- (void)rememberRootSection:(AKFileSection *)rootSection
-    forHTMLFile:(NSString *)filePath
+- (void)rememberRootSection:(AKFileSection *)rootSection forHTMLFile:(NSString *)filePath
 {
     [_rootSectionsByHTMLPath setObject:rootSection forKey:filePath];
 }
 
-- (int)offsetOfAnchorString:(NSString *)anchorString
-    inHTMLFile:(NSString *)filePath
+- (int)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
 {
-    NSMutableDictionary *offsetsByFilePath =
-        [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
+    NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
 
     if (offsetsByFilePath == nil)
     {
@@ -624,31 +612,27 @@
     return [offsetValue intValue];
 }
 
-- (void)rememberOffset:(int)anchorOffset
-    ofAnchorString:(NSString *)anchorString
-    inHTMLFile:(NSString *)filePath
+- (void)rememberOffset:(int)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
 {
-    NSMutableDictionary *offsetsByFilePath =
-        [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
+    NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
 
     if (offsetsByFilePath == nil)
     {
         offsetsByFilePath = [NSMutableDictionary dictionary];
 
-        [_offsetsOfAnchorStringsInHTMLFiles
-            setObject:offsetsByFilePath
-            forKey:anchorString];
+        [_offsetsOfAnchorStringsInHTMLFiles setObject:offsetsByFilePath forKey:anchorString];
     }
 
     NSNumber *offsetValue = [NSNumber numberWithInt:anchorOffset];
 
-    [offsetsByFilePath
-        setObject:offsetValue
-        forKey:filePath];
+    [offsetsByFilePath setObject:offsetValue forKey:filePath];
 }
 
 @end
 
+
+#pragma mark -
+#pragma mark Delegate methods
 
 @implementation AKDatabase (Private)
 

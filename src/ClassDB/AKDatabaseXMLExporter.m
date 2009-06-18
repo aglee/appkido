@@ -265,7 +265,7 @@
         _indent++;
         [self
             _performSelector:@selector(exportProtocol:)
-            onNodes:[_database formalProtocolsForFramework:fwName]];
+            onNodes:[_database formalProtocolsForFrameworkNamed:fwName]];
 
         // Write informal protocols.
         _indent--;
@@ -273,7 +273,7 @@
         _indent++;
         [self
             _performSelector:@selector(exportProtocol:)
-            onNodes:[_database informalProtocolsForFramework:fwName]];
+            onNodes:[_database informalProtocolsForFrameworkNamed:fwName]];
 
     [self _closeXMLElement:@"protocols"];
 }
@@ -308,12 +308,12 @@
         [self
             exportGroupNodesInSection:@"functions"
             ofFramework:fwName
-            usingGetSelector:@selector(functionsGroupsForFramework:)
+            usingGetSelector:@selector(functionsGroupsForFrameworkNamed:)
             subnodeTag:@"function"];
         [self
             exportGroupNodesInSection:@"globals"
             ofFramework:fwName
-            usingGetSelector:@selector(globalsGroupsForFramework:)
+            usingGetSelector:@selector(globalsGroupsForFrameworkNamed:)
             subnodeTag:@"global"];
 
     [self _closeXMLElement:@"framework"];

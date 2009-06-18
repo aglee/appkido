@@ -24,7 +24,7 @@
 
 // Designated initializer.
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
     groupName:(NSString *)groupName;
 
 //-------------------------------------------------------------------------

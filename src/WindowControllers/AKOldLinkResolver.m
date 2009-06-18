@@ -109,7 +109,7 @@
 
             behaviorNode = classNode;
             rootSection =
-                [classNode nodeDocumentationForFramework:fwName];
+                [classNode nodeDocumentationForFrameworkNamed:fwName];
             docTopic = [AKClassTopic topicWithClassNode:classNode inDatabase:_database];
 
             break;
@@ -416,35 +416,25 @@
 
     if (behaviorNode)
     {
-        subtopicName =
-            [self _subtopicNameImpliedBySectionName:majorSectionName];
+        subtopicName = [self _subtopicNameImpliedBySectionName:majorSectionName];
 
-        // When the subtopic is "General", the doc name is actually
-        // the section name.
+        // When the subtopic is "General", the doc name is actually the section name.
         if ([subtopicName isEqualToString:AKOverviewSubtopicName])
         {
-            if ([frameworkName
-                isEqualToString:[behaviorNode owningFramework]])
+            if ([frameworkName isEqualToString:[[behaviorNode owningFramework] frameworkName]])
             {
                 docName = majorSectionName;
             }
             else
             {
-                docName =
-                    [AKOverviewDoc
-                        qualifyDocName:majorSectionName
-                        withFrameworkName:frameworkName];
+                docName = [AKOverviewDoc qualifyDocName:majorSectionName withFrameworkName:frameworkName];
             }
         }
     }
 
     // Now that we've answered all our questions, we have everything we
     // need to put together the doc locator.
-    return
-        [AKDocLocator
-            withTopic:docTopic
-            subtopicName:subtopicName
-            docName:docName];
+    return [AKDocLocator withTopic:docTopic subtopicName:subtopicName docName:docName];
 }
 
 // [agl] make a note of the assumptions about child sections that this

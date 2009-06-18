@@ -139,16 +139,16 @@ static BOOL isPunctuation(char c)
     (void)[self _parseTokenIntoBuffer:token];
     NSString *className = [NSString stringWithUTF8String:token];
     AKClassNode *classNode =
-        [_databaseBeingPopulated classWithName:className];
+        [[_parserFW fwDatabase] classWithName:className];
 
     if (!classNode)
     {
         classNode =
             [AKClassNode
                 nodeWithNodeName:className
-                owningFramework:_frameworkName];
+                owningFramework:_parserFW];
     }
-    [_databaseBeingPopulated addClassNode:classNode];
+    [[_parserFW fwDatabase] addClassNode:classNode];
 
     AKBehaviorNode *resultNode = nil;
     while (([self _parseTokenIntoBuffer:token]))
@@ -164,15 +164,15 @@ static BOOL isPunctuation(char c)
             (void)[self _parseTokenIntoBuffer:token];
             NSString *parentClassName = [NSString stringWithUTF8String:token];
             AKClassNode *parentClassNode =
-                [_databaseBeingPopulated classWithName:parentClassName];
+                [[_parserFW fwDatabase] classWithName:parentClassName];
 
             if (!parentClassNode)
             {
                 parentClassNode =
                     [AKClassNode
                         nodeWithNodeName:parentClassName
-                        owningFramework:_frameworkName];
-                [_databaseBeingPopulated addClassNode:parentClassNode];
+                        owningFramework:_parserFW];
+                [[_parserFW fwDatabase] addClassNode:parentClassNode];
             }
 
             // [agl] KLUDGE  Some .h files use #ifndef WIN32 to decide
@@ -203,7 +203,7 @@ static BOOL isPunctuation(char c)
                 categoryNode =
                     [AKCategoryNode
                         nodeWithNodeName:catName
-                        owningFramework:_frameworkName];
+                        owningFramework:_parserFW];
                 [classNode addCategory:categoryNode];
             }
 
@@ -272,7 +272,7 @@ static BOOL isPunctuation(char c)
 
         // Make sure the framework which the class's .h file lives in is
         // recognized as the node's main framework.
-        [classNode setOwningFramework:_frameworkName];
+        [classNode setOwningFramework:_parserFW];
     }
 }
 
@@ -291,15 +291,15 @@ static BOOL isPunctuation(char c)
     (void)[self _parseTokenIntoBuffer:token];
     NSString *protocolName = [NSString stringWithUTF8String:token];
     AKProtocolNode *resultNode =
-        [_databaseBeingPopulated protocolWithName:protocolName];
+        [[_parserFW fwDatabase] protocolWithName:protocolName];
 
     if (!resultNode)
     {
         resultNode =
             [AKProtocolNode
                 nodeWithNodeName:protocolName
-                owningFramework:_frameworkName];
-        [_databaseBeingPopulated addProtocolNode:resultNode];
+                owningFramework:_parserFW];
+        [[_parserFW fwDatabase] addProtocolNode:resultNode];
     }
 
     [resultNode setHeaderFileWhereDeclared:[self currentPath]];
@@ -360,15 +360,15 @@ static BOOL isPunctuation(char c)
         {
             NSString *protocolName = [NSString stringWithUTF8String:token];
             AKProtocolNode *protocolNode =
-                [_databaseBeingPopulated protocolWithName:protocolName];
+                [[_parserFW fwDatabase] protocolWithName:protocolName];
 
             if (!protocolNode)
             {
                 protocolNode =
                     [AKProtocolNode
                         nodeWithNodeName:protocolName
-                        owningFramework:_frameworkName];
-                [_databaseBeingPopulated addProtocolNode:protocolNode];
+                        owningFramework:_parserFW];
+                [[_parserFW fwDatabase] addProtocolNode:protocolNode];
             }
 
             [behaviorNode addImplementedProtocol:protocolNode];
@@ -410,7 +410,7 @@ static BOOL isPunctuation(char c)
                 methodNode =
                     [[[AKMethodNode alloc]
                         initWithNodeName:methodName
-                        owningFramework:_frameworkName
+                        owningFramework:_parserFW
                         owningBehavior:behaviorNode] autorelease];
                 [behaviorNode
                     performSelector:selectorForAddingNode

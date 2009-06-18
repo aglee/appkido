@@ -10,6 +10,7 @@
 #import "DIGSLog.h"
 #import "AKTextUtils.h"
 #import "AKDatabase.h"
+#import "AKFramework.h"
 #import "AKFileSection.h"
 
 
@@ -265,10 +266,10 @@
     // Apply the parse results to the database.
     if (rootSection != nil)
     {
-        [_databaseBeingPopulated
-            rememberFramework:_frameworkName
+        [[_parserFW fwDatabase]
+            rememberFramework:_parserFW
             forHTMLFile:[self currentPath]];
-        [_databaseBeingPopulated
+        [[_parserFW fwDatabase]
             rememberRootSection:rootSection
             forHTMLFile:[self currentPath]];
         [self applyParseResults];
@@ -565,7 +566,7 @@
                     length:(_current - anchorStart)
                     encoding:NSUTF8StringEncoding] autorelease];
 
-            [_databaseBeingPopulated
+            [[_parserFW fwDatabase]
                 rememberOffset:(anchorStart - _dataStart)
                 ofAnchorString:anchorString
                 inHTMLFile:[self currentPath]];

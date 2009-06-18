@@ -27,10 +27,8 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [_memberNode owningFramework];
-    BOOL methodIsInSameFramework = 
-        [methodFrameworkName
-            isEqualToString:[_behaviorNode owningFramework]];
+    AKFramework *methodFramework = [_memberNode owningFramework];
+    BOOL methodIsInSameFramework = [methodFramework isEqual:[_behaviorNode owningFramework]];
     AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
 
     if (_behaviorNode == ownerOfMethod)
@@ -42,11 +40,7 @@
         }
         else
         {
-            return
-                [NSString
-                    stringWithFormat:
-                        @"This delegate method comes from the %@ framework.",
-                        methodFrameworkName];
+            return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFramework];
         }
     }
     else if ([ownerOfMethod isClassNode])
@@ -54,18 +48,13 @@
         // We inherited this method from an ancestor class.
         if (methodIsInSameFramework)
         {
-            return
-                [NSString stringWithFormat:
-                    @"This delegate method is used by class %@.",
-                    [ownerOfMethod nodeName]];
+            return [NSString stringWithFormat:@"This delegate method is used by class %@.", [ownerOfMethod nodeName]];
         }
         else
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is used by %@ class %@.",
-                    methodFrameworkName,
-                    [ownerOfMethod nodeName]];
+                    @"This delegate method is used by %@ class %@.", methodFramework, [ownerOfMethod nodeName]];
         }
     }
     else
@@ -73,18 +62,13 @@
         // This method is declared in a formal protocol.
         if (methodIsInSameFramework)
         {
-            return
-                [NSString stringWithFormat:
-                    @"This delegate method is declared in protocol %@.",
-                    [ownerOfMethod nodeName]];
+            return [NSString stringWithFormat:@"This delegate method is declared in protocol %@.", [ownerOfMethod nodeName]];
         }
         else
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is declared in %@ protocol %@.",
-                    methodFrameworkName,
-                    [ownerOfMethod nodeName]];
+                    @"This delegate method is declared in %@ protocol %@.", methodFramework, [ownerOfMethod nodeName]];
         }
     }
 }

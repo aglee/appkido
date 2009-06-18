@@ -17,7 +17,7 @@
 //-------------------------------------------------------------------------
 
 + (void)recursivelyParseDirectory:(NSString *)dirPath
-    forFramework:(NSString *)frameworkName
+    forFrameworkNamed:(NSString *)frameworkName
     inDatabase:(AKDatabase *)database
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:dirPath])
@@ -36,7 +36,7 @@
 
 + (void)parseFilesInPaths:(NSArray *)docPaths
     underBaseDir:(NSString *)baseDir
-    forFramework:(NSString *)fwName
+    forFrameworkNamed:(NSString *)fwName
     inDatabase:(AKDatabase *)database
 {
     int numDocs = [docPaths count];
@@ -65,8 +65,7 @@
 {
     if ((self = [super init]))
     {
-        _databaseBeingPopulated = [db retain];
-        _frameworkName = [frameworkName retain];
+        _parserFW = [db frameworkWithName:frameworkName];
     }
 
     return self;
@@ -81,8 +80,7 @@
 
 - (void)dealloc
 {
-    [_databaseBeingPopulated release];
-    [_frameworkName release];
+    [_parserFW release];
 
     [super dealloc];
 }

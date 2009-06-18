@@ -29,7 +29,7 @@
  * @discussion  Designated initializer.
  */
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(NSString *)fwName
+    owningFramework:(AKFramework *)theFramework
     owningBehavior:(AKBehaviorNode *)behaviorNode;
 
 //-------------------------------------------------------------------------

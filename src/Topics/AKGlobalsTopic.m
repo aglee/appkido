@@ -26,7 +26,7 @@
 
 - (int)numberOfSubtopics
 {
-    return [_database numberOfGlobalsGroupsForFramework:_topicFramework];
+    return [_database numberOfGlobalsGroupsForFrameworkNamed:_topicFramework];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
@@ -39,7 +39,7 @@
     NSArray *groupNodes =
         [AKSortUtils
             arrayBySortingArray:
-                [_database globalsGroupsForFramework:_topicFramework]];
+                [_database globalsGroupsForFrameworkNamed:_topicFramework]];
 
 
     if ((unsigned)subtopicIndex >= [groupNodes count])

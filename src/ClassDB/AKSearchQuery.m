@@ -494,7 +494,7 @@ g_NSStringComparisons++;
     while ((fwName = [fwNameEnum nextObject]))
     {
         NSArray *functionGroups =
-            [_database functionsGroupsForFramework:fwName];
+            [_database functionsGroupsForFrameworkNamed:fwName];
         NSEnumerator *groupEnum = [functionGroups objectEnumerator];
         AKGroupNode *groupNode;
 
@@ -531,7 +531,7 @@ g_NSStringComparisons++;
     while ((fwName = [fwNameEnum nextObject]))
     {
         NSArray *globalsGroups =
-            [_database globalsGroupsForFramework:fwName];
+            [_database globalsGroupsForFrameworkNamed:fwName];
         NSEnumerator *groupEnum = [globalsGroups objectEnumerator];
         AKGroupNode *groupNode;
 

@@ -993,7 +993,7 @@ enum
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
     NSArray *classNodes =
-        [[_windowController database] classesForFramework:fwName];
+        [[_windowController database] classesForFrameworkNamed:fwName];
 
     return [self _sortedDocLocatorsForClasses:classNodes];
 }

@@ -24,22 +24,20 @@
 // Factory methods
 //-------------------------------------------------------------------------
 
-+ (AKFrameworkTopic *)topicWithFramework:(NSString *)fwName
-    inDatabase:(AKDatabase *)database
++ (AKFrameworkTopic *)topicWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithFramework:fwName inDatabase:database] autorelease];
+    return [[[self alloc] initWithFramework:theTopicFramework inDatabase:database] autorelease];
 }
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithFramework:(NSString *)fwName
-    inDatabase:(AKDatabase *)database
+- (id)initWithFramework:(AKFramework *)theTopicFramework inDatabase:(AKDatabase *)database
 {
     if ((self = [super initWithDatabase:database]))
     {
-        _topicFramework = [fwName retain];
+        _topicFramework = [theTopicFramework retain];
     }
 
     return self;
@@ -81,18 +79,14 @@
 
     if (fwName == nil)
     {
-        DIGSLogWarning(
-            @"malformed pref dictionary for class %@",
-            [self className]);
+        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
         return nil;
     }
 
     AKDatabase *db = [[NSApp delegate] appDatabase];
     if (![db hasFrameworkWithName:fwName])
     {
-        DIGSLogWarning(
-            @"framework %@ named in pref dict for %@ doesn't exist",
-            [self className], fwName);
+        DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);
         return nil;
     }
 
@@ -104,13 +98,8 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict
-        setObject:[self className]
-        forKey:AKTopicClassNamePrefKey];
-
-    [prefDict
-        setObject:_topicFramework
-        forKey:AKFrameworkNamePrefKey];
+    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
+    [prefDict setObject:_topicFramework forKey:AKFrameworkNamePrefKey];
 
     return prefDict;
 }
@@ -122,38 +111,31 @@
 
 - (NSString *)pathInTopicBrowser
 {
-    return
-        [NSString stringWithFormat:@"%@%@",
-            AKTopicBrowserPathSeparator,
-            [self stringToDisplayInTopicBrowser]];
+    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, [self stringToDisplayInTopicBrowser]];
 }
 
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
 
-    if ([_database numberOfFunctionsGroupsForFramework:_topicFramework] > 0)
+    if ([_database numberOfFunctionsGroupsForFrameworkNamed:_topicFramework] > 0)
     {
-        [columnValues
-            addObject:[AKFunctionsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKFunctionsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
-    if ([_database numberOfGlobalsGroupsForFramework:_topicFramework] > 0)
+    if ([_database numberOfGlobalsGroupsForFrameworkNamed:_topicFramework] > 0)
     {
-        [columnValues
-            addObject:[AKGlobalsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKGlobalsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
-    if ([[_database formalProtocolsForFramework:_topicFramework] count] > 0)
+    if ([[_database formalProtocolsForFrameworkNamed:_topicFramework] count] > 0)
     {
-        [columnValues
-            addObject:[AKFormalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKFormalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
-    if ([[_database informalProtocolsForFramework:_topicFramework] count] > 0)
+    if ([[_database informalProtocolsForFrameworkNamed:_topicFramework] count] > 0)
     {
-        [columnValues
-            addObject:[AKInformalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
+        [columnValues addObject:[AKInformalProtocolsTopic topicWithFramework:_topicFramework inDatabase:_database]];
     }
 
     return columnValues;

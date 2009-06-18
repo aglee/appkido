@@ -33,8 +33,7 @@
 - (void)applyParseResults
 {
     // Make sure the current doc file has a "Functions" section.
-    AKFileSection *functionsSection =
-        [_rootSectionOfCurrentFile childSectionWithName:@"Functions"];
+    AKFileSection *functionsSection = [_rootSectionOfCurrentFile childSectionWithName:@"Functions"];
     
     if (functionsSection == nil)
     {
@@ -48,17 +47,13 @@
 
     if ([groupNamesByFunctionName count] == 0)
     {
-        defaultGroupName =
-            [@"Functions - "
-                stringByAppendingString:
-                    [_rootSectionOfCurrentFile sectionName]];
+        defaultGroupName = [@"Functions - " stringByAppendingString: [_rootSectionOfCurrentFile sectionName]];
 //NSLog(@"using default '%@' group name", defaultGroupName);  // [agl] REMOVE
     }
 
     // Each subsection of the "Functions" section contains the documentation
     // for one function.
-    NSEnumerator *functionSectionsEnum =
-        [functionsSection childSectionEnumerator];
+    NSEnumerator *functionSectionsEnum = [functionsSection childSectionEnumerator];
     AKFileSection *functionSection;
     
     while ((functionSection = [functionSectionsEnum nextObject]))
@@ -72,30 +67,21 @@
 
         if (groupName == nil)
         {
-            DIGSLogWarning(@"couldn't find group name for function named %@",
-                           functionName);
+            DIGSLogWarning(@"couldn't find group name for function named %@", functionName);
         }
         else
         {
             AKFunctionNode *functionNode =
-                [[[AKFunctionNode alloc]
-                    initWithNodeName:functionName
-                    owningFramework:_frameworkName] autorelease];
+                [[[AKFunctionNode alloc] initWithNodeName:functionName owningFramework:_parserFW] autorelease];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode =
-                [_databaseBeingPopulated
-                    functionsGroupWithName:groupName
-                    inFramework:_frameworkName];
+            AKGroupNode *groupNode = [[_parserFW fwDatabase] functionsGroupNamed:groupName inFrameworkNamed:_parserFW];
 
             if (!groupNode)
             {
-                groupNode =
-                    [[AKGroupNode alloc]
-                        initWithNodeName:groupName
-                        owningFramework:_frameworkName];
+                groupNode = [[AKGroupNode alloc] initWithNodeName:groupName owningFramework:_parserFW];
                 [groupNode setNodeDocumentation:functionSection];
-                [_databaseBeingPopulated addFunctionsGroup:groupNode];
+                [[_parserFW fwDatabase] addFunctionsGroup:groupNode];
             }
 
             [groupNode addSubnode:functionNode];
@@ -129,13 +115,11 @@
     
     // Each subsection of the "Functions by Task" section corresponds to a
     // function group.
-    AKFileSection *functionsByTaskSection =
-        [_rootSectionOfCurrentFile childSectionWithName:@"Functions by Task"];
+    AKFileSection *functionsByTaskSection = [_rootSectionOfCurrentFile childSectionWithName:@"Functions by Task"];
     
     if (functionsByTaskSection != nil)
     {
-        NSEnumerator *functionGroupSectionsEnum =
-            [functionsByTaskSection childSectionEnumerator];
+        NSEnumerator *functionGroupSectionsEnum = [functionsByTaskSection childSectionEnumerator];
         AKFileSection *functionGroupSection;
         
         while ((functionGroupSection = [functionGroupSectionsEnum nextObject]))
@@ -165,9 +149,7 @@
                         else
                         {
                             NSString *funcName = [NSString stringWithUTF8String:_token];
-                            [groupNamesByFunctionName
-                                setObject:[functionGroupSection sectionName]
-                                forKey:funcName];
+                            [groupNamesByFunctionName setObject:[functionGroupSection sectionName] forKey:funcName];
                         }
                     }
                 }
