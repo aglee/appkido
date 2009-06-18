@@ -108,7 +108,7 @@
 {
     return
         [NSString stringWithFormat:@"%@ class %@",
-            [_classNode owningFramework], [_classNode nodeName]];
+            [[_classNode owningFramework] frameworkName], [_classNode nodeName]];
 }
 
 - (NSString *)pathInTopicBrowser

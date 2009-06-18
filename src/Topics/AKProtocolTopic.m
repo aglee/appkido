@@ -106,7 +106,9 @@
         ? @"%@ INFORMAL protocol <%@>"
         : @"%@ protocol <%@>";
 
-    return [NSString stringWithFormat:stringFormat, [_protocolNode owningFramework], [_protocolNode nodeName]];
+    return
+        [NSString stringWithFormat:stringFormat,
+            [[_protocolNode owningFramework] frameworkName], [_protocolNode nodeName]];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -118,7 +120,7 @@
 
     return
         [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
-            AKTopicBrowserPathSeparator, [_protocolNode owningFramework],
+            AKTopicBrowserPathSeparator, [[_protocolNode owningFramework] frameworkName],
             AKTopicBrowserPathSeparator, whichProtocols,
             AKTopicBrowserPathSeparator, [_protocolNode nodeName]];
 }

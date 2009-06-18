@@ -46,8 +46,7 @@
 // Utility methods
 //-------------------------------------------------------------------------
 
-+ (NSString *)qualifyDocName:(NSString *)docName
-    withFrameworkName:(NSString *)frameworkName
++ (NSString *)qualifyDocName:(NSString *)docName withFrameworkName:(NSString *)frameworkName
 {
     if (frameworkName == nil)
     {
@@ -55,10 +54,7 @@
     }
     else
     {
-        return
-            [NSString stringWithFormat:@"%@ [%@]",
-                docName,
-                frameworkName];
+        return [NSString stringWithFormat:@"%@ [%@]", docName, frameworkName];
     }
 }
 
