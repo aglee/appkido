@@ -28,7 +28,18 @@
 // Manipulating node names
 //-------------------------------------------------------------------------
 
-// Override this.
+/*! Must override this. */
 + (NSString *)punctuateNodeName:(NSString *)memberName;
+
+//-------------------------------------------------------------------------
+// AKDoc methods
+//-------------------------------------------------------------------------
+
+/*!
+ * This implementation of -commentString assumes the receiver represents a
+ * method.  Subclasses of AKMemberDoc for which this is not true need to
+ * override this method.
+ */
+- (NSString *)commentString;
 
 @end

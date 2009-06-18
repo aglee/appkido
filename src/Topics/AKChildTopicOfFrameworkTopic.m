@@ -8,6 +8,7 @@
 #import "AKChildTopicOfFrameworkTopic.h"
 
 #import "DIGSLog.h"
+#import "AKFramework.h"
 
 @implementation AKChildTopicOfFrameworkTopic
 
@@ -23,7 +24,9 @@
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-    return [NSString stringWithFormat:@"%@ %@", _topicFramework, [self stringToDisplayInTopicBrowser]];
+    return
+        [NSString stringWithFormat:@"%@ %@",
+            [_topicFramework frameworkName], [self stringToDisplayInTopicBrowser]];
 }
 
 - (NSString *)stringToDisplayInLists
@@ -36,7 +39,7 @@
     return
         [NSString stringWithFormat:@"%@%@%@%@",
             AKTopicBrowserPathSeparator,
-                _topicFramework,
+                [_topicFramework frameworkName],
             AKTopicBrowserPathSeparator,
                 [self stringToDisplayInTopicBrowser]];
 }

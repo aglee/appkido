@@ -39,8 +39,7 @@
 
 // An overview doc list may contain docs for more than one framework.
 // If frameworkName is nil, returns docName unchanged.
-+ (NSString *)qualifyDocName:(NSString *)docName
-    withFrameworkName:(NSString *)frameworkName;
++ (NSString *)qualifyDocName:(NSString *)docName withFrameworkName:(NSString *)frameworkName;
 
 //-------------------------------------------------------------------------
 // Protected methods

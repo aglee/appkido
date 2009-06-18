@@ -67,8 +67,7 @@
 
 - (NSString *)stringToDisplayInDocList
 {
-    NSString *displayString =
-        [[self class] punctuateNodeName:[self docName]];
+    NSString *displayString = [[self class] punctuateNodeName:[self docName]];
     AKBehaviorNode *owningBehavior = [_memberNode owningBehavior];
 
     // Qualify the member name with ancestor or protocol info if any.
@@ -78,18 +77,14 @@
         {
             // We inherited this member from an ancestor class.
             displayString =
-                [NSString stringWithFormat:@"%@ (%@)",
-                    displayString,
-                    [owningBehavior nodeName]];
+                [NSString stringWithFormat:@"%@ (%@)", displayString, [owningBehavior nodeName]];
         }
         else
         {
             // This member is a method we implement in order to conform to
             // a protocol.
             displayString =
-                [NSString stringWithFormat:@"%@ <%@>",
-                    displayString,
-                    [owningBehavior nodeName]];
+                [NSString stringWithFormat:@"%@ <%@>", displayString, [owningBehavior nodeName]];
         }
     }
 
@@ -100,7 +95,7 @@
 
     if (!memberIsInSameFramework)
     {
-        displayString = [NSString stringWithFormat:@"%@ [%@]", displayString, memberFramework];
+        displayString = [NSString stringWithFormat:@"%@ [%@]", displayString, [memberFramework frameworkName]];
     }
     
     // In the Feb 2007 docs (maybe earlier?), deprecated methods are documented
@@ -135,7 +130,7 @@
         }
         else
         {
-            return [NSString stringWithFormat:@"This method is added by a category in %@.", memberFramework];
+            return [NSString stringWithFormat:@"This method is added by a category in %@.", [memberFramework frameworkName]];
         }
     }
     else if ([owningBehavior isClassNode])
@@ -149,7 +144,7 @@
         {
             return
                 [NSString stringWithFormat:@"This method is inherited from %@ class %@.",
-                    memberFramework, [owningBehavior nodeName]];
+                    [memberFramework frameworkName], [owningBehavior nodeName]];
         }
     }
     else
@@ -163,7 +158,7 @@
         {
             return
                 [NSString stringWithFormat:
-                    @"This method is declared in %@ protocol <%@>.", memberFramework, [owningBehavior nodeName]];
+                    @"This method is declared in %@ protocol <%@>.", [memberFramework frameworkName], [owningBehavior nodeName]];
         }
     }
 }

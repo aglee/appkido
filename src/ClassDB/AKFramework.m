@@ -11,6 +11,9 @@
 
 @implementation AKFramework
 
+#pragma mark -
+#pragma mark Getters and setters
+
 - (AKDatabase *)fwDatabase
 {
     return _fwDatabase;
@@ -31,6 +34,29 @@
     [frameworkName retain];
     [_frameworkName release];
     _frameworkName = frameworkName;
+}
+
+
+#pragma mark -
+#pragma mark NSObject methods
+
+- (NSString *)description
+{
+    return _frameworkName;
+}
+
+- (BOOL)isEqual:(id)anObject
+{
+    if (![anObject isMemberOfClass:[AKFramework class]])
+    {
+        return NO;
+    }
+    return [_frameworkName isEqualToString:[anObject frameworkName]];
+}
+
+- (unsigned)hash
+{
+    return [_frameworkName hash];
 }
 
 @end
