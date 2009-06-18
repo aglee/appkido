@@ -57,14 +57,11 @@
         return nil;
     }
 
-    NSString *labelString =
-        [prefDict objectForKey:AKLabelStringPrefKey];
+    NSString *labelString = [prefDict objectForKey:AKLabelStringPrefKey];
 
     if (labelString == nil)
     {
-        DIGSLogWarning(
-            @"malformed pref dictionary for class %@",
-            [self className]);
+        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
         return nil;
     }
     else
@@ -77,13 +74,8 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict
-        setObject:[self className]
-        forKey:AKTopicClassNamePrefKey];
-
-    [prefDict
-        setObject:_label
-        forKey:AKLabelStringPrefKey];
+    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
+    [prefDict setObject:_label forKey:AKLabelStringPrefKey];
 
     return prefDict;
 }
@@ -95,9 +87,7 @@
 
 - (NSString *)pathInTopicBrowser
 {
-    return
-        [NSString stringWithFormat:@"%@%@",
-            AKTopicBrowserPathSeparator, _label];
+    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, _label];
 }
 
 - (BOOL)browserCellShouldBeEnabled

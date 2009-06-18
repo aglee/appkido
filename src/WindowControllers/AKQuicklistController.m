@@ -1011,17 +1011,9 @@ enum
         // documented yet or intended for Apple's internal use.
         if ([classNode nodeDocumentation])
         {
-            AKTopic *topic =
-                [AKClassTopic
-                    topicWithClassNode:classNode
-                    inDatabase:[_windowController database]];
+            AKTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
-            [quicklistItems
-                addObject:
-                    [AKDocLocator
-                        withTopic:topic
-                        subtopicName:nil
-                        docName:nil]];
+            [quicklistItems addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
     }
 
@@ -1041,17 +1033,9 @@ enum
         // documented yet or intended for Apple's internal use.
         if ([protocolNode nodeDocumentation])
         {
-            AKTopic *topic =
-                [AKProtocolTopic
-                    topicWithProtocolNode:protocolNode
-                    inDatabase:[_windowController database]];
+            AKTopic *topic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
-            [quicklistItems
-                addObject:
-                    [AKDocLocator
-                        withTopic:topic
-                        subtopicName:nil
-                        docName:nil]];
+            [quicklistItems addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
     }
 

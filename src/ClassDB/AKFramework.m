@@ -16,9 +16,9 @@
     return _fwDatabase;
 }
 
-- (void)setFWDatabase:(AKDatabase *)theDatabase
+- (void)setFWDatabase:(AKDatabase *)aDatabase
 {
-    _fwDatabase = theDatabase;
+    _fwDatabase = aDatabase;
 }
 
 - (NSString *)frameworkName
@@ -26,11 +26,11 @@
     return _frameworkName;
 }
 
-- (void)setFrameworkName:(NSString *)name
+- (void)setFrameworkName:(NSString *)frameworkName
 {
-    [name retain];
+    [frameworkName retain];
     [_frameworkName release];
-    _frameworkName = name;
+    _frameworkName = frameworkName;
 }
 
 @end

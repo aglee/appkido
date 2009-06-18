@@ -12,7 +12,6 @@
 #import "AKFrameworkConstants.h"
 #import "AKPrefUtils.h"
 
-#import "AKFramework.h"
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
 #import "AKGroupNode.h"
@@ -26,7 +25,7 @@
 
 @interface AKDatabase (Private)
 - (void)_seeIfFrameworkIsNew:(NSString *)fwName;
-- (NSArray *)_allProtocolsForFramework:(NSString *)fwName;
+- (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName;
 @end
 
 
@@ -107,6 +106,7 @@
 {
     if ((self = [super init]))
     {
+        _frameworksByName = [[NSMutableDictionary alloc] init];
         _frameworkNames = [[NSMutableArray alloc] init];
         _namesOfAvailableFrameworks = nil;
 
@@ -135,7 +135,9 @@
 
 - (void)dealloc
 {
+    [_frameworksByName release];
     [_frameworkNames release];
+    [_namesOfAvailableFrameworks release];
 
     [_classNodesByName release];
     [_classListsByFramework release];
@@ -216,7 +218,18 @@
 
 - (AKFramework *)frameworkWithName:(NSString *)frameworkName
 {
-    return nil;
+    AKFramework *aFramework = [_frameworksByName objectForKey:frameworkName];
+
+    if (aFramework == nil)
+    {
+        aFramework = [[[AKFramework alloc] init] autorelease];
+        [aFramework setFWDatabase:self];
+        [aFramework setFrameworkName:frameworkName];
+
+        [_frameworksByName setObject:aFramework forKey:frameworkName];
+    }
+
+    return aFramework;
 }
 
 - (NSArray *)frameworkNames
@@ -312,7 +325,7 @@
 - (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [[self _allProtocolsForFramework:frameworkName] objectEnumerator];
+    NSEnumerator *en = [[self _allProtocolsForFrameworkNamed:frameworkName] objectEnumerator];
     AKProtocolNode *protocolNode;
 
     while ((protocolNode = [en nextObject]))
@@ -329,7 +342,7 @@
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [[self _allProtocolsForFramework:frameworkName] objectEnumerator];
+    NSEnumerator *en = [[self _allProtocolsForFrameworkNamed:frameworkName] objectEnumerator];
     AKProtocolNode *protocolNode;
 
     while ((protocolNode = [en nextObject]))
@@ -407,8 +420,7 @@
 
     // See if we have any functions groups in the framework yet.
     NSMutableArray *groupList = nil;
-    NSMutableDictionary *groupsByName =
-        [_functionsGroupsByFrameworkAndGroup objectForKey:frameworkName];
+    NSMutableDictionary *groupsByName = [_functionsGroupsByFrameworkAndGroup objectForKey:frameworkName];
 
     if (groupsByName)
     {
@@ -558,9 +570,9 @@
     return [_frameworkNamesByHTMLPath objectForKey:htmlFilePath];
 }
 
-- (void)rememberFramework:(AKFramework *)aFramework forHTMLFile:(NSString *)htmlFilePath
+- (void)rememberFrameworkName:(NSString *)frameworkName forHTMLFile:(NSString *)htmlFilePath
 {
-    [_frameworkNamesByHTMLPath setObject:[aFramework frameworkName] forKey:htmlFilePath];
+    [_frameworkNamesByHTMLPath setObject:frameworkName forKey:htmlFilePath];
 }
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
@@ -647,7 +659,7 @@
     }
 }
 
-- (NSArray *)_allProtocolsForFramework:(NSString *)fwName
+- (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName
 {
     return [_protocolListsByFramework objectForKey:fwName];
 }

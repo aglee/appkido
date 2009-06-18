@@ -379,15 +379,9 @@ g_NSStringComparisons++;
     {
         if ([self _matchesNode:classNode])
         {
-            AKClassTopic *topic =
-                [AKClassTopic topicWithClassNode:classNode inDatabase:_database];
+            AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
-            [_searchResults
-                addObject:
-                    [AKDocLocator
-                        withTopic:topic
-                        subtopicName:nil
-                        docName:nil]];
+            [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
     }
 }
@@ -401,15 +395,9 @@ g_NSStringComparisons++;
     {
         if ([self _matchesNode:protocolNode])
         {
-            AKProtocolTopic *topic =
-                [AKProtocolTopic topicWithProtocolNode:protocolNode inDatabase:_database];
+            AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
-            [_searchResults
-                addObject:
-                    [AKDocLocator
-                        withTopic:topic
-                        subtopicName:nil
-                        docName:nil]];
+            [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
     }
 }
@@ -421,7 +409,7 @@ g_NSStringComparisons++;
 
     while ((classNode = [en nextObject]))
     {
-        AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode inDatabase:_database];
+        AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
         // Search the class's properties.
         [self
@@ -463,7 +451,7 @@ g_NSStringComparisons++;
     while ((protocolNode = [en nextObject]))
     {
         AKProtocolTopic *topic =
-            [AKProtocolTopic topicWithProtocolNode:protocolNode inDatabase:_database];
+            [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
         // Search the protocol's properties.
         [self
@@ -508,7 +496,7 @@ g_NSStringComparisons++;
             {
                 if ([self _matchesNode:subnode])
                 {
-                    AKTopic *topic = [AKFunctionsTopic topicWithFramework:fwName inDatabase:_database];
+                    AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:_database];
 
                     [_searchResults
                         addObject:
@@ -572,7 +560,7 @@ g_NSStringComparisons++;
                 {
                     AKTopic *topic =
                         [AKGlobalsTopic
-                            topicWithFramework:fwName
+                            topicWithFrameworkNamed:fwName
                             inDatabase:_database];
 
                     [_searchResults

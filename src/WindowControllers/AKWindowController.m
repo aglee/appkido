@@ -113,7 +113,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     _windowHistoryIndex = -1;
     [_windowHistory removeAllObjects];
     AKClassNode *classNode = [_database classWithName:@"NSObject"];
-    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode inDatabase:_database]];
+    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
 }
 
 - (void)dealloc
@@ -707,7 +707,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     if (superclassNode)
     {
-        [self jumpToTopic:[AKClassTopic topicWithClassNode:superclassNode inDatabase:_database]];
+        [self jumpToTopic:[AKClassTopic topicWithClassNode:superclassNode]];
     }
 }
 
@@ -733,7 +733,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Do the jump.
-    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode inDatabase:_database]];
+    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
 }
 
 - (IBAction)jumpToFrameworkFormalProtocols:(id)sender
@@ -742,7 +742,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFormalProtocolsTopic topicWithFramework:fwName inDatabase:_database]];
+        [self jumpToTopic:[AKFormalProtocolsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
 
         [self showBrowser:nil];
     }
@@ -754,7 +754,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKInformalProtocolsTopic topicWithFramework:fwName inDatabase:_database]];
+        [self jumpToTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -765,7 +765,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFunctionsTopic topicWithFramework:fwName inDatabase:_database]];
+        [self jumpToTopic:[AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -776,7 +776,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *fwName = [[sender menu] title];
 
-        [self jumpToTopic:[AKGlobalsTopic topicWithFramework:fwName inDatabase:_database]];
+        [self jumpToTopic:[AKGlobalsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }

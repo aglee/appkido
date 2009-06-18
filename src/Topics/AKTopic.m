@@ -64,8 +64,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
         return nil;
     }
 
-    NSString *topicClassName =
-        [prefDict objectForKey:AKTopicClassNamePrefKey];
+    NSString *topicClassName = [prefDict objectForKey:AKTopicClassNamePrefKey];
 
     if (topicClassName == nil)
     {
@@ -76,9 +75,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     Class topicClass = NSClassFromString(topicClassName);
     if (topicClass == nil)
     {
-        DIGSLogInfo(
-            @"couldn't find a class called %@",
-            topicClassName);
+        DIGSLogInfo(@"couldn't find a class called %@", topicClassName);
         return nil;
     }
     else
@@ -95,9 +92,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
         if (cl == nil)
         {
-            DIGSLogWarning(
-                @"%@ is not a proper descendant class of AKTopic",
-                topicClassName);
+            DIGSLogWarning(@"%@ is not a proper descendant class of AKTopic", topicClassName);
             return nil;
         }
     }
@@ -252,11 +247,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:
-            @"<%@: browserPath=%@>",
-            [self className],
-            [self pathInTopicBrowser]];
+    return [NSString stringWithFormat:@"<%@: browserPath=%@>", [self className], [self pathInTopicBrowser]];
 }
 
 @end

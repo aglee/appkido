@@ -93,7 +93,7 @@
         {
             [classNode
                 setNodeDocumentation:_rootSectionOfCurrentFile
-                forFrameworkNamed:_parserFW];
+                forFrameworkNamed:[_parserFW frameworkName]];
         }
 
         behaviorNode = classNode;
@@ -112,7 +112,7 @@
             isDocumentedInHTMLFile:[self currentPath]];
         [protocolNode
             setNodeDocumentation:_rootSectionOfCurrentFile
-            forFrameworkNamed:_parserFW];
+            forFrameworkNamed:[_parserFW frameworkName]];
         
         behaviorNode = protocolNode;
     }

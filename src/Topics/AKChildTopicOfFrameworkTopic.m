@@ -23,10 +23,7 @@
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-    return
-        [NSString stringWithFormat:@"%@ %@",
-            _topicFramework,
-            [self stringToDisplayInTopicBrowser]];
+    return [NSString stringWithFormat:@"%@ %@", _topicFramework, [self stringToDisplayInTopicBrowser]];
 }
 
 - (NSString *)stringToDisplayInLists

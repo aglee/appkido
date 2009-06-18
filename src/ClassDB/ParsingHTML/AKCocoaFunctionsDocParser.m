@@ -75,7 +75,8 @@
                 [[[AKFunctionNode alloc] initWithNodeName:functionName owningFramework:_parserFW] autorelease];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode = [[_parserFW fwDatabase] functionsGroupNamed:groupName inFrameworkNamed:_parserFW];
+            AKGroupNode *groupNode =
+                [[_parserFW fwDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
 
             if (!groupNode)
             {

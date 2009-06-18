@@ -54,10 +54,9 @@
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithDatabase:(AKDatabase *)db
-    frameworkName:(NSString *)frameworkName
+- (id)initWithFramework:(AKFramework *)aFramework
 {
-    if ((self = [super initWithDatabase:db frameworkName:frameworkName]))
+    if ((self = [super initWithFramework:aFramework]))
     {
         _sectionStack = [[NSMutableArray alloc] init];
         _token[0] = '\0';
@@ -220,8 +219,7 @@
 
 - (NSMutableData *)loadDataToBeParsed
 {
-    NSMutableData *originalData =
-        [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
+    NSMutableData *originalData = [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
     if (!originalData)
     {
         DIGSLogWarning(@"could not load contents of file [%@]", [self currentPath]);
@@ -266,12 +264,8 @@
     // Apply the parse results to the database.
     if (rootSection != nil)
     {
-        [[_parserFW fwDatabase]
-            rememberFramework:_parserFW
-            forHTMLFile:[self currentPath]];
-        [[_parserFW fwDatabase]
-            rememberRootSection:rootSection
-            forHTMLFile:[self currentPath]];
+        [[_parserFW fwDatabase] rememberFrameworkName:[_parserFW frameworkName] forHTMLFile:[self currentPath]];
+        [[_parserFW fwDatabase] rememberRootSection:rootSection forHTMLFile:[self currentPath]];
         [self applyParseResults];
     }
 
@@ -367,8 +361,7 @@
 
     if (stackTop != nil)
     {
-        int sectionLength =
-            _dataEnd - _dataStart - [stackTop sectionOffset];
+        int sectionLength = _dataEnd - _dataStart - [stackTop sectionOffset];
 
         [stackTop setSectionLength:sectionLength];
     }
@@ -394,8 +387,7 @@
     }
     else
     {
-        AKFileSection *stackTop =
-            [_sectionStack objectAtIndex:(stackSize - 1)];
+        AKFileSection *stackTop = [_sectionStack objectAtIndex:(stackSize - 1)];
 
         [_sectionStack removeLastObject];
 
@@ -413,10 +405,7 @@
     }
     else
     {
-        AKFileSection *stackTop =
-            [_sectionStack objectAtIndex:(stackSize - 1)];
-
-        return stackTop;
+        return [_sectionStack objectAtIndex:(stackSize - 1)];
     }
 }
 
@@ -430,8 +419,7 @@
     }
     else
     {
-        AKFileSection *stackTop =
-            [_sectionStack objectAtIndex:(stackSize - 1)];
+        AKFileSection *stackTop = [_sectionStack objectAtIndex:(stackSize - 1)];
 
         return _dataStart[[stackTop sectionOffset] + 2];
     }
@@ -485,8 +473,7 @@
 
     if (stackTop != nil)
     {
-        int sectionLength =
-            startOfOpeningTag - _dataStart - [stackTop sectionOffset];
+        int sectionLength = startOfOpeningTag - _dataStart - [stackTop sectionOffset];
 
         [stackTop setSectionLength:sectionLength];
     }
@@ -507,8 +494,7 @@
     // <h#> element we are looking at.  We don't know the length of
     // the section yet, so for now we put 0.  We will fill in the real
     // length later.
-    AKFileSection *newFileSection =
-        [AKFileSection withFile:[self currentPath]];
+    AKFileSection *newFileSection = [AKFileSection withFile:[self currentPath]];
 
     [newFileSection setSectionName:sectionName];
     [newFileSection setSectionOffset:(startOfOpeningTag - _dataStart)];
@@ -709,8 +695,7 @@
         return nil;
     }
 
-    NSMutableData *newHTMLData =
-        [NSMutableData dataWithCapacity:([sourceData length] + 32)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 32)];
     static char *divOpenTag = "<div class=\"mach4\">";
     static char *divCloseTag = "</div>";
     int divOpenTagLength = strlen(divOpenTag);

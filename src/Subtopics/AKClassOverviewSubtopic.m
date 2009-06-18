@@ -79,7 +79,7 @@
 
     while ((extraFrameworkName = [fwNameEnum nextObject]))
     {
-        if (![classFramework isEqualToString:extraFrameworkName])
+        if (![[classFramework frameworkName] isEqualToString:extraFrameworkName])
         {
             [self _addDocsForExtraFramework:extraFrameworkName toList:docList];
         }

@@ -7,7 +7,6 @@
 
 #import <DIGSFileProcessor.h>
 
-@class AKDatabase;
 @class AKFramework;
 
 // [agl] add checks for buffer overflow
@@ -15,18 +14,15 @@
 
 /*!
  * @class       AKParser
- * @abstract    Base class for parsers used to populate the AppKiDo
- *              database.
+ * @abstract    Base class for parsers used to populate the AppKiDo database.
  * @discussion  An AKParser parses files that contain API information,
  *              creates database nodes that encapsulate that information,
  *              and inserts the nodes into an AKDatabase.
  *
  *              A given instance of AKParser associates all nodes it creates
- *              with one framework, and inserts all the nodes into one
- *              database.  The framework and database are assigned by
- *              AKParser's designated initializer.  You can ask for them
- *              with the methods -frameworkBeingParsed and
- *              -databaseBeingPopulated.
+ *              with one framework, and inserts all the nodes into that
+ *              framework's database.  The framework is assigned by AKParser's
+ *              designated initializer.
  *
  *              Each subclass of AKParser parses a particular type of file.
  *              Subclasses must override -parseCurrentFile, and must NOT
@@ -53,26 +49,21 @@
 // Class methods
 //-------------------------------------------------------------------------
 
-/*! Convenience method. */
-+ (void)recursivelyParseDirectory:(NSString *)dirPath
-    forFrameworkNamed:(NSString *)frameworkName
-    inDatabase:(AKDatabase *)database;
++ (void)recursivelyParseDirectory:(NSString *)dirPath forFramework:(AKFramework *)aFramework;
 
 + (void)parseFilesInPaths:(NSArray *)docPaths
     underBaseDir:(NSString *)baseDir
-    forFrameworkNamed:(NSString *)fwName
-    inDatabase:(AKDatabase *)database;
+    forFramework:(AKFramework *)aFramework;
 
 //-------------------------------------------------------------------------
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
 /*!
- * @method      initWithDatabase:frameworkName:
+ * @method      initWithFramework:
  * @discussion  Designated initializer.
  */
-- (id)initWithDatabase:(AKDatabase *)db
-    frameworkName:(NSString *)frameworkName;
+- (id)initWithFramework:(AKFramework *)aFramework;
 
 //-------------------------------------------------------------------------
 // Parsing

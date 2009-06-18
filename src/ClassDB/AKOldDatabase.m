@@ -84,17 +84,14 @@
     DIGSLogDebug(@"Parsing headers for framework %@", frameworkName);
     DIGSLogDebug(@"---------------------------------------------------");
 
-    NSString *_headerDir =
-        [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:frameworkName];
-    DIGSLogDebug(@"parsing headers in %@", _headerDir);
-    [AKObjCHeaderParser
-        recursivelyParseDirectory:_headerDir
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+    AKFramework *aFramework = [self frameworkWithName:frameworkName];
+    NSString *headerDir = [[AKFrameworkInfo sharedInstance] headerDirForFrameworkNamed:frameworkName];
+    DIGSLogDebug(@"parsing headers in %@", headerDir);
+    [AKObjCHeaderParser recursivelyParseDirectory:headerDir forFramework:aFramework];
     
     // Figure out which directories contain the doc files.
-    NSString *_mainDocDir = [[AKFrameworkInfo sharedInstance] docDirForFrameworkNamed:frameworkName];
-    NSString *behaviorsDocDir = _mainDocDir;
+    NSString *mainDocDir = [[AKFrameworkInfo sharedInstance] docDirForFrameworkNamed:frameworkName];
+    NSString *behaviorsDocDir = mainDocDir;
     NSString *functionsDocDir = nil;
     NSString *constantsDocDir = nil;
     NSString *datatypesDocDir = nil;
@@ -104,19 +101,19 @@
     {
         functionsDocDir =
             [AKFileUtils
-                subdirectoryOf:_mainDocDir
+                subdirectoryOf:mainDocDir
                 withName:@"Functions"
                 orName:@"functions"];
         constantsDocDir = nil;
         datatypesDocDir =
             [AKFileUtils
-                subdirectoryOf:_mainDocDir
+                subdirectoryOf:mainDocDir
                 withName:@"TypesAndConstants"
                 orName:@"typesandconstants"];
     }
     else
     {
-        NSString *miscPath = [_mainDocDir stringByAppendingPathComponent:@"Miscellaneous"];
+        NSString *miscPath = [mainDocDir stringByAppendingPathComponent:@"Miscellaneous"];
 
         functionsDocDir = [AKFileUtils subdirectoryOf:miscPath withNameEndingWith:@"Functions"];
         constantsDocDir = [AKFileUtils subdirectoryOf:miscPath withNameEndingWith:@"Constants"];
@@ -129,28 +126,16 @@
     DIGSLogDebug(@"---------------------------------------------------");
 
     DIGSLogDebug(@"parsing behavior docs for %@", frameworkName);
-    [AKCocoaBehaviorDocParser
-        recursivelyParseDirectory:behaviorsDocDir
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+    [AKCocoaBehaviorDocParser recursivelyParseDirectory:behaviorsDocDir forFramework:aFramework];
 
     DIGSLogDebug(@"parsing functions docs for %@", frameworkName);
-    [AKCocoaFunctionsDocParser
-        recursivelyParseDirectory:functionsDocDir
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+    [AKCocoaFunctionsDocParser recursivelyParseDirectory:functionsDocDir forFramework:aFramework];
 
     DIGSLogDebug(@"parsing constants docs for %@", frameworkName);
-    [AKCocoaGlobalsDocParser
-        recursivelyParseDirectory:constantsDocDir
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+    [AKCocoaGlobalsDocParser recursivelyParseDirectory:constantsDocDir forFramework:aFramework];
 
     DIGSLogDebug(@"parsing datatypes docs for %@", frameworkName);
-    [AKCocoaGlobalsDocParser
-        recursivelyParseDirectory:datatypesDocDir
-        forFrameworkNamed:frameworkName
-        inDatabase:self];
+    [AKCocoaGlobalsDocParser recursivelyParseDirectory:datatypesDocDir forFramework:aFramework];
 }
 
 @end

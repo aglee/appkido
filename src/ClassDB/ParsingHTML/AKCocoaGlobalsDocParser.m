@@ -22,8 +22,7 @@
 
 @interface AKCocoaGlobalsDocParser (Private)
 - (void)_parseGlobalsFromMajorSections;
-- (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection
-    usingGroupName:(NSString *)groupName;
+- (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection usingGroupName:(NSString *)groupName;
 - (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)fileSection;
 - (NSSet *)_parseNamesOfGlobalsInFileSection:(AKFileSection *)fileSection;
 - (BOOL)_privatelyParseNonMarkupToken;
@@ -36,10 +35,9 @@
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithDatabase:(AKDatabase *)db
-    frameworkName:(NSString *)frameworkName
+- (id)initWithFramework:(AKFramework *)aFramework
 {
-    if ((self = [super initWithDatabase:db frameworkName:frameworkName]))
+    if ((self = [super initWithFramework:aFramework]))
     {
         _prevToken[0] = '\0';
         _currTokenStart = NULL;
@@ -93,8 +91,7 @@
 // group of types/constants.
 - (void)_parseGlobalsFromMajorSections
 {
-    NSEnumerator *majorSectionEnum =
-        [_rootSectionOfCurrentFile childSectionEnumerator];
+    NSEnumerator *majorSectionEnum = [_rootSectionOfCurrentFile childSectionEnumerator];
     AKFileSection *majorSection;
 
     // Iterate through major sections.  Each major section corresponds
@@ -117,7 +114,7 @@
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKGroupNode *groupNode = [[_parserFW fwDatabase] globalsGroupNamed:groupName inFrameworkNamed:_parserFW];
+    AKGroupNode *groupNode = [[_parserFW fwDatabase] globalsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
 
     if (!groupNode)
     {
@@ -218,8 +215,7 @@
                     // We are in the middle of an "enumName = enumValue"
                     // expression.  The previous token, the one before
                     // the equals sign, was the enum name.
-                    [namesOfGlobals addObject:
-                        [NSString stringWithUTF8String:_prevToken]];
+                    [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
                     sawEqualsSign = YES;
                 }
                 else if (strcmp(_token, ",") == 0)
@@ -233,8 +229,7 @@
                     }
                     else
                     {
-                        [namesOfGlobals addObject:
-                            [NSString stringWithUTF8String:_prevToken]];
+                        [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
                     }
                 }
                 else if (strcmp(_token, "}") == 0)
@@ -243,8 +238,7 @@
                     // have been any tokens since the most recent comma.
                     if (!sawEqualsSign && !(strcmp(_prevToken, ",") == 0))
                     {
-                        [namesOfGlobals addObject:
-                            [NSString stringWithUTF8String:_prevToken]];
+                        [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
                     }
                     break;
                 }
@@ -266,8 +260,7 @@
             {
                 if (strcmp(_token, ";") == 0)
                 {
-                    [namesOfGlobals addObject:
-                        [NSString stringWithUTF8String:_prevToken]];
+                    [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
                     break;
                 }
             }
@@ -289,8 +282,7 @@
                 // Rule out, for example, HTML entities like "&#8220;".
                 if (!isdigit(firstChar))
                 {
-                    [namesOfGlobals addObject:
-                        [NSString stringWithUTF8String:_prevToken]];
+                    [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
                 }
             }
 
