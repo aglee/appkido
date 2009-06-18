@@ -34,17 +34,17 @@
 // Init/awake/dealloc
 //-------------------------------------------------------------------------
 
-- (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
+- (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
 {
-    if ((self = [super initWithDatabase:database]))
+    if ((self = [super init]))
     {
-        _topicFramework = [[_database frameworkWithName:frameworkName] retain];
+        _topicFramework = [[aDatabase frameworkWithName:frameworkName] retain];
     }
 
     return self;
 }
 
-- (id)initWithDatabase:(AKDatabase *)database
+- (id)init
 {
     DIGSLogError_NondesignatedInitializer();
     [self release];
@@ -118,26 +118,27 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
+    AKDatabase *aDatabase = [_topicFramework fwDatabase];
     NSString *frameworkName = [_topicFramework frameworkName];
 
-    if ([_database numberOfFunctionsGroupsForFrameworkNamed:frameworkName] > 0)
+    if ([aDatabase numberOfFunctionsGroupsForFrameworkNamed:frameworkName] > 0)
     {
-        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
+        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
     }
 
-    if ([_database numberOfGlobalsGroupsForFrameworkNamed:frameworkName] > 0)
+    if ([aDatabase numberOfGlobalsGroupsForFrameworkNamed:frameworkName] > 0)
     {
-        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
+        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
     }
 
-    if ([[_database formalProtocolsForFrameworkNamed:frameworkName] count] > 0)
+    if ([[aDatabase formalProtocolsForFrameworkNamed:frameworkName] count] > 0)
     {
-        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
+        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
     }
 
-    if ([[_database informalProtocolsForFrameworkNamed:frameworkName] count] > 0)
+    if ([[aDatabase informalProtocolsForFrameworkNamed:frameworkName] count] > 0)
     {
-        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
+        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
     }
 
     return columnValues;

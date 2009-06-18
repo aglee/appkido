@@ -38,7 +38,7 @@
 
 - (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
 {
-    if ((self = [super initWithDatabase:[[protocolNode owningFramework] fwDatabase]]))
+    if ((self = [super init]))
     {
         _protocolNode = [protocolNode retain];
     }
@@ -46,7 +46,7 @@
     return self;
 }
 
-- (id)initWithDatabase:(AKDatabase *)database
+- (id)init
 {
     DIGSLogError_NondesignatedInitializer();
     [self release];
@@ -71,8 +71,7 @@
         return nil;
     }
 
-    NSString *protocolName =
-        [prefDict objectForKey:AKBehaviorNamePrefKey];
+    NSString *protocolName = [prefDict objectForKey:AKBehaviorNamePrefKey];
 
     if (protocolName == nil)
     {

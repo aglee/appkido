@@ -40,8 +40,6 @@
  */
 @interface AKTopic : NSObject <AKSortable>
 {
-@protected
-    AKDatabase *_database;
 }
 
 //-------------------------------------------------------------------------
@@ -56,13 +54,6 @@ extern NSString *AKProtocolsTopicName;
 extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKGlobalsTopicName;
-
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
-
-/*! Designated initializer. */
-- (id)initWithDatabase:(AKDatabase *)database;
 
 //-------------------------------------------------------------------------
 // Preferences

@@ -26,34 +26,6 @@ NSString *AKFunctionsTopicName         = @"Functions";
 NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 //-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
-
-- (id)initWithDatabase:(AKDatabase *)database
-{
-    if ((self = [super init]))
-    {
-        _database = [database retain];
-    }
-
-    return self;
-}
-
-- (id)init
-{
-    DIGSLogError_NondesignatedInitializer();
-    [self release];
-    return nil;
-}
-
-- (void)dealloc
-{
-    [_database release];
-
-    [super dealloc];
-}
-
-//-------------------------------------------------------------------------
 // Preferences
 //-------------------------------------------------------------------------
 

@@ -33,6 +33,6 @@
 //-------------------------------------------------------------------------
 
 /*! Designated initializer. */
-- (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
+- (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase;
 
 @end
