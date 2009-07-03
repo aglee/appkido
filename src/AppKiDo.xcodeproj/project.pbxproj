@@ -1542,12 +1542,12 @@
 			children = (
 				7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */,
 				7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */,
+				732BD55C05ED8DC60055715D /* AKProtocolNode.h */,
+				732BD55D05ED8DC60055715D /* AKProtocolNode.m */,
 				732BD55405ED8DC50055715D /* AKClassNode.h */,
 				732BD55505ED8DC50055715D /* AKClassNode.m */,
 				732BD55205ED8DC50055715D /* AKCategoryNode.h */,
 				732BD55305ED8DC50055715D /* AKCategoryNode.m */,
-				732BD55C05ED8DC60055715D /* AKProtocolNode.h */,
-				732BD55D05ED8DC60055715D /* AKProtocolNode.m */,
 			);
 			name = behaviors;
 			sourceTree = "<group>";
