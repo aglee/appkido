@@ -17,8 +17,9 @@
 
 - (id)initWithNodeName:(NSString *)nodeName
     owningFramework:(AKFramework *)theFramework
+    owningBehavior:(AKBehaviorNode *)behaviorNode
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework owningBehavior:behaviorNode]))
     {
         _argumentTypes = [[NSMutableArray alloc] init];
     }
