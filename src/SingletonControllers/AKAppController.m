@@ -213,7 +213,17 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #endif MEASURE_PARSE_SPEED
 
     [_appDatabase setDelegate:self];  // So we can update the splash screen.
-    [_appDatabase loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AKFoundationOnly"])
+    {
+        // Special debug mode so launch is quicker.
+        // defaults write com.digitalspokes.appkido AKFoundationOnly YES
+        // defaults write com.appkido.appkidoforiphone AKFoundationOnly YES
+        [_appDatabase loadTokensForFrameworks:[NSArray arrayWithObject:@"Foundation"]];
+    }
+    else
+    {
+        [_appDatabase loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
+    }
     [_appDatabase setDelegate:nil];
 
 // [agl] working on performance
@@ -475,8 +485,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     // See if the latest version is newer than what the user is running.
-    NSDictionary *thisVersion =
-        [self _versionDictionaryFromString:[self _appVersion]];
+    NSDictionary *thisVersion = [self _versionDictionaryFromString:[self _appVersion]];
 
     if (![self _version:latestVersion isNewerThan:thisVersion])
     {
