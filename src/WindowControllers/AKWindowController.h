@@ -88,22 +88,22 @@
     IBOutlet NSDrawer *_quicklistDrawer;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKDatabase *)database;
 
-//-------------------------------------------------------------------------
-// User preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark User preferences
 
 /*!
  * @method      applyUserPreferences
@@ -112,9 +112,9 @@
  */
 - (void)applyUserPreferences;
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 - (AKDocLocator *)currentHistoryItem;
 
@@ -158,9 +158,9 @@
 
 - (void)searchForString:(NSString *)aString;
 
-//-------------------------------------------------------------------------
-// Window layout
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Window layout
 
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout;
 
@@ -168,9 +168,9 @@
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
 
-//-------------------------------------------------------------------------
-// UI item validation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI item validation
 
 /*!
  * @method      validateItem:
@@ -181,9 +181,9 @@
  */
 - (BOOL)validateItem:(id)anItem;
 
-//-------------------------------------------------------------------------
-// Action methods -- window layout
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender;
 
@@ -197,9 +197,9 @@
 
 - (IBAction)toggleQuicklistDrawer:(id)sender;
 
-//-------------------------------------------------------------------------
-// Action methods -- navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods -- navigation
 
 - (IBAction)navigateBack:(id)sender;
 
@@ -245,9 +245,9 @@
 
 - (IBAction)openDocURLInBrowser:(id)sender;
 
-//-------------------------------------------------------------------------
-// Action methods -- search (forwarded to the quicklist controller)
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods -- search (forwarded to the quicklist controller)
 
 - (IBAction)selectSearchField:(id)sender;
 

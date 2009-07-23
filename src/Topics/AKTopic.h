@@ -42,9 +42,9 @@
 {
 }
 
-//-------------------------------------------------------------------------
-// AKXyzTopicName
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKXyzTopicName
 
 extern NSString *AKTopicBrowserPathSeparator;
 
@@ -55,9 +55,9 @@ extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKGlobalsTopicName;
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 /*!
  * @method      fromPrefDictionary:
@@ -74,9 +74,9 @@ extern NSString *AKGlobalsTopicName;
 // [agl] note className should always be in the dict
 - (NSDictionary *)asPrefDictionary;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 // [agl] KLUDGE
 - (AKClassNode *)parentClassOfTopic;
@@ -87,9 +87,9 @@ extern NSString *AKGlobalsTopicName;
  */
 - (AKDatabaseNode *)topicNode;
 
-//-------------------------------------------------------------------------
-// Names for various display contexts
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Names for various display contexts
 
 // subclasses must override
 - (NSString *)stringToDisplayInTopicBrowser;
@@ -98,9 +98,9 @@ extern NSString *AKGlobalsTopicName;
 
 - (NSString *)stringToDisplayInLists;
 
-//-------------------------------------------------------------------------
-// Populating the topic browser
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Populating the topic browser
 
 // subclasses must override
 - (NSString *)pathInTopicBrowser;
@@ -115,9 +115,9 @@ extern NSString *AKGlobalsTopicName;
 // returns array of AKTopics
 - (NSArray *)childTopics;
 
-//-------------------------------------------------------------------------
-// Populating the subtopics table
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Populating the subtopics table
 
 // subclasses must override
 - (int)numberOfSubtopics;

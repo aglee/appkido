@@ -16,9 +16,9 @@
     AKDatabaseNode *_databaseNode;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithNode:(AKDatabaseNode *)databaseNode;

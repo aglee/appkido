@@ -9,9 +9,9 @@
 
 #import "DIGSLog.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKBehaviorTopic (Private)
 - (NSArray *)_subtopics;
@@ -20,9 +20,9 @@
 
 @implementation AKBehaviorTopic
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)dealloc
 {
@@ -31,9 +31,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)behaviorName
 {
@@ -41,9 +41,9 @@
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// AKTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKTopic methods
 
 - (NSDictionary *)asPrefDictionary
 {
@@ -70,9 +70,9 @@
     return [[self _subtopics] objectAtIndex:subtopicIndex];
 }
 
-//-------------------------------------------------------------------------
-// Initialization support
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Initialization support
 
 - (NSArray *)createSubtopicsArray
 {
@@ -80,9 +80,9 @@
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 - (NSString *)sortName
 {
@@ -92,9 +92,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKBehaviorTopic (Private)
 

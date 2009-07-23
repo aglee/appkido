@@ -35,15 +35,15 @@
     NSMutableDictionary *_docDirsByFrameworkName;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (AKFrameworkInfo *)sharedInstance;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 /*!
  * Returns all framework names listed in FrameworkInfo.plist, regardless

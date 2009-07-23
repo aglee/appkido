@@ -9,9 +9,9 @@
 
 @implementation DIGSMatchingBackgroundView
 
-//-------------------------------------------------------------------------
-// NSView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView methods
 
 - (void)drawRect:(NSRect)aRect
 {

@@ -36,9 +36,9 @@
     IBOutlet NSTextField *_topicDescriptionField;
 }
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 // may modify whereTo
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
@@ -50,9 +50,9 @@
  */
 - (void)jumpToSubtopicWithIndex:(int)subtopicIndex;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)removeBrowserColumn:(id)sender;
 

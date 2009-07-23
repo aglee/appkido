@@ -16,9 +16,9 @@
 #import "AKGroupNode.h"
 #import "AKGlobalsNode.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKCocoaGlobalsDocParser (Private)
 - (void)_parseGlobalsFromMajorSections;
@@ -31,9 +31,9 @@
 
 @implementation AKCocoaGlobalsDocParser
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFramework:(AKFramework *)aFramework
 {
@@ -49,9 +49,9 @@
     return self;
 }
 
-//-------------------------------------------------------------------------
-// AKDocParser methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDocParser methods
 
 - (void)applyParseResults
 {
@@ -60,9 +60,9 @@
     [self _parseGlobalsFromMajorSections];
 }
 
-//-------------------------------------------------------------------------
-// DIGSFileProcessor methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark DIGSFileProcessor methods
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
@@ -81,9 +81,9 @@
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKCocoaGlobalsDocParser (Private)
 

@@ -20,9 +20,9 @@
     AKBehaviorNode *_owningBehavior;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      initWithNodeName:owningFramework:owningBehavior:
@@ -32,9 +32,9 @@
     owningFramework:(AKFramework *)theFramework
     owningBehavior:(AKBehaviorNode *)behaviorNode;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKBehaviorNode *)owningBehavior;
 

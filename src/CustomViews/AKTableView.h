@@ -9,9 +9,9 @@
 
 @interface AKTableView : NSTableView
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 /*!
  * @method      applyListFontPrefs

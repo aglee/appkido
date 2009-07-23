@@ -9,9 +9,9 @@
 
 @implementation AKBrowser
 
-//-------------------------------------------------------------------------
-// NSView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView methods
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
 {

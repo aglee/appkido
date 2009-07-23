@@ -12,9 +12,9 @@
 
 @implementation AKChildTopicOfFrameworkTopic
 
-//-------------------------------------------------------------------------
-// AKTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKTopic methods
 
 - (NSString *)stringToDisplayInTopicBrowser
 {

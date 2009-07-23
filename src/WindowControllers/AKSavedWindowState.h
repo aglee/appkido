@@ -23,17 +23,17 @@
     AKDocLocator *_savedDocLocator;
 }
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (AKSavedWindowState *)fromPrefDictionary:(NSDictionary *)prefDict;
 
 - (NSDictionary *)asPrefDictionary;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKWindowLayout *)savedWindowLayout;
 - (void)setSavedWindowLayout:(AKWindowLayout *)windowLayout;

@@ -22,9 +22,9 @@
 
 @implementation AKDocListController
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)dealloc
 {
@@ -33,9 +33,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (void)setSubtopic:(AKSubtopic *)subtopic
 {
@@ -56,9 +56,9 @@
     return [_subtopicToDisplay docAtIndex:docIndex];
 }
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
 {
@@ -125,9 +125,9 @@
     (void)[[_docListTable window] makeFirstResponder:_docListTable];
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)doDocListTableAction:(id)sender
 {
@@ -141,9 +141,9 @@
     [_windowController jumpToDocName:docName];
 }
 
-//-------------------------------------------------------------------------
-// AKSubcontroller methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubcontroller methods
 
 - (void)applyUserPreferences
 {
@@ -159,9 +159,9 @@
     return NO;
 }
 
-//-------------------------------------------------------------------------
-// NSTableView datasource methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTableView datasource methods
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -177,9 +177,9 @@
             stringToDisplayInDocList];
 }
 
-//-------------------------------------------------------------------------
-// WebPolicyDelegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark WebPolicyDelegate methods
 
 - (void)webView:(WebView *)sender
     decidePolicyForNavigationAction:(NSDictionary *)actionInformation
@@ -215,9 +215,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// WebUIDelegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark WebUIDelegate methods
 
 - (NSArray *)webView:(WebView *)sender
     contextMenuItemsForElement:(NSDictionary *)element

@@ -14,9 +14,9 @@
 
 @implementation AKInformalProtocolsTopic
 
-//-------------------------------------------------------------------------
-// AKTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKTopic methods
 
 - (NSString *)stringToDisplayInTopicBrowser
 {

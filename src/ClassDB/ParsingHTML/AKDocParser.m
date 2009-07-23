@@ -14,9 +14,9 @@
 #import "AKFileSection.h"
 
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKDocParser (Private)
 
@@ -50,9 +50,9 @@
 
 @implementation AKDocParser
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFramework:(AKFramework *)aFramework
 {
@@ -73,9 +73,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Parsing
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Parsing
 
 - (BOOL)parseToken
 {
@@ -204,18 +204,18 @@
     return NO;
 }
 
-//-------------------------------------------------------------------------
-// DIGSFileProcessor methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark DIGSFileProcessor methods
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
     return [[filePath pathExtension] isEqualToString:@"html"];
 }
 
-//-------------------------------------------------------------------------
-// AKParser methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKParser methods
 
 - (NSMutableData *)loadDataToBeParsed
 {
@@ -272,9 +272,9 @@
     [tempPool release];
 }
 
-//-------------------------------------------------------------------------
-// Using parse results
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Using parse results
 
 - (AKFileSection *)rootSectionOfCurrentFile
 {
@@ -286,9 +286,9 @@
     // Do nothing by default.
 }
 
-//-------------------------------------------------------------------------
-// Heinous kludge
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Heinous kludge
 
 + (NSMutableData *)kludgeHTMLForTiger:(NSData *)sourceData
 {
@@ -301,9 +301,9 @@
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKDocParser (Private)
 

@@ -12,9 +12,9 @@
 
 @implementation AKParser
 
-//-------------------------------------------------------------------------
-// Class methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Class methods
 
 + (void)recursivelyParseDirectory:(NSString *)dirPath forFramework:(AKFramework *)aFramework
 {
@@ -45,9 +45,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFramework:(AKFramework *)aFramework
 {
@@ -73,9 +73,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Parsing
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Parsing
 
 - (NSMutableData *)loadDataToBeParsed
 {
@@ -87,9 +87,9 @@
     DIGSLogError_MissingOverride();
 }
 
-//-------------------------------------------------------------------------
-// DIGSFileProcessor methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark DIGSFileProcessor methods
 
 // Sets things up for -parseCurrentFile to do the real work.
 - (void)processCurrentFile

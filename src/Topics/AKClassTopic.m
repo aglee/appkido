@@ -23,18 +23,18 @@
 
 @implementation AKClassTopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)topicWithClassNode:(AKClassNode *)classNode
 {
     return [[[self alloc] initWithClassNode:classNode] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithClassNode:(AKClassNode *)classNode
 {
@@ -60,9 +60,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKTopic methods
 
 + (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -149,9 +149,9 @@
     return columnValues;
 }
 
-//-------------------------------------------------------------------------
-// AKBehaviorTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKBehaviorTopic methods
 
 - (NSString *)behaviorName
 {

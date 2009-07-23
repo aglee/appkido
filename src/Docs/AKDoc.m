@@ -13,9 +13,9 @@
 #import "AKFileSection.h"
 #import "AKDocParser.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKDoc (Private)
 
@@ -35,9 +35,9 @@
 
 @implementation AKDoc
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKFileSection *)fileSection
 {
@@ -92,9 +92,9 @@
     return @"";
 }
 
-//-------------------------------------------------------------------------
-// NSObject methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSObject methods
 
 - (NSString *)description
 {
@@ -108,9 +108,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKDoc (Private)
 

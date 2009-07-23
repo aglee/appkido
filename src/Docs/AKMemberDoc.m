@@ -15,9 +15,9 @@
 
 @implementation AKMemberDoc
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithMemberNode:(AKMemberNode *)memberNode
     inheritedByBehavior:(AKBehaviorNode *)behaviorNode
@@ -46,9 +46,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Manipulating node names
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Manipulating node names
 
 + (NSString *)punctuateNodeName:(NSString *)memberName
 {
@@ -56,9 +56,9 @@
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// AKDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDoc methods
 
 - (AKFileSection *)fileSection
 {

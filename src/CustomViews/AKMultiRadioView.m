@@ -11,9 +11,9 @@
 
 @implementation AKMultiRadioView
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Note: we never retain _selectedRadioMatrix, so there's no need to
 // release it in -dealloc.
@@ -75,9 +75,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (int)selectedTag
 {
@@ -126,9 +126,9 @@
     return didSelect;
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 // manage singleness of selection, then forward action to real target
 - (IBAction)doRadioAction:(id)sender

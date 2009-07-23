@@ -34,9 +34,9 @@
 #import "AKGlobalsTopic.h"
 #import "AKOverviewDoc.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKLinkResolver (Private)
 
@@ -45,18 +45,18 @@
 
 @implementation AKLinkResolver
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)linkResolverWithDatabase:(AKDatabase *)database
 {
     return [[[self alloc] initWithDatabase:database] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database
@@ -83,9 +83,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Resolving links
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Resolving links
 
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
 {
@@ -127,9 +127,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKLinkResolver (Private)
 

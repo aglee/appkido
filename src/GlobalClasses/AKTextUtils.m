@@ -11,9 +11,9 @@
 #import <AppKit/AppKit.h>
 
 
-//-------------------------------------------------------------------------
-// C string utilities
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark C string utilities
 
 extern char *ak_copystr(const char *s)
 {
@@ -22,9 +22,9 @@ extern char *ak_copystr(const char *s)
     return copy;
 }
 
-//-------------------------------------------------------------------------
-// NSString extensions
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSString extensions
 
 @implementation NSString (AppKiDo)
 
@@ -214,9 +214,9 @@ extern char *ak_copystr(const char *s)
 
 /* --- these methods aren't being used at the moment ---
 
-//-------------------------------------------------------------------------
-// NSMutableAttributedString extensions
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSMutableAttributedString extensions
 
 @implementation NSMutableAttributedString (AppKiDo)
 

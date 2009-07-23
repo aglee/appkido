@@ -10,9 +10,9 @@
 #import "DIGSLog.h"
 
 
-//-------------------------------------------------------------------------
-// NSView extensions
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView extensions
 
 @implementation NSView (AppKiDo)
 
@@ -83,9 +83,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// NSSplitView extensions
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSSplitView extensions
 
 @implementation NSSplitView (AppKiDo)
 

@@ -7,18 +7,18 @@
 
 #import <Foundation/Foundation.h>
 
-//-------------------------------------------------------------------------
-// C string utilities
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark C string utilities
 
 /*!
  * Creates a new buffer containing a copy of s.  Does a malloc and a strcpy.
  */
 extern char *ak_copystr(const char *s);
 
-//-------------------------------------------------------------------------
-// NSString extensions
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSString extensions
 
 @interface NSString (AppKiDo)
 
@@ -89,9 +89,9 @@ extern char *ak_copystr(const char *s);
 @end
 
 
-//-------------------------------------------------------------------------
-// NSMutableAttributedString extensions
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSMutableAttributedString extensions
 
 @interface NSMutableAttributedString (AppKiDo)
 

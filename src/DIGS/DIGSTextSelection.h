@@ -45,17 +45,17 @@
     NSDictionary *_typingAttributes;
 }
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (DIGSTextSelection *)fromPrefDictionary:(NSDictionary *)prefDict;
 
 - (NSDictionary *)asPrefDictionary;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSRect)visibleRect;
 - (void)setVisibleRect:(NSRect)aRect;
@@ -69,9 +69,9 @@
 - (NSDictionary *)typingAttributes;
 - (void)setTypingAttributes:(NSDictionary *)attrDict;
 
-//-------------------------------------------------------------------------
-// Interacting with text views
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Interacting with text views
 
 /*!
  * @method      takeSelectionFromTextView:

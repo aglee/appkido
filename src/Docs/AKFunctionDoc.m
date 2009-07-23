@@ -9,9 +9,9 @@
 
 @implementation AKFunctionDoc
 
-//-------------------------------------------------------------------------
-// AKDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDoc methods
 
 - (NSString *)stringToDisplayInDocList
 {

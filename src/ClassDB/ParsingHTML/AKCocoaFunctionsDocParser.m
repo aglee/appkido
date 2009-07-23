@@ -15,9 +15,9 @@
 #import "AKGroupNode.h"
 #import "AKFileSection.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKCocoaFunctionsDocParser (Private)
 - (NSDictionary *)_mapFunctionNamesToGroupNames;
@@ -26,9 +26,9 @@
 
 @implementation AKCocoaFunctionsDocParser
 
-//-------------------------------------------------------------------------
-// AKDocParser methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDocParser methods
 
 - (void)applyParseResults
 {
@@ -93,9 +93,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKCocoaFunctionsDocParser (Private)
 

@@ -10,9 +10,9 @@
 #import <Cocoa/Cocoa.h>
 #import "AKDocParser.h"
 
-//-------------------------------------------------------------------------
-// Category of AKFileSection debugging methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Category of AKFileSection debugging methods
 
 @implementation AKFileSection (Debugging)
 
@@ -55,9 +55,9 @@
 
 
 
-//-------------------------------------------------------------------------
-// 
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark 
 
 @implementation AKFileSectionDebug
 

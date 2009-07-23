@@ -14,16 +14,16 @@
     NSArray *_subtopics;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 // subclasses must implement
 - (NSString *)behaviorName;
 
-//-------------------------------------------------------------------------
-// Initialization support
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Initialization support
 
 // subclasses must implement; for internal use only
 - (NSArray *)createSubtopicsArray;

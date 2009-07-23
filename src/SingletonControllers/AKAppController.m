@@ -44,12 +44,12 @@
 
 // Thanks to Dominik Wagner for AppleScript support!
 
-@interface NSApplication (NSAppScriptingAdditions) 
+@interface NSApplication (NSAppScriptingAdditions)
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
 @end
 
 
-@implementation NSApplication (NSAppScriptingAdditions) 
+@implementation NSApplication (NSAppScriptingAdditions)
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
@@ -150,15 +150,13 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
     NSLog(@"...CHECKPOINT: %@", description);
-    NSLog(@"               %.3f seconds since last checkpoint",
-        now - g_checkpointTime);
+    NSLog(@"               %.3f seconds since last checkpoint", now - g_checkpointTime);
     g_checkpointTime = now;
 }
 
 - (void)_timeParseEnd
 {
-    NSLog(@"...DONE: took %.3f seconds total",
-        [NSDate timeIntervalSinceReferenceDate] - g_startTime);
+    NSLog(@"...DONE: took %.3f seconds total", [NSDate timeIntervalSinceReferenceDate] - g_startTime);
 }
 #endif MEASURE_PARSE_SPEED
 
@@ -213,16 +211,18 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #endif MEASURE_PARSE_SPEED
 
     [_appDatabase setDelegate:self];  // So we can update the splash screen.
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AKFoundationOnly"])
     {
-        // Special debug mode so launch is quicker.
-        // defaults write com.digitalspokes.appkido AKFoundationOnly YES
-        // defaults write com.appkido.appkidoforiphone AKFoundationOnly YES
-        [_appDatabase loadTokensForFrameworks:[NSArray arrayWithObject:@"Foundation"]];
-    }
-    else
-    {
-        [_appDatabase loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AKFoundationOnly"])
+        {
+            // Special debug mode so launch is quicker.
+            // defaults write com.digitalspokes.appkido AKFoundationOnly YES  # or NO
+            // defaults write com.appkido.appkidoforiphone AKFoundationOnly YES  # or NO
+            [_appDatabase loadTokensForFrameworks:[NSArray arrayWithObject:@"Foundation"]];
+        }
+        else
+        {
+            [_appDatabase loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
+        }
     }
     [_appDatabase setDelegate:nil];
 
@@ -323,19 +323,11 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (AKWindowController *)controllerForNewWindow
 {
-    NSDictionary *prefDict =
-        [AKPrefUtils
-            dictionaryValueForPref:AKLayoutForNewWindowsPrefName];
-    AKWindowLayout *windowLayout =
-        [AKWindowLayout fromPrefDictionary:prefDict];
-    AKWindowController *windowController =
-        [self _controllerForNewWindowWithLayout:windowLayout];
+    NSDictionary *prefDict = [AKPrefUtils dictionaryValueForPref:AKLayoutForNewWindowsPrefName];
+    AKWindowLayout *windowLayout = [AKWindowLayout fromPrefDictionary:prefDict];
+    AKWindowController *windowController = [self _controllerForNewWindowWithLayout:windowLayout];
 
-    [windowController
-        openWindowWithQuicklistDrawer:
-            (windowLayout
-            ? [windowLayout quicklistDrawerIsOpen]
-            : YES)];
+    [windowController openWindowWithQuicklistDrawer:(windowLayout ? [windowLayout quicklistDrawerIsOpen] : YES)];
 
     return windowController;
 }
@@ -354,8 +346,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         if (![wc isKindOfClass:[AKWindowController class]])
         {
-            DIGSLogError(
-                @"_windowControllers contains a non-AKWindowController");
+            DIGSLogError(@"_windowControllers contains a non-AKWindowController");
         }
         else
         {
@@ -519,8 +510,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if (whichButton == NSAlertDefaultReturn)
     {
-        [[NSWorkspace sharedWorkspace]
-            openURL:[NSURL URLWithString:_AKHomePageURL]];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_AKHomePageURL]];
     }
 }
 
@@ -566,51 +556,35 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (IBAction)exportDatabase:(id)sender
 {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
-    NSString *defaultFilename =
-        [NSString stringWithFormat:@"AppKiDo-DB-%@.xml",
-            [self _appVersion]];
+    NSString *defaultFilename = [NSString stringWithFormat:@"AppKiDo-DB-%@.xml", [self _appVersion]];
 
-    int modalResult =
-        [savePanel
-            runModalForDirectory:NSHomeDirectory()
-            file:defaultFilename];
+    int modalResult = [savePanel runModalForDirectory:NSHomeDirectory() file:defaultFilename];
 
     if (modalResult != NSFileHandlingPanelOKButton)
     {
         return;
     }
 
-    BOOL fileOK =
-        [[NSFileManager defaultManager]
-            createFileAtPath:[savePanel filename]
-            contents:nil
-            attributes:nil];
+    BOOL fileOK = [[NSFileManager defaultManager] createFileAtPath:[savePanel filename] contents:nil attributes:nil];
 
     if (!fileOK)
     {
         DIGSLogError_ExitingMethodPrematurely(
-            ([NSString
-                stringWithFormat:@"failed to get create file at [%@]",
-                    [savePanel filename]]));
+            ([NSString stringWithFormat:@"failed to get create file at [%@]", [savePanel filename]]));
         return;
     }
 
-    NSFileHandle *fh =
-        [NSFileHandle fileHandleForUpdatingAtPath:[savePanel filename]];
+    NSFileHandle *fh = [NSFileHandle fileHandleForUpdatingAtPath:[savePanel filename]];
 
     if (fh == nil)
     {
         DIGSLogError_ExitingMethodPrematurely(
-            ([NSString
-                stringWithFormat:@"failed to get file handle for [%@]",
-                    [savePanel filename]]));
+            ([NSString stringWithFormat:@"failed to get file handle for [%@]", [savePanel filename]]));
         return;
     }
 
     AKDatabaseXMLExporter *exporter =
-        [[[AKDatabaseXMLExporter alloc]
-            initWithDatabase:_appDatabase
-            fileHandle:fh] autorelease];
+        [[[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase fileHandle:fh] autorelease];
     [exporter doExport];
     [fh closeFile];
 }
@@ -631,9 +605,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
     else
     {
-        NSLog(@"key window's first responder is %@ at 0x%x",
-            [firstResponder className],
-            firstResponder);
+        NSLog(@"key window's first responder is %@ at 0x%x", [firstResponder className], firstResponder);
 
         if ([firstResponder isKindOfClass:[NSView class]])
         {
@@ -692,17 +664,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
     // Update prefs with the state of all open windows.
-    [AKPrefUtils
-        setArrayValue:[self _allWindowsAsPrefArray]
-        forPref:AKSavedWindowStatesPrefName];
+    [AKPrefUtils setArrayValue:[self _allWindowsAsPrefArray] forPref:AKSavedWindowStatesPrefName];
 }
 
 
 #pragma mark -
 #pragma mark AKDatabase delegate methods
 
-- (void)database:(AKDatabase *)database
-    willLoadTokensForFramework:(NSString *)frameworkName
+- (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName
 {
     [_splashMessage2Field setStringValue:frameworkName];
     [_splashMessage2Field display];
@@ -720,15 +689,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_aboutVersionField setStringValue:[self _appVersion]];
 
     // Load the credits text field.
-    NSString *creditsPath =
-        [[NSBundle mainBundle]
-            pathForResource:@"Credits"
-            ofType:@"html"];
+    NSString *creditsPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"html"];
     NSAttributedString *creditsString =
-        [[[NSAttributedString alloc]
-            initWithPath:creditsPath
-                documentAttributes:(NSDictionary **)NULL]
-            autorelease];
+        [[[NSAttributedString alloc] initWithPath:creditsPath documentAttributes:NULL] autorelease];
 
     [[_aboutCreditsView textStorage] setAttributedString:creditsString];
 }
@@ -750,8 +713,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFrameworkNamed:fwName];
 
         // Construct the submenu of framework-related topics.
-        NSMenu *fwTopicSubmenu =
-            [[[NSMenu alloc] initWithTitle:fwName] autorelease];
+        NSMenu *fwTopicSubmenu = [[[NSMenu alloc] initWithTitle:fwName] autorelease];
 
         if ([formalProtocolNodes count] > 0)
         {
@@ -819,29 +781,20 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // Add the Debug menu if the user is "Andy Lee" with login name "alee".
 - (void)_maybeAddDebugMenu
 {
-    if ([NSUserName() isEqualToString:@"alee"]
-        && [NSFullUserName() isEqualToString:@"Andy Lee"])
+    if ([NSUserName() isEqualToString:@"alee"] && [NSFullUserName() isEqualToString:@"Andy Lee"])
     {
         // Create the "Debug" top-level menu item.
         NSMenu *mainMenu = [NSApp mainMenu];
         NSMenuItem *debugMenuItem =
-            [mainMenu
-                addItemWithTitle:@"Debug"
-                action:@selector(_testParser:)
-                keyEquivalent:@""];
+            [mainMenu addItemWithTitle:@"Debug" action:@selector(_testParser:) keyEquivalent:@""];
         [debugMenuItem setEnabled:YES];
 
         // Create the submenu that will be under the "Debug" top-level menu item.
-        NSMenu *debugSubmenu =
-            [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
-        [debugSubmenu setAutoenablesItems:YES];
+        NSMenu *debugSubmenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
 
-        [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
-                action:@selector(_testParser:)
-                keyEquivalent:@""];
-        [debugSubmenu addItemWithTitle:@"Print Key View Loop"
-                action:@selector(_printKeyViewLoop:)
-                keyEquivalent:@""];
+        [debugSubmenu setAutoenablesItems:YES];
+        [debugSubmenu addItemWithTitle:@"Open Parser Testing Window" action:@selector(_testParser:) keyEquivalent:@""];
+        [debugSubmenu addItemWithTitle:@"Print Key View Loop" action:@selector(_printKeyViewLoop:) keyEquivalent:@""];
 
         // Attach the submenu to the "Debug" top-level menu item.
         [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
@@ -854,8 +807,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout
 {
-    AKWindowController *windowController =
-        [[[AKWindowController alloc] initWithDatabase:_appDatabase] autorelease];
+    AKWindowController *windowController = [[[AKWindowController alloc] initWithDatabase:_appDatabase] autorelease];
 
     [_windowControllers addObject:windowController];
     if (windowLayout)
@@ -878,8 +830,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_openInitialWindows
 {
-    NSArray *savedWindows =
-        [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
+    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
 
     if ([savedWindows count] == 0)
     {
@@ -893,16 +844,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
         for (i = numWindows - 1; i >= 0; i--)
         {
             NSDictionary *prefDict = [savedWindows objectAtIndex:i];
-            AKSavedWindowState *savedWindowState =
-                [AKSavedWindowState fromPrefDictionary:prefDict];
-            AKWindowLayout *windowLayout =
-                [savedWindowState savedWindowLayout];
-            AKWindowController *wc =
-                [self _controllerForNewWindowWithLayout:windowLayout];
+            AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
+            AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
+            AKWindowController *wc = [self _controllerForNewWindowWithLayout:windowLayout];
 
             [wc jumpToDocLocator:[savedWindowState savedDocLocator]];
-            [wc openWindowWithQuicklistDrawer:
-                [[savedWindowState savedWindowLayout] quicklistDrawerIsOpen]];
+            [wc openWindowWithQuicklistDrawer:[[savedWindowState savedWindowLayout] quicklistDrawerIsOpen]];
         }
     }
 }
@@ -930,8 +877,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([del isKindOfClass:[AKWindowController class]])
         {
             AKWindowController *wc = (AKWindowController *)del;
-            AKSavedWindowState *savedWindowState =
-                [[[AKSavedWindowState alloc] init] autorelease];
+            AKSavedWindowState *savedWindowState = [[[AKSavedWindowState alloc] init] autorelease];
 
             [wc putSavedWindowStateInto:savedWindowState];
             [result addObject:[savedWindowState asPrefDictionary]];
@@ -947,9 +893,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (NSString *)_appVersion
 {
-    return
-        [[[NSBundle mainBundle] infoDictionary]
-            objectForKey:@"CFBundleVersion"];
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
 // AppKiDoVersion##X.YY or X.YYZ or X.YYZspWW
@@ -960,9 +904,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (NSDictionary *)_latestAppVersion
 {
     NSURL *latestAppVersionURL = [NSURL URLWithString:_AKVersionURL];
-    NSString *latestAppVersionString =
-        [[NSString stringWithContentsOfURL:latestAppVersionURL]
-            ak_trimWhitespace];
+    NSString *latestAppVersionString = [[NSString stringWithContentsOfURL:latestAppVersionURL] ak_trimWhitespace];
 
     if (latestAppVersionString == nil)
     {
@@ -989,9 +931,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         return nil;
     }
 
-    latestAppVersionString =
-        [latestAppVersionString
-            substringFromIndex:[expectedPrefix length]];
+    latestAppVersionString = [latestAppVersionString substringFromIndex:[expectedPrefix length]];
 
     return [self _versionDictionaryFromString:latestAppVersionString];
 }
@@ -1001,12 +941,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     NSComparisonResult comparison;
 
     // Compare the major version numbers.
-    comparison =
-        [self
-            _compareValuesForKey:_AKMajorNumberKey
-            forLHS:lhs
-            andRHS:rhs
-            nilIsGreatest:NO];
+    comparison = [self _compareValuesForKey:_AKMajorNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:NO];
 
     if (comparison == NSOrderedDescending)
     {
@@ -1018,12 +953,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     // Compare the minor version numbers.
-    comparison =
-        [self
-            _compareValuesForKey:_AKMinorNumberKey
-            forLHS:lhs
-            andRHS:rhs
-            nilIsGreatest:NO];
+    comparison = [self _compareValuesForKey:_AKMinorNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:NO];
 
     if (comparison == NSOrderedDescending)
     {
@@ -1035,12 +965,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     // Compare the patch version numbers, if they are present.
-    comparison =
-        [self
-            _compareValuesForKey:_AKPatchNumberKey
-            forLHS:lhs
-            andRHS:rhs
-            nilIsGreatest:NO];
+    comparison = [self _compareValuesForKey:_AKPatchNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:NO];
 
     if (comparison == NSOrderedDescending)
     {
@@ -1052,12 +977,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     // Compare the sneakypeek version numbers, if they are present.
-    comparison =
-        [self
-            _compareValuesForKey:_AKSneakyPeekNumberKey
-            forLHS:lhs
-            andRHS:rhs
-            nilIsGreatest:YES];
+    comparison = [self _compareValuesForKey:_AKSneakyPeekNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:YES];
 
     if (comparison == NSOrderedDescending)
     {
@@ -1174,21 +1094,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }    
 
     // Stuff the parts of the version string into a dictionary.
-    NSMutableDictionary *versionDictionary =
-        [NSMutableDictionary dictionary];
+    NSMutableDictionary *versionDictionary = [NSMutableDictionary dictionary];
 
-    [versionDictionary
-        setObject:majorNumber
-        forKey:_AKMajorNumberKey];
-    [versionDictionary
-        setObject:minorNumber
-       forKey:_AKMinorNumberKey];
-    [versionDictionary
-        setObject:patchNumber
-        forKey:_AKPatchNumberKey];
-    [versionDictionary
-        setObject:sneakypeekNumber
-        forKey:_AKSneakyPeekNumberKey];
+    [versionDictionary setObject:majorNumber forKey:_AKMajorNumberKey];
+    [versionDictionary setObject:minorNumber forKey:_AKMinorNumberKey];
+    [versionDictionary setObject:patchNumber forKey:_AKPatchNumberKey];
+    [versionDictionary setObject:sneakypeekNumber forKey:_AKSneakyPeekNumberKey];
 
     return versionDictionary;
 }
@@ -1203,26 +1114,19 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [versionDictionary objectForKey:_AKMinorNumberKey]];
 
     // See if there is a patch number.
-    NSString *patchNumber =
-        [versionDictionary objectForKey:_AKPatchNumberKey];
+    NSString *patchNumber = [versionDictionary objectForKey:_AKPatchNumberKey];
 
     if (patchNumber && ([patchNumber length] > 0))
     {
-        versionString =
-            [versionString stringByAppendingString:patchNumber];
+        versionString = [versionString stringByAppendingString:patchNumber];
     }
 
     // See if there is a sneakypeek number.
-    NSString *sneakypeekNumber =
-        [versionDictionary objectForKey:_AKSneakyPeekNumberKey];
+    NSString *sneakypeekNumber = [versionDictionary objectForKey:_AKSneakyPeekNumberKey];
 
     if (sneakypeekNumber && ([sneakypeekNumber length] > 0))
     {
-        versionString =
-            [NSString
-                stringWithFormat:@"%@sp%@",
-                versionString,
-                sneakypeekNumber];
+        versionString = [NSString stringWithFormat:@"%@sp%@", versionString, sneakypeekNumber];
     }
 
     // Return the result.
@@ -1235,8 +1139,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_getFavoritesFromPrefs
 {
-    NSArray *favPrefList =
-        [AKPrefUtils arrayValueForPref:AKFavoritesPrefName];
+    NSArray *favPrefList = [AKPrefUtils arrayValueForPref:AKFavoritesPrefName];
     int numFavs = [favPrefList count];
     int i;
 
@@ -1281,9 +1184,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
         [favPrefList addObject:[favItem asPrefDictionary]];
     }
-    [AKPrefUtils
-        setArrayValue:favPrefList
-        forPref:AKFavoritesPrefName];
+    [AKPrefUtils setArrayValue:favPrefList forPref:AKFavoritesPrefName];
 
     // Update the Favorites menu.
     [self _updateFavoritesMenu];
@@ -1292,8 +1193,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)_updateFavoritesMenu
 {
     NSMenu *mainMenu = [NSApp mainMenu];
-    NSMenu *favoritesMenu =
-        [[mainMenu itemWithTitle:@"Favorites"] submenu];
+    NSMenu *favoritesMenu = [[mainMenu itemWithTitle:@"Favorites"] submenu];
     int numFavs = [_favoritesList count];
     int i;
 
@@ -1313,8 +1213,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
         if (i < 9)
         {
-            [menuItem setKeyEquivalent:
-                [NSString stringWithFormat:@"%d", (i + 1)]];
+            [menuItem setKeyEquivalent:[NSString stringWithFormat:@"%d", (i + 1)]];
             [menuItem setKeyEquivalentModifierMask:NSControlKeyMask];
         }
 

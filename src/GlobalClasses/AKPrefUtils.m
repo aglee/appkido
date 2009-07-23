@@ -12,9 +12,9 @@
 #import "AKPrefConstants.h"
 
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKPrefUtils (Private)
 + (void)_registerStandardDefaults;
@@ -23,9 +23,9 @@
 
 @implementation AKPrefUtils
 
-//-------------------------------------------------------------------------
-// Class initialization
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Class initialization
 
 + (void)initialize
 {
@@ -39,9 +39,9 @@
 //    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
-//-------------------------------------------------------------------------
-// App-specific getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark App-specific getters and setters
 
 + (NSArray *)selectedFrameworkNamesPref
 {
@@ -110,9 +110,9 @@
     [self setStringValue:dir forPref:AKSDKVersionPrefName];
 }
 
-//-------------------------------------------------------------------------
-// Clearing preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Clearing preferences
 
 + (void)resetAllPrefsToDefaults
 {
@@ -170,9 +170,9 @@
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKPrefUtils (Private)
 

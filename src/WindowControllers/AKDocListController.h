@@ -37,17 +37,17 @@
     IBOutlet NSTextField *_docCommentField;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (void)setSubtopic:(AKSubtopic *)subtopic;
 
 - (AKDoc *)currentDoc;
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 // may modify whereTo
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
@@ -58,9 +58,9 @@
  */
 - (void)focusOnDocListTable;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 /*!
  * @method      doDocListTableAction:

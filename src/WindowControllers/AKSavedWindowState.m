@@ -14,9 +14,9 @@
 
 @implementation AKSavedWindowState
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (AKSavedWindowState *)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -60,9 +60,9 @@
     return prefDict;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKWindowLayout *)savedWindowLayout
 {

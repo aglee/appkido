@@ -15,9 +15,9 @@
 #import "AKCategoryNode.h"
 #import "AKMethodNode.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKObjCHeaderParser (Private)
 
@@ -41,9 +41,9 @@
 
 @end
 
-//-------------------------------------------------------------------------
-// Character test functions
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Character test functions
 
 // We only care about certain punctuation characters.  This isn't
 // full-blown Objective-C parsing.
@@ -59,18 +59,18 @@ static BOOL isPunctuation(char c)
 
 @implementation AKObjCHeaderParser
 
-//-------------------------------------------------------------------------
-// DIGSFileProcessor methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark DIGSFileProcessor methods
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
     return [[filePath pathExtension] isEqualToString:@"h"];
 }
 
-//-------------------------------------------------------------------------
-// AKParser methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKParser methods
 
 /*
  * On entry, the file name is in _currentFile; the file
@@ -93,9 +93,9 @@ static BOOL isPunctuation(char c)
 
 @implementation AKObjCHeaderParser (Private)
 
-//-------------------------------------------------------------------------
-// Private methods -- parsing
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods -- parsing
 
 // Consumes tokens until we see either either an "@interface" or a
 // "@protocol" declaration.  Parses the thing being declared -- either a
@@ -502,9 +502,9 @@ static BOOL isPunctuation(char c)
     return YES;
 }
 
-//-------------------------------------------------------------------------
-// Private methods -- skipping
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods -- skipping
 
 // Skips whitespace, comments, and preprocessor directives.
 - (void)_skipJunk

@@ -27,9 +27,9 @@
     NSCursor *_linkCursor;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      initWithFrame:
@@ -46,9 +46,9 @@
  */
 - (id)initWithCoder:(NSCoder *)decoder;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 /*!
  * @method      linkCursorImageName
@@ -68,9 +68,9 @@
  */
 - (NSPoint)linkCursorHotSpot;
 
-//-------------------------------------------------------------------------
-// NSTextView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTextView methods
 
 /*!
  * @method      resetCursorRects

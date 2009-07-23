@@ -40,17 +40,17 @@
     BOOL _searchIgnoresCase;
 }
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (AKWindowLayout *)fromPrefDictionary:(NSDictionary *)prefDictionary;
 
 - (NSDictionary *)asPrefDictionary;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSRect)windowFrame;
 - (void)setWindowFrame:(NSRect)frame;

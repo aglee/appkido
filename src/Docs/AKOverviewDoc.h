@@ -15,9 +15,9 @@
     NSString *_extraFrameworkName;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer -- okay to use super's DI
 - (id)initWithFileSection:(AKFileSection *)fileSection
@@ -33,17 +33,17 @@
  */
 - (id)initWithFileSection:(AKFileSection *)fileSection;
 
-//-------------------------------------------------------------------------
-// Utility methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Utility methods
 
 // An overview doc list may contain docs for more than one framework.
 // If frameworkName is nil, returns docName unchanged.
 + (NSString *)qualifyDocName:(NSString *)docName withFrameworkName:(NSString *)frameworkName;
 
-//-------------------------------------------------------------------------
-// Protected methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Protected methods
 
 // Used to construct both my doc name and my display string.  My doc name
 // and display string "qualify" my unqualified doc name (i.e., add my

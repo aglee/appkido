@@ -15,9 +15,9 @@
 #import "AKDoc.h"
 #import "AKDocLocator.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKDocView (Private)
 
@@ -32,9 +32,9 @@
 
 @implementation AKDocView
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFrame:(NSRect)frameRect
 {
@@ -113,9 +113,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (void)setDocLocator:(AKDocLocator *)docLocator
 {
@@ -133,9 +133,9 @@
     [self _updateDocDisplay];
 }
 
-//-------------------------------------------------------------------------
-// UI behavior
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI behavior
 
 - (void)applyPrefs
 {
@@ -209,9 +209,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// NSView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView methods
 
 // Return YES so we can be part of the key view loop.
 - (BOOL)acceptsFirstResponder
@@ -222,9 +222,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKDocView (Private)
 

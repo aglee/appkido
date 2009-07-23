@@ -28,9 +28,9 @@
 #import "AKGlobalsTopic.h"
 #import "AKOverviewDoc.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKOldLinkResolver (Private)
 
@@ -62,9 +62,9 @@
 
 @implementation AKOldLinkResolver
 
-//-------------------------------------------------------------------------
-// AKLinkResolver methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKLinkResolver methods
 
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
 {
@@ -161,9 +161,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKOldLinkResolver (Private)
 

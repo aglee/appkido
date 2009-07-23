@@ -23,9 +23,9 @@
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKTopicBrowserController (Private)
 - (int)_numberOfRowsInColumn:(int)column;
@@ -36,9 +36,9 @@
 
 @implementation AKTopicBrowserController
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -61,9 +61,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
 {
@@ -127,9 +127,9 @@
     [_subtopicListController jumpToSubtopicWithIndex:subtopicIndex];
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)removeBrowserColumn:(id)sender
 {
@@ -154,9 +154,9 @@
         [[_topicBrowser selectedCell] representedObject]];
 }
 
-//-------------------------------------------------------------------------
-// AKSubcontroller methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubcontroller methods
 
 - (void)doAwakeFromNib
 {
@@ -184,9 +184,9 @@
     return [_subtopicListController validateItem:anItem];
 }
 
-//-------------------------------------------------------------------------
-// NSBrowser delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSBrowser delegate methods
 
 - (void)browser:(NSBrowser *)sender createRowsForColumn:(int)column
     inMatrix:(NSMatrix *)matrix
@@ -226,9 +226,9 @@
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKTopicBrowserController (Private)
 

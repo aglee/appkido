@@ -11,9 +11,9 @@
 {
 }
 
-//-------------------------------------------------------------------------
-// Finding the user's Dev Tools
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Finding the user's Dev Tools
 
 /*!
  * Tries to run xcode-select -print-path.  If successful, returns the

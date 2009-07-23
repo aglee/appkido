@@ -16,24 +16,24 @@
     AKBehaviorNode *_behaviorNode;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithMemberNode:(AKMemberNode *)memberNode
     inheritedByBehavior:(AKBehaviorNode *)behaviorNode;
 
-//-------------------------------------------------------------------------
-// Manipulating node names
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Manipulating node names
 
 /*! Must override this. */
 + (NSString *)punctuateNodeName:(NSString *)memberName;
 
-//-------------------------------------------------------------------------
-// AKDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDoc methods
 
 /*!
  * This implementation of -commentString assumes the receiver represents a

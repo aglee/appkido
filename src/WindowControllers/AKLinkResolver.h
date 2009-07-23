@@ -21,22 +21,22 @@
     AKDatabase *_database;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)linkResolverWithDatabase:(AKDatabase *)database;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database;
 
-//-------------------------------------------------------------------------
-// Resolving links
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Resolving links
 
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL;
 

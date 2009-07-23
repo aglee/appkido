@@ -7,14 +7,14 @@
 
 #import <Foundation/Foundation.h>
 
-//-------------------------------------------------------------------------
-// AKXyzHTMLSectionName
+
+#pragma mark -
+#pragma mark AKXyzHTMLSectionName
 //
 // Names of "major sections" within HTML doc files.  When the topic is a
 // class or protocol and the subtopic is "General", some of these are
 // used as doc names in the doc list, and some are deliberately
 // excluded.
-//-------------------------------------------------------------------------
 
 extern NSString *AKContentsHTMLSectionName;
 extern NSString *AKClassDescriptionHTMLSectionName;

@@ -29,9 +29,9 @@
 #define MEASURE_SEARCH_SPEED 0
 
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKSearchQuery (Private)
 
@@ -56,9 +56,9 @@
 
 @implementation AKSearchQuery
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithDatabase:(AKDatabase *)db
 {
@@ -98,9 +98,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)searchString
 {
@@ -216,9 +216,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// Searching
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Searching
 
 
 // [agl] working on performance
@@ -303,9 +303,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKSearchQuery (Private)
 

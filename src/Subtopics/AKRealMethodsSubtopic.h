@@ -14,25 +14,25 @@
     AKBehaviorNode *_behaviorNode;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 // convenience method uses the designated initializer
 + (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
     includeAncestors:(BOOL)includeAncestors;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
     includeAncestors:(BOOL)includeAncestors;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKBehaviorNode *)behaviorNode;
 

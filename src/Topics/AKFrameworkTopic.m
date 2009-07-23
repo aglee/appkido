@@ -21,18 +21,18 @@
 
 @implementation AKFrameworkTopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
     return [[[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
 {
@@ -58,9 +58,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKTopic methods
 
 + (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
 {

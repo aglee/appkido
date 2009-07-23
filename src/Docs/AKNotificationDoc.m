@@ -12,18 +12,18 @@
 
 @implementation AKNotificationDoc
 
-//-------------------------------------------------------------------------
-// AKMemberDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKMemberDoc methods
 
 + (NSString *)punctuateNodeName:(NSString *)methodName
 {
     return methodName;
 }
 
-//-------------------------------------------------------------------------
-// AKDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDoc methods
 
 - (NSString *)commentString
 {

@@ -31,9 +31,9 @@
     NSMutableArray *_argumentTypes;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (BOOL)isClassMethod;
 

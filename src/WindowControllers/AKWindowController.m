@@ -35,9 +35,9 @@
 #import "AKLinkResolver.h"
 #import "AKOldLinkResolver.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKWindowController (Private)
 - (void)_initToolbar;
@@ -57,15 +57,15 @@
 
 @implementation AKWindowController
 
-//-------------------------------------------------------------------------
-// Private constants -- toolbar identifiers
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private constants -- toolbar identifiers
 
 static NSString *_AKToolbarID = @"AKToolbarID";
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithDatabase:(AKDatabase *)database
 {
@@ -133,18 +133,18 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKDatabase *)database
 {
     return _database;
 }
 
-//-------------------------------------------------------------------------
-// User preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark User preferences
 
 - (void)applyUserPreferences
 {
@@ -152,9 +152,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_quicklistController applyUserPreferences];
 }
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 - (AKDocLocator *)currentHistoryItem
 {
@@ -316,9 +316,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_quicklistController searchForString:aString];
 }
 
-//-------------------------------------------------------------------------
-// Window layout
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Window layout
 
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
 {
@@ -425,9 +425,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [savedWindowState setSavedDocLocator:[self currentHistoryItem]];
 }
 
-//-------------------------------------------------------------------------
-// UI item validation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI item validation
 
 - (BOOL)validateItem:(id)anItem
 {
@@ -568,9 +568,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-//-------------------------------------------------------------------------
-// Action methods -- window layout
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender
 {
@@ -663,9 +663,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-//-------------------------------------------------------------------------
-// Action methods -- navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods -- navigation
 
 - (IBAction)navigateBack:(id)sender
 {
@@ -875,9 +875,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[NSWorkspace sharedWorkspace] openURL:fileURL];
 }
 
-//-------------------------------------------------------------------------
-// Action methods -- search (forwarded to the quicklist controller)
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods -- search (forwarded to the quicklist controller)
 
 - (IBAction)selectSearchField:(id)sender
 {
@@ -912,18 +912,18 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_quicklistController selectNextSearchResult:sender];
 }
 
-//-------------------------------------------------------------------------
-// NSMenuValidation protocol methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSMenuValidation protocol methods
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aCell
 {
     return [self validateItem:aCell];
 }
 
-//-------------------------------------------------------------------------
-// NSToolbarItemValidation protocol methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSToolbarItemValidation protocol methods
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
@@ -937,9 +937,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return isValid;
 }
 
-//-------------------------------------------------------------------------
-// NSSplitView delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSSplitView delegate methods
 
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
 {
@@ -954,9 +954,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-//-------------------------------------------------------------------------
-// NSWindow delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSWindow delegate methods
 
 // FIXME [agl] this is a workaround to either a bug or something I don't
 // understand; when the prefs panel is dismissed, the AppKiDo window below
@@ -971,9 +971,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKWindowController (Private)
 

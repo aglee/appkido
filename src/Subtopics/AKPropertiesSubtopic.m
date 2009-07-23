@@ -13,9 +13,9 @@
 
 @implementation AKPropertiesSubtopic
 
-//-------------------------------------------------------------------------
-// AKSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {
@@ -33,9 +33,9 @@
         : [@"2.  " stringByAppendingString:[self subtopicName]];
 }
 
-//-------------------------------------------------------------------------
-// AKMembersSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKMembersSubtopic methods
 
 - (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
 {

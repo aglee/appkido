@@ -41,15 +41,15 @@
     IBOutlet id _docListController;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (void)setDocLocator:(AKDocLocator *)docLocator;
 
-//-------------------------------------------------------------------------
-// UI behavior
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI behavior
 
 - (void)applyPrefs;
 

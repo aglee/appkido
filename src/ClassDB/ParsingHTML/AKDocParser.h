@@ -63,9 +63,9 @@
     char _token[AKTokenBufferSize];
 }
 
-//-------------------------------------------------------------------------
-// Parsing
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Parsing
 
 /*!
  * @method      parseToken
@@ -96,9 +96,9 @@
  */
 - (BOOL)parseNonMarkupToken;
 
-//-------------------------------------------------------------------------
-// Using parse results
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Using parse results
 
 /*!
  * @method      rootSectionOfCurrentFile
@@ -115,9 +115,9 @@
  */
 - (void)applyParseResults;
 
-//-------------------------------------------------------------------------
-// Heinous kludge
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Heinous kludge
 
 // [agl] wish I didn't have to do this -- curse you, Apple!  someday I
 // should write a smarter higher-level parser; problem is, in Tiger

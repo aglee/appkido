@@ -15,18 +15,18 @@
 
 @implementation AKProtocolOverviewSubtopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)subtopicForProtocolNode:(AKProtocolNode *)protocolNode
 {
     return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
 {
@@ -52,9 +52,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKBehaviorOverviewSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKBehaviorOverviewSubtopic methods
 
 - (AKBehaviorNode *)behaviorNode
 {

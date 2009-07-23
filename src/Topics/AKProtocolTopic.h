@@ -15,15 +15,15 @@
     AKProtocolNode *_protocolNode;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithProtocolNode:(AKProtocolNode *)protocolNode;

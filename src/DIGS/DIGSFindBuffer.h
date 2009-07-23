@@ -50,9 +50,9 @@
     NSMutableArray *_listenerActions;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 /*!
  * @method      sharedInstance
@@ -60,9 +60,9 @@
  */
 + (DIGSFindBuffer *)sharedInstance;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 /*!
  * @method      findString
@@ -77,9 +77,9 @@
  */
 - (void)setFindString:(NSString *)string;
 
-//-------------------------------------------------------------------------
-// Managing listeners
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Managing listeners
 
 /*!
  * @method      addListener:withSelector:

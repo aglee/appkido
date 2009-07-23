@@ -15,9 +15,9 @@
 
 @implementation AKRealMethodsSubtopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
     includeAncestors:(BOOL)includeAncestors
@@ -28,9 +28,9 @@
             includeAncestors:includeAncestors] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
     includeAncestors:(BOOL)includeAncestors
@@ -57,9 +57,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKMembersSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKMembersSubtopic methods
 
 - (AKBehaviorNode *)behaviorNode
 {

@@ -11,9 +11,9 @@
 
 @implementation DIGSFileProcessor
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithBasePath:(NSString *)basePath
 {
@@ -39,9 +39,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)basePath
 {
@@ -53,9 +53,9 @@
     return _currentPath;
 }
 
-//-------------------------------------------------------------------------
-// Processing files
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Processing files
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {

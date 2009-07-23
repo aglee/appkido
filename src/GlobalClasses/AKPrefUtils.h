@@ -19,9 +19,9 @@
 {
 }
 
-//-------------------------------------------------------------------------
-// App-specific getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark App-specific getters and setters
 
 + (NSArray *)selectedFrameworkNamesPref;
 + (void)setSelectedFrameworkNamesPref:(NSArray *)fwNames;
@@ -34,9 +34,9 @@
 + (NSString *)sdkVersionPref;
 + (void)setSDKVersionPref:(NSString *)dir;
 
-//-------------------------------------------------------------------------
-// Clearing preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Clearing preferences
 
 /*!
  * @method      resetAllPrefsToDefaults
