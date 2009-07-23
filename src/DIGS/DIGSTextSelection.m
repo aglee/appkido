@@ -7,9 +7,9 @@
 
 #import "DIGSTextSelection.h"
 
-//-------------------------------------------------------------------------
-// Private constants
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private constants
 
 static NSString *_DIGS_VISIBLE_RECT_PREF_KEY         = @"VisibleRect";
 static NSString *_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY  = @"VisibleCharsRange";
@@ -17,9 +17,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 
 @implementation DIGSTextSelection
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -41,9 +41,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (DIGSTextSelection *)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -99,9 +99,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     return prefDict;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSRect)visibleRect
 {
@@ -145,9 +145,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     _typingAttributes = attrDict;
 }
 
-//-------------------------------------------------------------------------
-// Interacting with text views
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Interacting with text views
 
 - (void)takeSelectionFromTextView:(NSTextView *)textView
 {
@@ -204,9 +204,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     [textView setTypingAttributes:_typingAttributes];
 }
 
-//-------------------------------------------------------------------------
-// NSCoding protocol methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSCoding protocol methods
 
 - (id)initWithCoder:(NSCoder *)decoder
 {

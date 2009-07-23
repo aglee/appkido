@@ -14,22 +14,22 @@
     NSString *_groupName;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer.
 - (id)initWithNodeName:(NSString *)nodeName
     owningFramework:(AKFramework *)theFramework
     groupName:(NSString *)groupName;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)groupName;
 

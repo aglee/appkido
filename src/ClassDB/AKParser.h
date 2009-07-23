@@ -45,9 +45,9 @@
     const char *_dataEnd;
 }
 
-//-------------------------------------------------------------------------
-// Class methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Class methods
 
 + (void)recursivelyParseDirectory:(NSString *)dirPath forFramework:(AKFramework *)aFramework;
 
@@ -55,9 +55,9 @@
     underBaseDir:(NSString *)baseDir
     forFramework:(AKFramework *)aFramework;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      initWithFramework:
@@ -65,9 +65,9 @@
  */
 - (id)initWithFramework:(AKFramework *)aFramework;
 
-//-------------------------------------------------------------------------
-// Parsing
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Parsing
 
 /*!
  * @method      loadDataToBeParsed

@@ -22,9 +22,9 @@
 {
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      doAwakeFromNib
@@ -41,9 +41,9 @@
  */
 - (void)doAwakeFromNib;
 
-//-------------------------------------------------------------------------
-// User preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark User preferences
 
 /*!
  * @method      applyUserPreferences
@@ -52,9 +52,9 @@
  */
 - (void)applyUserPreferences;
 
-//-------------------------------------------------------------------------
-// UI item validation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI item validation
 
 /*!
  * @method      validateItem:

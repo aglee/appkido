@@ -52,9 +52,9 @@ typedef enum {
     NSMutableArray *_searchResults;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      initWithDatabase:
@@ -62,9 +62,9 @@ typedef enum {
  */
 - (id)initWithDatabase:(AKDatabase *)db;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)searchString;
 - (void)setSearchString:(NSString *)s;
@@ -90,9 +90,9 @@ typedef enum {
 - (AKSearchComparison)searchComparison;
 - (void)setSearchComparison:(AKSearchComparison)searchComparison;
 
-//-------------------------------------------------------------------------
-// Searching
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Searching
 
 /*!
  * @method      queryResults

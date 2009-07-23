@@ -15,25 +15,25 @@
     AKClassNode *_classNode;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 // convenience method uses the designated initializer
 + (id)subtopicForClassNode:(AKClassNode *)classNode
     includeAncestors:(BOOL)includeAncestors;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithClassNode:(AKClassNode *)classNode
     includeAncestors:(BOOL)includeAncestors;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKClassNode *)classNode;
 

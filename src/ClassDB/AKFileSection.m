@@ -14,9 +14,9 @@
 #import "AKTextUtils.h"
 #import "AKFileSection.h"
 
-//-------------------------------------------------------------------------
-// Static variables
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Static variables
 
 // Keys are file paths, values are NSData instances containing file
 // contents.
@@ -31,9 +31,9 @@ static NSMutableDictionary *s_fileCache = nil;
 static NSMutableDictionary *s_fileCacheCounts = nil;
 
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKFileSection (Private)
 - (void)_releaseFileContents;
@@ -42,9 +42,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 @implementation AKFileSection
 
-//-------------------------------------------------------------------------
-// Class initializer
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Class initializer
 
 + (void)initialize
 {
@@ -52,9 +52,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     s_fileCacheCounts = [[NSMutableDictionary alloc] init];
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (AKFileSection *)withFile:(NSString *)filePath
 {
@@ -86,9 +86,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     return fileSection;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFile:(NSString *)filePath
 {
@@ -121,9 +121,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)filePath
 {
@@ -316,18 +316,18 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
    return nil;
 }
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 - (NSString *)sortName
 {
     return _sectionName;
 }
 
-//-------------------------------------------------------------------------
-// NSObject methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSObject methods
 
 - (NSString *)description
 {
@@ -342,9 +342,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKFileSection (Private)
 

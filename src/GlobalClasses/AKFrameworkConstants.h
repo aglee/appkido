@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
-//-------------------------------------------------------------------------
-// AKXyzFrameworkName
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKXyzFrameworkName
 
 // Names of Apple frameworks that we give special treatment.
 extern NSString *AKFoundationFrameworkName;

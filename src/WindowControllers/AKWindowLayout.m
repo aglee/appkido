@@ -12,9 +12,9 @@
 
 @implementation AKWindowLayout
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -41,9 +41,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (AKWindowLayout *)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -191,9 +191,9 @@
     return prefDict;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSRect)windowFrame
 {

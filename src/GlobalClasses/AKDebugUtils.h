@@ -9,9 +9,9 @@
 
 #import "AKFileSection.h"
 
-//-------------------------------------------------------------------------
-// Category of AKFileSection debugging methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Category of AKFileSection debugging methods
 
 @interface AKFileSection (Debugging)
 
@@ -21,9 +21,9 @@
 
 
 
-//-------------------------------------------------------------------------
-// 
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark 
 
 @interface AKFileSectionDebug : NSObject
 {

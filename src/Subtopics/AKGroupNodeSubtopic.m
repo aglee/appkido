@@ -17,9 +17,9 @@
 
 @implementation AKGroupNodeSubtopic
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithGroupNode:(AKGroupNode *)groupNode
 {
@@ -45,9 +45,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {

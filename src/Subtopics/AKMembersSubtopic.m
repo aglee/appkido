@@ -14,9 +14,9 @@
 #import "AKMethodNode.h"
 #import "AKMemberDoc.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKMembersSubtopic (Private)
 - (NSArray *)_ancestorNodesWeCareAbout;
@@ -26,9 +26,9 @@
 
 @implementation AKMembersSubtopic
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initIncludingAncestors:(BOOL)includeAncestors
 {
@@ -40,9 +40,9 @@
     return self;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (BOOL)includesAncestors
 {
@@ -67,9 +67,9 @@
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// AKSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubtopic methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
@@ -102,9 +102,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKMembersSubtopic (Private)
 

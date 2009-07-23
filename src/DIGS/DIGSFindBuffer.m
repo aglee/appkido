@@ -7,9 +7,9 @@
 
 #import "DIGSFindBuffer.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface DIGSFindBuffer (Private)
 - (void)_setFindString:(NSString *)string writeToPasteboard:(BOOL)flag;
@@ -21,9 +21,9 @@
 
 @implementation DIGSFindBuffer
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 static DIGSFindBuffer *s_sharedInstance = nil;
 
@@ -38,9 +38,9 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     return s_sharedInstance;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -83,9 +83,9 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     }
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)findString
 {
@@ -101,9 +101,9 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     [self _setFindString:string writeToPasteboard:YES];
 }
 
-//-------------------------------------------------------------------------
-// Managing listeners
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Managing listeners
 
 - (void)addListener:(id)listenerObject withSelector:(SEL)handlerSelector
 {
@@ -136,9 +136,9 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation DIGSFindBuffer (Private)
 

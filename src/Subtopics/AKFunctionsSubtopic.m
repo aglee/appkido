@@ -14,9 +14,9 @@
 
 @implementation AKFunctionsSubtopic
 
-//-------------------------------------------------------------------------
-// AKSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubtopic methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {

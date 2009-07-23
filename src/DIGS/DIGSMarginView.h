@@ -46,9 +46,9 @@
     BOOL _isViewTwoFlexible;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      awakeFromNib
@@ -57,9 +57,9 @@
  */
 - (void)awakeFromNib;
 
-//-------------------------------------------------------------------------
-// NSView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView methods
 
 /*!
  * @method      resizeSubviewsWithOldSize:

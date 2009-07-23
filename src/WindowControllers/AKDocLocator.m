@@ -12,9 +12,9 @@
 #import "AKSubtopic.h"
 #import "AKDoc.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKDocLocator (Private)
 - (void)_clearCachedObjects;
@@ -23,9 +23,9 @@
 
 @implementation AKDocLocator
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)withTopic:(AKTopic *)topic
     subtopicName:(NSString *)subtopicName
@@ -39,9 +39,9 @@
             autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithTopic:(AKTopic *)topic
     subtopicName:(NSString *)subtopicName
@@ -70,9 +70,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (id)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -122,9 +122,9 @@
     return prefDict;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKTopic *)topicToDisplay
 {
@@ -217,9 +217,9 @@
     return _cachedDoc;
 }
 
-//-------------------------------------------------------------------------
-// Sorting
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Sorting
 
 // We want this to mirror the logic of -stringToDisplayInLists, which is
 // too expensive to call directly.  That logic is:
@@ -329,9 +329,9 @@ compareDocLocators(id locOne, id locTwo, void *context)
     [array sortUsingFunction:&compareDocLocators context:NULL];
 }
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 - (NSString *)sortName
 {
@@ -365,9 +365,9 @@ compareDocLocators(id locOne, id locTwo, void *context)
     return _cachedSortName;
 }
 
-//-------------------------------------------------------------------------
-// NSObject methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSObject methods
 
 - (BOOL)isEqual:(id)anObject
 {
@@ -418,9 +418,9 @@ compareDocLocators(id locOne, id locTwo, void *context)
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKDocLocator (Private)
 

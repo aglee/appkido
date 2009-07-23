@@ -7,9 +7,9 @@
 
 #import "AKPrefConstants.h"
 
-//-------------------------------------------------------------------------
-// AKXyzPrefName
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKXyzPrefName
 
 NSString *AKLayoutForNewWindowsPrefName       = @"AKLayoutForNewWindows";
 NSString *AKSavedWindowStatesPrefName         = @"AKSavedWindowStates";
@@ -33,9 +33,9 @@ NSString *AKSelectedFrameworksPrefName = @"AKSelectedFrameworks";
 NSString *AKDevToolsPathPrefName = @"AKDevToolsPath";
 NSString *AKSDKVersionPrefName = @"AKSDKVersion";
 
-//-------------------------------------------------------------------------
-// AKXyzPrefKey
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKXyzPrefKey
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.

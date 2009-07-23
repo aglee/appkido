@@ -12,9 +12,9 @@
 
 @implementation AKDevToolsUtils
 
-//-------------------------------------------------------------------------
-// Finding the user's Dev Tools
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Finding the user's Dev Tools
 
 // Can't use NSTask because stdout and/or stderr gets screwed up and
 // subsequent NSLogs don't print anything, perhaps because xcode-select

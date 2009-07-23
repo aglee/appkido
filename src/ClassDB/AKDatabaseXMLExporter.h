@@ -24,17 +24,17 @@
     int _indent;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*! Designated initialzer. */
 - (id)initWithDatabase:(AKDatabase *)database
     fileHandle:(NSFileHandle *)outfile;
 
-//-------------------------------------------------------------------------
-// The main export method
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark The main export method
 
 /*!
  * @method      doExport

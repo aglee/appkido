@@ -25,9 +25,9 @@
     NSMutableArray *_subnodes;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (void)addSubnode:(AKDatabaseNode *)node;
 

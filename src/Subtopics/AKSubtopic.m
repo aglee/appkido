@@ -11,9 +11,9 @@
 
 #import "AKDoc.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKSubtopic (Private)
 - (void)_makeSureDocListIsReady;
@@ -22,9 +22,9 @@
 
 @implementation AKSubtopic
 
-//-------------------------------------------------------------------------
-// AKXyzSubtopicName
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKXyzSubtopicName
 
 NSString *AKOverviewSubtopicName        = @"General";
 NSString *AKPropertiesSubtopicName      = @"Properties";
@@ -33,9 +33,9 @@ NSString *AKInstanceMethodsSubtopicName = @"Instance Methods";
 NSString *AKDelegateMethodsSubtopicName = @"Delegate Methods";
 NSString *AKNotificationsSubtopicName   = @"Notifications";
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)dealloc
 {
@@ -44,9 +44,9 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)subtopicName
 {
@@ -59,9 +59,9 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
     return [self subtopicName];
 }
 
-//-------------------------------------------------------------------------
-// Managing the doc list
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Managing the doc list
 
 - (int)numberOfDocs
 {
@@ -115,18 +115,18 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
     return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
 }
 
-//-------------------------------------------------------------------------
-// Protected methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Protected methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
     DIGSLogError_MissingOverride();
 }
 
-//-------------------------------------------------------------------------
-// NSObject methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSObject methods
 
 - (NSString *)description
 {
@@ -140,9 +140,9 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKSubtopic (Private)
 

@@ -26,9 +26,9 @@
     IBOutlet NSTextField *_statusTextField;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 /*!
  * @method      sharedInstance
@@ -36,9 +36,9 @@
  */
 + (AKFindPanelController *)sharedInstance;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)findNext:(id)sender;
 

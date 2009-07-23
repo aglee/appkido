@@ -23,9 +23,9 @@
     NSMutableDictionary *_nodesByName;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSArray *)allNodes;
 

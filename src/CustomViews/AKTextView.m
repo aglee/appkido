@@ -9,9 +9,9 @@
 
 @implementation AKTextView
 
-//-------------------------------------------------------------------------
-// NSView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView methods
 
 - (void)insertTab:(id)sender
 {

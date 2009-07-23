@@ -20,9 +20,9 @@
 {
 }
 
-//-------------------------------------------------------------------------
-// Low-level getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Low-level getters and setters
 
 + (BOOL)boolValueForPref:(NSString *)prefName;
 + (void)setBoolValue:(BOOL)value forPref:(NSString *)prefName;

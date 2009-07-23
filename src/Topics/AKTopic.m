@@ -14,9 +14,9 @@
 
 @implementation AKTopic
 
-//-------------------------------------------------------------------------
-// AKXyzTopicName
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKXyzTopicName
 
 NSString *AKTopicBrowserPathSeparator = @"/";
 
@@ -25,9 +25,9 @@ NSString *AKInformalProtocolsTopicName = @"Informal Protocols";
 NSString *AKFunctionsTopicName         = @"Functions";
 NSString *AKGlobalsTopicName           = @"Types & Constants";
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -78,9 +78,9 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKClassNode *)parentClassOfTopic
 {
@@ -92,9 +92,9 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// Names for various display contexts
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Names for various display contexts
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
@@ -112,9 +112,9 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return [self stringToDisplayInTopicBrowser];
 }
 
-//-------------------------------------------------------------------------
-// Populating the topic browser
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Populating the topic browser
 
 - (NSString *)pathInTopicBrowser
 {
@@ -137,9 +137,9 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// Populating the subtopics table
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Populating the subtopics table
 
 - (int)numberOfSubtopics
 {
@@ -189,18 +189,18 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
         : [self subtopicAtIndex:subtopicIndex];
 }
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 - (NSString *)sortName
 {
     return [self stringToDisplayInLists];
 }
 
-//-------------------------------------------------------------------------
-// Object methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Object methods
 
 - (BOOL)isEqual:(id)anObject
 {
@@ -213,9 +213,9 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return ([[anObject pathInTopicBrowser] isEqualToString:[self pathInTopicBrowser]]);
 }
 
-//-------------------------------------------------------------------------
-// NSObject methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSObject methods
 
 - (NSString *)description
 {

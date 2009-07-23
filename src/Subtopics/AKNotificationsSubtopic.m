@@ -12,9 +12,9 @@
 
 @implementation AKNotificationsSubtopic
 
-//-------------------------------------------------------------------------
-// AKSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {
@@ -32,9 +32,9 @@
         : [@"6.  " stringByAppendingString:[self subtopicName]];
 }
 
-//-------------------------------------------------------------------------
-// AKMembersSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKMembersSubtopic methods
 
 - (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
 {

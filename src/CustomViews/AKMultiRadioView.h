@@ -31,16 +31,16 @@
     id _radioTarget;  // gets set in -awakeFromNib
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (int)selectedTag;
 - (BOOL)selectCellWithTag:(int)tag;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)doRadioAction:(id)sender;
 

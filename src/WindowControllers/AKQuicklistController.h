@@ -53,23 +53,23 @@
     IBOutlet NSButton *_removeFavoriteButton;
 }
 
-//-------------------------------------------------------------------------
-// Window layout
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Window layout
 
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout;
 
 - (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout;
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 - (void)searchForString:(NSString *)aString;
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)doQuicklistModeMatrixAction:(id)sender;
 

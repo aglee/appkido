@@ -16,9 +16,9 @@
 
 @implementation AKSubtopicListController
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -43,9 +43,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
 {
@@ -124,9 +124,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)doSubtopicTableAction:(id)sender
 {
@@ -140,9 +140,9 @@
     [_windowController jumpToSubtopicWithName:newSubtopicName];
 }
 
-//-------------------------------------------------------------------------
-// AKSubcontroller methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubcontroller methods
 
 - (void)doAwakeFromNib
 {
@@ -175,9 +175,9 @@
     return [_docListController validateItem:anItem];
 }
 
-//-------------------------------------------------------------------------
-// NSTableView datasource methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTableView datasource methods
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -191,9 +191,9 @@
     return [[_subtopics objectAtIndex:rowIndex] stringToDisplayInSubtopicList];
 }
 
-//-------------------------------------------------------------------------
-// NSTableView delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTableView delegate methods
 
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell
     forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex

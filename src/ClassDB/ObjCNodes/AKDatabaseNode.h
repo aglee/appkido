@@ -66,9 +66,9 @@
  */
 - (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 /*!
  * @method      nodeName

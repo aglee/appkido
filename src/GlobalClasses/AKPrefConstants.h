@@ -7,11 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
-//-------------------------------------------------------------------------
-// AKXyzPrefName
+
+#pragma mark -
+#pragma mark AKXyzPrefName
 //
 // Keys for NSUserDefaults.
-//-------------------------------------------------------------------------
 
 // Value is a dictionary that can be converted to an AKWindowLayout.
 extern NSString *AKLayoutForNewWindowsPrefName;
@@ -69,11 +69,11 @@ extern NSString *AKDevToolsPathPrefName;
 // see AKDevTools.
 extern NSString *AKSDKVersionPrefName;
 
-//-------------------------------------------------------------------------
-// AKXyzPrefKey
+
+#pragma mark -
+#pragma mark AKXyzPrefKey
 //
 // Keys within pref values that are of type NSDictionary.
-//-------------------------------------------------------------------------
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.

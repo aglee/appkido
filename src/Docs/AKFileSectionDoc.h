@@ -13,9 +13,9 @@
     AKFileSection *_fileSection;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithFileSection:(AKFileSection *)fileSection;

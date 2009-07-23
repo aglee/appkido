@@ -9,9 +9,9 @@
 
 #import "DIGSLog.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface DIGSTextView (Private)
 - (void)_initLinkCursor;
@@ -21,9 +21,9 @@
 
 @implementation DIGSTextView
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFrame:(NSRect)frameRect
 {
@@ -52,9 +52,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSString *)linkCursorImageName
 {
@@ -66,9 +66,9 @@
     return NSMakePoint(6, 0);
 }
 
-//-------------------------------------------------------------------------
-// NSTextView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTextView methods
 
 - (void)resetCursorRects
 {
@@ -79,9 +79,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation DIGSTextView (Private)
 

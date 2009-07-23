@@ -15,9 +15,9 @@
 
 @implementation AKPseudoMethodsSubtopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)subtopicForClassNode:(AKClassNode *)classNode
     includeAncestors:(BOOL)includeAncestors
@@ -28,9 +28,9 @@
             includeAncestors:includeAncestors] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithClassNode:(AKClassNode *)classNode
     includeAncestors:(BOOL)includeAncestors
@@ -57,18 +57,18 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKClassNode *)classNode
 {
     return _classNode;
 }
 
-//-------------------------------------------------------------------------
-// AKMembersSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKMembersSubtopic methods
 
 - (AKBehaviorNode *)behaviorNode
 {

@@ -13,9 +13,9 @@
     NSString *_devToolsPath;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDevToolsPath:(NSString *)devToolsPath;

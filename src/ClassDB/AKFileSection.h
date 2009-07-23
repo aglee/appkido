@@ -38,9 +38,9 @@
     NSMutableArray *_childSections;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 /*!
  * @method      withFile:
@@ -54,9 +54,9 @@
  */
 + (AKFileSection *)withEntireFile:(NSString *)filePath;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 /*!
  * @method      initWithFile:
@@ -64,9 +64,9 @@
  */
 - (id)initWithFile:(NSString *)filePath;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 /*!
  * @method      filePath
@@ -105,9 +105,9 @@
 - (AKFileSection *)childSectionContainingString:(NSString *)name; // thanks Gerriet
 
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 /*!
  * @method      sortName

@@ -9,9 +9,9 @@
 
 @implementation AKFileUtils
 
-//-------------------------------------------------------------------------
-// Existence checking
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Existence checking
 
 + (BOOL)directoryExistsAtPath:(NSString *)path
 {

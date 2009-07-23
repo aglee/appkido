@@ -13,9 +13,9 @@
 
 @implementation AKFileSectionDoc
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithFileSection:(AKFileSection *)fileSection
 {
@@ -41,9 +41,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDoc methods
 
 - (AKFileSection *)fileSection
 {

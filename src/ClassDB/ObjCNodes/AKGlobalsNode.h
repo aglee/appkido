@@ -26,9 +26,9 @@
     NSMutableArray *_namesOfGlobals;
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (void)addNameOfGlobal:(NSString *)nameOfGlobal;
 

@@ -23,18 +23,18 @@
 
 @implementation AKProtocolTopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
 {
     return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
 {
@@ -60,9 +60,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKTopic methods
 
 + (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -129,9 +129,9 @@
     return NO;
 }
 
-//-------------------------------------------------------------------------
-// AKBehaviorTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKBehaviorTopic methods
 
 - (NSString *)behaviorName
 {

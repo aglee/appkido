@@ -9,9 +9,9 @@
 
 @implementation AKHeaderFileDoc
 
-//-------------------------------------------------------------------------
-// AKOverviewDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKOverviewDoc methods
 
 - (BOOL)isPlainText
 {

@@ -14,9 +14,9 @@
 #import "AKOverviewDoc.h"
 #import "AKFileSection.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKClassOverviewSubtopic (Private)
 - (void)_addDocsForExtraFramework:extraFrameworkName
@@ -25,18 +25,18 @@
 
 @implementation AKClassOverviewSubtopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)subtopicForClassNode:(AKClassNode *)classNode
 {
     return [[[self alloc] initWithClassNode:classNode] autorelease];
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithClassNode:(AKClassNode *)classNode
 {
@@ -62,9 +62,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubtopic methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
@@ -86,9 +86,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// AKBehaviorOverviewSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKBehaviorOverviewSubtopic methods
 
 - (AKBehaviorNode *)behaviorNode
 {
@@ -107,9 +107,9 @@
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKClassOverviewSubtopic (Private)
 

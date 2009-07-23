@@ -11,9 +11,9 @@
 
 @implementation AKClassMethodDoc
 
-//-------------------------------------------------------------------------
-// AKMemberDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKMemberDoc methods
 
 + (NSString *)punctuateNodeName:(NSString *)methodName
 {

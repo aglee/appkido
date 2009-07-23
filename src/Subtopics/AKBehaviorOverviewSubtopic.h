@@ -40,9 +40,9 @@
 {
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 // must override
 - (AKBehaviorNode *)behaviorNode;
@@ -53,9 +53,9 @@
 // for internal use
 - (NSString *)altHtmlNameOfDescriptionSection;
 
-//-------------------------------------------------------------------------
-// Utility methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Utility methods
 
 // for internal use
 - (NSArray *)pertinentChildSectionsOf:(AKFileSection *)rootSection;

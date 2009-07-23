@@ -35,12 +35,12 @@
     NSMutableArray *_docList;
 }
 
-//-------------------------------------------------------------------------
-// AKXyzSubtopicName
+
+#pragma mark -
+#pragma mark AKXyzSubtopicName
 //
 // Names of standard subtopics that are listed when the topic is a
 // class or protocol.
-//-------------------------------------------------------------------------
 
 extern NSString *AKOverviewSubtopicName;
 extern NSString *AKPropertiesSubtopicName;
@@ -49,18 +49,18 @@ extern NSString *AKInstanceMethodsSubtopicName;
 extern NSString *AKDelegateMethodsSubtopicName;
 extern NSString *AKNotificationsSubtopicName;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 // must override
 - (NSString *)subtopicName;
 
 - (NSString *)stringToDisplayInSubtopicList;
 
-//-------------------------------------------------------------------------
-// Managing the doc list
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Managing the doc list
 
 /*!
  * @method      numberOfDocs
@@ -83,9 +83,9 @@ extern NSString *AKNotificationsSubtopicName;
 @end
 
 
-//-------------------------------------------------------------------------
-// Protected methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Protected methods
 
 @interface AKSubtopic (Protected)
 

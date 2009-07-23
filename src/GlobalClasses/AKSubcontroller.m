@@ -9,27 +9,27 @@
 
 @implementation AKSubcontroller
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)doAwakeFromNib
 {
     // Do nothing.
 }
 
-//-------------------------------------------------------------------------
-// User preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark User preferences
 
 - (void)applyUserPreferences
 {
     // Do nothing.
 }
 
-//-------------------------------------------------------------------------
-// UI item validation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark UI item validation
 
 - (BOOL)validateItem:(id)anItem
 {

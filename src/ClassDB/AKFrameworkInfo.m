@@ -11,9 +11,9 @@
 #import "AKPrefUtils.h"
 #import "AKDatabase.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKFrameworkInfo (Private)
 
@@ -25,9 +25,9 @@
 
 @implementation AKFrameworkInfo
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (AKFrameworkInfo *)sharedInstance
 {
@@ -41,9 +41,9 @@
     return s_sharedInstance;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -113,9 +113,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (NSArray *)allPossibleFrameworkNames
 {
@@ -153,9 +153,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKFrameworkInfo (Private)
 

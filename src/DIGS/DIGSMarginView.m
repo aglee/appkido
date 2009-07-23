@@ -7,9 +7,9 @@
 
 #import "DIGSMarginView.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface DIGSMarginView (Private)
 - (void)_figureOutWhichSubviewIsWhich;
@@ -20,9 +20,9 @@
 
 @implementation DIGSMarginView
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)awakeFromNib
 {
@@ -32,9 +32,9 @@
     [self _figureOutWhichSubviewIsWhich];
 }
 
-//-------------------------------------------------------------------------
-// NSView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView methods
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize
 {
@@ -56,9 +56,9 @@
 @end
 
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation DIGSMarginView (Private)
 

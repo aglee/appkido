@@ -15,16 +15,16 @@
     AKClassNode *_classNode;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 // convenience method uses the designated initializer
 + (id)subtopicForClassNode:(AKClassNode *)classNode;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithClassNode:(AKClassNode *)classNode;

@@ -34,33 +34,33 @@
     AKDoc *_cachedDoc;
 }
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (id)withTopic:(AKTopic *)topic
     subtopicName:(NSString *)subtopicName
     docName:(NSString *)docName;
 
-//-------------------------------------------------------------------------
-// Preferences
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Preferences
 
 + (id)fromPrefDictionary:(NSDictionary *)prefDict;
 
 - (NSDictionary *)asPrefDictionary;
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithTopic:(AKTopic *)topic
     subtopicName:(NSString *)subtopicName
     docName:(NSString *)docName;
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKTopic *)topicToDisplay;
 
@@ -76,16 +76,16 @@
 
 - (AKDoc *)docToDisplay;
 
-//-------------------------------------------------------------------------
-// Sorting
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Sorting
 
 // *Should* be equivalent to using the -sortName mechanism, but faster.
 + (void)sortArrayOfDocLocators:(NSMutableArray *)array;
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 - (NSString *)sortName;
 

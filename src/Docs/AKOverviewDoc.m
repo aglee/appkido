@@ -12,9 +12,9 @@
 
 @implementation AKOverviewDoc
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithFileSection:(AKFileSection *)fileSection
@@ -42,9 +42,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Utility methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Utility methods
 
 + (NSString *)qualifyDocName:(NSString *)docName withFrameworkName:(NSString *)frameworkName
 {
@@ -58,9 +58,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// AKDoc methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDoc methods
 
 // If we're a doc for something in an extra framework (as opposed to a main
 // framework), qualify the docName with the name of the extra framework.
@@ -95,9 +95,9 @@
     }
 }
 
-//-------------------------------------------------------------------------
-// Protected methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Protected methods
 
 - (NSString *)_unqualifiedDocName
 {

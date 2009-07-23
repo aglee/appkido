@@ -15,9 +15,9 @@
 #import "AKAppController.h"
 #import "AKWindowController.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKFindPanelController (Private)
 - (BOOL)_find:(BOOL)isForwardDirection;
@@ -26,9 +26,9 @@
 
 @implementation AKFindPanelController
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 static AKFindPanelController *s_sharedInstance = nil;
 
@@ -42,9 +42,9 @@ static AKFindPanelController *s_sharedInstance = nil;
     return s_sharedInstance;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -82,9 +82,9 @@ static AKFindPanelController *s_sharedInstance = nil;
     }
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)orderFrontFindPanel:(id)sender
 {
@@ -169,9 +169,9 @@ static AKFindPanelController *s_sharedInstance = nil;
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKFindPanelController (Private)
 

@@ -21,9 +21,9 @@
     IBOutlet NSView *_viewToMatch;
 }
 
-//-------------------------------------------------------------------------
-// NSView methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSView methods
 
 - (void)drawRect:(NSRect)aRect;
 

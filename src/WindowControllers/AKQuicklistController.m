@@ -29,9 +29,9 @@
 #import "AKTableView.h"
 #import "AKMultiRadioView.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKQuicklistController (Private)
 
@@ -57,6 +57,7 @@
 - (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)nodeSet;
 
 - (void)_jumpToSearchResultAtIndex:(int)index;
+- (void)_jumpToSearchResultWithPrefix:(NSString *)searchString;
 - (void)_findStringDidChange:(DIGSFindBuffer *)findBuffer;
 
 - (void)_updateSearchOptionsPopup;
@@ -65,9 +66,9 @@
 
 @end
 
-//-------------------------------------------------------------------------
-// Private constants
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private constants
 
 // Pasteboard type used for drag and drop when the quicklist is in
 // Favorites mode.
@@ -93,9 +94,9 @@ enum
 
 @implementation AKQuicklistController
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)init
 {
@@ -128,43 +129,21 @@ enum
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Window layout
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Window layout
 
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
 {
     // Restore the selection in the frameworks popup.
-    [_frameworkPopup
-        selectItemWithTitle:
-            [windowLayout frameworkPopupSelection]];
+    [_frameworkPopup selectItemWithTitle:[windowLayout frameworkPopupSelection]];
 
     // Restore the settings in the search options popup.
-    [_includeClassesItem
-        setState:
-            ([windowLayout searchIncludesClasses]
-            ? NSOnState
-            : NSOffState)];
-    [_includeMethodsItem
-        setState:
-            ([windowLayout searchIncludesMembers]
-            ? NSOnState
-            : NSOffState)];
-    [_includeFunctionsItem
-        setState:
-            ([windowLayout searchIncludesFunctions]
-            ? NSOnState
-            : NSOffState)];
-    [_includeGlobalsItem
-        setState:
-            ([windowLayout searchIncludesGlobals]
-            ? NSOnState
-            : NSOffState)];
-    [_ignoreCaseItem
-        setState:
-            ([windowLayout searchIgnoresCase]
-            ? NSOnState
-            : NSOffState)];
+    [_includeClassesItem setState:([windowLayout searchIncludesClasses] ? NSOnState : NSOffState)];
+    [_includeMethodsItem setState:([windowLayout searchIncludesMembers] ? NSOnState : NSOffState)];
+    [_includeFunctionsItem setState:([windowLayout searchIncludesFunctions] ? NSOnState : NSOffState)];
+    [_includeGlobalsItem setState:([windowLayout searchIncludesGlobals] ? NSOnState : NSOffState)];
+    [_ignoreCaseItem setState:([windowLayout searchIgnoresCase] ? NSOnState : NSOffState)];
 
     // Restore the quicklist mode -- after the other ducks have been
     // lined up, so the quicklist table will reload properly.
@@ -177,31 +156,19 @@ enum
     [windowLayout setQuicklistMode:_currentQuicklistMode];
 
     // Remember the selection in the frameworks popup.
-    [windowLayout
-        setFrameworkPopupSelection:
-            [[_frameworkPopup selectedItem] title]];
+    [windowLayout setFrameworkPopupSelection:[[_frameworkPopup selectedItem] title]];
 
     // Remember the settings in the search options popup.
-    [windowLayout
-        setSearchIncludesClasses:
-            ([_includeClassesItem state] == NSOnState)];
-    [windowLayout
-        setSearchIncludesMembers:
-            ([_includeMethodsItem state] == NSOnState)];
-    [windowLayout
-        setSearchIncludesFunctions:
-            ([_includeFunctionsItem state] == NSOnState)];
-    [windowLayout
-        setSearchIncludesGlobals:
-            ([_includeGlobalsItem state] == NSOnState)];
-    [windowLayout
-        setSearchIgnoresCase:
-            ([_ignoreCaseItem state] == NSOnState)];
+    [windowLayout setSearchIncludesClasses:([_includeClassesItem state] == NSOnState)];
+    [windowLayout setSearchIncludesMembers:([_includeMethodsItem state] == NSOnState)];
+    [windowLayout setSearchIncludesFunctions:([_includeFunctionsItem state] == NSOnState)];
+    [windowLayout setSearchIncludesGlobals:([_includeGlobalsItem state] == NSOnState)];
+    [windowLayout setSearchIgnoresCase:([_ignoreCaseItem state] == NSOnState)];
 }
 
-//-------------------------------------------------------------------------
-// Navigation
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Navigation
 
 - (void)searchForString:(NSString *)aString
 {
@@ -209,9 +176,9 @@ enum
     [self doSearch:self];
 }
 
-//-------------------------------------------------------------------------
-// Action methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)doQuicklistModeMatrixAction:(id)sender
 {
@@ -244,9 +211,7 @@ enum
     else
     {
         // Update the Favorites-list management buttons.
-        [_removeFavoriteButton
-            setEnabled:
-                (_currentQuicklistMode == _AKFavoritesQuicklistMode)];
+        [_removeFavoriteButton setEnabled:(_currentQuicklistMode == _AKFavoritesQuicklistMode)];
 
         // Tell the main window to navigate to the selected doc.
         [_windowController jumpToDocLocator:quicklistItem];
@@ -290,13 +255,11 @@ enum
     [_pastSearchStrings removeObject:searchString];
     [_pastSearchStrings insertObject:searchString atIndex:0];
 
-    int maxSearchStrings =
-        [AKPrefUtils intValueForPref:AKMaxSearchStringsPrefName];
+    int maxSearchStrings = [AKPrefUtils intValueForPref:AKMaxSearchStringsPrefName];
 
     while ((int)[_pastSearchStrings count] > maxSearchStrings)
     {
-        [_pastSearchStrings removeObjectAtIndex:
-            ([_pastSearchStrings count] - 1)];
+        [_pastSearchStrings removeObjectAtIndex:([_pastSearchStrings count] - 1)];
     }
 
     [self _updateSearchOptionsPopup];
@@ -325,7 +288,7 @@ enum
     }
     else
     {
-        [self _jumpToSearchResultAtIndex:0];
+        [self _jumpToSearchResultWithPrefix:searchString];
     }
 }
 
@@ -375,9 +338,9 @@ enum
     [self _jumpToSearchResultAtIndex:(_indexWithinSearchResults + 1)];
 }
 
-//-------------------------------------------------------------------------
-// AKSubcontroller methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubcontroller methods
 
 - (void)doAwakeFromNib
 {
@@ -481,9 +444,9 @@ enum
     return NO;
 }
 
-//-------------------------------------------------------------------------
-// NSTableView datasource methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTableView datasource methods
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -500,9 +463,9 @@ enum
     return [quicklistItem stringToDisplayInLists];
 }
 
-//-------------------------------------------------------------------------
-// NSTableView delegate methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark NSTableView delegate methods
 
 - (BOOL)tableView:(NSTableView*)tableView
     acceptDrop:(id <NSDraggingInfo>)info
@@ -582,9 +545,9 @@ enum
 
 @end
 
-//-------------------------------------------------------------------------
-// Private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Private methods
 
 @implementation AKQuicklistController (Private)
 
@@ -1061,8 +1024,7 @@ enum
 
 - (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)nodeSet
 {
-    NSMutableSet *resultSet =
-        [NSMutableSet setWithCapacity:([nodeSet count] * 2)];
+    NSMutableSet *resultSet = [NSMutableSet setWithCapacity:([nodeSet count] * 2)];
     NSEnumerator *en = [nodeSet objectEnumerator];
     AKClassNode *node;
 
@@ -1102,15 +1064,33 @@ enum
     // Jump to the search result at the new position.
     [_quicklistTable deselectAll:nil];
     [_quicklistTable scrollRowToVisible:_indexWithinSearchResults];
-    [_quicklistTable selectRow:_indexWithinSearchResults
-        byExtendingSelection:NO];
+    [_quicklistTable selectRow:_indexWithinSearchResults byExtendingSelection:NO];
 
-    // Give the quicklist table focus and tell the owning window to
-    // navigate to the selected search result.
-    (void)[[_quicklistTable window]
-        makeFirstResponder:_quicklistTable];
+    // Give the quicklist table focus and tell the owning window to navigate to the selected search result.
+    (void)[[_quicklistTable window] makeFirstResponder:_quicklistTable];
     [[_quicklistTable window] makeKeyAndOrderFront:nil];
     [self doQuicklistTableAction:nil];
+}
+
+- (void)_jumpToSearchResultWithPrefix:(NSString *)searchString
+{
+    int searchResultIndex = 0;
+    NSArray *searchResults = [_searchQuery queryResults];
+    int numSearchResults = [searchResults count];
+    int i;
+
+    for (i = 0; i < numSearchResults; i++)
+    {
+        AKDocLocator *docLocator = [searchResults objectAtIndex:i];
+
+        if ([[docLocator docName] hasPrefix:searchString])
+        {
+            searchResultIndex = i;
+            break;
+        }
+    }
+
+    [self _jumpToSearchResultAtIndex:searchResultIndex];
 }
 
 - (void)_findStringDidChange:(DIGSFindBuffer *)findBuffer
@@ -1148,9 +1128,7 @@ enum
 
     if ([searchString hasSuffix:@"*"])
     {
-        [_searchQuery
-            setSearchString:
-                [searchString substringToIndex:([searchString length] - 1)]];
+        [_searchQuery setSearchString:[searchString substringToIndex:([searchString length] - 1)]];
         [_searchQuery setSearchComparison:AKSearchForPrefix];
     }
     else
@@ -1159,21 +1137,11 @@ enum
         [_searchQuery setSearchComparison:AKSearchForSubstring];
     }
 
-    [_searchQuery
-        setIncludesClassesAndProtocols:
-            ([_includeClassesItem state] == NSOnState)];
-    [_searchQuery
-        setIncludesMembers:
-            ([_includeMethodsItem state] == NSOnState)];
-    [_searchQuery
-        setIncludesFunctions:
-            ([_includeFunctionsItem state] == NSOnState)];
-    [_searchQuery
-        setIncludesGlobals:
-            ([_includeGlobalsItem state] == NSOnState)];
-    [_searchQuery
-        setIgnoresCase:
-            ([_ignoreCaseItem state] == NSOnState)];
+    [_searchQuery setIncludesClassesAndProtocols:([_includeClassesItem state] == NSOnState)];
+    [_searchQuery setIncludesMembers:([_includeMethodsItem state] == NSOnState)];
+    [_searchQuery setIncludesFunctions:([_includeFunctionsItem state] == NSOnState)];
+    [_searchQuery setIncludesGlobals:([_includeGlobalsItem state] == NSOnState)];
+    [_searchQuery setIgnoresCase:([_ignoreCaseItem state] == NSOnState)];
 }
 
 @end

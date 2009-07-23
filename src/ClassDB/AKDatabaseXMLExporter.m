@@ -18,9 +18,9 @@
 #import "AKProtocolNode.h"
 #import "AKGroupNode.h"
 
-//-------------------------------------------------------------------------
-// Forward declarations of private methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Forward declarations of private methods
 
 @interface AKDatabaseXMLExporter (Private)
 
@@ -60,9 +60,9 @@
 
 @implementation AKDatabaseXMLExporter
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithDatabase:(AKDatabase *)database
     fileHandle:(NSFileHandle *)outfile
@@ -91,9 +91,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// The main export method
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark The main export method
 
 - (void)doExport
 {
@@ -111,9 +111,9 @@
     [self _writeLine:@"</database>"];
 }
 
-//-------------------------------------------------------------------------
-// Exporting -- members
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Exporting -- members
 
 - (void)exportMembers:(NSString *)membersType
     ofBehavior:(AKBehaviorNode *)behaviorNode
@@ -142,9 +142,9 @@
         alsoClose:YES];
 }
 
-//-------------------------------------------------------------------------
-// Exporting -- classes and protocols
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Exporting -- classes and protocols
 
 - (void)exportClass:(AKClassNode *)classNode
 {
@@ -206,9 +206,9 @@
     [self _closeXMLElement:@"protocol"];
 }
 
-//-------------------------------------------------------------------------
-// Exporting -- group nodes
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Exporting -- group nodes
 
 - (void)exportGroupSubnode:(AKDatabaseNode *)databaseNode
     withXMLTag:(NSString *)subnodeTag
@@ -235,9 +235,9 @@
     [self _closeXMLElement:@"group"];
 }
 
-//-------------------------------------------------------------------------
-// Exporting -- frameworks
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Exporting -- frameworks
 
 - (void)exportNodesInSection:(NSString *)frameworkSection
     ofFramework:(NSString *)fwName
@@ -320,9 +320,9 @@
     [self _writeLine:@""];
 }
 
-//-------------------------------------------------------------------------
-// Low-level utility methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Low-level utility methods
 
 @end
 

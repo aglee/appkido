@@ -19,9 +19,9 @@
 
 @implementation AKBehaviorOverviewSubtopic
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (AKBehaviorNode *)behaviorNode
 {
@@ -41,9 +41,9 @@
     return nil;
 }
 
-//-------------------------------------------------------------------------
-// Utility methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Utility methods
 
 - (NSArray *)pertinentChildSectionsOf:(AKFileSection *)rootSection
 {
@@ -73,9 +73,9 @@
     return pertinentSections;
 }
 
-//-------------------------------------------------------------------------
-// AKSubtopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {

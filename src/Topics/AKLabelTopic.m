@@ -11,9 +11,9 @@
 
 @implementation AKLabelTopic
 
-//-------------------------------------------------------------------------
-// Factory methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
@@ -24,9 +24,9 @@
     return obj;
 }
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)dealloc
 {
@@ -35,9 +35,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// Getters and setters
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Getters and setters
 
 - (void)setLabel:(NSString *)label
 {
@@ -46,9 +46,9 @@
     _label = label;
 }
 
-//-------------------------------------------------------------------------
-// AKTopic methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKTopic methods
 
 + (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -100,9 +100,9 @@
     return NO;
 }
 
-//-------------------------------------------------------------------------
-// AKSortable methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKSortable methods
 
 - (NSString *)sortName
 {

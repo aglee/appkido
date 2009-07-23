@@ -20,9 +20,9 @@
 
 @implementation AKDatabaseWithDocSet
 
-//-------------------------------------------------------------------------
-// Init/awake/dealloc
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex
 {
@@ -51,9 +51,9 @@
     [super dealloc];
 }
 
-//-------------------------------------------------------------------------
-// AKDatabase methods
-//-------------------------------------------------------------------------
+
+#pragma mark -
+#pragma mark AKDatabase methods
 
 - (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
