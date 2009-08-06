@@ -1008,6 +1008,7 @@ enum
 
 - (void)_jumpToSearchResultWithPrefix:(NSString *)searchString
 {
+	NSString *lowercaseSearchString = [searchString lowercaseString];
     int searchResultIndex = 0;
     NSArray *searchResults = [_searchQuery queryResults];
     int numSearchResults = [searchResults count];
@@ -1017,7 +1018,7 @@ enum
     {
         AKDocLocator *docLocator = [searchResults objectAtIndex:i];
 
-        if ([[docLocator docName] hasPrefix:searchString])
+        if ([[[docLocator docName] lowercaseString] hasPrefix:lowercaseSearchString])
         {
             searchResultIndex = i;
             break;
