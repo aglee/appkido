@@ -110,9 +110,7 @@ enum
         _searchQuery = nil;  // Wait for -doAwakeFromNib to set this.
         _pastSearchStrings = [[NSMutableArray alloc] init];
 
-        [[DIGSFindBuffer sharedInstance]
-            addListener:self
-            withSelector:@selector(_findStringDidChange:)];
+        [[DIGSFindBuffer sharedInstance] addListener:self withSelector:@selector(_findStringDidChange:)];
     }
 
     return self;
@@ -188,10 +186,7 @@ enum
 - (IBAction)doQuicklistTableAction:(id)sender
 {
     int selectedRow = [_quicklistTable selectedRow];
-    AKDocLocator *quicklistItem =
-        (selectedRow < 0)
-        ? nil
-        : [_currentTableValues objectAtIndex:selectedRow];
+    AKDocLocator *quicklistItem = (selectedRow < 0) ? nil : [_currentTableValues objectAtIndex:selectedRow];
 
     // If we are in search mode, remember the selected object's position in
     // the search results list, so we can do Find Previous and Find Next.
@@ -303,8 +298,7 @@ enum
     {
         int oldState = [selectedItem state];
 
-        [selectedItem
-            setState:((oldState == NSOnState) ? NSOffState : NSOnState)];
+        [selectedItem setState:((oldState == NSOnState) ? NSOffState : NSOnState)];
     }
     else
     {
@@ -316,8 +310,7 @@ enum
 
 - (IBAction)selectPreviousSearchResult:(id)sender
 {
-    if (![[_searchField stringValue]
-        isEqualToString:[_searchQuery searchString]])
+    if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
     {
         [self doSearch:nil];
         return;
@@ -328,8 +321,7 @@ enum
 
 - (IBAction)selectNextSearchResult:(id)sender
 {
-    if (![[_searchField stringValue]
-        isEqualToString:[_searchQuery searchString]])
+    if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
     {
         [self doSearch:nil];
         return;
@@ -346,13 +338,10 @@ enum
 {
     // Set our _searchQuery ivar.  We do it here instead of in -init
     // because we need to be sure [_windowController database] has been set.
-    _searchQuery =
-        [[AKSearchQuery alloc]
-            initWithDatabase:[_windowController database]];
+    _searchQuery = [[AKSearchQuery alloc] initWithDatabase:[_windowController database]];
 
     // Set up _quicklistTable to do drag and drop.
-    [_quicklistTable registerForDraggedTypes:
-        [NSArray arrayWithObject:_AKQuicklistPasteboardType]];
+    [_quicklistTable registerForDraggedTypes:[NSArray arrayWithObject:_AKQuicklistPasteboardType]];
 
     // Set up the popup menu of frameworks for the "Classes in framework:"
     // quicklist item.
@@ -360,8 +349,7 @@ enum
     // We don't want that.
     [_frameworkPopup setAutoenablesItems:NO];
 
-    NSEnumerator *fwEnum =
-        [[[_windowController database] sortedFrameworkNames] objectEnumerator];
+    NSEnumerator *fwEnum = [[[_windowController database] sortedFrameworkNames] objectEnumerator];
     NSString *fwName;
 
     while ((fwName = [fwEnum nextObject]))
@@ -370,33 +358,15 @@ enum
     }
 
     // Initialize the search field to match the system find-pasteboard.
-    [_searchField setStringValue:
-        [[DIGSFindBuffer sharedInstance] findString]];
+    [_searchField setStringValue:[[DIGSFindBuffer sharedInstance] findString]];
 
     // Match the search options popup to the user's preferences.
     [_includeClassesItem setState:
-        ([AKPrefUtils
-            boolValueForPref:AKIncludeClassesAndProtocolsPrefKey]
-        ? NSOnState
-        : NSOffState)];
-    [_includeMethodsItem setState:
-        ([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey]
-        ? NSOnState
-        : NSOffState)];
-    [_includeFunctionsItem setState:
-        ([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey]
-        ? NSOnState
-        : NSOffState)];
-    [_includeGlobalsItem setState:
-        ([AKPrefUtils
-            boolValueForPref:AKIncludeGlobalsPrefKey]
-        ? NSOnState
-        : NSOffState)];
-    [_ignoreCaseItem setState:
-        ([AKPrefUtils
-            boolValueForPref:AKIgnoreCasePrefKey]
-        ? NSOnState
-        : NSOffState)];
+        ([AKPrefUtils boolValueForPref:AKIncludeClassesAndProtocolsPrefKey] ? NSOnState : NSOffState)];
+    [_includeMethodsItem setState:([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey] ? NSOnState : NSOffState)];
+    [_includeFunctionsItem setState:([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey] ? NSOnState : NSOffState)];
+    [_includeGlobalsItem setState:([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey] ? NSOnState : NSOffState)];
+    [_ignoreCaseItem setState:([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey] ? NSOnState : NSOffState)];
 
     // We want everything in the search options popup to be enabled.
     [_searchOptionsPopup setAutoenablesItems:NO];
@@ -457,8 +427,7 @@ enum
     objectValueForTableColumn:(NSTableColumn *)aTableColumn
     row:(int)rowIndex
 {
-    AKDocLocator *quicklistItem =
-        [_currentTableValues objectAtIndex:rowIndex];
+    AKDocLocator *quicklistItem = [_currentTableValues objectAtIndex:rowIndex];
 
     return [quicklistItem stringToDisplayInLists];
 }
@@ -483,16 +452,14 @@ enum
     }
 
     NSPasteboard *pboard = [info draggingPasteboard];
-    NSArray *draggedRows =
-        (NSArray *)[pboard propertyListForType:_AKQuicklistPasteboardType];
+    NSArray *draggedRows = (NSArray *)[pboard propertyListForType:_AKQuicklistPasteboardType];
 
     if ([draggedRows count] == 0)
     {
         return NO;
     }
 
-    int draggedRowIndex =
-        [(NSNumber *)[draggedRows objectAtIndex:0] intValue];
+    int draggedRowIndex = [(NSNumber *)[draggedRows objectAtIndex:0] intValue];
 
     if ((draggedRowIndex < 0) || (draggedRowIndex == row))
     {
@@ -501,9 +468,7 @@ enum
 
     AKAppController *appController = [NSApp delegate];
 
-    [appController
-        moveFavoriteFromIndex:draggedRowIndex
-        toIndex:row];
+    [appController moveFavoriteFromIndex:draggedRowIndex toIndex:row];
 
     return YES;
 }
@@ -530,15 +495,8 @@ enum
         return NO;
     }
 
-    [pboard
-        declareTypes:
-            [NSArray arrayWithObjects:
-                _AKQuicklistPasteboardType,
-                nil]
-        owner:self];
-    [pboard
-        setPropertyList:rows
-        forType:_AKQuicklistPasteboardType];
+    [pboard declareTypes:[NSArray arrayWithObjects:_AKQuicklistPasteboardType, nil] owner:self];
+    [pboard setPropertyList:rows forType:_AKQuicklistPasteboardType];
 
     return YES;
 }
@@ -683,11 +641,11 @@ enum
                 @"NSArray",
                 @"NSDictionary",
                 @"NSSet",
+                @"NSDate",
                 nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_collectionClasses =
-            [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_collectionClasses;
@@ -702,8 +660,7 @@ enum
         NSArray *arr = [NSArray arrayWithObjects:@"NSWindow", nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_windowClasses =
-            [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_windowClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_windowClasses;
@@ -729,8 +686,7 @@ enum
         NSArray *arr = [NSArray arrayWithObjects:nameOfRootViewClass, nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_viewClasses =
-            [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_viewClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_viewClasses;
@@ -745,8 +701,7 @@ enum
         NSArray *arr = [NSArray arrayWithObjects:@"NSCell", nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_cellClasses =
-            [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_cellClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_cellClasses;
@@ -769,16 +724,12 @@ enum
 
             // See if the class doc contains a "Delegate Methods" section.
             AKFileSection *delegateMethodsSection =
-                [[classNode nodeDocumentation]
-                    childSectionWithName:
-                        AKDelegateMethodsHTMLSectionName];
+                [[classNode nodeDocumentation] childSectionWithName:AKDelegateMethodsHTMLSectionName];
 
             if (!delegateMethodsSection)
             {
                 delegateMethodsSection =
-                    [[classNode nodeDocumentation]
-                        childSectionWithName:
-                            AKDelegateMethodsAlternateHTMLSectionName];
+                    [[classNode nodeDocumentation] childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
             }
 
             if (delegateMethodsSection)
@@ -789,17 +740,14 @@ enum
             // If not, see if the class has a method with a name like setFooDelegate:.
             if (!classHasDelegate)
             {
-                NSEnumerator *methodEnum =
-                    [[classNode documentedInstanceMethods]
-                        objectEnumerator];
+                NSEnumerator *methodEnum = [[classNode documentedInstanceMethods] objectEnumerator];
                 AKMethodNode *methodNode;
 
                 while ((methodNode = [methodEnum nextObject]))
                 {
                     NSString *methodName = [methodNode nodeName];
 
-                    if ([methodName hasPrefix:@"set"]
-                        && [methodName hasSuffix:@"Delegate:"])
+                    if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"])
                     {
                         classHasDelegate = YES;
                         break;
@@ -810,17 +758,14 @@ enum
             // If not, see if the class has a property named "delegate" or "fooDelegate".
             if (!classHasDelegate)
             {
-                NSEnumerator *propertyEnum =
-                    [[classNode documentedProperties]
-                        objectEnumerator];
+                NSEnumerator *propertyEnum = [[classNode documentedProperties] objectEnumerator];
                 AKPropertyNode *propertyNode;
 
                 while ((propertyNode = [propertyEnum nextObject]))
                 {
                     NSString *propertyName = [propertyNode nodeName];
 
-                    if ([propertyName isEqual:@"delegate"]
-                        || [propertyName hasSuffix:@"Delegate:"])
+                    if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"])
                     {
                         classHasDelegate = YES;
                         break;
@@ -844,8 +789,7 @@ enum
         }
 
         classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDelegates =
-            [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_classesWithDelegates = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_classesWithDelegates;
@@ -867,9 +811,7 @@ enum
             BOOL classHasDataSource = NO;
 
             // See if the class has a -setDataSource: method.
-            NSEnumerator *methodEnum =
-                [[classNode documentedInstanceMethods]
-                    objectEnumerator];
+            NSEnumerator *methodEnum = [[classNode documentedInstanceMethods] objectEnumerator];
             AKMethodNode *methodNode;
 
             while ((methodNode = [methodEnum nextObject]))
@@ -886,9 +828,7 @@ enum
             // If not, see if the class has a property named "dataSource".
             if (!classHasDataSource)
             {
-                NSEnumerator *propertyEnum =
-                    [[classNode documentedProperties]
-                        objectEnumerator];
+                NSEnumerator *propertyEnum = [[classNode documentedProperties] objectEnumerator];
                 AKPropertyNode *propertyNode;
 
                 while ((propertyNode = [propertyEnum nextObject]))
@@ -904,8 +844,7 @@ enum
             }
 
             // If not, see if there's a protocol named thisClassDataSource.
-            NSString *possibleDataSourceProtocolName =
-                [[classNode nodeName] stringByAppendingString:@"DataSource"];
+            NSString *possibleDataSourceProtocolName = [[classNode nodeName] stringByAppendingString:@"DataSource"];
             if ([[_windowController database] protocolWithName:possibleDataSourceProtocolName])
             {
                 classHasDataSource = YES;
@@ -919,8 +858,7 @@ enum
         }
 
         classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDataSources =
-            [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_classesWithDataSources = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_classesWithDataSources;
@@ -932,9 +870,7 @@ enum
 
     if (!s_dataSourceProtocols)
     {
-        NSEnumerator *en =
-            [[[_windowController database] allProtocols]
-                objectEnumerator];
+        NSEnumerator *en = [[[_windowController database] allProtocols] objectEnumerator];
         AKProtocolNode *protocolNode;
         NSMutableArray *protocolNodes = [NSMutableArray array];
 
@@ -946,8 +882,7 @@ enum
             }
         }
 
-        s_dataSourceProtocols =
-            [[self _sortedDocLocatorsForProtocols:protocolNodes] retain];
+        s_dataSourceProtocols = [[self _sortedDocLocatorsForProtocols:protocolNodes] retain];
     }
 
     return s_dataSourceProtocols;
@@ -955,8 +890,7 @@ enum
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-    NSArray *classNodes =
-        [[_windowController database] classesForFrameworkNamed:fwName];
+    NSArray *classNodes = [[_windowController database] classesForFrameworkNamed:fwName];
 
     return [self _sortedDocLocatorsForClasses:classNodes];
 }
