@@ -18,6 +18,9 @@
  * This UI is used in two places: (1) the modal window that appears on
  * application launch if we can't find the docset specified by the user's prefs,
  * and (2) the Dev Tools tab of the preferences window.
+ *
+ * To use this class, make an instance in a nib file that also contains a text
+ * field and a popup button, and connect the two outlets.
  */
 @interface AKDevToolsPathController : NSObject
 {
