@@ -142,6 +142,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return _database;
 }
 
+- (NSWindow *)window
+{
+    return [_topicBrowser window];
+}
+
 
 #pragma mark -
 #pragma mark User preferences

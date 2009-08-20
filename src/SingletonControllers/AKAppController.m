@@ -81,7 +81,8 @@
 - (NSString *)_displayStringForVersion:(NSDictionary *)versionDictionary;
 
 // Private methods -- window management
-- (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout;
+- (NSWindow *)_frontmostBrowserWindow;
+- (AKWindowController *)_windowControllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout;
 - (void)_handleWindowWillCloseNotification:(NSNotification *)notification;
 - (void)_openInitialWindows;
 - (NSArray *)_allWindowsAsPrefArray;
@@ -292,41 +293,33 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return (obj && [obj isKindOfClass:[NSTextView class]]) ? obj : nil;
 }
 
-// [agl] Was there some reason I couldn't use keyWindow/mainWindow instead of
-// iterating through the whole window list?
 - (AKWindowController *)frontmostWindowController
 {
-    int numWindows;
-
-    NSCountWindows(&numWindows);
-
-    int windowList[numWindows];
-
-    NSWindowList(numWindows, windowList);
-
-    int i;
-    for (i = 0; i < numWindows; i++)
-    {
-        int windowNum = windowList[i];
-        NSWindow *win = [NSApp windowWithWindowNumber:windowNum];
-        id del = [win delegate];
-
-        if ([del isKindOfClass:[AKWindowController class]])
-        {
-            return del;
-        }
-    }
-
-    // If we got this far, there is no browser window open.
-    return nil;
+    return [[self _frontmostBrowserWindow] delegate];
 }
 
 - (AKWindowController *)controllerForNewWindow
 {
+    // Create the window, using remembered prefs for its layout if any.
     NSDictionary *prefDict = [AKPrefUtils dictionaryValueForPref:AKLayoutForNewWindowsPrefName];
     AKWindowLayout *windowLayout = [AKWindowLayout fromPrefDictionary:prefDict];
-    AKWindowController *windowController = [self _controllerForNewWindowWithLayout:windowLayout];
+    AKWindowController *windowController = [self _windowControllerForNewWindowWithLayout:windowLayout];
 
+    // Stagger the window relative to the frontmost window, if there is one.
+    NSWindow *existingWindow = [self _frontmostBrowserWindow];
+
+    if (existingWindow)
+    {
+        NSRect existingFrame = [existingWindow frame];
+        NSRect newFrame = [[windowController window] frame];
+
+        newFrame = NSOffsetRect(newFrame,
+                                NSMinX(existingFrame) - NSMinX(newFrame) + 20,
+                                NSMaxY(existingFrame) - NSMaxY(newFrame) - 20);
+        [[windowController window] setFrame:newFrame display:NO];
+    }
+
+    // Display the window.
     [windowController openWindowWithQuicklistDrawer:(windowLayout ? [windowLayout quicklistDrawerIsOpen] : YES)];
 
     return windowController;
@@ -414,46 +407,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [fav release];
     [self _putFavoritesIntoPrefs];
     [self applyUserPreferences];
-}
-
-
-#pragma mark -
-#pragma mark UI item validation
-
-- (BOOL)validateItem:(id)anItem
-{
-    SEL itemAction = [anItem action];
-
-    if (itemAction == @selector(openSearchPanel:))
-    {
-        return YES;
-    }
-    else if ((itemAction == @selector(openNewWindow:))
-        || (itemAction == @selector(openLinkInNewWindow:))
-        || (itemAction == @selector(openPrefsPanel:))
-        || (itemAction == @selector(checkForNewerVersion:))
-        || (itemAction == @selector(openAboutPanel:))
-        || (itemAction == @selector(exportDatabase:)))
-    {
-        return YES;
-    }
-    else if ((itemAction == @selector(_testParser:)) // [agl] uses AKDebugUtils
-        || (itemAction == @selector(_printKeyViewLoop:)))
-    {
-        return YES;
-    }
-    else if (itemAction == @selector(scrollToTextSelection:))
-    {
-        NSTextView *tv = [self selectedTextView];
-
-        if (tv == nil) { return NO; }
-
-        return ([tv selectedRange].length > 0);
-    }
-    else
-    {
-        return NO;
-    }
 }
 
 
@@ -612,6 +565,46 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [firstResponder ak_printKeyViewLoop];
             [firstResponder ak_printReverseKeyViewLoop];
         }
+    }
+}
+
+
+#pragma mark -
+#pragma mark UI item validation
+
+- (BOOL)validateItem:(id)anItem
+{
+    SEL itemAction = [anItem action];
+
+    if (itemAction == @selector(openSearchPanel:))
+    {
+        return YES;
+    }
+    else if ((itemAction == @selector(openNewWindow:))
+        || (itemAction == @selector(openLinkInNewWindow:))
+        || (itemAction == @selector(openPrefsPanel:))
+        || (itemAction == @selector(checkForNewerVersion:))
+        || (itemAction == @selector(openAboutPanel:))
+        || (itemAction == @selector(exportDatabase:)))
+    {
+        return YES;
+    }
+    else if ((itemAction == @selector(_testParser:)) // [agl] uses AKDebugUtils
+        || (itemAction == @selector(_printKeyViewLoop:)))
+    {
+        return YES;
+    }
+    else if (itemAction == @selector(scrollToTextSelection:))
+    {
+        NSTextView *tv = [self selectedTextView];
+
+        if (tv == nil) { return NO; }
+
+        return ([tv selectedRange].length > 0);
+    }
+    else
+    {
+        return NO;
     }
 }
 
@@ -805,7 +798,34 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #pragma mark -
 #pragma mark Private methods -- window management
 
-- (AKWindowController *)_controllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout
+- (NSWindow *)_frontmostBrowserWindow
+{
+    int numWindows;
+
+    NSCountWindows(&numWindows);
+
+    int windowList[numWindows];
+
+    NSWindowList(numWindows, windowList);
+
+    int i;
+    for (i = 0; i < numWindows; i++)
+    {
+        int windowNum = windowList[i];
+        NSWindow *win = [NSApp windowWithWindowNumber:windowNum];
+        id del = [win delegate];
+
+        if ([del isKindOfClass:[AKWindowController class]])
+        {
+            return win;
+        }
+    }
+
+    // If we got this far, there is no browser window open.
+    return nil;
+}
+
+- (AKWindowController *)_windowControllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout
 {
     AKWindowController *windowController = [[[AKWindowController alloc] initWithDatabase:_appDatabase] autorelease];
 
@@ -846,7 +866,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             NSDictionary *prefDict = [savedWindows objectAtIndex:i];
             AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
             AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
-            AKWindowController *wc = [self _controllerForNewWindowWithLayout:windowLayout];
+            AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
 
             [wc jumpToDocLocator:[savedWindowState savedDocLocator]];
             [wc openWindowWithQuicklistDrawer:[[savedWindowState savedWindowLayout] quicklistDrawerIsOpen]];
