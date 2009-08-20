@@ -101,6 +101,8 @@
 
 - (AKDatabase *)database;
 
+- (NSWindow *)window;
+
 
 #pragma mark -
 #pragma mark User preferences
