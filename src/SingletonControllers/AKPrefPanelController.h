@@ -33,6 +33,8 @@
     IBOutlet NSTableView *_frameworksTable;
 
     // Controls in the Dev Tools tab.
+    // In our nib file, _devToolsPathController's two outlets are connected
+    // to _devToolsPathField and _sdkVersionsPopUpButton.
     IBOutlet AKDevToolsPathController *_devToolsPathController;
     IBOutlet NSTextField *_devToolsPathField;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
