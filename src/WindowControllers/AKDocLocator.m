@@ -27,25 +27,16 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)withTopic:(AKTopic *)topic
-    subtopicName:(NSString *)subtopicName
-    docName:(NSString *)docName
++ (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
-    return
-        [[[self alloc]
-            initWithTopic:topic
-            subtopicName:subtopicName
-            docName:docName]
-            autorelease];
+    return [[[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName] autorelease];
 }
 
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithTopic:(AKTopic *)topic
-    subtopicName:(NSString *)subtopicName
-    docName:(NSString *)docName
+- (id)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
     if ((self = [super init]))
     {
@@ -87,11 +78,7 @@
 
     AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
 
-    return
-        [self
-            withTopic:topic
-            subtopicName:subtopicName
-            docName:docName];
+    return [self withTopic:topic subtopicName:subtopicName docName:docName];
 }
 
 - (NSDictionary *)asPrefDictionary
@@ -100,23 +87,17 @@
 
     if (_topic)
     {
-        [prefDict
-            setObject:[_topic asPrefDictionary]
-            forKey:AKTopicPrefKey];
+        [prefDict setObject:[_topic asPrefDictionary] forKey:AKTopicPrefKey];
     }
 
     if (_subtopicName)
     {
-        [prefDict
-            setObject:_subtopicName
-            forKey:AKSubtopicPrefKey];
+        [prefDict setObject:_subtopicName forKey:AKSubtopicPrefKey];
     }
 
     if (_docName)
     {
-        [prefDict
-            setObject:_docName
-            forKey:AKDocNamePrefKey];
+        [prefDict setObject:_docName forKey:AKDocNamePrefKey];
     }
 
     return prefDict;
@@ -347,15 +328,11 @@ compareDocLocators(id locOne, id locTwo, void *context)
         {
             if (_docName == nil)
             {
-                _cachedSortName =
-                    [NSString stringWithFormat:@"%@-%@",
-                        _subtopicName, topicName];
+                _cachedSortName = [NSString stringWithFormat:@"%@-%@", _subtopicName, topicName];
             }
             else
             {
-                _cachedSortName =
-                    [NSString stringWithFormat:@"%@-%@",
-                        _docName, topicName];
+                _cachedSortName = [NSString stringWithFormat:@"%@-%@", _docName, topicName];
             }
         }
 
@@ -380,16 +357,14 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
     // See if the subtopics have the same name.
     NSString *otherSubtopicName = [anObject subtopicName];
-    if ((otherSubtopicName != _subtopicName)
-        && ![otherSubtopicName isEqualToString:_subtopicName])
+    if ((otherSubtopicName != _subtopicName) && ![otherSubtopicName isEqualToString:_subtopicName])
     {
         return NO;
     }
 
     // See if the docs have the same name.
     NSString *otherDocName = [anObject docName];
-    if ((otherDocName != _docName)
-        && ![otherDocName isEqualToString:_docName])
+    if ((otherDocName != _docName) && ![otherDocName isEqualToString:_docName])
     {
         return NO;
     }

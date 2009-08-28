@@ -73,8 +73,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         _database = [database retain];
 
-        int maxHistory =
-            [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
+        int maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
         _windowHistory = [[NSMutableArray alloc] initWithCapacity:maxHistory];
         _windowHistoryIndex = -1;
@@ -163,10 +162,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (AKDocLocator *)currentHistoryItem
 {
-    return
-        (_windowHistoryIndex < 0)
-        ? nil
-        : [_windowHistory objectAtIndex:_windowHistoryIndex];
+    return (_windowHistoryIndex < 0) ? nil : [_windowHistory objectAtIndex:_windowHistoryIndex];
 }
 
 - (void)openWindowWithQuicklistDrawer:(BOOL)drawerIsOpen
@@ -191,44 +187,30 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     AKDocLocator *currentItem = [self currentHistoryItem];
 
-    [self
-        jumpToTopic:obj
-        subtopicName:[currentItem subtopicName]
-        docName:[currentItem docName]];
+    [self jumpToTopic:obj subtopicName:[currentItem subtopicName] docName:[currentItem docName]];
 }
 
 - (void)jumpToSubtopicWithName:(NSString *)subtopicName
 {
     AKDocLocator *currentItem = [self currentHistoryItem];
 
-    [self
-        jumpToTopic:[currentItem topicToDisplay]
-        subtopicName:subtopicName
-        docName:[currentItem docName]];
+    [self jumpToTopic:[currentItem topicToDisplay] subtopicName:subtopicName docName:[currentItem docName]];
 }
 
 - (void)jumpToDocName:(NSString *)docName
 {
     AKDocLocator *currentItem = [self currentHistoryItem];
 
-    [self
-        jumpToTopic:[currentItem topicToDisplay]
-        subtopicName:[currentItem subtopicName]
-        docName:docName];
+    [self jumpToTopic:[currentItem topicToDisplay] subtopicName:[currentItem subtopicName] docName:docName];
 }
 
 - (void)jumpToDocLocator:(AKDocLocator *)docLocator
 {
-    [self
-        jumpToTopic:[docLocator topicToDisplay]
-        subtopicName:[docLocator subtopicName]
-        docName:[docLocator docName]];
+    [self jumpToTopic:[docLocator topicToDisplay] subtopicName:[docLocator subtopicName] docName:[docLocator docName]];
 }
 
 // all the other "jumpTo" methods must come through here
-- (void)jumpToTopic:(AKTopic *)topic
-    subtopicName:(NSString *)subtopicName
-    docName:(NSString *)docName
+- (void)jumpToTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
     if (topic == nil)
     {
@@ -238,23 +220,17 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [self _rememberCurrentTextSelection];
 
-    AKDocLocator *newHistoryItem =
-        [AKDocLocator
-            withTopic:topic
-            subtopicName:subtopicName
-            docName:docName];
+    AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic subtopicName:subtopicName docName:docName];
 
-    [_topicBrowserController
-        navigateFrom:[self currentHistoryItem]
-        to:newHistoryItem];
+    [_topicBrowserController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
     [self _addHistoryItem:newHistoryItem];
 }
 
 - (BOOL)jumpToLinkURL:(NSURL *)linkURL
 {
-    NSString *filePath =
-        [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
+    NSString *filePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
     NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
+
     linkURL = [NSURL URLWithString:[linkURL relativeString] relativeToURL:docFileURL];
 
     // If the link URL is a "file:" URL, try to convert it to an AKDocLocator.
@@ -263,21 +239,16 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         // If the link can be converted to an AKDocLocator, jump to that
         // locator.  Otherwise, try opening the file in the user's browser.
-        linkDestination =
-            [[AKLinkResolver linkResolverWithDatabase:_database]
-                docLocatorForURL:linkURL];
+        linkDestination = [[AKLinkResolver linkResolverWithDatabase:_database] docLocatorForURL:linkURL];
 
         if (linkDestination == nil)
         {
             DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
-            linkDestination =
-                [[AKOldLinkResolver linkResolverWithDatabase:_database]
-                    docLocatorForURL:linkURL];
+            linkDestination = [[AKOldLinkResolver linkResolverWithDatabase:_database] docLocatorForURL:linkURL];
         }
     }
 
-    // Now we know whether we can follow the link within the app or we have to
-    // use NSWorkspace.
+    // Now we know whether we can follow the link within the app or we have to use NSWorkspace.
     if (linkDestination)
     {
         [self jumpToDocLocator:linkDestination];
@@ -333,23 +304,18 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Apply the specified window frame.
-    [[_topicBrowser window]
-        setFrame:[windowLayout windowFrame] display:NO];
+    [[_topicBrowser window] setFrame:[windowLayout windowFrame] display:NO];
 
     // Restore the visibility of the toolbar.
-    [[[_topicBrowser window] toolbar]
-        setVisible:[windowLayout toolbarIsVisible]];
+    [[[_topicBrowser window] toolbar] setVisible:[windowLayout toolbarIsVisible]];
 
     // Apply the new browser fraction.  Note that -_computerBrowserHeight
     // uses the _browserFractionWhenVisible ivar, so we make sure to set
     // the ivar first.
     _browserFractionWhenVisible = [windowLayout browserFraction];
-    if (([_topicBrowser frame].size.height > 0.0)
-        && [windowLayout browserIsVisible])
+    if (([_topicBrowser frame].size.height > 0.0) && [windowLayout browserIsVisible])
     {
-        [_topLevelSplitView
-            ak_setHeight:[self _computeBrowserHeight]
-            ofSubview:_topicBrowser];
+        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight] ofSubview:_topicBrowser];
     }
     else
     {
@@ -357,15 +323,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Restore the state of the inner split view.
-    [_innerSplitView
-        ak_setHeight:[windowLayout middleViewHeight]
-        ofSubview:_middleView];
+    [_innerSplitView ak_setHeight:[windowLayout middleViewHeight] ofSubview:_middleView];
 
     // Restore the number of browser columns.
     if ([windowLayout numberOfBrowserColumns])
     {
-        [_topicBrowser setMaxVisibleColumns:
-            [windowLayout numberOfBrowserColumns]];
+        [_topicBrowser setMaxVisibleColumns:[windowLayout numberOfBrowserColumns]];
     }
     else
     {
@@ -393,27 +356,22 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [windowLayout setWindowFrame:[[_topicBrowser window] frame]];
 
     // Remember the visibility of the toolbar.
-    [windowLayout setToolbarIsVisible:
-        [[[_topicBrowser window] toolbar] isVisible]];
+    [windowLayout setToolbarIsVisible:[[[_topicBrowser window] toolbar] isVisible]];
 
     // Remember the state of the inner split view.
     [windowLayout setMiddleViewHeight:([_middleView frame].size.height)];
 
     // Remember the state of the browser.
-    [windowLayout setBrowserIsVisible:
-        ([_topicBrowser frame].size.height > 0)];
+    [windowLayout setBrowserIsVisible:([_topicBrowser frame].size.height > 0)];
     [windowLayout setBrowserFraction:_browserFractionWhenVisible];
-    [windowLayout setNumberOfBrowserColumns:
-        [_topicBrowser maxVisibleColumns]];
+    [windowLayout setNumberOfBrowserColumns:[_topicBrowser maxVisibleColumns]];
 
     // Remember the state of the Quicklist drawer.
     int state = [_quicklistDrawer state];
-    BOOL drawerIsOpen =
-        (state == NSDrawerOpenState) || (state == NSDrawerOpeningState);
+    BOOL drawerIsOpen = (state == NSDrawerOpenState) || (state == NSDrawerOpeningState);
 
     [windowLayout setQuicklistDrawerIsOpen:drawerIsOpen];
-    [windowLayout setQuicklistDrawerWidth:
-        ([_quicklistDrawer contentSize].width)];
+    [windowLayout setQuicklistDrawerWidth:([_quicklistDrawer contentSize].width)];
 
     // Remember the internal state of the Quicklist.
     [_quicklistController putWindowLayoutInto:windowLayout];
@@ -421,8 +379,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState
 {
-    AKWindowLayout *windowLayout =
-        [[[AKWindowLayout alloc] init] autorelease];
+    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
 
     [self putWindowLayoutInto:windowLayout];
 
@@ -479,29 +436,19 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         AKTopic *currentTopic = [self _currentTopic];
 
-        // Update the menu item title to reflect what's currently
-        // selected in the topic browser.
+        // Update the menu item title to reflect what's currently selected in the topic browser.
         if ([anItem isKindOfClass:[NSMenuItem class]])
         {
-            NSString *topicName =
-                [currentTopic stringToDisplayInTopicBrowser];
-            NSString *menuTitle =
-                [NSString
-                    stringWithFormat:@"Add \"%@\" to Favorites",
-                    topicName];
+            NSString *topicName = [currentTopic stringToDisplayInTopicBrowser];
+            NSString *menuTitle = [NSString stringWithFormat:@"Add \"%@\" to Favorites", topicName];
 
             [anItem setTitle:menuTitle];
         }
 
-        // Enable the item if the selected topic isn't already a
-        // favorite.
+        // Enable the item if the selected topic isn't already a favorite.
         AKAppController *appController = [NSApp delegate];
         NSArray *favoritesList = [appController favoritesList];
-        AKDocLocator *proposedFavorite =
-            [AKDocLocator
-                withTopic:currentTopic
-                subtopicName:nil
-                docName:nil];
+        AKDocLocator *proposedFavorite = [AKDocLocator withTopic:currentTopic subtopicName:nil docName:nil];
 
         if ([favoritesList containsObject:proposedFavorite])
         {
@@ -579,14 +526,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)rememberWindowLayout:(id)sender
 {
-    AKWindowLayout *windowLayout =
-        [[[AKWindowLayout alloc] init] autorelease];
+    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
     [self putWindowLayoutInto:windowLayout];
 
     NSDictionary *prefDictionary = [windowLayout asPrefDictionary];
-    [AKPrefUtils
-        setDictionaryValue:prefDictionary
-        forPref:AKLayoutForNewWindowsPrefName];
+    [AKPrefUtils setDictionaryValue:prefDictionary forPref:AKLayoutForNewWindowsPrefName];
 }
 
 - (IBAction)addBrowserColumn:(id)sender
@@ -610,9 +554,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     if (browserFrame.size.height == 0.0)
     {
-        [_topLevelSplitView
-            ak_setHeight:[self _computeBrowserHeight]
-            ofSubview:_topicBrowser];
+        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight] ofSubview:_topicBrowser];
     }
     else
     {
@@ -622,8 +564,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 // [agl] KLUDGE -- for some reason the scroll view does not retile
 // automatically, so I force it here; the reason I traverse all subviews
 // is because the internal view hierarchy of WebView is not exposed
-    NSMutableArray *allSubviews =
-        [NSMutableArray arrayWithArray:[_docView subviews]];
+    NSMutableArray *allSubviews = [NSMutableArray arrayWithArray:[_docView subviews]];
     unsigned index = 0;
 
     while (index < [allSubviews count])
@@ -797,11 +738,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)addTopicToFavorites:(id)sender
 {
     [(AKAppController *)[NSApp delegate]
-        addFavorite:
-            [AKDocLocator
-                withTopic:[self _currentTopic]
-                subtopicName:nil
-                docName:nil]];
+        addFavorite:[AKDocLocator withTopic:[self _currentTopic] subtopicName:nil docName:nil]];
 }
 
 - (IBAction)findNext:(id)sender
@@ -841,12 +778,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                 @"    activate\n"
                 @"end tell",
                 [fileSection filePath]];
-    NSAppleScript *appleScript =
-        [[[NSAppleScript alloc] initWithSource:appleScriptCommand]
-            autorelease];
+    NSAppleScript *appleScript = [[[NSAppleScript alloc] initWithSource:appleScriptCommand] autorelease];
     NSDictionary *errorInfo = nil;
-    NSAppleEventDescriptor *appleEventDescriptor =
-        [appleScript executeAndReturnError:&errorInfo];
+    NSAppleEventDescriptor *appleEventDescriptor = [appleScript executeAndReturnError:&errorInfo];
 
     if (appleEventDescriptor == nil)
     {
@@ -856,8 +790,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)copyDocTextURL:(id)sender
 {
-    NSString *filePath =
-        [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
+    NSString *filePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
     NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
     NSURL *fileURL = [[docFileURL absoluteURL] standardizedURL];
 
@@ -872,8 +805,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)openDocURLInBrowser:(id)sender
 {
-    NSString *filePath =
-        [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
+    NSString *filePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
     NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
     NSURL *fileURL = [[docFileURL absoluteURL] standardizedURL];
 
@@ -887,6 +819,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)selectSearchField:(id)sender
 {
     int state = [_quicklistDrawer state];
+
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
         [self toggleQuicklistDrawer:nil];
@@ -898,6 +831,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)selectPreviousSearchResult:(id)sender
 {
     int state = [_quicklistDrawer state];
+
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
         [self toggleQuicklistDrawer:nil];
@@ -909,6 +843,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)selectNextSearchResult:(id)sender
 {
     int state = [_quicklistDrawer state];
+
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
         [self toggleQuicklistDrawer:nil];
@@ -984,8 +919,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_initToolbar
 {
-    NSToolbar *toolbar =
-        [[[NSToolbar alloc] initWithIdentifier:_AKToolbarID] autorelease];
+    NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:_AKToolbarID] autorelease];
 
     // Set up toolbar properties. 
     [toolbar setAllowsUserCustomization:YES];
@@ -1036,9 +970,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         if (menuItemName)
         {
-            [_backMenu addItemWithTitle:menuItemName
-                action:@selector(doBackMenuAction:)
-                keyEquivalent:@""];
+            [_backMenu addItemWithTitle:menuItemName action:@selector(doBackMenuAction:) keyEquivalent:@""];
         }
     }
 }
@@ -1063,16 +995,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         AKDocLocator *historyItem = [_windowHistory objectAtIndex:i];
         NSString *menuItemName = [historyItem stringToDisplayInLists];
 
-        [_forwardMenu addItemWithTitle:menuItemName
-            action:@selector(doForwardMenuAction:)
-            keyEquivalent:@""];
+        [_forwardMenu addItemWithTitle:menuItemName action:@selector(doForwardMenuAction:) keyEquivalent:@""];
     }
 }
 
 - (void)_refreshSuperclassButton
 {
-    AKClassNode *parentClass =
-        [[self _currentTopic] parentClassOfTopic];
+    AKClassNode *parentClass = [[self _currentTopic] parentClassOfTopic];
 
     // Enable or disable the Superclass button as appropriate.
     [_superclassButton setEnabled:(parentClass != nil)];
@@ -1115,8 +1044,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Update our marker index into the history array.
     _windowHistoryIndex = index;
-    DIGSLogDebug(@"jumped to history index %d, history count=%d",
-        _windowHistoryIndex, [_windowHistory count]);
+    DIGSLogDebug(@"jumped to history index %d, history count=%d", _windowHistoryIndex, [_windowHistory count]);
 
     // Update miscellaneous parts of the UI that reflect our current
     // position in history.
@@ -1166,8 +1094,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Any time the history changes, we want to do the following UI updates.
     [self _refreshNavigationButtons];
-    [[_topicBrowser window]
-        setTitle:[newHistoryItem stringToDisplayInLists]];
+    [[_topicBrowser window] setTitle:[newHistoryItem stringToDisplayInLists]];
 }
 
 - (AKTopic *)_currentTopic
@@ -1185,9 +1112,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
     else
     {
-        float splitViewHeight =
-            [_topLevelSplitView frame].size.height
-            - [_topLevelSplitView dividerThickness];
+        float splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
 
         return browserHeight / splitViewHeight;
     }
@@ -1195,9 +1120,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (float)_computeBrowserHeight
 {
-    float splitViewHeight =
-        [_topLevelSplitView frame].size.height
-        - [_topLevelSplitView dividerThickness];
+    float splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
 
     return _browserFractionWhenVisible * splitViewHeight;
 }

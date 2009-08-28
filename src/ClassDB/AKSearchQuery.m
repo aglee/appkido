@@ -498,12 +498,7 @@ g_NSStringComparisons++;
                 {
                     AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:_database];
 
-                    [_searchResults
-                        addObject:
-                            [AKDocLocator
-                                withTopic:topic
-                                subtopicName:[groupNode nodeName]
-                                docName:[subnode nodeName]]];
+                    [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:[groupNode nodeName] docName:[subnode nodeName]]];
                 }
             }
         }
@@ -563,12 +558,7 @@ g_NSStringComparisons++;
                             topicWithFrameworkNamed:fwName
                             inDatabase:_database];
 
-                    [_searchResults
-                        addObject:
-                            [AKDocLocator
-                                withTopic:topic
-                                subtopicName:[groupNode nodeName]
-                                docName:[subnode nodeName]]];
+                    [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:[groupNode nodeName] docName:[subnode nodeName]]];
                 }
             }
         }
@@ -586,12 +576,7 @@ g_NSStringComparisons++;
     {
         if ([self _matchesNode:node])
         {
-            [_searchResults
-                addObject:
-                    [AKDocLocator
-                        withTopic:topic
-                        subtopicName:subtopicName
-                        docName:[node nodeName]]];
+            [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:subtopicName docName:[node nodeName]]];
         }
     }
 }
