@@ -18,7 +18,7 @@ defaults write com.apple.Xcode PBXCustomTemplateMacroDefinitions -dict-add ORGAN
 
 
 ---- R E L E A S E -----
-Edit version string in Info.plist, InfoPlist.strings, Credits.html
+Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings, Credits.html
 Commit everything
     Close the project in PB, use command line to commit the xcodeproj
     Can keep the project closed for remaining steps
