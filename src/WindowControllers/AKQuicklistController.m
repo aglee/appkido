@@ -1018,7 +1018,7 @@ enum
     {
         AKDocLocator *docLocator = [searchResults objectAtIndex:i];
 
-        if ([[[docLocator docName] lowercaseString] hasPrefix:lowercaseSearchString])
+        if ([[[docLocator stringToDisplayInLists] lowercaseString] hasPrefix:lowercaseSearchString])
         {
             searchResultIndex = i;
             break;
