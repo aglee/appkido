@@ -6,9 +6,9 @@
 <body bgcolor="#FFFFFF">
 <h1>AppKiDo version history</h1>
 [ <a href="appkido.html">home</a> ]
-[ <a href="AppKiDo-0.982.tgz">download <b>AppKiDo</b> 0.982</a> ]
-[ <a href="AppKiDo-for-iPhone-0.982.tgz">download <b>AppKiDo-for-iPhone</b> 0.982</a> ]
-[ <a href="AppKiDo-src-0.982.tgz">download the <b>source</b></a> ]
+[ <a href="AppKiDo-0.983.tgz">download <b>AppKiDo</b> 0.983</a> ]
+[ <a href="AppKiDo-for-iPhone-0.983.tgz">download <b>AppKiDo-for-iPhone</b> 0.983</a> ]
+[ <a href="AppKiDo-src-0.983.tgz">download the <b>source</b></a> ]
 <br/>
 [ <a href="release-notes.html">release notes</a> ]
 [ <a href="screenshot.html">screenshot</a> ]
@@ -21,6 +21,21 @@
 
 <table><tr><td>
 
+
+<h2>Version 0.983 (August 28, 2009)</h2>
+<ul>
+<li>Works with the Xcode 3.2 docs (i.e., Snow Leopard).</li>
+<li>Added NSDate to the "Strings, data, collections" quicklist.</li>
+<li>If you switch to a different app while AppKiDo is loading, you won't get AppKiDo windows popping up in front when it's done loading.</li>
+<li>Changed to look for docs in the right place when the Dev Tools version is 2.5 and the Dev Tools directory is not /Developer.</li>
+<li>Added a popup button in prefs so you can choose between iPhone SDKs if you have more than one installed.</li>
+<li>Fixed bug where links to http: pages (like the sample code links in +stringWithString:) weren't going anywhere.</li>
+<li>Fixed bug causing DOM classes to show up as root classes.</li>
+<li>When you do a search, jumps to the first search result that has the search string as a prefix, if there is one.</li>
+<li>Staggers placement of new windows.</li>
+</ul>
+
+
 <h2>Version 0.982 (December 11, 2008)</h2>
 <ul>
 <li>This is a bug-fix release, not the faster-loading version I promised earlier (that version will be 0.99).</li>
@@ -31,6 +46,7 @@
 <li>Fixed the Spaces bug where a new window would be created every time you switch to the space containing AppKiDo.</li>
 <li>Known issue: a few deprecated methods show up in "Delegate Methods" section -- for example, [NSData deserializeAlignedBytesLengthAtCursor:].</li>
 </ul>
+
 
 <h2>Version 0.981 (September 3, 2008)</h2>
 <ul>
