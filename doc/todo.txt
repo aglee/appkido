@@ -29,6 +29,8 @@
 
 *** 0.99 stuff (Xcode 3.x only?) ***
 
+[ ] Honor the stylesheet.
+
 [ ] Open a document online instead of locally.  Copy that URL to the pasteboard.
 
 [ ] Search the Examples directory for an example of the method.
