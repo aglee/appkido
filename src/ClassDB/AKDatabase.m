@@ -40,6 +40,8 @@
     NSString *docSetPath = [devTools docSetPathForVersion:sdkVersion];
     NSString *basePathForHeaders = [devTools headersPathForVersion:sdkVersion];
 
+    DIGSLogDebug(@"_docSetIndexForDevTools: -- docSetPath is [%@]", docSetPath);
+
     if (docSetPath == nil || basePathForHeaders == nil)
         return nil;
 
@@ -52,6 +54,8 @@
 
 + (id)databaseForMacPlatform
 {
+    DIGSLogDebug_EnteringMethod();
+    
     static AKDatabase *s_macOSDatabase = nil;
 
     if (s_macOSDatabase == nil)
@@ -73,6 +77,7 @@
             [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
     }
 
+    DIGSLogDebug_ExitingMethod();
     return s_macOSDatabase;
 }
 
