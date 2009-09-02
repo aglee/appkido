@@ -53,6 +53,7 @@ Upload files to .Mac
     then AppKiDo.version
     then appkido.html, release-notes.html, screenshot.html
     then anything else that was edited
+Delete obsolete versions, if any, from .Mac (should keep a version or two around so people can revert)
 Sanity-check links on HTML pages
 Send release email to cocoa-dev and to manual mailing list
     Use bcc, then move from Sent mailbox to AppKiDo mailbox
