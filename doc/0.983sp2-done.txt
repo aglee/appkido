@@ -1,0 +1,9 @@
+*** Done in 0.983sp2 ***
+
+[x] DOM classes were showing up as root classes -- probably because I thought I was being smart by only parsing the headers I "had to" parse.  There's actually a comment in AKDatabaseWithDocSet, which I overlooked, about how I specifically need to parse all the headers in the directory, including the ones not referenced by the docset index.  Fixed by going back to the old way of traversing headers.
+
+[x] The related-sample-code links (e.g., in +stringWithString:) don't work.
+	* Fixed by cleaning up the logic in -[AKWindowController jumpToLinkURL:] in the case of http: links.  Needed to explicitly handle those links instead of simply returning NO (which made sense for the old NSTextView-based implementation, but not the current WebView-based implementation).
+
+[x] Fix that thing Gerriet reported: "In decimalNumberWithDecimal: there is a link NSDecimal.  Clicking this I get to NSDecimal which has further down a link: Used by the functions described in "Decimals".  When I control-click "Decimals" and select copy link and paste this into Safari all is fine.  So the link seems to be ok.  But when I click on it, I get to the very top of the Foundation classes: "Adding Classes" instead of "Decimals" further down.
+	* Seems it was fixed already in 0.983sp1.
