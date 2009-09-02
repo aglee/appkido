@@ -14,14 +14,14 @@
 
 [ ] Sparkle.
 
-[ ] If time: Make the subtopic list resizable.
+[ ] Make the subtopic list resizable.
 
 [ ] Deal with "Method selectRow:byExtendingSelection: in class AKTableView is deprecated."
 
 [ ] Add progress indicator during search, and a count when done.
 
-[ ] If time: Put "ALL" as a button on same line.
-[ ] If time: Use clover-1, clover-2, etc. in the subtopic list.
+[ ] Put "ALL" as a button on same line.
+[ ] Use clover-1, clover-2, etc. in the subtopic list.
 
 [ ] put the TESTING_PERFORMANCE #ifdef (or whatever it's called) in the Xcode "Development" configuration instead of hand-toggling it
 
