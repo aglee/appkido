@@ -12,6 +12,7 @@ defaults write com.digitalspokes.AppKiDo DIGSVerbosity 30
 defaults write com.digitalspokes.AppKiDo DIGSVerbosity 40
 defaults write com.digitalspokes.AppKiDo DIGSVerbosity 50
 defaults write com.digitalspokes.AppKiDo DIGSVerbosity 60
+defaults write com.digitalspokes.AppKiDo DIGSVerbosity 99
 
 defaults write com.digitalspokes.AppKiDo AKFoundationOnly YES
 defaults write com.digitalspokes.AppKiDo AKFoundationOnly NO
