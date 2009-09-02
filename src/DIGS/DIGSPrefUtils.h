@@ -37,7 +37,7 @@
 + (void)setArrayValue:(NSArray *)value forPref:(NSString *)prefName;
 
 + (NSDictionary *)dictionaryValueForPref:(NSString *)prefName;
-+ (void)setDictionaryValue:(NSDictionary *)value
-    forPref:(NSString *)prefName;
++ (void)setDictionaryValue:(NSDictionary *)value forPref:(NSString *)prefName;
+
 
 @end
