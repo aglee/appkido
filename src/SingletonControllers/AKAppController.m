@@ -178,11 +178,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)awakeFromNib
 {
+    DIGSLogDebug_EnteringMethod();
+
     // Initialize the About panel.
     [self _initAboutPanel];
 
-    // If necessary, prompt the user repeatedly for a valid Dev Tools path and
-    // SDK version.
+    // If necessary, prompt the user repeatedly for a valid Dev Tools path and SDK version.
     while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
     {
         [[AKDevToolsPanelController controller] runDevToolsSetupPanel];
@@ -195,8 +196,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashWindow center];
     [_splashWindow makeKeyAndOrderFront:nil];
 
-    // Populate the database(s) by parsing files for each of the selected
-    // frameworks in the user's prefs.
+    // Populate the database(s) by parsing files for each of the selected frameworks in the user's prefs.
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
 
@@ -225,7 +225,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [_appDatabase loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
         }
     }
-    [_appDatabase setDelegate:nil];
+    [_appDatabase setDelegate:nil];  // Avoid dangling weak references.
 
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
@@ -252,11 +252,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(_handleWindowWillCloseNotification:)
-        name:NSWindowWillCloseNotification object:nil];
+        name:NSWindowWillCloseNotification
+        object:nil];
 
     // Force the DIGSFindBuffer to initialize.
     // [agl] ??? Why not in DIGSFindBuffer's +initialize?
     (void)[DIGSFindBuffer sharedInstance];
+
+    DIGSLogDebug_ExitingMethod();
 }
 
 - (void)dealloc
@@ -632,6 +635,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    DIGSLogDebug_EnteringMethod();
+    
     // Reopen windows from the previous session.
     [self _openInitialWindows];
 
@@ -691,6 +696,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_initGoMenu
 {
+    DIGSLogDebug_EnteringMethod();
+    
     NSMenu *goMenu = [_firstGoMenuDivider menu];
     int menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
 
@@ -774,6 +781,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // Add the Debug menu if the user is "Andy Lee" with login name "alee".
 - (void)_maybeAddDebugMenu
 {
+    DIGSLogDebug_EnteringMethod();
+    
     if ([NSUserName() isEqualToString:@"alee"] && [NSFullUserName() isEqualToString:@"Andy Lee"])
     {
         // Create the "Debug" top-level menu item.
@@ -1159,6 +1168,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_getFavoritesFromPrefs
 {
+    DIGSLogDebug_EnteringMethod();
+    
     NSArray *favPrefList = [AKPrefUtils arrayValueForPref:AKFavoritesPrefName];
     int numFavs = [favPrefList count];
     int i;
