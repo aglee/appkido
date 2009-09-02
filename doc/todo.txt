@@ -23,6 +23,32 @@
 
 
 ----------------------------------------------------------
+
+*** 0.984 stuff ***
+
+[ ] Fix the crash that has been reported in 0.983.
+
+*** 0.985 stuff ***
+
+[ ] More robust error detection, logging, and recovery.
+
+[ ] Detect when user hasn't installed docs.
+
+[ ] Sparkle.
+
+[ ] If time: Make the subtopic list resizable.
+
+[ ] Deal with "Method selectRow:byExtendingSelection: in class AKTableView is deprecated."
+
+[ ] Add progress indicator during search, and a count when done.
+
+[ ] If time: Put "ALL" as a button on same line.
+[ ] If time: Use clover-1, clover-2, etc. in the subtopic list.
+
+[ ] put the TESTING_PERFORMANCE #ifdef (or whatever it's called) in the Xcode "Development" configuration instead of hand-toggling it
+
+[ ] use that other method for opening in browser (it's in NSWorkspace)
+
 *** 0.99 stuff (Xcode 3.x only?) ***
 
 [ ] Open a document online instead of locally.  Copy that URL to the pasteboard.
@@ -55,16 +81,14 @@
 
 [ ] regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
 
-[ ] From Jeff Johnson 2009-03-10: "I have a suggestion for a minor code change in AKAppController.m. I recommend implementing -applicationDidFinishLaunching: and moving everything in -awakeFromNib starting with [_splashMessage2Field setStringValue:@""] to the new method.    I'll explain the reason for this. As we know, AppKit is not thread-safe. Of relevance here is that the NSApplication isActive state only gets updated on the main thread. The AppKiDo database parsing in awakeFromNib is an expensive, blocking operation. Thus, what often happens is that I launch AppKiDo, perhaps at the beginning of the day, and then switch to another application before it's finished launching. When the database parsing is done, the app is no longer active, but the isActive state hasn't been updated yet, applicationDidResignActive hasn't been called yet, and so forth, because that all happens only on the main thread, which was blocked in awakeFromNib. When [self _openInitialWindows] is called in awakeFromNib, the app still thinks it's active, and the window appears in front of the active app rather than in the background, which is confusing and bothersome.    Moving the window opening code out of awakeFromNib gives the app a chance to update the isActive state after the database parsing is done, and then the correct window ordering behavior occurs."
+[x] From Jeff Johnson 2009-03-10: "I have a suggestion for a minor code change in AKAppController.m. I recommend implementing -applicationDidFinishLaunching: and moving everything in -awakeFromNib starting with [_splashMessage2Field setStringValue:@""] to the new method.    I'll explain the reason for this. As we know, AppKit is not thread-safe. Of relevance here is that the NSApplication isActive state only gets updated on the main thread. The AppKiDo database parsing in awakeFromNib is an expensive, blocking operation. Thus, what often happens is that I launch AppKiDo, perhaps at the beginning of the day, and then switch to another application before it's finished launching. When the database parsing is done, the app is no longer active, but the isActive state hasn't been updated yet, applicationDidResignActive hasn't been called yet, and so forth, because that all happens only on the main thread, which was blocked in awakeFromNib. When [self _openInitialWindows] is called in awakeFromNib, the app still thinks it's active, and the window appears in front of the active app rather than in the background, which is confusing and bothersome.    Moving the window opening code out of awakeFromNib gives the app a chance to update the isActive state after the database parsing is done, and then the correct window ordering behavior occurs."
 
-[ ] CGRectMake is in both CoreGraphics functions and QuartzCore functions??
-
-[ ] Suggestion from Jeff Laing: "One niggle: would it be possible to select which version of the SDK you use?  At th moment, I'm trying to concentrate on 2.1 rather than 2.2 (for what is probably not a good reason since you'd expect everyone would just upgrade, but some people just don't)"
+[x] Suggestion from Jeff Laing: "One niggle: would it be possible to select which version of the SDK you use?  At th moment, I'm trying to concentrate on 2.1 rather than 2.2 (for what is probably not a good reason since you'd expect everyone would just upgrade, but some people just don't)"
 	* Rustam Muginov asked about selecting the version too.
 	* Hm -- on the MBP I have the 2.2 SDK installed; only that .docset is there, but SDKs for 2.0, 2.1, and 2.2 show up.  I see in Xcode's doc window that I can get/subscribe to 2.0/2.1
 	* Maybe use values in the ZDISTRIBUTIONVERSION table?
 
-[ ] Reported by Rustam Muginov: "For example, 2.2 did introduced new class, AVAudioPlayer, which was not present in 2.1 and 2.0.  By the way, i can not find it in the current 0,982 version of AppKiDo."
+[x] Reported by Rustam Muginov: "For example, 2.2 did introduced new class, AVAudioPlayer, which was not present in 2.1 and 2.0.  By the way, i can not find it in the current 0,982 version of AppKiDo."
 
 [ ] Fix the stuff Paul Kim found with clang.
 
@@ -168,12 +192,10 @@
 	* -numberOfGlobalsGroupsForFramework:
 [ ] Can I be smarter about knowing when the user only has a partial docset?  How does Xcode do it?
 [ ] Can I be smarter about telling whether a deprecated method is a class or instance method?  Although if it's an instance method, can I tell if it's a delegate method?
-[ ] Test against Snow Leopard.
+[x] Test against Snow Leopard.
 [ ] prune away code that supported the old way of parsing
 [ ] clean up copyrights in source files
 [ ] change hosting?
-[ ] put the TESTING_PERFORMANCE #ifdef (or whatever it's called) in the Xcode "Development" configuration instead of hand-toggling it
-[ ] use that other method for opening in browser (it's in NSWorkspace)
 
 
 ===== features =====
