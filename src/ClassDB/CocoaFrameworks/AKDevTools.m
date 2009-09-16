@@ -220,7 +220,7 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
     }
 
     // Prune SDK versions for which we found docs but no headers.
-    NSEnumerator *versionEnum = [[_sdkVersions copy] objectEnumerator];
+    NSEnumerator *versionEnum = [[NSArray arrayWithArray:_sdkVersions] objectEnumerator];
     NSString *sdkVersion;
 
     while ((sdkVersion = [versionEnum nextObject]))
