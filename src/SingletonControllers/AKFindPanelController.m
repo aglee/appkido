@@ -207,11 +207,10 @@ static AKFindPanelController *s_sharedInstance = nil;
     {
         NSTextView *textView = (NSTextView *)viewToSearch;
         NSString *textContents = [textView string];
-        unsigned textLength;
         NSString *findString =
             [[DIGSFindBuffer sharedInstance] findString];
 
-        if (textContents && (textLength = [textContents length]))
+        if ([textContents length])
         {
             NSRange range;
             unsigned options = NSCaseInsensitiveSearch;
@@ -221,11 +220,7 @@ static AKFindPanelController *s_sharedInstance = nil;
                 options |= NSBackwardsSearch;
             }
 
-            range =
-                [textContents ak_findString:findString
-                    selectedRange:[textView selectedRange]
-                    options:options
-                    wrap:YES];
+            range = [textContents ak_findString:findString selectedRange:[textView selectedRange] options:options wrap:YES];
 
             if (range.length)
             {
