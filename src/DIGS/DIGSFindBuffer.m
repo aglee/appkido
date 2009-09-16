@@ -31,8 +31,7 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 {
     if (!s_sharedInstance)
     {
-        (void)[[self allocWithZone:[[NSApplication sharedApplication] zone]]
-                init];
+        (void)[[self allocWithZone:[[NSApplication sharedApplication] zone]] init];
     }
 
     return s_sharedInstance;
@@ -107,14 +106,12 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 
 - (void)addListener:(id)listenerObject withSelector:(SEL)handlerSelector
 {
-    NSValue *pointerHolder =
-        [NSValue valueWithNonretainedObject:listenerObject];
+    NSValue *pointerHolder = [NSValue valueWithNonretainedObject:listenerObject];
     unsigned index = [_listenerPointers indexOfObject:pointerHolder];
 
     if (index == NSNotFound)
     {
-        NSValue *actionHolder =
-            [NSValue valueWithBytes:&handlerSelector objCType:@encode(SEL)];
+        NSValue *actionHolder = [NSValue valueWithBytes:&handlerSelector objCType:@encode(SEL)];
 
         [_listenerPointers addObject:pointerHolder];
         [_listenerActions addObject:actionHolder];
@@ -123,8 +120,7 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 
 - (void)removeListener:(id)listenerObject
 {
-    NSValue *pointerHolder =
-        [NSValue valueWithNonretainedObject:listenerObject];
+    NSValue *pointerHolder = [NSValue valueWithNonretainedObject:listenerObject];
     unsigned index = [_listenerPointers indexOfObject:pointerHolder];
 
     if (index != NSNotFound)
