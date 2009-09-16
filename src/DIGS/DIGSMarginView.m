@@ -53,14 +53,9 @@
     [_viewTwo setFrame:newFrameTwo];
 }
 
-@end
-
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation DIGSMarginView (Private)
 
 /*
  * Called by awakeFromNib.
