@@ -118,7 +118,7 @@
 
     if (!groupNode)
     {
-        groupNode = [[AKGroupNode alloc] initWithNodeName:groupName owningFramework:_parserFW];
+        groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_parserFW];
         // [agl] FIXME -- There is a slight flaw in this reasoning: the
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
