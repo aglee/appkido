@@ -68,14 +68,14 @@
         }
         else
         {
-            AKFunctionNode *functionNode = [[AKFunctionNode alloc] nodeWithNodeName:functionName owningFramework:_parserFW];
+            AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName owningFramework:_parserFW];
             [functionNode setNodeDocumentation:functionSection];
 
             AKGroupNode *groupNode = [[_parserFW fwDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
 
             if (!groupNode)
             {
-                groupNode = [[AKGroupNode alloc] nodeWithNodeName:groupName owningFramework:_parserFW];
+                groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_parserFW];
                 [groupNode setNodeDocumentation:functionSection];
                 [[_parserFW fwDatabase] addFunctionsGroup:groupNode];
             }
