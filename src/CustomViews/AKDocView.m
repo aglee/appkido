@@ -141,16 +141,11 @@
 {
     if (![[_docLocator docToDisplay] isPlainText])
     {
-        int docMagnifierPref =
-            [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
-        BOOL magnifierChanged = NO;
+        int docMagnifierPref = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
 
         if (_docMagnifier != docMagnifierPref)
         {
-            magnifierChanged = YES;
-
             _docMagnifier = docMagnifierPref;
-
             [self _updateDocDisplay];
         }
     }
