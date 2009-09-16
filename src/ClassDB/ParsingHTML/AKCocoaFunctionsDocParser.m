@@ -59,10 +59,7 @@
     while ((functionSection = [functionSectionsEnum nextObject]))
     {
         NSString *functionName = [functionSection sectionName];
-        NSString *groupName =
-            defaultGroupName
-            ? defaultGroupName
-            : [groupNamesByFunctionName objectForKey:functionName];
+        NSString *groupName = defaultGroupName ? defaultGroupName : [groupNamesByFunctionName objectForKey:functionName];
 //NSLog(@"function name '%@', group name '%@'", functionName, groupName);  // [agl] REMOVE
 
         if (groupName == nil)
@@ -71,16 +68,14 @@
         }
         else
         {
-            AKFunctionNode *functionNode =
-                [[[AKFunctionNode alloc] initWithNodeName:functionName owningFramework:_parserFW] autorelease];
+            AKFunctionNode *functionNode = [[AKFunctionNode alloc] nodeWithNodeName:functionName owningFramework:_parserFW];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode =
-                [[_parserFW fwDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
+            AKGroupNode *groupNode = [[_parserFW fwDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
 
             if (!groupNode)
             {
-                groupNode = [[AKGroupNode alloc] initWithNodeName:groupName owningFramework:_parserFW];
+                groupNode = [[AKGroupNode alloc] nodeWithNodeName:groupName owningFramework:_parserFW];
                 [groupNode setNodeDocumentation:functionSection];
                 [[_parserFW fwDatabase] addFunctionsGroup:groupNode];
             }
