@@ -51,6 +51,40 @@
 
 ===== bugs =====
 
+[ ] Why 10.5 not showing up in dev tools prefs on Flint?  Is it that plist bug?  (Might be too late to check -- upgraded Flint to 10.6.)
+
+[ ] Maybe naming convention that says _owningXXX and _parentXXX are always weak references?
+
+[ ] "Inheritance" section now contains other stuff like links to code samples.  Parse and organize better.
+
+[ ] Try removing _kludgeXXX calls one by one.  See if parse results are the same.  Remember to test with Xcode 3.2, 3.1, 2.5.
+
+[ ] AgentM suggests ability to add annotations.  Could either maintain a central server or (much less work) allow user to specify a location, either online or off-.
+
+[ ] Autoselect after search not working: try searching for "scrollPoint".  Or "view".
+
+[ ] Have the build script create an unstripped version as well.
+
+[ ] Should I be using DWARF?  See dSYM.
+
+[ ] When releasing, bake a build number into the version string.
+
+[ ] Put default defaults into a plist as bbum suggests.
+
+[ ] Handle the multiple delegates a WebView can have.
+
+[ ] Add agvtool to workflow.
+
+[ ] [docSetPlist objectForKey:@"DocSetPlatformVersion"] sometimes returns nil with 3.1.3; handle more gracefully.
+
+[ ] Use this for Reveal In Finder: (void)[[NSWorkspace sharedWorkspace] selectFile:aFolderPath inFileViewerRootedAtPath:[aFolderPath stringByDeletingLastPathComponent]];
+
+[ ] Top and middle panes should keep fixed height during autoresizing.
+
+[ ] Feature to add your own directory of headers.  Specify a project name (e.g., "AppKiDo") and a directory (e.g., /Users/alee/_Developer/appkido/trunk/src).  Recursively parse all headers, excluding .svn (and build?).  Give those headers special treatment -- include them in the database even though they don't have associated doc files.  Will have to update the parser to recognize @property in headers.  Won't be able to show docs, but can at least read the headers and navigate them.  Add quicklist for "All classes in project X".  Have some way to open selected header (and option to find .m) in tool of your choice -- Xcode or whatever.
+
+[ ] NSExceptionHandler has a "System Hang Constants" section.  Should be able to go to it when click on the link under, e.g., setExceptionHangingMask:.  Similarly for "Logging and Handling Constants" under setExceptionHandlingMask:.
+
 [ ] regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
 
 [x] From Jeff Johnson 2009-03-10: "I have a suggestion for a minor code change in AKAppController.m. I recommend implementing -applicationDidFinishLaunching: and moving everything in -awakeFromNib starting with [_splashMessage2Field setStringValue:@""] to the new method.    I'll explain the reason for this. As we know, AppKit is not thread-safe. Of relevance here is that the NSApplication isActive state only gets updated on the main thread. The AppKiDo database parsing in awakeFromNib is an expensive, blocking operation. Thus, what often happens is that I launch AppKiDo, perhaps at the beginning of the day, and then switch to another application before it's finished launching. When the database parsing is done, the app is no longer active, but the isActive state hasn't been updated yet, applicationDidResignActive hasn't been called yet, and so forth, because that all happens only on the main thread, which was blocked in awakeFromNib. When [self _openInitialWindows] is called in awakeFromNib, the app still thinks it's active, and the window appears in front of the active app rather than in the background, which is confusing and bothersome.    Moving the window opening code out of awakeFromNib gives the app a chance to update the isActive state after the database parsing is done, and then the correct window ordering behavior occurs."
@@ -70,7 +104,7 @@
 
 [x] Reported by Rustam Muginov: "For example, 2.2 did introduced new class, AVAudioPlayer, which was not present in 2.1 and 2.0.  By the way, i can not find it in the current 0,982 version of AppKiDo."
 
-[ ] Fix the stuff Paul Kim found with clang.
+[ ] Fix the stuff clang finds.
 
 [ ] Use NSTabView for doc view.
 
