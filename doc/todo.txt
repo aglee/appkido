@@ -11,7 +11,11 @@
 [ ] Announce github hosting.
 
 [ ] Go Leopard-only.
-	[ ] Remove the old-style database classes.
+	[ ] Bump the compiler version from GCC 4.0 to 4.2 (note this means can no longer compile against 10.4u), and change the base class.
+	[ ] Fix 64-bit stuff.
+	[ ] Remove the old-style database classes and the references to them.
+	[ ] During doc parsing, take note of anchors.
+	[ ] Change link traversal logic to assume anchors work like in docsets.
 
 [ ] Update copyright to 2010.
 
