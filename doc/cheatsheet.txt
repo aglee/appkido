@@ -33,8 +33,12 @@ rm ~/Library/Preferences/com.appkido.appkidoforiphone.plist
 ---- R E L E A S E ----
 
 Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings, Credits.html
+Update web files
+    Update AppKiDo.version with version number
+    Update appkido.html, release-notes.html, screenshot.html with version number and release notes
+    Update screenshots if necessary
 Commit everything
-    Close the project in PB, use command line to commit the xcodeproj
+    Quit Xcode and use command line to commit so that changes to the xcodeproj get picked up
     Can keep the project closed for remaining steps
 Tag the release using akdtag (run with no args for help)
     (note: should make the script smarter, and have it cd to the dir, and check for uncommitted stuff)
@@ -44,10 +48,6 @@ Generate the three release tarballs (two for app and one for source) using akdre
     Unpack the app and run it as a sanity check
     (note: should I also make an svn *checkout* snapshot to make comparisons easier later?  At least get the svn co command for checking out a particular tag)
     (note: akdrelease could be smart and parse version number from Info.plist)
-Update web files
-    Update AppKiDo.version with version number
-    Update appkido.html, release-notes.html, screenshot.html with version number and release notes
-    Update screenshots if necessary
 Upload files to .Mac
     first the tarballs
     then AppKiDo.version
