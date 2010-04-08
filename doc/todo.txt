@@ -2,11 +2,24 @@
 
 *** 0.984 stuff ***
 
+[x] Fix bug caused by empty <h1></h1> in latest iPhone 3.2 SDK docs.  Jeff Johnson fixed this, and I just patched in his fix.
+
+*** 0.985 stuff ***
+
+[ ] Update github with 0.984 stuff.
+[ ] Go git-only.
+[ ] Announce github hosting.
+
+[ ] Go Leopard-only.
+	[ ] Remove the old-style database classes.
+
+[ ] Update copyright to 2010.
+
 [ ] Fix the crash that has been reported in 0.983.
 
 [ ] Inform the manual mailing list that I'll be using cocoa-dev.  If they're not on cocoa-dev they can RSS my blog (RSS just "AppKiDo announcements"? -- should add the tag, or maybe just use the "AppKiDo" tag, and make sure RSS on the tag is possible).
 
-*** 0.985 stuff ***
+*** 0.986 stuff ***
 
 [ ] More robust error detection, logging, and recovery.
 
