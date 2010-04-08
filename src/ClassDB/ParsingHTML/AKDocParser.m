@@ -489,6 +489,12 @@
     // Parse the element name (i.e., the text between <h#> and </h#>),
     // and skip past the end of the closing </h#> tag.
     NSString *sectionName = [self _parseTitleAtLevel:headerLevel];
+	// JJ Start
+	if (sectionName == nil)
+	{
+		return;
+	}
+	// JJ End
 
     // Push a new file section onto the stack, corresponding to the
     // <h#> element we are looking at.  We don't know the length of
@@ -601,6 +607,12 @@
             {
                 [self _processAnchorTag];
             }
+			// JJ Start
+			else if ((_current[1] == '/') && ((_current[2] == 'h') || (_current[2] == 'H')))
+			{
+				break; // This should only occur if title is empty, i.e., <h#></h#>
+			}
+			// JJ End
             else
             {
                 [self _skipPastClosingAngleBracket];
@@ -667,7 +679,10 @@
     }
     else
     {
-        result = @"untitled section";
+		// JJ Start
+		//result = @"untitled section";
+		return nil;
+		// JJ End
     }
 
     // Advance past the closing </h#> before returning the title string.
