@@ -26,7 +26,9 @@
 
 - (BOOL)isValidDocSetName:(NSString *)fileName
 {
-    return [[fileName pathExtension] isEqualToString:@"docset"];
+    return
+		[fileName hasPrefix:@"com.apple"]
+		&& [[fileName pathExtension] isEqualToString:@"docset"];
 }
 
 @end

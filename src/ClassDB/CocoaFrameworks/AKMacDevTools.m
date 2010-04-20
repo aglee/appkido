@@ -25,7 +25,9 @@
 
 - (BOOL)isValidDocSetName:(NSString *)fileName
 {
-    return [fileName hasSuffix:@"CoreReference.docset"];
+    return
+		[fileName hasPrefix:@"com.apple"]
+		&& [fileName hasSuffix:@"CoreReference.docset"];
 }
 
 @end
