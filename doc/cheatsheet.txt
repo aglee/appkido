@@ -46,7 +46,9 @@ Update web files
 Commit everything
 	Quit Xcode and use command line to commit so that changes to the xcodeproj get picked up
 	Can keep the project closed for remaining steps
-Tag the release using akdtag (run with no args for help)
+Tag the release:
+	Go to the trunk directory to make sure to get all subdirs
+	Run akdtag (run with no args for help)
 	(note: should make the script smarter, and have it cd to the dir, and check for uncommitted stuff)
 	If need to remove the tag:
 		svn rm http://svn.appkido.com/svn/appkido/tags/release-VERSION
