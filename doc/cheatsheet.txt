@@ -22,6 +22,9 @@ defaults write com.digitalspokes.AppKiDo DIGSVerbosity 60
 defaults write com.digitalspokes.AppKiDo DIGSVerbosity 99
 defaults remove com.digitalspokes.AppKiDo DIGSVerbosity
 
+defaults write com.appkido.appkidoforiphone DIGSVerbosity 99
+defaults remove com.appkido.appkidoforiphone DIGSVerbosity
+
 defaults write com.digitalspokes.AppKiDo AKFoundationOnly YES
 defaults write com.digitalspokes.AppKiDo AKFoundationOnly NO
 defaults remove com.digitalspokes.AppKiDo AKFoundationOnly
