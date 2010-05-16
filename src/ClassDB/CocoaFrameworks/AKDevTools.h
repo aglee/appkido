@@ -13,7 +13,8 @@
 /*!
  * Abstract class that represents a Dev Tools installation as it relates to
  * development for a particular platform.  Within the Dev Tools there are SDK
- * versions, each of which has a name, a docset, and a headers directory.
+ * versions, each of which has a name (e.g., "3.2" for the iPhone SDK), a
+ * docset (given by a path to a .docset bundle), and a headers directory.
  *
  * Concrete subclasses are for Mac and iPhone Dev Tools.
  */
@@ -43,20 +44,28 @@
 #pragma mark -
 #pragma mark Getters and setters
 
+/*! Typically /Developer, but can be wherever the user has installed the Dev Tools. */
 - (NSString *)devToolsPath;
 
-- (NSArray *)sdkVersions;  // Returns a sorted array in order of version number.
+/*! Returns a sorted array of strings in order of version number. */
+- (NSArray *)sdkVersions;  // TODO: Maybe better name would be "docVersions".
 
-- (NSString *)docSetPathForVersion:(NSString *)sdkVersion;  // Uses latest version if sdkVersion is nil.
-- (NSString *)headersPathForVersion:(NSString *)sdkVersion;  // Uses latest version if sdkVersion is nil.
+/*! Uses latest version if sdkVersion is nil. */
+- (NSString *)docSetPathForVersion:(NSString *)sdkVersion;
+
+/*!
+ * Uses latest version if sdkVersion is nil.  Note that sdkVersion could be something
+ * like 3.1 and the returned path could be the headers for something like 3.1.2.
+ */
+- (NSString *)headersPathForVersion:(NSString *)sdkVersion;
 
 
 #pragma mark -
 #pragma mark Validation
 
 /*!
- * Does a rough sanity check on a directory that is claimed to be a
- * Dev Tools directory.
+ * Does a rough sanity check on a directory that is claimed to be a Dev Tools directory.
+ * Checks for the presence of Xcode and a few other things.
  */
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath;
 
@@ -64,8 +73,24 @@
 #pragma mark -
 #pragma mark For internal use only
 
-- (NSString *)relativePathToDocSetsDir;  // Subclasses must override.
-- (NSString *)relativePathToHeadersDir;  // Subclasses must override.
-- (BOOL)isValidDocSetName:(NSString *)fileName;  // Subclasses must override.
+/*!
+ * Subclasses must override.  Returns a relative path within the Dev Tools directory
+ * to the directory containing docsets.  Note that docsets can also live outside the
+ * Dev Tools directory, in /Library/Developer/Shared/Documentation/DocSets.  For
+ * example, the iPhone 3.1 docset now gets installed there for some reason.
+ */
+- (NSString *)_relativePathToDocSetsDir;
+
+/*!
+ * Subclasses must override.  Returns a relative path within the Dev Tools directory
+ * to the "SDKs" directory.
+ */
+- (NSString *)_relativePathToSDKsDir;
+
+/*!
+ * Subclasses must override.  Checks whether fileName is a valid docset name for
+ * the platform we address.
+ */
+- (BOOL)_isValidDocSetName:(NSString *)fileName;
 
 @end

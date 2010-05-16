@@ -56,7 +56,7 @@
 #pragma mark -
 #pragma mark Running the panel
 
-- (void)runDevToolsSetupPanel
+- (BOOL)runDevToolsSetupPanel
 {
     DIGSLogDebug_EnteringMethod();
 
@@ -66,6 +66,8 @@
 
     DIGSLogDebug(@"result of Dev Tools path panel: %d", result);
     [[_devToolsPathField window] orderOut:self];
+
+	return (result == NSRunStoppedResponse);
 }
 
 

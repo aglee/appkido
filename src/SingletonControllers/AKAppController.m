@@ -183,12 +183,33 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Initialize the About panel.
     [self _initAboutPanel];
 
-    // If necessary, prompt the user repeatedly for a valid Dev Tools path and SDK version.
-    while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
-    {
-        [[AKDevToolsPanelController controller] runDevToolsSetupPanel];
-    }
-    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
+	// Create an AKDatabase instance, or give the user the option to quit.
+	while (_appDatabase == nil)
+	{
+		// If necessary, prompt the user for a valid Dev Tools path and SDK version.
+		while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]]
+			|| ([AKPrefUtils sdkVersionPref] == nil))
+		{
+			if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
+			{
+				// The user cancelled, so quit the application.
+				[[NSApplication sharedApplication] terminate:self];
+			}
+		}
+		DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
+
+		// Try to create a database instance based on the user's selected Dev Tools path and SDK version.
+#if APPKIDO_FOR_IPHONE
+		_appDatabase = [[AKDatabase databaseForIPhonePlatform] retain];
+#else
+		_appDatabase = [[AKDatabase databaseForMacPlatform] retain];
+#endif
+		if (_appDatabase == nil)
+		{
+			[AKPrefUtils setDevToolsPathPref:nil];
+			[AKPrefUtils setSDKVersionPref:nil];
+		}
+	}
 
     // Put up the splash window.
     [_splashVersionField setStringValue:[self _appVersion]];
@@ -199,12 +220,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Populate the database(s) by parsing files for each of the selected frameworks in the user's prefs.
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
-
-#if APPKIDO_FOR_IPHONE
-    _appDatabase = [[AKDatabase databaseForIPhonePlatform] retain];
-#else
-    _appDatabase = [[AKDatabase databaseForMacPlatform] retain];
-#endif
 
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED

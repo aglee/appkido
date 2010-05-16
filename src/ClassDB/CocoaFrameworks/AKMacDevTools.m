@@ -13,17 +13,17 @@
 #pragma mark -
 #pragma mark AKDevTools methods
 
-- (NSString *)relativePathToDocSetsDir
+- (NSString *)_relativePathToDocSetsDir
 {
     return @"Documentation/DocSets/";
 }
 
-- (NSString *)relativePathToHeadersDir
+- (NSString *)_relativePathToSDKsDir
 {
     return @"SDKs/";
 }
 
-- (BOOL)isValidDocSetName:(NSString *)fileName
+- (BOOL)_isValidDocSetName:(NSString *)fileName
 {
     return
 		[fileName hasPrefix:@"com.apple"]

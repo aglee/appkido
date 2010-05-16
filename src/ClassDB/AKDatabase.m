@@ -36,6 +36,7 @@
 
 + (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools
 {
+DIGSLogDebug_EnteringMethod();
     NSString *sdkVersion = [AKPrefUtils sdkVersionPref];
     NSString *docSetPath = [devTools docSetPathForVersion:sdkVersion];
     NSString *basePathForHeaders = [devTools headersPathForVersion:sdkVersion];
@@ -49,6 +50,7 @@
         [[[AKDocSetIndex alloc]
             initWithDocSetPath:docSetPath
             basePathForHeaders:basePathForHeaders] autorelease];
+DIGSLogDebug_ExitingMethod();
 }
 
 
@@ -91,13 +93,16 @@
         AKDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
         AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools];
 
-        s_iPhoneDatabase = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
+		if (docSetIndex)
+		{
+			s_iPhoneDatabase = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
 
-        // Assume anyone using AppKiDo for iPhone is going to want all possible
-        // frameworks in the iPhone SDK by default, and will deselect whichever
-        // ones they don't want.  The docset is small enough that we can do this.
-        if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
-            [AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
+			// Assume a new user of AppKiDo-for-iPhone is going to want all possible
+			// frameworks in the iPhone SDK by default, and will deselect whichever
+			// ones they don't want.  The docset is small enough that we can do this.
+			if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
+				[AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
+		}
     }
 
     return s_iPhoneDatabase;

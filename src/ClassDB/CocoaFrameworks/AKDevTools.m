@@ -12,14 +12,20 @@
 #import "AKFileUtils.h"
 #import "AKTextUtils.h"
 #import "AKDocSetIndex.h"
+#import "AKSDKVersion.h"
 
 
 #pragma mark -
 #pragma mark Forward declarations of private methods
 
 @interface AKDevTools ()
+
+- (void)_lookForDocSetsInDirectory:(NSString *)docSetsDir;
 - (void)_initDocSetPathsByVersion;
+
+- (NSString *)_docSetVersionForSDKVersion:(NSString *)sdkVersion;
 - (void)_initHeadersPathsByVersion;
+
 @end
 
 
@@ -37,7 +43,7 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
     for (i = 0; i < [leftComponents count]; i++)
     {
         if (i >= [rightComponents count])
-            return NSOrderedDescending;  // leftVersionString is greater than rightVersionString
+            return NSOrderedDescending;  // left has more components and is therefore greater than right
 
         int leftNumber = [[leftComponents objectAtIndex:i] intValue];
         int rightNumber = [[rightComponents objectAtIndex:i] intValue];
@@ -50,9 +56,9 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
 
     // If we got this far, rightComponents has leftComponents as a prefix.
     if ([leftComponents count] < [rightComponents count])
-        return NSOrderedAscending;  // leftVersionString is less than rightVersionString
+        return NSOrderedAscending;  // left has fewer components and is therefore less than right
     else
-        return NSOrderedSame;  // leftVersionString equals rightVersionString
+        return NSOrderedSame;  // all left components equal all right components
 }
 
 
@@ -68,7 +74,6 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*! Designated initializer. */
 - (id)initWithPath:(NSString *)devToolsPath
 {
     if ((self = [super init]))
@@ -163,18 +168,15 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
 #pragma mark -
 #pragma mark Private methods
 
-// Called by -initWithPath: to populate _docSetPathsByVersion by locating all available
-// docsets.  Adds to _sdkVersions as it goes.  Must be called before _initHeadersPathsByVersion,
-// because the latter depends on _sdkVersions having been populated.
-- (void)_initDocSetPathsByVersion
+// Adds entries to _docSetPathsByVersion and _sdkVersions by locating all docsets in the given directory.
+- (void)_lookForDocSetsInDirectory:(NSString *)docSetsDir
 {
-    NSString *docSetsDir = [_devToolsPath stringByAppendingPathComponent:[self relativePathToDocSetsDir]];
     NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] directoryContentsAtPath:docSetsDir] objectEnumerator];
     NSString *fileName;
 
     while ((fileName = [dirContentsEnum nextObject]))
     {
-        if ([self isValidDocSetName:fileName])
+        if ([self _isValidDocSetName:fileName])
         {
             NSString *docSetPath = [docSetsDir stringByAppendingPathComponent:fileName];
             NSString *plistPath = [docSetPath stringByAppendingPathComponent:@"Contents/Info.plist"];
@@ -197,11 +199,39 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
     }
 }
 
+// Called by -initWithPath: to populate _docSetPathsByVersion and _sdkVersions.  Does this by
+// calling _lookForDocSetsInDirectory:.  Must be called before _initHeadersPathsByVersion,
+// because the latter depends on _sdkVersions having been populated.
+//
+// There are two places to look for docsets: within the Dev Tools directory, and in /Library/Developer.
+- (void)_initDocSetPathsByVersion
+{
+    [self _lookForDocSetsInDirectory:[_devToolsPath stringByAppendingPathComponent:[self _relativePathToDocSetsDir]]];
+    [self _lookForDocSetsInDirectory:@"/Library/Developer/Shared/Documentation/DocSets"];
+}
+
+- (NSString *)_docSetVersionForSDKVersion:(NSString *)sdkVersion
+{
+	NSEnumerator *docSetVersionsEnum = [_sdkVersions objectEnumerator];
+	NSString *docSetVersion;
+	
+	while ((docSetVersion = [docSetVersionsEnum nextObject]))
+	{
+		if ([[AKSDKVersion versionFromString:docSetVersion] coversVersion:[AKSDKVersion versionFromString:sdkVersion]])
+		{
+			return docSetVersion;
+		}
+	}
+	
+	// If we got this far, we did not find a match.
+	return nil;
+}
+
 // Called by -initWithPath: to populate _headersPathsByVersion by locating all
 // SDK directories whose versions have corresponding docs, as indicated by _sdkVersions.
 - (void)_initHeadersPathsByVersion
 {
-    NSString *sdksDir = [_devToolsPath stringByAppendingPathComponent:[self relativePathToHeadersDir]];
+    NSString *sdksDir = [_devToolsPath stringByAppendingPathComponent:[self _relativePathToSDKsDir]];
     NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] directoryContentsAtPath:sdksDir] objectEnumerator];
     NSString *fileName;
 
@@ -213,9 +243,10 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
             NSString *plistPath = [sdkPath stringByAppendingPathComponent:@"SDKSettings.plist"];
             NSDictionary *sdkPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
             NSString *sdkVersion = [sdkPlist objectForKey:@"Version"];
+			NSString *docSetVersion = [self _docSetVersionForSDKVersion:sdkVersion];
 
-            if ([_sdkVersions containsObject:sdkVersion])
-                [_headersPathsByVersion setObject:sdkPath forKey:sdkVersion];
+            if (docSetVersion != nil)
+                [_headersPathsByVersion setObject:sdkPath forKey:docSetVersion];
         }
     }
 
@@ -238,19 +269,19 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
 #pragma mark -
 #pragma mark For internal use only
 
-- (NSString *)relativePathToDocSetsDir
+- (NSString *)_relativePathToDocSetsDir
 {
     DIGSLogError_MissingOverride();
     return nil;
 }
 
-- (NSString *)relativePathToHeadersDir
+- (NSString *)_relativePathToSDKsDir
 {
     DIGSLogError_MissingOverride();
     return nil;
 }
 
-- (BOOL)isValidDocSetName:(NSString *)fileName
+- (BOOL)_isValidDocSetName:(NSString *)fileName
 {
     DIGSLogError_MissingOverride();
     return NO;

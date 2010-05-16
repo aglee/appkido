@@ -7,6 +7,7 @@
 //
 
 #import "AKIPhoneDevTools.h"
+#import "AKTextUtils.h"
 
 
 @implementation AKIPhoneDevTools
@@ -14,20 +15,21 @@
 #pragma mark -
 #pragma mark AKDevTools methods
 
-- (NSString *)relativePathToDocSetsDir
+- (NSString *)_relativePathToDocSetsDir
 {
     return @"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/";
 }
 
-- (NSString *)relativePathToHeadersDir
+- (NSString *)_relativePathToSDKsDir
 {
     return @"Platforms/iPhoneOS.platform/Developer/SDKs/";
 }
 
-- (BOOL)isValidDocSetName:(NSString *)fileName
+- (BOOL)_isValidDocSetName:(NSString *)fileName
 {
     return
 		[fileName hasPrefix:@"com.apple"]
+		&& [fileName ak_contains:@"iPhone"]
 		&& [[fileName pathExtension] isEqualToString:@"docset"];
 }
 
