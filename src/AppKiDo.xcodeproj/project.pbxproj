@@ -1193,6 +1193,7 @@
 			name = "------- O T H E R   S T U F F -------";
 			path = WindowControllers;
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		732BD5FB05ED90900055715D /* ----------- M O D E L S ----------- */ = {
 			isa = PBXGroup;
@@ -1202,6 +1203,7 @@
 			);
 			name = "----------- M O D E L S -----------";
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		732BD60005ED90A10055715D /* ------------ V I E W S ------------ */ = {
 			isa = PBXGroup;
@@ -1221,6 +1223,7 @@
 			);
 			name = "------------ V I E W S ------------";
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		732BD60505ED90AB0055715D /* ------- C O N T R O L L E R S ------- */ = {
 			isa = PBXGroup;
@@ -1231,6 +1234,7 @@
 			);
 			name = "------- C O N T R O L L E R S -------";
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		732BD60B05ED90FA0055715D /* -------------------------------- */ = {
 			isa = PBXGroup;
@@ -1249,6 +1253,7 @@
 			);
 			name = "---- S U P P O R T   C L A S S E S ----";
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		734701A804ED644C00A80003 /* saveable window states */ = {
 			isa = PBXGroup;
@@ -1492,6 +1497,7 @@
 			);
 			name = "-------- N A V I G A T I O N --------";
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		73D237000D4561C300EF7503 /* fmdb */ = {
 			isa = PBXGroup;
@@ -1878,7 +1884,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 73DA1ED0089AEA560016F230 /* Build configuration list for PBXProject "AppKiDo" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* HierKnowledge */;
 			projectDirPath = "";
 			projectRoot = "";
