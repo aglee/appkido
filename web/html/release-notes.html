@@ -6,9 +6,9 @@
 <body bgcolor="#FFFFFF">
 <h1>AppKiDo version history</h1>
 [ <a href="appkido.html">home</a> ]
-[ <a href="AppKiDo-0.984.tgz">download <b>AppKiDo</b> 0.984</a> ]
-[ <a href="AppKiDo-for-iPhone-0.984.tgz">download <b>AppKiDo-for-iPhone</b> 0.984</a> ]
-[ <a href="AppKiDo-0.984-src.tgz">download the <b>source</b></a> ]
+[ <a href="AppKiDo-0.985.tgz">download <b>AppKiDo</b> 0.985</a> ]
+[ <a href="AppKiDo-for-iPhone-0.985.tgz">download <b>AppKiDo-for-iPhone</b> 0.985</a> ]
+[ <a href="AppKiDo-0.985-src.tgz">download the <b>source</b></a> ]
 <br/>
 [ <a href="release-notes.html">release notes</a> ]
 [ <a href="screenshot.html">screenshot</a> ]
@@ -20,6 +20,19 @@
 
 
 <table><tr><td>
+
+
+<h2>Version 0.985 (September 25, 2010)</h2>
+<ul>
+<li>Added patch submitted by Gerriet Denkmann that fixes the problem with Xcode 3.2.4 due to the name change from "iPhoneOS" to "iOS", which caused AppKiDo not to recognize a valid dev tools folder as such.</li>
+<li>Includes changes from 0.985 sneakypeeks:
+	<ul>
+	<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one.  Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
+	<li>The bug Fritz found went deeper than I thought.  Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
+	<li>Added fix, sent by Michael Klein, for the fact that -[NSFont defaultLineHeightForFont:] is deprecated and isn't available to 64-bit applications.</li>
+	</ul>
+</li>
+</ul>
 
 
 <h2>Version 0.984 (April 8, 2010)</h2>

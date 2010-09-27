@@ -27,10 +27,22 @@
 
 - (BOOL)_isValidDocSetName:(NSString *)fileName
 {
-    return
-		[fileName hasPrefix:@"com.apple"]
-		&& [fileName ak_contains:@"iPhone"]
-		&& [[fileName pathExtension] isEqualToString:@"docset"];
+    if (![fileName hasPrefix:@"com.apple.adc.documentation.Apple"])
+    {
+        return NO;
+    }
+    
+    if (![[fileName pathExtension] isEqualToString:@"docset"])
+    {
+        return NO;
+    }
+    
+    if (![fileName ak_contains:@"iPhone"]  &&  ![fileName ak_contains:@"iOS"])
+    {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
