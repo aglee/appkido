@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ ! "${1}" ]; then
+    echo "USAGE:"
+    echo "  `basename ${0}` <releasenumber>"
+    echo
+    echo "  Tags the AppKiDo trunk with the specified release number."
+    echo
+    echo "  Make sure <releasenumber> is a nicely formed release number."
+    echo "  This script doesn't check for whitespace or any other characters"
+    echo "  that are special to the shell."
+    echo
+    echo
+    echo "EXAMPLE:"
+    echo "  `basename ${0}` 0.95"
+    exit
+fi
+
+
+AKD_VERSION=${1}
+RELEASE_TAG=release-$AKD_VERSION
+SVN_ROOT=http://svn.appkido.com/svn/appkido
+
+echo
+echo "Tagging trunk with tag $RELEASE_TAG..."
+svn copy -m "Tagging $RELEASE_TAG." $SVN_ROOT/trunk $SVN_ROOT/tags/$RELEASE_TAG
+
+echo
+echo "...Done tagging.  If you need to remove the tag, you can do this:"
+echo "  svn rm $SVN_ROOT/tags/$RELEASE_TAG"
+
+echo
+echo "===== DONE ====="
+echo
+

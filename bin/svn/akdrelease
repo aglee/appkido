@@ -1,0 +1,128 @@
+#!/bin/bash
+
+BUILD_DIR=~/AKDBUILD
+
+if [ ! "${1}" ]; then
+    echo "USAGE:"
+    echo "  `basename ${0}` <releasenumber>"
+    echo
+    echo "  Builds release tarballs for AppKiDo, AppKiDo-for-iPhone, and the"
+    echo "  AppKiDo source, using $BUILD_DIR as a staging area."
+    echo
+    echo "  Make sure <releasenumber> is a nicely formed release number."
+    echo "  This script doesn't check for whitespace or any other characters"
+    echo "  that are special to the shell."
+    echo
+    echo "EXAMPLE:"
+    echo "  `basename ${0}` 0.95"
+    exit
+fi
+
+AKD_VERSION=${1}
+RELEASE_TAG=release-$AKD_VERSION
+SVN_ROOT=http://svn.appkido.com/svn/appkido
+
+DEPLOYMENT_BUILD_DIR=$BUILD_DIR/AppKiDo/build/Deployment
+
+AKD_EXECUTABLE=$DEPLOYMENT_BUILD_DIR/AppKiDo.app/Contents/MacOS/AppKiDo
+AKD_TARBALL_PATH=$BUILD_DIR/AppKiDo-$AKD_VERSION.tgz
+
+AKD_FOR_IPHONE_EXECUTABLE=$DEPLOYMENT_BUILD_DIR/AppKiDo-for-iPhone.app/Contents/MacOS/AppKiDo-for-iPhone
+AKD_FOR_IPHONE_TARBALL_PATH=$BUILD_DIR/AppKiDo-for-iPhone-$AKD_VERSION.tgz
+
+SRC_TARBALL_PATH=$BUILD_DIR/AppKiDo-$AKD_VERSION-src.tgz
+
+echo
+echo "===== BUILDING APPKIDO ====="
+
+#---------------------------------------------------------------------------
+# Create/clear the staging area
+#---------------------------------------------------------------------------
+
+echo
+echo "Preparing staging area $BUILD_DIR..."
+mkdir -p $BUILD_DIR
+cd $BUILD_DIR
+
+echo
+echo "Deleting $BUILD_DIR/AppKiDo if it exists..."
+rm -rf $BUILD_DIR/AppKiDo
+
+#---------------------------------------------------------------------------
+# Check out from svn
+#---------------------------------------------------------------------------
+
+echo
+echo "Checking out the source tree using tag $RELEASE_TAG..."
+svn export $SVN_ROOT/tags/$RELEASE_TAG/src AppKiDo || exit
+
+#---------------------------------------------------------------------------
+# Create a tarball of the source without any build products in it.
+#---------------------------------------------------------------------------
+
+echo
+echo "Tarring up the source..."
+tar -C $BUILD_DIR -czf $SRC_TARBALL_PATH AppKiDo
+
+#---------------------------------------------------------------------------
+# Build
+#---------------------------------------------------------------------------
+
+echo
+echo "Building the app..."
+cd $BUILD_DIR/AppKiDo
+xcodebuild -target All -configuration Deployment || exit
+##xcodebuild -activetarget -configuration Deployment || exit
+
+#---------------------------------------------------------------------------
+# Strip (unless we're making a sneakypeek)
+#---------------------------------------------------------------------------
+
+if [ "$SNEAKYPEEK" == "" ] ; then
+
+	echo
+	echo "Stripping the executables..."
+	echo "  -- size of AppKiDo BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`"
+	strip $AKD_EXECUTABLE
+	echo "  -- size of AppKiDo AFTER  is `stat -n -f "%z" $AKD_EXECUTABLE`"
+	echo "  -- size of AppKiDo-for-iPhone BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`"
+	strip $AKD_FOR_IPHONE_EXECUTABLE
+	echo "  -- size of AppKiDo-for-iPhone AFTER  is `stat -n -f "%z" $AKD_FOR_IPHONE_EXECUTABLE`"
+
+else
+
+	echo
+	echo "This is a sneakypeek, so won't strip the executables..."
+
+fi
+
+#---------------------------------------------------------------------------
+# Create tarballs of the binaries
+#---------------------------------------------------------------------------
+
+echo
+echo "Tarring up the applications..."
+tar -C $DEPLOYMENT_BUILD_DIR -czf $AKD_TARBALL_PATH AppKiDo.app
+tar -C $DEPLOYMENT_BUILD_DIR -czf $AKD_FOR_IPHONE_TARBALL_PATH AppKiDo-for-iPhone.app
+
+#---------------------------------------------------------------------------
+# Print sizes
+#---------------------------------------------------------------------------
+
+echo
+echo "Sizes:"
+
+echo "  -- AppKiDo tarball is $AKD_TARBALL_PATH"
+##echo "  -- size of app tarball is `stat -n -f "%z" $AKD_TARBALL_PATH`"
+echo "  -- size of AppKiDo.app tarball is `du -h "$AKD_TARBALL_PATH" | cut -f 1`"
+
+echo "  -- AppKiDo-for-iPhone tarball is $AKD_FOR_IPHONE_TARBALL_PATH"
+echo "  -- size of AppKiDo-for-iPhone.app tarball is `du -h "$AKD_FOR_IPHONE_TARBALL_PATH" | cut -f 1`"
+
+echo "  -- source tarball is $SRC_TARBALL_PATH"
+echo "  -- size of source tarball is `du -h "$SRC_TARBALL_PATH" | cut -f 1`"
+
+echo
+echo "===== DONE ====="
+echo
+
