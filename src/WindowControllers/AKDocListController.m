@@ -101,7 +101,7 @@
 
         // Select the doc at that index.
         [_docListTable scrollRowToVisible:docIndex];
-        [_docListTable selectRow:docIndex byExtendingSelection:NO];
+        [_docListTable selectRowIndexes:[NSIndexSet indexSetWithIndex:docIndex] byExtendingSelection:NO];
 
         // Modify whereTo.
         AKDoc *docToDisplay = [_subtopicToDisplay docAtIndex:docIndex];

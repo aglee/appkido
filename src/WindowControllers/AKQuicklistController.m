@@ -998,7 +998,7 @@ enum
     // Jump to the search result at the new position.
     [_quicklistTable deselectAll:nil];
     [_quicklistTable scrollRowToVisible:_indexWithinSearchResults];
-    [_quicklistTable selectRow:_indexWithinSearchResults byExtendingSelection:NO];
+    [_quicklistTable selectRowIndexes:[NSIndexSet indexSetWithIndex:_indexWithinSearchResults] byExtendingSelection:NO];
 
     // Give the quicklist table focus and tell the owning window to navigate to the selected search result.
     (void)[[_quicklistTable window] makeFirstResponder:_quicklistTable];

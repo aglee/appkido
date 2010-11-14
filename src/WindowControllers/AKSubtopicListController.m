@@ -97,7 +97,7 @@
         }
 
         // Select the subtopic at that index.
-        [_subtopicsTable selectRow:subtopicIndex byExtendingSelection:NO];
+        [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:subtopicIndex] byExtendingSelection:NO];
 
         AKSubtopic *subtopic = [_subtopics objectAtIndex:subtopicIndex];
 
@@ -157,7 +157,7 @@
 
     // Populate the subtopics table.
     [_subtopicsTable reloadData];
-    [_subtopicsTable selectRow:0 byExtendingSelection:NO];
+    [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 
     // Tell subordinate controllers to awake.
     [_docListController doAwakeFromNib];
