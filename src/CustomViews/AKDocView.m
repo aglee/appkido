@@ -70,7 +70,7 @@
     [textView setSelectable:YES];
     [textView setImportsGraphics:YES];
     [textView setRichText:YES];
-    [textView setDelegate:[[_scrollView window] delegate]];
+    [textView setDelegate:(id <NSTextViewDelegate>)[[_scrollView window] delegate]];
     [textView setMenu:[self menu]];
 
     [textView setFrame:[[_scrollView contentView] bounds]];
