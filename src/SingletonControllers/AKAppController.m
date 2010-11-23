@@ -312,7 +312,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (AKWindowController *)frontmostWindowController
 {
-    return [[self _frontmostBrowserWindow] delegate];
+    return (AKWindowController *)[[self _frontmostBrowserWindow] delegate];
 }
 
 - (AKWindowController *)controllerForNewWindow
