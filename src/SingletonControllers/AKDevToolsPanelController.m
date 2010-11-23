@@ -46,8 +46,8 @@
 {
     DIGSLogDebug_EnteringMethod();
 
+    [_window release];
     [_devToolsPathController release];
-    [[_devToolsPathField window] release];
 
     [super dealloc];
 }
@@ -60,12 +60,10 @@
 {
     DIGSLogDebug_EnteringMethod();
 
-    int result =
-        [[NSApplication sharedApplication]
-            runModalForWindow:[_devToolsPathField window]];
+    int result = [[NSApplication sharedApplication] runModalForWindow:_window];
 
     DIGSLogDebug(@"result of Dev Tools path panel: %d", result);
-    [[_devToolsPathField window] orderOut:self];
+    [_window orderOut:self];
 
 	return (result == NSRunStoppedResponse);
 }

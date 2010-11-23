@@ -13,21 +13,23 @@
 #pragma mark -
 #pragma mark AKDevTools methods
 
-- (NSString *)_relativePathToDocSetsDir
+- (NSArray *)docSetSearchPaths
 {
-    return @"Documentation/DocSets/";
-}
-
-- (NSString *)_relativePathToSDKsDir
-{
-    return @"SDKs/";
+    return [NSArray arrayWithObjects:
+            [[self devToolsPath] stringByAppendingPathComponent:@"Documentation/DocSets/"],
+            AKSharedDocSetDirectory,
+            nil];
 }
 
 - (BOOL)_isValidDocSetName:(NSString *)fileName
 {
-    return
-		[fileName hasPrefix:@"com.apple"]
-		&& [fileName hasSuffix:@"CoreReference.docset"];
+    return ([fileName hasPrefix:@"com.apple"]
+            && [fileName hasSuffix:@"CoreReference.docset"]);
+}
+
+- (NSString *)sdkSearchPath
+{
+    return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
 }
 
 @end

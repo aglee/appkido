@@ -13,6 +13,12 @@
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
 
+
+@interface AKDevToolsPathController (Private)
+- (void)_populateSDKPopUpButton;
+@end
+
+
 @implementation AKDevToolsPathController
 
 #pragma mark -
@@ -27,7 +33,7 @@
         [_devToolsPathField setStringValue:@""];
 
     // Put initial values in _sdkVersionsPopUpButton.
-    [self populateSDKPopUpButton];
+    [self _populateSDKPopUpButton];
 }
 
 - (void)dealloc
@@ -82,9 +88,13 @@
 
 
 #pragma mark -
-#pragma mark Running the panel
+#pragma mark Private methods
 
-- (void)populateSDKPopUpButton
+// Fills in the popup button that lists available SDK versions.  Gets this list
+// by looking in the directory specified by [AKPrefUtils devToolsPathPref].
+// If we find any SDKs for which we have a docset but no headers, we display
+// a message to this effect in _missingSDKWarningsField.
+- (void)_populateSDKPopUpButton
 {
     NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
 #if APPKIDO_FOR_IPHONE
@@ -92,28 +102,47 @@
 #else
     AKMacDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
 #endif
-    NSEnumerator *sdkVersionsEnum = [[devTools sdkVersions] objectEnumerator];
+    NSMutableArray *sdkVersionsWithHeaders = [NSMutableArray array];
+    NSMutableArray *sdkVersionsWithoutHeaders = [NSMutableArray array];
+    NSEnumerator *sdkVersionsEnum = [[devTools sdkVersionsThatHaveDocSets] objectEnumerator];
     NSString *sdkVersion;
-
+    
     [_sdkVersionsPopUpButton removeAllItems];
     while ((sdkVersion = [sdkVersionsEnum nextObject]))
     {
-        [_sdkVersionsPopUpButton addItemWithTitle:sdkVersion];
+        if ([devTools sdkPathForSDKVersion:sdkVersion] == nil)
+        {
+            DIGSLogInfo(@"found docs but not headers for version [%@]", sdkVersion);
+            [sdkVersionsWithoutHeaders addObject:sdkVersion];
+        }
+        else
+        {
+            [sdkVersionsWithHeaders addObject:sdkVersion];
+            [_sdkVersionsPopUpButton addItemWithTitle:sdkVersion];
+        }
     }
-
+    
+    NSMutableString *explanationString = [NSMutableString string];
+    
+    if ([sdkVersionsWithoutHeaders count] > 0)
+    {
+        [explanationString appendFormat:@"Found docsets but not SDKs for these SDK versions: %@.\n\n",
+         [sdkVersionsWithoutHeaders componentsJoinedByString:@", "]];
+    }
+    [explanationString appendFormat:@"Search paths for docsets: %@.\n\n",
+     [[devTools docSetSearchPaths] componentsJoinedByString:@", "]];
+    [explanationString appendFormat:@"Search path for SDKs: %@.\n\n", [devTools sdkSearchPath]];
+    [_explanationField setStringValue:explanationString];
+    
     NSString *selectedSDKVersion = [AKPrefUtils sdkVersionPref];
     if (selectedSDKVersion == nil
-        || ![[devTools sdkVersions] containsObject:selectedSDKVersion])
+        || ![[devTools sdkVersionsThatHaveDocSets] containsObject:selectedSDKVersion])
     {
-        selectedSDKVersion = [[devTools sdkVersions] lastObject];
+        selectedSDKVersion = [sdkVersionsWithHeaders lastObject];
         [AKPrefUtils setSDKVersionPref:selectedSDKVersion];
     }
     [_sdkVersionsPopUpButton selectItemWithTitle:selectedSDKVersion];
 }
-
-
-#pragma mark -
-#pragma mark Modal delegate support
 
 // Called when the open panel sheet opened by -runOpenPanel is dismissed.
 - (void)_devToolsOpenPanelDidEnd:(NSOpenPanel *)panel
@@ -127,18 +156,22 @@
     if (returnCode == NSOKButton)
     {
         NSString *selectedDir = [panel directory];
+        NSMutableArray *errorStrings = [NSMutableArray array];
 
-        if ([AKDevTools looksLikeValidDevToolsPath:selectedDir])
+        if ([AKDevTools looksLikeValidDevToolsPath:selectedDir errorStrings:errorStrings])
         {
             [_devToolsPathField setStringValue:selectedDir];
             [AKPrefUtils setDevToolsPathPref:selectedDir];
-            [self populateSDKPopUpButton];
+            [self _populateSDKPopUpButton];
         }
         else
         {
+            NSString *errorMessage = [NSString stringWithFormat:@"\"%@\" doesn't look like a valid Dev Tools path.\n\n%@",
+                                      selectedDir,
+                                      [errorStrings componentsJoinedByString:@"\n"]];
             [self
                 performSelector:@selector(_showBadPathAlert:)
-                withObject:selectedDir
+                withObject:errorMessage
                 afterDelay:(NSTimeInterval)0.0
                 inModes:
                     [NSArray arrayWithObjects:
@@ -151,7 +184,7 @@
 
 // Called by -_devToolsOpenPanelDidEnd:returnCode:contextInfo: if the user
 // selects a directory that does not look like a valid Dev Tools directory.
-- (void)_showBadPathAlert:(NSString *)selectedDir
+- (void)_showBadPathAlert:(NSString *)errorMessage
 {
     DIGSLogDebug_EnteringMethod();
 
@@ -165,8 +198,8 @@
         @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
         (SEL)NULL,  // didDismissSelector
         (void *)NULL,  // contextInfo
-        @"'%@' doesn't look like a valid Dev Tools path.",  // msg
-        selectedDir
+        @"%@",  // msg
+        errorMessage
     );
 }
 

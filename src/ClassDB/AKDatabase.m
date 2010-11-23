@@ -38,8 +38,8 @@
 {
 DIGSLogDebug_EnteringMethod();
     NSString *sdkVersion = [AKPrefUtils sdkVersionPref];
-    NSString *docSetPath = [devTools docSetPathForVersion:sdkVersion];
-    NSString *basePathForHeaders = [devTools headersPathForVersion:sdkVersion];
+    NSString *docSetPath = [devTools docSetPathForSDKVersion:sdkVersion];
+    NSString *basePathForHeaders = [devTools sdkPathForSDKVersion:sdkVersion];
 
     DIGSLogDebug(@"_docSetIndexForDevTools: -- docSetPath is [%@]", docSetPath);
 
@@ -76,7 +76,9 @@ DIGSLogDebug_ExitingMethod();
         // It would be nice to simply provide everything, but until we cut down
         // the amount of startup time used by parsing, that will take too long.
         if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
+        {
             [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
+        }
     }
 
     DIGSLogDebug_ExitingMethod();
@@ -99,9 +101,11 @@ DIGSLogDebug_ExitingMethod();
 
 			// Assume a new user of AppKiDo-for-iPhone is going to want all possible
 			// frameworks in the iPhone SDK by default, and will deselect whichever
-			// ones they don't want.  The docset is small enough that we can do this.
+			// ones they don't want.  The docset is small enough that we can do this.  [agl] Still?
 			if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
+            {
 				[AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
+            }
 		}
     }
 

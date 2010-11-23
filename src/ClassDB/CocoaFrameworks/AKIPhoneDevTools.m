@@ -15,17 +15,15 @@
 #pragma mark -
 #pragma mark AKDevTools methods
 
-- (NSString *)_relativePathToDocSetsDir
+- (NSArray *)docSetSearchPaths
 {
-    return @"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/";
+    return [NSArray arrayWithObjects:
+            [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"],
+            AKSharedDocSetDirectory,
+            nil];
 }
 
-- (NSString *)_relativePathToSDKsDir
-{
-    return @"Platforms/iPhoneOS.platform/Developer/SDKs/";
-}
-
-- (BOOL)_isValidDocSetName:(NSString *)fileName
+- (BOOL)isValidDocSetName:(NSString *)fileName
 {
     if (![fileName hasPrefix:@"com.apple.adc.documentation.Apple"])
     {
@@ -43,6 +41,11 @@
     }
     
     return YES;
+}
+
+- (NSString *)sdkSearchPath
+{
+    return [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/SDKs/"];
 }
 
 @end

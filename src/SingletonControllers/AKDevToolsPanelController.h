@@ -16,13 +16,8 @@
  */
 @interface AKDevToolsPanelController : NSObject
 {
-    // In our nib file, _devToolsPathController's two outlets are connected
-    // to _devToolsPathField and _sdkVersionsPopUpButton.
+    IBOutlet NSWindow *_window;
     IBOutlet AKDevToolsPathController *_devToolsPathController;
-    IBOutlet NSTextField *_devToolsPathField;
-    IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
-
-    IBOutlet NSButton *_okButton;
 }
 
 #pragma mark -

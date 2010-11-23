@@ -184,11 +184,27 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _initAboutPanel];
 
 	// Create an AKDatabase instance, or give the user the option to quit.
+    NSMutableArray *errorStrings = [NSMutableArray array];
 	while (_appDatabase == nil)
 	{
 		// If necessary, prompt the user for a valid Dev Tools path and SDK version.
-		while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]])
+        [errorStrings removeAllObjects];
+		while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]
+                                          errorStrings:errorStrings])
 		{
+            if ([AKPrefUtils devToolsPathPref])
+            {
+                NSString *errorMessage = [NSString stringWithFormat:@"%@ doesn't seem to be a Dev Tools directory.\n\n%@",
+                                          [AKPrefUtils devToolsPathPref],
+                                          [errorStrings componentsJoinedByString:@"\n"]];
+                NSAlert *alert = [NSAlert alertWithMessageText:errorMessage
+                                                 defaultButton:@"OK"
+                                               alternateButton:nil
+                                                   otherButton:nil
+                                     informativeTextWithFormat:@""];
+                [alert runModal];
+            }
+            
 			if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
 			{
 				// The user cancelled, so quit the application.

@@ -26,6 +26,7 @@
 {
     IBOutlet NSTextField *_devToolsPathField;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
+    IBOutlet NSTextField *_explanationField;
 }
 
 
@@ -42,15 +43,5 @@
  * Called by the popup button that lists available SDK versions.
  */
 - (IBAction)selectSDKVersion:(id)sender;
-
-
-#pragma mark -
-#pragma mark Running the panel
-
-/*!
- * Fills in the popup button that lists available SDK versions.  Gets this list
- * by looking in the directory specified by the AKDevToolsPathPrefName user pref.
- */
-- (void)populateSDKPopUpButton;
 
 @end
