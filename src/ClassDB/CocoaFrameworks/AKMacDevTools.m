@@ -21,7 +21,7 @@
             nil];
 }
 
-- (BOOL)_isValidDocSetName:(NSString *)fileName
+- (BOOL)isValidDocSetName:(NSString *)fileName
 {
     return ([fileName hasPrefix:@"com.apple"]
             && [fileName hasSuffix:@"CoreReference.docset"]);
