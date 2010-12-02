@@ -100,7 +100,7 @@
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
     [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
-    [prefDict setObject:_topicFramework forKey:AKFrameworkNamePrefKey];
+    [prefDict setObject:[_topicFramework frameworkName] forKey:AKFrameworkNamePrefKey];
 
     return prefDict;
 }
