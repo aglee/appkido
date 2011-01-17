@@ -33,9 +33,40 @@ rm ~/Library/Preferences/com.digitalspokes.AppKiDo.plist
 rm ~/Library/Preferences/com.appkido.appkidoforiphone.plist
 
 
----- R E L E A S E ----
+---- R E L E A S E (the new git way) ----
 
-Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings, Credits.html
+Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings
+Update web files
+	If a normal release:
+		Update AppKiDo.version with version number
+		Update appkido.html, release-notes.html, screenshot.html with version number and release notes
+		Update screenshots if necessary
+	If a sneakypeak:
+		Update sneakypeeks.html
+Tag the release:
+	git branch <release-0.999>
+	If need to remove the tag:
+		
+Commit everything
+	(superstition) Quit Xcode first to be sure changes to the xcodeproj get picked up
+Generate the three release tarballs (two for app and one for source) using akd-release (run with no args for help)
+	Unpack the app and run it as a sanity check
+	[agl] akdrelease could be smart and parse version number from Info.plist
+Upload files to .Mac
+	first the tarballs
+	then AppKiDo.version (if it was edited)
+	then any .html files that were edited
+Delete obsolete versions, if any, from .Mac (should keep a version or two around so people can revert)
+	[agl] when I drop 10.4 support, make a note of the last version that supports it
+Sanity-check links on HTML pages
+Send release email to cocoa-dev if release is significant enough
+	Use bcc, then move from Sent mailbox to AppKiDo mailbox
+	No longer using the manual mailing list
+
+
+---- R E L E A S E (the old svn way) ----
+
+Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings
 Update web files
 	If a normal release:
 		Update AppKiDo.version with version number
@@ -44,7 +75,7 @@ Update web files
 	If a sneakypeak:
 		Update sneakypeeks.html
 Commit everything
-	Quit Xcode and use command line to commit so that changes to the xcodeproj get picked up
+	(superstition) Quit Xcode first to be sure changes to the xcodeproj get picked up
 	Can keep the project closed for remaining steps
 Tag the release:
 	Go to the trunk directory to make sure to get all subdirs
@@ -58,9 +89,8 @@ Generate the three release tarballs (two for app and one for source) using akdre
 	(note: akdrelease could be smart and parse version number from Info.plist)
 Upload files to .Mac
 	first the tarballs
-	then AppKiDo.version
-	then appkido.html, release-notes.html, screenshot.html
-	then anything else that was edited
+	then AppKiDo.version (if it was edited)
+	then any .html files that were edited
 Delete obsolete versions, if any, from .Mac (should keep a version or two around so people can revert)
 Sanity-check links on HTML pages
 Send release email to cocoa-dev and to manual mailing list
