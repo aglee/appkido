@@ -20,6 +20,7 @@
     return [NSArray arrayWithObjects:
             [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"],
             AKSharedDocSetDirectory,
+            AKLibraryDocSetDirectory,
             nil];
 }
 

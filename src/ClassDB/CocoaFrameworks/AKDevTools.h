@@ -11,6 +11,9 @@
 /*! Some docsets get installed here for some reason. */
 #define AKSharedDocSetDirectory @"/Library/Developer/Shared/Documentation/DocSets"
 
+/*! Xcode4 puts the docsets here. */
+#define AKLibraryDocSetDirectory @"/Library/Developer/Documentation/DocSets"
+
 @class AKDocSetIndex;
 
 /*!

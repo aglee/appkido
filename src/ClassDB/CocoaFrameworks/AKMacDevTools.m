@@ -18,6 +18,7 @@
     return [NSArray arrayWithObjects:
             [[self devToolsPath] stringByAppendingPathComponent:@"Documentation/DocSets/"],
             AKSharedDocSetDirectory,
+            AKLibraryDocSetDirectory,
             nil];
 }
 
