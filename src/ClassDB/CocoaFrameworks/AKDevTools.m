@@ -21,10 +21,9 @@
 @interface AKDevTools ()
 
 - (void)_lookForDocSetsInDirectory:(NSString *)docSetsDir;
-- (void)_initDocSetPathsBySDKVersion;
-
-- (NSString *)_docSetVersionForSDKVersion:(NSString *)sdkVersion;
-- (void)_initHeadersPathsBySDKVersion;
+- (void)_findAllDocSetPaths;
+- (void)_findAllSDKPathsWithDocSets;
+- (void)_removeDocSetPathsWithoutSDKs;
 
 @end
 
@@ -83,12 +82,10 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
         _sdkVersionsThatHaveDocSets = [[NSMutableArray alloc] init];
         _sdkPathsBySDKVersion = [[NSMutableDictionary alloc] init];
 
-        [self _initDocSetPathsBySDKVersion];
-        [self _initHeadersPathsBySDKVersion];
+        [self _findAllDocSetPaths];
+        [self _findAllSDKPathsWithDocSets];
+        [self _removeDocSetPathsWithoutSDKs];
         [_sdkVersionsThatHaveDocSets sortUsingFunction:_versionSortFunction context:NULL];
-//        NSLog(@"_sdkVersionsThatHaveDocSets = %@", _sdkVersionsThatHaveDocSets);
-//        NSLog(@"_docSetPathsBySDKVersion = %@", _docSetPathsBySDKVersion);
-//        NSLog(@"_sdkPathsBySDKVersion = %@", _sdkPathsBySDKVersion);
     }
 
     return self;
@@ -241,12 +238,7 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
     }
 }
 
-// Called by -initWithPath: to populate _docSetPathsBySDKVersion and _sdkVersionsWithDocSets.  Does this by
-// calling _lookForDocSetsInDirectory:.  Must be called before _initHeadersPathsBySDKVersion,
-// because the latter depends on _sdkVersionsWithDocSets having been populated.
-//
-// There are two places to look for docsets: within the Dev Tools directory, and in /Library/Developer.
-- (void)_initDocSetPathsBySDKVersion
+- (void)_findAllDocSetPaths
 {
     NSEnumerator *docSetPathEnum = [[self docSetSearchPaths] objectEnumerator];
     NSString *docSetPath;
@@ -274,9 +266,9 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
 	return nil;
 }
 
-// Called by -initWithPath: to populate _sdkPathsBySDKVersion by locating all
-// SDK directories whose versions have corresponding docs, as indicated by _sdkVersionsWithDocSets.
-- (void)_initHeadersPathsBySDKVersion
+// Finds all SDK directories within our Dev Tools directory for which we have found corresponding
+// docsets.  Must be called after _findAllDocSetPaths so we know what docsets are available.
+- (void)_findAllSDKPathsWithDocSets
 {
     NSString *sdksDir = [self sdkSearchPath];
     NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] directoryContentsAtPath:sdksDir] objectEnumerator];
@@ -296,6 +288,21 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
             {
                 [_sdkPathsBySDKVersion setObject:sdkPath forKey:docSetVersion];
             }
+        }
+    }
+}
+
+- (void)_removeDocSetPathsWithoutSDKs
+{
+    NSEnumerator *sdkVersionsEnum = [[NSArray arrayWithArray:_sdkVersionsThatHaveDocSets] objectEnumerator];
+    NSString *sdkVersion;
+    
+    while ((sdkVersion = [sdkVersionsEnum nextObject]))
+    {
+        if ([_sdkPathsBySDKVersion objectForKey:sdkVersion] == nil)
+        {
+            [_sdkVersionsThatHaveDocSets removeObject:sdkVersion];
+            [_docSetPathsBySDKVersion removeObjectForKey:sdkVersion];
         }
     }
 }
