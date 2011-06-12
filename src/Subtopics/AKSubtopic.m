@@ -70,11 +70,11 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
     return [_docList count];
 }
 
-- (AKDoc *)docAtIndex:(int)index
+- (AKDoc *)docAtIndex:(int)docIndex
 {
     [self _makeSureDocListIsReady];
 
-    return [_docList objectAtIndex:index];
+    return [_docList objectAtIndex:docIndex];
 }
 
 - (int)indexOfDocWithName:(NSString *)docName

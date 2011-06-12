@@ -58,13 +58,13 @@
     NSMutableArray *fwNames = [NSMutableArray arrayWithArray:prefArray];
     
     // In older versions, "AppKit" was saved as "ApplicationKit" in prefs.
-    unsigned index = [fwNames indexOfObject:@"ApplicationKit"];
-    if (index != NSNotFound)
+    unsigned frameworkIndex = [fwNames indexOfObject:@"ApplicationKit"];
+    if (frameworkIndex != NSNotFound)
     {
-        [fwNames removeObjectAtIndex:index];
+        [fwNames removeObjectAtIndex:frameworkIndex];
         [fwNames
             insertObject:AKAppKitFrameworkName
-            atIndex:index];
+            atIndex:frameworkIndex];
     }
 
     // It seems prefs files can be messed up from earlier app versions.  In

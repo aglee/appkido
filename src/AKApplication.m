@@ -15,11 +15,11 @@
 // that WebView, otherwise nil.
 - (WebView *)_webViewEnclosingFirstResponder
 {
-    NSWindow *keyWindow = [self keyWindow];
-    if (keyWindow == nil)
+    NSWindow *keyWind = [self keyWindow];
+    if (keyWind == nil)
         return nil;
 
-    id view = [keyWindow firstResponder];
+    id view = [keyWind firstResponder];
     if (![view isKindOfClass:[NSView class]])
         return nil;
 

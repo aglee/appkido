@@ -972,7 +972,7 @@ enum
     return [AKSortUtils arrayBySortingSet:resultSet];
 }
 
-- (void)_jumpToSearchResultAtIndex:(int)index
+- (void)_jumpToSearchResultAtIndex:(int)resultIndex
 {
     // Change the quicklist mode to search mode.
     [self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
@@ -985,15 +985,15 @@ enum
     }
 
     // Reset our remembered index into the array of search results.
-    if (index < 0)
+    if (resultIndex < 0)
     {
-        index = [[_searchQuery queryResults] count] - 1;
+        resultIndex = [[_searchQuery queryResults] count] - 1;
     }
-    else if ((unsigned)index > [[_searchQuery queryResults] count] - 1)
+    else if ((unsigned)resultIndex > [[_searchQuery queryResults] count] - 1)
     {
-        index = 0;
+        resultIndex = 0;
     }
-    _indexWithinSearchResults = index;
+    _indexWithinSearchResults = resultIndex;
 
     // Jump to the search result at the new position.
     [_quicklistTable deselectAll:nil];

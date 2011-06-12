@@ -179,7 +179,7 @@
     return (AKMethodNode *)[_indexOfDelegateMethods nodeWithName:methodName];
 }
 
-- (void)addDelegateMethod:(AKMethodNode *)methodNode;
+- (void)addDelegateMethod:(AKMethodNode *)methodNode
 {
     [_indexOfDelegateMethods addNode:methodNode];
 }
@@ -198,7 +198,7 @@
     return (AKNotificationNode *)[_indexOfNotifications nodeWithName:notificationName];
 }
 
-- (void)addNotification:(AKNotificationNode *)notificationNode;
+- (void)addNotification:(AKNotificationNode *)notificationNode
 {
     [_indexOfNotifications addNode:notificationNode];
 }

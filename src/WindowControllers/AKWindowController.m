@@ -565,20 +565,20 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 // automatically, so I force it here; the reason I traverse all subviews
 // is because the internal view hierarchy of WebView is not exposed
     NSMutableArray *allSubviews = [NSMutableArray arrayWithArray:[_docView subviews]];
-    unsigned index = 0;
+    unsigned subviewIndex = 0;
 
-    while (index < [allSubviews count])
+    while (subviewIndex < [allSubviews count])
     {
-        NSView *view = [allSubviews objectAtIndex:index];
+        NSView *view = [allSubviews objectAtIndex:subviewIndex];
 
         [allSubviews addObjectsFromArray:[view subviews]];
 
-        index++;
+        subviewIndex++;
     }
 
-    for (index = 0; index < [allSubviews count]; index++)
+    for (subviewIndex = 0; subviewIndex < [allSubviews count]; subviewIndex++)
     {
-        NSView *view = [allSubviews objectAtIndex:index];
+        NSView *view = [allSubviews objectAtIndex:subviewIndex];
 
         if ([view isKindOfClass:[NSScrollView class]])
         {
@@ -1029,21 +1029,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 // All the history navigation methods come through here.
-- (void)_navigateToHistoryIndex:(int)index
+- (void)_navigateToHistoryIndex:(int)historyIndex
 {
-    if ((index < 0) || (index >= (int)[_windowHistory count]))
+    if ((historyIndex < 0) || (historyIndex >= (int)[_windowHistory count]))
     {
         return;
     }
 
     // Navigate to the specified history item.
-    AKDocLocator *historyItem = [_windowHistory objectAtIndex:index];
+    AKDocLocator *historyItem = [_windowHistory objectAtIndex:historyIndex];
 
     [self _rememberCurrentTextSelection];
     [_topicBrowserController navigateFrom:nil to:historyItem];
 
     // Update our marker index into the history array.
-    _windowHistoryIndex = index;
+    _windowHistoryIndex = historyIndex;
     DIGSLogDebug(@"jumped to history index %d, history count=%d", _windowHistoryIndex, [_windowHistory count]);
 
     // Update miscellaneous parts of the UI that reflect our current

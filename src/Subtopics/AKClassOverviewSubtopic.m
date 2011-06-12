@@ -136,15 +136,15 @@
                     andExtraFrameworkName:extraFrameworkName]
                     autorelease];
 
-            int index = [self indexOfDocWithName:sectionName];
+            int docIndex = [self indexOfDocWithName:sectionName];
 
-            if (index < 0)
+            if (docIndex < 0)
             {
                 [docList addObject:sectionDoc];
             }
             else
             {
-                [docList insertObject:sectionDoc atIndex:(index + 1)];
+                [docList insertObject:sectionDoc atIndex:(docIndex + 1)];
             }
         }
     }

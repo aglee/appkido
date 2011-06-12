@@ -412,11 +412,11 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-- (void)removeFavoriteAtIndex:(int)index
+- (void)removeFavoriteAtIndex:(int)favoritesIndex
 {
-    if (index >= 0)
+    if (favoritesIndex >= 0)
     {
-        [_favoritesList removeObjectAtIndex:index];
+        [_favoritesList removeObjectAtIndex:favoritesIndex];
         [self _putFavoritesIntoPrefs];
         [self applyUserPreferences];
     }

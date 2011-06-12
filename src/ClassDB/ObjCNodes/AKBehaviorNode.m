@@ -145,7 +145,7 @@
     return (AKPropertyNode *)[_indexOfProperties nodeWithName:propertyName];
 }
 
-- (void)addPropertyNode:(AKPropertyNode *)propertyNode;
+- (void)addPropertyNode:(AKPropertyNode *)propertyNode
 {
     [_indexOfProperties addNode:propertyNode];
 }
@@ -164,7 +164,7 @@
     return (AKMethodNode *)[_indexOfClassMethods nodeWithName:methodName];
 }
 
-- (void)addClassMethod:(AKMethodNode *)methodNode;
+- (void)addClassMethod:(AKMethodNode *)methodNode
 {
     [_indexOfClassMethods addNode:methodNode];
 }
@@ -183,7 +183,7 @@
     return (AKMethodNode *)[_indexOfInstanceMethods nodeWithName:methodName];
 }
 
-- (void)addInstanceMethod:(AKMethodNode *)methodNode;
+- (void)addInstanceMethod:(AKMethodNode *)methodNode
 {
     [_indexOfInstanceMethods addNode:methodNode];
 }

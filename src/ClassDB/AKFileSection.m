@@ -222,9 +222,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     return [_childSections count];
 }
 
-- (AKFileSection *)childSectionAtIndex:(int)index
+- (AKFileSection *)childSectionAtIndex:(int)childSectionIndex
 {
-    return [_childSections objectAtIndex:index];
+    return [_childSections objectAtIndex:childSectionIndex];
 }
 
 - (AKFileSection *)childSectionWithName:(NSString *)name
@@ -286,14 +286,14 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 }
 
 - (void)insertChildSection:(AKFileSection *)childSection
-    atIndex:(int)index
+    atIndex:(int)childSectionIndex
 {
-    [_childSections insertObject:childSection atIndex:index];
+    [_childSections insertObject:childSection atIndex:childSectionIndex];
 }
 
-- (void)removeChildSectionAtIndex:(int)index
+- (void)removeChildSectionAtIndex:(int)childSectionIndex
 {
-    [_childSections removeObjectAtIndex:index];
+    [_childSections removeObjectAtIndex:childSectionIndex];
 }
 
 - (AKFileSection *)childSectionContainingString:(NSString *)name  // thanks Gerriet

@@ -107,9 +107,9 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 - (void)addListener:(id)listenerObject withSelector:(SEL)handlerSelector
 {
     NSValue *pointerHolder = [NSValue valueWithNonretainedObject:listenerObject];
-    unsigned index = [_listenerPointers indexOfObject:pointerHolder];
+    unsigned listenerIndex = [_listenerPointers indexOfObject:pointerHolder];
 
-    if (index == NSNotFound)
+    if (listenerIndex == NSNotFound)
     {
         NSValue *actionHolder = [NSValue valueWithBytes:&handlerSelector objCType:@encode(SEL)];
 
@@ -121,12 +121,12 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 - (void)removeListener:(id)listenerObject
 {
     NSValue *pointerHolder = [NSValue valueWithNonretainedObject:listenerObject];
-    unsigned index = [_listenerPointers indexOfObject:pointerHolder];
+    unsigned listenerIndex = [_listenerPointers indexOfObject:pointerHolder];
 
-    if (index != NSNotFound)
+    if (listenerIndex != NSNotFound)
     {
-        [_listenerPointers removeObjectAtIndex:index];
-        [_listenerActions removeObjectAtIndex:index];
+        [_listenerPointers removeObjectAtIndex:listenerIndex];
+        [_listenerActions removeObjectAtIndex:listenerIndex];
     }
 }
 
