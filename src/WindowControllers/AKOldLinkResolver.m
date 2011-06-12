@@ -234,7 +234,7 @@
     }
 
     NSData *textBytes = [fileSection fileContents];
-    const char *anchorPtr = [textBytes bytes] + anchorOffset;
+    const char *anchorPtr = (char *)[textBytes bytes] + anchorOffset;
 
     // [agl] KLUDGE
     // In the newer Apple docs, the anchor tag comes before the
@@ -251,7 +251,7 @@
     // [agl] KLUDGE ON TOP OF KLUDGE
     // Now, with Tiger, we search for a closing </div> as well.
     const char *dataEnd =
-        [textBytes bytes] + [textBytes length] - 4;
+        (char *)[textBytes bytes] + [textBytes length] - 4;
 
     while (anchorPtr < dataEnd)
     {

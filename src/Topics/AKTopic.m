@@ -69,7 +69,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
         }
     }
 
-    return [topicClass fromPrefDictionary:prefDict];
+    return (AKTopic *)[topicClass fromPrefDictionary:prefDict];
 }
 
 - (NSDictionary *)asPrefDictionary
