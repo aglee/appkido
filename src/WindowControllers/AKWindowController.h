@@ -37,7 +37,7 @@
 // history"; "navigate" means "navigate the various subcontrollers to";
 // navigation always starts here at the window controller and propagates
 // to subcontrollers
-@interface AKWindowController : NSObject <NSToolbarDelegate>
+@interface AKWindowController : NSObject
 {
     AKDatabase *_database;
 
