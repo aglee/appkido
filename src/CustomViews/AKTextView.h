@@ -7,7 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <DIGSTextView.h>
+#import "DIGSTextView.h"
 
 /*!
  * Used by AKDocView to display header files.  Overrides insertTab: and

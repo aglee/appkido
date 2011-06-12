@@ -5,7 +5,7 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import <DIGSFileProcessor.h>
+#import "DIGSFileProcessor.h"
 
 #import "DIGSLog.h"
 

@@ -6,26 +6,26 @@
     #import <Cocoa/Cocoa.h>
 
     #import "DIGSLog.h"
-    #import <DIGSFileProcessor.h>
-    #import <DIGSFindBuffer.h>
-    #import <DIGSTextSelection.h>
-    #import <DIGSMarginView.h>
-    #import <DIGSMatchingBackgroundView.h>
-    #import <DIGSTextView.h>
-    #import <DIGSWindow.h>
+    #import "DIGSFileProcessor.h"
+    #import "DIGSFindBuffer.h"
+    #import "DIGSTextSelection.h"
+    #import "DIGSMarginView.h"
+    #import "DIGSMatchingBackgroundView.h"
+    #import "DIGSTextView.h"
+    #import "DIGSWindow.h"
 
-    #import <AKFrameworkConstants.h>
-    #import <AKHTMLConstants.h>
-    #import <AKPrefConstants.h>
+    #import "AKFrameworkConstants.h"
+    #import "AKHTMLConstants.h"
+    #import "AKPrefConstants.h"
 
-    #import <AKFileUtils.h>
-    #import <AKSortable.h>
-    #import <AKSortUtils.h>
-    #import <AKTextUtils.h>
-    #import <AKViewUtils.h>
-    #import <AKSubcontroller.h>
-    #import <AKFileSection.h>
-    #import <AKPrefUtils.h>
-    #import <AKFrameworkInfo.h>
-    #import <AKDebugUtils.h>
+    #import "AKFileUtils.h"
+    #import "AKSortable.h"
+    #import "AKSortUtils.h"
+    #import "AKTextUtils.h"
+    #import "AKViewUtils.h"
+    #import "AKSubcontroller.h"
+    #import "AKFileSection.h"
+    #import "AKPrefUtils.h"
+    #import "AKFrameworkInfo.h"
+    #import "AKDebugUtils.h"
 #endif

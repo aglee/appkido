@@ -7,7 +7,7 @@
 
 #import "AKQuicklistController.h"
 
-#import <DIGSFindBuffer.h>
+#import "DIGSFindBuffer.h"
 
 #import "AKFrameworkConstants.h"
 #import "AKHTMLConstants.h"

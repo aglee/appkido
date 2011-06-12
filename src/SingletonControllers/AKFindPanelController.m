@@ -10,7 +10,7 @@
 #import "AKFindPanelController.h"
 
 #import <WebKit/WebKit.h>
-#import <DIGSFindBuffer.h>
+#import "DIGSFindBuffer.h"
 #import "AKTextUtils.h"
 #import "AKAppController.h"
 #import "AKWindowController.h"

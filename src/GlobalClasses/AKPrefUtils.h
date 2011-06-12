@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <DIGSPrefUtils.h>
+#import "DIGSPrefUtils.h"
 #import "AKPrefConstants.h"
 
 /*!
