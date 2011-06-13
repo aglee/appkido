@@ -55,12 +55,12 @@
     return prefDict;
 }
 
-- (int)numberOfSubtopics
+- (NSInteger)numberOfSubtopics
 {
     return [[self _subtopics] count];
 }
 
-- (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
 {
     if (subtopicIndex < 0)
     {

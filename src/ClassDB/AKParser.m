@@ -33,8 +33,8 @@
     underBaseDir:(NSString *)baseDir
     forFramework:(AKFramework *)aFramework
 {
-    int numDocs = [docPaths count];
-    int i;
+    NSInteger numDocs = [docPaths count];
+    NSInteger i;
     for (i = 0; i < numDocs; i++)
     {
         NSString *docPath = [baseDir stringByAppendingPathComponent:[docPaths objectAtIndex:i]];

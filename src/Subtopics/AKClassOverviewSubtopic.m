@@ -136,7 +136,7 @@
                     andExtraFrameworkName:extraFrameworkName]
                     autorelease];
 
-            int index = [self indexOfDocWithName:sectionName];
+            NSInteger index = [self indexOfDocWithName:sectionName];
 
             if (index < 0)
             {

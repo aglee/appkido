@@ -31,7 +31,7 @@
 
 - (void)addSubnode:(AKDatabaseNode *)node;
 
-- (int)numberOfSubnodes;
+- (NSInteger)numberOfSubnodes;
 
 /*! Order of returned nodes is not guaranteed. */
 - (NSArray *)subnodes;

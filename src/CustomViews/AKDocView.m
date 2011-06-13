@@ -141,7 +141,7 @@
 {
     if (![[_docLocator docToDisplay] isPlainText])
     {
-        int docMagnifierPref = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
+        NSInteger docMagnifierPref = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
 
         if (_docMagnifier != docMagnifierPref)
         {
@@ -153,7 +153,7 @@
     {
         NSString *headerFontNamePref =
             [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-        int headerFontSizePref =
+        NSInteger headerFontSizePref =
             [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
         BOOL headerFontChanged = NO;
 
@@ -298,7 +298,7 @@
     // Display the plain text in _scrollView.
     NSString *fontName =
         [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-    int fontSize =
+    NSInteger fontSize =
         [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
     NSFont *plainTextFont = [NSFont fontWithName:fontName size:fontSize];
     NSString *docString = @"";
@@ -348,7 +348,7 @@
     }
 
     // Apply the user's magnification preference.
-    float multiplier = ((float)_docMagnifier) / 100.0;
+    float multiplier = ((float)_docMagnifier) / 100.0f;
 
     [_webView setTextSizeMultiplier:multiplier];
 

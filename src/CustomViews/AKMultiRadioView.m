@@ -79,7 +79,7 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (int)selectedTag
+- (NSInteger)selectedTag
 {
     if (_selectedRadioMatrix == nil)
     {
@@ -91,7 +91,7 @@
     }
 }
 
-- (BOOL)selectCellWithTag:(int)tag
+- (BOOL)selectCellWithTag:(NSInteger)tag
 {
     BOOL didSelect = NO;
     NSEnumerator *en = [[self subviews] objectEnumerator];

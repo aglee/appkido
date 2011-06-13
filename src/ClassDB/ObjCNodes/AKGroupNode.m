@@ -42,7 +42,7 @@
     [_subnodes addObject:node];
 }
 
-- (int)numberOfSubnodes
+- (NSInteger)numberOfSubnodes
 {
     return [_subnodes count];
 }

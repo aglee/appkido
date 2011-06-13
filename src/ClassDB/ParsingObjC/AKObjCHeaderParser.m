@@ -495,7 +495,7 @@ static BOOL isPunctuation(char c)
         return NO;
     }
 
-    int len = _current - tokenStart;
+    NSInteger len = _current - tokenStart;
 
     memcpy(buffer, tokenStart, len);
     buffer[len] = '\0';

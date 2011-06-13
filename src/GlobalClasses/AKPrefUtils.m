@@ -58,7 +58,7 @@
     NSMutableArray *fwNames = [NSMutableArray arrayWithArray:prefArray];
     
     // In older versions, "AppKit" was saved as "ApplicationKit" in prefs.
-    unsigned index = [fwNames indexOfObject:@"ApplicationKit"];
+    NSUInteger index = [fwNames indexOfObject:@"ApplicationKit"];
     if (index != NSNotFound)
     {
         [fwNames removeObjectAtIndex:index];

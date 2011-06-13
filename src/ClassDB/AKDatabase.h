@@ -247,7 +247,7 @@
 #pragma mark -
 #pragma mark Getters and setters -- functions
 
-- (int)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName;
+- (NSInteger)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName;
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName;
 - (AKGroupNode *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName;
 - (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
@@ -259,7 +259,7 @@
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
-- (int)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName;
+- (NSInteger)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName;
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName;
 - (AKGroupNode *)globalsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName;
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
@@ -296,8 +296,8 @@
  *              This method returns the byte offset of the given anchor
  *              string within the given file, or -1 if it is not present.
  */
-- (int)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
-- (void)rememberOffset:(int)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
+- (NSInteger)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
+- (void)rememberOffset:(NSInteger)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
 
 @end
 

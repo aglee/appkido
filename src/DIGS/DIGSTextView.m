@@ -110,8 +110,8 @@
 - (void)_setCursorRectsForLinks
 {
      NSTextStorage *attrString = [self textStorage];
-     unsigned loc = 0;
-     unsigned end = [attrString length];
+     NSUInteger loc = 0;
+     NSUInteger end = [attrString length];
 
      while (loc < end)
      {

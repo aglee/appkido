@@ -48,7 +48,7 @@
  * @discussion  A pass-through method.  Forwards the message to my
  *   subtopics controller.
  */
-- (void)jumpToSubtopicWithIndex:(int)subtopicIndex;
+- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex;
 
 
 #pragma mark -

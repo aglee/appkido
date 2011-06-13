@@ -162,14 +162,14 @@ static AKPrefPanelController *s_sharedInstance = nil;
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     return [[self _namesOfAvailableFrameworks] count];
 }
 
 - (id)tableView:(NSTableView *)aTableView
     objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(int)rowIndex
+    row:(NSInteger)rowIndex
 {
     return
         [[self _namesOfAvailableFrameworks]
@@ -238,7 +238,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
     // The list-font-name pref.
     NSString *listFontName =
         [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    int listFontNameIndex =
+    NSInteger listFontNameIndex =
         [_listFontNameChoice indexOfItemWithTitle:listFontName];
 
     if (listFontNameIndex < 0)
@@ -254,13 +254,13 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_listFontNameChoice selectItemAtIndex:listFontNameIndex];
 
     // The list-font-size pref.
-    [_listFontSizeCombo setIntValue:
+    [_listFontSizeCombo setIntegerValue:
         [AKPrefUtils intValueForPref:AKListFontSizePrefName]];
 
     // The header-font-name pref.
     NSString *headerFontName =
         [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-    int headerFontNameIndex =
+    NSInteger headerFontNameIndex =
         [_headerFontNameChoice indexOfItemWithTitle:headerFontName];
 
     if (headerFontNameIndex < 0)
@@ -276,13 +276,13 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_headerFontNameChoice selectItemAtIndex:headerFontNameIndex];
 
     // The header-font-size pref.
-    [_headerFontSizeCombo setIntValue:
+    [_headerFontSizeCombo setIntegerValue:
         [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName]];
 
     // The doc-magnification pref.
-    int magnificationChoiceTag =
+    NSInteger magnificationChoiceTag =
         [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
-    int magnificationIndex =
+    NSInteger magnificationIndex =
         [_magnificationChoice indexOfItemWithTag:magnificationChoiceTag];
 
     if (magnificationIndex < 0)

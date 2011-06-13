@@ -28,10 +28,10 @@
 
     // Criterion used to populate _quicklistTable, as selected from
     // _quicklistModeMatrix.
-    int _currentQuicklistMode;
+    NSInteger _currentQuicklistMode;
 
     // For managing searches and search results.
-    int _indexWithinSearchResults;
+    NSInteger _indexWithinSearchResults;
     AKSearchQuery *_searchQuery;
     NSMutableArray *_pastSearchStrings;
 

@@ -31,8 +31,8 @@
 
     NSString *_sectionName;
 
-    unsigned _sectionOffset;
-    unsigned _sectionLength;
+    NSUInteger _sectionOffset;
+    NSUInteger _sectionLength;
 
     // Elements are AKFileSections.
     NSMutableArray *_childSections;
@@ -83,25 +83,25 @@
 - (NSString *)sectionName;
 - (void)setSectionName:(NSString *)name;
 
-- (unsigned)sectionOffset;
-- (void)setSectionOffset:(unsigned)offset;
+- (NSUInteger)sectionOffset;
+- (void)setSectionOffset:(NSUInteger)offset;
 
-- (unsigned)sectionLength;
-- (void)setSectionLength:(unsigned)length;
+- (NSUInteger)sectionLength;
+- (void)setSectionLength:(NSUInteger)length;
 
 - (NSData *)sectionData;
 
 - (NSEnumerator *)childSectionEnumerator;
-- (int)numberOfChildSections;
-- (AKFileSection *)childSectionAtIndex:(int)index;
+- (NSInteger)numberOfChildSections;
+- (AKFileSection *)childSectionAtIndex:(NSInteger)index;
 - (AKFileSection *)childSectionWithName:(NSString *)name;
 - (AKFileSection *)lastChildSection;
-- (int)indexOfChildSectionWithName:(NSString *)name;
+- (NSInteger)indexOfChildSectionWithName:(NSString *)name;
 - (BOOL)hasChildSectionWithName:(NSString *)name;
 - (void)addChildSection:(AKFileSection *)childSection;
 - (void)insertChildSection:(AKFileSection *)childSection
-    atIndex:(int)index;
-- (void)removeChildSectionAtIndex:(int)index;
+    atIndex:(NSInteger)index;
+- (void)removeChildSectionAtIndex:(NSInteger)index;
 - (AKFileSection *)childSectionContainingString:(NSString *)name; // thanks Gerriet
 
 

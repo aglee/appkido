@@ -133,7 +133,7 @@
         forKey:AKToolbarIsVisiblePrefKey];
 
     [prefDict
-        setObject:[NSNumber numberWithFloat:_middleViewHeight]
+        setObject:[NSNumber numberWithDouble:_middleViewHeight]
         forKey:AKMiddleViewHeightPrefKey];
 
     [prefDict
@@ -141,11 +141,11 @@
         forKey:AKBrowserIsVisiblePrefKey];
 
     [prefDict
-        setObject:[NSNumber numberWithFloat:_browserFraction]
+        setObject:[NSNumber numberWithDouble:_browserFraction]
         forKey:AKBrowserFractionPrefKey];
 
     [prefDict
-        setObject:[NSNumber numberWithInt:_numberOfBrowserColumns]
+        setObject:[NSNumber numberWithInteger:_numberOfBrowserColumns]
         forKey:AKNumberOfBrowserColumnsPrefKey];
 
     [prefDict
@@ -153,11 +153,11 @@
         forKey:AKQuicklistDrawerIsOpenPrefKey];
 
     [prefDict
-        setObject:[NSNumber numberWithFloat:_quicklistDrawerWidth]
+        setObject:[NSNumber numberWithDouble:_quicklistDrawerWidth]
         forKey:AKQuicklistDrawerWidthPrefKey];
 
     [prefDict
-        setObject:[NSNumber numberWithFloat:_quicklistMode]
+        setObject:[NSNumber numberWithDouble:_quicklistMode]
         forKey:AKQuicklistModePrefKey];
 
     if (_frameworkPopupSelection)
@@ -225,32 +225,32 @@
     _browserIsVisible = flag;
 }
 
-- (float)browserFraction
+- (CGFloat)browserFraction
 {
     return _browserFraction;
 }
 
-- (void)setBrowserFraction:(float)height
+- (void)setBrowserFraction:(CGFloat)height
 {
     _browserFraction = height;
 }
 
-- (int)numberOfBrowserColumns
+- (NSInteger)numberOfBrowserColumns
 {
     return _numberOfBrowserColumns;
 }
 
-- (void)setNumberOfBrowserColumns:(int)numColumns
+- (void)setNumberOfBrowserColumns:(NSInteger)numColumns
 {
     _numberOfBrowserColumns = numColumns;
 }
 
-- (float)middleViewHeight
+- (CGFloat)middleViewHeight
 {
     return _middleViewHeight;
 }
 
-- (void)setMiddleViewHeight:(float)height
+- (void)setMiddleViewHeight:(CGFloat)height
 {
     _middleViewHeight = height;
 }
@@ -265,22 +265,22 @@
     _quicklistDrawerIsOpen = flag;
 }
 
-- (float)quicklistDrawerWidth
+- (CGFloat)quicklistDrawerWidth
 {
     return _quicklistDrawerWidth;
 }
 
-- (void)setQuicklistDrawerWidth:(float)width
+- (void)setQuicklistDrawerWidth:(CGFloat)width
 {
     _quicklistDrawerWidth = width;
 }
 
-- (int)quicklistMode
+- (NSInteger)quicklistMode
 {
     return _quicklistMode;
 }
 
-- (void)setQuicklistMode:(int)mode
+- (void)setQuicklistMode:(NSInteger)mode
 {
     _quicklistMode = mode;
 }

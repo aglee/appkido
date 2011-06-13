@@ -66,14 +66,14 @@ extern const NSString *DIGSLogVerbosityUserDefault;
  * @discussion  Returns the verbosity level used by the various
  *              DIGSLogXXX() functions.
  */
-extern int DIGSGetVerbosityLevel();
+extern NSInteger DIGSGetVerbosityLevel();
 
 /*!
  * @function    DIGSSetVerbosityLevel
  * @discussion  Sets the verbosity level used by the various DIGSLogXXX()
  *              functions.
  */
-extern void DIGSSetVerbosityLevel(int level);
+extern void DIGSSetVerbosityLevel(NSInteger level);
 
 /*!
  * @function    DIGSLogError

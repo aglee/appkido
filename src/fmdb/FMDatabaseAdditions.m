@@ -35,7 +35,7 @@
         return 0;  // [agl] handle end-of-resultset better
     }
     
-    long ret = [rs longForColumnIndex:0];
+    int ret = [rs intForColumnIndex:0];
     
     // clear it out.
     [rs close];
@@ -51,7 +51,7 @@
         return 0;  // [agl] handle end-of-resultset better
     }
     
-    int ret = [rs intForColumnIndex:0];
+    long ret = [rs longForColumnIndex:0];
     
     // clear it out.
     [rs close];

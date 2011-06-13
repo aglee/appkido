@@ -49,7 +49,7 @@
  *   This method is mainly to simplify implementation of the various
  *   menu items that navigate to Class Method, Instance Methods, etc.
  */
-- (void)jumpToSubtopicWithIndex:(int)subtopicIndex;
+- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex;
 
 
 #pragma mark -

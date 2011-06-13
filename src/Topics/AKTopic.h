@@ -120,13 +120,13 @@ extern NSString *AKGlobalsTopicName;
 #pragma mark Populating the subtopics table
 
 // subclasses must override
-- (int)numberOfSubtopics;
+- (NSInteger)numberOfSubtopics;
 
 // subclasses must override; not guaranteed to return the same instance
 // every time
-- (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex;
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex;
 
-- (int)indexOfSubtopicWithName:(NSString *)subtopicName;
+- (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName;
 
 - (AKSubtopic *)subtopicWithName:(NSString *)subtopicName;
 

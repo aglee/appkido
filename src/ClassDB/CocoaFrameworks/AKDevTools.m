@@ -33,7 +33,7 @@
 @implementation AKDevTools
 
 // Used for sorting the version strings in _sdkVersionsWithDocSets.
-static int _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
+static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
 {
     NSArray *leftComponents = [(NSString *)leftVersionString componentsSeparatedByString:@"."];
     NSArray *rightComponents = [(NSString *)rightVersionString componentsSeparatedByString:@"."];

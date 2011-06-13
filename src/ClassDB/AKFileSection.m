@@ -176,22 +176,22 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     _sectionName = name;
 }
 
-- (unsigned)sectionOffset
+- (NSUInteger)sectionOffset
 {
     return _sectionOffset;
 }
 
-- (void)setSectionOffset:(unsigned)offset
+- (void)setSectionOffset:(NSUInteger)offset
 {
     _sectionOffset = offset;
 }
 
-- (unsigned)sectionLength
+- (NSUInteger)sectionLength
 {
     return _sectionLength;
 }
 
-- (void)setSectionLength:(unsigned)length
+- (void)setSectionLength:(NSUInteger)length
 {
     _sectionLength = length;
 }
@@ -217,12 +217,12 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     return [_childSections objectEnumerator];
 }
 
-- (int)numberOfChildSections
+- (NSInteger)numberOfChildSections
 {
     return [_childSections count];
 }
 
-- (AKFileSection *)childSectionAtIndex:(int)index
+- (AKFileSection *)childSectionAtIndex:(NSInteger)index
 {
     return [_childSections objectAtIndex:index];
 }
@@ -247,7 +247,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 - (AKFileSection *)lastChildSection
 {
-    int numSubs = [_childSections count];
+    NSInteger numSubs = [_childSections count];
 
     return
         (numSubs == 0)
@@ -255,10 +255,10 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
         : [_childSections objectAtIndex:(numSubs - 1)];
 }
 
-- (int)indexOfChildSectionWithName:(NSString *)name
+- (NSInteger)indexOfChildSectionWithName:(NSString *)name
 {
-    int numChildSections = [_childSections count];
-    int i;
+    NSInteger numChildSections = [_childSections count];
+    NSInteger i;
 
     for (i = 0; i < numChildSections; i++)
     {
@@ -286,12 +286,12 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 }
 
 - (void)insertChildSection:(AKFileSection *)childSection
-    atIndex:(int)index
+    atIndex:(NSInteger)index
 {
     [_childSections insertObject:childSection atIndex:index];
 }
 
-- (void)removeChildSectionAtIndex:(int)index
+- (void)removeChildSectionAtIndex:(NSInteger)index
 {
     [_childSections removeObjectAtIndex:index];
 }

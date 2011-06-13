@@ -9,11 +9,11 @@
 
 const NSString *DIGSLogVerbosityUserDefault = @"DIGSVerbosity";
 
-static int g_verbosityLevel = DIGS_VERBOSITY_INFO;
+static NSInteger g_verbosityLevel = DIGS_VERBOSITY_INFO;
 
-int DIGSGetVerbosityLevel() { return g_verbosityLevel; }
+NSInteger DIGSGetVerbosityLevel() { return g_verbosityLevel; }
 
-void DIGSSetVerbosityLevel(int level) { g_verbosityLevel = level; }
+void DIGSSetVerbosityLevel(NSInteger level) { g_verbosityLevel = level; }
 
 /* Copped from http://www.cocoabuilder.com/archive/message/cocoa/2007/12/13/194858 */
 int DIGSPrintf(NSString *format, ...)

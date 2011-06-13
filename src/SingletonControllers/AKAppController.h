@@ -116,9 +116,9 @@
 
 - (void)addFavorite:(AKDocLocator *)docLocator;
 
-- (void)removeFavoriteAtIndex:(int)index;
+- (void)removeFavoriteAtIndex:(NSInteger)index;
 
-- (void)moveFavoriteFromIndex:(int)fromIndex toIndex:(int)toIndex;
+- (void)moveFavoriteFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
 
 
 #pragma mark -

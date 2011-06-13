@@ -121,7 +121,7 @@
             _current++;
             if (_current >= _dataEnd)
             {
-                int len = _dataEnd - tokenStart;
+                NSInteger len = _dataEnd - tokenStart;
 
                 _current = _dataEnd;
                 memcpy(_token, tokenStart, len);
@@ -134,7 +134,7 @@
         // If we got this far, we found the end of the token before
         // reaching the end of the input, and cp points to the first
         // character after the token.
-        int len = _current - tokenStart;
+        NSInteger len = _current - tokenStart;
 
         memcpy(_token, tokenStart, len);
         _token[len] = '\0';
@@ -361,7 +361,7 @@
 
     if (stackTop != nil)
     {
-        int sectionLength = _dataEnd - _dataStart - [stackTop sectionOffset];
+        NSInteger sectionLength = _dataEnd - _dataStart - [stackTop sectionOffset];
 
         [stackTop setSectionLength:sectionLength];
     }
@@ -379,7 +379,7 @@
 
 - (AKFileSection *)_popSectionStack
 {
-    int stackSize = [_sectionStack count];
+    NSInteger stackSize = [_sectionStack count];
 
     if (stackSize == 0)
     {
@@ -397,7 +397,7 @@
 
 - (AKFileSection *)_peekSectionStack
 {
-    int stackSize = [_sectionStack count];
+    NSInteger stackSize = [_sectionStack count];
 
     if (stackSize == 0)
     {
@@ -411,7 +411,7 @@
 
 - (char)_headerLevelAtTopOfSectionStack
 {
-    int stackSize = [_sectionStack count];
+    NSInteger stackSize = [_sectionStack count];
 
     if (stackSize == 0)
     {
@@ -438,8 +438,8 @@
     }
 
     AKFileSection *parentSection = [self _peekSectionStack];
-    int numSiblings = [siblings count];
-    int i;
+    NSInteger numSiblings = [siblings count];
+    NSInteger i;
 
     for (i = numSiblings - 1; i >= 0; i--)
     {
@@ -473,7 +473,7 @@
 
     if (stackTop != nil)
     {
-        int sectionLength = startOfOpeningTag - _dataStart - [stackTop sectionOffset];
+        NSInteger sectionLength = startOfOpeningTag - _dataStart - [stackTop sectionOffset];
 
         [stackTop setSectionLength:sectionLength];
     }
@@ -646,7 +646,7 @@
     // efficiency gain, do these operations on the C string before
     // converting to an NSString (thus avoiding, for example, a call to
     // ak_trimWhitespace).
-    int titleLength = _current - titleStart;
+    NSInteger titleLength = _current - titleStart;
     char titleBuf[titleLength + 1];
     strncpy(titleBuf, titleStart, titleLength);
     titleBuf[titleLength] = '\0';
@@ -713,8 +713,8 @@
     NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 32)];
     static char *divOpenTag = "<div class=\"mach4\">";
     static char *divCloseTag = "</div>";
-    int divOpenTagLength = strlen(divOpenTag);
-    int divCloseTagLength = strlen(divCloseTag);
+    NSInteger divOpenTagLength = strlen(divOpenTag);
+    NSInteger divCloseTagLength = strlen(divCloseTag);
 
     char *endOfLastDivTag = (char *)[sourceData bytes];
     char *startOfDivOpenTag = strstr(endOfLastDivTag, divOpenTag);
@@ -769,8 +769,8 @@
         [NSMutableData dataWithCapacity:([sourceData length] + 32)];
     static char *spanOpenTag = "<span class=\"page_title\">";
     static char *spanCloseTag = "</span>";
-    int spanOpenTagLength = strlen(spanOpenTag);
-    int spanCloseTagLength = strlen(spanCloseTag);
+    NSInteger spanOpenTagLength = strlen(spanOpenTag);
+    NSInteger spanCloseTagLength = strlen(spanCloseTag);
 
     char *endOfLastSpanTag = (char *)[sourceData bytes];
     char *startOfSpanOpenTag = strstr(endOfLastSpanTag, spanOpenTag);

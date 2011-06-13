@@ -443,8 +443,8 @@
 - (NSString *)_spreadString:(NSString *)s
 {
     NSMutableString *result = [NSMutableString string];
-    int numChars = [s length];
-    int i;
+    NSInteger numChars = [s length];
+    NSInteger i;
 
     for (i = 0; i < numChars; i++)
     {

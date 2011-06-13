@@ -43,7 +43,7 @@ extern char *ak_copystr(const char *s)
     return (r.location != NSNotFound);
 }
 
-- (int)ak_positionOf:(NSString *)searchString
+- (NSInteger)ak_positionOf:(NSString *)searchString
 {
     NSRange r = [self rangeOfString:searchString];
 
@@ -57,7 +57,7 @@ extern char *ak_copystr(const char *s)
     }
 }
 
-- (int)ak_positionAfter:(NSString *)searchString
+- (NSInteger)ak_positionAfter:(NSString *)searchString
 {
     NSRange r = [self rangeOfString:searchString];
 
@@ -73,11 +73,11 @@ extern char *ak_copystr(const char *s)
 
 - (NSRange)ak_findString:(NSString *)string
     selectedRange:(NSRange)selectedRange
-    options:(unsigned)options
+    options:(NSUInteger)options
     wrap:(BOOL)wrap
 {
     BOOL forwards = ((options & NSBackwardsSearch) == 0);
-    unsigned length = [self length];
+    NSUInteger length = [self length];
     NSRange searchRange, range;
 
     if (forwards)
@@ -127,9 +127,9 @@ extern char *ak_copystr(const char *s)
 {
     NSCharacterSet *whitespaceChars =
         [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    int originalLength = [self length];
-    int startIndex = 0;
-    int endIndex = startIndex + originalLength - 1;
+    NSInteger originalLength = [self length];
+    NSInteger startIndex = 0;
+    NSInteger endIndex = startIndex + originalLength - 1;
 
     while (startIndex < originalLength)
     {
@@ -159,7 +159,7 @@ extern char *ak_copystr(const char *s)
         }
     }
 
-    int newLength = endIndex - startIndex + 1;
+    NSInteger newLength = endIndex - startIndex + 1;
 
     if (newLength == originalLength)
     {

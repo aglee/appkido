@@ -58,8 +58,8 @@
     if (topicIsChanging)
     {
         // Update the arrays of table values and reload the subtopics table.
-        int numSubtopics = [newTopic numberOfSubtopics];
-        int i;
+        NSInteger numSubtopics = [newTopic numberOfSubtopics];
+        NSInteger i;
 
         [_subtopics removeAllObjects];
         for (i = 0; i < numSubtopics; i++)
@@ -86,7 +86,7 @@
     {
         // Figure out what subtopic index to select.  Try to select the
         // subtopic whose name matches the current one.
-        int subtopicIndex =
+        NSInteger subtopicIndex =
             (newSubtopicName == nil)
             ? [newTopic indexOfSubtopicWithName:currentSubtopicName]
             : [newTopic indexOfSubtopicWithName:newSubtopicName];
@@ -111,7 +111,7 @@
     [_docListController navigateFrom:whereFrom to:whereTo];
 }
 
-- (void)jumpToSubtopicWithIndex:(int)subtopicIndex
+- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex
 {
     if (subtopicIndex != [_subtopicsTable selectedRow])
     {
@@ -130,7 +130,7 @@
 
 - (IBAction)doSubtopicTableAction:(id)sender
 {
-    int selectedRow = [_subtopicsTable selectedRow];
+    NSInteger selectedRow = [_subtopicsTable selectedRow];
     NSString *newSubtopicName =
         (selectedRow < 0)
         ? nil
@@ -179,14 +179,14 @@
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     return [_subtopics count];
 }
 
 - (id)tableView:(NSTableView *)aTableView
     objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(int)rowIndex
+    row:(NSInteger)rowIndex
 {
     return [[_subtopics objectAtIndex:rowIndex] stringToDisplayInSubtopicList];
 }
@@ -196,7 +196,7 @@
 #pragma mark NSTableView delegate methods
 
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell
-    forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
+    forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     if ([aCell isKindOfClass:[NSBrowserCell class]])
     {

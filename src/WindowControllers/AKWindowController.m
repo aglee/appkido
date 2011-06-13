@@ -46,11 +46,11 @@
 - (void)_refreshBackButton;
 - (void)_refreshForwardButton;
 - (void)_refreshSuperclassButton;
-- (void)_navigateToHistoryIndex:(int)index;
+- (void)_navigateToHistoryIndex:(NSInteger)index;
 - (void)_addHistoryItem:(AKDocLocator *)newHistoryItem;
 - (AKTopic *)_currentTopic;
-- (float)_computeBrowserFraction;
-- (float)_computeBrowserHeight;
+- (CGFloat)_computeBrowserFraction;
+- (CGFloat)_computeBrowserHeight;
 - (void)_rememberCurrentTextSelection;
 @end
 
@@ -73,7 +73,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         _database = [database retain];
 
-        int maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
+        NSInteger maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
         _windowHistory = [[NSMutableArray alloc] initWithCapacity:maxHistory];
         _windowHistoryIndex = -1;
@@ -284,7 +284,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 - (void)searchForString:(NSString *)aString {
-    int state = [_quicklistDrawer state];
+    NSInteger state = [_quicklistDrawer state];
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
         [self toggleQuicklistDrawer:nil];
@@ -367,7 +367,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [windowLayout setNumberOfBrowserColumns:[_topicBrowser maxVisibleColumns]];
 
     // Remember the state of the Quicklist drawer.
-    int state = [_quicklistDrawer state];
+    NSInteger state = [_quicklistDrawer state];
     BOOL drawerIsOpen = (state == NSDrawerOpenState) || (state == NSDrawerOpeningState);
 
     [windowLayout setQuicklistDrawerIsOpen:drawerIsOpen];
@@ -463,7 +463,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         if ([anItem isKindOfClass:[NSMenuItem class]])
         {
-            int state = [_quicklistDrawer state];
+            NSInteger state = [_quicklistDrawer state];
 
             if ((state == NSDrawerClosedState)
                 || (state == NSDrawerClosingState))
@@ -597,7 +597,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)toggleQuicklistDrawer:(id)sender
 {
-    int state = [_quicklistDrawer state];
+    NSInteger state = [_quicklistDrawer state];
 
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
@@ -632,7 +632,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)doBackMenuAction:(id)sender
 {
     // Figure out how far back in history to navigate.
-    int offset = [_backMenu indexOfItem:(NSMenuItem *)sender] + 1;
+    NSInteger offset = [_backMenu indexOfItem:(NSMenuItem *)sender] + 1;
 
     // Do the navigation.
     [self _navigateToHistoryIndex:(_windowHistoryIndex - offset)];
@@ -641,7 +641,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)doForwardMenuAction:(id)sender
 {
     // Figure out how far forward in history to navigate.
-    int offset = [_forwardMenu indexOfItem:(NSMenuItem *)sender] + 1;
+    NSInteger offset = [_forwardMenu indexOfItem:(NSMenuItem *)sender] + 1;
 
     // Do the navigation.
     [self _navigateToHistoryIndex:(_windowHistoryIndex + offset)];
@@ -661,8 +661,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)jumpToAncestorClass:(id)sender
 {
     AKClassNode * classNode = [[self _currentTopic] parentClassOfTopic];
-    int numberOfSuperlevels;
-    int i;
+    NSInteger numberOfSuperlevels;
+    NSInteger i;
 
     if (classNode == nil)
     {
@@ -818,7 +818,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)selectSearchField:(id)sender
 {
-    int state = [_quicklistDrawer state];
+    NSInteger state = [_quicklistDrawer state];
 
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
@@ -830,7 +830,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)selectPreviousSearchResult:(id)sender
 {
-    int state = [_quicklistDrawer state];
+    NSInteger state = [_quicklistDrawer state];
 
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
@@ -842,7 +842,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)selectNextSearchResult:(id)sender
 {
-    int state = [_quicklistDrawer state];
+    NSInteger state = [_quicklistDrawer state];
 
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
@@ -885,7 +885,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ([aNotification object] == _topLevelSplitView)
     {
-        float browserHeight = [_topicBrowser frame].size.height;
+        CGFloat browserHeight = [_topicBrowser frame].size.height;
 
         if (browserHeight != 0.0)
         {
@@ -951,7 +951,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_refreshBackButton
 {
-    int i;
+    NSInteger i;
 
     // Enable or disable the Back button as appropriate.
     [_backButton setEnabled:(_windowHistoryIndex > 0)];
@@ -977,8 +977,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_refreshForwardButton
 {
-    int historySize = (int)[_windowHistory count];
-    int i;
+    NSInteger historySize = (int)[_windowHistory count];
+    NSInteger i;
 
     // Enable or disable the Forward button as appropriate.
     [_forwardButton setEnabled:(_windowHistoryIndex < historySize - 1)];
@@ -1029,9 +1029,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 // All the history navigation methods come through here.
-- (void)_navigateToHistoryIndex:(int)index
+- (void)_navigateToHistoryIndex:(NSInteger)index
 {
-    if ((index < 0) || (index >= (int)[_windowHistory count]))
+    if ((index < 0) || (index >= (NSInteger)[_windowHistory count]))
     {
         return;
     }
@@ -1055,7 +1055,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)_addHistoryItem:(AKDocLocator *)newHistoryItem
 {
     AKDocLocator *currentHistoryItem = [self currentHistoryItem];
-    int maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
+    NSInteger maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
     if ([currentHistoryItem isEqual:newHistoryItem])
     {
@@ -1102,9 +1102,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return [[self currentHistoryItem] topicToDisplay];
 }
 
-- (float)_computeBrowserFraction
+- (CGFloat)_computeBrowserFraction
 {
-    float browserHeight = [_topicBrowser frame].size.height;
+    CGFloat browserHeight = [_topicBrowser frame].size.height;
 
     if (browserHeight == 0.0)
     {
@@ -1112,15 +1112,15 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
     else
     {
-        float splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
+        CGFloat splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
 
         return browserHeight / splitViewHeight;
     }
 }
 
-- (float)_computeBrowserHeight
+- (CGFloat)_computeBrowserHeight
 {
-    float splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
+    CGFloat splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
 
     return _browserFractionWhenVisible * splitViewHeight;
 }

@@ -63,21 +63,21 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 #pragma mark -
 #pragma mark Managing the doc list
 
-- (int)numberOfDocs
+- (NSInteger)numberOfDocs
 {
     [self _makeSureDocListIsReady];
 
     return [_docList count];
 }
 
-- (AKDoc *)docAtIndex:(int)index
+- (AKDoc *)docAtIndex:(NSInteger)index
 {
     [self _makeSureDocListIsReady];
 
     return [_docList objectAtIndex:index];
 }
 
-- (int)indexOfDocWithName:(NSString *)docName
+- (NSInteger)indexOfDocWithName:(NSString *)docName
 {
     [self _makeSureDocListIsReady];
 
@@ -86,8 +86,8 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
         return -1;
     }
 
-    int numDocs = [_docList count];
-    int i;
+    NSInteger numDocs = [_docList count];
+    NSInteger i;
 
     for (i = 0; i < numDocs; i++)
     {
@@ -107,7 +107,7 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 {
     [self _makeSureDocListIsReady];
 
-    int docIndex =
+    NSInteger docIndex =
         (docName == nil)
         ? -1
         : [self indexOfDocWithName:docName];

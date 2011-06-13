@@ -23,14 +23,14 @@
     return AKFunctionsTopicName;
 }
 
-- (int)numberOfSubtopics
+- (NSInteger)numberOfSubtopics
 {
     return
         [[_topicFramework fwDatabase]
             numberOfFunctionsGroupsForFrameworkNamed:[_topicFramework frameworkName]];
 }
 
-- (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
 {
     if (subtopicIndex < 0)
     {

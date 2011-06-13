@@ -140,14 +140,14 @@
 - (void)_addDescendantSectionsOf:(AKFileSection *)fileSection
     depthFirstToArray:(NSMutableArray *)sectionArray
 {
-    int numSubs = [fileSection numberOfChildSections];
+    NSInteger numSubs = [fileSection numberOfChildSections];
 
     if (numSubs == 0)
     {
         return;
     }
 
-    int i;
+    NSInteger i;
     for (i = 0; i < numSubs; i++)
     {
         AKFileSection *sub = [fileSection childSectionAtIndex:i];
