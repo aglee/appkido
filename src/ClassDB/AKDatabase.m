@@ -413,7 +413,7 @@ DIGSLogDebug_ExitingMethod();
 #pragma mark -
 #pragma mark Getters and setters -- functions
 
-- (int)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName
+- (NSInteger)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
     return [[_functionsGroupListsByFramework objectForKey:frameworkName] count];
 }
@@ -496,7 +496,7 @@ DIGSLogDebug_ExitingMethod();
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
-- (int)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName
+- (NSInteger)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
     return [[_globalsGroupListsByFramework objectForKey:frameworkName] count];
 }
@@ -619,7 +619,7 @@ DIGSLogDebug_ExitingMethod();
     [_rootSectionsByHTMLPath setObject:rootSection forKey:filePath];
 }
 
-- (int)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
+- (NSInteger)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
 {
     NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
 
@@ -638,7 +638,7 @@ DIGSLogDebug_ExitingMethod();
     return [offsetValue intValue];
 }
 
-- (void)rememberOffset:(int)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
+- (void)rememberOffset:(NSInteger)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
 {
     NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
 
@@ -649,7 +649,7 @@ DIGSLogDebug_ExitingMethod();
         [_offsetsOfAnchorStringsInHTMLFiles setObject:offsetsByFilePath forKey:anchorString];
     }
 
-    NSNumber *offsetValue = [NSNumber numberWithInt:anchorOffset];
+    NSNumber *offsetValue = [NSNumber numberWithInteger:anchorOffset];
 
     [offsetsByFilePath setObject:offsetValue forKey:filePath];
 }

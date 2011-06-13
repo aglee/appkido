@@ -99,7 +99,7 @@
     NSString *startPath =
         [[_basePath stringByAppendingPathComponent:dirPath]
             stringByStandardizingPath];
-    en = [[fm directoryContentsAtPath:startPath] objectEnumerator];
+    en = [[fm contentsOfDirectoryAtPath:startPath error:NULL] objectEnumerator];
     while ((filename = [en nextObject]))
     {
         BOOL isDir;

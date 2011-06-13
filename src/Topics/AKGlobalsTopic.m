@@ -24,14 +24,14 @@
     return AKGlobalsTopicName;
 }
 
-- (int)numberOfSubtopics
+- (NSInteger)numberOfSubtopics
 {
     return
         [[_topicFramework fwDatabase]
             numberOfGlobalsGroupsForFrameworkNamed:[_topicFramework frameworkName]];
 }
 
-- (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
 {
     if (subtopicIndex < 0)
     {

@@ -16,7 +16,7 @@
 
 @implementation NSView (AppKiDo)
 
-- (void)ak_setFrameHeight:(float)newHeight
+- (void)ak_setFrameHeight:(CGFloat)newHeight
 {
     NSRect frame = [self frame];
 
@@ -89,7 +89,7 @@
 
 @implementation NSSplitView (AppKiDo)
 
-- (void)ak_setHeight:(float)newHeight ofSubview:(NSView *)subview
+- (void)ak_setHeight:(CGFloat)newHeight ofSubview:(NSView *)subview
 {
     if ((newHeight < 0) || (subview == nil))
     {
@@ -106,7 +106,7 @@
     }
 
     NSView *otherSubview = [self ak_siblingOfSubview:subview];
-    float otherNewHeight =
+    CGFloat otherNewHeight =
         [self frame].size.height - [self dividerThickness] - newHeight;
 
     [subview ak_setFrameHeight:newHeight];

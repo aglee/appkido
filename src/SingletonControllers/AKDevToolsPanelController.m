@@ -60,7 +60,7 @@
 {
     DIGSLogDebug_EnteringMethod();
 
-    int result = [[NSApplication sharedApplication] runModalForWindow:_window];
+    NSInteger result = [[NSApplication sharedApplication] runModalForWindow:_window];
 
     DIGSLogDebug(@"result of Dev Tools path panel: %d", result);
     [_window orderOut:self];

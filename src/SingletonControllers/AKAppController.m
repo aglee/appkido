@@ -412,7 +412,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-- (void)removeFavoriteAtIndex:(int)favoritesIndex
+- (void)removeFavoriteAtIndex:(NSInteger)favoritesIndex
 {
     if (favoritesIndex >= 0)
     {
@@ -422,7 +422,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-- (void)moveFavoriteFromIndex:(int)fromIndex toIndex:(int)toIndex
+- (void)moveFavoriteFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
     AKDocLocator *fav = [_favoritesList objectAtIndex:fromIndex];
 
@@ -486,7 +486,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [self _displayStringForVersion:latestVersion],
             [self _displayStringForVersion:thisVersion]];
 
-    int whichButton =
+    NSInteger whichButton =
         NSRunAlertPanel(
             @"Newer version available",  // title
             alertMessage,  // msg
@@ -544,7 +544,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     NSString *defaultFilename = [NSString stringWithFormat:@"AppKiDo-DB-%@.xml", [self _appVersion]];
 
-    int modalResult = [savePanel runModalForDirectory:NSHomeDirectory() file:defaultFilename];
+    NSInteger modalResult = [savePanel runModalForDirectory:NSHomeDirectory() file:defaultFilename];
 
     if (modalResult != NSFileHandlingPanelOKButton)
     {
@@ -729,7 +729,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     DIGSLogDebug_EnteringMethod();
     
     NSMenu *goMenu = [_firstGoMenuDivider menu];
-    int menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
+    NSInteger menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
 
     NSEnumerator *fwNameEnum = [[_appDatabase sortedFrameworkNames] objectEnumerator];
     NSString *fwName;
@@ -839,18 +839,18 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (NSWindow *)_frontmostBrowserWindow
 {
-    int numWindows;
+    NSInteger numWindows;
 
     NSCountWindows(&numWindows);
 
-    int windowList[numWindows];
+    NSInteger windowList[numWindows];
 
     NSWindowList(numWindows, windowList);
 
     int i;
     for (i = 0; i < numWindows; i++)
     {
-        int windowNum = windowList[i];
+        NSInteger windowNum = windowList[i];
         NSWindow *win = [NSApp windowWithWindowNumber:windowNum];
         id del = [win delegate];
 
@@ -897,8 +897,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
     else
     {
-        int numWindows = [savedWindows count];
-        int i;
+        NSInteger numWindows = [savedWindows count];
+        NSInteger i;
 
         for (i = numWindows - 1; i >= 0; i--)
         {
@@ -918,18 +918,18 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (NSArray *)_allWindowsAsPrefArray
 {
     NSMutableArray *result = [NSMutableArray array];
-    int numWindows;
+    NSInteger numWindows;
 
     NSCountWindows(&numWindows);
 
-    int windowList[numWindows];
+    NSInteger windowList[numWindows];
 
     NSWindowList(numWindows, windowList);
 
-    int i;
+    NSInteger i;
     for (i = 0; i < numWindows; i++)
     {
-        int windowNum = windowList[i];
+        NSInteger windowNum = windowList[i];
         NSWindow *win = [NSApp windowWithWindowNumber:windowNum];
         id del = [win delegate];
 
@@ -963,7 +963,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (NSDictionary *)_latestAppVersion
 {
     NSURL *latestAppVersionURL = [NSURL URLWithString:_AKVersionURL];
-    NSString *latestAppVersionString = [[NSString stringWithContentsOfURL:latestAppVersionURL] ak_trimWhitespace];
+    NSString *latestAppVersionString = [[NSString stringWithContentsOfURL:latestAppVersionURL
+                                                                 encoding:NSUTF8StringEncoding
+                                                                    error:NULL] ak_trimWhitespace];
 
     if (latestAppVersionString == nil)
     {
@@ -1201,8 +1203,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
     DIGSLogDebug_EnteringMethod();
     
     NSArray *favPrefList = [AKPrefUtils arrayValueForPref:AKFavoritesPrefName];
-    int numFavs = [favPrefList count];
-    int i;
+    NSInteger numFavs = [favPrefList count];
+    NSInteger i;
 
     // Get values from NSUserDefaults.
     [_favoritesList removeAllObjects];
@@ -1235,8 +1237,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)_putFavoritesIntoPrefs
 {
     NSMutableArray *favPrefList = [NSMutableArray array];
-    int numFavs = [_favoritesList count];
-    int i;
+    NSInteger numFavs = [_favoritesList count];
+    NSInteger i;
 
     // Update the UserDefaults.
     for (i = 0; i < numFavs; i++)
@@ -1255,8 +1257,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     NSMenu *mainMenu = [NSApp mainMenu];
     NSMenu *favoritesMenu = [[mainMenu itemWithTitle:@"Favorites"] submenu];
-    int numFavs = [_favoritesList count];
-    int i;
+    NSInteger numFavs = [_favoritesList count];
+    NSInteger i;
 
     while ([favoritesMenu numberOfItems] > 2)
     {

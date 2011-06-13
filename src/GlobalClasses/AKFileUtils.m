@@ -57,8 +57,7 @@
         return nil;
     }
 
-	NSArray *dirContents =
-        [[NSFileManager defaultManager] directoryContentsAtPath:dir];
+	NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
 	unsigned int i;
 
 	for (i = 0; i < [dirContents count]; i++)

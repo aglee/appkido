@@ -28,7 +28,7 @@
 #pragma mark Forward declarations of private methods
 
 @interface AKTopicBrowserController (Private)
-- (int)_numberOfRowsInColumn:(int)column;
+- (NSInteger)_numberOfRowsInColumn:(NSInteger)column;
 - (void)_setUpChildTopics;
 - (void)_setUpTopicsForZeroethBrowserColumn;
 @end
@@ -122,7 +122,7 @@
     [_subtopicListController navigateFrom:whereFrom to:whereTo];
 }
 
-- (void)jumpToSubtopicWithIndex:(int)subtopicIndex
+- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex
 {
     [_subtopicListController jumpToSubtopicWithIndex:subtopicIndex];
 }
@@ -133,7 +133,7 @@
 
 - (IBAction)removeBrowserColumn:(id)sender
 {
-    int numColumns = [_topicBrowser maxVisibleColumns];
+    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
 
     if (numColumns > 2)
     {
@@ -143,7 +143,7 @@
 
 - (IBAction)addBrowserColumn:(id)sender
 {
-    int numColumns = [_topicBrowser maxVisibleColumns];
+    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
 
     [_topicBrowser setMaxVisibleColumns:(numColumns + 1)];
 }
@@ -188,18 +188,18 @@
 #pragma mark -
 #pragma mark NSBrowser delegate methods
 
-- (void)browser:(NSBrowser *)sender createRowsForColumn:(int)column
+- (void)browser:(NSBrowser *)sender createRowsForColumn:(NSInteger)column
     inMatrix:(NSMatrix *)matrix
 {
     // Put an upper bound on the font size, because NSBrowser seems to be
     // stubborn about changing its row height.
     NSString *fontName =
         [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    int fontSizePref =
+    NSInteger fontSizePref =
         [AKPrefUtils intValueForPref:AKListFontSizePrefName];
-    int fontSize = (fontSizePref > 16) ? 16 : fontSizePref;
+    NSInteger fontSize = (fontSizePref > 16) ? 16 : fontSizePref;
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];
-    int numRows = [self _numberOfRowsInColumn:column];
+    NSInteger numRows = [self _numberOfRowsInColumn:column];
 
     [matrix setFont:font];
     [matrix renewRows:numRows columns:1];
@@ -232,7 +232,7 @@
 
 @implementation AKTopicBrowserController (Private)
 
-- (int)_numberOfRowsInColumn:(int)column
+- (NSInteger)_numberOfRowsInColumn:(NSInteger)column
 {
     // Defensive programming: see if we are trying to populate a
     // browser column that's too far to the right.
@@ -243,7 +243,7 @@
     }
 
     // Discard data for columns we will no longer displaying.
-    int numBrowserColumns = [_topicBrowser lastColumn] + 1;
+    NSInteger numBrowserColumns = [_topicBrowser lastColumn] + 1;
     if (column > numBrowserColumns)  // gmd
     {
         DIGSLogError(@"_topicListsForBrowserColumns has too few elements /gmd");
@@ -274,7 +274,7 @@
 
 - (void)_setUpChildTopics
 {
-    int columnNumber = [_topicListsForBrowserColumns count];
+    NSInteger columnNumber = [_topicListsForBrowserColumns count];
 
     if (columnNumber == 0)
     {

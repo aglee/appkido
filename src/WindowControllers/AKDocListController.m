@@ -46,7 +46,7 @@
 
 - (AKDoc *)currentDoc
 {
-    int docIndex = [_docListTable selectedRow];
+    NSInteger docIndex = [_docListTable selectedRow];
 
     if (docIndex < 0)
     {
@@ -75,7 +75,7 @@
 
     // Reload the doc list table.
     [_docListTable reloadData];
-    int docIndex = -1;
+    NSInteger docIndex = -1;
     if ([_subtopicToDisplay numberOfDocs] == 0)
     {
         // Modify whereTo.
@@ -131,7 +131,7 @@
 
 - (IBAction)doDocListTableAction:(id)sender
 {
-    int selectedRow = [_docListTable selectedRow];
+    NSInteger selectedRow = [_docListTable selectedRow];
     NSString *docName =
         (selectedRow < 0)
         ? nil
@@ -163,14 +163,14 @@
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     return [_subtopicToDisplay numberOfDocs];
 }
 
 - (id)tableView:(NSTableView *)aTableView
     objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(int)rowIndex
+    row:(NSInteger)rowIndex
 {
     return
         [[_subtopicToDisplay docAtIndex:rowIndex]
@@ -238,7 +238,7 @@
 
     while ((menuItem = [en nextObject]))
     {
-        int tag = [menuItem tag];
+        NSInteger tag = [menuItem tag];
 
         if (tag == WebMenuItemTagOpenLinkInNewWindow)
         {

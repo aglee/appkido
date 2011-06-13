@@ -136,8 +136,8 @@
 // it to the level of a major section so it will get listed in the doc list.
 - (void)_tweakRootSection
 {
-    int numMajorSections = [_rootSectionOfCurrentFile numberOfChildSections];
-    int majorIndex;
+    NSInteger numMajorSections = [_rootSectionOfCurrentFile numberOfChildSections];
+    NSInteger majorIndex;
 
     for (majorIndex = 0; majorIndex < numMajorSections; majorIndex++)
     {
@@ -152,8 +152,8 @@
             return;
         }
 
-        int numMinorSections = [majorSection numberOfChildSections];
-        int minorIndex;
+        NSInteger numMinorSections = [majorSection numberOfChildSections];
+        NSInteger minorIndex;
 
         for (minorIndex = 0; minorIndex < numMinorSections; minorIndex++)
         {

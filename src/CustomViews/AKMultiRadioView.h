@@ -35,8 +35,8 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (int)selectedTag;
-- (BOOL)selectCellWithTag:(int)tag;
+- (NSInteger)selectedTag;
+- (BOOL)selectCellWithTag:(NSInteger)tag;
 
 
 #pragma mark -

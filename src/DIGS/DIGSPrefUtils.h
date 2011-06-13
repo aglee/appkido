@@ -27,8 +27,8 @@
 + (BOOL)boolValueForPref:(NSString *)prefName;
 + (void)setBoolValue:(BOOL)value forPref:(NSString *)prefName;
 
-+ (int)intValueForPref:(NSString *)prefName;
-+ (void)setIntValue:(int)value forPref:(NSString *)prefName;
++ (NSInteger)intValueForPref:(NSString *)prefName;
++ (void)setIntValue:(NSInteger)value forPref:(NSString *)prefName;
 
 + (NSString *)stringValueForPref:(NSString *)prefName;
 + (void)setStringValue:(NSString *)value forPref:(NSString *)prefName;

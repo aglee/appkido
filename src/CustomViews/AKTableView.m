@@ -8,6 +8,7 @@
 #import "AKTableView.h"
 
 #import "AKPrefUtils.h"
+#import <tgmath.h>
 
 @implementation AKTableView
 
@@ -19,12 +20,12 @@
 {
     NSString *fontName =
         [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    int fontSize =
+    NSInteger fontSize =
         [AKPrefUtils intValueForPref:AKListFontSizePrefName];
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];
     //int newRowHeight = round([font defaultLineHeightForFont] + 1.0);
     NSLayoutManager * lm = [[NSLayoutManager alloc] init]; 
- 	int newRowHeight = round([lm defaultLineHeightForFont:font] + 1.0); 
+ 	NSInteger newRowHeight = round([lm defaultLineHeightForFont:font] + 1.0); 
  	[lm release]; 
 
     [[[[self tableColumns] objectAtIndex:0] dataCell] setFont:font];
@@ -49,7 +50,7 @@
     }
     else
     {
-        int oldSelectedRow = [self selectedRow];
+        NSInteger oldSelectedRow = [self selectedRow];
 
         [super keyDown:theEvent];
 

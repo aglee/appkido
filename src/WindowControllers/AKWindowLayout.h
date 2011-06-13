@@ -22,16 +22,16 @@
 
     // Attributes of the browser section.
     BOOL _browserIsVisible;
-    float _browserFraction;
-    int _numberOfBrowserColumns;
+    CGFloat _browserFraction;
+    NSInteger _numberOfBrowserColumns;
 
     // Attributes of the middle section.
-    float _middleViewHeight;
+    CGFloat _middleViewHeight;
 
     // Attributes of the quicklist drawer.
     BOOL _quicklistDrawerIsOpen;
-    float _quicklistDrawerWidth;
-    int _quicklistMode;
+    CGFloat _quicklistDrawerWidth;
+    NSInteger _quicklistMode;
     NSString *_frameworkPopupSelection;
     BOOL _searchIncludesClasses;
     BOOL _searchIncludesMembers;
@@ -61,23 +61,23 @@
 - (BOOL)browserIsVisible;
 - (void)setBrowserIsVisible:(BOOL)flag;
 
-- (float)browserFraction;
-- (void)setBrowserFraction:(float)height;
+- (CGFloat)browserFraction;
+- (void)setBrowserFraction:(CGFloat)height;
 
-- (int)numberOfBrowserColumns;
-- (void)setNumberOfBrowserColumns:(int)numColumns;
+- (NSInteger)numberOfBrowserColumns;
+- (void)setNumberOfBrowserColumns:(NSInteger)numColumns;
 
-- (float)middleViewHeight;
-- (void)setMiddleViewHeight:(float)height;
+- (CGFloat)middleViewHeight;
+- (void)setMiddleViewHeight:(CGFloat)height;
 
 - (BOOL)quicklistDrawerIsOpen;
 - (void)setQuicklistDrawerIsOpen:(BOOL)flag;
 
-- (float)quicklistDrawerWidth;
-- (void)setQuicklistDrawerWidth:(float)width;
+- (CGFloat)quicklistDrawerWidth;
+- (void)setQuicklistDrawerWidth:(CGFloat)width;
 
-- (int)quicklistMode;
-- (void)setQuicklistMode:(int)mode;
+- (NSInteger)quicklistMode;
+- (void)setQuicklistMode:(NSInteger)mode;
 
 - (NSString *)frameworkPopupSelection;
 - (void)setFrameworkPopupSelection:(NSString *)frameworkName;

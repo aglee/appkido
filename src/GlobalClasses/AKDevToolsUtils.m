@@ -25,10 +25,10 @@
 // implementation of all.
 + (NSString *)devToolsPathAccordingToXcodeSelect
 {
-    NSString *devToolsPath =
-        [NSString stringWithContentsOfFile:
-            @"/usr/share/xcode-select/xcode_dir_path"];
-
+    NSString *devToolsPath = [NSString stringWithContentsOfFile:@"/usr/share/xcode-select/xcode_dir_path"
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:NULL];
+    
     if (devToolsPath == nil)
     {
         return nil;

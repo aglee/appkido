@@ -35,7 +35,7 @@
 
 @interface AKQuicklistController (Private)
 
-- (void)_selectQuicklistMode:(int)mode;
+- (void)_selectQuicklistMode:(NSInteger)mode;
 
 - (void)_reloadQuicklistTable;
 
@@ -56,7 +56,7 @@
 - (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames;
 - (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)nodeSet;
 
-- (void)_jumpToSearchResultAtIndex:(int)index;
+- (void)_jumpToSearchResultAtIndex:(NSInteger)resultIndex;
 - (void)_jumpToSearchResultWithPrefix:(NSString *)searchString;
 - (void)_findStringDidChange:(DIGSFindBuffer *)findBuffer;
 
@@ -185,7 +185,7 @@ enum
 
 - (IBAction)doQuicklistTableAction:(id)sender
 {
-    int selectedRow = [_quicklistTable selectedRow];
+    NSInteger selectedRow = [_quicklistTable selectedRow];
     AKDocLocator *quicklistItem = (selectedRow < 0) ? nil : [_currentTableValues objectAtIndex:selectedRow];
 
     // If we are in search mode, remember the selected object's position in
@@ -221,7 +221,7 @@ enum
 
 - (IBAction)removeFavorite:(id)sender
 {
-    int row = [_quicklistTable selectedRow];
+    NSInteger row = [_quicklistTable selectedRow];
 
     if (row >= 0)
     {
@@ -250,7 +250,7 @@ enum
     [_pastSearchStrings removeObject:searchString];
     [_pastSearchStrings insertObject:searchString atIndex:0];
 
-    int maxSearchStrings = [AKPrefUtils intValueForPref:AKMaxSearchStringsPrefName];
+    NSInteger maxSearchStrings = [AKPrefUtils intValueForPref:AKMaxSearchStringsPrefName];
 
     while ((int)[_pastSearchStrings count] > maxSearchStrings)
     {
@@ -275,7 +275,7 @@ enum
     // If no search results were found, reselect the search field so the
     // user can try again.  Otherwise, select the first search result.
     NSArray *searchResults = [_searchQuery queryResults];
-    int numSearchResults = [searchResults count];
+    NSInteger numSearchResults = [searchResults count];
     if (numSearchResults == 0)
     {
         _indexWithinSearchResults = -1;
@@ -290,13 +290,13 @@ enum
 - (IBAction)doSearchOptionsPopupAction:(id)sender
 {
     NSMenu *searchMenu = [_searchOptionsPopup menu];
-    int indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
-    int selectedIndex = [_searchOptionsPopup indexOfSelectedItem];
+    NSInteger indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
+    NSInteger selectedIndex = [_searchOptionsPopup indexOfSelectedItem];
     NSMenuItem *selectedItem = [sender selectedItem];
 
     if (selectedIndex < indexOfDivider)
     {
-        int oldState = [selectedItem state];
+        NSInteger oldState = [selectedItem state];
 
         [selectedItem setState:((oldState == NSOnState) ? NSOffState : NSOnState)];
     }
@@ -418,14 +418,14 @@ enum
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     return [_currentTableValues count];
 }
 
 - (id)tableView:(NSTableView *)aTableView
     objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(int)rowIndex
+    row:(NSInteger)rowIndex
 {
     AKDocLocator *quicklistItem = [_currentTableValues objectAtIndex:rowIndex];
 
@@ -509,7 +509,7 @@ enum
 
 @implementation AKQuicklistController (Private)
 
-- (void)_selectQuicklistMode:(int)mode
+- (void)_selectQuicklistMode:(NSInteger)mode
 {
     BOOL modeIsChanging = (mode != _currentQuicklistMode);
 
@@ -972,7 +972,7 @@ enum
     return [AKSortUtils arrayBySortingSet:resultSet];
 }
 
-- (void)_jumpToSearchResultAtIndex:(int)resultIndex
+- (void)_jumpToSearchResultAtIndex:(NSInteger)resultIndex
 {
     // Change the quicklist mode to search mode.
     [self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
@@ -1009,10 +1009,10 @@ enum
 - (void)_jumpToSearchResultWithPrefix:(NSString *)searchString
 {
 	NSString *lowercaseSearchString = [searchString lowercaseString];
-    int searchResultIndex = 0;
+    NSInteger searchResultIndex = 0;
     NSArray *searchResults = [_searchQuery queryResults];
-    int numSearchResults = [searchResults count];
-    int i;
+    NSInteger numSearchResults = [searchResults count];
+    NSInteger i;
 
     for (i = 0; i < numSearchResults; i++)
     {
@@ -1037,9 +1037,9 @@ enum
 - (void)_updateSearchOptionsPopup
 {
     NSMenu *searchMenu = [_searchOptionsPopup menu];
-    int indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
-    int numMenuItems = [searchMenu numberOfItems];
-    int i;
+    NSInteger indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
+    NSInteger numMenuItems = [searchMenu numberOfItems];
+    NSInteger i;
 
     // Remove the existing list of past search strings.
     for (i = indexOfDivider + 1; i < numMenuItems; i++)

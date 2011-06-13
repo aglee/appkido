@@ -97,7 +97,7 @@
 
 - (void)removeChildClass:(AKClassNode *)node
 {
-    int i = [_childClassNodes indexOfObject:node];
+    NSInteger i = [_childClassNodes indexOfObject:node];
 
     if (i >= 0)
     {

@@ -142,34 +142,34 @@
 - (void)_doTheHardCalc:(NSRect *)frameOnePtr :(NSRect *)frameTwoPtr
 {
     NSSize newSize = [self bounds].size;
-    float initialTotalLength =
+    CGFloat initialTotalLength =
         _isSideBySide
         ? _initialSize.width
         : _initialSize.height;
-    float newTotalLength =
+    CGFloat newTotalLength =
         _isSideBySide
         ? newSize.width
         : newSize.height;
-    float *coordOnePtr =
+    CGFloat *coordOnePtr =
         _isSideBySide
         ? &(frameOnePtr->origin.x)
         : &(frameOnePtr->origin.y);
-    float *lengthOnePtr =
+    CGFloat *lengthOnePtr =
         _isSideBySide
         ? &(frameOnePtr->size.width)
         : &(frameOnePtr->size.height);
-    float *coordTwoPtr =
+    CGFloat *coordTwoPtr =
         _isSideBySide
         ? &(frameTwoPtr->origin.x)
         : &(frameTwoPtr->origin.y);
-    float *lengthTwoPtr =
+    CGFloat *lengthTwoPtr =
         _isSideBySide
         ? &(frameTwoPtr->size.width)
         : &(frameTwoPtr->size.height);
-    float totalMargin = initialTotalLength - *lengthOnePtr - *lengthTwoPtr;
-    float marginOne = *coordOnePtr;
-    float marginTwo = *coordTwoPtr - *coordOnePtr - *lengthOnePtr;
-    float availableLength = newTotalLength - totalMargin;
+    CGFloat totalMargin = initialTotalLength - *lengthOnePtr - *lengthTwoPtr;
+    CGFloat marginOne = *coordOnePtr;
+    CGFloat marginTwo = *coordTwoPtr - *coordOnePtr - *lengthOnePtr;
+    CGFloat availableLength = newTotalLength - totalMargin;
 
     // Is there room for any view portions at all?
     if (availableLength <= 0.0)
@@ -232,20 +232,20 @@
 - (void)_doTheEasyCalc:(NSRect *)framePtr
 {
     NSSize newSize = [self bounds].size;
-    float initialTotalLength =
+    CGFloat initialTotalLength =
         _isSideBySide
         ? _initialSize.height
         : _initialSize.width;
-    float newTotalLength =
+    CGFloat newTotalLength =
         _isSideBySide
         ? newSize.height
         : newSize.width;
-    float *lengthPtr =
+    CGFloat *lengthPtr =
         _isSideBySide
         ? &(framePtr->size.height)
         : &(framePtr->size.width);
-    float totalMargin = initialTotalLength - *lengthPtr;
-    float availableLength = newTotalLength - totalMargin;
+    CGFloat totalMargin = initialTotalLength - *lengthPtr;
+    CGFloat availableLength = newTotalLength - totalMargin;
 
     if (availableLength <= 0.0)
     {

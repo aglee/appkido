@@ -16,7 +16,7 @@
 * @method      ak_setFrameHeight:
  * @discussion  Convenience method that's a wrapper around -setFrame:.
  */
-- (void)ak_setFrameHeight:(float)newHeight;
+- (void)ak_setFrameHeight:(CGFloat)newHeight;
 
 /*!
  * @method      ak_printKeyViewLoop
@@ -41,7 +41,7 @@
 @interface NSSplitView (AppKiDo)
 
 // requires subview to be one of exactly two subviews of the splitview
-- (void)ak_setHeight:(float)newHeight ofSubview:(NSView *)subview;
+- (void)ak_setHeight:(CGFloat)newHeight ofSubview:(NSView *)subview;
 
 - (NSView *)ak_siblingOfSubview:(NSView *)subview;
 

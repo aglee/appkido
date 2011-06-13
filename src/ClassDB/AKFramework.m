@@ -54,7 +54,7 @@
     return [_frameworkName isEqualToString:[anObject frameworkName]];
 }
 
-- (unsigned)hash
+- (NSUInteger)hash
 {
     return [_frameworkName hash];
 }

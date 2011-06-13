@@ -40,7 +40,7 @@ extern char *ak_copystr(const char *s);
  *              position of the found string, or -1 if the string
  *              is not found.  [agl] Or should I return NSNotFound?
  */
-- (int)ak_positionOf:(NSString *)searchString;
+- (NSInteger)ak_positionOf:(NSString *)searchString;
 
 /*!
  * @method      ak_positionAfter:
@@ -48,7 +48,7 @@ extern char *ak_copystr(const char *s);
  *              position after the found string, or -1 if the string
  *              is not found.  [agl] Or should I return NSNotFound?
  */
-- (int)ak_positionAfter:(NSString *)searchString;
+- (NSInteger)ak_positionAfter:(NSString *)searchString;
 
 /*!
  * @method      ak_findString:selectedRange:options:wrap:
@@ -57,7 +57,7 @@ extern char *ak_copystr(const char *s);
  */
 - (NSRange)ak_findString:(NSString *)string
     selectedRange:(NSRange)selectedRange
-    options:(unsigned)mask
+    options:(NSUInteger)mask
     wrap:(BOOL)wrapFlag;
 
 /*!

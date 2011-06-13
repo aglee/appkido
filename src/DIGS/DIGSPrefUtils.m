@@ -29,12 +29,12 @@
         setBool:prefValue forKey:prefName];
 }
 
-+ (int)intValueForPref:(NSString *)prefName
++ (NSInteger)intValueForPref:(NSString *)prefName
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:prefName];
 }
 
-+ (void)setIntValue:(int)prefValue forPref:(NSString *)prefName
++ (void)setIntValue:(NSInteger)prefValue forPref:(NSString *)prefName
 {
     [[NSUserDefaults standardUserDefaults]
         setInteger:prefValue forKey:prefName];

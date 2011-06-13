@@ -117,8 +117,8 @@
     // it to the top.
     NSString *descriptionSectionName = [self htmlNameOfDescriptionSection];
     NSString *altDescriptionSectionName = [self altHtmlNameOfDescriptionSection];
-    int numDocs = [docList count];
-    int i;
+    NSInteger numDocs = [docList count];
+    NSInteger i;
 
     for (i = 0; i < numDocs; i++)
     {

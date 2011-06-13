@@ -66,14 +66,14 @@ extern const NSString *DIGSLogVerbosityUserDefault;
  * @discussion  Returns the verbosity level used by the various
  *              DIGSLogXXX() functions.
  */
-extern int DIGSGetVerbosityLevel();
+extern NSInteger DIGSGetVerbosityLevel();
 
 /*!
  * @function    DIGSSetVerbosityLevel
  * @discussion  Sets the verbosity level used by the various DIGSLogXXX()
  *              functions.
  */
-extern void DIGSSetVerbosityLevel(int level);
+extern void DIGSSetVerbosityLevel(NSInteger level);
 
 /*!
  * @function    DIGSLogError
@@ -83,9 +83,7 @@ extern void DIGSSetVerbosityLevel(int level);
 do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
     {\
-        NSLog(\
-            [@"[_ERROR_] " stringByAppendingString:(format)],\
-            ## __VA_ARGS__);\
+        NSLog(@"[_ERROR_] " format, ## __VA_ARGS__);\
     }\
 } while (0)
 
@@ -97,9 +95,7 @@ do {\
 do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_WARNING)\
     {\
-        NSLog(\
-            [@"[_WARNING_] " stringByAppendingString:(format)],\
-            ## __VA_ARGS__);\
+        NSLog(@"[_WARNING_] " format, ## __VA_ARGS__);\
     }\
 } while (0)
 
@@ -111,9 +107,7 @@ do {\
 do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_INFO)\
     {\
-        NSLog(\
-            [@"[_INFO_] " stringByAppendingString:(format)],\
-            ## __VA_ARGS__);\
+        NSLog(@"[_INFO_] " format, ## __VA_ARGS__);\
     }\
 } while(0)
 
@@ -125,9 +119,7 @@ do {\
 do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
     {\
-        NSLog(\
-            [@"[_DEBUG_] " stringByAppendingString:(format)],\
-            ## __VA_ARGS__);\
+        NSLog(@"[_DEBUG_] " format, ## __VA_ARGS__);\
     }\
 } while (0)
 
@@ -139,9 +131,7 @@ do {\
 do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG2)\
     {\
-        NSLog(\
-            [@"[_DEBUG2_] " stringByAppendingString:(format)],\
-            ## __VA_ARGS__);\
+        NSLog(@"[_DEBUG2_] " format, ## __VA_ARGS__);\
     }\
 } while (0)
 
@@ -153,9 +143,7 @@ do {\
 do {\
     if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG3)\
     {\
-        NSLog(\
-            [@"[_DEBUG3_] " stringByAppendingString:(format)],\
-            ## __VA_ARGS__);\
+        NSLog(@"[_DEBUG3_] " format, ## __VA_ARGS__);\
     }\
 } while (0)
 

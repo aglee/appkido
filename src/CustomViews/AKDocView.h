@@ -20,8 +20,8 @@
     AKDocLocator *_docLocator;
 
     NSString *_headerFontName;
-    int _headerFontSize;
-    int _docMagnifier;
+    NSInteger _headerFontSize;
+    NSInteger _docMagnifier;
     
     // These are used during awakeFromNib to remember where in the window's
     // key view loop we were, because we are going to be modifying the loop

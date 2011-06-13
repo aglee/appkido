@@ -37,7 +37,7 @@
 // history"; "navigate" means "navigate the various subcontrollers to";
 // navigation always starts here at the window controller and propagates
 // to subcontrollers
-@interface AKWindowController : NSObject
+@interface AKWindowController : NSObject <NSToolbarDelegate>
 {
     AKDatabase *_database;
 
@@ -46,12 +46,12 @@
     NSMutableArray *_windowHistory;
 
     // The index within _windowHistory of our current navigation state.
-    int _windowHistoryIndex;
+    NSInteger _windowHistoryIndex;
 
     // Remembered for when we hide/show the browser.  We remember it as a
     // fraction instead of an absolute height because the user can toggle
     // the browser off, resize the window, and toggle the browser back on.
-    float _browserFractionWhenVisible;
+    CGFloat _browserFractionWhenVisible;
 
     // Outlets to subcontrollers that manage different portions of the
     // window.

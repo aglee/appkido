@@ -141,26 +141,26 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 #pragma mark -
 #pragma mark Populating the subtopics table
 
-- (int)numberOfSubtopics
+- (NSInteger)numberOfSubtopics
 {
     return 0;
 }
 
-- (AKSubtopic *)subtopicAtIndex:(int)subtopicIndex
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
 {
     DIGSLogError_MissingOverride();
     return nil;
 }
 
-- (int)indexOfSubtopicWithName:(NSString *)subtopicName
+- (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName
 {
     if (subtopicName == nil)
     {
         return -1;
     }
 
-    int numSubtopics = [self numberOfSubtopics];
-    int i;
+    NSInteger numSubtopics = [self numberOfSubtopics];
+    NSInteger i;
 
     for (i = 0; i < numSubtopics; i++)
     {
@@ -178,7 +178,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (AKSubtopic *)subtopicWithName:(NSString *)subtopicName
 {
-    int subtopicIndex =
+    NSInteger subtopicIndex =
         (subtopicName == nil)
         ? -1
         : [self indexOfSubtopicWithName:subtopicName];

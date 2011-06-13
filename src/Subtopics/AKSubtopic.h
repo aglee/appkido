@@ -67,16 +67,16 @@ extern NSString *AKNotificationsSubtopicName;
  * @discussion  Returns the number of docs the doc list should display
  *              when this subtopic is selected.
  */
-- (int)numberOfDocs;
+- (NSInteger)numberOfDocs;
 
-- (AKDoc *)docAtIndex:(int)index;
+- (AKDoc *)docAtIndex:(NSInteger)docIndex;
 
 /*!
  * @method      indexOfDocWithName:
  * @discussion  Returns the index within the doc list of the AKDoc with
  *              the specified name, or -1 if there is none.
  */
-- (int)indexOfDocWithName:(NSString *)docName;
+- (NSInteger)indexOfDocWithName:(NSString *)docName;
 
 - (AKDoc *)docWithName:(NSString *)docName;
 

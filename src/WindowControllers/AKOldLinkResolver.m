@@ -43,7 +43,7 @@
  */
 - (NSString *)_frameworkNameImpliedBy:(NSString *)aString;
 
-- (int)_offsetOfAnchor:(NSString *)anchor
+- (NSInteger)_offsetOfAnchor:(NSString *)anchor
     inFileSection:(AKFileSection *)fileSection;
 
 - (NSString *)_subtopicNameImpliedBySectionName:(NSString *)subtopicDesc;
@@ -55,7 +55,7 @@
     frameworkName:(NSString *)frameworkName;
 
 - (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
-    containingOffset:(unsigned)offset;
+    containingOffset:(NSUInteger)offset;
 
 @end
 
@@ -220,10 +220,10 @@
 // Returns a byte offset within the HTML file that lies within the file
 // element referred to by the given anchor string.  This byte offset can
 // be passed to -_childSectionOf:containingOffset:.
-- (int)_offsetOfAnchor:(NSString *)anchorString
+- (NSInteger)_offsetOfAnchor:(NSString *)anchorString
     inFileSection:(AKFileSection *)fileSection
 {
-    int anchorOffset =
+    NSInteger anchorOffset =
         [_database
             offsetOfAnchorString:anchorString
             inHTMLFile:[fileSection filePath]];
@@ -315,8 +315,8 @@
             nil];
 
     NSString *uppercaseSectionName = [sectionName uppercaseString];
-    int numStrings = [namePairs count];
-    int i;
+    NSInteger numStrings = [namePairs count];
+    NSInteger i;
 
     for (i = 0; i < numStrings; i += 2)
     {
@@ -347,7 +347,7 @@
         return nil;
     }
 
-    int offset = [self _offsetOfAnchor:linkAnchor inFileSection:rootSection];
+    NSInteger offset = [self _offsetOfAnchor:linkAnchor inFileSection:rootSection];
 
     if (offset < 0)
     {
@@ -431,7 +431,7 @@
 // [agl] make a note of the assumptions about child sections that this
 // relies on: same file, sequential, non-overlapping.
 - (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
-    containingOffset:(unsigned)offset
+    containingOffset:(NSUInteger)offset
 {
     if (offset < [fileSection sectionOffset])
     {
@@ -466,11 +466,11 @@
         lastDescendant = lastSub;
     }
 
-    unsigned totalSectionLength =
+    NSUInteger totalSectionLength =
         [lastDescendant sectionOffset]
         + [lastDescendant sectionLength]
         - [fileSection sectionLength];
-    unsigned endingOffset =
+    NSUInteger endingOffset =
         [fileSection sectionOffset] + totalSectionLength;
 
     if (offset < endingOffset)

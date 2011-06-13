@@ -58,7 +58,7 @@
     NSMutableArray *fwNames = [NSMutableArray arrayWithArray:prefArray];
     
     // In older versions, "AppKit" was saved as "ApplicationKit" in prefs.
-    unsigned frameworkIndex = [fwNames indexOfObject:@"ApplicationKit"];
+    NSUInteger frameworkIndex = [fwNames indexOfObject:@"ApplicationKit"];
     if (frameworkIndex != NSNotFound)
     {
         [fwNames removeObjectAtIndex:frameworkIndex];

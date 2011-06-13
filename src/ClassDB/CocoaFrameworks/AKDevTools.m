@@ -33,7 +33,7 @@
 @implementation AKDevTools
 
 // Used for sorting the version strings in _sdkVersionsWithDocSets.
-static int _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
+static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
 {
     NSArray *leftComponents = [(NSString *)leftVersionString componentsSeparatedByString:@"."];
     NSArray *rightComponents = [(NSString *)rightVersionString componentsSeparatedByString:@"."];
@@ -208,7 +208,7 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
 // Adds entries to _docSetPathsBySDKVersion and _sdkVersionsWithDocSets by locating all docsets in the given directory.
 - (void)_lookForDocSetsInDirectory:(NSString *)docSetsDir
 {
-    NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] directoryContentsAtPath:docSetsDir] objectEnumerator];
+    NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:docSetsDir error:NULL] objectEnumerator];
     NSString *fileName;
 
     while ((fileName = [dirContentsEnum nextObject]))
@@ -271,7 +271,7 @@ static int _versionSortFunction(id leftVersionString, id rightVersionString, voi
 - (void)_findAllSDKPathsWithDocSets
 {
     NSString *sdksDir = [self sdkSearchPath];
-    NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] directoryContentsAtPath:sdksDir] objectEnumerator];
+    NSEnumerator *dirContentsEnum = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:sdksDir error:NULL] objectEnumerator];
     NSString *fileName;
 
     while ((fileName = [dirContentsEnum nextObject]))
