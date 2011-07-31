@@ -302,7 +302,7 @@
         [self
             exportNodesInSection:@"classes"
             ofFramework:fwName
-            usingGetSelector:@selector(classesForFramework:)
+            usingGetSelector:@selector(classesForFrameworkNamed:)
             exportSelector:@selector(exportClass:)];
         [self exportProtocolsForFramework:fwName];
         [self
