@@ -1,3 +1,6 @@
 .DS_Store
 src/build
 src/*.xcodeproj/alee.*
+*.xcuserdatad
+xcuserdata
+*.xcworkspace
