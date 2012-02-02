@@ -9,7 +9,7 @@
 
 @class AKDatabase;
 @class AKTopic;
-@class AKDocLocator;
+@class AKDoc;
 @class AKDocLocator;
 @class AKTopicBrowserController;
 @class AKDocListController;
@@ -103,6 +103,25 @@
 
 - (NSWindow *)window;
 
+- (AKDocLocator *)currentHistoryItem;
+
+/*!
+ * Returns the currently displayed doc. If there is no current doc, looks for a
+ * General/Overview doc on the assumption that the current topic is probably a class.
+ * For example, when NSFileWrapper > "Class Methods" is selected, there is no doc in
+ * the doc view, because NSFileWrapper has no class methods, but it is useful to
+ * return the file containing the NSFileWrapper docs. (Thanks to Gerriet for pointing
+ * out this case and providing code to look for General/Overview.)
+ *
+ * If all else fails, returns nil.
+ */
+- (AKDoc *)currentDoc;
+
+/*! Returns the path to the file containing [self currentDoc], or nil. */
+- (NSString *)currentDocPath;
+
+/*! Returns the URL for [self currentDocPath], or nil. */
+- (NSURL *)currentDocURL;
 
 #pragma mark -
 #pragma mark User preferences
@@ -117,8 +136,6 @@
 
 #pragma mark -
 #pragma mark Navigation
-
-- (AKDocLocator *)currentHistoryItem;
 
 /*!
  * @method      openWindowWithQuicklistDrawer:
