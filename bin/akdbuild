@@ -53,6 +53,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     exit 1
 fi
+
 ##case "$REPLY" in 
 ##  y|Y ) echo "yes";;
 ##  n|N ) echo "no";;
@@ -74,9 +75,13 @@ cd $STAGING_DIR
 #---------------------------------------------------------------------------
 
 echo
-echo "Checking out the source tree using tag $RELEASE_TAG"
+echo "Cloning the repository $GIT_REPO"
 ##git clone --depth 1 --branch master $GIT_REPO || exit
-git clone --depth 1 --tag release-$AKD_VERSION $GIT_REPO || exit
+git clone $GIT_REPO || exit
+
+echo
+echo "Checking out the tag $RELEASE_TAG"
+pushd $CHECKOUT_DIR ; git checkout tags/release-$AKD_VERSION ; popd
 
 echo "Deleting the .git directory"
 rm -rf $CHECKOUT_DIR/.git

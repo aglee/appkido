@@ -53,6 +53,7 @@ Update files in the "web" directory
 	Update screenshots if necessary
 Do git commit
 	Might want to quit Xcode/IB first to be sure there's no unsaved changes.
+Do git push origin msater
 Tag the release:
 	akdtag <version-number>
 	Note the actual tag will be release-<version-number>
