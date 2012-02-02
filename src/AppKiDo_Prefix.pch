@@ -5,6 +5,11 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 
+    #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+    @protocol NSToolbarDelegate <NSObject> @end
+    @protocol NSTextViewDelegate <NSObject> @end
+    #endif
+
     #import "DIGSLog.h"
     #import "DIGSFileProcessor.h"
     #import "DIGSFindBuffer.h"
