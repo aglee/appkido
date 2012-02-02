@@ -1,3 +1,5 @@
 .DS_Store
 src/build
 src/*.xcodeproj/alee.*
+src/English.lproj/**/designable.nib
+src/English.lproj/**/designable.nib
