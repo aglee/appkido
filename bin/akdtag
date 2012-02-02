@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ ! "${1}" ]; then
+    echo "USAGE:"
+    echo "  `basename ${0}` <releasenumber>"
+    echo
+    echo "  Tags HEAD with the specified release number. You have to be"
+    echo "  in the project's root directory (the one that contains bin,"
+    echo "  doc, src, and web)."
+    echo
+    echo "  Make sure <releasenumber> is a nicely formed release number."
+    echo "  This script doesn't check for whitespace or any other characters"
+    echo "  that are special to the shell."
+    echo
+    echo
+    echo "EXAMPLE:"
+    echo "  `basename ${0}` 0.95"
+    exit
+fi
+
+# [agl] Add a check to make sure we're in the top-level directory.
+
+AKD_VERSION=${1}
+RELEASE_TAG=release-$AKD_VERSION
+
+echo
+echo "Tagging with tag $RELEASE_TAG..."
+git tag $RELEASE_TAG
+git push --tags
+
+echo
+echo "...Done tagging.  If you need to remove the tag, you can do this:"
+echo "  git tag -d $RELEASE_TAG"
+echo "  git push origin :refs/tags/$RELEASE_TAG"
+
+echo
+echo "===== DONE ====="
+echo
+
