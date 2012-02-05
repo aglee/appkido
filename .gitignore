@@ -1,6 +1,11 @@
 .DS_Store
 src/build
 src/*.xcodeproj/alee.*
+<<<<<<< HEAD
 *.xcuserdatad
 xcuserdata
 *.xcworkspace
+=======
+src/English.lproj/**/designable.nib
+src/English.lproj/**/designable.nib
+>>>>>>> 36f377c224b6a670115bc7afc6dfc02c6fce674e

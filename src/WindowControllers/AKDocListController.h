@@ -43,8 +43,6 @@
 
 - (void)setSubtopic:(AKSubtopic *)subtopic;
 
-- (AKDoc *)currentDoc;
-
 
 #pragma mark -
 #pragma mark Navigation

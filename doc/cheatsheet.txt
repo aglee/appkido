@@ -33,68 +33,44 @@ rm ~/Library/Preferences/com.digitalspokes.AppKiDo.plist
 rm ~/Library/Preferences/com.appkido.appkidoforiphone.plist
 
 
+Branch commands:
+	git branch
+	git branch -r
+	git branch $BRANCH_NAME
+Deleting a branch:
+	git branch -D $BRANCH_NAME
+	git push origin :$BRANCH_NAME
+
+
 ---- R E L E A S E (the new git way) ----
 
 Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings
-Update web files
-	If a normal release:
-		Update AppKiDo.version with version number
-		Update appkido.html, release-notes.html, screenshot.html with version number and release notes
-		Update screenshots if necessary
-	If a sneakypeak:
-		Update sneakypeeks.html
+	If going from sneakypeek to official release, remember to just drop the "sp..." suffix; don't increment the version number.
+	[agl] Add a note here about release numbering conventions I'm using.
+Update files in the "web" directory
+	Update AppKiDo.version with version number
+	Update appkido.html, release-notes.html (or sneakypeeks.html, as the case may be), screenshot.html with version number and release notes
+	Update screenshots if necessary
+Do git commit
+	Might want to quit Xcode/IB first to be sure there's no unsaved changes.
+Do git push origin msater
 Tag the release:
-	git branch <release-0.999>
-	If need to remove the tag:
-		
-Commit everything
-	(superstition) Quit Xcode first to be sure changes to the xcodeproj get picked up
-Generate the three release tarballs (two for app and one for source) using akd-release (run with no args for help)
-	Unpack the app and run it as a sanity check
-	[agl] akdrelease could be smart and parse version number from Info.plist
-Upload files to .Mac
-	first the tarballs
-	then AppKiDo.version (if it was edited)
+	akdtag <version-number>
+	Note the actual tag will be release-<version-number>
+	Note that we tag after editing the HTML files, since they will be part of the version
+	Note that we tag before running akdbuild, since it will do a git clone based on the tag
+	[agl] Maybe akdtag could inject the version number into Info.plist etc. and commit before tagging?
+Generate the three release tarballs (two for app and one for source)
+	akdbuild <version-number>
+	This creates ~/AKDBUILD directory, deleting it first if it exists already
+	Note that akdbuild renames the src directory to "AppKiDo" so the tarball will untar with that name
+	Untar the generated tarballs and run the apps as a sanity check
+Upload files to web site
+	first the three tarballs
 	then any .html files that were edited
-Delete obsolete versions, if any, from .Mac (should keep a version or two around so people can revert)
+	then AppKiDo.version (note this is last; it's used by the "check for new version" feature, so it shouldn't be posted until everything else is in place for the user to actually get the newer version)
+Delete obsolete versions from web site (keep a version or two around so people can revert)
 	[agl] when I drop 10.4 support, make a note of the last version that supports it
 Sanity-check links on HTML pages
 Send release email to cocoa-dev if release is significant enough
-	Use bcc, then move from Sent mailbox to AppKiDo mailbox
-	No longer using the manual mailing list
-
-
----- R E L E A S E (the old svn way) ----
-
-Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings
-Update web files
-	If a normal release:
-		Update AppKiDo.version with version number
-		Update appkido.html, release-notes.html, screenshot.html with version number and release notes
-		Update screenshots if necessary
-	If a sneakypeak:
-		Update sneakypeeks.html
-Commit everything
-	(superstition) Quit Xcode first to be sure changes to the xcodeproj get picked up
-	Can keep the project closed for remaining steps
-Tag the release:
-	Go to the trunk directory to make sure to get all subdirs
-	Run akdtag (run with no args for help)
-	(note: should make the script smarter, and have it cd to the dir, and check for uncommitted stuff)
-	If need to remove the tag:
-		svn rm http://svn.appkido.com/svn/appkido/tags/release-VERSION
-Generate the three release tarballs (two for app and one for source) using akdrelease (run with no args for help)
-	Unpack the app and run it as a sanity check
-	(note: should I also make an svn *checkout* snapshot to make comparisons easier later?  At least get the svn co command for checking out a particular tag)
-	(note: akdrelease could be smart and parse version number from Info.plist)
-Upload files to .Mac
-	first the tarballs
-	then AppKiDo.version (if it was edited)
-	then any .html files that were edited
-Delete obsolete versions, if any, from .Mac (should keep a version or two around so people can revert)
-Sanity-check links on HTML pages
-Send release email to cocoa-dev and to manual mailing list
-	Use bcc, then move from Sent mailbox to AppKiDo mailbox
-	(planning to stop using the manual mailing list)
-
-
+	Cc individuals who might be interested but not be on cocoa-dev.

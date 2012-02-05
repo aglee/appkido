@@ -1892,6 +1892,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = 73DA1ED0089AEA560016F230 /* Build configuration list for PBXProject "AppKiDo" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -2366,7 +2369,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = All;
 				ZERO_LINK = NO;
 			};
@@ -2383,6 +2385,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AppKiDo_Prefix.pch;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				"GCC_VERSION[sdk=macosx10.4][arch=*]" = 4.0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2407,7 +2411,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_CFLAGS[arch=i386]" = "-fsingle-precision-constant";
 				"OTHER_CFLAGS[arch=ppc]" = "-fsingle-precision-constant";
-				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2428,9 +2431,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = NO;
 				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AppKiDo_Prefix.pch;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				"GCC_VERSION[sdk=macosx10.4][arch=*]" = 4.0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2458,7 +2462,6 @@
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.6;
 				"OTHER_CFLAGS[arch=i386]" = "-fsingle-precision-constant";
 				"OTHER_CFLAGS[arch=ppc]" = "-fsingle-precision-constant";
-				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = debugging;

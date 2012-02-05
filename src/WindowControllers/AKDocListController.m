@@ -44,18 +44,6 @@
     _subtopicToDisplay = subtopic;
 }
 
-- (AKDoc *)currentDoc
-{
-    NSInteger docIndex = [_docListTable selectedRow];
-
-    if (docIndex < 0)
-    {
-        return nil;
-    }
-
-    return [_subtopicToDisplay docAtIndex:docIndex];
-}
-
 
 #pragma mark -
 #pragma mark Navigation
@@ -222,6 +210,12 @@
 {
     NSURL *linkURL = [element objectForKey:WebElementLinkURLKey];
     NSMutableArray *newMenuItems = [NSMutableArray array];
+    
+    // Don't have a contextual menu if there is nothing in the doc view.
+    if ([_windowController currentDoc] == nil)
+    {
+        return newMenuItems;
+    }
 
     // Loop through the proposed menu items in defaultMenuItems, and only
     // allow certain ones of them to appear in the contextual menu, because
