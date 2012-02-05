@@ -1,76 +1,109 @@
----- X C O D E ----
+---- XCODE ----
 
 defaults write com.apple.Xcode PBXCustomTemplateMacroDefinitions -dict-add ORGANIZATIONNAME "Andy Lee"
 
 
----- D E B U G G I N G ----
+---- DEBUGGING -- APPKIDO ----
 
-DIGS_VERBOSITY_NONE = 0,
-DIGS_VERBOSITY_ERROR = 10,
-DIGS_VERBOSITY_WARNING = 20,
-DIGS_VERBOSITY_INFO = 30,
-DIGS_VERBOSITY_DEBUG = 40,
-DIGS_VERBOSITY_DEBUG2 = 50,
-DIGS_VERBOSITY_DEBUG3 = 60,
-DIGS_VERBOSITY_ALL = 99,
-(default is INFO)
+Verbosity:
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity  0  # NONE
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity 10  # ERROR
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity 20  # WARNING (the default)
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity 30  # INFO
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity 40  # DEBUG
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity 50  # DEBUG2
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity 60  # DEBUG3
+	defaults write com.digitalspokes.AppKiDo DIGSVerbosity 99  # ALL
 
-defaults write com.digitalspokes.AppKiDo DIGSVerbosity 30
-defaults write com.digitalspokes.AppKiDo DIGSVerbosity 40
-defaults write com.digitalspokes.AppKiDo DIGSVerbosity 50
-defaults write com.digitalspokes.AppKiDo DIGSVerbosity 60
-defaults write com.digitalspokes.AppKiDo DIGSVerbosity 99
-defaults remove com.digitalspokes.AppKiDo DIGSVerbosity
+	defaults remove com.digitalspokes.AppKiDo DIGSVerbosity    # (go back to the default, which is WARNING)
 
-defaults write com.appkido.appkidoforiphone DIGSVerbosity 99
-defaults remove com.appkido.appkidoforiphone DIGSVerbosity
+Only load Foundation docs:
+	defaults write com.digitalspokes.AppKiDo AKFoundationOnly YES  # for faster launch, ONLY for debugging
 
-defaults write com.digitalspokes.AppKiDo AKFoundationOnly YES
-defaults write com.digitalspokes.AppKiDo AKFoundationOnly NO
-defaults remove com.digitalspokes.AppKiDo AKFoundationOnly
+	defaults remove com.digitalspokes.AppKiDo AKFoundationOnly     # back to loading normal frameworks
 
-rm ~/Library/Preferences/com.digitalspokes.AppKiDo.plist
-rm ~/Library/Preferences/com.appkido.appkidoforiphone.plist
+Delete prefs plist:
+	rm ~/Library/Preferences/com.digitalspokes.AppKiDo.plist
 
+
+---- DEBUGGING -- APPKIDO-FOR-IPHONE ----
+
+Verbosity:
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity  0  # NONE
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity 10  # ERROR
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity 20  # WARNING (the default)
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity 30  # INFO
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity 40  # DEBUG
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity 50  # DEBUG2
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity 60  # DEBUG3
+	defaults write com.appkido.appkidoforiphone DIGSVerbosity 99  # ALL
+
+	defaults remove com.appkido.appkidoforiphone DIGSVerbosity    # (go back to the default, which is WARNING)
+
+Only load Foundation docs:
+	defaults write com.appkido.appkidoforiphone AKFoundationOnly YES  # for faster launch, ONLY for debugging
+
+	defaults remove com.appkido.appkidoforiphone AKFoundationOnly     # back to loading normal frameworks
+
+Delete prefs plist:
+	rm ~/Library/Preferences/com.appkido.appkidoforiphone.plist
+
+
+---- BRANCH ----
 
 Branch commands:
 	git branch
 	git branch -r
 	git branch $BRANCH_NAME
+
 Deleting a branch:
 	git branch -D $BRANCH_NAME
 	git push origin :$BRANCH_NAME
 
 
----- R E L E A S E (the new git way) ----
+---- RELEASE ----
 
 Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings
 	If going from sneakypeek to official release, remember to just drop the "sp..." suffix; don't increment the version number.
-	[agl] Add a note here about release numbering conventions I'm using.
+	[agl] Add a note here about the release numbering conventions I'm using.
+
 Update files in the "web" directory
 	Update AppKiDo.version with version number
-	Update appkido.html, release-notes.html (or sneakypeeks.html, as the case may be), screenshot.html with version number and release notes
+	Update appkido.html, release-notes.html (or sneakypeeks.html, as the case may be), screenshot.html with version number, release notes, and changed links
 	Update screenshots if necessary
+
 Do git commit
 	Might want to quit Xcode/IB first to be sure there's no unsaved changes.
+
 Do git push origin msater
+
 Tag the release:
 	akdtag <version-number>
 	Note the actual tag will be release-<version-number>
 	Note that we tag after editing the HTML files, since they will be part of the version
 	Note that we tag before running akdbuild, since it will do a git clone based on the tag
 	[agl] Maybe akdtag could inject the version number into Info.plist etc. and commit before tagging?
+
 Generate the three release tarballs (two for app and one for source)
 	akdbuild <version-number>
 	This creates ~/AKDBUILD directory, deleting it first if it exists already
 	Note that akdbuild renames the src directory to "AppKiDo" so the tarball will untar with that name
 	Untar the generated tarballs and run the apps as a sanity check
+
 Upload files to web site
 	first the three tarballs
 	then any .html files that were edited
 	then AppKiDo.version (note this is last; it's used by the "check for new version" feature, so it shouldn't be posted until everything else is in place for the user to actually get the newer version)
+
 Delete obsolete versions from web site (keep a version or two around so people can revert)
 	[agl] when I drop 10.4 support, make a note of the last version that supports it
+
 Sanity-check links on HTML pages
+
 Send release email to cocoa-dev if release is significant enough
 	Cc individuals who might be interested but not be on cocoa-dev.
+
+
+
+
+
