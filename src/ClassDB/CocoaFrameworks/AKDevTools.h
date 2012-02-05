@@ -3,7 +3,7 @@
 //  AppKiDo
 //
 //  Created by Andy Lee on 2/11/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Andy Lee. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -11,18 +11,21 @@
 /*! Some docsets get installed here for some reason. */
 #define AKSharedDocSetDirectory @"/Library/Developer/Shared/Documentation/DocSets"
 
-/*! Xcode4 puts the docsets here. */
+/*! Xcode 4 puts the docsets here. */
 #define AKLibraryDocSetDirectory @"/Library/Developer/Documentation/DocSets"
 
 @class AKDocSetIndex;
 
 /*!
  * Abstract class that represents a Dev Tools installation as it relates to
- * development for a particular platform.  Within the Dev Tools there are SDK
- * versions, each of which has a name (e.g., "3.2" for the iPhone SDK), a
- * docset (given by a path to a .docset bundle), and a headers directory.
+ * development for a particular platform. At the moment the supported platforms are
+ * Mac and iOS, hence the subclasses AKMacDevTools and AKIPhoneDevTools.
  *
- * Concrete subclasses are for Mac and iPhone Dev Tools.
+ * Within the Dev Tools directory (typically /Developer unless the user chose to
+ * install with a different directory name) there are SDK versions (e.g., "10.6",
+ * "10.7" for the Mac platform). We associate each SDK version with two directories:
+ * a .docset bundle and a headers directory. The data AppKiDo presents to the user
+ * comes from these two directories.
  */
 @interface AKDevTools : NSObject
 {
@@ -37,6 +40,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
+/*! devToolsPath is typically /Developer. It's the top-level Dev Tools directory. */
 + (id)devToolsWithPath:(NSString *)devToolsPath;
 
 
@@ -63,7 +67,12 @@
 #pragma mark -
 #pragma mark Docset paths
 
-/*! Subclasses must override.  Returns the directories in which we look for docsets. */
+/*!
+ * Subclasses must override.  Returns the directories in which we look for docsets.
+ *
+ * Docsets are sometimes outside of the Dev Tools directory. At some point (I forget
+ * when) Xcode started installing them in /Library/Developer.
+ */
 - (NSArray *)docSetSearchPaths;
 
 /*!
