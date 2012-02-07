@@ -69,7 +69,11 @@ Edit version string in Info.plist, Info-iPhone.plist
 
 Update files in the "web" directory
 	Update AppKiDo.version with version number
-	Update appkido.html, release-notes.html (or sneakypeeks.html, as the case may be), screenshot.html with version number, release notes, and changed links
+	Update links and release notes:
+		appkido.html
+		faq.html
+		release-notes.html (or sneakypeeks.html, as the case may be)
+		screenshot.html
 	Update screenshots if necessary
 
 Do git commit
