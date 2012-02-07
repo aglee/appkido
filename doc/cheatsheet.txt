@@ -2,6 +2,10 @@
 
 defaults write com.apple.Xcode PBXCustomTemplateMacroDefinitions -dict-add ORGANIZATIONNAME "Andy Lee"
 
+Converting nibs to xibs:
+	# From <http://softwaretrenches.com/2008/06/cocoa-convertin.html>:
+	ls | grep nib | xargs -L1 ibtool --upgrade
+
 
 ---- DEBUGGING -- APPKIDO ----
 
