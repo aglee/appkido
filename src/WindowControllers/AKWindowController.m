@@ -1067,7 +1067,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Update our marker index into the history array.
     _windowHistoryIndex = historyIndex;
-    DIGSLogDebug(@"jumped to history index %d, history count=%d", _windowHistoryIndex, [_windowHistory count]);
+    DIGSLogDebug(@"jumped to history index %ld, history count=%ld", (long)_windowHistoryIndex, (long)[_windowHistory count]);
 
     // Update miscellaneous parts of the UI that reflect our current
     // position in history.
@@ -1109,8 +1109,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_windowHistory addObject:newHistoryItem];
     _windowHistoryIndex = [_windowHistory count] - 1;
     DIGSLogDebug(
-        @"added history item [%@][%@][%@] at index %d",
-        [[newHistoryItem topicToDisplay] pathInTopicBrowser],
+        @"added history item [%@][%@][%@] at index %ld",
+        (long)[[newHistoryItem topicToDisplay] pathInTopicBrowser],
         [newHistoryItem subtopicName],
         [newHistoryItem docName],
         _windowHistoryIndex);

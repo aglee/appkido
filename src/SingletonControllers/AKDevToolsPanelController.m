@@ -62,7 +62,7 @@
 
     NSInteger result = [[NSApplication sharedApplication] runModalForWindow:_window];
 
-    DIGSLogDebug(@"result of Dev Tools path panel: %d", result);
+    DIGSLogDebug(@"result of Dev Tools path panel: %ld", (long)result);
     [_window orderOut:self];
 
 	return (result == NSRunStoppedResponse);

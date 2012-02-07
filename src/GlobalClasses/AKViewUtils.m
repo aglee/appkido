@@ -33,7 +33,7 @@
     while (YES)
     {
         NSLog(
-            @"  %@ at 0x%x (acceptsFirstResponder = %@)",
+            @"  %@ at %p (acceptsFirstResponder = %@)",
             [view className], view, ([view acceptsFirstResponder] ? @"YES" : @"NO"));
 
         if ([visitedViews containsObject:view])
@@ -61,7 +61,7 @@
     while (YES)
     {
         NSLog(
-            @"  %@ at 0x%x (acceptsFirstResponder = %@)",
+            @"  %@ at %p (acceptsFirstResponder = %@)",
             [view className], view, ([view acceptsFirstResponder] ? @"YES" : @"NO"));
 
         if ([visitedViews containsObject:view])
