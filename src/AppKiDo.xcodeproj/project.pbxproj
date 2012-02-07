@@ -539,6 +539,10 @@
 		73C983F50FE47F6800C4BEBA /* AKMacDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */; };
 		73C983FE0FE4815E00C4BEBA /* AKMacDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C983F20FE47F6800C4BEBA /* AKMacDevTools.h */; };
 		73C983FF0FE4815E00C4BEBA /* AKMacDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */; };
+		73D07C0914E11D2700383E06 /* AppKiDo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D614E10B7600A54FF6 /* AppKiDo.xib */; };
+		73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D814E10B7600A54FF6 /* DevToolsPath.xib */; };
+		73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DA14E10B7600A54FF6 /* MainMenu.xib */; };
+		73D07C0C14E11D3800383E06 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DC14E10B7600A54FF6 /* Prefs.xib */; };
 		73D237080D4561C300EF7503 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237010D4561C300EF7503 /* FMDatabase.h */; };
 		73D237090D4561C300EF7503 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237020D4561C300EF7503 /* FMDatabase.m */; };
 		73D2370A0D4561C300EF7503 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237030D4561C300EF7503 /* FMDatabaseAdditions.h */; };
@@ -1973,6 +1977,10 @@
 				7399B3410E632A5C001AE672 /* AppKiDo-source-intro.txt in Resources */,
 				7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */,
 				7399B3430E632A5C001AE672 /* README-fmdb.txt in Resources */,
+				73D07C0914E11D2700383E06 /* AppKiDo.xib in Resources */,
+				73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */,
+				73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */,
+				73D07C0C14E11D3800383E06 /* Prefs.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
