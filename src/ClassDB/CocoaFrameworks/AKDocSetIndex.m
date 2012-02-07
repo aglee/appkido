@@ -7,13 +7,14 @@
 
 #import "AKDocSetIndex.h"
 
-#import "DIGSLog.h"
-#import "FMDatabase.h"
-#import "AKFrameworkConstants.h"
-#import "AKTextUtils.h"
 #import "AKFileUtils.h"
-#import "AKMacDevTools.h"
+#import "AKFrameworkConstants.h"
 #import "AKIPhoneDevTools.h"
+#import "AKMacDevTools.h"
+#import "AKSQLTemplate.h"
+#import "AKTextUtils.h"
+
+#import "FMDatabase.h"
 
 
 @interface AKDocSetIndex ()
@@ -46,127 +47,6 @@
 #pragma mark -
 
 @implementation AKDocSetIndex
-
-#pragma mark -
-#pragma mark SQL queries
-
-// Tables we use in the dsidx SQLite database. ZTOKEN is the main table, and ZTOKENMETAINFORMATION
-// gives us additional information about tokens.
-//
-//    ZTOKEN
-//        ZTOKENNAME
-//        ZLANGUAGE => ZAPILANGUAGE
-//        ZTOKENTYPE => ZTOKENTYPE
-//        ZMETAINFORMATION => ZTOKENMETAINFORMATION
-//
-//    ZTOKENMETAINFORMATION
-//        ZTOKEN => ZTOKEN
-//        ZFILE => ZFILEPATH
-//        ZDECLAREDIN => ZHEADER
-//        ZRETURNVALUE => ZRETURNVALUE
-//        ZANCHOR
-//        ZDECLARATION
-//        ZDEPRECATIONSUMMARY
-//        ZABSTRACT
-//
-//    These tables are mostly lists of strings, although ZHEADER also has a ZFRAMEWORKNAME column
-//
-//    ZAPILANGUAGE
-//        ZFULLNAME
-//
-//    ZFILEPATH
-//        ZPATH
-//
-//    ZHEADER
-//        ZHEADERPATH
-//        ZFRAMEWORKNAME
-//
-//    ZRETURNVALUE
-//        ZABSTRACT
-//
-//    ZTOKENTYPE
-//        ZTYPENAME
-
-// Gets the names of all frameworks in the docset.
-static NSString *s_allFrameworkNamesQuery =
-    @"select distinct ZFRAMEWORKNAME from ZHEADER order by ZFRAMEWORKNAME";
-
-// Gets the names of all frameworks containing Objective-C classes and protocols.
-static NSString *s_objectiveCFrameworkNamesQuery =
-    @"select distinct "
-        @"header.ZFRAMEWORKNAME "
-    @"from "
-        @"ZTOKEN token, "
-        @"ZTOKENTYPE tokenType, "
-        @"ZTOKENMETAINFORMATION tokenMeta, "
-        @"ZHEADER header, "
-        @"ZAPILANGUAGE language "
-    @"where "
-        @"token.ZLANGUAGE = language.Z_PK "
-        @"and language.ZFULLNAME = 'Objective-C' "
-        @"and token.ZTOKENTYPE = tokenType.Z_PK "
-        @"and token.ZMETAINFORMATION = tokenMeta.Z_PK "
-        @"and tokenMeta.ZDECLAREDIN = header.Z_PK "
-        @"and tokenType.ZTYPENAME in ('cl', 'intf') "
-    @"order by "
-        @"header.ZFRAMEWORKNAME";
-
-// Gets all doc file paths for up to four token types within the specified framework.
-static NSString *s_docPathsQueryTemplate =
-    @"select distinct "
-        @"filePath.ZPATH as docPath "
-    @"from "
-        @"ZTOKEN token, "
-        @"ZTOKENTYPE tokenType, "
-        @"ZTOKENMETAINFORMATION tokenMeta, "
-        @"ZHEADER header, "
-        @"ZFILEPATH filePath "
-    @"where "
-        @"token.ZTOKENTYPE = tokenType.Z_PK "
-        @"and token.ZMETAINFORMATION = tokenMeta.Z_PK "
-        @"and tokenMeta.ZFILE = filePath.Z_PK "
-        @"and tokenMeta.ZDECLAREDIN = header.Z_PK "
-        @"and header.ZFRAMEWORKNAME = ? "
-        @"and tokenType.ZTYPENAME in (?, ?, ?, ?)";
-
-// Unfortunately s_docPathsQueryTemplate doesn't get all the doc paths we want, because some rows
-// in ZTOKENMETAINFORMATION are missing a ZDECLAREDIN foreign key (to the ZHEADER table), which we
-// need to be able to tell what framework a token is in, because ZFRAMEWORKNAME is in ZHEADER.
-//
-// As a workaround, we make a second query using s_docPathsSecondQueryTemplate, which looks for
-// tokens where ZDECLAREDIN is null and the doc path contains the framework name as a component.
-// For example, we assume any tokens documented in .../CoreData/... are in the CoreData framework.
-// This reasoning isn't perfect, but it does pick up, for example, NSFetchedResultsControllerDelegate,
-// thus fixing <https://github.com/aglee/appkido/issues/3>.
-//
-// Note: the placeholders must be in the same order as in s_docPathsQueryTemplate.
-static NSString *s_docPathsSecondQueryTemplate =
-    @"select distinct "
-        @"filePath.ZPATH as docPath "
-    @"from "
-        @"ZTOKEN token, "
-        @"ZTOKENTYPE tokenType, "
-        @"ZTOKENMETAINFORMATION tokenMeta, "
-        @"ZFILEPATH filePath "
-    @"where "
-        @"token.ZTOKENTYPE = tokenType.Z_PK "
-        @"and token.ZMETAINFORMATION = tokenMeta.Z_PK "
-        @"and tokenMeta.ZFILE = filePath.Z_PK "
-        @"and filePath.ZPATH like '%/' || ? || '/%' "
-        @"and tokenType.ZTYPENAME in (?, ?, ?, ?)";
-
-// Gets all header file paths for the specified framework.
-static NSString *s_headerPathsQueryTemplate =
-    @"select distinct "
-        @"header.ZHEADERPATH as headerPath "
-    @"from ZTOKEN token, "
-        @"ZTOKENMETAINFORMATION tokenMeta, "
-        @"ZHEADER header "
-    @"where "
-        @"token.ZMETAINFORMATION = tokenMeta.Z_PK "
-        @"and tokenMeta.ZDECLAREDIN = header.Z_PK "
-        @"and header.ZFRAMEWORKNAME = ?";
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -270,7 +150,8 @@ static NSString *s_headerPathsQueryTemplate =
 
     // Do the query and process the results.
     NSMutableArray *headerFiles = [NSMutableArray array];
-    FMResultSet *rs = [sqliteDB executeQuery:s_headerPathsQueryTemplate, frameworkName];
+    NSString *sql = [AKSQLTemplate templateNamed:@"HeaderPaths"];
+    FMResultSet *rs = [sqliteDB executeQuery:sql, frameworkName];
 
     while ([rs next])
     {
@@ -295,7 +176,8 @@ static NSString *s_headerPathsQueryTemplate =
 
     // Do the query and process the results.
     NSMutableSet *headerDirs = [NSMutableSet set];
-    FMResultSet *rs = [sqliteDB executeQuery:s_headerPathsQueryTemplate, frameworkName];
+    NSString *sql = [AKSQLTemplate templateNamed:@"HeaderPaths"];
+    FMResultSet *rs = [sqliteDB executeQuery:sql, frameworkName];
 
     while ([rs next])
     {
@@ -383,12 +265,14 @@ static NSString *s_headerPathsQueryTemplate =
 
 - (NSMutableArray *)_allFrameworkNames
 {
-    return [self _stringArrayFromQuery:s_allFrameworkNamesQuery];
+    NSString *sql = [AKSQLTemplate templateNamed:@"AllFrameworkNames"];
+    return [self _stringArrayFromQuery:sql];
 }
 
 - (NSMutableArray *)_objectiveCFrameworkNames
 {
-    return [self _stringArrayFromQuery:s_objectiveCFrameworkNamesQuery];
+    NSString *sql = [AKSQLTemplate templateNamed:@"ObjCFrameworkNames"];
+    return [self _stringArrayFromQuery:sql];
 }
 
 - (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString
@@ -484,6 +368,7 @@ static NSString *s_headerPathsQueryTemplate =
             _docPathsForTokensOfType:tokenType
             orType:nil
             orType:nil
+            orType:nil
             forFramework:frameworkName];
 }
 
@@ -496,6 +381,7 @@ static NSString *s_headerPathsQueryTemplate =
             _docPathsForTokensOfType:tokenType1
             orType:tokenType2
             orType:nil
+         orType:nil
             forFramework:frameworkName];
 }
 
@@ -537,13 +423,16 @@ static NSString *s_headerPathsQueryTemplate =
 
     // Query the database. See the comment for s_docPathsSecondQueryTemplate
     // to see why we do two queries.
-    NSMutableSet *docPaths = [self _docPathsFromQuery:s_docPathsQueryTemplate
+    NSString *docPathsQueryTemplate = [AKSQLTemplate templateNamed:@"DocPaths"];
+    NSString *docPathsSecondQueryTemplate = [AKSQLTemplate templateNamed:@"DocPaths2"];
+    
+    NSMutableSet *docPaths = [self _docPathsFromQuery:docPathsQueryTemplate
                                         withTokenType:tokenType1
                                                orType:tokenType2
                                                orType:tokenType3
                                                orType:tokenType4
                                          forFramework:frameworkName];
-    [docPaths unionSet:[self _docPathsFromQuery:s_docPathsSecondQueryTemplate
+    [docPaths unionSet:[self _docPathsFromQuery:docPathsSecondQueryTemplate
                                   withTokenType:tokenType1
                                          orType:tokenType2
                                          orType:tokenType3
