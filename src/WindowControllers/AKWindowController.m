@@ -1110,10 +1110,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     _windowHistoryIndex = [_windowHistory count] - 1;
     DIGSLogDebug(
         @"added history item [%@][%@][%@] at index %ld",
-        (long)[[newHistoryItem topicToDisplay] pathInTopicBrowser],
+        [[newHistoryItem topicToDisplay] pathInTopicBrowser],
         [newHistoryItem subtopicName],
         [newHistoryItem docName],
-        _windowHistoryIndex);
+        (long)_windowHistoryIndex);
 
     // Any time the history changes, we want to do the following UI updates.
     [self _refreshNavigationButtons];
