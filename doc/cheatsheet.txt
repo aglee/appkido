@@ -63,7 +63,7 @@ Deleting a branch:
 
 ---- RELEASE ----
 
-Edit version string in Info.plist, Info-iPhone.plist, InfoPlist.strings
+Edit version string in Info.plist, Info-iPhone.plist
 	If going from sneakypeek to official release, remember to just drop the "sp..." suffix; don't increment the version number.
 	[agl] Add a note here about the release numbering conventions I'm using.
 
@@ -75,12 +75,14 @@ Update files in the "web" directory
 Do git commit
 	Might want to quit Xcode/IB first to be sure there's no unsaved changes.
 
-Do git push origin msater
+Do git push origin master
 
 Tag the release:
 	akdtag <version-number>
+		This pushes the tag to GitHub -- but is not the same as git push origin master
 	Note the actual tag will be release-<version-number>
-	Note that we tag after editing the HTML files, since they will be part of the version
+	Note that ideally we tag after editing the HTML files, since they will be part of the version
+		But if I forget or have to go back and edit an HTML file, it's probably okay; no need to move the tag
 	Note that we tag before running akdbuild, since it will do a git clone based on the tag
 	[agl] Maybe akdtag could inject the version number into Info.plist etc. and commit before tagging?
 
