@@ -13,6 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="359"/>
+			<integer value="852"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1137,7 +1138,7 @@
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="422987476">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1164,7 +1165,7 @@
 							<reference key="NSSuperview" ref="422987476"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="960859981">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">69336577</int>
 								<int key="NSCellFlags2">4194304</int>
 								<string key="NSContents">version...</string>
 								<reference key="NSSupport" ref="312002061"/>
@@ -1288,7 +1289,7 @@
 								</object>
 								<object class="NSScroller" id="272802927">
 									<reference key="NSNextResponder" ref="1004507357"/>
-									<int key="NSvFlags">256</int>
+									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{-100, -100}, {87, 18}}</string>
 									<reference key="NSSuperview" ref="1004507357"/>
 									<int key="NSsFlags">1</int>
@@ -1308,6 +1309,7 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{508, 467}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMinSize">{213, 129}</string>
@@ -2956,7 +2958,9 @@
 					<string>833.ImportedFromIB2</string>
 					<string>834.IBPluginDependency</string>
 					<string>834.ImportedFromIB2</string>
+					<string>849.IBEditorWindowLastContentRect</string>
 					<string>849.IBPluginDependency</string>
+					<string>849.IBWindowTemplateEditedContentRect</string>
 					<string>849.ImportedFromIB2</string>
 					<string>849.windowTemplate.hasMinSize</string>
 					<string>849.windowTemplate.minSize</string>
@@ -3203,7 +3207,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>{{316, 378}, {508, 467}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{316, 378}, {508, 467}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
