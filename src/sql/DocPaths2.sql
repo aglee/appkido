@@ -21,5 +21,6 @@ where
     token.ZTOKENTYPE = tokenType.Z_PK
     and token.ZMETAINFORMATION = tokenMeta.Z_PK
     and tokenMeta.ZFILE = filePath.Z_PK
+    and tokenMeta.ZDECLAREDIN is null
     and filePath.ZPATH like '%/' || ? || '/%'
     and tokenType.ZTYPENAME in (?, ?, ?, ?)
