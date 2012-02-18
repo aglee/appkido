@@ -123,10 +123,10 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 #if APPKIDO_FOR_IPHONE
                                           @"Platforms/iPhoneOS.platform",
                                           @"Platforms/iPhoneSimulator.platform",
+#else
+                                          @"Platforms/MacOSX.platform",
 #endif
-                                          @"Applications/Xcode.app",
                                           @"Documentation",
-                                          @"Examples",
                                           nil] objectEnumerator];
     NSString *subdir;
     BOOL seemsOkay = YES;

@@ -36,7 +36,7 @@
 
 - (NSString *)sdkSearchPath
 {
-    return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
+    return [[self devToolsPath] stringByAppendingString:@"/Platforms/MacOSX.platform/Developer/SDKs/"];
 }
 
 @end
