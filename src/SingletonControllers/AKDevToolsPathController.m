@@ -50,6 +50,24 @@
 #pragma mark -
 #pragma mark Action methods
 
+- (IBAction)takeDevToolsInstallModeFrom:(id)sender
+{
+    if ([(NSMatrix *)sender selectedTag] == 0)
+    {
+        [AKPrefUtils setDevToolsPathPref:AKDevToolsPathForStandaloneXcode];
+        [self _populateSDKPopUpButton];
+    }
+    else if ([(NSMatrix *)sender selectedTag] == 1)
+    {
+        [AKPrefUtils setDevToolsPathPref:[_devToolsPathField stringValue]];
+        [self _populateSDKPopUpButton];
+    }
+    else 
+    {
+        DIGSLogError(@"%@ has unexpected selectedTag %ld", sender, [(NSMatrix *)sender selectedTag]);
+    }
+}
+
 - (IBAction)runOpenPanel:(id)sender
 {
     DIGSLogDebug_EnteringMethod();
@@ -155,7 +173,7 @@
 
     if (returnCode == NSOKButton)
     {
-        NSString *selectedDir = [panel directory];
+        NSString *selectedDir = [[[panel URLs] lastObject] path];
         NSMutableArray *errorStrings = [NSMutableArray array];
 
         if ([AKDevTools looksLikeValidDevToolsPath:selectedDir errorStrings:errorStrings])
