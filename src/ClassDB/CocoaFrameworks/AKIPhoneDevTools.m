@@ -15,18 +15,47 @@
 #pragma mark -
 #pragma mark AKDevTools methods
 
++ (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
+{
+    // Are we using the standalone Xcode in /Applications introduced by Xcode 4.3
+    // or the older Dev Tools installation model?
+    if ([devToolsPath isEqualToString:AKDevToolsPathForStandaloneXcode])
+    {
+        return [NSArray arrayWithObjects:
+                @"Platforms/iPhoneOS.platform",
+                @"Platforms/iPhoneSimulator.platform",
+                @"Documentation",
+                nil];
+    }
+    else
+    {
+        return [NSArray arrayWithObjects:
+                @"Platforms/iPhoneOS.platform",
+                @"Platforms/iPhoneSimulator.platform",
+                @"Applications/Xcode.app",
+                @"Documentation",
+                @"Examples",
+                nil];
+    }
+}
+
 - (NSArray *)docSetSearchPaths
 {
     // NOTE: Order matters. On 2011-10-31, Gerriet reported that NSFileVersion (new in 10.7) wasn't
     // appearing in AppKiDo even though it did appear in the Xcode doc window. I reproduced the bug
     // and noticed that I had *two* Lion docsets: one in AKLibraryDocSetDirectory which did not
     // contain NSFileVersion, and a newer one in AKSharedDocSetDirectory which did. So I moved
-    // AKSharedDocSetDirectory to the end of this array so that it "wins" when docsets appear in both
+    // AKSharedDocSetDirectory later in this array so that it "wins" when docsets appear in both
     // places. This fixed the problem, at least for me.
     return [NSArray arrayWithObjects:
             [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"],
             AKLibraryDocSetDirectory,
             AKSharedDocSetDirectory,
+            
+            // New directories to look in as of Xcode 4.3.
+            [AKDevToolsPathForStandaloneXcode stringByAppendingPathComponent:@"Documentation/DocSets"],
+            [NSHomeDirectory() stringByAppendingPathComponent:AKSharedDocSetDirectory],
+            
             nil];
 }
 
