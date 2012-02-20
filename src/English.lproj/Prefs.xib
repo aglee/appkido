@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">12A128p</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2427</string>
-		<string key="IBDocument.AppKitVersion">1157.7</string>
-		<string key="IBDocument.HIToolboxVersion">599.00</string>
+		<string key="IBDocument.SystemVersion">11D50b</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2427</string>
+			<string key="NS.object.0">1938</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -75,7 +75,6 @@
 							<string key="NSFrame">{{-1, 10}, {426, 518}}</string>
 							<reference key="NSSuperview" ref="811421789"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="460135358"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSTabViewItem" id="64094721">
@@ -156,7 +155,7 @@
 												<reference key="NSSuperview" ref="254120958"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSPopUpButtonCell" key="NSCell" id="135830127">
-													<int key="NSCellFlags">-2076153792</int>
+													<int key="NSCellFlags">-2076049856</int>
 													<int key="NSCellFlags2">1024</int>
 													<object class="NSFont" key="NSSupport" id="837029068">
 														<string key="NSName">LucidaGrande</string>
@@ -300,7 +299,7 @@
 												<reference key="NSSuperview" ref="254120958"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSPopUpButtonCell" key="NSCell" id="842792679">
-													<int key="NSCellFlags">-2076153792</int>
+													<int key="NSCellFlags">-2076049856</int>
 													<int key="NSCellFlags2">1024</int>
 													<reference key="NSSupport" ref="837029068"/>
 													<reference key="NSControlView" ref="448614493"/>
@@ -593,7 +592,7 @@
 												<reference key="NSSuperview" ref="254120958"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSPopUpButtonCell" key="NSCell" id="439661169">
-													<int key="NSCellFlags">-2076153792</int>
+													<int key="NSCellFlags">-2076049856</int>
 													<int key="NSCellFlags2">1024</int>
 													<reference key="NSSupport" ref="837029068"/>
 													<reference key="NSControlView" ref="31953726"/>
@@ -897,9 +896,6 @@
 												<reference key="NSHScroller" ref="597178316"/>
 												<reference key="NSContentView" ref="274658478"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
-												<double key="NSMinMagnification">0.25</double>
-												<double key="NSMaxMagnification">4</double>
-												<double key="NMagnification">1</double>
 											</object>
 											<object class="NSTextField" id="717128692">
 												<reference key="NSNextResponder" ref="435371857"/>
@@ -1104,7 +1100,6 @@
 												<string key="NSFrame">{{14, 32}, {378, 186}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="587184511">
 													<int key="NSCellFlags">69245441</int>
@@ -1133,7 +1128,7 @@
 												<reference key="NSNextKeyView" ref="498842063"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSPopUpButtonCell" key="NSCell" id="706575967">
-													<int key="NSCellFlags">-2076153792</int>
+													<int key="NSCellFlags">-2076049856</int>
 													<int key="NSCellFlags2">2048</int>
 													<reference key="NSSupport" ref="334852111"/>
 													<reference key="NSControlView" ref="469268845"/>
@@ -1267,16 +1262,10 @@ AAAAAAAAAAUAAAAfAAAAZTMzM8KAgIDwv7+//O3t7f/t7e3/v7+//ICAgPAzMzPCAAAAZQAAAB8AAAAF
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAFwAAAEMAAAB3AAAAnwAAALMAAACzAAAAnwAAAHcAAABD
 AAAAFwAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAoAAAAXAAAAJAAAAC4AAAAu
 AAAAJAAAABcAAAAKAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgEAAAMAAAABABIAAAEB
-AAMAAAABABIAAAECAAMAAAAEAAAFxgEDAAMAAAABAAEAAAEGAAMAAAABAAIAAAERAAQAAAABAAAACAES
+AAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQEAAAMAAAABABIAAAEB
+AAMAAAABABIAAAECAAMAAAAEAAAFugEDAAMAAAABAAEAAAEGAAMAAAABAAIAAAERAAQAAAABAAAACAES
 AAMAAAABAAEAAAEVAAMAAAABAAQAAAEWAAMAAAABABIAAAEXAAQAAAABAAAFEAEcAAMAAAABAAEAAAFS
-AAMAAAABAAEAAAFTAAMAAAAEAAAFzgK8AAEAAAFDAAAF1gAAAAAACAAIAAgACAABAAEAAQABPHg6eG1w
-bWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS4xLjIiPgogICA8
-cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1u
-cyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0
-aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOkNvbXByZXNz
-aW9uPjE8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpS
-REY+CjwveDp4bXBtZXRhPgo</bytes>
+AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																		</object>
 																	</object>
 																</object>
@@ -1333,16 +1322,10 @@ AAAAAAAAAAUAAAAfAAAAZTMzM8KAgIDwv7+//O3t7f/t7e3/v7+//ICAgPAzMzPCAAAAZQAAAB8AAAAF
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAFwAAAEMAAAB3AAAAnwAAALMAAACzAAAAnwAAAHcAAABD
 AAAAFwAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAoAAAAXAAAAJAAAAC4AAAAu
 AAAAJAAAABcAAAAKAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgEAAAMAAAABABIAAAEB
-AAMAAAABABIAAAECAAMAAAAEAAAFxgEDAAMAAAABAAEAAAEGAAMAAAABAAIAAAERAAQAAAABAAAACAES
+AAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQEAAAMAAAABABIAAAEB
+AAMAAAABABIAAAECAAMAAAAEAAAFugEDAAMAAAABAAEAAAEGAAMAAAABAAIAAAERAAQAAAABAAAACAES
 AAMAAAABAAEAAAEVAAMAAAABAAQAAAEWAAMAAAABABIAAAEXAAQAAAABAAAFEAEcAAMAAAABAAEAAAFS
-AAMAAAABAAEAAAFTAAMAAAAEAAAFzgK8AAEAAAFDAAAF1gAAAAAACAAIAAgACAABAAEAAQABPHg6eG1w
-bWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS4xLjIiPgogICA8
-cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1u
-cyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0
-aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOkNvbXByZXNz
-aW9uPjE8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpS
-REY+CjwveDp4bXBtZXRhPgo</bytes>
+AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																	</object>
 																</object>
 															</object>
@@ -1616,19 +1599,27 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_devToolsInstallationMatrix</string>
+						<string key="label">_devToolsInstallationTypeMatrix</string>
 						<reference key="source" ref="1037134083"/>
 						<reference key="destination" ref="992366612"/>
 					</object>
-					<int key="connectionID">1805</int>
+					<int key="connectionID">1807</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">takeDevToolsInstallModeFrom:</string>
+						<string key="label">takeDevToolsInstallationTypeFrom:</string>
 						<reference key="source" ref="1037134083"/>
 						<reference key="destination" ref="992366612"/>
 					</object>
-					<int key="connectionID">1806</int>
+					<int key="connectionID">1808</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_selectPathButton</string>
+						<reference key="source" ref="1037134083"/>
+						<reference key="destination" ref="252322994"/>
+					</object>
+					<int key="connectionID">1809</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2417,7 +2408,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 					<string>1802.IBPluginDependency</string>
 					<string>1803.IBPluginDependency</string>
 				</object>
-				<object class="NSArray" key="dict.values">
+				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2529,7 +2520,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1806</int>
+			<int key="maxID">1809</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2543,9 +2534,9 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>runOpenPanel:</string>
 							<string>selectSDKVersion:</string>
-							<string>takeDevToolsInstallModeFrom:</string>
+							<string>takeDevToolsInstallationTypeFrom:</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>id</string>
@@ -2558,9 +2549,9 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>runOpenPanel:</string>
 							<string>selectSDKVersion:</string>
-							<string>takeDevToolsInstallModeFrom:</string>
+							<string>takeDevToolsInstallationTypeFrom:</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">runOpenPanel:</string>
@@ -2571,7 +2562,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">takeDevToolsInstallModeFrom:</string>
+								<string key="name">takeDevToolsInstallationTypeFrom:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
@@ -2580,32 +2571,35 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_devToolsInstallationMatrix</string>
+							<string>_devToolsInstallationTypeMatrix</string>
 							<string>_devToolsPathField</string>
 							<string>_explanationField</string>
 							<string>_sdkVersionsPopUpButton</string>
+							<string>_selectPathButton</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSMatrix</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSPopUpButton</string>
+							<string>NSButton</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_devToolsInstallationMatrix</string>
+							<string>_devToolsInstallationTypeMatrix</string>
 							<string>_devToolsPathField</string>
 							<string>_explanationField</string>
 							<string>_sdkVersionsPopUpButton</string>
+							<string>_selectPathButton</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_devToolsInstallationMatrix</string>
+								<string key="name">_devToolsInstallationTypeMatrix</string>
 								<string key="candidateClassName">NSMatrix</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -2619,6 +2613,10 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_sdkVersionsPopUpButton</string>
 								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_selectPathButton</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 						</object>
 					</object>
@@ -2641,7 +2639,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<string>selectAllFrameworks:</string>
 							<string>useDefaultAppearancePrefs:</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>id</string>
@@ -2662,7 +2660,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<string>selectAllFrameworks:</string>
 							<string>useDefaultAppearancePrefs:</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">applyAppearancePrefs:</string>
@@ -2705,7 +2703,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<string>_prefsTabView</string>
 							<string>_sdkVersionsPopUpButton</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>AKDevToolsPathController</string>
 							<string>NSTextField</string>
@@ -2734,7 +2732,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<string>_prefsTabView</string>
 							<string>_sdkVersionsPopUpButton</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_devToolsPathController</string>
@@ -2813,7 +2811,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<string>toggleBrowserVisible:</string>
 							<string>toggleQuicklistDrawer:</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>id</string>
@@ -2868,7 +2866,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 							<string>toggleBrowserVisible:</string>
 							<string>toggleQuicklistDrawer:</string>
 						</object>
-						<object class="NSArray" key="dict.values">
+						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">addBrowserColumn:</string>
@@ -2977,6 +2975,10 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
 		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<real value="1060" key="NS.object.0"/>
+		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
 			<integer value="3000" key="NS.object.0"/>
@@ -2990,7 +2992,7 @@ REY+CjwveDp4bXBtZXRhPgo</bytes>
 				<string>NSMenuCheckmark</string>
 				<string>NSMenuMixedState</string>
 			</object>
-			<object class="NSArray" key="dict.values">
+			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{11, 11}</string>
 				<string>{10, 3}</string>

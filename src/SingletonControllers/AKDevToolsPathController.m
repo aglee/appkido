@@ -14,7 +14,12 @@
 #import "AKIPhoneDevTools.h"
 
 
+#define AKMatrixTagForStandaloneXcode 0
+#define AKMatrixTagForOldStyleDevTools 1
+
+
 @interface AKDevToolsPathController (Private)
+- (void)_updateEnablednessOfDevPathControls;
 - (void)_populateSDKPopUpButton;
 @end
 
@@ -26,6 +31,19 @@
 
 - (void)awakeFromNib
 {
+    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
+    
+    // Make initial selection from _devToolsInstallationTypeMatrix.
+    if ([devToolsPath isEqualToString:AKDevToolsPathForStandaloneXcode])
+    {
+        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForStandaloneXcode];
+    }
+    else
+    {
+        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForOldStyleDevTools];
+    }
+    [self _updateEnablednessOfDevPathControls];
+    
     // Put initial value in _devToolsPathField.
     if ([AKPrefUtils devToolsPathPref])
         [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
@@ -50,14 +68,16 @@
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)takeDevToolsInstallModeFrom:(id)sender
+- (IBAction)takeDevToolsInstallationTypeFrom:(id)sender
 {
-    if ([(NSMatrix *)sender selectedTag] == 0)
+    [self _updateEnablednessOfDevPathControls];
+    
+    if ([(NSMatrix *)sender selectedTag] == AKMatrixTagForStandaloneXcode)
     {
         [AKPrefUtils setDevToolsPathPref:AKDevToolsPathForStandaloneXcode];
         [self _populateSDKPopUpButton];
     }
-    else if ([(NSMatrix *)sender selectedTag] == 1)
+    else if ([(NSMatrix *)sender selectedTag] == AKMatrixTagForOldStyleDevTools)
     {
         [AKPrefUtils setDevToolsPathPref:[_devToolsPathField stringValue]];
         [self _populateSDKPopUpButton];
@@ -107,6 +127,14 @@
 
 #pragma mark -
 #pragma mark Private methods
+
+- (void)_updateEnablednessOfDevPathControls
+{
+    BOOL isOldStyleDevTools = ([_devToolsInstallationTypeMatrix selectedTag] == AKMatrixTagForOldStyleDevTools);
+    
+    [_devToolsPathField setEnabled:isOldStyleDevTools];
+    [_selectPathButton setEnabled:isOldStyleDevTools];
+}
 
 // Fills in the popup button that lists available SDK versions.  Gets this list
 // by looking in the directory specified by [AKPrefUtils devToolsPathPref].

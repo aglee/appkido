@@ -11,21 +11,21 @@
 
 /*!
  * Manages the UI used for specifying which docset the application should load.
- * The user selects a Dev Tools path (e.g., /Developer) and an SDK version
- * (e.g., 10.5 for Mac OS or 3.0 for iPhone SDK).  The choice of SDK versions
- * depends on what we find in the Dev Tools path.
+ * The user specifies how (and, if necessary, where) the Dev Tools are installed.
+ * The user then selects one of the SDK versions supported by that Dev Tools
+ * installation (e.g., 10.7 for Mac OS or 5.0 for iPhone SDK).
  *
- * This UI is used in two places: (1) the modal window that appears on
- * application launch if we can't find the docset specified by the user's prefs,
- * and (2) the Dev Tools tab of the preferences window.
- *
- * To use this class, make an instance in a nib file that also contains a text
- * field and a popup button, and connect the two outlets.
+ * This UI is used in two places: (1) the modal window that appears on application
+ * launch if we can't find the docset specified by the user's prefs (DevToolsPath.xib);
+ * and (2) the Dev Tools tab of the preferences window (Pref.xib). The design of this
+ * controller class is fragile in that if I add outlets I have to remember to add them
+ * in both nibs.
  */
 @interface AKDevToolsPathController : NSObject
 {
-    IBOutlet NSMatrix *_devToolsInstallationMatrix;  // tag=0 means /Applications/Xcode.app, tag=1 means old-style /Developer
+    IBOutlet NSMatrix *_devToolsInstallationTypeMatrix;  // tag=0 means /Applications/Xcode.app, tag=1 means old-style /Developer
     IBOutlet NSTextField *_devToolsPathField;
+    IBOutlet NSButton *_selectPathButton;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
     IBOutlet NSTextField *_explanationField;
 }
@@ -34,7 +34,7 @@
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)takeDevToolsInstallModeFrom:(id)sender;
+- (IBAction)takeDevToolsInstallationTypeFrom:(id)sender;
 
 /*!
  * Repeatedly displays an open panel sheet until the user either cancels or

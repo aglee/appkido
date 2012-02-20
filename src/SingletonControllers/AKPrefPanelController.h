@@ -17,7 +17,7 @@
  */
 @interface AKPrefPanelController : NSObject
 {
-    // IB outlets.
+    // Tab view for switching between groups of preference settings.
     IBOutlet NSTabView *_prefsTabView;
 
     // Controls in the Appearance tab.
