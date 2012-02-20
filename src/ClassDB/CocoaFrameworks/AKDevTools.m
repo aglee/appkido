@@ -3,7 +3,7 @@
 //  AppKiDo
 //
 //  Created by Andy Lee on 2/11/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Andy Lee. All rights reserved.
 //
 
 #import "AKDevTools.h"
@@ -105,6 +105,12 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 #pragma mark -
 #pragma mark Dev Tools paths
 
++ (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
+{
+    DIGSLogError_MissingOverride();
+    return nil;
+}
+
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath errorStrings:(NSMutableArray *)errorStrings
 {
     if (devToolsPath == nil)
@@ -119,15 +125,8 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
         return NO;
     }
     
-    NSEnumerator *expectedSubdirsEnum = [[NSArray arrayWithObjects:
-#if APPKIDO_FOR_IPHONE
-                                          @"Platforms/iPhoneOS.platform",
-                                          @"Platforms/iPhoneSimulator.platform",
-#endif
-                                          @"Applications/Xcode.app",
-                                          @"Documentation",
-                                          @"Examples",
-                                          nil] objectEnumerator];
+    NSArray *expectedSubdirs = [self expectedSubdirsForDevToolsPath:devToolsPath];
+    NSEnumerator *expectedSubdirsEnum = [expectedSubdirs objectEnumerator];
     NSString *subdir;
     BOOL seemsOkay = YES;
     

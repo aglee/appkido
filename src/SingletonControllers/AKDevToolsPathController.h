@@ -3,7 +3,7 @@
 //  AppKiDo
 //
 //  Created by Andy Lee on 6/17/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 Andy Lee. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -24,6 +24,7 @@
  */
 @interface AKDevToolsPathController : NSObject
 {
+    IBOutlet NSMatrix *_devToolsInstallationMatrix;  // tag=0 means /Applications/Xcode.app, tag=1 means old-style /Developer
     IBOutlet NSTextField *_devToolsPathField;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
     IBOutlet NSTextField *_explanationField;
@@ -32,6 +33,8 @@
 
 #pragma mark -
 #pragma mark Action methods
+
+- (IBAction)takeDevToolsInstallModeFrom:(id)sender;
 
 /*!
  * Repeatedly displays an open panel sheet until the user either cancels or

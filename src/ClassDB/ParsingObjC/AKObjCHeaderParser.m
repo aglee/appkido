@@ -153,6 +153,14 @@ static BOOL isPunctuation(char c)
         {
             break;
         }
+        else if (strcmp(token, "@property") == 0)
+        {
+            // Skip the rest of the line so that the opening paren in the property
+            // declaration doesn't fool us into thinking we're looking at a category.
+            // [agl] I'm assuming the whole property declaration is on one line so
+            // that I can use this quicker approach rather than scan to the semicolon.
+            [self _skipRemainderOfLine];
+        }
         else if (strcmp(token, ":") == 0)
         {
             // We now know we are parsing a class declaration, because

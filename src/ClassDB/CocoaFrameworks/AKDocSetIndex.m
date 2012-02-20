@@ -7,13 +7,14 @@
 
 #import "AKDocSetIndex.h"
 
-#import "DIGSLog.h"
-#import "FMDatabase.h"
-#import "AKFrameworkConstants.h"
-#import "AKTextUtils.h"
 #import "AKFileUtils.h"
-#import "AKMacDevTools.h"
+#import "AKFrameworkConstants.h"
 #import "AKIPhoneDevTools.h"
+#import "AKMacDevTools.h"
+#import "AKSQLTemplate.h"
+#import "AKTextUtils.h"
+
+#import "FMDatabase.h"
 
 
 @interface AKDocSetIndex ()
@@ -48,28 +49,6 @@
 @implementation AKDocSetIndex
 
 #pragma mark -
-#pragma mark SQL queries
-
-static NSString *s_allFrameworkNamesQuery =
-    @"select distinct header.ZFRAMEWORKNAME from ZHEADER header order by header.ZFRAMEWORKNAME";
-
-// Selects frameworks containing Objective-C tokens.
-static NSString *s_objectiveCFrameworkNamesQuery =
-    @"select distinct header.ZFRAMEWORKNAME from ZTOKEN token, ZTOKENTYPE tokenType, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header, ZAPILANGUAGE language where token.ZLANGUAGE = language.Z_PK and language.ZFULLNAME = 'Objective-C' and token.ZTOKENTYPE = tokenType.Z_PK and token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and tokenType.ZTYPENAME in ('cl', 'intf') order by header.ZFRAMEWORKNAME";
-
-
-/*!
- * Returns a single column containing distinct doc paths for up to three token
- * types within the specified framework.
- */
-static NSString *s_docPathsQueryTemplate =
-    @"select distinct filePath.ZPATH as docPath from ZTOKEN token, ZTOKENTYPE tokenType, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header, ZFILEPATH filePath where token.ZTOKENTYPE = tokenType.Z_PK and token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and tokenMeta.ZFILE = filePath.Z_PK and (tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ? or tokenType.ZTYPENAME = ?) and header.ZFRAMEWORKNAME = ?";
-
-static NSString *s_headerPathsQueryTemplate =
-    @"select distinct header.ZHEADERPATH as headerPath from ZTOKEN token, ZTOKENMETAINFORMATION tokenMeta, ZHEADER header where token.ZMETAINFORMATION = tokenMeta.Z_PK and tokenMeta.ZDECLAREDIN = header.Z_PK and header.ZFRAMEWORKNAME = ?";
-
-
-#pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders
@@ -81,6 +60,8 @@ static NSString *s_headerPathsQueryTemplate =
         _docSetPath = [docSetPath retain];
         _basePathForHeaders = [basePathForHeaders retain];
 
+        DIGSLogInfo(@"docset index -- [%@]", [self _pathToSqliteFile]);
+        
         BOOL isDir;
         if (![[NSFileManager defaultManager] fileExistsAtPath:[self _pathToSqliteFile] isDirectory:&isDir])
         {
@@ -169,7 +150,8 @@ static NSString *s_headerPathsQueryTemplate =
 
     // Do the query and process the results.
     NSMutableArray *headerFiles = [NSMutableArray array];
-    FMResultSet *rs = [sqliteDB executeQuery:s_headerPathsQueryTemplate, frameworkName];
+    NSString *sql = [AKSQLTemplate templateNamed:@"HeaderPaths"];
+    FMResultSet *rs = [sqliteDB executeQuery:sql, frameworkName];
 
     while ([rs next])
     {
@@ -194,7 +176,8 @@ static NSString *s_headerPathsQueryTemplate =
 
     // Do the query and process the results.
     NSMutableSet *headerDirs = [NSMutableSet set];
-    FMResultSet *rs = [sqliteDB executeQuery:s_headerPathsQueryTemplate, frameworkName];
+    NSString *sql = [AKSQLTemplate templateNamed:@"HeaderPaths"];
+    FMResultSet *rs = [sqliteDB executeQuery:sql, frameworkName];
 
     while ([rs next])
     {
@@ -282,12 +265,14 @@ static NSString *s_headerPathsQueryTemplate =
 
 - (NSMutableArray *)_allFrameworkNames
 {
-    return [self _stringArrayFromQuery:s_allFrameworkNamesQuery];
+    NSString *sql = [AKSQLTemplate templateNamed:@"AllFrameworkNames"];
+    return [self _stringArrayFromQuery:sql];
 }
 
 - (NSMutableArray *)_objectiveCFrameworkNames
 {
-    return [self _stringArrayFromQuery:s_objectiveCFrameworkNamesQuery];
+    NSString *sql = [AKSQLTemplate templateNamed:@"ObjCFrameworkNames"];
+    return [self _stringArrayFromQuery:sql];
 }
 
 - (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString
@@ -314,6 +299,42 @@ static NSString *s_headerPathsQueryTemplate =
     [sqliteDB close];
 
     return stringArray;
+}
+
+- (NSMutableSet *)_docPathsFromQuery:(NSString *)queryString
+                       withTokenType:(NSString *)tokenType1
+                              orType:(NSString *)tokenType2
+                              orType:(NSString *)tokenType3
+                              orType:(NSString *)tokenType4
+                        forFramework:(NSString *)frameworkName
+{
+    NSMutableSet *setOfStrings = [NSMutableSet set];
+    
+    // Open the database.
+    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    if (sqliteDB == nil)
+    {
+        return nil;
+    }
+    
+    // Query the database and process the results.
+    FMResultSet *rs = [sqliteDB executeQuery:queryString,
+                       frameworkName,
+                       tokenType1,
+                       tokenType2,
+                       tokenType3,
+                       tokenType4];
+    while ([rs next])
+    {
+        NSString *fwName = [rs stringForColumnIndex:0];
+        [setOfStrings addObject:fwName];
+    }
+    [rs close];
+    
+    // Close the database.
+    [sqliteDB close];
+    
+    return setOfStrings;
 }
 
 - (NSString *)_resourcesPath
@@ -347,6 +368,7 @@ static NSString *s_headerPathsQueryTemplate =
             _docPathsForTokensOfType:tokenType
             orType:nil
             orType:nil
+            orType:nil
             forFramework:frameworkName];
 }
 
@@ -359,6 +381,7 @@ static NSString *s_headerPathsQueryTemplate =
             _docPathsForTokensOfType:tokenType1
             orType:tokenType2
             orType:nil
+         orType:nil
             forFramework:frameworkName];
 }
 
@@ -382,14 +405,7 @@ static NSString *s_headerPathsQueryTemplate =
     orType:(NSString *)tokenType4
     forFramework:(NSString *)frameworkName
 {
-    // Open the database.
-    FMDatabase* sqliteDB = [self _openSQLiteDB];
-    if (sqliteDB == nil)
-    {
-        return nil;
-    }
-
-    // Do the query and process the results.
+    // Make sure we pass non-nil for all four tokenType arguments.
     if (tokenType2 == nil)
     {
         tokenType2 = tokenType1;
@@ -405,25 +421,25 @@ static NSString *s_headerPathsQueryTemplate =
         tokenType4 = tokenType1;
     }
 
-    NSMutableArray *docPaths = [NSMutableArray array];
-    FMResultSet *rs =
-        [sqliteDB executeQuery:s_docPathsQueryTemplate,
-            tokenType1,
-            tokenType2,
-            tokenType3,
-            tokenType4,
-            frameworkName];
+    // Query the database. See the comment for s_docPathsSecondQueryTemplate
+    // to see why we do two queries.
+    NSString *docPathsQueryTemplate = [AKSQLTemplate templateNamed:@"DocPaths"];
+    NSString *docPathsSecondQueryTemplate = [AKSQLTemplate templateNamed:@"DocPaths2"];
+    
+    NSMutableSet *docPaths = [self _docPathsFromQuery:docPathsQueryTemplate
+                                        withTokenType:tokenType1
+                                               orType:tokenType2
+                                               orType:tokenType3
+                                               orType:tokenType4
+                                         forFramework:frameworkName];
+    [docPaths unionSet:[self _docPathsFromQuery:docPathsSecondQueryTemplate
+                                  withTokenType:tokenType1
+                                         orType:tokenType2
+                                         orType:tokenType3
+                                         orType:tokenType4
+                                   forFramework:frameworkName]];
 
-    while ([rs next])
-    {
-        [docPaths addObject:[rs stringForColumnIndex:0]];
-    }
-    [rs close];  
-
-    // Close the database.
-    [sqliteDB close];
-
-    return docPaths;
+    return [docPaths allObjects];
 }
 
 - (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames

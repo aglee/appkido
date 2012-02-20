@@ -146,6 +146,51 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return [_topicBrowser window];
 }
 
+- (AKDocLocator *)currentHistoryItem
+{
+    return (_windowHistoryIndex < 0) ? nil : [_windowHistory objectAtIndex:_windowHistoryIndex];
+}
+
+- (AKDoc *)currentDoc
+{
+    AKDocLocator *docLocator = [self currentHistoryItem];
+    AKDoc *currentDoc = [docLocator docToDisplay];
+    
+    if (currentDoc == nil)    //  try General/Overview instead
+    {
+        docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay] subtopicName:@"General" docName: @"Overview"];
+        currentDoc = [docLocator docToDisplay];
+    };
+    
+    return currentDoc;
+}
+
+- (NSString *)currentDocPath
+{
+    AKDocLocator *docLocator = [self currentHistoryItem];
+    AKDoc *currentDoc = [docLocator docToDisplay];
+    
+    if (currentDoc == nil)
+    {
+        docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay] subtopicName:@"General" docName: @"Overview"];
+        currentDoc = [docLocator docToDisplay];
+    };
+    
+    return [[[self currentDoc] fileSection] filePath];
+}
+
+- (NSURL *)currentDocURL
+{
+    NSString *docPath = [self currentDocPath];
+    
+    if (docPath == nil)
+    {
+        return nil;
+    }
+    
+    return [[[NSURL fileURLWithPath:docPath] absoluteURL] standardizedURL];
+}
+
 
 #pragma mark -
 #pragma mark User preferences
@@ -159,11 +204,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 #pragma mark -
 #pragma mark Navigation
-
-- (AKDocLocator *)currentHistoryItem
-{
-    return (_windowHistoryIndex < 0) ? nil : [_windowHistory objectAtIndex:_windowHistoryIndex];
-}
 
 - (void)openWindowWithQuicklistDrawer:(BOOL)drawerIsOpen
 {
@@ -395,9 +435,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     SEL itemAction = [anItem action];
 
-    if (itemAction == @selector(revealDocFileInFinder:))
+    if ((itemAction == @selector(copyDocTextURL:))
+        || (itemAction == @selector(openDocURLInBrowser:))
+        || (itemAction == @selector(revealDocFileInFinder:)))
     {
-        return ([[self currentHistoryItem] docName] != nil);
+        return ([self currentDoc] != nil);
     }
     else if (itemAction == @selector(navigateBack:))
     {
@@ -426,8 +468,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         || (itemAction == @selector(jumpToFrameworkFunctions:))
         || (itemAction == @selector(jumpToFrameworkGlobals:))
         || (itemAction == @selector(jumpToDocLocatorRepresentedBy:))
-        || (itemAction == @selector(copyDocTextURL:))
-        || (itemAction == @selector(openDocURLInBrowser:))
         || (itemAction == @selector(rememberWindowLayout:)))
     {
         return YES;
@@ -754,20 +794,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)revealDocFileInFinder:(id)sender
 {
     // Figure out what file is being displayed in the doc view.
-    AKDoc *doc = [_docListController currentDoc];
-
-    if (doc == nil)
+    NSString *docPath = [self currentDocPath];
+    
+    if (docPath == nil)
     {
         return;
     }
-
-    AKFileSection *fileSection = [doc fileSection];
-
-    if (fileSection == nil)
-    {
-        return;
-    }
-
+    
     // Construct and execute an AppleScript command that asks the Finder
     // to reveal the file.
     NSString *appleScriptCommand =
@@ -777,7 +810,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                 @"    reveal posix file \"%@\"\n"
                 @"    activate\n"
                 @"end tell",
-                [fileSection filePath]];
+                docPath];
     NSAppleScript *appleScript = [[[NSAppleScript alloc] initWithSource:appleScriptCommand] autorelease];
     NSDictionary *errorInfo = nil;
     NSAppleEventDescriptor *appleEventDescriptor = [appleScript executeAndReturnError:&errorInfo];
@@ -790,26 +823,16 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)copyDocTextURL:(id)sender
 {
-    NSString *filePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
-    NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
-    NSURL *fileURL = [[docFileURL absoluteURL] standardizedURL];
-
-    NSString *urlString = [fileURL absoluteString];
-
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     NSArray *pasteboardTypes = [NSArray arrayWithObject:NSStringPboardType];
 
     [pasteboard declareTypes:pasteboardTypes owner:nil];
-    [pasteboard setString:urlString forType:NSStringPboardType];
+    [pasteboard setString:[[self currentDocURL] absoluteString] forType:NSStringPboardType];
 }
 
 - (IBAction)openDocURLInBrowser:(id)sender
 {
-    NSString *filePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
-    NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
-    NSURL *fileURL = [[docFileURL absoluteURL] standardizedURL];
-
-    [[NSWorkspace sharedWorkspace] openURL:fileURL];
+    [[NSWorkspace sharedWorkspace] openURL:[self currentDocURL]];
 }
 
 
@@ -1044,7 +1067,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Update our marker index into the history array.
     _windowHistoryIndex = historyIndex;
-    DIGSLogDebug(@"jumped to history index %d, history count=%d", _windowHistoryIndex, [_windowHistory count]);
+    DIGSLogDebug(@"jumped to history index %ld, history count=%ld", (long)_windowHistoryIndex, (long)[_windowHistory count]);
 
     // Update miscellaneous parts of the UI that reflect our current
     // position in history.
@@ -1086,11 +1109,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_windowHistory addObject:newHistoryItem];
     _windowHistoryIndex = [_windowHistory count] - 1;
     DIGSLogDebug(
-        @"added history item [%@][%@][%@] at index %d",
+        @"added history item [%@][%@][%@] at index %ld",
         [[newHistoryItem topicToDisplay] pathInTopicBrowser],
         [newHistoryItem subtopicName],
         [newHistoryItem docName],
-        _windowHistoryIndex);
+        (long)_windowHistoryIndex);
 
     // Any time the history changes, we want to do the following UI updates.
     [self _refreshNavigationButtons];

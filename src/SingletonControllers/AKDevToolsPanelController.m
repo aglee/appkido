@@ -3,7 +3,7 @@
 //  AppKiDo
 //
 //  Created by Andy Lee on 8/10/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 Andy Lee. All rights reserved.
 //
 
 #import "AKDevToolsPanelController.h"
@@ -62,7 +62,7 @@
 
     NSInteger result = [[NSApplication sharedApplication] runModalForWindow:_window];
 
-    DIGSLogDebug(@"result of Dev Tools path panel: %d", result);
+    DIGSLogDebug(@"result of Dev Tools path panel: %ld", (long)result);
     [_window orderOut:self];
 
 	return (result == NSRunStoppedResponse);

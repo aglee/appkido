@@ -6,8 +6,8 @@
 <body bgcolor="#FFFFFF">
 <h1>AppKiDo version history</h1>
 [ <a href="appkido.html">home</a> ]
-<li><a href="AppKiDo-0.986sp4.zip">download <b>AppKiDo</b> 0.986sp4</a>
-<li><a href="AppKiDo-for-iPhone-0.986sp4.zip">download <b>AppKiDo-for-iPhone</b> 0.986sp4</a>
+<li><a href="AppKiDo-0.988.tgz">download <b>AppKiDo</b> 0.988</a>
+<li><a href="AppKiDo-for-iPhone-0.988.tgz">download <b>AppKiDo-for-iPhone</b> 0.988</a>
 <li>The source is now on <a href="http://github.com/aglee/appkido">GitHub</a>
 <br/>
 [ <a href="release-notes.html">release notes</a> ]
@@ -20,6 +20,36 @@
 
 
 <table><tr><td>
+
+
+<h2>Version 0.988 (Feb 7, 2012)</h2>
+<ul>
+<li>Fixed corrupted nib files and converted them to xibs.</li>
+</ul>
+
+
+<h2>Version 0.987 (Feb 6, 2012)</h2>
+<ul>
+<li>Fixed (at least for me) the bug where NSFileVersion wasn't appearing.</li>
+<li>Fixed bug where docs for NSFetchedResultsControllerDelegate weren't appearing.</li>
+<li>Made version number selectable in the About window.</li>
+</ul>
+
+
+<h2>Version 0.986 (Feb 2, 2012)</h2>
+<ul>
+<li>This is a bug fix release.</li>
+<li>Fixed an exception that occurs when you use the contextual menu in the doc view and there is no doc (e.g., when you select NSFileWrapper &gt; Class Methods -- NSFileWrapper doesn't have class methods).</li>
+<li>Includes changes from 0.986 sneakypeeks:
+	<ul>
+		<li>Now works with Xcode 4.</li>
+		<li>Fixed a problem with 10.4.</li>
+		<li>Fixed a rarely occurring crash on quit. (Could reproduce by selecting CGEventTapIsEnabled before quitting.)</li>
+		<li>Now displaying more info about Dev Tools directories and why they are or aren't recognized as such.</li>
+		<li>Fixes for 64-bit (NSInteger instead of int).</li>
+	</ul>
+</li>
+</ul>
 
 
 <h2>Version 0.985 (September 25, 2010)</h2>

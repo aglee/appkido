@@ -1,6 +1,10 @@
 .DS_Store
 src/build
+src/DerivedData
 src/*.xcodeproj/alee.*
 *.xcuserdatad
 xcuserdata
 *.xcworkspace
+src/*.xcodeproj/**/*xcuserdata*
+src/English.lproj/**/designable.nib
+src/English.lproj/**/designable.nib

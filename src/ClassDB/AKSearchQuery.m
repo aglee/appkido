@@ -252,7 +252,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         [_searchResults count],
         [NSDate timeIntervalSinceReferenceDate] - g_startTime);
 }
-#endif MEASURE_SEARCH_SPEED
+#endif //MEASURE_SEARCH_SPEED
 
 
 - (NSArray *)queryResults
@@ -263,7 +263,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // [agl] working on performance
 #if MEASURE_SEARCH_SPEED
 [self _timeSearchStart];
-#endif MEASURE_SEARCH_SPEED
+#endif //MEASURE_SEARCH_SPEED
 
         _searchResults = [[NSMutableArray alloc] init];
 
@@ -286,7 +286,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // [agl] working on performance
 #if MEASURE_SEARCH_SPEED
 [self _timeSearchCheckpoint:@"about to sort..."];
-#endif MEASURE_SEARCH_SPEED
+#endif //MEASURE_SEARCH_SPEED
 
         // Sort the results.
         [AKDocLocator sortArrayOfDocLocators:_searchResults];
@@ -294,7 +294,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // [agl] working on performance
 #if MEASURE_SEARCH_SPEED
 [self _timeSearchEnd];
-#endif MEASURE_SEARCH_SPEED
+#endif //MEASURE_SEARCH_SPEED
     }
 
     return _searchResults;
@@ -320,7 +320,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // [agl] working on performance
 #if MEASURE_SEARCH_SPEED
 g_NSStringComparisons++;
-#endif MEASURE_SEARCH_SPEED
+#endif //MEASURE_SEARCH_SPEED
 
 //DIGSLogDebug(@"[%@] (%@)", _searchString, s);  // [agl] REMOVE
 

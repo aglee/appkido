@@ -159,7 +159,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     NSLog(@"...DONE: took %.3f seconds total", [NSDate timeIntervalSinceReferenceDate] - g_startTime);
 }
-#endif MEASURE_PARSE_SPEED
+#endif //MEASURE_PARSE_SPEED
 
 - (id)init
 {
@@ -239,7 +239,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
 [self _timeParseStart];
-#endif MEASURE_PARSE_SPEED
+#endif //MEASURE_PARSE_SPEED
 
     [_appDatabase setDelegate:self];  // So we can update the splash screen.
     {
@@ -260,7 +260,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
 [self _timeParseEnd];
-#endif MEASURE_PARSE_SPEED
+#endif //MEASURE_PARSE_SPEED
 
     [_splashMessage2Field setStringValue:@""];
     [_splashMessage2Field display];
@@ -581,7 +581,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
     else
     {
-        NSLog(@"key window's first responder is %@ at 0x%x", [firstResponder className], firstResponder);
+        NSLog(@"key window's first responder is %@ at %p", [firstResponder className], firstResponder);
 
         if ([firstResponder isKindOfClass:[NSView class]])
         {
