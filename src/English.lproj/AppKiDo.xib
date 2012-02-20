@@ -1002,7 +1002,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<object class="NSWindowTemplate" id="516961095">
 				<int key="NSWindowStyleMask">4111</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{60, 211}, {548, 603}}</string>
+				<string key="NSWindowRect">{{240, 245}, {548, 603}}</string>
 				<int key="NSWTFlags">813170688</int>
 				<string key="NSWindowTitle">AppKiDo</string>
 				<string key="NSWindowClass">DIGSWindow</string>
@@ -3035,9 +3035,9 @@ dC1jbGljayBmb3IgbWVudSk</string>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{316, 219}, {548, 603}}</string>
+					<string>{{404, 248}, {548, 603}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{316, 219}, {548, 603}}</string>
+					<string>{{404, 248}, {548, 603}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{350, 350}</string>
