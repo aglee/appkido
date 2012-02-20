@@ -19,5 +19,5 @@ if [ ! "${1}" ]; then
     exit
 fi
 
-SNEAKYPEEK=1 `dirname ${0}`/akdrelease $@
+SNEAKYPEEK=1 `dirname ${0}`/akdbuild $@
 
