@@ -9,6 +9,13 @@
 
 @implementation DIGSWindow
 
+// For debugging leaking and over-releasing of NSWindows.
+- (void)dealloc
+{
+    DIGSLogDebug(@"DIGSWindow dealloc [%@]", [self title]);
+    [super dealloc];
+}
+
 // As suggested by Gerriet Denkmann.  Protects against nil being passed.
 - (void)setTitle:(NSString *)aString
 {
