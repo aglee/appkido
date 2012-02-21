@@ -188,7 +188,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 	while (_appDatabase == nil)
 	{
 		// If necessary, prompt the user for a valid Dev Tools path and SDK version.
-        [errorStrings removeAllObjects];
 		while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]
                                           errorStrings:errorStrings])
 		{
@@ -203,6 +202,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
                                                    otherButton:nil
                                      informativeTextWithFormat:@""];
                 [alert runModal];
+                [errorStrings removeAllObjects];
             }
             
 			if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
