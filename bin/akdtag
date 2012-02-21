@@ -12,6 +12,12 @@ if [ ! "${1}" ]; then
     echo "  This script doesn't check for whitespace or any other characters"
     echo "  that are special to the shell."
     echo
+    echo "  For your convenience, here are the git commands to remove a"
+    echo "  tag, in case you make one by mistake or need to change it:"
+    echo
+    echo "    git tag -d release-XXX"
+    echo "    git push origin :refs/tags/release-XXX"
+    echo
     echo
     echo "EXAMPLE:"
     echo "  `basename ${0}` 0.95"
