@@ -54,16 +54,6 @@
     [self _populateSDKPopUpButton];
 }
 
-- (void)dealloc
-{
-    DIGSLogDebug_EnteringMethod();
-
-    [_devToolsPathField release];
-    [_sdkVersionsPopUpButton release];
-
-    [super dealloc];
-}
-
 
 #pragma mark -
 #pragma mark Action methods

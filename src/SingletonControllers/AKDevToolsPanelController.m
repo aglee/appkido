@@ -45,8 +45,12 @@
 - (void)dealloc
 {
     DIGSLogDebug_EnteringMethod();
+    
+    if ([_window delegate] == self)
+    {
+        [_window setDelegate:nil];
+    }
 
-    [_window release];
     [_devToolsPathController release];
 
     [super dealloc];
@@ -76,6 +80,7 @@
 {
     DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] stopModal];
+    [_window close];
 }
 
 - (IBAction)cancel:(id)sender
