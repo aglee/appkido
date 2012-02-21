@@ -80,7 +80,7 @@
 {
     DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] stopModal];
-    [_window close];
+//    [_window close];
 }
 
 - (IBAction)cancel:(id)sender
