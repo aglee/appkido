@@ -28,6 +28,7 @@
     IBOutlet NSButton *_selectPathButton;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
     IBOutlet NSTextField *_explanationField;
+    IBOutlet NSButton *_okButton;  // Present only in the Locate Dev Tools window.
 }
 
 

@@ -158,6 +158,7 @@
         }
     }
     
+    // Update the explanation string that tells where we looked for docsets and SDKs.
     NSMutableString *explanationString = [NSMutableString string];
     
     if ([sdkVersionsWithoutHeaders count] > 0)
@@ -170,6 +171,7 @@
     [explanationString appendFormat:@"Search path for SDKs: %@.\n\n", [devTools sdkSearchPath]];
     [_explanationField setStringValue:explanationString];
     
+    // Take the "selected SDK version" pref setting from the selected item in the SDK popup.
     NSString *selectedSDKVersion = [AKPrefUtils sdkVersionPref];
     if (selectedSDKVersion == nil
         || ![[devTools sdkVersionsThatHaveDocSets] containsObject:selectedSDKVersion])
@@ -178,6 +180,9 @@
         [AKPrefUtils setSDKVersionPref:selectedSDKVersion];
     }
     [_sdkVersionsPopUpButton selectItemWithTitle:selectedSDKVersion];
+    
+    // Update the enabledness of the OK button.
+    [_okButton setEnabled:(selectedSDKVersion != nil)];
 }
 
 // Called when the open panel sheet opened by -runOpenPanel is dismissed.
