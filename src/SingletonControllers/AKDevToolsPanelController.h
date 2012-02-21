@@ -13,6 +13,12 @@
 /*!
  * Controller for the panel that comes up during launch if the user's
  * prefs don't contain a valid Dev Tools path.
+ *
+ * [agl] FIXME It would be better to use this same class both as needed
+ * during launch and as a sheet in the prefs window (which is currently
+ * modeless, which means it allows saving an invalid directory). Can
+ * redesign if and when all this gets converted to NSWindowControllers
+ * and NSViewControllers etc.
  */
 @interface AKDevToolsPanelController : NSObject
 {
