@@ -8,11 +8,14 @@
 
 #import "AKDevTools.h"
 
-#import "DIGSLog.h"
-#import "AKFileUtils.h"
-#import "AKTextUtils.h"
 #import "AKDocSetIndex.h"
+#import "AKFileUtils.h"
+#import "AKIPhoneDevTools.h"
+#import "AKMacDevTools.h"
 #import "AKSDKVersion.h"
+#import "AKTextUtils.h"
+
+#import "DIGSLog.h"
 
 
 #pragma mark -
@@ -107,8 +110,11 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {
-    DIGSLogError_MissingOverride();
-    return nil;
+#if APPKIDO_FOR_IPHONE
+    return [AKIPhoneDevTools expectedSubdirsForDevToolsPath:devToolsPath];
+#else
+    return [AKMacDevTools expectedSubdirsForDevToolsPath:devToolsPath];
+#endif
 }
 
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath errorStrings:(NSMutableArray *)errorStrings
