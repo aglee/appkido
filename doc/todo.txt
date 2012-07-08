@@ -262,6 +262,7 @@
 [ ] put overrides in .h and give them headerdoc comments
 
 [ ] instead of kludging around css stuff, use the Apple stylesheet
+[ ] provide a feature allowing custom stylesheet
 
 [ ] consider giving AKGlobalsNode an ivar indication the behavior it's associated with (if any) instead of shoving the behavior name into the AKGlobalsNode name
 
