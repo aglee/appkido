@@ -27,6 +27,13 @@ extern NSString *AKHomePageURL;
  *  12.345sp3
  */
 @interface AKAppVersion : NSObject
+{
+@private
+    NSString *_major;
+    NSString *_minor;
+    NSString *_patch;
+    NSString *_sneakypeek;
+}
 
 @property (strong) NSString *major;
 @property (strong) NSString *minor;
