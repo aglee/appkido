@@ -13,11 +13,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleGetInfoString</key>
-	<string>0.989sp1</string>
+	<string>0.99sp1</string>
 	<key>CFBundleVersion</key>
-	<string>0.989sp1</string>
+	<string>0.99sp1</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.989sp1</string>
+	<string>0.99sp1</string>
 	<key>CFBundleName</key>
 	<string>AppKiDo</string>
 	<key>CFBundlePackageType</key>
