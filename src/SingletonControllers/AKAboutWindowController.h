@@ -12,7 +12,6 @@
 
 @interface AKAboutWindowController : NSWindowController
 {
-    IBOutlet NSTextField *_versionField;
     IBOutlet WebView *_creditsView;
 }
 

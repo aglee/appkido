@@ -10,11 +10,9 @@
 #import <WebKit/WebKit.h>
 #import "AKAppVersion.h"
 
-@interface AKAboutWindowController ()
-
-@end
-
 @implementation AKAboutWindowController
+
+#pragma mark - NSWindowController methods
 
 - (void)windowDidLoad
 {
@@ -22,20 +20,21 @@
 
     [[self window] center];
 
-    // Load the version string.
-    [_versionField setStringValue:[[AKAppVersion appVersion] displayString]];
-
-    // Load the credits file.
+    // Load the credits file into the web view.
     NSString *creditsPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"html"];
     NSError *err = nil;
     NSString *creditsString = [NSString stringWithContentsOfFile:creditsPath encoding:NSUTF8StringEncoding error:&err];
-
+    
     if (creditsString == nil)
     {
         NSLog(@"Error loading credits file from [%@] - [%@]", creditsPath, err);
     }
     else
     {
+        NSString *versionString = [[AKAppVersion appVersion] displayString];
+        
+        creditsString = [creditsString stringByReplacingOccurrencesOfString:@"$APPVERSION"
+                                                                 withString:versionString];
         [[_creditsView mainFrame] loadHTMLString:creditsString baseURL:nil];
     }
 }
