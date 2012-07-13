@@ -8,9 +8,12 @@
 #import "AKAppController.h"
 
 #import <CoreFoundation/CoreFoundation.h>
+
 #import "DIGSLog.h"
 #import "DIGSFindBuffer.h"
 
+#import "AKAboutWindowController.h"
+#import "AKAppVersion.h"
 #import "AKDocSetIndex.h"
 #import "AKIPhoneDevTools.h"
 #import "AKFrameworkConstants.h"
@@ -65,20 +68,8 @@
 @interface AKAppController (Private)
 
 // Private methods -- steps during launch
-- (void)_initAboutPanel;
 - (void)_initGoMenu;
 - (void)_maybeAddDebugMenu;  // [agl] uses AKDebugUtils
-
-// Private methods -- version management
-- (NSString *)_appVersion;
-- (NSDictionary *)_latestAppVersion;
-- (BOOL)_version:(NSDictionary *)lhs isNewerThan:(NSDictionary *)rhs;
-- (NSComparisonResult)_compareValuesForKey:(NSString *)key
-    forLHS:(NSDictionary *)lhs
-    andRHS:(NSDictionary *)rhs
-    nilIsGreatest:(BOOL)nilIsGreatest;
-- (NSDictionary *)_versionDictionaryFromString:(NSString *)versionString;
-- (NSString *)_displayStringForVersion:(NSDictionary *)versionDictionary;
 
 // Private methods -- window management
 - (NSWindow *)_frontmostBrowserWindow;
@@ -86,6 +77,9 @@
 - (void)_handleWindowWillCloseNotification:(NSNotification *)notification;
 - (void)_openInitialWindows;
 - (NSArray *)_allWindowsAsPrefArray;
+
+// Private methods -- version management
+- (AKAppVersion *)_latestAppVersion;
 
 // Private methods -- Favorites
 - (void)_getFavoritesFromPrefs;
@@ -98,27 +92,6 @@
 #pragma mark -
 
 @implementation AKAppController
-
-#pragma mark -
-#pragma mark Private constants
-
-// [agl] handle the possibility of hosting elsewhere; make a pref?
-// URL of the downloads page for AppKiDo.
-static NSString *_AKHomePageURL = @"http://homepage.mac.com/aglee/downloads";
-
-// URL of the file from which to get the latest version number.
-#if APPKIDO_FOR_IPHONE
-static NSString *_AKVersionURL = @"http://homepage.mac.com/aglee/downloads/AppKiDo-for-iPhone.version";
-#else
-static NSString *_AKVersionURL = @"http://homepage.mac.com/aglee/downloads/AppKiDo.version";
-#endif
-
-// Dictionary keys.
-static NSString *_AKMajorNumberKey      = @"major";
-static NSString *_AKMinorNumberKey      = @"minor";
-static NSString *_AKPatchNumberKey      = @"patch";
-static NSString *_AKSneakyPeekNumberKey = @"sneakypeek";
-
 
 #pragma mark -
 #pragma mark Factory methods
@@ -180,9 +153,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     DIGSLogDebug_EnteringMethod();
 
-    // Initialize the About panel.
-    [self _initAboutPanel];
-
 	// Create an AKDatabase instance, or give the user the option to quit.
     NSMutableArray *errorStrings = [NSMutableArray array];
 	while (_appDatabase == nil)
@@ -227,7 +197,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 	}
 
     // Put up the splash window.
-    [_splashVersionField setStringValue:[self _appVersion]];
+    [_splashVersionField setStringValue:[[AKAppVersion appVersion] displayString]];
     [_splashWindow setReleasedWhenClosed:YES];
     [_splashWindow center];
     [_splashWindow makeKeyAndOrderFront:nil];
@@ -298,6 +268,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     [_appDatabase release];
 
+    [_aboutWindowController release];
     [_windowControllers release];
     [_prefPanelController release];
     [_favoritesList release];
@@ -448,13 +419,19 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (IBAction)openAboutPanel:(id)sender
 {
-    [_aboutPanel makeKeyAndOrderFront:nil];
+    if (_aboutWindowController == nil)
+    {
+        _aboutWindowController = [[AKAboutWindowController alloc] initWithWindowNibName:@"AboutWindow"];
+    }
+    
+    [_aboutWindowController showWindow:nil];
+    [[_aboutWindowController window] makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)checkForNewerVersion:(id)sender
 {
     // Phone home for the latest version number.
-    NSDictionary *latestVersion = [self _latestAppVersion];
+    AKAppVersion *latestVersion = [self _latestAppVersion];
 
     if (latestVersion == nil)
     {
@@ -462,9 +439,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     // See if the latest version is newer than what the user is running.
-    NSDictionary *thisVersion = [self _versionDictionaryFromString:[self _appVersion]];
+    AKAppVersion *thisVersion = [AKAppVersion appVersion];
 
-    if (![self _version:latestVersion isNewerThan:thisVersion])
+    if (![latestVersion isNewerThanVersion:thisVersion])
     {
         NSRunAlertPanel(
             @"Up to date",  // title
@@ -483,8 +460,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
                 @"Version %@ of AppKiDo is available for download."
                 @"  You are currently running version %@."
                 @"\n\nWould you like to go to the AppKiDo web page?",
-            [self _displayStringForVersion:latestVersion],
-            [self _displayStringForVersion:thisVersion]];
+            [latestVersion displayString],
+            [thisVersion displayString]];
 
     NSInteger whichButton =
         NSRunAlertPanel(
@@ -496,7 +473,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if (whichButton == NSAlertDefaultReturn)
     {
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_AKHomePageURL]];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:AKHomePageURL]];
     }
 }
 
@@ -542,7 +519,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (IBAction)exportDatabase:(id)sender
 {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
-    NSString *defaultFilename = [NSString stringWithFormat:@"AppKiDo-DB-%@.xml", [self _appVersion]];
+    NSString *defaultFilename = [NSString stringWithFormat:@"AppKiDo-DB-%@.xml", [AKAppVersion appVersion]];
 
     NSInteger modalResult = [savePanel runModalForDirectory:NSHomeDirectory() file:defaultFilename];
 
@@ -708,21 +685,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 #pragma mark -
 #pragma mark Private methods -- steps during launch
-
-- (void)_initAboutPanel
-{
-    [_aboutPanel center];
-
-    // Load the version string text field.
-    [_aboutVersionField setStringValue:[self _appVersion]];
-
-    // Load the credits text field.
-    NSString *creditsPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"html"];
-    NSAttributedString *creditsString =
-        [[[NSAttributedString alloc] initWithPath:creditsPath documentAttributes:NULL] autorelease];
-
-    [[_aboutCreditsView textStorage] setAttributedString:creditsString];
-}
 
 - (void)_initGoMenu
 {
@@ -950,248 +912,45 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #pragma mark -
 #pragma mark Private methods -- version management
 
-- (NSString *)_appVersion
-{
-    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-}
+// URL of the file from which to get the latest version number.
+#if APPKIDO_FOR_IPHONE
+static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo-for-iPhone.version";
+#else
+static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
+#endif
 
-// AppKiDoVersion##X.YY or X.YYZ or X.YYZspWW
-//  X  is major (1 or more digits)
-//  YY is minor version number (exactly 2 digits)
-//  Z  is patch number, if present (exactly 1 digit)
-//  WW is sneakypeek number, if present (unpadded integer)
-- (NSDictionary *)_latestAppVersion
+- (AKAppVersion *)_latestAppVersion
 {
     NSURL *latestAppVersionURL = [NSURL URLWithString:_AKVersionURL];
     NSString *latestAppVersionString = [[NSString stringWithContentsOfURL:latestAppVersionURL
                                                                  encoding:NSUTF8StringEncoding
                                                                     error:NULL] ak_trimWhitespace];
-
+    
     if (latestAppVersionString == nil)
     {
-        NSRunAlertPanel(
-            @"Problem phoning home",  // title
-            @"Couldn't access the version number from the"
-            @" AppKiDo web site.",  // msg
-            @"OK",  // defaultButton
-            nil,  // alternateButton
-            nil);  // otherButton
-
-
+        NSRunAlertPanel(@"Problem phoning home",  // title
+                        @"Couldn't access the version number from the"
+                        @" AppKiDo web site.",  // msg
+                        @"OK",  // defaultButton
+                        nil,  // alternateButton
+                        nil);  // otherButton
+        
         return nil;
     }
-
+    
     NSString *expectedPrefix = @"AppKiDoVersion";
-
+    
     if ((![latestAppVersionString hasPrefix:expectedPrefix])
         || ([latestAppVersionString length] > 30))
     {
-        DIGSLogWarning(
-            @"the received contents of the version-number URL don't"
-            @" look like a valid version string");
+        DIGSLogWarning(@"the received contents of the version-number URL don't"
+                       @" look like a valid version string");
         return nil;
     }
-
+    
     latestAppVersionString = [latestAppVersionString substringFromIndex:[expectedPrefix length]];
-
-    return [self _versionDictionaryFromString:latestAppVersionString];
-}
-
-- (BOOL)_version:(NSDictionary *)lhs isNewerThan:(NSDictionary *)rhs
-{
-    NSComparisonResult comparison;
-
-    // Compare the major version numbers.
-    comparison = [self _compareValuesForKey:_AKMajorNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:NO];
-
-    if (comparison == NSOrderedDescending)
-    {
-        return YES;
-    }
-    else if (comparison == NSOrderedAscending)
-    {
-        return NO;
-    }
-
-    // Compare the minor version numbers.
-    comparison = [self _compareValuesForKey:_AKMinorNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:NO];
-
-    if (comparison == NSOrderedDescending)
-    {
-        return YES;
-    }
-    else if (comparison == NSOrderedAscending)
-    {
-        return NO;
-    }
-
-    // Compare the patch version numbers, if they are present.
-    comparison = [self _compareValuesForKey:_AKPatchNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:NO];
-
-    if (comparison == NSOrderedDescending)
-    {
-        return YES;
-    }
-    else if (comparison == NSOrderedAscending)
-    {
-        return NO;
-    }
-
-    // Compare the sneakypeek version numbers, if they are present.
-    comparison = [self _compareValuesForKey:_AKSneakyPeekNumberKey forLHS:lhs andRHS:rhs nilIsGreatest:YES];
-
-    if (comparison == NSOrderedDescending)
-    {
-        return YES;
-    }
-    else if (comparison == NSOrderedAscending)
-    {
-        return NO;
-    }
-
-    // If we got this far, all components matched.
-    return NO;
-}
-
-// If nilIsGreatest, then nil is "greater than" anything except itself.
-// Otherwise, nil is "less than" anything except itself.
-- (NSComparisonResult)_compareValuesForKey:(NSString *)key
-    forLHS:(NSDictionary *)lhs
-    andRHS:(NSDictionary *)rhs
-    nilIsGreatest:(BOOL)nilIsGreatest
-{
-    NSString *lhsValue = [lhs objectForKey:key];
-    NSString *rhsValue = [rhs objectForKey:key];
-
-    if ([@"" isEqualToString:lhsValue])
-    {
-        lhsValue = nil;
-    }
-
-    if ([@"" isEqualToString:rhsValue])
-    {
-        rhsValue = nil;
-    }
-
-    // Handle cases where values are identical, possibly by being nil.
-    if (lhsValue == rhsValue)
-    {
-        return NSOrderedSame;
-    }
-
-    // If we got this far, we have at least one non-nil value.
-    // Rule out the remaining nil cases.
-    if (lhsValue == nil)
-    {
-        return nilIsGreatest ? NSOrderedDescending : NSOrderedAscending;
-    }
-
-    if (rhsValue == nil)
-    {
-        return nilIsGreatest ? NSOrderedAscending : NSOrderedDescending;
-    }
-
-    // If we got this far, we have two different non-nil values.
-    return [lhsValue compare:rhsValue];
-}
-
-// The required format of a version string is X.YY{P}{spZ} where:
-//  X  (possibly multidigit)            is the "major version number"
-//  YY (exactly two digits)             is the "minor version number"
-//  P  (exactly one digit if present)   is the "patch number"
-//  Z  (possibly multidigit if present) is the "sneakypeak number"
-//
-// Examples:
-//  0.98
-//  0.981
-//  12.34sp3
-//  12.345sp3
-- (NSDictionary *)_versionDictionaryFromString:(NSString *)versionString
-{
-    NSArray *versionParts = nil;
-
-    // Parse out the major version number.
-    versionParts = [versionString componentsSeparatedByString:@"."];
-
-    if ([versionParts count] != 2)
-    {
-        DIGSLogWarning(@"error parsing major/minor version numbers");
-        return nil;
-    }
-
-    NSString *majorNumber = [versionParts objectAtIndex:0];
-    NSString *minorNumber = [versionParts objectAtIndex:1];
-
-    // Parse out the sneakypeek number if it's there.
-    versionParts = [minorNumber componentsSeparatedByString:@"sp"];
-
-    if ([versionParts count] > 2)
-    {
-        DIGSLogWarning(@"error parsing sneakypeek version number");
-        return nil;
-    }
-
-    NSString *sneakypeekNumber = @"";
-
-    if ([versionParts count] == 2)
-    {
-        minorNumber = [versionParts objectAtIndex:0];
-        sneakypeekNumber = [versionParts objectAtIndex:1];
-    }
-
-    // Parse out the patch number if it's there.
-    if (([minorNumber length] < 2) || ([minorNumber length] > 3))
-    {
-        DIGSLogWarning(@"error parsing minor/patch version numbers");
-        return nil;
-    }
-
-    NSString *patchNumber = @"";
-
-    if ([minorNumber length] == 3)
-    {
-        patchNumber = [minorNumber substringFromIndex:2];
-        minorNumber = [minorNumber substringToIndex:2];
-    }    
-
-    // Stuff the parts of the version string into a dictionary.
-    NSMutableDictionary *versionDictionary = [NSMutableDictionary dictionary];
-
-    [versionDictionary setObject:majorNumber forKey:_AKMajorNumberKey];
-    [versionDictionary setObject:minorNumber forKey:_AKMinorNumberKey];
-    [versionDictionary setObject:patchNumber forKey:_AKPatchNumberKey];
-    [versionDictionary setObject:sneakypeekNumber forKey:_AKSneakyPeekNumberKey];
-
-    return versionDictionary;
-}
-
-- (NSString *)_displayStringForVersion:(NSDictionary *)versionDictionary
-{
-    // Concatenate the major and minor version numbers.
-    NSString *versionString =
-        [NSString
-            stringWithFormat:@"%@.%@",
-            [versionDictionary objectForKey:_AKMajorNumberKey],
-            [versionDictionary objectForKey:_AKMinorNumberKey]];
-
-    // See if there is a patch number.
-    NSString *patchNumber = [versionDictionary objectForKey:_AKPatchNumberKey];
-
-    if (patchNumber && ([patchNumber length] > 0))
-    {
-        versionString = [versionString stringByAppendingString:patchNumber];
-    }
-
-    // See if there is a sneakypeek number.
-    NSString *sneakypeekNumber = [versionDictionary objectForKey:_AKSneakyPeekNumberKey];
-
-    if (sneakypeekNumber && ([sneakypeekNumber length] > 0))
-    {
-        versionString = [NSString stringWithFormat:@"%@sp%@", versionString, sneakypeekNumber];
-    }
-
-    // Return the result.
-    return versionString;
+    
+    return [AKAppVersion appVersionFromString:latestAppVersionString];
 }
 
 

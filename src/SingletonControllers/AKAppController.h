@@ -7,6 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class AKAboutWindowController;
 @class AKDatabase;
 @class AKDocLocator;
 @class AKWindowController;
@@ -30,6 +31,7 @@
 
     BOOL _finishedInitializing;  // Becomes true when -awakeFromNib finishes.
     AKPrefPanelController *_prefPanelController;  // Lazily instantiated.
+    AKAboutWindowController *_aboutWindowController;  // Lazily instantiated.
 
     // Elements are AKWindowControllers.
     NSMutableArray *_windowControllers;
@@ -42,10 +44,6 @@
     IBOutlet NSTextField *_splashVersionField;
     IBOutlet NSTextField *_splashMessageField;
     IBOutlet NSTextField *_splashMessage2Field;
-
-    IBOutlet NSPanel *_aboutPanel;
-    IBOutlet NSTextView *_aboutCreditsView;
-    IBOutlet NSTextField *_aboutVersionField;
 
     IBOutlet NSMenuItem *_firstGoMenuDivider;
 }
