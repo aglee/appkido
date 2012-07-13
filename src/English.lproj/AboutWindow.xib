@@ -34,7 +34,7 @@
 			<object class="NSCustomObject" id="1004">
 				<string key="NSClassName">NSApplication</string>
 			</object>
-			<object class="NSWindowTemplate" id="884898223">
+			<object class="NSWindowTemplate" id="1050423820">
 				<int key="NSWindowStyleMask">11</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{323, 206}, {480, 540}}</string>
@@ -45,12 +45,12 @@
 					<characters key="NS.bytes">View</characters>
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
-				<object class="NSView" key="NSWindowView" id="136111792">
+				<object class="NSView" key="NSWindowView" id="177605132">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
-						<object class="WebView" id="601923402">
-							<reference key="NSNextResponder" ref="136111792"/>
+						<object class="WebView" id="564677677">
+							<reference key="NSNextResponder" ref="177605132"/>
 							<int key="NSvFlags">274</int>
 							<set class="NSMutableSet" key="NSDragTypes">
 								<string>Apple HTML pasteboard type</string>
@@ -70,7 +70,7 @@
 								<string>public.url-name</string>
 							</set>
 							<string key="NSFrameSize">{480, 540}</string>
-							<reference key="NSSuperview" ref="136111792"/>
+							<reference key="NSSuperview" ref="177605132"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -96,7 +96,7 @@
 					<string key="NSFrameSize">{480, 540}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="601923402"/>
+					<reference key="NSNextKeyView" ref="564677677"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -109,7 +109,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">window</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="884898223"/>
+						<reference key="destination" ref="1050423820"/>
 					</object>
 					<int key="connectionID">29</int>
 				</object>
@@ -117,17 +117,25 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">_creditsView</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="601923402"/>
+						<reference key="destination" ref="564677677"/>
 					</object>
 					<int key="connectionID">30</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="884898223"/>
+						<reference key="source" ref="1050423820"/>
 						<reference key="destination" ref="1001"/>
 					</object>
 					<int key="connectionID">28</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">policyDelegate</string>
+						<reference key="source" ref="564677677"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">32</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -158,25 +166,25 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">5</int>
-						<reference key="object" ref="884898223"/>
+						<reference key="object" ref="1050423820"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="136111792"/>
+							<reference ref="177605132"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">About</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">6</int>
-						<reference key="object" ref="136111792"/>
+						<reference key="object" ref="177605132"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="601923402"/>
+							<reference ref="564677677"/>
 						</array>
-						<reference key="parent" ref="884898223"/>
+						<reference key="parent" ref="1050423820"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
-						<reference key="object" ref="601923402"/>
-						<reference key="parent" ref="136111792"/>
+						<reference key="object" ref="564677677"/>
+						<reference key="parent" ref="177605132"/>
 					</object>
 				</array>
 			</object>
@@ -193,7 +201,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">31</int>
+			<int key="maxID">32</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

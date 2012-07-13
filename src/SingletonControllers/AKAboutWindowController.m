@@ -39,4 +39,30 @@
     }
 }
 
+#pragma mark -
+#pragma mark WebPolicyDelegate methods
+
+- (void)webView:(WebView *)sender
+decidePolicyForNavigationAction:(NSDictionary *)actionInformation
+        request:(NSURLRequest *)request
+          frame:(WebFrame *)frame
+decisionListener:(id <WebPolicyDecisionListener>)listener
+{
+    NSNumber *navType = [actionInformation objectForKey:WebActionNavigationTypeKey];
+    BOOL isLinkClicked = ((navType != nil) && ([navType intValue] == WebNavigationTypeLinkClicked));
+    
+    if (isLinkClicked)
+    {
+        // Use a delayed perform to avoid mucking with the WebView's
+        // display while it's in the middle of processing a UI event.
+        // Note that the return value of -jumpToLinkURL: will be lost.
+        [[NSWorkspace sharedWorkspace] performSelector:@selector(openURL:) withObject:[request URL] afterDelay:0];
+    }
+    else
+    {
+        [listener use];
+    }
+}
+
+
 @end
