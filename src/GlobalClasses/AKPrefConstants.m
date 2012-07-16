@@ -33,9 +33,11 @@ NSString *AKSelectedFrameworksPrefName = @"AKSelectedFrameworks";
 NSString *AKDevToolsPathPrefName = @"AKDevToolsPath";
 NSString *AKSDKVersionPrefName = @"AKSDKVersion";
 
+NSString *AKSearchInNewWindowPrefName         = @"AKSearchInNewWindow";
+
 
 #pragma mark -
-#pragma mark AKXyzPrefKey
+#pragma mark AKXyzPrefKey - dictionary
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.

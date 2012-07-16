@@ -14,28 +14,29 @@
 
 #import "AKAboutWindowController.h"
 #import "AKAppVersion.h"
-#import "AKDocSetIndex.h"
-#import "AKIPhoneDevTools.h"
-#import "AKFrameworkConstants.h"
-#import "AKFileUtils.h"
-#import "AKTextUtils.h"
-#import "AKViewUtils.h"
-#import "AKPrefUtils.h"
-#import "AKDevToolsUtils.h"
-#import "AKDebugUtils.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
+#import "AKDebugUtils.h"
+#import "AKDevTools.h"
+#import "AKDevToolsPanelController.h"
+#import "AKDevToolsPathController.h"
+#import "AKDevToolsUtils.h"
 #import "AKDocLocator.h"
+#import "AKDocSetIndex.h"
+#import "AKFileUtils.h"
+#import "AKFrameworkConstants.h"
+#import "AKIPhoneDevTools.h"
+#import "AKPrefUtils.h"
 #import "AKPrefPanelController.h"
 #import "AKQuicklistController.h"
+#import "AKSavedWindowState.h"
+#import "AKServicesProvider.h"
+#import "AKTextUtils.h"
+#import "AKTopic.h"
+#import "AKViewUtils.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
-#import "AKSavedWindowState.h"
-#import "AKTopic.h"
 
-#import "AKDevTools.h"
-#import "AKDevToolsPathController.h"
-#import "AKDevToolsPanelController.h"
 
 
 // [agl] working on parse performance
@@ -354,12 +355,21 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 
 #pragma mark -
+#pragma mark External search requests
+
+- (void)searchForString:(NSString *)searchString
+{
+    AKWindowController *wc = [self controllerForNewWindow];
+    [wc searchForString:searchString];
+}
+
+
+#pragma mark -
 #pragma mark AppleScript support
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    AKWindowController *wc = [self controllerForNewWindow];
-    [wc searchForString:[aCommand directParameter]];
+    [self searchForString:[aCommand directParameter]];
     return nil;
 }
 
@@ -649,6 +659,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     // Add the Debug menu if certain conditions are met.
     [self _maybeAddDebugMenu];  // [agl] uses AKDebugUtils
+    
+    // Set the provider of system services.
+    [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
+    NSUpdateDynamicServices();
 
     _finishedInitializing = YES;
 }

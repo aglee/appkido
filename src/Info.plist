@@ -32,5 +32,42 @@
 	<string>AKApplication</string>
 	<key>OSAScriptingDefinition</key>
 	<string>AppKiDo.sdef</string>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Search with AppKiDo</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>searchForString</string>
+			<key>NSPortName</key>
+			<string>AppKiDo</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+			</array>
+			<key>NSRequiredContext</key>
+			<array/>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Search for Method with AppKiDo</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>searchForMethod</string>
+			<key>NSPortName</key>
+			<string>AppKiDo</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+			</array>
+			<key>NSRequiredContext</key>
+			<array/>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -69,6 +69,8 @@ extern NSString *AKDevToolsPathPrefName;
 // see AKDevTools.
 extern NSString *AKSDKVersionPrefName;
 
+extern NSString *AKSearchInNewWindowPrefName;
+
 
 #pragma mark -
 #pragma mark AKXyzPrefKey

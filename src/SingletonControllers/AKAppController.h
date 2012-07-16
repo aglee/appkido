@@ -97,6 +97,12 @@
 
 
 #pragma mark -
+#pragma mark External search requests
+
+- (void)searchForString:(NSString *)searchString;
+
+
+#pragma mark -
 #pragma mark AppleScript support
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;

@@ -583,6 +583,14 @@
 		73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */; };
 		73D23C880D4CCE2800EF7503 /* AKDocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */; };
 		73D23C890D4CCE2800EF7503 /* AKDocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */; };
+		73D59E8515B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */; };
+		73D59E8615B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */; };
+		73D59E8715B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */; };
+		73D59E8815B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */; };
+		73D59E8B15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */; };
+		73D59E8C15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */; };
+		73D59E8D15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */; };
+		73D59E8E15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */; };
 		73E86F3D0E396A71002AFB76 /* AKPropertyNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F3B0E396A71002AFB76 /* AKPropertyNode.h */; };
 		73E86F3E0E396A71002AFB76 /* AKPropertyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F3C0E396A71002AFB76 /* AKPropertyNode.m */; };
 		73E86F420E3974E1002AFB76 /* AKMemberNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F400E3974E1002AFB76 /* AKMemberNode.h */; };
@@ -891,6 +899,10 @@
 		73D409E804A3A04F00A80003 /* AKSortUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSortUtils.m; sourceTree = "<group>"; };
 		73D409EE04A3A1EB00A80003 /* AKTextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTextUtils.h; sourceTree = "<group>"; };
 		73D409EF04A3A1EB00A80003 /* AKTextUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTextUtils.m; sourceTree = "<group>"; };
+		73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMethodNameExtractor.h; sourceTree = "<group>"; };
+		73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMethodNameExtractor.m; sourceTree = "<group>"; };
+		73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKServicesProvider.h; sourceTree = "<group>"; };
+		73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKServicesProvider.m; sourceTree = "<group>"; };
 		73DA45FD0966583A00BFD67E /* AppKiDo_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppKiDo_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		73E86F3B0E396A71002AFB76 /* AKPropertyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPropertyNode.h; sourceTree = "<group>"; };
 		73E86F3C0E396A71002AFB76 /* AKPropertyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPropertyNode.m; sourceTree = "<group>"; };
@@ -1082,6 +1094,8 @@
 				738D41BC15B07EC6008950F6 /* AKAppVersion.m */,
 				7323C9C108313881002E8D7D /* AKFileUtils.h */,
 				7323C9C208313881002E8D7D /* AKFileUtils.m */,
+				73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */,
+				73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */,
 				730030DD0498501500A80007 /* AKSortable.h */,
 				73D409E704A3A04F00A80003 /* AKSortUtils.h */,
 				73D409E804A3A04F00A80003 /* AKSortUtils.m */,
@@ -1212,6 +1226,8 @@
 			children = (
 				732BD5D505ED8FBE0055715D /* AKAppController.h */,
 				732BD5D605ED8FBE0055715D /* AKAppController.m */,
+				73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */,
+				73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */,
 				738D41B015B078E0008950F6 /* AKAboutWindowController.h */,
 				738D41B115B078E0008950F6 /* AKAboutWindowController.m */,
 				73B914930E089D180012C16F /* AKDevToolsPathController.h */,
@@ -1771,6 +1787,8 @@
 				733DF5EB14E17700007E6313 /* AKSQLTemplate.h in Headers */,
 				738D41B915B07D7F008950F6 /* AKAboutWindowController.h in Headers */,
 				738D41BD15B07EC6008950F6 /* AKAppVersion.h in Headers */,
+				73D59E8515B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */,
+				73D59E8B15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1900,6 +1918,8 @@
 				733DF5ED14E17700007E6313 /* AKSQLTemplate.h in Headers */,
 				738D41BA15B07D7F008950F6 /* AKAboutWindowController.h in Headers */,
 				738D41BE15B07EC6008950F6 /* AKAppVersion.h in Headers */,
+				73D59E8615B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */,
+				73D59E8C15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2189,6 +2209,8 @@
 				733DF5EC14E17700007E6313 /* AKSQLTemplate.m in Sources */,
 				738D41B715B07D7A008950F6 /* AKAboutWindowController.m in Sources */,
 				738D41BF15B07EC6008950F6 /* AKAppVersion.m in Sources */,
+				73D59E8715B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */,
+				73D59E8D15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2318,6 +2340,8 @@
 				733DF5EE14E17700007E6313 /* AKSQLTemplate.m in Sources */,
 				738D41B815B07D7B008950F6 /* AKAboutWindowController.m in Sources */,
 				738D41C015B07EC6008950F6 /* AKAppVersion.m in Sources */,
+				73D59E8815B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */,
+				73D59E8E15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
