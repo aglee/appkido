@@ -13,6 +13,7 @@
 #import "DIGSFindBuffer.h"
 #import "AKTextUtils.h"
 #import "AKAppController.h"
+#import "AKTestDocParserWindowController.h"
 #import "AKWindowController.h"
 
 
@@ -175,6 +176,22 @@ static AKFindPanelController *s_sharedInstance = nil;
 
 @implementation AKFindPanelController (Private)
 
+- (NSView *)_viewToSearch
+{
+    id windowDelegate = [[NSApp mainWindow] delegate];
+    
+    if ([windowDelegate isKindOfClass:[AKWindowController class]])
+    {
+        return [(AKWindowController *)windowDelegate focusOnDocView];
+    }
+    else if ([windowDelegate isKindOfClass:[AKTestDocParserWindowController class]])
+    {
+        return [(AKTestDocParserWindowController *)windowDelegate viewToSearch];
+    }
+                
+    return nil;
+}
+
 // Does a find in the whatever text view it makes sense to do the find in,
 // if any.  Selects the found range or beeps if not found.  Sets the status
 // field accordingly.
@@ -182,9 +199,7 @@ static AKFindPanelController *s_sharedInstance = nil;
 {
     NSWindow *mainWindow = [NSApp mainWindow];
     id oldFirstResponder = [mainWindow firstResponder];
-    AKAppController *appController = [NSApp delegate];
-    AKWindowController *wc = [appController frontmostWindowController];
-    NSView *viewToSearch = [wc focusOnDocView];
+    NSView *viewToSearch = [self _viewToSearch];
 
     _lastFindWasSuccessful = NO;
 

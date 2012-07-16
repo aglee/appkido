@@ -326,7 +326,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     NSUInteger i;
     for (i = 0; i < depth; i++)
     {
-        [s appendString:@"  "];
+        [s appendString:@"    "];
     }
     
     [s appendString:[self sectionName]];

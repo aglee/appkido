@@ -13,7 +13,11 @@
 @implementation AKTestDocParserWindowController
 
 @synthesize filePathField = _filePathField;
+@synthesize tabView = _tabView;
 @synthesize parseResultTextView = _parseResultTextView;
+@synthesize parseResultBrowser = _parseResultBrowser;
+@synthesize fileSectionTextView = _fileSectionTextView;
+@synthesize fileSectionInfoField = _fileSectionInfoField;
 
 + (NSMutableArray *)_testDocParserWindowControllers
 {
@@ -31,10 +35,41 @@
 {
     AKTestDocParserWindowController *instance = [[self alloc] initWithWindowNibName:@"TestDocParser"];
     
-    [[self _testDocParserWindowControllers] addObject:instance];
-    
     [[instance window] makeKeyAndOrderFront:nil];
 }
+
+- (id)initWithWindowNibName:(NSString *)windowNibName
+{
+    self = [super initWithWindowNibName:windowNibName];
+    if (self)
+    {
+        [[AKTestDocParserWindowController _testDocParserWindowControllers] addObject:self];
+    }
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_rootSection release];
+    
+    [super dealloc];
+}
+
+- (NSView *)viewToSearch
+{
+    if ([[[_tabView selectedTabViewItem] identifier] isEqualToString:@"outline"])
+    {
+        return _parseResultTextView;
+    }
+    else if ([[[_tabView selectedTabViewItem] identifier] isEqualToString:@"browser"])
+    {
+        return _fileSectionTextView;
+    }
+    
+    return nil;
+}
+
 
 #pragma mark - Action methods
 
@@ -59,6 +94,29 @@
     [self _parseFileAtPath:[sender stringValue]];
 }
 
+- (IBAction)doBrowserAction:(id)sender
+{
+    AKFileSection *fileSection = [_parseResultBrowser itemAtIndexPath:[_parseResultBrowser selectionIndexPath]];
+    NSData *sectionData = [fileSection sectionData];
+    NSString *sectionString = [[[NSString alloc] initWithData:sectionData encoding:NSUTF8StringEncoding] autorelease];
+    
+    [_fileSectionTextView setString:sectionString];
+    [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%d-%d, %d chars",
+                                           [fileSection sectionOffset],
+                                           [fileSection sectionOffset] + [fileSection sectionLength],
+                                           [fileSection sectionLength]]];
+}
+
+#pragma mark - NSWindowController methods
+
+- (void)windowDidLoad
+{
+    // If you use IB to set an NSTextView's font, the font doesn't stick,
+	// even if you've turned off the text view's richText setting.
+    [_parseResultTextView setFont:[NSFont fontWithName:@"Courier" size:13.0]];
+    [_fileSectionTextView setFont:[NSFont fontWithName:@"Courier" size:13.0]];
+}
+
 #pragma mark - NSWindowDelegate methods
 
 - (void)windowWillClose:(NSNotification *)notification
@@ -68,6 +126,36 @@
         [[self retain] autorelease];
         [[[self class] _testDocParserWindowControllers] removeObject:self];
     }
+}
+
+#pragma mark - NSBrowserDelegate methods
+
+// Note we are using "item-based" API.
+// <https://developer.apple.com/library/mac/#samplecode/SimpleCocoaBrowser/Listings/AppController_m.html#//apple_ref/doc/uid/DTS40008872-AppController_m-DontLinkElementID_4>
+
+- (id)rootItemForBrowser:(NSBrowser *)browser
+{
+	return _rootSection;    
+}
+
+- (NSInteger)browser:(NSBrowser *)browser numberOfChildrenOfItem:(id)item
+{
+	return [(AKFileSection *)item numberOfChildSections];
+}
+
+- (id)browser:(NSBrowser *)browser child:(NSInteger)index ofItem:(id)item
+{
+	return [(AKFileSection *)item childSectionAtIndex:index];
+}
+
+- (BOOL)browser:(NSBrowser *)browser isLeafItem:(id)item
+{
+	return ([(AKFileSection *)item numberOfChildSections] == 0);
+}
+
+- (id)browser:(NSBrowser *)browser objectValueForItem:(id)item
+{
+    return [(AKFileSection *)item sectionName];
 }
 
 #pragma mark - Private methods
@@ -96,9 +184,13 @@
     
     [dp processFile:fileToParse];
     
-    NSString *parseResult = [[dp rootSectionOfCurrentFile] descriptionAsOutline];
+    [_rootSection release];
+    _rootSection = [[dp rootSectionOfCurrentFile] retain];
     
-    [_parseResultTextView setString:(parseResult ? parseResult : @"<error>")];
+    NSString *textOutline = [_rootSection descriptionAsOutline];
+    
+    [_parseResultTextView setString:(textOutline ? textOutline : @"<error>")];
+    [_parseResultBrowser loadColumnZero];
 }
 
 @end
