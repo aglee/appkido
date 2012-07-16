@@ -11,8 +11,12 @@
 
 @interface AKTestDocParserWindowController : NSWindowController
 {
-    NSTextView *_parseResultTextView;
     NSTextField *_filePathField;
+    NSTabView *_tabView;
+    NSTextView *_parseResultTextView;
+    NSBrowser *_parseResultBrowser;
+    NSTextView *_fileSectionTextView;
+    NSTextField *_fileSectionInfoField;
     
     AKFileSection *_rootSection;  // Root section of parse result.
 }
@@ -26,7 +30,7 @@
 
 + (void)openNewParserWindow;
 
-- (NSView *)viewToSearch;
+- (NSView *)viewToSearch;  // Enables us to be targeted by the Find panel.
 
 - (IBAction)chooseFileToParse:(id)sender;
 - (IBAction)takeFileToParseFrom:(id)sender;

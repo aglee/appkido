@@ -9,16 +9,6 @@
 #import "AKMethodNameExtractor.h"
 #import <ctype.h>
 
-
-@interface AKMethodNameExtractor ()
-{
-@private
-	char *_start;
-	char *_current;
-}
-@end
-
-
 @implementation AKMethodNameExtractor
 
 - (id)initWithString:(NSString *)string

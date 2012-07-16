@@ -43,7 +43,11 @@ If you use any of these new services, remember to assign hotkeys in System Prefe
 
  */
 @interface AKMethodNameExtractor : NSObject
-
+{
+@private
+	char *_start;
+	char *_current;
+}
 
 - (id)initWithString:(NSString *)string;
 
