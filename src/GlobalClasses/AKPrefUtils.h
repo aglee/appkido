@@ -23,6 +23,7 @@
 #pragma mark -
 #pragma mark App-specific getters and setters
 
+/*! Which frameworks we should display docs for. */
 + (NSArray *)selectedFrameworkNamesPref;
 + (void)setSelectedFrameworkNamesPref:(NSArray *)fwNames;
 
@@ -33,6 +34,13 @@
 /*! See AKDevTools for where the SDK version comes from. */
 + (NSString *)sdkVersionPref;
 + (void)setSDKVersionPref:(NSString *)dir;
+
+/*!
+ * Should we open a new window when there's an external search request
+ * (via AppleScript or system service)?
+ */
++ (BOOL)shouldSearchInNewWindow;
++ (void)setShouldSearchInNewWindow:(BOOL)flag;
 
 
 #pragma mark -

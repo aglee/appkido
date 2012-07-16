@@ -359,7 +359,23 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)searchForString:(NSString *)searchString
 {
-    AKWindowController *wc = [self controllerForNewWindow];
+    if ([searchString length] == 0)
+    {
+        return;
+    }
+    
+    AKWindowController *wc = nil;
+    
+    if (![AKPrefUtils shouldSearchInNewWindow])
+    {
+        wc = [self frontmostWindowController];
+    }
+    
+    if (wc == nil)
+    {
+        wc = [self controllerForNewWindow];
+    }
+    
     [wc searchForString:searchString];
 }
 

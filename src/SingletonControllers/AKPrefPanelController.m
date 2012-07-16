@@ -21,6 +21,8 @@
 
 - (void)_updateAppearanceTabFromPrefs;
 - (void)_updatePrefsFromAppearanceTab;
+- (void)_updateSearchTabFromPrefs;
+- (void)_updatePrefsFromSearchTab;
 - (NSArray *)_namesOfAvailableFrameworks;
 
 @end
@@ -99,6 +101,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
 - (IBAction)openPrefsPanel:(id)sender
 {
     [self _updateAppearanceTabFromPrefs];
+    [self _updateSearchTabFromPrefs];
     [[_prefsTabView window] makeKeyAndOrderFront:nil];
 }
 
@@ -156,6 +159,11 @@ static AKPrefPanelController *s_sharedInstance = nil;
 {
     [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
     [_frameworksTable reloadData];
+}
+
+- (IBAction)toggleShouldSearchInNewWindow:(id)sender
+{
+    [self _updatePrefsFromSearchTab];
 }
 
 
@@ -327,6 +335,20 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
     // The small-contextual-menus pref.
     // [agl] fill in small-contextual-menus pref
+}
+
+- (void)_updateSearchTabFromPrefs
+{
+    BOOL shouldSearchInNewWindow = [AKPrefUtils shouldSearchInNewWindow];
+    
+    [_searchInNewWindowCheckbox setState:(shouldSearchInNewWindow ? NSOnState : NSOffState)];
+}
+
+- (void)_updatePrefsFromSearchTab
+{
+    BOOL shouldSearchInNewWindow = ([_searchInNewWindowCheckbox state] == NSOnState);
+    
+    [AKPrefUtils setShouldSearchInNewWindow:shouldSearchInNewWindow];
 }
 
 - (NSArray *)_namesOfAvailableFrameworks

@@ -110,6 +110,16 @@
     [self setStringValue:dir forPref:AKSDKVersionPrefName];
 }
 
++ (BOOL)shouldSearchInNewWindow
+{
+    return [self boolValueForPref:AKSearchInNewWindowPrefName];
+}
+
++ (void)setShouldSearchInNewWindow:(BOOL)flag
+{
+    [self setBoolValue:flag forPref:AKSearchInNewWindowPrefName];
+}
+
 
 #pragma mark -
 #pragma mark Clearing preferences
@@ -120,6 +130,7 @@
 
     [userPrefs removeObjectForKey:(id)DIGSLogVerbosityUserDefault];
     [userPrefs removeObjectForKey:AKDevToolsPathPrefName];
+    [userPrefs removeObjectForKey:AKSearchInNewWindowPrefName];
 
     [self resetAppearancePrefsToDefaults];
     [self resetNavigationPrefsToDefaults];
@@ -199,6 +210,8 @@
         setObject:@"/Developer"
         forKey:AKDevToolsPathPrefName];
 
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:NO] forKey:AKSearchInNewWindowPrefName];
+    
     [defaultPrefsDictionary
         setObject:[NSNumber numberWithInt:20]
         forKey:AKMaxSearchStringsPrefName];

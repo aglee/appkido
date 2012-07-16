@@ -38,6 +38,9 @@
     IBOutlet AKDevToolsPathController *_devToolsPathController;
     IBOutlet NSTextField *_devToolsPathField;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
+    
+    // Controls in the Search tab.
+    IBOutlet NSButton *_searchInNewWindowCheckbox;
 }
 
 
@@ -65,5 +68,7 @@
 - (IBAction)selectAllFrameworks:(id)sender;
 
 - (IBAction)deselectAllFrameworks:(id)sender;
+
+- (IBAction)toggleShouldSearchInNewWindow:(id)sender;
 
 @end
