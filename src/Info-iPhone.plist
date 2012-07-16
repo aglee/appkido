@@ -38,12 +38,12 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Search with AppKiDo-for-iPhone</string>
+				<string>Search (AppKiDo-for-iPhone)</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>searchForString</string>
 			<key>NSPortName</key>
-			<string>AppKiDo</string>
+			<string>AppKiDo-for-iPhone</string>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -55,12 +55,12 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Search for Method with AppKiDo-for-iPhone</string>
+				<string>Search for Method (AppKiDo-for-iPhone)</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>searchForMethod</string>
 			<key>NSPortName</key>
-			<string>AppKiDo</string>
+			<string>AppKiDo-for-iPhone</string>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>

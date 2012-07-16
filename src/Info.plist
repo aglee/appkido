@@ -38,7 +38,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Search with AppKiDo</string>
+				<string>Search (AppKiDo)</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>searchForString</string>
@@ -55,7 +55,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Search for Method with AppKiDo</string>
+				<string>Search for Method (AppKiDo)</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>searchForMethod</string>
