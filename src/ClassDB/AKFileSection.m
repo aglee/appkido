@@ -318,6 +318,42 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 
 #pragma mark -
+#pragma mark Debugging
+
+- (void)_printTreeWithDepth:(NSUInteger)depth intoString:(NSMutableString *)s
+{
+    // Print this section's name at the indicated indentation level.
+    NSUInteger i;
+    for (i = 0; i < depth; i++)
+    {
+        [s appendString:@"  "];
+    }
+    
+    [s appendString:[self sectionName]];
+    [s appendString:[NSString stringWithFormat:@" (%d-%d, %d chars)",
+                     [self sectionOffset],
+                     [self sectionOffset] + [self sectionLength],
+                     [self sectionLength]]];
+    [s appendString:@"\n"];
+    
+    // Print child sections.
+    for (AKFileSection *childSection in [self childSectionEnumerator])
+    {
+        [childSection _printTreeWithDepth:(depth + 1) intoString:s];
+    }
+}
+
+- (NSString *)descriptionAsOutline
+{
+    NSMutableString *s = [NSMutableString stringWithCapacity:2000];
+    
+    [self _printTreeWithDepth:0 intoString:s];
+    
+    return s;
+}
+
+
+#pragma mark -
 #pragma mark AKSortable methods
 
 - (NSString *)sortName

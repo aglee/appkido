@@ -32,5 +32,5 @@
     #import "AKFileSection.h"
     #import "AKPrefUtils.h"
     #import "AKFrameworkInfo.h"
-    #import "AKDebugUtils.h"
+    #import "AKTestDocParserWindowController.h"
 #endif

@@ -16,7 +16,7 @@
 #import "AKAppVersion.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
-#import "AKDebugUtils.h"
+#import "AKTestDocParserWindowController.h"
 #import "AKDevTools.h"
 #import "AKDevToolsPanelController.h"
 #import "AKDevToolsPathController.h"
@@ -70,7 +70,7 @@
 
 // Private methods -- steps during launch
 - (void)_initGoMenu;
-- (void)_maybeAddDebugMenu;  // [agl] uses AKDebugUtils
+- (void)_maybeAddDebugMenu;
 
 // Private methods -- window management
 - (NSWindow *)_frontmostBrowserWindow;
@@ -578,10 +578,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [fh closeFile];
 }
 
-// [agl] uses AKDebugUtils
+#pragma mark -
+#pragma mark Action methods for debugging only
+
 - (IBAction)_testParser:(id)sender
 {
-    [AKFileSectionDebug _testParser];
+    [AKTestDocParserWindowController openNewParserWindow];
 }
 
 - (IBAction)_printKeyViewLoop:(id)sender
@@ -625,7 +627,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         return YES;
     }
-    else if ((itemAction == @selector(_testParser:)) // [agl] uses AKDebugUtils
+    else if ((itemAction == @selector(_testParser:))
         || (itemAction == @selector(_printKeyViewLoop:)))
     {
         return YES;
@@ -674,7 +676,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _openInitialWindows];
 
     // Add the Debug menu if certain conditions are met.
-    [self _maybeAddDebugMenu];  // [agl] uses AKDebugUtils
+    [self _maybeAddDebugMenu];
     
     // Set the provider of system services.
     [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
@@ -799,7 +801,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-// [agl] uses AKDebugUtils
 // Add the Debug menu if the user is "Andy Lee" with login name "alee".
 - (void)_maybeAddDebugMenu
 {

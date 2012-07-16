@@ -184,7 +184,7 @@
 
 
 #pragma mark -
-#pragma mark Private action methods (for debugging only)
+#pragma mark Action methods for debugging only
 
 /*!
  * @method      _testParser:
@@ -192,10 +192,10 @@
  *              users.  Opens a window in which you can select a file and
  *              see the results of attempting to parse the file.
  */
-- (IBAction)_testParser:(id)sender;  // [agl] uses AKDebugUtils
+- (IBAction)_testParser:(id)sender;
 
 /*!
- * @method      _testParser:
+ * @method      _printKeyViewLoop:
  * @discussion  For debugging purposes only -- not exposed to general
  *              users.  Prints the current key view loop to the log.
  */

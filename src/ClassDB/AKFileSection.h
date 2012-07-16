@@ -105,6 +105,12 @@
 - (AKFileSection *)childSectionContainingString:(NSString *)name; // thanks Gerriet
 
 
+#pragma mark -
+#pragma mark Debugging
+
+/*! Returns a string that uses indentation to show the hierarchy of file sections. */
+- (NSString *)descriptionAsOutline;
+
 
 #pragma mark -
 #pragma mark AKSortable methods
