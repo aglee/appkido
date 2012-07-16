@@ -179,6 +179,16 @@
     {
         [globalsNode addNameOfGlobal:nameOfGlobal];
     }
+    
+    // [agl] 2012-07-16 I noticed NSCocoaErrorDomain wasn't getting added, among lots of
+    // other constants. Seems I now need to go another level deep to parse those.
+    for (AKFileSection *fs in [fileSection childSectionEnumerator])
+    {
+        for (NSString *name in [self _parseNamesOfGlobalsInFileSection:fs])
+        {
+            [globalsNode addNameOfGlobal:name];
+        }
+    }
 
     // Return the result.
     return globalsNode;
