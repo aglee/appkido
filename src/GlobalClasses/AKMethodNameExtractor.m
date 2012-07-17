@@ -38,9 +38,9 @@
 
 + (NSString *)extractMethodNameFromString:(NSString *)string
 {
-    AKMethodNameExtractor *me = [[[self alloc] initWithString:string] autorelease];
+    AKMethodNameExtractor *methEx = [[[self alloc] initWithString:string] autorelease];
 
-    return [me extractMethodName];
+    return [methEx extractMethodName];
 }
 
 - (NSString *)extractMethodName
@@ -231,7 +231,7 @@
 {
     for ( ; *_current; _current++)
     {
-        if (*_current == '\r')
+        if (*_current == '\n')
         {
             _current++;
             break;
@@ -240,7 +240,7 @@
         {
             _current++;
 
-            if (*_current == 'n')
+            if (*_current == '\n')
             {
                 _current++;
             }
@@ -310,6 +310,12 @@
 
     // Skip over the opening delimiter.
     _current++;
+    
+    // If we don't recognize the opening delimiter, bail.
+    if (closer == '\0')
+    {
+        return;
+    }
 
     // Skip all elements until we land on the closing delimiter.
     while (*_current)
