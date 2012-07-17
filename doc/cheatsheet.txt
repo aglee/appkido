@@ -67,6 +67,8 @@ Deleting a branch:
 
 ---- RELEASE ----
 
+Do at least one test run where you delete the app's plist etc. first, to see what the experience is like for new users.
+
 Edit version string in Info.plist, Info-iPhone.plist
 	If going from sneakypeek to official release, remember to just drop the "sp..." suffix; don't increment the version number.
 	[agl] Add a note here about the release numbering conventions I'm using.
