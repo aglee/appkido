@@ -822,6 +822,7 @@
 		73A1B628061B6AF5002C95F1 /* AKFrameworkConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkConstants.m; sourceTree = "<group>"; };
 		73A1B675061B6CC8002C95F1 /* AKHTMLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHTMLConstants.h; sourceTree = "<group>"; };
 		73A1B676061B6CC8002C95F1 /* AKHTMLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHTMLConstants.m; sourceTree = "<group>"; };
+		73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKMultiRadioView.h; path = CustomViews/AKMultiRadioView.h; sourceTree = "<group>"; };
 		73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKMultiRadioView.m; path = CustomViews/AKMultiRadioView.m; sourceTree = "<group>"; };
 		73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKClassMethodsSubtopic.h; sourceTree = "<group>"; };
@@ -972,6 +973,7 @@
 		29B97314FDCFA39411CA2CEA /* HierKnowledge */ = {
 			isa = PBXGroup;
 			children = (
+				73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */,
 				7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */,
 				733DF63F14E18FAB007E6313 /* DocSetIndexTables.txt */,
 				732BD61605ED913B0055715D /* ---- S U P P O R T   C L A S S E S ---- */,
