@@ -7,19 +7,6 @@ This is a hastily written draft introduction to the implementation internals of 
 
 
 
-TERMS OF USAGE FOR THIS SOURCE CODE
-===================================
-(1) You may not sell AppKiDo, its source code, or a derivative thereof.  For example, you may not tweak my code, recompile it, and sell it as "BetterThanAppKiDo" (even if it is), but you may give away the improved app as freeware.  Another example: if you're selling a software compilation, you may not include AppKiDo in that compilation.
-
-(2) You may include minor portions of AppKiDo code in your own projects, commercial or otherwise, with or without modification, provided you give credit.  Something like "Uses code from Andy Lee's AppKiDo project" will suffice.
-
-(3) You don't have to share changes with me or anyone else.  I'd sure appreciate it, though!
-
-(4) You may do anything else you want with the AppKiDo code, provided you meet terms (1), (2), and (3).
-
-
-
-
 WHAT HAPPENS WHEN YOU RUN APPKIDO
 =================================
 AppKiDo lets you navigate logical relationships among API constructs -- for example, between a class and its subclasses, or between a protocol and its methods, or between a framework and its functions.  AppKiDo derives these relationships by parsing two kinds of text files:
