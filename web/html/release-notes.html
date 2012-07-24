@@ -6,8 +6,8 @@
 <body bgcolor="#FFFFFF">
 <h1>AppKiDo version history</h1>
 [ <a href="index.html">home</a> ]
-<li><a href="AppKiDo-0.99.tgz">download <b>AppKiDo</b> 0.99</a>
-<li><a href="AppKiDo-for-iPhone-0.99.tgz">download <b>AppKiDo-for-iPhone</b> 0.99</a>
+<li><a href="AppKiDo-0.991.tgz">download <b>AppKiDo</b> 0.991</a>
+<li><a href="AppKiDo-for-iPhone-0.991.tgz">download <b>AppKiDo-for-iPhone</b> 0.991</a>
 <li>The source is now on <a href="http://github.com/aglee/appkido">GitHub</a>
 <br/>
 [ <a href="release-notes.html">release notes</a> ]
@@ -22,35 +22,41 @@
 <table><tr><td>
 
 
-<h2>Version 0.99 (July 16, 2012)</h2>
+<h2>Version 0.991 (July 24, 2012)</h2>
 <ul>
-<li>Added two system services: "Search for Method" and "Search". Each is available in both AppKiDo and AppKiDo-for-iPhone. See the note below this list for details.</li>
+<li>Added a system service: "Look Up in AppKiDo". (In AppKiDo-for-iPhone it's "Look Up in AppKiDo-for-iPhone".) See the note below this list for details.</li>
 <li>Added a preference for whether a search request via AppleScript or system services opens a new window. Defaults to NO. Previously, a search via AppleScript would always open a new window.</li>
+<li>Fixed a bug causing a lot of constants (e.g. NSCocoaErrorDomain) not to appear.</li>
+<li>I'm starting to use fast enumeration in the code, which means AppKiDo now requires at least 10.5 (Leopard). I've updated the system requirements on the home page accordingly.</li>
 <li>"Check for Newer Version" now connects to appkido.com, the new home for AppKiDo now that MobileMe has been shut down.</li>
 <li>"Check for Newer Version" should now work for AppKiDo-for-iPhone. It was broken even before MobileMe was turned off, because a file was missing on the web site.</li>
 <li>Links in the About box now connect to appkido.com.</li>
 <li>Fixed the AppKiDo-for-iPhone icon so it displays properly on Retina displays. (Only AppKiDo-for-iPhone had this problem.)</li>
-<li>Fixed a bug causing a lot of constants (e.g. NSCocoaErrorDomain) not to appear.</li>
-<li>I'm starting to use fast enumeration and properties, which I think means I've broken compatibility with at least one older Mac OS version that I was supporting up to now. At some point I'll figure out the details and update the system requirements on the home page. On a similar note, I've updated the Xcode project to be 3.2-compatible.</li>
 </ul>
 
-<h3>About "Search for Method" and "Search"</h3>
+<h3>About "Look Up in AppKiDo"</h3>
 
-<p>"Search for Method" examines the selected text and tries to figure out whether it contains an Objective-C message-send or method declaration. If so, it searches for that method name. Otherwise, it searches for the literal text you have selected.</p>
+<p>"Look Up in AppKiDo" is a service that you can invoke from any application where you have selected some text. It activates AppKiDo and performs a search for that text.</p>
 
-<p>In Xcode if you have <code>[self flyToX:100 y:200 z:300]</code>, you can double-click one of the square brackets to select the whole expression, then invoke this service. AppKiDo should search for the method name <code>flyToX:y:z:</code>.</p>
+<p>Often what we want to search for is a method name. AppKiDo tries to help by determining whether the selected text contains an Objective-C message-send or method declaration. If so, it searches for that method name. Otherwise, it searches for the literal text you have selected.</p>
 
-<p>If you happen to be in BBEdit and double-clicking a bracket selects the text <i>inside</i> the brackets, the service should still work. If there is leading whitespace or a cast, or comments anywhere, it should still work, so if you have a line like this you can triple-click to select the whole line, and then invoke the service.</p>
+<p>For example, in Xcode if you have <code>[self flyToX:100 y:200 z:300]</code>, you can double-click one of the square brackets to select the whole expression, then invoke this service. AppKiDo will search for the method name <code>flyToX:y:z:</code>.</p>
 
-<pre>    (void)[self flyToX:100 y:200 z:900 /*300*/];  // discard the return value</pre>
+<p>If you happen to be in BBEdit, where double-clicking a bracket selects the text <i>inside</i> the brackets, the service should still work. If there is leading whitespace or a cast, or newlines or comments anywhere, it should still work, so if you have lines like this you can select them all and then invoke the service:</p>
 
-<p>Note that "Search for Method" doesn't work if there is an assignment in the selected text. For example, it won't work if you select this whole line:</p>
+<pre>
+    (void)[self flyToX:100  // cast to void to discard the return value
+                     y:200
+                     z:900 /*300*/];
+</pre>
+
+<p>Note that "Look Up in AppKiDo" doesn't work if there is an assignment in the selected text. For example, it won't work if you select this whole line:</p>
 
 <pre>    BOOL didFly = [self flyToX:100 y:200 z:300];</pre>
 
 <p>The workaround is to select just the message-send -- the part after the "=".</p>
 
-<p>Another intended use is when you're looking at code that <b>declares</b> a method and you want to search for that method name. For example, you can select these lines and it will search for <code>browser:child:ofItem:</code> (the "- (id)" will be ignored):</p>
+<p>Another intended use is when you're looking at code that <b>declares</b> a method and you want to search for that method name. For example, you can select these lines and it will search for <code>browser:child:ofItem:</code> (the "-<nbsp/>(id)" will be ignored):</p>
 
 <pre>
     - (id)browser:(NSBrowser *)browser
@@ -59,9 +65,7 @@
 
 <p>This service assumes well-formed Objective-C. You might get unexpected results otherwise. If there are nested messages, it uses the top-level one. The algorithm mainly looks at punctuation -- delimiters like brackets and a few other characters that need special treatment. The basic idea is that it ignores anything between delimiters, like <code>(blah blah blah)</code>, <code>[blah blah blah]</code>, or <code>{blah blah blah}</code>. For this reason it should work if your selected code contains blocks or the new object literals.</p>
 
-<p>The "Search" service tells AppKiDo to blindly search for whatever text you have selected in your active application. This service is provided as a fallback in case "Search for Method" doesn't work as you'd like. Really, though, "Search for Method" should work for all your search needs, even when you're not searching for a method.</p>
-
-<p>If you use any of these new services, remember to assign hotkeys in System Preferences > Keyboard > Keyboard Shortcuts > Services for maximum convenience.</p>
+<p>If you use the "Look Up" service, remember to assign a hotkey in System Preferences > Keyboard > Keyboard Shortcuts > Services for maximum convenience.</p>
 
 
 <h2>Version 0.988 (Feb 7, 2012)</h2>
