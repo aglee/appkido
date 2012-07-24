@@ -19,6 +19,12 @@
 
 @class AKDocSetIndex;
 
+// [agl] Long-term, it probably makes sense to get rid of Dev Tools installations as a
+// core AppKiDo concept. Instead, there are SDKs in various expected places and there are
+// docsets in various expected places. We look for matching SDK/docset pairs (based on
+// version number), not Dev Tools installations. I suspect this is how Dash avoids making
+// users think about picking one
+
 /*!
  * Abstract class that represents an Apple Dev Tools installation as it relates to
  * development for a particular platform. At the moment the supported platforms are
@@ -40,9 +46,9 @@
  * including headers for the supported SDKs. A separate installation step puts
  * command-line tools such as git in /usr/bin.
  *
- * The SDK directories have always been under the Dev Tools directory. The docsets,
- * however, have moved around over time, so AppKiDo looks for them in various places
- * they might be.
+ * Until 4.3, the SDK directories were always under the Dev Tools directory. The docsets,
+ * however, have moved around over time, even before 4.3, so AppKiDo looks for them in
+ * various places they might be.
  */
 @interface AKDevTools : NSObject
 {
