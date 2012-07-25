@@ -64,7 +64,7 @@
             {
                 return
                     [NSString stringWithFormat:
-                        @"This property is inherited from @% class %@.", methodFrameworkName, [ownerOfMethod nodeName]];
+                        @"This property is inherited from %@ class %@.", methodFrameworkName, [ownerOfMethod nodeName]];
             }
             else
             {

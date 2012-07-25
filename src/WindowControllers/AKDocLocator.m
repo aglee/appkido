@@ -148,6 +148,13 @@
 
 - (NSString *)stringToDisplayInLists
 {
+    // Note the Unicode character.  Here's the info from
+    // Character Palette:
+    //      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+    //      Unicode: 00AB
+    //      UTF8: C2 AB
+    static unichar kLeftDoubleAngle = 0x00AB;
+    
     if (_cachedDisplayString == nil)
     {
         NSString *topicName = [_topic stringToDisplayInLists];
@@ -158,15 +165,10 @@
         }
         else if (_docName == nil)
         {
-            // Note the Unicode character.  Here's the info from
-            // Character Palette:
-            //      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
-            //      Unicode: 00AB
-            //      UTF8: C2 AB
             _cachedDisplayString =
                 [NSString stringWithFormat:@"%@  %C  %@",
                     _subtopicName,  // [agl] displayed string?
-                    0x00AB,
+                    kLeftDoubleAngle,
                     topicName];
         }
         else
@@ -176,7 +178,7 @@
             _cachedDisplayString =
                 [NSString stringWithFormat:@"%@  %C  %@",
                     [doc stringToDisplayInDocList],
-                    0x00AB,
+                    kLeftDoubleAngle,
                     topicName];
         }
 

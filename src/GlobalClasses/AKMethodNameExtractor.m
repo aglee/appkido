@@ -17,7 +17,7 @@
     if (self)
     {
         const char *origChars = [string UTF8String];
-        int numChars = strlen(origChars);
+        size_t numChars = strlen(origChars);
 
         _buffer = malloc(numChars + 1);
         (void)strncpy(_buffer, origChars, numChars);

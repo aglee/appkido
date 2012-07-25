@@ -101,7 +101,7 @@
     NSString *sectionString = [[[NSString alloc] initWithData:sectionData encoding:NSUTF8StringEncoding] autorelease];
     
     [_fileSectionTextView setString:sectionString];
-    [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%d-%d, %d chars",
+    [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%ld-%ld, %ld chars",
                                            [fileSection sectionOffset],
                                            [fileSection sectionOffset] + [fileSection sectionLength],
                                            [fileSection sectionLength]]];
