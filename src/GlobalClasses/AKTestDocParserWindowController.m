@@ -102,9 +102,9 @@
     
     [_fileSectionTextView setString:sectionString];
     [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%ld-%ld, %ld chars",
-                                           [fileSection sectionOffset],
-                                           [fileSection sectionOffset] + [fileSection sectionLength],
-                                           [fileSection sectionLength]]];
+                                           (long)[fileSection sectionOffset],
+                                           (long)[fileSection sectionOffset] + [fileSection sectionLength],
+                                           (long)[fileSection sectionLength]]];
 }
 
 #pragma mark - NSWindowController methods

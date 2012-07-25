@@ -74,7 +74,7 @@
     }
     else 
     {
-        DIGSLogError(@"%@ has unexpected selectedTag %ld", sender, [(NSMatrix *)sender selectedTag]);
+        DIGSLogError(@"%@ has unexpected selectedTag %ld", sender, (long)[(NSMatrix *)sender selectedTag]);
     }
 }
 

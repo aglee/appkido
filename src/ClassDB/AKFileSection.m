@@ -331,9 +331,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     
     [s appendString:[self sectionName]];
     [s appendString:[NSString stringWithFormat:@" (%ld-%ld, %ld chars)",
-                     [self sectionOffset],
-                     [self sectionOffset] + [self sectionLength],
-                     [self sectionLength]]];
+                     (long)[self sectionOffset],
+                     (long)[self sectionOffset] + [self sectionLength],
+                     (long)[self sectionLength]]];
     [s appendString:@"\n"];
     
     // Print child sections.

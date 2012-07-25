@@ -1066,7 +1066,7 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
 
         if (i < 9)
         {
-            [menuItem setKeyEquivalent:[NSString stringWithFormat:@"%ld", (i + 1)]];
+            [menuItem setKeyEquivalent:[NSString stringWithFormat:@"%ld", (long)(i + 1)]];
             [menuItem setKeyEquivalentModifierMask:NSControlKeyMask];
         }
 
