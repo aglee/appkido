@@ -12,26 +12,24 @@
 	<string>com.digitalspokes.AppKiDo</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleGetInfoString</key>
-	<string>0.991</string>
-	<key>CFBundleVersion</key>
-	<string>0.991</string>
-	<key>CFBundleShortVersionString</key>
-	<string>0.991</string>
 	<key>CFBundleName</key>
 	<string>AppKiDo</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.992</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.992</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>AKApplication</string>
-	<key>OSAScriptingDefinition</key>
-	<string>AppKiDo.sdef</string>
 	<key>NSServices</key>
 	<array>
 		<dict>
@@ -44,18 +42,20 @@
 			<string>searchForMethod</string>
 			<key>NSPortName</key>
 			<string>AppKiDo</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSServiceCategory</key>
+				<string>Searching</string>
+			</dict>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
 			<key>NSServiceDescription</key>
 			<string>If your selected text contains a method call or declaration, AppKiDo tries to parse the method name and search for that.</string>
-			<key>NSRequiredContext</key>
-			<dict>
-				<key>NSServiceCategory</key>
-				<string>Searching</string>
-			</dict>
 		</dict>
 	</array>
+	<key>OSAScriptingDefinition</key>
+	<string>AppKiDo.sdef</string>
 </dict>
 </plist>
