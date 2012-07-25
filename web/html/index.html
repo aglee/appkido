@@ -1,23 +1,26 @@
 <html>
-<head>
-<title>AppKiDo</title>
-<link rel="stylesheet" href="style.css" type="text/css" />
-<script type="text/javascript">
-<!--
-function validateGoogleCheckout(form)
-{
-	var enteredAmount = form.item_price_1.value;
-
-	// Regex checks for a valid non-negative decimal number.
-	if ((! /^\d+(\.\d+)?$/.test(enteredAmount)) || (enteredAmount <= 0)) {
-		alert("Please enter an amount to donate via Google Checkout.");
-		return false;
-	} else {
-		return true;
+<head profile="http://www.w3.org/2005/10/profile">
+	<title>AppKiDo</title>
+	
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="icon" type="image/png" href="images/favicon.png">
+	
+	<script type="text/javascript">
+	<!--
+	function validateGoogleCheckout(form)
+	{
+		var enteredAmount = form.item_price_1.value;
+	
+		// Regex checks for a valid non-negative decimal number.
+		if ((! /^\d+(\.\d+)?$/.test(enteredAmount)) || (enteredAmount <= 0)) {
+			alert("Please enter an amount to donate via Google Checkout.");
+			return false;
+		} else {
+			return true;
+		}
 	}
-}
-// -->
-</script>
+	// -->
+	</script>
 </head>
 
 <body>
