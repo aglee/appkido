@@ -162,9 +162,13 @@ function validateGoogleCheckout(form)
 <col width="400"/>
 
 <tr valign="top">
-    <td><p>If you're not sure what you're looking for, AppKiDo can search for names of API constructs.  For example, if you're wondering how to manage cursors, search for "cursor".  Apple has conveniently put the word "cursor" in the names of most things related to cursors.</p></td>
+    <td><p>AppKiDo provides a system service called "Look Up in AppKiDo". (In AppKiDo-for-iPhone it's "Look Up in AppKiDo-for-iPhone".) This allows you to search the docs from any application where you have selected some text</p>
+    	<p>AppKiDo's service is "method-aware". If you select a message-send or method declaration, and then invoke the service, AppKiDo will detect the method name and search for that instead of the literal text you selected. This is useful for multi-argument methods where the pieces of the method name are intermingled with other text.</p>
+    	<p>To invoke this service as quickly as possible, be sure to assign a hotkey to it in System Preferences > Keyboard > Keyboard Shortcuts > Services.</p>
+    	<p>Feel free to use my <a href="https://github.com/aglee/appkido/blob/master/src/GlobalClasses/AKMethodNameExtractor.h" target="_blank">method-parsing class</a> in your own apps.</p>
+    </td>
 
-    <td><img src="images/search.png"></img></td>
+    <td><img src="images/services-appkido.png"><br/><br/><img src="images/method-declaration.png"><br/><br/><img src="images/method-search.png"></img></td>
 </tr>
 </table>
 
