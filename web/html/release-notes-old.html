@@ -49,17 +49,17 @@
 
 <h2>Version 0.971 (January 3, 2008)</h2>
 <ul>
-<li>Works better with Leopard.  Core Data docs show up.  Deprecated methods show up in the proper place (not as delegate methods).</li>
+<li>Works better with Leopard. Core Data docs show up. Deprecated methods show up in the proper place (not as delegate methods).</li>
 <li>No more brushed metal.</li>
 <li>Known issue: Core Animation docs are not yet supported.</li>
 </ul>
 
 <h2>Version 0.97 (June 4, 2007)</h2>
 <ul>
-<li>This release was actually annnounced to cocoa-dev on March 19.  For some reason it took me two and a half months to update the web site.</li>
+<li>This release was actually annnounced to cocoa-dev on March 19. For some reason it took me two and a half months to update the web site.</li>
 <li>Fixed bug introduced in previous release, such that methods added via categories were not listed (e.g., the draw methods that AppKit adds to NSAttributedString).</li>
 <li>Fixed parsing of functions so they're listed in groups like they used to be.</li>
-<li>Methods that Apple has documented as deprecated (they are in a separate HTML file now) are listed with "(deprecated)" after their name.  Example: [NSApplication application:printFiles:].</li>
+<li>Methods that Apple has documented as deprecated (they are in a separate HTML file now) are listed with "(deprecated)" after their name. Example: [NSApplication application:printFiles:].</li>
 <li>You can use right-arrow and left-arrow to switch between the method-groups table ("General", "Class Methods", etc.) and the list-of-methods table.</li>
 <li>Known issue: Types &amp; Constants are still not parsed properly.</li>
 <li>Known issue: There is at least one deprecated instance method that I incorrectly categorize as a delegate method ([NSTypesetter lineFragmentRectForProposedRect:remainingRect:]).</li>
@@ -67,31 +67,31 @@
 
 <h2>Version 0.962 (March 4, 2007)</h2>
 <ul>
-<li>This release handles the changes introduced by the Feb 2007 documentation update.  Many thanks to Jeff Johnson for figuring out what needed to be fixed.</li>
+<li>This release handles the changes introduced by the Feb 2007 documentation update. Many thanks to Jeff Johnson for figuring out what needed to be fixed.</li>
 <li>Works better, though not perfectly, with the latest Leopard seed.</li>
 </ul>
 
 <h2>Version 0.961 (May 27, 2006)</h2>
 <ul>
-<li>This release handles the changes introduced by Xcode 2.3 and the May 2006 documentation update.  You need at least one of these to use version 0.961.</li>
+<li>This release handles the changes introduced by Xcode 2.3 and the May 2006 documentation update. You need at least one of these to use version 0.961.</li>
 <li>Known issue: The "Functions" and "Types & Constants" sections, are organized a little differently, and sometimes list an "Introduction" subsection with no content.</li>
 </ul>
 
 <h2>Version 0.96 (April 12, 2006)</h2>
 <ul>
-<li>This version of AppKiDo is a Universal build.  Thanks to Michael Clark and Dominik Wagner, who independently submitted changes.</li>
-<li>Thanks to Dominik Wagner for adding AppleScript support.  To see it in action, launch Script Editor and run the following script:<pre>
+<li>This version of AppKiDo is a Universal build. Thanks to Michael Clark and Dominik Wagner, who independently submitted changes.</li>
+<li>Thanks to Dominik Wagner for adding AppleScript support. To see it in action, launch Script Editor and run the following script:<pre>
 tell application "AppKiDo"
   search "textview"
 end tell</pre></li>
-<li>Fixed lingering funny characters due to incorrect UTF-8 encoding.  For example, search for "fonts" and you'll see one of the items had funny characters where an em dash should have been.  Serves me right for lazily leaving in calls to deprecated C string methods.</li>
-<li>Fixed the About box so the credits aren't editable.  (Thanks to Michael for pointing this out.)</li>
+<li>Fixed lingering funny characters due to incorrect UTF-8 encoding. For example, search for "fonts" and you'll see one of the items had funny characters where an em dash should have been. Serves me right for lazily leaving in calls to deprecated C string methods.</li>
+<li>Fixed the About box so the credits aren't editable. (Thanks to Michael for pointing this out.)</li>
 </ul>
 
 <h2>Version 0.951 (January 6, 2006)</h2>
 <ul>
 <li>Fixed two problems that showed up if you installed Xcode 2.2 or the latest doc update: (1) the "Delegate Methods" lists were empty, and (2) weird characters would appear in some docs.</li>
-<li>Removed the "Delegate protocols" mode from the Quicklist.  Decided it's more confusing than useful, since it's empty unless you've chosen WebKit in Preferences.  You can always discover the various kinds of WebKit delegate methods by selecting "WebKit" -&gt; "Informal Protocols" in the browser.</li>
+<li>Removed the "Delegate protocols" mode from the Quicklist. Decided it's more confusing than useful, since it's empty unless you've chosen WebKit in Preferences. You can always discover the various kinds of WebKit delegate methods by selecting "WebKit" -&gt; "Informal Protocols" in the browser.</li>
 <li>Added a couple of thank-yous to the credits in the About box.</li>
 </ul>
 
@@ -105,7 +105,7 @@ end tell</pre></li>
 
 <h2>Version 0.94 (June 9, 2005)</h2>
 <ul>
-<li>Fixed several memory errors that were causing crashes.  Things that could cause those crashes were: open and closing multiple windows; and launching AppKiDo with nothing in the system-wide Find pasteboard.</li>
+<li>Fixed several memory errors that were causing crashes. Things that could cause those crashes were: open and closing multiple windows; and launching AppKiDo with nothing in the system-wide Find pasteboard.</li>
 <li>Got "Use Selection For Find" working with WebView.</li>
 <li>Added SyncServices to the list of frameworks you can browse (Tiger only).</li>
 <li>Modified XML export to export frameworks in alphabetical order by framework name.</li>
@@ -127,26 +127,26 @@ end tell</pre></li>
 
 <h2>Version 0.92 (April 28, 2005)</h2>
 <ul>
-<li>This is a beta release.  Its main feature is that it runs on Tiger.</li>
+<li>This is a beta release. Its main feature is that it runs on Tiger.</li>
 <li>Fixed a prefs bug that caused some users to lose their Search settings between launches.</li>
-<li>In the method lists, if a method is added by a different framework than the class belongs to, that framework is indicated next to the method name.  Example: NSAttributedString -> -initWithURL:documentAttributes: is added by AppKit.</li>
+<li>In the method lists, if a method is added by a different framework than the class belongs to, that framework is indicated next to the method name. Example: NSAttributedString -> -initWithURL:documentAttributes: is added by AppKit.</li>
 <li>Got Find working again.</li>
-<li>Changed Command-G and Shift-Command-G to do Find Next and Find Previous instead of Search For Next and Search For Previous.  Got rid of Search For Next and Search For Previous.</li>
+<li>Changed Command-G and Shift-Command-G to do Find Next and Find Previous instead of Search For Next and Search For Previous. Got rid of Search For Next and Search For Previous.</li>
 </ul>
 
 <h2>Version 0.91 (July 5, 2004)</h2>
 <ul>
 <li>Now requires at least version 10.2.x of OS X.</li>
-<li>Changed Search back to being per-window instead of in a separate panel.  Search options are now in a popup menu instead of a bunch of checkboxes.</li>
+<li>Changed Search back to being per-window instead of in a separate panel. Search options are now in a popup menu instead of a bunch of checkboxes.</li>
 <li>Added "Reveal In Finder" item to the File menu.</li>
 <li>Fixed bug causing search to miss some results (for example, if you searched for "alertpanel" or "NSAlertDefaultReturn").</li>
 <li>Fixed bug causing wrong header file to be displayed.</li>
 <li>Fixed bug where "Reset Appearance Prefs" was clearing out all prefs, including Frameworks prefs.</li>
-<li>Fixed bug causing sections to be omitted from displayed docs.  For example, function docs were missing the "Description" section.  The "Availability" sections were also missing.</li>
+<li>Fixed bug causing sections to be omitted from displayed docs. For example, function docs were missing the "Description" section. The "Availability" sections were also missing.</li>
 <li>Function names show up properly punctuated (with parens) in the doc list.</li>
-<li>With at least one Jaguar incarnation of the ScreenSaver framework docs (I think the Dec 2002 DevTools), the function docs could not be read.  Now they can.</li>
+<li>With at least one Jaguar incarnation of the ScreenSaver framework docs (I think the Dec 2002 DevTools), the function docs could not be read. Now they can.</li>
 <li>Added "Hide Toolbar" and "Customize Toolbar..." items to the View menu.</li>
-<li>Added logic to check for different possible locations of the HTML docs.  The directory structure of the documentation has changed over various releases of the DevTools.  Most recently, it has been changed by the Xcode 1.5 beta.</li>
+<li>Added logic to check for different possible locations of the HTML docs. The directory structure of the documentation has changed over various releases of the DevTools. Most recently, it has been changed by the Xcode 1.5 beta.</li>
 <li>Changed wording of the red message in the Frameworks tab of the prefs panel to be less alarming and more accurate.</li>
 <li>Added remembering of windows' quicklist states between launches.</li>
 <li>Fixed bug causing "Inheritance" to show up at the top of the doc list above "Class Description" if there is also a "Class At A Glance" item (e.g., NSTableView).</li>
@@ -164,11 +164,11 @@ end tell</pre></li>
 <h2>Version 0.902 (April 9, 2004)</h2>
 <ul>
 <li>This is a maintenance release.</li>
-<li>Fixed a crash that could occur during parsing if non-Apple HTML files were encountered in the documentation tree.  Thanks to Fran Stubbs for helping me find this.</li>
+<li>Fixed a crash that could occur during parsing if non-Apple HTML files were encountered in the documentation tree. Thanks to Fran Stubbs for helping me find this.</li>
 <li>Fixed a bug where if you choose to include the AddressBook framework, ABActionDelegate would be listed as a top-level class instead of an informal protocol.</li>
-<li>Fixed a display bug where if you drag the mouse in the blank area of the Quicklist table, a hand cursor would appear in addition to your regular mouse pointer.  Thanks to David Dauer for pointing this out.</li>
+<li>Fixed a display bug where if you drag the mouse in the blank area of the Quicklist table, a hand cursor would appear in addition to your regular mouse pointer. Thanks to David Dauer for pointing this out.</li>
 <li>Fixed the bug where not all windows would update if you make a change to your Favorites list, whether by adding, removing, or re-ordering.</li>
-<li>Made Command-D the shortcut for adding a Favorite.  This is consistent with the "Add Bookmark" shortcuts in Safari, Mozilla, OmniWeb, etc.</li>
+<li>Made Command-D the shortcut for adding a Favorite. This is consistent with the "Add Bookmark" shortcuts in Safari, Mozilla, OmniWeb, etc.</li>
 <li>Removed the command-keys for "Find Next" and "Find Previous"; changed the "Search For Next" and "Search For Previous" menu items to use the Apple-standard Command-G and Command-Shift-G.</li>
 </ul>
 
@@ -179,15 +179,15 @@ end tell</pre></li>
     <ul>
     <li>The Quicklist drawer now has a "Favorites" mode that lets you define your own quicklist.</li>
     <li>Add a Favorite using the "Add xxx to Favorites" menu item.</li>
-    <li>Favorites can be any top-level topic -- i.e., any item in the browser view at the top of the window.  A class or protocol can be a Favorite.  So can the "Informal Protocols" topic for a framework.</li>
+    <li>Favorites can be any top-level topic -- i.e., any item in the browser view at the top of the window. A class or protocol can be a Favorite. So can the "Informal Protocols" topic for a framework.</li>
     <li>AppKiDo accepts Command-Shift-1 through Command-Shift-9 as shortcuts for the first nine favorites in your list.</li>
     </ul>
 </li>
 
 <li><b>Search</b>
     <ul>
-    <li>Search is now in a separate panel instead of the Quicklist drawer.  This makes it easier to read search results such as long method names that are too wide to fit in the Quicklist table.
-    <li>The Search panel displays a popup list of your last 20 search strings.  Search strings are not remembered between launches.</li>
+    <li>Search is now in a separate panel instead of the Quicklist drawer. This makes it easier to read search results such as long method names that are too wide to fit in the Quicklist table.
+    <li>The Search panel displays a popup list of your last 20 search strings. Search strings are not remembered between launches.</li>
     <li>Added option for case-sensitive search.</li>
     <li>Added a Search tool to the toolbar.</li>
     </ul>
@@ -195,7 +195,7 @@ end tell</pre></li>
 
 <li><b>Additional frameworks</b>
     <ul>
-    <li>Added documentation for four more frameworks: WebKit, AddressBook, PreferencePanes, and ScreenSaver.  If these frameworks are present on your system, you can choose the ones you want in the Prefs panel.  Note that more frameworks means longer launch times, because AppKiDo parses the headers and HTML files every time.</li>
+    <li>Added documentation for four more frameworks: WebKit, AddressBook, PreferencePanes, and ScreenSaver. If these frameworks are present on your system, you can choose the ones you want in the Prefs panel. Note that more frameworks means longer launch times, because AppKiDo parses the headers and HTML files every time.</li>
     <li>If the WebKit docs aren't in the new location, AppKiDo searches in the old location where earlier versions of WebKit installed them.</li>
     <li>Reorganized the Quicklist drawer to reflect the fact that we aren't just about Foundation and AppKit any more.</li>
     </ul>
@@ -206,7 +206,7 @@ end tell</pre></li>
     <li>AppKiDo now uses the brushed metal look.</li>
     <li>AppKiDo now remembers window locations on quit.</li>
     <li>There is a new "Remember This Window's Layout" menu item that lets you specify the size and position of newly opened windows.</li>
-    <li>AppKiDo now uses WebView to display doc text.  Pros: code examples now display properly; you can now select text from tables, like the tables used to display Constants.  Cons: "Find" and "Use Selection For Find" no longer work (I may switch to the Omni frameworks if I can't figure out how to fix this with WebKit).</li>
+    <li>AppKiDo now uses WebView to display doc text. Pros: code examples now display properly; you can now select text from tables, like the tables used to display Constants. Cons: "Find" and "Use Selection For Find" no longer work (I may switch to the Omni frameworks if I can't figure out how to fix this with WebKit).</li>
     <li>If WebKit is not available, AppKiDo falls back on NSTextView for displaying documentation.</li>
     <li>Command-clicking a link opens it in a new window.</li>
     <li>Removed Foundation/AppKit Functions from the toolbar.</li>
@@ -220,7 +220,7 @@ end tell</pre></li>
     <ul>
     <li>For classes that belong to multiple frameworks, the "Overview" list now shows the extra framework docs ("Class Description", etc.).</li>
     <li>Added a "Check For Newer Version" option to the application menu.</li>
-    <li>Added "Export Framework Database..." to the File menu.  This writes the structure of AppKiDo's internal database (but not the documentation itself) to an XML file.  I use this mainly for my own debugging, but others may find it useful.  For example, you could run it before and after a release of the Dev Tools to help spot API changes.</li>
+    <li>Added "Export Framework Database..." to the File menu. This writes the structure of AppKiDo's internal database (but not the documentation itself) to an XML file. I use this mainly for my own debugging, but others may find it useful. For example, you could run it before and after a release of the Dev Tools to help spot API changes.</li>
     </ul>
 </li>
 
@@ -238,14 +238,14 @@ end tell</pre></li>
 <li>You can now browse Types &amp; Constants.</li>
 <li>Changes to Find:
     <ul>
-    <li>You can now do a Find within the piece of documentation you are reading, using the standard Command-F/G/D command-keys.  Command-F opens a Find panel.</li>
+    <li>You can now do a Find within the piece of documentation you are reading, using the standard Command-F/G/D command-keys. Command-F opens a Find panel.</li>
     <li>The global find operation is now called Search, and uses Shift-Command keys.</li>
     <li>There is a new Find menu that contains the Search and Find operations.</li>
-    <li>The Search and Find text fields are synchronized with the system-wide find-pasteboard.  This means you can use Command-E on a word selected in some other Cocoa app, come back to AppKiDo, and hit Shift-Command-G to search for that word.</li>
+    <li>The Search and Find text fields are synchronized with the system-wide find-pasteboard. This means you can use Command-E on a word selected in some other Cocoa app, come back to AppKiDo, and hit Shift-Command-G to search for that word.</li>
     </ul>
 </li>
-<li>The class browser has been reorganized a bit.  I've added Types &amp; Constants and I've separated informal protocols into their own list.</li>
-<li>I've removed the "Not all versions will be free" sentence from the About box.  AppKiDo is freeware.  (I was going to ask for donations when the version number reached 1.0, but I've changed my mind.)</li>
+<li>The class browser has been reorganized a bit. I've added Types &amp; Constants and I've separated informal protocols into their own list.</li>
+<li>I've removed the "Not all versions will be free" sentence from the About box. AppKiDo is freeware. (I was going to ask for donations when the version number reached 1.0, but I've changed my mind.)</li>
 <li>Added a "Horizontal scroll bar" option to the text view's contextual menu.</li>
 </ul>
 
@@ -262,7 +262,7 @@ end tell</pre></li>
 <h2>Version 0.88 (January 25, 2003)</h2>
 <ul>
 <li>Added ability to list all of a class's documented methods, including inherited methods and methods declared in protocols.</li>
-<li>Added buttons that behave like the "Back", "Forward", and "Superclass" toolbar icons.  Right-clicking on these buttons brings up either a history menu or, in the case of the "Superclass" button, a menu of ancestor classes.</li>
+<li>Added buttons that behave like the "Back", "Forward", and "Superclass" toolbar icons. Right-clicking on these buttons brings up either a history menu or, in the case of the "Superclass" button, a menu of ancestor classes.</li>
 <li>Divided the "Navigation" menu into "View" and "Go".</li>
 <li>Modified the app icon.</li>
 </ul>
@@ -285,21 +285,21 @@ end tell</pre></li>
 
 <h2>Version 0.851 (August 29, 2002)</h2>
 <ul>
-<li>This is an interim patch release.  It fixes one bug: when running under Jaguar, delegate methods were not being listed.</li>
+<li>This is an interim patch release. It fixes one bug: when running under Jaguar, delegate methods were not being listed.</li>
 </ul>
 
 <h2>Version 0.85 (July 25, 2002)</h2>
 <ul>
-<li>Moved the "Lookup" drawer to the left-hand side, which is more natural for a nav-bar type of pane.  Now calling it the "Quicklist."</li>
-<li>Added Find capability to the Quicklist drawer.  Try Command-F, Command-E, Command-G, and Command-D.  Also try selecting a class name in the documentation and hitting Option-Command-F.</li>
-<li>Fixed a bug where nothing would happen if you clicked on the already-selected item in the Quicklist (formerly the "Lookup" drawer).  This was a bug because you might have changed the main window selection using history navigation.</li>
+<li>Moved the "Lookup" drawer to the left-hand side, which is more natural for a nav-bar type of pane. Now calling it the "Quicklist."</li>
+<li>Added Find capability to the Quicklist drawer. Try Command-F, Command-E, Command-G, and Command-D. Also try selecting a class name in the documentation and hitting Option-Command-F.</li>
+<li>Fixed a bug where nothing would happen if you clicked on the already-selected item in the Quicklist (formerly the "Lookup" drawer). This was a bug because you might have changed the main window selection using history navigation.</li>
 <li>All clickable links should work now, except those in HTML tables -- that seems to be an AppKit bug.</li>
 <li>Added menu items and keyboard equivalents for things -- see the "Navigation" menu.</li>
 <li>Added a "Superclass" button.
-<li>Removed the "--Columns" and "++Columns" buttons.  They are now menu items, with keyboard equivalents.</li>
+<li>Removed the "--Columns" and "++Columns" buttons. They are now menu items, with keyboard equivalents.</li>
 <li>Added "Show/Hide Browser" button to toggle visibility of the class browser.</li>
 <li>Renamed "Previous" and "Next" buttons to "Back" and "Forward".</li>
-<li>Now tries to display as many browser columns as possible.  For example, go to an object deep in the hierarchy like NSTextView, then a shallower object like NSArray.  In 0.84, the browser was scrolled over unnecessarily.</li>
+<li>Now tries to display as many browser columns as possible. For example, go to an object deep in the hierarchy like NSTextView, then a shallower object like NSArray. In 0.84, the browser was scrolled over unnecessarily.</li>
 <li>Cursor changes to a hand over clickable links.</li>
 <li>Now closes the splash window when done initializing.</li>
 <li>Toned down the icon.</li>

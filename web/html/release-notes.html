@@ -136,8 +136,8 @@
 <li>Added patch submitted by Gerriet Denkmann that fixes the problem with Xcode 3.2.4 due to the name change from "iPhoneOS" to "iOS", which caused AppKiDo not to recognize a valid dev tools folder as such.</li>
 <li>Includes changes from 0.985 sneakypeeks:
 	<ul>
-	<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one.  Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
-	<li>The bug Fritz found went deeper than I thought.  Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
+	<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one. Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
+	<li>The bug Fritz found went deeper than I thought. Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
 	<li>Added fix, sent by Michael Klein, for the fact that -[NSFont defaultLineHeightForFont:] is deprecated and isn't available to 64-bit applications.</li>
 	</ul>
 </li>
@@ -167,7 +167,7 @@
 <h2>Version 0.982 (December 11, 2008)</h2>
 <ul>
 <li>This is a bug-fix release, not the faster-loading version I promised earlier (that version will be 0.99).</li>
-<li>Now that the iPhone NDA has been lifted, AppKiDo-for-iPhone is available.  It is a separate app with a very slightly different icon.  Also, the AppKiDo source code is again available.  I don't think it contains anything all that secret, but I wanted to be on the safe side.</li>
+<li>Now that the iPhone NDA has been lifted, AppKiDo-for-iPhone is available. It is a separate app with a very slightly different icon. Also, the AppKiDo source code is again available. I don't think it contains anything all that secret, but I wanted to be on the safe side.</li>
 <li>Added nil checks to prevent some of the crashes that were reported in 0.981.</li>
 <li>Some docs weren't showing up -- for example, NSIndexPath UIKit Additions and UITextField's delegate methods.</li>
 <li>The "Classes with delegates" quicklist was missing classes that have a delegate property as opposed to an explicit setDelegate: method.</li>
@@ -178,18 +178,18 @@
 
 <h2>Version 0.981 (September 3, 2008)</h2>
 <ul>
-<li>Documentation for Core Animation classes now shows up.  I believe a few classes in other frameworks are also fixed.</li>
+<li>Documentation for Core Animation classes now shows up. I believe a few classes in other frameworks are also fixed.</li>
 <li>Documentation for properties now shows up.</li>
-<li>Hyperlinks work better, although links to Core Foundation docs still open a browser page.  Thanks to Gerriet Denkmann for help with links.</li>
+<li>Hyperlinks work better, although links to Core Foundation docs still open a browser page. Thanks to Gerriet Denkmann for help with links.</li>
 <li>You can specify the location of your Dev Tools if it isn't /Developer.</li>
 <li>More frameworks are supported if you use Xcode 3, which is recommended.</li>
 <li>The contextual menu in the doc pane now has an "Open Page in Browser" option, which is handy if you want to send feedback to Apple using the link at the bottom of the HTML page.</li>
-<li>Keyboard shortcuts have changed.  Command-(number) and Command-Option-(number) are now used to select items in the table of contents ("General", "Properties", "ALL Properties", "Classes", "ALL Classes", etc.).  The keyboard shortcut for selecting a Favorite is now Control-(number).</li>
+<li>Keyboard shortcuts have changed. Command-(number) and Command-Option-(number) are now used to select items in the table of contents ("General", "Properties", "ALL Properties", "Classes", "ALL Classes", etc.). The keyboard shortcut for selecting a Favorite is now Control-(number).</li>
 <li>In the prefs panel, you can "Select All" and "Deselect All" when specifying which frameworks to include.</li>
-<li>You can do a prefix search by ending your search string with "*".  This is not a general regex search, just a special case for prefixes.</li>
-<li><b>Note #1:</b> There was a 0.98 release, but it only went out to a handful of people as a beta.  This version fixes a performance bug that was found in 0.98.</li>
-<li><b>Note #2:</b> AppKiDo works best with Xcode 3.x.  It will work with 2.4 and 2.5, but some of the docs will be missing.</li>
-<li><b>Note #3:</b> I'll release the source code if Apple tells me I'm not violating the iPhone NDA by doing so (I've asked), or when the NDA gets lifted, whichever comes first.  At that time I will also release a compiled version that supports the iPhone SDK docs.  AppKiDo-for-iPhone will be a separate app that is compiled from the same code as regular AppKiDo except for a few #ifdefs.</li>
+<li>You can do a prefix search by ending your search string with "*". This is not a general regex search, just a special case for prefixes.</li>
+<li><b>Note #1:</b> There was a 0.98 release, but it only went out to a handful of people as a beta. This version fixes a performance bug that was found in 0.98.</li>
+<li><b>Note #2:</b> AppKiDo works best with Xcode 3.x. It will work with 2.4 and 2.5, but some of the docs will be missing.</li>
+<li><b>Note #3:</b> I'll release the source code if Apple tells me I'm not violating the iPhone NDA by doing so (I've asked), or when the NDA gets lifted, whichever comes first. At that time I will also release a compiled version that supports the iPhone SDK docs. AppKiDo-for-iPhone will be a separate app that is compiled from the same code as regular AppKiDo except for a few #ifdefs.</li>
 </ul>
 
 
