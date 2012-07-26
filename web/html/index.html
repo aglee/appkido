@@ -33,8 +33,8 @@
 
 <td>
 <ul style="margin-bottom: 8px;">
-<li><a href="AppKiDo-0.991.tgz">download <b>AppKiDo</b> 0.991</a></li>
-<li><a href="AppKiDo-for-iPhone-0.991.tgz">download <b>AppKiDo-for-iPhone</b> 0.991</a></li>
+<li><a href="AppKiDo-0.992.zip">download <b>AppKiDo</b> 0.992</a></li>
+<li><a href="AppKiDo-for-iPhone-0.992.zip">download <b>AppKiDo-for-iPhone</b> 0.992</a></li>
 <li><a href="http://github.com/aglee/appkido" target="_blank">source code</a> on GitHub</li>
 </ul>
 </td>
@@ -76,7 +76,7 @@
 
 <p><b>Requirements:</b></p>
 <ul>
-<li>Mac OS X 10.5 or higher</li>
+<li>Mac OS X 10.5 or higher <font color="red">[codesigned for Mountain Lion]</font></li>
 <li>Xcode 3.x or higher</li>
 </ul>
 
@@ -86,7 +86,7 @@
 <li><a href="#consolidated-list">Consolidated list of methods</a></li>
 <li><a href="#quicklists">Quicklists</a></li>
 <li><a href="#search">Search</a></li>
-<li><a href="#system-service">Method-aware system service</a> <font color="red">[new in 0.991]</font></li>
+<li><a href="#system-service">Search from anywhere ("method-aware")</a> <font color="red">[new]</font></li>
 <li><a href="#header-files">Header files</a></li>
 </ul>
 </td>
@@ -107,7 +107,7 @@
 <col width="400"/>
 
 <tr valign="top">
-    <td><p>AppKiDo presents the class hierarchy in a browser view.  You can see sibling classes at a glance and go up and down the hierarchy with a single click.  This is convenient because the method you're looking for is often in a superclass.</p>
+    <td><p>AppKiDo presents the class hierarchy in a view much like the Finder's "Columns" view.  You can see sibling classes at a glance and go up and down the hierarchy with a single click.  This is convenient because the method you're looking for is often in a superclass.</p>
     
     <p>If you are new to Cocoa, browse the class hierarchy to get acquainted with what's there and how it's organized.  If you are more experienced, you can explore branches of the hierarchy you never paid attention to before.</p></td>
 
@@ -158,7 +158,7 @@
 </table>
 
 <!-- --- system service --- -->
-<h2><a name="system-service">Method-aware system service</a></h2>
+<h2><a name="system-service">Search from anywhere ("method-aware")</a></h2>
 
 <table class="featuresTable">
 <col width="*"/>
@@ -166,7 +166,7 @@
 
 <tr valign="top">
     <td><p>AppKiDo provides a system service called "Look Up in AppKiDo". (In AppKiDo-for-iPhone it's "Look Up in AppKiDo-for-iPhone".) This allows you to search the docs from any application where you have selected some text.</p>
-    	<p>AppKiDo's service is "method-aware". If you select a message-send or method declaration, and then invoke the service, AppKiDo will detect the method name and search for that instead of the literal text you selected. This is useful for multi-argument methods where the pieces of the method name are intermingled with other text.</p>
+    	<p>AppKiDo's search service is "method-aware". If you select a message-send or method declaration, and then invoke the service, AppKiDo will detect the method name and search for that instead of the literal text you selected. This is useful for multi-argument methods where the pieces of the method name are intermingled with other text.</p>
     	<p>To invoke this service as quickly as possible, be sure to assign a hotkey to it in System Preferences > Keyboard > Keyboard Shortcuts > Services.</p>
     	<p>Feel free to use my <a href="https://github.com/aglee/appkido/blob/master/src/GlobalClasses/AKMethodNameExtractor.h" target="_blank">method-parsing class</a> in your own apps.</p>
     </td>
