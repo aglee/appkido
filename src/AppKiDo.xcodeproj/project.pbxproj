@@ -226,6 +226,16 @@
 		65B10A4209D7B6C300A8A637 /* AKMultiRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */; };
 		65B10A4409D7B6C300A8A637 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		65B10A4509D7B6C300A8A637 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734168FA0841F59C0027E6BD /* WebKit.framework */; };
+		730F68BF15C1478300E0B7B0 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BA15C1478300E0B7B0 /* FMDatabasePool.h */; };
+		730F68C015C1478300E0B7B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */; };
+		730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */; };
+		730F68C215C1478300E0B7B0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */; };
+		730F68C515C1502600E0B7B0 /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BE15C1478300E0B7B0 /* fmdb.m */; };
+		730F68C615C1502600E0B7B0 /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BE15C1478300E0B7B0 /* fmdb.m */; };
+		730F68C715C1502A00E0B7B0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */; };
+		730F68C815C1502C00E0B7B0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */; };
+		730F68C915C1503000E0B7B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */; };
+		730F68CA15C1503400E0B7B0 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BA15C1478300E0B7B0 /* FMDatabasePool.h */; };
 		731657930FE48AE70097F3A1 /* AKDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 731657910FE48AE70097F3A1 /* AKDevTools.h */; };
 		731657940FE48AE70097F3A1 /* AKDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 731657920FE48AE70097F3A1 /* AKDevTools.m */; };
 		731657BE0FE48DEC0097F3A1 /* AKDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 731657910FE48AE70097F3A1 /* AKDevTools.h */; };
@@ -418,7 +428,6 @@
 		7399B3400E632A5C001AE672 /* FrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73C7099306979F0E00509711 /* FrameworkInfo.plist */; };
 		7399B3410E632A5C001AE672 /* AppKiDo-source-intro.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */; };
 		7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
-		7399B3430E632A5C001AE672 /* README-fmdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 73D237070D4561C300EF7503 /* README-fmdb.txt */; };
 		7399B3470E632A5C001AE672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
 		7399B3490E632A5C001AE672 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
@@ -573,7 +582,6 @@
 		73D2370B0D4561C300EF7503 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237040D4561C300EF7503 /* FMDatabaseAdditions.m */; };
 		73D2370C0D4561C300EF7503 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237050D4561C300EF7503 /* FMResultSet.h */; };
 		73D2370D0D4561C300EF7503 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237060D4561C300EF7503 /* FMResultSet.m */; };
-		73D2370E0D4561C300EF7503 /* README-fmdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 73D237070D4561C300EF7503 /* README-fmdb.txt */; };
 		73D237270D4562BA00EF7503 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D237260D4562BA00EF7503 /* libsqlite3.dylib */; };
 		73D239CC0D4ABBA000EF7503 /* AKDevToolsUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D239CA0D4ABBA000EF7503 /* AKDevToolsUtils.h */; };
 		73D239CD0D4ABBA000EF7503 /* AKDevToolsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D239CB0D4ABBA000EF7503 /* AKDevToolsUtils.m */; };
@@ -686,6 +694,12 @@
 		730D3725060E774900ABA5E5 /* AKDelegateMethodDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDelegateMethodDoc.m; sourceTree = "<group>"; };
 		730D3733060E775600ABA5E5 /* AKNotificationDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNotificationDoc.h; sourceTree = "<group>"; };
 		730D3734060E775600ABA5E5 /* AKNotificationDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNotificationDoc.m; sourceTree = "<group>"; };
+		730F68BA15C1478300E0B7B0 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		730F68BE15C1478300E0B7B0 /* fmdb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmdb.m; sourceTree = "<group>"; };
+		730F68C415C1500500E0B7B0 /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		730FCBD00685758B0083160A /* AKDatabaseNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabaseNode.h; sourceTree = "<group>"; };
 		730FCBD10685758B0083160A /* AKDatabaseNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseNode.m; sourceTree = "<group>"; };
 		731657910FE48AE70097F3A1 /* AKDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDevTools.h; path = CocoaFrameworks/AKDevTools.h; sourceTree = "<group>"; };
@@ -1590,8 +1604,14 @@
 				73D237040D4561C300EF7503 /* FMDatabaseAdditions.m */,
 				73D237050D4561C300EF7503 /* FMResultSet.h */,
 				73D237060D4561C300EF7503 /* FMResultSet.m */,
+				730F68BA15C1478300E0B7B0 /* FMDatabasePool.h */,
+				730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */,
+				730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */,
+				730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */,
+				730F68BE15C1478300E0B7B0 /* fmdb.m */,
 				73A9A7C215B6DA110060E578 /* LICENSE.txt */,
 				73D237070D4561C300EF7503 /* README-fmdb.txt */,
+				730F68C415C1500500E0B7B0 /* README.markdown */,
 			);
 			path = fmdb;
 			sourceTree = "<group>";
@@ -1797,6 +1817,8 @@
 				738D41BD15B07EC6008950F6 /* AKAppVersion.h in Headers */,
 				73D59E8515B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */,
 				73D59E8B15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
+				730F68BF15C1478300E0B7B0 /* FMDatabasePool.h in Headers */,
+				730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1928,6 +1950,8 @@
 				738D41BE15B07EC6008950F6 /* AKAppVersion.h in Headers */,
 				73D59E8615B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */,
 				73D59E8C15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
+				730F68C815C1502C00E0B7B0 /* FMDatabaseQueue.h in Headers */,
+				730F68CA15C1503400E0B7B0 /* FMDatabasePool.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2031,7 +2055,6 @@
 				65B109D809D7B6C300A8A637 /* FrameworkInfo.plist in Resources */,
 				65B109D909D7B6C300A8A637 /* AppKiDo-source-intro.txt in Resources */,
 				73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */,
-				73D2370E0D4561C300EF7503 /* README-fmdb.txt in Resources */,
 				7399B3FB0E638B54001AE672 /* app-icon-iphone.icns in Resources */,
 				73C891DE14E10B7600A54FF6 /* AppKiDo.xib in Resources */,
 				73C891DF14E10B7600A54FF6 /* DevToolsPath.xib in Resources */,
@@ -2076,7 +2099,6 @@
 				7399B3400E632A5C001AE672 /* FrameworkInfo.plist in Resources */,
 				7399B3410E632A5C001AE672 /* AppKiDo-source-intro.txt in Resources */,
 				7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */,
-				7399B3430E632A5C001AE672 /* README-fmdb.txt in Resources */,
 				73D07C0914E11D2700383E06 /* AppKiDo.xib in Resources */,
 				73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */,
 				73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */,
@@ -2222,6 +2244,9 @@
 				738D41BF15B07EC6008950F6 /* AKAppVersion.m in Sources */,
 				73D59E8715B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */,
 				73D59E8D15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
+				730F68C015C1478300E0B7B0 /* FMDatabasePool.m in Sources */,
+				730F68C215C1478300E0B7B0 /* FMDatabaseQueue.m in Sources */,
+				730F68C515C1502600E0B7B0 /* fmdb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2353,6 +2378,9 @@
 				738D41C015B07EC6008950F6 /* AKAppVersion.m in Sources */,
 				73D59E8815B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */,
 				73D59E8E15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
+				730F68C615C1502600E0B7B0 /* fmdb.m in Sources */,
+				730F68C715C1502A00E0B7B0 /* FMDatabaseQueue.m in Sources */,
+				730F68C915C1503000E0B7B0 /* FMDatabasePool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
