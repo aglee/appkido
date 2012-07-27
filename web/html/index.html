@@ -29,7 +29,7 @@
 
 <!-- ========== TOP-OF-PAGE LINKS ========== -->
 <table border="0">
-<tr valign="top">
+<tr>
 
 <td>
 <ul style="margin-bottom: 8px;">
@@ -58,16 +58,72 @@
 </tr>
 </table>
 <!-- ========== END, TOP-OF-PAGE LINKS ========== -->
+<!-- experiment
+<table class="topOfPageTable">
+<tr>
+<td>
+	<table>
+	<tr>
+		<th>Downloads</th>
+	</tr>
+	<tr>
+		<td><a href="AppKiDo-0.992.zip">AppKiDo 0.992</a></td>
+	</tr>
+	<tr>
+		<td><a href="AppKiDo-for-iPhone-0.992.zip">AppKiDo-for-iPhone 0.992</a></td>
+	</tr>
+	<tr>
+		<td><a href="http://github.com/aglee/appkido" target="_blank">Source code</a> on GitHub</td>
+	</tr>
+	</table>
+</td>
 
+<td>
+	<table>
+	<tr>
+		<th>Support</th>
+	</tr>
+	<tr>
+		<td><a href="release-notes.html">Release notes</a></td>
+	</tr>
+	<tr>
+		<td><a href="faq.html">FAQ</a></td>
+	</tr>
+	<tr>
+		<td><a href="sneakypeeks.html">Sneakypeeks</a></td>
+	</tr>
+	</table>
+</td>
 
-<div style="width: 800px;">
+<td>
+	<table>
+	<tr>
+		<th colspan="2">Contact</th>
+	</tr>
+	<tr>
+		<td style="text-align: right; padding-right: 0px;">Email:</td>
+		<td><a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">Andy Lee</a></td>
+	</tr>
+	<tr>
+		<td style="text-align: right; padding-right: 0px;">Twitter:</td>
+		<td><a href="https://twitter.com/cocoadog" target="_blank">@cocoadog</a></td>
+	</tr>
+	<tr>
+		<td style="text-align: right; padding-right: 0px;">Blog:</td>
+		<td><a href="http://notesfromandy.com/" target="_blank">Notes From Andy</a></td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+-->
 
 
 <!-- ========== WHAT IS APPKIDO? ========== -->
 <h2>What is AppKiDo?</h2>
 
 <table>
-<tr valign="top">
+<tr>
 
 <td>
 <p><b>AppKiDo</b> is an API documentation browser for Cocoa programmers. It helps you quickly find the doc you want, whether it's for a class, protocol, function, type, or constant. AppKiDo parses the headers and HTML doc files that were installed with your Developer Tools. It presents the results in a form that is easy to navigate.</p>
@@ -86,12 +142,12 @@
 <li><a href="#consolidated-list">Consolidated list of methods</a></li>
 <li><a href="#quicklists">Quicklists</a></li>
 <li><a href="#search">Search</a></li>
-<li><a href="#system-service">Search from anywhere ("method-aware")</a> <font color="red">[new]</font></li>
+<li><a href="#system-service">Search from anywhere (method-aware")</a> <font color="red">[new]</font></li>
 <li><a href="#header-files">Header files</a></li>
 </ul>
 </td>
 
-<td><!-- <img src="images/docs.png"></img> --><a href="screenshot.html"><img src="images/screenshot-smaller.png" width="390"></img></a><br/><center><i><font size="-1">Click to see larger image</font></i></center></td>
+<td class="featuresRightColumn"><div><a href="screenshot.html"><img src="images/screenshot-smaller.png" width="390"></img></a><div class="imageCaption">Click to see larger image</div></div></td>
 
 </tr>
 </table>
@@ -103,15 +159,12 @@
 <h2><a name="class-hierarchy">Class hierarchy</a></h2>
 
 <table class="featuresTable">
-<col width="*"/>
-<col width="400"/>
-
-<tr valign="top">
+<tr>
     <td><p>AppKiDo presents the class hierarchy in a view much like the Finder's "Columns" view. You can see sibling classes at a glance and go up and down the hierarchy with a single click. This is convenient because the method you're looking for is often in a superclass.</p>
     
     <p>If you are new to Cocoa, browse the class hierarchy to get acquainted with what's there and how it's organized. If you are more experienced, you can explore branches of the hierarchy you never paid attention to before.</p></td>
 
-    <td><img src="images/browser.png"></img></td>
+    <td class="featuresRightColumn"><img src="images/browser.png"></img></td>
 </tr>
 </table>
 
@@ -119,13 +172,10 @@
 <h2><a name="consolidated-list">Consolidated list of methods</a></h2>
 
 <table class="featuresTable">
-<col width="*"/>
-<col width="400"/>
-
-<tr valign="top">
+<tr>
     <td><p>AppKiDo can display a consolidated list of all methods a class implements, including inherited methods, methods that satisfy a protocol, and methods added by a framework other than the class's main framework (for example, the drawing methods that AppKit adds to NSAttributedString). This can help you understand the complete behavior of a class, and it's another quick way to find methods that are in a superclass.</p></td>
 
-    <td><img src="images/consolidated.png"></img></td>
+    <td class="featuresRightColumn"><img src="images/consolidated.png"></img></td>
 </tr>
 </table>
 
@@ -133,13 +183,10 @@
 <h2><a name="quicklists">Quicklists</a></h2>
 
 <table class="featuresTable">
-<col width="*"/>
-<col width="400"/>
-
-<tr valign="top">
+<tr>
     <td><p>AppKiDo provides handy "quicklists" of logically related groups of classes. This puts many frequently used classes a click or two away. It can also help you understand some concepts. For example, if you find delegates confusing, it may help to browse "Classes with delegates" to see all the ways a delegate is used.</p></td>
 
-    <td><img src="images/quicklists.png"></img></td>
+    <td class="featuresRightColumn"><img src="images/quicklists.png"></img></td>
 </tr>
 </table>
 
@@ -147,13 +194,10 @@
 <h2><a name="search">Search</a></h2>
 
 <table class="featuresTable">
-<col width="*"/>
-<col width="400"/>
-
-<tr valign="top">
+<tr>
     <td><p>If you're not sure what you're looking for, AppKiDo can search for names of API constructs. For example, if you're wondering how to manage cursors, search for "cursor". Apple has conveniently put the word "cursor" in the names of most things related to cursors.</p></td>
 
-    <td><img src="images/search.png"></img></td>
+    <td class="featuresRightColumn"><img src="images/search.png"></img></td>
 </tr>
 </table>
 
@@ -161,17 +205,19 @@
 <h2><a name="system-service">Search from anywhere ("method-aware")</a></h2>
 
 <table class="featuresTable">
-<col width="*"/>
-<col width="400"/>
-
-<tr valign="top">
+<tr>
     <td><p>AppKiDo provides a system service called "Look Up in AppKiDo". (In AppKiDo-for-iPhone it's "Look Up in AppKiDo-for-iPhone".) This allows you to search the docs from any application where you have selected some text.</p>
     	<p>AppKiDo's search service is "method-aware". If you select a message-send or method declaration, and then invoke the service, AppKiDo will detect the method name and search for that instead of the literal text you selected. This is useful for multi-argument methods where the pieces of the method name are intermingled with other text.</p>
     	<p>To invoke this service as quickly as possible, be sure to assign a hotkey to it in System Preferences > Keyboard > Keyboard Shortcuts > Services.</p>
     	<p>Feel free to use my <a href="https://github.com/aglee/appkido/blob/master/src/GlobalClasses/AKMethodNameExtractor.h" target="_blank">method-parsing class</a> in your own apps.</p>
     </td>
 
-    <td><img src="images/services-appkido.png"><br/><br/><img src="images/method-declaration.png"><br/><br/><img src="images/method-search.png"></img></td>
+    <td class="featuresRightColumn"><span class="imageIntro">1. Select these lines:</span><br/>
+    	<img src="images/method-declaration.png"><br/><br/>
+    	<span class="imageIntro">2. Invoke the service:</span><br/>
+    	<img src="images/services-appkido.png"><br/><br/>
+    	<span class="imageIntro">3. AppKiDo searches for the method:</span><br/>
+    	<img src="images/method-search.png"></img></td>
 </tr>
 </table>
 
@@ -179,13 +225,10 @@
 <h2><a name="header-files">Header files</a></h2>
 
 <table class="featuresTable">
-<col width="*"/>
-<col width="400"/>
-
-<tr valign="top">
+<tr>
     <td><p>AppKiDo can open the header file for any Cocoa class. Sometimes there is useful information in the headers that is not available in the documentation.</p></td>
 
-    <td><img src="images/header.png"></img></td>
+    <td class="featuresRightColumn"><img src="images/header.png"></img></td>
 </tr>
 
 </table>
@@ -194,7 +237,7 @@
 <!-- ========== Free ========== -->
 <h2>Free</h2>
 <table border="0" width="100%">
-<tr valign="top">
+<tr>
 
 <td>
 <!-- --- free --- -->
@@ -210,7 +253,7 @@
 <table class="donationBox" style="margin-bottom: 8px;">
 <tr><td class="donationBoxHeading"><nobr>Donate using PayPal</nobr></td></tr>
 
-<tr valign="top">
+<tr>
 
 <td>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="margin-bottom: 0px;">
@@ -232,7 +275,7 @@
 <table class="donationBox" style="margin-bottom: 0px;">
 <tr><td class="donationBoxHeading"><nobr>Donate using Google Checkout</nobr></td></tr>
 
-<tr valign="top">
+<tr>
 
 <td>
 <form method="POST"
@@ -261,9 +304,6 @@ height="46" width="180"/>
 </td>
 </tr>
 </table>
-
-
-</div>
 
 
 </body>

@@ -1,8 +1,10 @@
 body
 {
+	width: 820px;
 	margin-top: 40px;
 	margin-left: 60px;
 	margin-bottom: 100px;
+	font-family: Verdana, Helvetica, sans-serif;
 }
 
 h1
@@ -16,6 +18,21 @@ h2
 	margin-bottom: 4px;
 }
 
+p
+{
+	font-size: 13px;
+}
+
+tr
+{
+	vertical-align: top;
+}
+
+li
+{
+	font-size: 13px;
+}
+
 dt
 {
 	font-weight: bold;
@@ -24,7 +41,54 @@ dt
 img
 {
 	border: solid #DDDDDD 1px;
-	margin-left: 8px;
+	padding: 2px 2px;
+}
+
+table.topOfPageTable
+{
+	margin-bottom: 16px;
+}
+
+table.topOfPageTable tr td table
+{
+	border: solid #DDDDDD 1px;
+	font-size: 13px;
+	text-align: left;
+/*	padding-left: 4px;
+	padding-right: 18px;*/
+}
+
+table.topOfPageTable tr td table th
+{
+	color: #555555;
+	background-color: #DDDDDD;
+	padding-left: 4px;
+	padding-right: 12px;
+}
+
+table.topOfPageTable tr td table td
+{
+	padding-left: 4px;
+	padding-right: 12px;
+}
+
+td.featuresRightColumn
+{
+	width: 410px;
+	padding-left: 8px;
+}
+
+.imageIntro
+{
+	font-size: 12px;
+	font-style: italic;
+}
+
+.imageCaption
+{
+	font-size: 12px;
+	font-style: italic;
+	text-align: center;
 }
 
 .navButton
