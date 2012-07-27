@@ -10,30 +10,30 @@
 <h1><a href="index.html">AppKiDo</a> version history</h1>
 
 <!-- ========== TOP-OF-PAGE LINKS ========== -->
-<table border="0">
+<table>
 <tr>
 
 <td>
 <ul style="margin-bottom: 8px;">
-<li><a href="AppKiDo-0.992.zip">download <b>AppKiDo</b> 0.992</a></li>
-<li><a href="AppKiDo-for-iPhone-0.992.zip">download <b>AppKiDo-for-iPhone</b> 0.992</a></li>
-<li><a href="http://github.com/aglee/appkido" target="_blank">source code</a> on GitHub</li>
+<li><a href="AppKiDo-0.992.zip">Download <b>AppKiDo</b> 0.992</a></li>
+<li><a href="AppKiDo-for-iPhone-0.992.zip">Download <b>AppKiDo-for-iPhone</b> 0.992</a></li>
+<li><a href="http://github.com/aglee/appkido" target="_blank">Source code</a> on GitHub</li>
 </ul>
 </td>
 
 <td>
 <ul>
-<li><a href="release-notes.html">release notes</a></li>
-<li><a href="sneakypeeks.html">sneakypeeks</a></li>
+<li><a href="release-notes.html">Release notes</a></li>
+<li><a href="sneakypeeks.html">Sneakypeeks</a></li>
 <li><a href="faq.html">FAQ</a></li>
 </ul>
 </td>
 
 <td>
 <ul>
-<li><a href="http://notesfromandy.com/" target="_blank">blog</a></li>
+<li><a href="http://notesfromandy.com/" target="_blank">Blog</a></li>
 <li><a href="https://twitter.com/cocoadog" target="_blank">@cocoadog</a></li>
-<li><a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">email</a> to Andy Lee</li>
+<li><a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">Email</a> to Andy Lee</li>
 </ul>
 </td>
 
@@ -99,98 +99,6 @@
 <p>This service assumes well-formed Objective-C. You might get unexpected results otherwise. If there are nested messages, it uses the top-level one. The algorithm mainly looks at punctuation -- delimiters like brackets and a few other characters that need special treatment. The basic idea is that it ignores anything between delimiters, like <code>(blah blah blah)</code>, <code>[blah blah blah]</code>, or <code>{blah blah blah}</code>. For this reason it should work if your selected code contains blocks or the new object literals.</p>
 
 <p>If you use the "Look Up" service, remember to assign a hotkey in System Preferences > Keyboard > Keyboard Shortcuts > Services for maximum convenience.</p>
-
-
-<h2>Version 0.988 (Feb 7, 2012)</h2>
-<ul>
-<li>Fixed corrupted nib files and converted them to xibs.</li>
-</ul>
-
-
-<h2>Version 0.987 (Feb 6, 2012)</h2>
-<ul>
-<li>Fixed (at least for me) the bug where NSFileVersion wasn't appearing.</li>
-<li>Fixed bug where docs for NSFetchedResultsControllerDelegate weren't appearing.</li>
-<li>Made version number selectable in the About window.</li>
-</ul>
-
-
-<h2>Version 0.986 (Feb 2, 2012)</h2>
-<ul>
-<li>This is a bug fix release.</li>
-<li>Fixed an exception that occurs when you use the contextual menu in the doc view and there is no doc (e.g., when you select NSFileWrapper &gt; Class Methods -- NSFileWrapper doesn't have class methods).</li>
-<li>Includes changes from 0.986 sneakypeeks:
-	<ul>
-		<li>Now works with Xcode 4.</li>
-		<li>Fixed a problem with 10.4.</li>
-		<li>Fixed a rarely occurring crash on quit. (Could reproduce by selecting CGEventTapIsEnabled before quitting.)</li>
-		<li>Now displaying more info about Dev Tools directories and why they are or aren't recognized as such.</li>
-		<li>Fixes for 64-bit (NSInteger instead of int).</li>
-	</ul>
-</li>
-</ul>
-
-
-<h2>Version 0.985 (September 25, 2010)</h2>
-<ul>
-<li>Added patch submitted by Gerriet Denkmann that fixes the problem with Xcode 3.2.4 due to the name change from "iPhoneOS" to "iOS", which caused AppKiDo not to recognize a valid dev tools folder as such.</li>
-<li>Includes changes from 0.985 sneakypeeks:
-	<ul>
-	<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one. Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
-	<li>The bug Fritz found went deeper than I thought. Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
-	<li>Added fix, sent by Michael Klein, for the fact that -[NSFont defaultLineHeightForFont:] is deprecated and isn't available to 64-bit applications.</li>
-	</ul>
-</li>
-</ul>
-
-
-<h2>Version 0.984 (April 8, 2010)</h2>
-<ul>
-<li>Added Jeff Johnson's fix for a problem with the latest 3.2 docs whereby no docs would appear.</li>
-</ul>
-
-
-<h2>Version 0.983 (August 28, 2009)</h2>
-<ul>
-<li>Works with the Xcode 3.2 docs (i.e., Snow Leopard).</li>
-<li>Added NSDate to the "Strings, data, collections" quicklist.</li>
-<li>If you switch to a different app while AppKiDo is loading, you won't get AppKiDo windows popping up in front when it's done loading.</li>
-<li>Changed to look for docs in the right place when the Dev Tools version is 2.5 and the Dev Tools directory is not /Developer.</li>
-<li>Added a popup button in prefs so you can choose between iPhone SDKs if you have more than one installed.</li>
-<li>Fixed bug where links to http: pages (like the sample code links in +stringWithString:) weren't going anywhere.</li>
-<li>Fixed bug causing DOM classes to show up as root classes.</li>
-<li>When you do a search, jumps to the first search result that has the search string as a prefix, if there is one.</li>
-<li>Staggers placement of new windows.</li>
-</ul>
-
-
-<h2>Version 0.982 (December 11, 2008)</h2>
-<ul>
-<li>This is a bug-fix release, not the faster-loading version I promised earlier (that version will be 0.99).</li>
-<li>Now that the iPhone NDA has been lifted, AppKiDo-for-iPhone is available. It is a separate app with a very slightly different icon. Also, the AppKiDo source code is again available. I don't think it contains anything all that secret, but I wanted to be on the safe side.</li>
-<li>Added nil checks to prevent some of the crashes that were reported in 0.981.</li>
-<li>Some docs weren't showing up -- for example, NSIndexPath UIKit Additions and UITextField's delegate methods.</li>
-<li>The "Classes with delegates" quicklist was missing classes that have a delegate property as opposed to an explicit setDelegate: method.</li>
-<li>Fixed the Spaces bug where a new window would be created every time you switch to the space containing AppKiDo.</li>
-<li>Known issue: a few deprecated methods show up in "Delegate Methods" section -- for example, [NSData deserializeAlignedBytesLengthAtCursor:].</li>
-</ul>
-
-
-<h2>Version 0.981 (September 3, 2008)</h2>
-<ul>
-<li>Documentation for Core Animation classes now shows up. I believe a few classes in other frameworks are also fixed.</li>
-<li>Documentation for properties now shows up.</li>
-<li>Hyperlinks work better, although links to Core Foundation docs still open a browser page. Thanks to Gerriet Denkmann for help with links.</li>
-<li>You can specify the location of your Dev Tools if it isn't /Developer.</li>
-<li>More frameworks are supported if you use Xcode 3, which is recommended.</li>
-<li>The contextual menu in the doc pane now has an "Open Page in Browser" option, which is handy if you want to send feedback to Apple using the link at the bottom of the HTML page.</li>
-<li>Keyboard shortcuts have changed. Command-(number) and Command-Option-(number) are now used to select items in the table of contents ("General", "Properties", "ALL Properties", "Classes", "ALL Classes", etc.). The keyboard shortcut for selecting a Favorite is now Control-(number).</li>
-<li>In the prefs panel, you can "Select All" and "Deselect All" when specifying which frameworks to include.</li>
-<li>You can do a prefix search by ending your search string with "*". This is not a general regex search, just a special case for prefixes.</li>
-<li><b>Note #1:</b> There was a 0.98 release, but it only went out to a handful of people as a beta. This version fixes a performance bug that was found in 0.98.</li>
-<li><b>Note #2:</b> AppKiDo works best with Xcode 3.x. It will work with 2.4 and 2.5, but some of the docs will be missing.</li>
-<li><b>Note #3:</b> I'll release the source code if Apple tells me I'm not violating the iPhone NDA by doing so (I've asked), or when the NDA gets lifted, whichever comes first. At that time I will also release a compiled version that supports the iPhone SDK docs. AppKiDo-for-iPhone will be a separate app that is compiled from the same code as regular AppKiDo except for a few #ifdefs.</li>
-</ul>
 
 
 </td></tr></table>

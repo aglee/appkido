@@ -10,30 +10,30 @@
 <h1><a href="index.html">AppKiDo</a> version history - old</h1>
 
 <!-- ========== TOP-OF-PAGE LINKS ========== -->
-<table border="0">
+<table>
 <tr>
 
 <td>
 <ul style="margin-bottom: 8px;">
-<li><a href="AppKiDo-0.992.zip">download <b>AppKiDo</b> 0.992</a></li>
-<li><a href="AppKiDo-for-iPhone-0.992.zip">download <b>AppKiDo-for-iPhone</b> 0.992</a></li>
-<li><a href="http://github.com/aglee/appkido" target="_blank">source code</a> on GitHub</li>
+<li><a href="AppKiDo-0.992.zip">Download <b>AppKiDo</b> 0.992</a></li>
+<li><a href="AppKiDo-for-iPhone-0.992.zip">Download <b>AppKiDo-for-iPhone</b> 0.992</a></li>
+<li><a href="http://github.com/aglee/appkido" target="_blank">Source code</a> on GitHub</li>
 </ul>
 </td>
 
 <td>
 <ul>
-<li><a href="release-notes.html">release notes</a></li>
-<li><a href="sneakypeeks.html">sneakypeeks</a></li>
+<li><a href="release-notes.html">Release notes</a></li>
+<li><a href="sneakypeeks.html">Sneakypeeks</a></li>
 <li><a href="faq.html">FAQ</a></li>
 </ul>
 </td>
 
 <td>
 <ul>
-<li><a href="http://notesfromandy.com/" target="_blank">blog</a></li>
+<li><a href="http://notesfromandy.com/" target="_blank">Blog</a></li>
 <li><a href="https://twitter.com/cocoadog" target="_blank">@cocoadog</a></li>
-<li><a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">email</a> to Andy Lee</li>
+<li><a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">Email</a> to Andy Lee</li>
 </ul>
 </td>
 
@@ -47,12 +47,105 @@
 
 <table><tr><td>
 
+<h2>Version 0.988 (Feb 7, 2012)</h2>
+<ul>
+<li>Fixed corrupted nib files and converted them to xibs.</li>
+</ul>
+
+
+<h2>Version 0.987 (Feb 6, 2012)</h2>
+<ul>
+<li>Fixed (at least for me) the bug where NSFileVersion wasn't appearing.</li>
+<li>Fixed bug where docs for NSFetchedResultsControllerDelegate weren't appearing.</li>
+<li>Made version number selectable in the About window.</li>
+</ul>
+
+
+<h2>Version 0.986 (Feb 2, 2012)</h2>
+<ul>
+<li>This is a bug fix release.</li>
+<li>Fixed an exception that occurs when you use the contextual menu in the doc view and there is no doc (e.g., when you select NSFileWrapper &gt; Class Methods -- NSFileWrapper doesn't have class methods).</li>
+<li>Includes changes from 0.986 sneakypeeks:
+	<ul>
+		<li>Now works with Xcode 4.</li>
+		<li>Fixed a problem with 10.4.</li>
+		<li>Fixed a rarely occurring crash on quit. (Could reproduce by selecting CGEventTapIsEnabled before quitting.)</li>
+		<li>Now displaying more info about Dev Tools directories and why they are or aren't recognized as such.</li>
+		<li>Fixes for 64-bit (NSInteger instead of int).</li>
+	</ul>
+</li>
+</ul>
+
+
+<h2>Version 0.985 (September 25, 2010)</h2>
+<ul>
+<li>Added patch submitted by Gerriet Denkmann that fixes the problem with Xcode 3.2.4 due to the name change from "iPhoneOS" to "iOS", which caused AppKiDo not to recognize a valid dev tools folder as such.</li>
+<li>Includes changes from 0.985 sneakypeeks:
+	<ul>
+	<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one. Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
+	<li>The bug Fritz found went deeper than I thought. Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
+	<li>Added fix, sent by Michael Klein, for the fact that -[NSFont defaultLineHeightForFont:] is deprecated and isn't available to 64-bit applications.</li>
+	</ul>
+</li>
+</ul>
+
+
+<h2>Version 0.984 (April 8, 2010)</h2>
+<ul>
+<li>Added Jeff Johnson's fix for a problem with the latest 3.2 docs whereby no docs would appear.</li>
+</ul>
+
+
+<h2>Version 0.983 (August 28, 2009)</h2>
+<ul>
+<li>Works with the Xcode 3.2 docs (i.e., Snow Leopard).</li>
+<li>Added NSDate to the "Strings, data, collections" quicklist.</li>
+<li>If you switch to a different app while AppKiDo is loading, you won't get AppKiDo windows popping up in front when it's done loading.</li>
+<li>Changed to look for docs in the right place when the Dev Tools version is 2.5 and the Dev Tools directory is not /Developer.</li>
+<li>Added a popup button in prefs so you can choose between iPhone SDKs if you have more than one installed.</li>
+<li>Fixed bug where links to http: pages (like the sample code links in +stringWithString:) weren't going anywhere.</li>
+<li>Fixed bug causing DOM classes to show up as root classes.</li>
+<li>When you do a search, jumps to the first search result that has the search string as a prefix, if there is one.</li>
+<li>Staggers placement of new windows.</li>
+</ul>
+
+
+<h2>Version 0.982 (December 11, 2008)</h2>
+<ul>
+<li>This is a bug-fix release, not the faster-loading version I promised earlier (that version will be 0.99).</li>
+<li>Now that the iPhone NDA has been lifted, AppKiDo-for-iPhone is available. It is a separate app with a very slightly different icon. Also, the AppKiDo source code is again available. I don't think it contains anything all that secret, but I wanted to be on the safe side.</li>
+<li>Added nil checks to prevent some of the crashes that were reported in 0.981.</li>
+<li>Some docs weren't showing up -- for example, NSIndexPath UIKit Additions and UITextField's delegate methods.</li>
+<li>The "Classes with delegates" quicklist was missing classes that have a delegate property as opposed to an explicit setDelegate: method.</li>
+<li>Fixed the Spaces bug where a new window would be created every time you switch to the space containing AppKiDo.</li>
+<li>Known issue: a few deprecated methods show up in "Delegate Methods" section -- for example, [NSData deserializeAlignedBytesLengthAtCursor:].</li>
+</ul>
+
+
+<h2>Version 0.981 (September 3, 2008)</h2>
+<ul>
+<li>Documentation for Core Animation classes now shows up. I believe a few classes in other frameworks are also fixed.</li>
+<li>Documentation for properties now shows up.</li>
+<li>Hyperlinks work better, although links to Core Foundation docs still open a browser page. Thanks to Gerriet Denkmann for help with links.</li>
+<li>You can specify the location of your Dev Tools if it isn't /Developer.</li>
+<li>More frameworks are supported if you use Xcode 3, which is recommended.</li>
+<li>The contextual menu in the doc pane now has an "Open Page in Browser" option, which is handy if you want to send feedback to Apple using the link at the bottom of the HTML page.</li>
+<li>Keyboard shortcuts have changed. Command-(number) and Command-Option-(number) are now used to select items in the table of contents ("General", "Properties", "ALL Properties", "Classes", "ALL Classes", etc.). The keyboard shortcut for selecting a Favorite is now Control-(number).</li>
+<li>In the prefs panel, you can "Select All" and "Deselect All" when specifying which frameworks to include.</li>
+<li>You can do a prefix search by ending your search string with "*". This is not a general regex search, just a special case for prefixes.</li>
+<li><b>Note #1:</b> There was a 0.98 release, but it only went out to a handful of people as a beta. This version fixes a performance bug that was found in 0.98.</li>
+<li><b>Note #2:</b> AppKiDo works best with Xcode 3.x. It will work with 2.4 and 2.5, but some of the docs will be missing.</li>
+<li><b>Note #3:</b> I'll release the source code if Apple tells me I'm not violating the iPhone NDA by doing so (I've asked), or when the NDA gets lifted, whichever comes first. At that time I will also release a compiled version that supports the iPhone SDK docs. AppKiDo-for-iPhone will be a separate app that is compiled from the same code as regular AppKiDo except for a few #ifdefs.</li>
+</ul>
+
+
 <h2>Version 0.971 (January 3, 2008)</h2>
 <ul>
 <li>Works better with Leopard. Core Data docs show up. Deprecated methods show up in the proper place (not as delegate methods).</li>
 <li>No more brushed metal.</li>
 <li>Known issue: Core Animation docs are not yet supported.</li>
 </ul>
+
 
 <h2>Version 0.97 (June 4, 2007)</h2>
 <ul>
@@ -64,6 +157,7 @@
 <li>Known issue: Types &amp; Constants are still not parsed properly.</li>
 <li>Known issue: There is at least one deprecated instance method that I incorrectly categorize as a delegate method ([NSTypesetter lineFragmentRectForProposedRect:remainingRect:]).</li>
 </ul>
+
 
 <h2>Version 0.962 (March 4, 2007)</h2>
 <ul>
@@ -77,6 +171,7 @@
 <li>Known issue: The "Functions" and "Types & Constants" sections, are organized a little differently, and sometimes list an "Introduction" subsection with no content.</li>
 </ul>
 
+
 <h2>Version 0.96 (April 12, 2006)</h2>
 <ul>
 <li>This version of AppKiDo is a Universal build. Thanks to Michael Clark and Dominik Wagner, who independently submitted changes.</li>
@@ -88,12 +183,14 @@ end tell</pre></li>
 <li>Fixed the About box so the credits aren't editable. (Thanks to Michael for pointing this out.)</li>
 </ul>
 
+
 <h2>Version 0.951 (January 6, 2006)</h2>
 <ul>
 <li>Fixed two problems that showed up if you installed Xcode 2.2 or the latest doc update: (1) the "Delegate Methods" lists were empty, and (2) weird characters would appear in some docs.</li>
 <li>Removed the "Delegate protocols" mode from the Quicklist. Decided it's more confusing than useful, since it's empty unless you've chosen WebKit in Preferences. You can always discover the various kinds of WebKit delegate methods by selecting "WebKit" -&gt; "Informal Protocols" in the browser.</li>
 <li>Added a couple of thank-yous to the credits in the About box.</li>
 </ul>
+
 
 <h2>Version 0.95 (October 5, 2005)</h2>
 <ul>
@@ -102,6 +199,7 @@ end tell</pre></li>
 <li>Fixed the "Reveal In Finder" contextual menu item.</li>
 <li>[source] Replaced the Project Builder project with an Xcode project.</li>
 </ul>
+
 
 <h2>Version 0.94 (June 9, 2005)</h2>
 <ul>
@@ -114,6 +212,7 @@ end tell</pre></li>
 <li>Fixed bug causing the search field to sometimes not pick up changes to the system-wide Find pasteboard.</li>
 </ul>
 
+
 <h2>Version 0.93 (May 7, 2005)</h2>
 <ul>
 <li>Got rid of the search delays that appeared in the previous version.</li>
@@ -125,6 +224,7 @@ end tell</pre></li>
 <li>Fixed a hyperlink bug that caused you to go the wrong place if you went from NSView to "Class Description" and clicked "Commonly Used Methods".</li>
 </ul>
 
+
 <h2>Version 0.92 (April 28, 2005)</h2>
 <ul>
 <li>This is a beta release. Its main feature is that it runs on Tiger.</li>
@@ -133,6 +233,7 @@ end tell</pre></li>
 <li>Got Find working again.</li>
 <li>Changed Command-G and Shift-Command-G to do Find Next and Find Previous instead of Search For Next and Search For Previous. Got rid of Search For Next and Search For Previous.</li>
 </ul>
+
 
 <h2>Version 0.91 (July 5, 2004)</h2>
 <ul>
@@ -154,12 +255,14 @@ end tell</pre></li>
 <li>Sped up the initial parsing a bit -- or rather, got rid of some of the slowdown that had been added in the previous release.</li>
 </ul>
 
+
 <h2>Version 0.903 (April 28, 2004)</h2>
 <ul>
 <li>Fixed incompatibility with Xcode 1.2.</li>
 <li>Added preference option to use Aqua windows instead of metal.</li>
 <li>Fixed a bug with older (pre-Xcode) versions of the docs: if you went to NSImageCell / Instance Methods / -imageAlignment, and clicked on the "Constants" link, you would go to the wrong place.</li>
 </ul>
+
 
 <h2>Version 0.902 (April 9, 2004)</h2>
 <ul>
@@ -171,6 +274,7 @@ end tell</pre></li>
 <li>Made Command-D the shortcut for adding a Favorite. This is consistent with the "Add Bookmark" shortcuts in Safari, Mozilla, OmniWeb, etc.</li>
 <li>Removed the command-keys for "Find Next" and "Find Previous"; changed the "Search For Next" and "Search For Previous" menu items to use the Apple-standard Command-G and Command-Shift-G.</li>
 </ul>
+
 
 <h2>Version 0.90 (April 3, 2004)</h2>
 <ul>
@@ -226,12 +330,14 @@ end tell</pre></li>
 
 </ul>
 
+
 <h2>Version 0.891 (July 21, 2003)</h2>
 <ul>
 <li>Runs under the Panther pre-release.</li>
 <li>Removed trailing &lt;hr&gt; tags and Apple copyright notices in the text view.</li>
 <li>Now wrapping long lines of example code instead of letting them run off the right edge of the text view.</li>
 </ul>
+
 
 <h2>Version 0.89 (May 19, 2003)</h2>
 <ul>
@@ -249,15 +355,18 @@ end tell</pre></li>
 <li>Added a "Horizontal scroll bar" option to the text view's contextual menu.</li>
 </ul>
 
+
 <h2>Version 0.882 (January 26, 2003)</h2>
 <ul>
 <li>Bug fix to my bug fix: I didn't mean to include protocol methods in the regular lists, only the "ALL Methods" lists.</li>
 </ul>
 
+
 <h2>Version 0.881 (January 26, 2003)</h2>
 <ul>
 <li>Bug fix: some methods declared in protocols were not showing up in the "ALL xxx Methods" lists.</li>
 </ul>
+
 
 <h2>Version 0.88 (January 25, 2003)</h2>
 <ul>
@@ -267,12 +376,14 @@ end tell</pre></li>
 <li>Modified the app icon.</li>
 </ul>
 
+
 <h2>Version 0.87 (October 27, 2002)</h2>
 <ul>
 <li>Added ability to search for method names by substring.</li>
 <li>Modified tooltip for "Superclass" button to show class name.</li>
 <li>Reordered items in the "General" list so "Class Description" or "Protocol Description" is always the first item.</li>
 </ul>
+
 
 <h2>Version 0.86 (September 28, 2002)</h2>
 <ul>
@@ -283,10 +394,12 @@ end tell</pre></li>
 <li>Assorted bug fixes and tweaks, including resizing bugs, non-working hyperlinks, and memory leaks.</li>
 </ul>
 
+
 <h2>Version 0.851 (August 29, 2002)</h2>
 <ul>
 <li>This is an interim patch release. It fixes one bug: when running under Jaguar, delegate methods were not being listed.</li>
 </ul>
+
 
 <h2>Version 0.85 (July 25, 2002)</h2>
 <ul>
@@ -308,9 +421,6 @@ end tell</pre></li>
 
 
 </td></tr></table>
-
-
-</div>
 
 
 </body>
