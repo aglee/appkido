@@ -230,8 +230,6 @@
 		730F68C015C1478300E0B7B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */; };
 		730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */; };
 		730F68C215C1478300E0B7B0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */; };
-		730F68C515C1502600E0B7B0 /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BE15C1478300E0B7B0 /* fmdb.m */; };
-		730F68C615C1502600E0B7B0 /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BE15C1478300E0B7B0 /* fmdb.m */; };
 		730F68C715C1502A00E0B7B0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */; };
 		730F68C815C1502C00E0B7B0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */; };
 		730F68C915C1503000E0B7B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */; };
@@ -698,7 +696,6 @@
 		730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
 		730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
 		730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		730F68BE15C1478300E0B7B0 /* fmdb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmdb.m; sourceTree = "<group>"; };
 		730F68C415C1500500E0B7B0 /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		730FCBD00685758B0083160A /* AKDatabaseNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabaseNode.h; sourceTree = "<group>"; };
 		730FCBD10685758B0083160A /* AKDatabaseNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseNode.m; sourceTree = "<group>"; };
@@ -1608,7 +1605,6 @@
 				730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */,
 				730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */,
 				730F68BD15C1478300E0B7B0 /* FMDatabaseQueue.m */,
-				730F68BE15C1478300E0B7B0 /* fmdb.m */,
 				73A9A7C215B6DA110060E578 /* LICENSE.txt */,
 				73D237070D4561C300EF7503 /* README-fmdb.txt */,
 				730F68C415C1500500E0B7B0 /* README.markdown */,
@@ -2246,7 +2242,6 @@
 				73D59E8D15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
 				730F68C015C1478300E0B7B0 /* FMDatabasePool.m in Sources */,
 				730F68C215C1478300E0B7B0 /* FMDatabaseQueue.m in Sources */,
-				730F68C515C1502600E0B7B0 /* fmdb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2378,7 +2373,6 @@
 				738D41C015B07EC6008950F6 /* AKAppVersion.m in Sources */,
 				73D59E8815B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */,
 				73D59E8E15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
-				730F68C615C1502600E0B7B0 /* fmdb.m in Sources */,
 				730F68C715C1502A00E0B7B0 /* FMDatabaseQueue.m in Sources */,
 				730F68C915C1503000E0B7B0 /* FMDatabasePool.m in Sources */,
 			);
