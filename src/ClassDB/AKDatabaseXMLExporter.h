@@ -7,6 +7,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "TCMXMLWriter.h"
 
 @class AKDatabase;
 
@@ -20,8 +21,7 @@
 {
 @private
     AKDatabase *_database;
-    NSFileHandle *_outfile;
-    int _indent;
+    TCMXMLWriter *_xmlWriter;
 }
 
 
@@ -30,7 +30,7 @@
 
 /*! Designated initialzer. */
 - (id)initWithDatabase:(AKDatabase *)database
-    fileHandle:(NSFileHandle *)outfile;
+			   fileURL:(NSURL *)outfileURL;
 
 
 #pragma mark -
