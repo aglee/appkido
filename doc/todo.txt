@@ -1,418 +1,185 @@
-:--- APPKIDO TO-DO ---:
+* re-check small icon issue in A4i
+* Add Sparkle
+* smart search for properties
+* Accept monkeydom's pull request to emit correct XML
+* Get rid of compiler warnings.
+* Use Sparkle for updates.
+* Option-Command-H should Hide Others.
+
+----
+
+* Launch improvements:
+	* Make the splash panel cancellable.
+	* Use NSOperation for parsing during launch.
+	* In splash screen, don't say parsing framework unless it exists (e.g. UIKit for Mac OS).
+* Detect when docset is incomplete (needs to be downloaded, or hasn't finished downloading).
+* syntax highlighting for header files
+* figure out why command-line build different from in Xcode
+* Get rid of Dev Tools concept and just present available SDKs.
+* Use the stylesheet that comes with the docset.
+* Give option to use custom stylesheet.
+* not just "Copy Link" but "Open Link in Browser"
+* Use NSTabView for doc view.
+* Autoselect after search
+	* try searching for "scrollPoint".  Or "view".
+	* search NSBrowserDelegate, is it not auto-selected because begins with "<"?
+* Add progress indicator during search, and a count when done.
+* Instead of a separate subtopic for "ALL Instance Methods" etc., put an "ALL" button in the "Instance Methods" subtopic cell.
+* fast enumeration everywhere
+* "Find a random item"
+* Use this for Reveal In Finder: (void)[[NSWorkspace sharedWorkspace] selectFile:aFolderPath inFileViewerRootedAtPath:[aFolderPath stringByDeletingLastPathComponent]];
+* Top and middle panes should keep fixed height during autoresizing.
+* web site
+	* add tips and tricks page
+	* add faq: why does this site keep changing look?
+	* fix HTML validation errors
+* disable contextual menu items when there is no doc
+* show "No Results", "No Classes", etc. in quicklist table when it is empty
+
+----
+
+* Store database on disk so it doesn't have to be reparsed on every launch.
+	* Treat anchors as primary way of linking.
+* Remove the old-style database classes and the references to them.
+* Put a splitter between the subtopic list and doc list -- or maybe recalculate subtopic list width depending on font.
+
+* service for putting multi-line method into clipboard
+	* Submit radar about splitting method calls into multiple lines
+* services in separate app
+* add error handling to parser API
+* add service to copy method name to clipboard
+* Test on 10.5
+* add speech support (or rather don't remove it)
+* start saving dSYMs
+* hot key to activate
+* ARC (when ready to require 10.6)
+
+* rename digitalspokes plist
+	* maybe try to get the domain name back?
+
+* go back to [AKDatabase defaultDatabase]
+	* possibly pull _database out of AKTopic
+	* hm -- why did I want to do this?  it was to prevent AKClassNode from having to know about AKAppController
+
+* can DIGSLogExitingMethodPrematurely take varargs?
+* cell classes are n/a for iPhone (UITableViewCell is actually a view)
+* subtopic list should scroll to visible, e.g., if you search for NSNextMapEnumeratorPair, "Managing Map Tables" is far down the subtopic list and isn't visible
+* in Xcode, search for "setTimeOffset:" finds the *property* timeOffset
+* maybe shouldn't use Command-+ to add column; it's standard for increasing font size
+* check whether .h parser handles class extensions
+	* _are_ there any extensions I need to parse?
+* search for "::" doesn't find -[CIImageProvider provideImageData:bytesPerRow:origin::size::userInfo:] -- it's because CIImageProvider is not showing up (a QuartzCore informal protocol)
+* there exist *Carbon* protocols: IMKTextInput and IMKUnicodeTextInput; and the -insertText: method for the latter is not showing up (not documented, I assume)
+* prefs > frameworks space bar doesn't work to toggle selection
+* show which OS version deprecated symbols were deprecated in
+* Remember scroll position in history.
+* Odd -- the small dividers for the split views aren't small.
+* Favorites menu shouldn't just say "Add Functions to favorites"; should be "Add AppKit Functions to favorites".
+* Why isn't "NSAttributedString Application Kit Additions Reference" showing up in the General doc list for NSAttributedString?  (It doesn't in 0.971 either.)
+
+* QCComposition -> instance methods -> protocols -> link to "Standard Protocols" opens web page; maybe should appear under General and link can go there within AppKiDo?
+* make sure handling errors querying sqlite -- note Tony Cate's problem
+* fix splitview problems reported by Gerriet
+* "Classes in AppKit" doesn't include NSString
+* would be nice to see header file containing functions / globals
+* some way to convert between file:// URLs and http:// URLs
+	* could drag from doc list into email and get the http:// URL
+	* could drag from cocoa-dev message into AppKiDo and navigate to the right doc
+* ApplicationServices -> Types & Constants -> Constants -- "Color Modes" appears twice, as does "Color Constants".
+* [AKDocParser parseToken] treats bytes with high bit set as whitespace; works for now, but may someday have to properly handle charsets and encodings.
+* Consider giving AKGlobalsNode an ivar indicating the behavior it's associated with (if any) instead of shoving the behavior name into the AKGlobalsNode name.
+* Reconcile use of platform names as parameters with use of APPKIDO_FOR_IPHONE macro -- do I need to do both?
+* Why do some searches take so long?  "cursor" is slow, yet "o" is fast even though it returns a superset of results.
+	* Possible clue: I think it's the "<<" characters that get drawn in the search results.
+* Rename fromPrefDictionary: to xxxFromPrefDictionary: in various classes.
+* Fuzzy table contents -- double drawing?
+	* Seems to have been fixed when I stopped using ak_stripHTML on the strings we display in the doc list
+	* Oops, that didn't really fix the bug, yet for some reason it seems better
+
+* "Inheritance" section now contains other stuff like links to code samples.  Parse and organize better.
+* Put default defaults into a plist as bbum suggests.
+* Try removing _kludgeXXX calls one by one.  See if parse results are the same.  Remember to test with Xcode 3.x.
+* Add a Bindings subtopic?  (See "Cocoa Bindings Reference".  There's a list of classes that have bindings -- mostly view classes, but not all - and what those bindings are.)
+* look for [agl] REMOVE
 
-*** 0.984 stuff ***
+* Move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
 
-[x] Fix bug caused by empty <h1></h1> in latest iPhone 3.2 SDK docs.  Jeff Johnson fixed this, and I just patched in his fix.
+* Provide some help dealing with the quarantines.
 
-*** 0.985 stuff ***
+* There's a bunch of methods that fail my heuristic for deciding whether a deprecated method is a class/instance/delegate method.  For example, deserializeAlignedBytesLengthAtCursor: is a deprecated instance method of NSData which is declared in NSSerialization.h -- which is only in the 10.4u SDK, so in 10.5 I won't parse that file and I'll assume that method is a delegate method.  Considered moving all deprecated methods, regardless of type, to a separate subtopic, but that's too many subtopics -- *unless* I put an "ALL" button in subtopic cells for "Instance Methods", "Class Methods", etc.  Hm.
 
-[ ] Update github with 0.984 stuff.
-[ ] Go git-only.
-[ ] Announce github hosting.
+----
 
-[ ] Go Leopard-only.
-	[ ] Bump the compiler version from GCC 4.0 to 4.2 (note this means can no longer compile against 10.4u), and change the base class.
-	[ ] Fix 64-bit stuff.
-	[ ] Remove the old-style database classes and the references to them.
-	[ ] During doc parsing, take note of anchors.
-	[ ] Change link traversal logic to assume anchors work like in docsets.
+* Have the build script create an unstripped version as well.
 
-[ ] Update copyright to 2010.
+* Should I be using DWARF?  See dSYM.
 
-[ ] Fix the crash that has been reported in 0.983.
+* When releasing, bake a build number into the version string.
 
-[ ] Inform the manual mailing list that I'll be using cocoa-dev.  If they're not on cocoa-dev they can RSS my blog (RSS just "AppKiDo announcements"? -- should add the tag, or maybe just use the "AppKiDo" tag, and make sure RSS on the tag is possible).
+* Add agvtool to workflow.
 
-*** 0.986 stuff ***
+* [docSetPlist objectForKey:@"DocSetPlatformVersion"] sometimes returns nil with 3.1.3; handle more gracefully.
 
-[ ] More robust error detection, logging, and recovery.
+* Feature to add your own directory of headers.  Specify a project name (e.g., "AppKiDo") and a directory (e.g., /Users/alee/_Developer/appkido/trunk/src).  Recursively parse all headers, excluding .svn (and build?).  Give those headers special treatment -- include them in the database even though they don't have associated doc files.  Will have to update the parser to recognize @property in headers.  Won't be able to show docs, but can at least read the headers and navigate them.  Add quicklist for "All classes in project X".  Have some way to open selected header (and option to find .m) in tool of your choice -- Xcode or whatever.
 
-[ ] Detect when user hasn't installed docs.
+* NSExceptionHandler has a "System Hang Constants" section.  Should be able to go to it when click on the link under, e.g., setExceptionHangingMask:.  Similarly for "Logging and Handling Constants" under setExceptionHandlingMask:.
 
-[ ] Sparkle.
+* regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
 
-[ ] Make the subtopic list resizable.
+* regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
 
-[ ] Deal with "Method selectRow:byExtendingSelection: in class AKTableView is deprecated."
+----
 
-[ ] Add progress indicator during search, and a count when done.
+* Maybe add subtopic for deprecated methods?
+* Document the validation process to go through when there's a new doc update or a new SDK version: dump file, do a dump diff, etc.
+* Can get rid of some of the #ifdef's on APPKIDO_FOR_IPHONE -- the ones that were to honor the NDA.
+* Can I get rid of these methods in AKDatabase?  They never seem to be called.
+	* -functionsGroupContainingFunction:inFramework:
+	* -globalsGroupContainingGlobal:inFramework: in AKDatabase
+* Maybe get rid of these methods in AKDatabase, for brevity (can send -count to the array).
+	* -numberOfFunctionsGroupsForFramework:
+	* -numberOfGlobalsGroupsForFramework:
+* Can I be smarter about telling whether a deprecated method is a class or instance method?  Although if it's an instance method, can I tell if it's a delegate method?
+* clean up copyrights in source files
 
-[ ] Put "ALL" as a button on same line.
-[ ] Use clover-1, clover-2, etc. in the subtopic list.
+* SubEthaEdit search Service only hits Mac OS ("classic") AppKiDo.
+* Possible confusion: in AppKit Constants, there's "Cell Types [NSCell]" and "NSCellType [NSCell]"; perhaps no more confusing than the NSCell doc itself -- except they're so far apart in the doc list it may not be clear they're related; maybe should reorg so "Constants" and "Data Types" are separate topics -- this would allow another level of subdivisions.
+* If you hide quicklist, move window near left edge of screen, and restore quicklist, the window should be pushed right to make room for the whole quicklist to be visible.
+* AKPropertiesSubtopic should be an AKRealMethodsSubtopic (for behavior, not just class).
+* Would it be possible to include CoreFoundation docs?
+* Maybe force-exclude XgridFoundation from frameworks, as with Carbon?
+* Add the ability to look things up / do searches in the Xcode doc window.
+* I think can stop parsing headers when docset queries fully fleshed out.
+* Why sometimes slow to jump to a favorite?
+* Look into logging alternatives.
+* Make sure parsing class extensions.
+* Open a document online instead of locally.  Copy that URL to the pasteboard.
+* Search the Examples directory for an example of the method.
 
-[ ] put the TESTING_PERFORMANCE #ifdef (or whatever it's called) in the Xcode "Development" configuration instead of hand-toggling it
+----
 
-[ ] use that other method for opening in browser (it's in NSWorkspace)
+## Efficiency ##
 
-*** 0.99 stuff (Xcode 3.x only?) ***
-
-[ ] Honor the stylesheet.
-
-[ ] Open a document online instead of locally.  Copy that URL to the pasteboard.
-
-[ ] Search the Examples directory for an example of the method.
-
-[ ] Add a "Controller classes" option to the quicklist.
-
-[ ] Add "Donate..." menu item and a link on the About box.
-
-[ ] Add a Bindings subtopic?  (See "Cocoa Bindings Reference".  There's a list of classes that have bindings -- mostly view classes, but not all - and what those bindings are.)
-
-[ ] change "doesn't look like dev tools dir" message to be iphone-specific (e.g., maybe you don't have iphone sdk installed?)
-
-[ ] install Xcode 2.5 and 3.1 at home and on Flint
-
-[ ] look for [agl] REMOVE
-
-[ ] make sure mailing list has latest people who asked to be on it
-
-===== bugs =====
-
-[ ] Why 10.5 not showing up in dev tools prefs on Flint?  Is it that plist bug?  (Might be too late to check -- upgraded Flint to 10.6.)
-
-[ ] Maybe naming convention that says _owningXXX and _parentXXX are always weak references?
-
-[ ] "Inheritance" section now contains other stuff like links to code samples.  Parse and organize better.
-
-[ ] Try removing _kludgeXXX calls one by one.  See if parse results are the same.  Remember to test with Xcode 3.2, 3.1, 2.5.
-
-[ ] AgentM suggests ability to add annotations.  Could either maintain a central server or (much less work) allow user to specify a location, either online or off-.
-
-[ ] Autoselect after search not working: try searching for "scrollPoint".  Or "view".
-
-[ ] Have the build script create an unstripped version as well.
-
-[ ] Should I be using DWARF?  See dSYM.
-
-[ ] When releasing, bake a build number into the version string.
-
-[ ] Put default defaults into a plist as bbum suggests.
-
-[ ] Handle the multiple delegates a WebView can have.
-
-[ ] Add agvtool to workflow.
-
-[ ] [docSetPlist objectForKey:@"DocSetPlatformVersion"] sometimes returns nil with 3.1.3; handle more gracefully.
-
-[ ] Use this for Reveal In Finder: (void)[[NSWorkspace sharedWorkspace] selectFile:aFolderPath inFileViewerRootedAtPath:[aFolderPath stringByDeletingLastPathComponent]];
-
-[ ] Top and middle panes should keep fixed height during autoresizing.
-
-[ ] Feature to add your own directory of headers.  Specify a project name (e.g., "AppKiDo") and a directory (e.g., /Users/alee/_Developer/appkido/trunk/src).  Recursively parse all headers, excluding .svn (and build?).  Give those headers special treatment -- include them in the database even though they don't have associated doc files.  Will have to update the parser to recognize @property in headers.  Won't be able to show docs, but can at least read the headers and navigate them.  Add quicklist for "All classes in project X".  Have some way to open selected header (and option to find .m) in tool of your choice -- Xcode or whatever.
-
-[ ] NSExceptionHandler has a "System Hang Constants" section.  Should be able to go to it when click on the link under, e.g., setExceptionHangingMask:.  Similarly for "Logging and Handling Constants" under setExceptionHandlingMask:.
-
-[ ] regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
-
-[x] From Jeff Johnson 2009-03-10: "I have a suggestion for a minor code change in AKAppController.m. I recommend implementing -applicationDidFinishLaunching: and moving everything in -awakeFromNib starting with [_splashMessage2Field setStringValue:@""] to the new method.    I'll explain the reason for this. As we know, AppKit is not thread-safe. Of relevance here is that the NSApplication isActive state only gets updated on the main thread. The AppKiDo database parsing in awakeFromNib is an expensive, blocking operation. Thus, what often happens is that I launch AppKiDo, perhaps at the beginning of the day, and then switch to another application before it's finished launching. When the database parsing is done, the app is no longer active, but the isActive state hasn't been updated yet, applicationDidResignActive hasn't been called yet, and so forth, because that all happens only on the main thread, which was blocked in awakeFromNib. When [self _openInitialWindows] is called in awakeFromNib, the app still thinks it's active, and the window appears in front of the active app rather than in the background, which is confusing and bothersome.    Moving the window opening code out of awakeFromNib gives the app a chance to update the isActive state after the database parsing is done, and then the correct window ordering behavior occurs."
-
-[ ] CGRectMake is in both CoreGraphics functions and QuartzCore functions??
-
-[x] Noticed AppKiDo prompted for location of dev tools although it had already parsed the docs found in /Developer.
-
-[ ] regarding init failure, noticed on objc-language: <http://lists.apple.com/archives/objc-language/2008/Sep/msg00133.html> "You should first clean up anything you already did in your -init, then call [super dealloc]. [self dealloc] or [self release] are bad because they might call some subclass's -dealloc method even though the subclass's -init hasn't done anything yet."
-
-[x] From Jeff Johnson 2009-03-10: "I have a suggestion for a minor code change in AKAppController.m. I recommend implementing -applicationDidFinishLaunching: and moving everything in -awakeFromNib starting with [_splashMessage2Field setStringValue:@""] to the new method.    I'll explain the reason for this. As we know, AppKit is not thread-safe. Of relevance here is that the NSApplication isActive state only gets updated on the main thread. The AppKiDo database parsing in awakeFromNib is an expensive, blocking operation. Thus, what often happens is that I launch AppKiDo, perhaps at the beginning of the day, and then switch to another application before it's finished launching. When the database parsing is done, the app is no longer active, but the isActive state hasn't been updated yet, applicationDidResignActive hasn't been called yet, and so forth, because that all happens only on the main thread, which was blocked in awakeFromNib. When [self _openInitialWindows] is called in awakeFromNib, the app still thinks it's active, and the window appears in front of the active app rather than in the background, which is confusing and bothersome.    Moving the window opening code out of awakeFromNib gives the app a chance to update the isActive state after the database parsing is done, and then the correct window ordering behavior occurs."
-
-[x] Suggestion from Jeff Laing: "One niggle: would it be possible to select which version of the SDK you use?  At th moment, I'm trying to concentrate on 2.1 rather than 2.2 (for what is probably not a good reason since you'd expect everyone would just upgrade, but some people just don't)"
-	* Rustam Muginov asked about selecting the version too.
-	* Hm -- on the MBP I have the 2.2 SDK installed; only that .docset is there, but SDKs for 2.0, 2.1, and 2.2 show up.  I see in Xcode's doc window that I can get/subscribe to 2.0/2.1
-	* Maybe use values in the ZDISTRIBUTIONVERSION table?
-
-[x] Reported by Rustam Muginov: "For example, 2.2 did introduced new class, AVAudioPlayer, which was not present in 2.1 and 2.0.  By the way, i can not find it in the current 0,982 version of AppKiDo."
-
-[ ] Fix the stuff clang finds.
-
-[ ] Use NSTabView for doc view.
-
-
-
-[ ] Speed: try NSUncachedRead or NSMappedRead (search cocoa-dev mailbox for Wil Shipley's suggestion on 2009-01-27).
-
-[ ] should handle better if user needs to update their docs: either the initial web download by subscribing in Xcode, or subsequent updates
-
-[ ] Provide some help dealing with the quarantines.
-
-[ ] Move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
-
-[ ] There's a bunch of methods that fail my heuristic for deciding whether a deprecated method is a class/instance/delegate method.  For example, deserializeAlignedBytesLengthAtCursor: is a deprecated instance method of NSData which is declared in NSSerialization.h -- which is only in the 10.4u SDK, so in 10.5 I won't parse that file and I'll assume that method is a delegate method.  Considered moving all deprecated methods, regardless of type, to a separate subtopic, but that's too many subtopics -- *unless* I put an "ALL" button in subtopic cells for "Instance Methods", "Class Methods", etc.  Hm.
-
-2008-12-07 14:15:24.453 AppKiDo[6882:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
-2008-12-07 14:15:24.473 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeAlignedBytesLengthAtCursor: while processing deprecated methods for behavior NSData
-2008-12-07 14:15:24.475 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeBytes:length:atCursor: while processing deprecated methods for behavior NSData
-2008-12-07 14:15:24.479 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeDataAt:ofObjCType:atCursor:context: while processing deprecated methods for behavior NSData
-2008-12-07 14:15:24.480 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeIntAtCursor: while processing deprecated methods for behavior NSData
-2008-12-07 14:15:24.480 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeIntAtIndex: while processing deprecated methods for behavior NSData
-2008-12-07 14:15:24.481 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeInts:count:atCursor: while processing deprecated methods for behavior NSData
-2008-12-07 14:15:24.481 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named deserializeInts:count:atIndex: while processing deprecated methods for behavior NSData
-
-
-2008-12-07 14:15:25.826 AppKiDo[6882:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/Foundation/Classes/NSMutableData_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
-2008-12-07 14:15:25.828 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeAlignedBytesLength: while processing deprecated methods for behavior NSMutableData
-2008-12-07 14:15:25.831 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeDataAt:ofObjCType:context: while processing deprecated methods for behavior NSMutableData
-2008-12-07 14:15:25.832 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInt: while processing deprecated methods for behavior NSMutableData
-2008-12-07 14:15:25.832 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInt:atIndex: while processing deprecated methods for behavior NSMutableData
-2008-12-07 14:15:25.833 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInts:count: while processing deprecated methods for behavior NSMutableData
-2008-12-07 14:15:25.833 AppKiDo[6882:813] [_INFO_] Couldn't find class method or instance method named serializeInts:count:atIndex: while processing deprecated methods for behavior NSMutableData
-
-
-2008-12-07 14:35:20.001 AppKiDo[7111:813] [_DEBUG_] processing file [/Developer/Documentation/DocSets/com.apple.ADC_Reference_Library.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/ApplicationKit/Classes/NSApplication_Class/DeprecationAppendix/AppendixADeprecatedAPI.html]
-2008-12-07 14:35:30.791 AppKiDo[7111:813] [_INFO_] Couldn't find class method or instance method named application:printFiles: while processing deprecated methods for behavior NSApplication
-
-
-===== efficiency =====
-
-[ ] store stuff on disk so it doesn't have to be reparsed
-	* overhaul data model to be more CoreData-friendly (and possibly more generic so it can be applied to other languages/frameworks someday)
-	* use CoreData to store
-
-[ ] parse faster
+* parse faster
 	* write new pure-C parser, use different strategy; or should I use DOM classes?
 	* have list of HTML tags I care about, and attributes within those tags, and in the special case of tags that I designate as "header" tags (h1, h2, etc. but could also include 
 	* pluck out byte offsets of where those tags begin and end, and their values for those attributes (in particular, the "name" attribute for anchor tags)
 	* output of parsing one file is an ordered list of these byte offsets
 	* create a mini-language for querying this list for a range of bytes satisfying some criterion (in particular, the range of bytes containing the documentation for a token that is identified by a given anchor string)
 
-[ ] parse less stuff
+* parse less stuff
 	* among HTML files, only need to parse class docs (to get delegate methods and notifications); everything else we can tell from the docset index
 	* can we count on the doc file itself to tell us a protocol is informal?  if so, may not need to parse headers
 
-[ ] parse _more_ stuff
+* parse _more_ stuff
 	* CoreFoundation?
 
-[ ] parse more correctly -- create better unit tests for detecting when a token is missing (like the NSIndexPath UI Kit Additions Guillaume reported)
+* parse more correctly -- create better unit tests for detecting when a token is missing (like the NSIndexPath UI Kit Additions Guillaume reported)
 
-[ ] save less stuff in memory
+* save less stuff in memory
 	* query as needed from the docset index and the CoreData storage instead of storing everything in memory
 
+* would startup be noticeably faster if AKDocSetIndex kept the database open all the time instead of opening and closing for each query?
 
-===== cosmetics/ui =====
+* Speed: try NSUncachedRead or NSMappedRead (search cocoa-dev mailbox for Wil Shipley's suggestion on 2009-01-27).
 
-[ ] Instead of a separate subtopic for "ALL Instance Methods" etc., put an "ALL" button in the "Instance Methods" subtopic cell.
-
-[ ] Add subtopic for deprecated methods.  Lump 'em all together since that's what Apple (sometimes) does.
-	[ ] *OR* leave it broken for now and file a bug with Apple asking for deprecated class methods/instance methods/etc. to be in distinguishable subsections.
-
-[ ] new icons
-[ ] clean up window layout -- overlapping views, etc.
-	[ ] put a splitter in the middle section
-[ ] make the iPhone version visually distinctive
-	[ ] somehow parametrize the UI (different background colors, etc.)
-	[ ] create alternate icon for the iPhone version
-[ ] nicer credits: bold names and list them alphabetically (perhaps with version number?)
-[ ] progress indicator during search
-[ ] "Open Page in Browser" should be "Open Page In Browser"
-[ ] disable contextual menu items when there is no doc
-
-
-===== dev stuff =====
-
-[ ] Add more debug statements.
-[ ] "Truncate the text at the copyright symbol" -- violating copyright or something?
-[ ] Rename _namesOfAvailableFrameworks to _namesOfLoadableFrameworks?
-[ ] I wonder -- if the file doesn't exist at the location indicated by the sqlite database, does Xcode then take that as an indication to go to the web, using the same documentation/... path?
-	[ ] Reinstall 2.2, make a copy of the partial docset, *then* download update.
-[ ] Maybe steal Gus Mueller's idea of a downloadable "latest build"?
-[ ] Document the validation process to go through when there's a new doc update or a new SDK version: dump file, do a dump diff,
-[ ] Can get rid of some of the #ifdef's on APPKIDO_FOR_IPHONE -- the ones that were to honor the NDA.
-[ ] Can I get rid of these methods in AKDatabase?  They never seem to be called.
-	* -functionsGroupContainingFunction:inFramework:
-	* -globalsGroupContainingGlobal:inFramework: in AKDatabase
-[ ] Maybe get rid of these methods in AKDatabase, for brevity (can send -count to the array).
-	* -numberOfFunctionsGroupsForFramework:
-	* -numberOfGlobalsGroupsForFramework:
-[ ] Can I be smarter about knowing when the user only has a partial docset?  How does Xcode do it?
-[ ] Can I be smarter about telling whether a deprecated method is a class or instance method?  Although if it's an instance method, can I tell if it's a delegate method?
-[x] Test against Snow Leopard.
-[ ] prune away code that supported the old way of parsing
-[ ] clean up copyrights in source files
-[ ] change hosting?
-
-
-===== features =====
-
-
-----------------------------------------------------------
-
-[ ] show feedback during search
-	[ ] show number of search results
-
-[ ] QCComposition -> instance methods -> protocols -> link to "Standard Protocols" opens web page; maybe because of the space which gets converted to an underscore in the URL?
-
-[ ] make sure handling errors querying sqlite -- note Tony Cate's problem
-
-[ ] fix splitview problems reported by Gerriet
-
-[ ] have new windows cascade
-
-[ ] "Classes in AppKit" doesn't include NSString
-
-[ ] NSObject -> Instance Methods shows [Foundation] next to every method
-
-[ ] would be nice to see header file containing functions / globals
-
-[ ] some way to convert between file:// URLs and http:// URLs
-	* could drag from doc list into email and get the http:// URL
-	* could drag from cocoa-dev message into AppKiDo and navigate to the right doc
-
-[ ] ApplicationServices -> Types & Constants -> Constants -- "Color Modes" appears twice, as does "Color Constants"
-
-[ ] consider putting declarations of private methods at the bottom of the public .h instead of the top of the .m, where they get in the way
-
-[ ] put overrides in .h and give them headerdoc comments
-
-[ ] instead of kludging around css stuff, use the Apple stylesheet
-[ ] provide a feature allowing custom stylesheet
-
-[ ] consider giving AKGlobalsNode an ivar indication the behavior it's associated with (if any) instead of shoving the behavior name into the AKGlobalsNode name
-
-[ ] reconcile use of platform names as parameters with use of APPKIDO_FOR_IPHONE macro -- do I need to do both?
-
-[ ] [AKDocParser parseToken] treats bytes with high bit set as whitespace; works for now, but may someday have to properly handle charsets and encodings
-
-[ ] would startup be noticeably faster if AKDocSetIndex kept the database open all the time instead of opening and closing for each query?
-
-[ ] NSResponder -> acceptsFirstResponder -> YES opens browser window
-
-[ ] CGDisplayCurrentMode -> CFDictionaryRef opens browser (CoreFoundation)
-
-[ ] remember scroll position in history
-
-[ ] in topic browser, select NSWindow and then NSViewController -- does a weird sideways scrolling thing, and the horizontal scroller doesn't update
-
-[ ] SubEthaEdit search Service only hits Mac OS ("classic") AppKiDo
-
-[ ] why does it take so long to load AddressBook -> Protocols -> <ABImageClient>?
-
-[ ] why do some searches take so long?  "cursor" is slow, yet "o" is fast even though it returns a superset of results
-	* clue: I think it's the "<<" characters that get drawn in the search results
-
-[ ] odd -- the small dividers for the split views aren't small
-
-[ ] fuzzy table contents -- double drawing?
-	* seems to have been fixed when I stopped using ak_stripHTML on the strings we display in the doc list
-	* oops, that didn't really fix the bug, yet for some reason it seems better
-
-[ ] AddressBook -> Types & Constants -> shows a "Constants" subtopic with no docs
-
-[ ] possible confusion: in AppKit Constants, there's "Cell Types [NSCell]" and "NSCellType [NSCell]"; perhaps no more confusing than the NSCell doc itself -- except they're so far apart in the doc list it may not be clear they're related; maybe should reorg so "Constants" and "Data Types" are separate topics -- this would allow another level of subdivisions
-
-[ ] show progress indicator during search, number of results when done
-
-[ ] lower the memory profile
-
-[ ] Use RBSplitView.
-
-[ ] if you hide quicklist, move window near left edge of screen, and restore quicklist, the window should be pushed right to make room for the whole quicklist to be visible
-
-[ ] Favorites menu shouldn't just say "add Functions to favorites"; should be "add AppKit Functions to favorites"
-
-[ ] make sure breaking delegate and notification connections in dealloc, as I argued one should
-[ ] check for memory leaks in general
-
-[ ] prefs "use default appearance" is buggy
-
-[ ] possible radar: request performSelector:afterDelay: (without a withObject:)
-[ ] report objective c typo in text submenu
-
-[ ] why isn't "NSAttributedString Application Kit Additions Reference" showing up in the General doc list for NSAttributedString?  (It doesn't in 0.971 either)
-
-[ ] in splash screen, don't say parsing framework unless it exists (e.g. UIKit for Mac OS)
-
-[ ] review behaviorDocPathsForFramework
-
-[ ] AKPropertiesSubtopic should be an AKRealMethodsSubtopic (for behavior, not just class)
-
-[ ] equivalent of "view classes" is what for uikit?
-
-[ ] rename fromPrefDictionary: to xxxFromPrefDictionary: in various classes
-
-[ ] why is Carbon showing up???
-
-[ ] should [self release] be [[super init] release]?
-
-[ ] ping Cathy re: subversion, and UI question re: iPhone support
-
-[ ] could CoreFoundation work?
-
-[ ] had an idea once upon a time to offer the option of small-style contextual menus
-
-[ ] quicklist includes NSButton among classes with delegates, but it doesn't technically have one
-	[ ] WebView does not appear in list of classes with delegates
-
-[ ] maybe force-exclude XgridFoundation from frameworks, as with Carbon?
-
-[ ] put web site into svn
-
-[ ] maybe move hosting to Dreamhost to get better stats etc.?
-
-------------------
-
-[ ] go back to [AKDatabase defaultDatabase]
-	* possibly pull _database out of AKTopic
-	* hm -- why did I want to do this?  it was to prevent AKClassNode from having to know about AKAppController
-
-[ ] cell classes are n/a for iPhone (UITableViewCell is actually a view)
-
-[ ] add some UI to choose which iPhone SDK to use -- a tab in the prefs panel that only appears in iPhone mode
-
-[ ] subtopic list should scroll to visible, e.g., if you search for NSNextMapEnumeratorPair, "Managing Map Tables" is far down the subtopic list and isn't visible
-
-[ ] script to go through and make sure all imports are actually necessary
-
-[ ] in Xcode, search for "setTimeOffset:" finds the *property* timeOffset
-
-[ ] can DIGSLogExitingMethodPrematurely take varargs?
-
-[ ] shouldn't use Command-+ to add column; it's standard for increasing font size
-
-[ ] check whether .h parser handles class extensions
-	* _are_ there any extensions I need to parse?
-
-[ ] add the ability to look things up / do searches in the Xcode doc window
-
-[ ] I think can stop parsing headers when docset queries fully fleshed out
-
-[ ] why sometimes slow to jump to a favorite?
-
-[ ] do a screencast
-
-[ ] technical meaning of "member"?
-
-[ ] make the splash panel a cancellable modal panel
-
-[ ] get rid of "shadowing" warnings
-
-[ ] use Sparkle for updates
-
-look into log4cocoa
-
-* akd prefs frameworks space bar doesn't work to toggle selection
-
-get latest fmdb
-
-show which OS version deprecated methods were deprecated in
-
-make sure parsing class extensions
-
-rename digitalspokes plist
-	maybe try to get the domain name back?
-
-AddressBook constants not appearing in 980, but they do in 971
-
-QTKit types and constants contains only a "Constants" group in 980, only a "Data Types" group in 971; the subnodes of the two groups are disjoint
-
-weirdness if browsing e.g. CoreData Constants and click on one of the clickable constants -- see what happens to topic browser
-
-use NSUInteger
-
-search for "::" doesn't find -[CIImageProvider provideImageData:bytesPerRow:origin::size::userInfo:]
-
-hm, *Carbon* is showing up, with two protocols: IMKTextInput and IMKUnicodeTextInput; and the -insertText: method for the latter is not showing up (not documented, I assume)
-
-omit frameworks with no classes from the quicklist popup
-
-check out latest fmdb
-
-open link in new window doesn't work (e.g., runModalForWindow: links to stopModal)
-	- New window doesn't do anything either
