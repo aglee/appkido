@@ -48,6 +48,9 @@
     NSMutableString *methodName = [NSMutableString string];
     NSString *lastTopLevelElement = nil;
 
+    // Start at the beginning.
+    _current = _buffer;
+
     // Skip prelude.
     //
     // Case 1, message-send: If we have "(SomeTypeCast)[someMessageSend..." then we want
