@@ -54,7 +54,7 @@
     // to skip the "(SomeTypeCast)[".
     //
     // Case 2, method declaration: If we have "- (SomeReturnType)someInstanceMethod..."
-    // then we want to skip the "- (id)". Similarly if it's a class method.
+    // then we want to skip the "- (SomeReturnType)". Similarly if it's a class method.
     [self _scanWhitespace];
 
     if (*_current == '+' || *_current == '-')
