@@ -30,23 +30,7 @@
     onNodes:(NSArray *)nodes
     with:(id)arg;
 
-- (void)_openXMLElement:(NSString *)xmlElementName
-    nameAttribute:(NSString *)nameAttribute
-    typeAttribute:(NSString *)typeAttribute
-    deprecated:(BOOL)deprecated
-    alsoClose:(BOOL)alsoClose;
-- (void)_openXMLElement:(NSString *)xmlElementName
-    nameAttribute:(NSString *)nameAttribute
-    typeAttribute:(NSString *)typeAttribute;
-- (void)_openXMLElement:(NSString *)xmlElementName
-    nameAttribute:(NSString *)nameAttribute;
-- (void)_openXMLElement:(NSString *)xmlElementName;
-- (void)_closeXMLElement:(NSString *)xmlElementName;
-
 - (NSString *)_spreadString:(NSString *)s;
-
-- (void)_writeLine:(NSString *)s;
-- (void)_writeLine;
 
 - (void)_writeLongDividerWithString:(NSString *)aString;
 - (void)_writeDividerWithString:(NSString *)aString;
@@ -65,12 +49,13 @@
 #pragma mark Init/awake/dealloc
 
 - (id)initWithDatabase:(AKDatabase *)database
-    fileHandle:(NSFileHandle *)outfile
+               fileURL:(NSURL *)outfileURL;
 {
     if ((self = [super init]))
     {
         _database = [database retain];
-        _outfile = [outfile retain];
+        _xmlWriter = [[TCMXMLWriter alloc] initWithOptions:TCMXMLWriterOptionOrderedAttributes | TCMXMLWriterOptionPrettyPrinted
+                                                   fileURL:outfileURL];
     }
     
     return self;
@@ -86,7 +71,7 @@
 - (void)dealloc
 {
     [_database release];
-    [_outfile release];
+    [_xmlWriter release];
     
     [super dealloc];
 }
@@ -97,18 +82,11 @@
 
 - (void)doExport
 {
-    _indent = 0;
-
-    [self _writeLine:@"<?xml version=\"1.0\"?>"];
-    [self _writeLine];
-    [self _writeLine:@"<database>"];
-    [self _writeLine];
-
-        [self
-            _performSelector:@selector(exportFrameworkNamed:)
-            onStrings:[_database frameworkNames]];
-
-    [self _writeLine:@"</database>"];
+    [_xmlWriter instructXMLStandalone];
+    [_xmlWriter tag:@"database" attributes:nil contentBlock:^{
+        [self _performSelector:@selector(exportFrameworkNamed:)
+                     onStrings:[_database frameworkNames]];
+    }];
 }
 
 
@@ -120,26 +98,24 @@
     usingGetSelector:(SEL)getSelector
     xmlTag:(NSString *)memberTag
 {
-    [self _writeShortDividerWithString:membersType];
-    [self _openXMLElement:membersType];
-
+    [_xmlWriter tag:membersType attributes:nil contentBlock:^{
         [self
-            _performSelector:@selector(exportMember:withXMLTag:)
-            onNodes:[behaviorNode performSelector:getSelector]
-            with:memberTag];
-
-    [self _closeXMLElement:membersType];
+         _performSelector:@selector(exportMember:withXMLTag:)
+         onNodes:[behaviorNode performSelector:getSelector]
+         with:memberTag];
+    }];
 }
 
 - (void)exportMember:(AKMemberNode *)memberNode
     withXMLTag:(NSString *)memberTag
 {
-    [self
-        _openXMLElement:memberTag
-        nameAttribute:[memberNode nodeName]
-        typeAttribute:nil
-        deprecated:[memberNode isDeprecated]
-        alsoClose:YES];
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
+    [attributes setObject:[memberNode nodeName] forKey:@"name"];
+    if ([memberNode isDeprecated]) {
+        [attributes setObject:[NSNumber numberWithBool:YES] forKey:@"isDeprecated"];
+    }
+    [_xmlWriter tag:memberTag attributes:attributes];
+    [attributes release];
 }
 
 
@@ -148,62 +124,58 @@
 
 - (void)exportClass:(AKClassNode *)classNode
 {
-    [self _writeDividerWithString:@"class" string:[classNode nodeName]];
-    [self _openXMLElement:@"class" nameAttribute:[classNode nodeName]];
-
+    [_xmlWriter tag:@"class" attributes:[NSDictionary dictionaryWithObjectsAndKeys:[classNode nodeName],@"name", nil] contentBlock:^{
         [self
-            exportMembers:@"properties"
-            ofBehavior:classNode
-            usingGetSelector:@selector(documentedProperties)
-            xmlTag:@"property"];
+         exportMembers:@"properties"
+         ofBehavior:classNode
+         usingGetSelector:@selector(documentedProperties)
+         xmlTag:@"property"];
         [self
-            exportMembers:@"classmethods"
-            ofBehavior:classNode
-            usingGetSelector:@selector(documentedClassMethods)
-            xmlTag:@"method"];
+         exportMembers:@"classmethods"
+         ofBehavior:classNode
+         usingGetSelector:@selector(documentedClassMethods)
+         xmlTag:@"method"];
         [self
-            exportMembers:@"instancemethods"
-            ofBehavior:classNode
-            usingGetSelector:@selector(documentedInstanceMethods)
-            xmlTag:@"method"];
+         exportMembers:@"instancemethods"
+         ofBehavior:classNode
+         usingGetSelector:@selector(documentedInstanceMethods)
+         xmlTag:@"method"];
         [self
-            exportMembers:@"delegatemethods"
-            ofBehavior:classNode
-            usingGetSelector:@selector(documentedDelegateMethods)
-            xmlTag:@"method"];
+         exportMembers:@"delegatemethods"
+         ofBehavior:classNode
+         usingGetSelector:@selector(documentedDelegateMethods)
+         xmlTag:@"method"];
         [self
-            exportMembers:@"notifications"
-            ofBehavior:classNode
-            usingGetSelector:@selector(documentedNotifications)
-            xmlTag:@"notification"];
-
-    [self _closeXMLElement:@"class"];
+         exportMembers:@"notifications"
+         ofBehavior:classNode
+         usingGetSelector:@selector(documentedNotifications)
+         xmlTag:@"notification"];
+    }];
 }
 
 - (void)exportProtocol:(AKProtocolNode *)protocolNode
 {
-    [self _writeDividerWithString:@"protocol" string:[protocolNode nodeName]];
-    [self _openXMLElement:@"protocol"
-        nameAttribute:[protocolNode nodeName]
-        typeAttribute:([protocolNode isInformal] ? @"informal" : @"formal")];
-
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
+    [attributes setObject:[protocolNode nodeName] forKey:@"name"];
+    [attributes setObject:([protocolNode isInformal] ? @"informal" : @"formal") forKey:@"type"];
+    [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
         [self
-            exportMembers:@"properties"
-            ofBehavior:protocolNode
-            usingGetSelector:@selector(documentedProperties)
-            xmlTag:@"property"];
+         exportMembers:@"properties"
+         ofBehavior:protocolNode
+         usingGetSelector:@selector(documentedProperties)
+         xmlTag:@"property"];
         [self
-            exportMembers:@"classmethods"
-            ofBehavior:protocolNode
-            usingGetSelector:@selector(documentedClassMethods)
-            xmlTag:@"method"];
+         exportMembers:@"classmethods"
+         ofBehavior:protocolNode
+         usingGetSelector:@selector(documentedClassMethods)
+         xmlTag:@"method"];
         [self
-            exportMembers:@"instancemethods"
-            ofBehavior:protocolNode
-            usingGetSelector:@selector(documentedInstanceMethods)
-            xmlTag:@"method"];
-
-    [self _closeXMLElement:@"protocol"];
+         exportMembers:@"instancemethods"
+         ofBehavior:protocolNode
+         usingGetSelector:@selector(documentedInstanceMethods)
+         xmlTag:@"method"];
+    }];
+    [attributes release];
 }
 
 
@@ -213,26 +185,23 @@
 - (void)exportGroupSubnode:(AKDatabaseNode *)databaseNode
     withXMLTag:(NSString *)subnodeTag
 {
-    [self
-        _openXMLElement:subnodeTag
-        nameAttribute:[databaseNode nodeName]
-        typeAttribute:nil
-        deprecated:[databaseNode isDeprecated]
-        alsoClose:YES];
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
+    [attributes setObject:[databaseNode nodeName] forKey:@"name"];
+    if ([databaseNode isDeprecated]) {
+        [attributes setObject:[NSNumber numberWithBool:YES] forKey:@"isDeprecated"];
+    }
+    [_xmlWriter tag:subnodeTag attributes:attributes];
+    [attributes release];
 }
 
 - (void)exportGroupNode:(AKGroupNode *)groupNode
     usingSubnodeTag:(NSString *)subnodeTag
 {
-    [self _writeAltDividerWithString:[groupNode nodeName]];
-    [self _openXMLElement:@"group" nameAttribute:[groupNode nodeName]];
-
-        [self
-            _performSelector:@selector(exportGroupSubnode:withXMLTag:)
-            onNodes:[groupNode subnodes]
-            with:subnodeTag];
-
-    [self _closeXMLElement:@"group"];
+    [_xmlWriter tag:@"group" attributes:[NSDictionary dictionaryWithObjectsAndKeys:[groupNode nodeName],@"name", nil] contentBlock:^{
+        [self _performSelector:@selector(exportGroupSubnode:withXMLTag:)
+                       onNodes:[groupNode subnodes]
+                          with:subnodeTag];
+    }];
 }
 
 
@@ -245,37 +214,24 @@
     exportSelector:(SEL)exportSelector
 {
     [self _writeDividerWithString:fwName string:frameworkSection];
-    [self _openXMLElement:frameworkSection];
-
-        [self
-            _performSelector:exportSelector
-            onNodes:[_database performSelector:getSelector withObject:fwName]];
-
-    [self _closeXMLElement:frameworkSection];
+    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
+        [self _performSelector:exportSelector
+                       onNodes:[_database performSelector:getSelector withObject:fwName]];
+    }];
 }
 
 - (void)exportProtocolsForFramework:(NSString *)fwName
 {
-    [self _writeDividerWithString:fwName string:@"protocols"];
-    [self _openXMLElement:@"protocols"];
-
-        // Write formal protocols.
-        _indent--;
+    [_xmlWriter tag:@"protocols" attributes:nil contentBlock:^{
         [self _writeDividerWithString:fwName string:@"formal protocols"];
-        _indent++;
-        [self
-            _performSelector:@selector(exportProtocol:)
-            onNodes:[_database formalProtocolsForFrameworkNamed:fwName]];
-
+        [self _performSelector:@selector(exportProtocol:)
+                       onNodes:[_database formalProtocolsForFrameworkNamed:fwName]];
+        
         // Write informal protocols.
-        _indent--;
         [self _writeDividerWithString:fwName string:@"informal protocols"];
-        _indent++;
-        [self
-            _performSelector:@selector(exportProtocol:)
-            onNodes:[_database informalProtocolsForFrameworkNamed:fwName]];
-
-    [self _closeXMLElement:@"protocols"];
+        [self _performSelector:@selector(exportProtocol:)
+                       onNodes:[_database informalProtocolsForFrameworkNamed:fwName]];
+    }];
 }
 
 - (void)exportGroupNodesInSection:(NSString *)frameworkSection
@@ -284,26 +240,25 @@
     subnodeTag:(NSString *)subnodeTag
 {
     [self _writeDividerWithString:fwName string:frameworkSection];
-    [self _openXMLElement:frameworkSection];
-
+    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
         [self
             _performSelector:@selector(exportGroupNode:usingSubnodeTag:)
             onNodes:[_database performSelector:getSelector withObject:fwName]
             with:subnodeTag];
 
-    [self _closeXMLElement:frameworkSection];
+    }];
 }
 
 - (void)exportFrameworkNamed:(NSString *)fwName
 {
     [self _writeLongDividerWithString:fwName];
-    [self _openXMLElement:@"framework" nameAttribute:fwName];
-
-        [self
-            exportNodesInSection:@"classes"
-            ofFramework:fwName
-            usingGetSelector:@selector(classesForFramework:)
-            exportSelector:@selector(exportClass:)];
+    [_xmlWriter tag:@"framework" attributes:[NSDictionary dictionaryWithObjectsAndKeys:fwName,@"name", nil] contentBlock:^{
+        [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
+            // export all classes now
+            for (AKClassNode *classNode in [_database classesForFrameworkNamed:fwName]) {
+                [self exportClass:classNode];
+            }
+        }];
         [self exportProtocolsForFramework:fwName];
         [self
             exportGroupNodesInSection:@"functions"
@@ -315,9 +270,7 @@
             ofFramework:fwName
             usingGetSelector:@selector(globalsGroupsForFrameworkNamed:)
             subnodeTag:@"global"];
-
-    [self _closeXMLElement:@"framework"];
-    [self _writeLine:@""];
+    }];
 }
 
 
@@ -368,78 +321,6 @@
     }
 }
 
-- (void)_openXMLElement:(NSString *)xmlElementName
-    nameAttribute:(NSString *)nameAttribute
-    typeAttribute:(NSString *)typeAttribute
-    deprecated:(BOOL)deprecated
-    alsoClose:(BOOL)alsoClose
-{
-    NSString *maybeNameAttribute =
-        nameAttribute
-        ? [NSString stringWithFormat:@" name=\"%@\"", nameAttribute]
-        : @"";
-    NSString *maybeTypeAttribute =
-        typeAttribute
-        ? [NSString stringWithFormat:@" type=\"%@\"", typeAttribute]
-        : @"";
-    NSString *maybeDeprecated = deprecated ? @" deprecated=\"true\"" : @"";
-    NSString *maybeClose = alsoClose ? @"/" : @"";
-
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<%@%@%@%@%@>",
-                    xmlElementName,
-                    maybeNameAttribute,
-                    maybeTypeAttribute,
-                    maybeDeprecated,
-                    maybeClose]];
-    if (!alsoClose)
-    {
-        _indent++;
-    }
-}
-
-- (void)_openXMLElement:(NSString *)xmlElementName
-    nameAttribute:(NSString *)nameAttribute
-    typeAttribute:(NSString *)typeAttribute
-{
-    [self
-        _openXMLElement:xmlElementName
-        nameAttribute:nameAttribute
-        typeAttribute:typeAttribute
-        deprecated:NO
-        alsoClose:NO];
-}
-
-- (void)_openXMLElement:(NSString *)xmlElementName
-    nameAttribute:(NSString *)nameAttribute
-{
-    [self
-        _openXMLElement:xmlElementName
-        nameAttribute:nameAttribute
-        typeAttribute:nil
-        deprecated:NO
-        alsoClose:NO];
-}
-
-- (void)_openXMLElement:(NSString *)xmlElementName
-{
-    [self
-        _openXMLElement:xmlElementName
-        nameAttribute:nil
-        typeAttribute:nil
-        deprecated:NO
-        alsoClose:NO];
-}
-
-- (void)_closeXMLElement:(NSString *)xmlElementName
-{
-    _indent--;
-    [self _writeLine:[NSString stringWithFormat:@"</%@>", xmlElementName]];
-}
-
 - (NSString *)_spreadString:(NSString *)s
 {
     NSMutableString *result = [NSMutableString string];
@@ -461,68 +342,41 @@
     return result;
 }
 
-- (void)_writeLine:(NSString *)s
-{
-    int i;
-
-    for (i = 0; i < _indent; i++)
-    {
-        s = [@"    " stringByAppendingString:s];
-    }
-
-    s = [s stringByAppendingString:@"\n"];
-
-    [_outfile writeData:[s dataUsingEncoding:NSASCIIStringEncoding]];
-}
-
-- (void)_writeLine
-{
-    [_outfile writeData:[@"\n" dataUsingEncoding:NSASCIIStringEncoding]];
-}
 
 - (void)_writeLongDividerWithString:(NSString *)aString
 {
-    [self
-         _writeLine:
-            [NSString
-                stringWithFormat:@"<!-- ========== [ %@ ] ========== -->",
-                [self _spreadString:aString]]];
+    NSString *commentString = [[NSString alloc] initWithFormat:@"========== [ %@ ] ==========",[self _spreadString:aString]];
+    [_xmlWriter comment:commentString];
+    [commentString release];
 }
 
 - (void)_writeDividerWithString:(NSString *)aString
 {
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== %@ ===== -->",
-                    aString]];
+    NSString *commentString = [[NSString alloc] initWithFormat:@"===== %@ =====",aString];
+    [_xmlWriter comment:commentString];
+    [commentString release];
 }
 
 - (void)_writeAltDividerWithString:(NSString *)aString
 {
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== [%@] ===== -->",
-                    aString]];
+    NSString *commentString = [[NSString alloc] initWithFormat:@"===== [%@] =====",aString];
+    [_xmlWriter comment:commentString];
+    [commentString release];
 }
 
 - (void)_writeDividerWithString:(NSString *)string1
     string:(NSString *)string2
 {
-    [self
-        _writeLine:
-            [NSString
-                stringWithFormat:
-                    @"<!-- ===== %@ %@ ===== -->",
-                    string1, string2]];
+    NSString *commentString = [[NSString alloc] initWithFormat:@"===== %@ %@ =====",string1, string2];
+    [_xmlWriter comment:commentString];
+    [commentString release];
 }
 
 - (void)_writeShortDividerWithString:(NSString *)aString
 {
-    [self _writeLine:[NSString stringWithFormat:@"<!-- ## %@ ## -->", aString]];
+    NSString *commentString = [[NSString alloc] initWithFormat:@"## %@ ##",aString];
+    [_xmlWriter comment:commentString];
+    [commentString release];
 }
 
 @end

@@ -563,19 +563,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
         return;
     }
 
-    NSFileHandle *fh = [NSFileHandle fileHandleForUpdatingAtPath:[savePanel filename]];
-
-    if (fh == nil)
-    {
-        DIGSLogError_ExitingMethodPrematurely(
-            ([NSString stringWithFormat:@"failed to get file handle for [%@]", [savePanel filename]]));
-        return;
-    }
-
     AKDatabaseXMLExporter *exporter =
-        [[[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase fileHandle:fh] autorelease];
+        [[[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase fileURL:[savePanel URL]] autorelease];
     [exporter doExport];
-    [fh closeFile];
 }
 
 #pragma mark -

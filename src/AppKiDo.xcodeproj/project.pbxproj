@@ -605,6 +605,10 @@
 		73E86F430E3974E1002AFB76 /* AKMemberNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F410E3974E1002AFB76 /* AKMemberNode.m */; };
 		73E86F4A0E397760002AFB76 /* AKNotificationNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F480E397760002AFB76 /* AKNotificationNode.h */; };
 		73E86F4B0E397760002AFB76 /* AKNotificationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F490E397760002AFB76 /* AKNotificationNode.m */; };
+		F28A5B2B13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
+		F28A5B2C13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
+		F28A5B2D13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */; };
+		F28A5B2E13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -928,6 +932,8 @@
 		73E86F490E397760002AFB76 /* AKNotificationNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNotificationNode.m; sourceTree = "<group>"; };
 		73EE9E3D06856D120008CBEC /* AKDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabase.h; sourceTree = "<group>"; };
 		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; };
+		F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMXMLWriter.m; sourceTree = "<group>"; };
+		F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMXMLWriter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1233,6 +1239,8 @@
 		731D743A0E4357F000C54AD5 /* export */ = {
 			isa = PBXGroup;
 			children = (
+				F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */,
+				F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */,
 				7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */,
 				7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */,
 			);
@@ -1808,6 +1816,7 @@
 				731657BE0FE48DEC0097F3A1 /* AKDevTools.h in Headers */,
 				7382628C0FE6C4880020E4F1 /* AKFramework.h in Headers */,
 				737405C91195B28D000BD282 /* AKSDKVersion.h in Headers */,
+				F28A5B2D13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */,
 				733DF5EB14E17700007E6313 /* AKSQLTemplate.h in Headers */,
 				738D41B915B07D7F008950F6 /* AKAboutWindowController.h in Headers */,
 				738D41BD15B07EC6008950F6 /* AKAppVersion.h in Headers */,
@@ -1941,6 +1950,7 @@
 				731657930FE48AE70097F3A1 /* AKDevTools.h in Headers */,
 				7382628A0FE6C4880020E4F1 /* AKFramework.h in Headers */,
 				737405C71195B28D000BD282 /* AKSDKVersion.h in Headers */,
+				F28A5B2E13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */,
 				733DF5ED14E17700007E6313 /* AKSQLTemplate.h in Headers */,
 				738D41BA15B07D7F008950F6 /* AKAboutWindowController.h in Headers */,
 				738D41BE15B07EC6008950F6 /* AKAppVersion.h in Headers */,
@@ -2235,6 +2245,7 @@
 				731657BF0FE48DEC0097F3A1 /* AKDevTools.m in Sources */,
 				7382628D0FE6C4880020E4F1 /* AKFramework.m in Sources */,
 				737405CA1195B28D000BD282 /* AKSDKVersion.m in Sources */,
+				F28A5B2B13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */,
 				733DF5EC14E17700007E6313 /* AKSQLTemplate.m in Sources */,
 				738D41B715B07D7A008950F6 /* AKAboutWindowController.m in Sources */,
 				738D41BF15B07EC6008950F6 /* AKAppVersion.m in Sources */,
@@ -2368,6 +2379,7 @@
 				731657940FE48AE70097F3A1 /* AKDevTools.m in Sources */,
 				7382628B0FE6C4880020E4F1 /* AKFramework.m in Sources */,
 				737405C81195B28D000BD282 /* AKSDKVersion.m in Sources */,
+				F28A5B2C13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */,
 				733DF5EE14E17700007E6313 /* AKSQLTemplate.m in Sources */,
 				738D41B815B07D7B008950F6 /* AKAboutWindowController.m in Sources */,
 				738D41C015B07EC6008950F6 /* AKAppVersion.m in Sources */,
