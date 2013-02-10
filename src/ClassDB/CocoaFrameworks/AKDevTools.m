@@ -155,6 +155,19 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return _devToolsPath;
 }
 
++ (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath {
+    NSString *devToolsPath = [possibleXcodePath stringByAppendingPathComponent:@"Contents/Developer"];
+
+    NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+    BOOL isDir = NO;
+    if (!([fileManager fileExistsAtPath:devToolsPath isDirectory:&isDir] && isDir)) {
+        //That doesn't exist, so this isn't an Xcode path. A later test, namely looksLikeValidDevToolsPath:errorStrings:, will determine whether this is actually a dev tools path.
+        devToolsPath = possibleXcodePath;
+    }
+
+    return devToolsPath;
+}
+
 
 #pragma mark -
 #pragma mark Docset paths

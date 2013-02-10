@@ -19,10 +19,12 @@
 
 
 @interface AKDevToolsPathController (Private)
-- (void)_updateEnablednessOfDevPathControls;
 - (void)_populateSDKPopUpButton;
 @end
 
+
+@interface AKDevToolsPathController () <NSOpenSavePanelDelegate>
+@end
 
 @implementation AKDevToolsPathController
 
@@ -34,16 +36,15 @@
     NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
     
     // Make initial selection from _devToolsInstallationTypeMatrix.
-    if ([devToolsPath isEqualToString:AKDevToolsPathForStandaloneXcode])
-    {
-        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForStandaloneXcode];
-    }
-    else
+    if ([devToolsPath isEqualToString:AKDevToolsPathForOldStyleDevTools])
     {
         [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForOldStyleDevTools];
     }
-    [self _updateEnablednessOfDevPathControls];
-    
+    else
+    {
+        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForStandaloneXcode];
+    }
+
     // Put initial value in _devToolsPathField.
     if ([AKPrefUtils devToolsPathPref])
         [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
@@ -57,26 +58,6 @@
 
 #pragma mark -
 #pragma mark Action methods
-
-- (IBAction)takeDevToolsInstallationTypeFrom:(id)sender
-{
-    [self _updateEnablednessOfDevPathControls];
-    
-    if ([(NSMatrix *)sender selectedTag] == AKMatrixTagForStandaloneXcode)
-    {
-        [AKPrefUtils setDevToolsPathPref:AKDevToolsPathForStandaloneXcode];
-        [self _populateSDKPopUpButton];
-    }
-    else if ([(NSMatrix *)sender selectedTag] == AKMatrixTagForOldStyleDevTools)
-    {
-        [AKPrefUtils setDevToolsPathPref:[_devToolsPathField stringValue]];
-        [self _populateSDKPopUpButton];
-    }
-    else 
-    {
-        DIGSLogError(@"%@ has unexpected selectedTag %ld", sender, (long)[(NSMatrix *)sender selectedTag]);
-    }
-}
 
 - (IBAction)runOpenPanel:(id)sender
 {
@@ -94,7 +75,8 @@
     [openPanel setPrompt:@"Select"];
     [openPanel setAllowsMultipleSelection:NO];
     [openPanel setCanChooseDirectories:YES];
-    [openPanel setCanChooseFiles:NO];
+    [openPanel setCanChooseFiles:YES];
+    [openPanel setDelegate:self];
     [openPanel setResolvesAliases:YES];
     
     [openPanel
@@ -117,14 +99,6 @@
 
 #pragma mark -
 #pragma mark Private methods
-
-- (void)_updateEnablednessOfDevPathControls
-{
-    BOOL isOldStyleDevTools = ([_devToolsInstallationTypeMatrix selectedTag] == AKMatrixTagForOldStyleDevTools);
-    
-    [_devToolsPathField setEnabled:isOldStyleDevTools];
-    [_selectPathButton setEnabled:isOldStyleDevTools];
-}
 
 // Fills in the popup button that lists available SDK versions.  Gets this list
 // by looking in the directory specified by [AKPrefUtils devToolsPathPref].
@@ -185,6 +159,12 @@
     [_okButton setEnabled:(selectedSDKVersion != nil)];
 }
 
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
+    NSString *devToolsPath = [url path];
+    devToolsPath = [AKDevTools devToolsPathFromPossibleXcodePath:devToolsPath];
+    return [AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:nil];
+}
+
 // Called when the open panel sheet opened by -runOpenPanel is dismissed.
 - (void)_devToolsOpenPanelDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
@@ -198,6 +178,9 @@
     {
         NSString *selectedDir = [[[panel URLs] lastObject] path];
         NSMutableArray *errorStrings = [NSMutableArray array];
+
+        //If the user selected an Xcode.app, get the /Developer that resides within, if there is one.
+        selectedDir = [AKDevTools devToolsPathFromPossibleXcodePath:selectedDir];
 
         if ([AKDevTools looksLikeValidDevToolsPath:selectedDir errorStrings:errorStrings])
         {

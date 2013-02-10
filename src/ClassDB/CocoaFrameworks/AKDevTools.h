@@ -17,6 +17,9 @@
 /*! Starting with Xcode 4.3, this what AppKiDo should use as the Dev Tools directory. */
 #define AKDevToolsPathForStandaloneXcode @"/Applications/Xcode.app/Contents/Developer"
 
+/*! Any version of the Xcode tools older than 4.3 is installed here by the package installer. */
+#define AKDevToolsPathForOldStyleDevTools @"/Developer"
+
 @class AKDocSetIndex;
 
 // [agl] Long-term, it probably makes sense to get rid of Dev Tools installations as a
@@ -87,6 +90,8 @@
 
 /*! Typically /Developer, but can be wherever the user has installed the Dev Tools. */
 - (NSString *)devToolsPath;
+
++ (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath;
 
 
 #pragma mark -

@@ -10,6 +10,7 @@
 #import "DIGSLog.h"
 #import "AKFrameworkConstants.h"
 #import "AKPrefConstants.h"
+#import "AKDevToolsUtils.h"
 
 
 
@@ -207,7 +208,7 @@
         forKey:(id)DIGSLogVerbosityUserDefault];
 
     [defaultPrefsDictionary
-        setObject:@"/Developer"
+        setObject:[AKDevToolsUtils devToolsPathAccordingToXcodeSelect]
         forKey:AKDevToolsPathPrefName];
 
     [defaultPrefsDictionary setObject:[NSNumber numberWithBool:NO] forKey:AKSearchInNewWindowPrefName];

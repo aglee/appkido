@@ -35,8 +35,6 @@
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)takeDevToolsInstallationTypeFrom:(id)sender;
-
 /*!
  * Repeatedly displays an open panel sheet until the user either cancels or
  * selects a valid Dev Tools directory.
