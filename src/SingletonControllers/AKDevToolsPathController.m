@@ -19,7 +19,6 @@
 
 
 @interface AKDevToolsPathController (Private)
-- (void)_updateEnablednessOfDevPathControls;
 - (void)_populateSDKPopUpButton;
 @end
 
@@ -45,8 +44,7 @@
     {
         [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForStandaloneXcode];
     }
-    [self _updateEnablednessOfDevPathControls];
-    
+
     // Put initial value in _devToolsPathField.
     if ([AKPrefUtils devToolsPathPref])
         [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
@@ -63,8 +61,6 @@
 
 - (IBAction)takeDevToolsInstallationTypeFrom:(id)sender
 {
-    [self _updateEnablednessOfDevPathControls];
-    
     if ([(NSMatrix *)sender selectedTag] == AKMatrixTagForStandaloneXcode)
     {
         [AKPrefUtils setDevToolsPathPref:AKDevToolsPathForStandaloneXcode];
@@ -121,14 +117,6 @@
 
 #pragma mark -
 #pragma mark Private methods
-
-- (void)_updateEnablednessOfDevPathControls
-{
-    BOOL isOldStyleDevTools = ([_devToolsInstallationTypeMatrix selectedTag] == AKMatrixTagForOldStyleDevTools);
-    
-    [_devToolsPathField setEnabled:isOldStyleDevTools];
-    [_selectPathButton setEnabled:isOldStyleDevTools];
-}
 
 // Fills in the popup button that lists available SDK versions.  Gets this list
 // by looking in the directory specified by [AKPrefUtils devToolsPathPref].
