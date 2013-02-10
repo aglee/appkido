@@ -34,13 +34,13 @@
     NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
     
     // Make initial selection from _devToolsInstallationTypeMatrix.
-    if ([devToolsPath isEqualToString:AKDevToolsPathForStandaloneXcode])
+    if ([devToolsPath isEqualToString:AKDevToolsPathForOldStyleDevTools])
     {
-        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForStandaloneXcode];
+        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForOldStyleDevTools];
     }
     else
     {
-        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForOldStyleDevTools];
+        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForStandaloneXcode];
     }
     [self _updateEnablednessOfDevPathControls];
     

@@ -15,21 +15,21 @@
 
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {
-    // Are we using the standalone Xcode in /Applications introduced by Xcode 4.3
-    // or the older Dev Tools installation model?
-    if ([devToolsPath isEqualToString:AKDevToolsPathForStandaloneXcode])
-    {
-        return [NSArray arrayWithObjects:
-                @"Platforms/MacOSX.platform",
-                @"Documentation",
-                nil];
-    }
-    else
+    // Are we using the standalone Xcode introduced by Xcode 4.3
+    // or the older package-installation model?
+    if ([devToolsPath isEqualToString:AKDevToolsPathForOldStyleDevTools])
     {
         return [NSArray arrayWithObjects:
                 @"Applications/Xcode.app",
                 @"Documentation",
                 @"Examples",
+                nil];
+    }
+    else
+    {
+        return [NSArray arrayWithObjects:
+                @"Platforms/MacOSX.platform",
+                @"Documentation",
                 nil];
     }
 }
@@ -64,15 +64,15 @@
 
 - (NSString *)sdkSearchPath
 {
-    // Are we using the standalone Xcode in /Applications introduced by Xcode 4.3
+    // Are we using the standalone Xcode introduced by Xcode 4.3
     // or the older Dev Tools installation model?
-    if ([[self devToolsPath] isEqualToString:AKDevToolsPathForStandaloneXcode])
+    if ([[self devToolsPath] isEqualToString:AKDevToolsPathForOldStyleDevTools])
     {
-        return [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/MacOSX.platform/Developer/SDKs/"];
+        return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
     }
     else
     {
-        return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
+        return [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/MacOSX.platform/Developer/SDKs/"];
     }
 }
 
