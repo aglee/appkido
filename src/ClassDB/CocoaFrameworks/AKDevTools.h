@@ -91,6 +91,8 @@
 /*! Typically /Developer, but can be wherever the user has installed the Dev Tools. */
 - (NSString *)devToolsPath;
 
++ (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath;
+
 
 #pragma mark -
 #pragma mark Docset paths

@@ -24,6 +24,9 @@
 @end
 
 
+@interface AKDevToolsPathController () <NSOpenSavePanelDelegate>
+@end
+
 @implementation AKDevToolsPathController
 
 #pragma mark -
@@ -94,7 +97,8 @@
     [openPanel setPrompt:@"Select"];
     [openPanel setAllowsMultipleSelection:NO];
     [openPanel setCanChooseDirectories:YES];
-    [openPanel setCanChooseFiles:NO];
+    [openPanel setCanChooseFiles:YES];
+    [openPanel setDelegate:self];
     [openPanel setResolvesAliases:YES];
     
     [openPanel
@@ -185,6 +189,12 @@
     [_okButton setEnabled:(selectedSDKVersion != nil)];
 }
 
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
+    NSString *devToolsPath = [url path];
+    devToolsPath = [AKDevTools devToolsPathFromPossibleXcodePath:devToolsPath];
+    return [AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:nil];
+}
+
 // Called when the open panel sheet opened by -runOpenPanel is dismissed.
 - (void)_devToolsOpenPanelDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
@@ -198,6 +208,9 @@
     {
         NSString *selectedDir = [[[panel URLs] lastObject] path];
         NSMutableArray *errorStrings = [NSMutableArray array];
+
+        //If the user selected an Xcode.app, get the /Developer that resides within, if there is one.
+        selectedDir = [AKDevTools devToolsPathFromPossibleXcodePath:selectedDir];
 
         if ([AKDevTools looksLikeValidDevToolsPath:selectedDir errorStrings:errorStrings])
         {
