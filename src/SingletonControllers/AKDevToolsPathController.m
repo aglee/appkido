@@ -59,24 +59,6 @@
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)takeDevToolsInstallationTypeFrom:(id)sender
-{
-    if ([(NSMatrix *)sender selectedTag] == AKMatrixTagForStandaloneXcode)
-    {
-        [AKPrefUtils setDevToolsPathPref:AKDevToolsPathForStandaloneXcode];
-        [self _populateSDKPopUpButton];
-    }
-    else if ([(NSMatrix *)sender selectedTag] == AKMatrixTagForOldStyleDevTools)
-    {
-        [AKPrefUtils setDevToolsPathPref:[_devToolsPathField stringValue]];
-        [self _populateSDKPopUpButton];
-    }
-    else 
-    {
-        DIGSLogError(@"%@ has unexpected selectedTag %ld", sender, (long)[(NSMatrix *)sender selectedTag]);
-    }
-}
-
 - (IBAction)runOpenPanel:(id)sender
 {
     DIGSLogDebug_EnteringMethod();
