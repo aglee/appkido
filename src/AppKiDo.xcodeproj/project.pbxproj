@@ -264,6 +264,10 @@
 		7359EAC20BADAAD900574728 /* AKTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359EAC00BADAAD900574728 /* AKTextView.m */; };
 		7359EB2D0BADB68100574728 /* AKApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 7359EB2B0BADB68100574728 /* AKApplication.h */; };
 		7359EB2E0BADB68100574728 /* AKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359EB2C0BADB68100574728 /* AKApplication.m */; };
+		735D9F7716CC5DAC00B72158 /* ALSimpleTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */; };
+		735D9F7816CC5DAC00B72158 /* ALSimpleTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */; };
+		735D9F7916CC5DAC00B72158 /* ALSimpleTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 735D9F7616CC5DAC00B72158 /* ALSimpleTask.m */; };
+		735D9F7A16CC5DAC00B72158 /* ALSimpleTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 735D9F7616CC5DAC00B72158 /* ALSimpleTask.m */; };
 		7368B9AF0E0EFB2200AFEA2D /* AKCollectionOfNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7368B9AD0E0EFB2200AFEA2D /* AKCollectionOfNodes.h */; };
 		7368B9B00E0EFB2200AFEA2D /* AKCollectionOfNodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfNodes.m */; };
 		737405C71195B28D000BD282 /* AKSDKVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 737405C51195B28D000BD282 /* AKSDKVersion.h */; };
@@ -779,6 +783,8 @@
 		7359EAC00BADAAD900574728 /* AKTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKTextView.m; path = CustomViews/AKTextView.m; sourceTree = "<group>"; };
 		7359EB2B0BADB68100574728 /* AKApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKApplication.h; path = ../AKApplication.h; sourceTree = "<group>"; };
 		7359EB2C0BADB68100574728 /* AKApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKApplication.m; path = ../AKApplication.m; sourceTree = "<group>"; };
+		735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSimpleTask.h; sourceTree = "<group>"; };
+		735D9F7616CC5DAC00B72158 /* ALSimpleTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSimpleTask.m; sourceTree = "<group>"; };
 		7362064706169C7D0007F07A /* AKSearchQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKSearchQuery.h; path = ClassDB/AKSearchQuery.h; sourceTree = "<group>"; };
 		7362064806169C7D0007F07A /* AKSearchQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKSearchQuery.m; path = ClassDB/AKSearchQuery.m; sourceTree = "<group>"; };
 		7362078A0616C02F0007F07A /* AKGlobalsNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGlobalsNode.h; sourceTree = "<group>"; };
@@ -1369,6 +1375,8 @@
 		734B2D8D0810C882001D5F3A /* DIGS */ = {
 			isa = PBXGroup;
 			children = (
+				735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */,
+				735D9F7616CC5DAC00B72158 /* ALSimpleTask.m */,
 				734B2D940810C882001D5F3A /* DIGSLog.h */,
 				734B2D950810C882001D5F3A /* DIGSLog.m */,
 				73D23ACE0D4C45B500EF7503 /* DIGSPrefUtils.h */,
@@ -1824,6 +1832,7 @@
 				73D59E8B15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
 				730F68BF15C1478300E0B7B0 /* FMDatabasePool.h in Headers */,
 				730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */,
+				735D9F7716CC5DAC00B72158 /* ALSimpleTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1958,6 +1967,7 @@
 				73D59E8C15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
 				730F68C815C1502C00E0B7B0 /* FMDatabaseQueue.h in Headers */,
 				730F68CA15C1503400E0B7B0 /* FMDatabasePool.h in Headers */,
+				735D9F7816CC5DAC00B72158 /* ALSimpleTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2253,6 +2263,7 @@
 				73D59E8D15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
 				730F68C015C1478300E0B7B0 /* FMDatabasePool.m in Sources */,
 				730F68C215C1478300E0B7B0 /* FMDatabaseQueue.m in Sources */,
+				735D9F7916CC5DAC00B72158 /* ALSimpleTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2387,6 +2398,7 @@
 				73D59E8E15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
 				730F68C715C1502A00E0B7B0 /* FMDatabaseQueue.m in Sources */,
 				730F68C915C1503000E0B7B0 /* FMDatabasePool.m in Sources */,
+				735D9F7A16CC5DAC00B72158 /* ALSimpleTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
