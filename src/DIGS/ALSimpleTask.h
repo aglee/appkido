@@ -37,19 +37,23 @@
 
 /*!
  * Returns the combined stdout and stderr output of the command. If the command
- * failed to launch, contains a string that gives the reason why.
+ * failed to launch, contains a UTF-8 string that gives the reason why. You can
+ * call this before the task completes.
  */
 - (NSData *)outputData;
 
 /*!
- * Convenience method that converts [self outputData] to a string.
- * Assumes the data is UTF8.
+ * Convenience method that converts [self outputData] to a string, using UTF-8
+ * encoding. You can call this before the task completes, but it's conceivable
+ * that outputData ends in the middle of a multi-byte character, in which case
+ * the UTF-8 conversion won't work properly. If you aren't expecting any
+ * multi-byte characters you should be fine.
  */
 - (NSString *)outputString;
 
 /*!
- * Returns the NSTask's terminationStatus, which is 0 on success. If the task
- * hasn't launched or has launched but not completed, returns 0.
+ * Returns the NSTask's terminationStatus, which is 0 on success. Note that this
+ * also returns 0 if the task hasn't launched or has launched but not completed.
  */
 - (int)exitStatus;
 
