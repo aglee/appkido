@@ -37,6 +37,7 @@
                                                                  withString:versionString];
         [[_creditsView mainFrame] loadHTMLString:creditsString baseURL:nil];
     }
+    [[[_creditsView mainFrame] frameView] setAllowsScrolling:NO];
 }
 
 #pragma mark -
