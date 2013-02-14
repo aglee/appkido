@@ -23,10 +23,11 @@
 {
 	NSString *_commandPath;
 	NSArray *_commandArguments;
-	NSMutableData *_commandOutputData;
 
 	NSTask *_task;
 	BOOL _taskDidLaunch;
+	NSMutableData *_taskOutputData;
+    int _taskExitStatus;
 }
 
 - (id)initWithCommandPath:(NSString *)commandPath arguments:(NSArray *)args
@@ -36,7 +37,7 @@
 	{
 		_commandPath = [commandPath copy];
 		_commandArguments = [args copy];
-		_commandOutputData = [[NSMutableData alloc] init];
+		_taskOutputData = [[NSMutableData alloc] init];
 	}
 
 	return self;
@@ -47,9 +48,16 @@
 	// We call this in dealloc because besides ensuring the task is stopped, it
 	// disconnects weak references.
 	[self _stopTask];
+
+    [_commandPath release];
+    [_commandArguments release];
+    [_task release];
+    [_taskOutputData release];
+    
+    [super dealloc];
 }
 
-- (BOOL)runWithExitStatus:(int *)exitStatusPtr
+- (BOOL)runTask
 {
 	// Only allow ourselves to run the command once.
 	if (_task)
@@ -87,14 +95,15 @@
 	{
 		[_task launch];
 		_taskDidLaunch = YES;
+        
 		[_task waitUntilExit];
-		*exitStatusPtr = [_task terminationStatus];
+		_taskExitStatus = [_task terminationStatus];
 	}
 	@catch (NSException *exception)
 	{
 		if ([[exception name] isEqualToString:NSInvalidArgumentException])
 		{
-			[_commandOutputData setData:[[exception reason] dataUsingEncoding:NSUTF8StringEncoding]];
+			[_taskOutputData setData:[[exception reason] dataUsingEncoding:NSUTF8StringEncoding]];
 			return NO;
 		}
 		else
@@ -108,12 +117,17 @@
 
 - (NSData *)outputData
 {
-	return [_commandOutputData copy];
+	return [_taskOutputData copy];
 }
 
 - (NSString *)outputString
 {
-	return [[NSString alloc] initWithData:_commandOutputData encoding:NSUTF8StringEncoding];
+	return [[NSString alloc] initWithData:_taskOutputData encoding:NSUTF8StringEncoding];
+}
+
+- (int)exitStatus
+{
+    return _taskExitStatus;
 }
 
 #pragma mark - Private methods
@@ -127,7 +141,7 @@
 	if ([data length])
 	{
 		// Collect the task's output.
-		[_commandOutputData appendData:data];
+		[_taskOutputData appendData:data];
 
 		// Schedule the file handle to read more data.
 		[[aNotification object] readInBackgroundAndNotify];
@@ -153,7 +167,7 @@
 		NSData *data;
 		while ((data = [[[_task standardOutput] fileHandleForReading] availableData]) && [data length])
 		{
-			[_commandOutputData appendData:data];
+			[_taskOutputData appendData:data];
 		}
 	}
 }

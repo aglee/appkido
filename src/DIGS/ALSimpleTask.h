@@ -31,11 +31,9 @@
 
 /*!
  * Runs the command synchronously. Returns NO if the command fails to launch.
- * If the command does launch, puts its exit status in exitStatusPtr.
- *
  * You can only call this once.
  */
-- (BOOL)runWithExitStatus:(int *)exitStatusPtr;
+- (BOOL)runTask;
 
 /*!
  * Returns the combined stdout and stderr output of the command. If the command
@@ -48,5 +46,11 @@
  * Assumes the data is UTF8.
  */
 - (NSString *)outputString;
+
+/*!
+ * Returns the NSTask's terminationStatus, which is 0 on success. If the task
+ * hasn't launched or has launched but not completed, returns 0.
+ */
+- (int)exitStatus;
 
 @end
