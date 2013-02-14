@@ -96,6 +96,14 @@
     [AKPrefUtils setSDKVersionPref:[[(NSPopUpButton *)sender selectedItem] title]];
 }
 
+#pragma mark - NSOpenSavePanelDelegate methods
+
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url
+{
+    NSString *devToolsPath = [url path];
+    devToolsPath = [AKDevTools devToolsPathFromPossibleXcodePath:devToolsPath];
+    return [AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:nil];
+}
 
 #pragma mark -
 #pragma mark Private methods
@@ -157,12 +165,6 @@
     
     // Update the enabledness of the OK button.
     [_okButton setEnabled:(selectedSDKVersion != nil)];
-}
-
-- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
-    NSString *devToolsPath = [url path];
-    devToolsPath = [AKDevTools devToolsPathFromPossibleXcodePath:devToolsPath];
-    return [AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:nil];
 }
 
 // Called when the open panel sheet opened by -runOpenPanel is dismissed.
