@@ -23,7 +23,6 @@
  */
 @interface AKDevToolsPathController : NSObject
 {
-    IBOutlet NSMatrix *_devToolsInstallationTypeMatrix;  // tag=0 means /Applications/Xcode.app, tag=1 means old-style /Developer
     IBOutlet NSTextField *_devToolsPathField;
     IBOutlet NSButton *_selectPathButton;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;

@@ -14,10 +14,6 @@
 #import "AKIPhoneDevTools.h"
 
 
-#define AKMatrixTagForStandaloneXcode 0
-#define AKMatrixTagForOldStyleDevTools 1
-
-
 @interface AKDevToolsPathController (Private)
 - (void)_populateSDKPopUpButton;
 @end
@@ -33,18 +29,6 @@
 
 - (void)awakeFromNib
 {
-    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
-    
-    // Make initial selection from _devToolsInstallationTypeMatrix.
-    if ([devToolsPath isEqualToString:AKDevToolsPathForOldStyleDevTools])
-    {
-        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForOldStyleDevTools];
-    }
-    else
-    {
-        [_devToolsInstallationTypeMatrix selectCellWithTag:AKMatrixTagForStandaloneXcode];
-    }
-
     // Put initial value in _devToolsPathField.
     if ([AKPrefUtils devToolsPathPref])
         [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
