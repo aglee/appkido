@@ -34,9 +34,9 @@
 
     // Controls in the Dev Tools tab.
     // In our nib file, _devToolsPathController's two outlets are connected
-    // to _devToolsPathField and _sdkVersionsPopUpButton.
+    // to _xcodeAppPathField and _sdkVersionsPopUpButton.
     IBOutlet AKDevToolsPathController *_devToolsPathController;
-    IBOutlet NSTextField *_devToolsPathField;
+    IBOutlet NSTextField *_xcodeAppPathField;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
     
     // Controls in the Search tab.

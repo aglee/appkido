@@ -33,17 +33,13 @@
     NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
     NSString *xcodeAppPath = [AKDevToolsUtils xcodeAppPathFromDevToolsPath:devToolsPath];
 
-    NSLog(@"xxx devTools '%@' -- xcode '%@'", devToolsPath, xcodeAppPath);
-    
     [self _setSelectedXcodeAppPath:xcodeAppPath];
     
-    // Put initial value in _devToolsPathField.
-    if (devToolsPath)
-        [_devToolsPathField setStringValue:devToolsPath];
+    // Populate the UI with initial values.
+    if (xcodeAppPath)
+        [_xcodeAppPathField setStringValue:xcodeAppPath];
     else
-        [_devToolsPathField setStringValue:@""];
-
-    // Put initial values in _sdkVersionsPopUpButton.
+        [_xcodeAppPathField setStringValue:@""];
     [self _populateSDKPopUpButton];
 }
 
@@ -51,12 +47,12 @@
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)runOpenPanel:(id)sender
+- (IBAction)promptForXcodeLocation:(id)sender
 {
     DIGSLogDebug_EnteringMethod();
 
-    if (_devToolsPathField == nil)
-        DIGSLogError(@"_devToolsPathField should not be nil");
+    if (_xcodeAppPathField == nil)
+        DIGSLogError(@"_xcodeAppPathField should not be nil");
 
     if (_sdkVersionsPopUpButton == nil)
         DIGSLogError(@"_docSetsPopUpButton should not be nil");
@@ -75,9 +71,9 @@
          beginSheetForDirectory:_selectedXcodeAppPath
          file:nil
          types:[NSArray arrayWithObject:@"app"]
-         modalForWindow:[_devToolsPathField window]
+         modalForWindow:[_xcodeAppPathField window]
          modalDelegate:[self retain]  // will release later
-         didEndSelector:@selector(_devToolsOpenPanelDidEnd:returnCode:contextInfo:)
+         didEndSelector:@selector(_xcodeOpenPanelDidEnd:returnCode:contextInfo:)
          contextInfo:(void *)NULL];
 }
 
@@ -185,14 +181,14 @@
     [_okButton setEnabled:(selectedSDKVersion != nil)];
 }
 
-// Called when the open panel sheet opened by -runOpenPanel is dismissed.
-- (void)_devToolsOpenPanelDidEnd:(NSOpenPanel *)panel
+// Called when the open panel sheet opened by -promptForXcodeLocation: is dismissed.
+- (void)_xcodeOpenPanelDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
     DIGSLogDebug_EnteringMethod();
 
-    [self autorelease];  // was retained by -runOpenPanel:
+    [self autorelease];  // was retained by -promptForXcodeLocation:
 
     if (returnCode == NSOKButton)
     {
@@ -206,7 +202,7 @@
 
         if ([AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
         {
-            [_devToolsPathField setStringValue:devToolsPath];
+            [_xcodeAppPathField setStringValue:xcodeAppPath];
             [AKPrefUtils setDevToolsPathPref:devToolsPath];
             [self _populateSDKPopUpButton];
         }
@@ -228,7 +224,7 @@
     }
 }
 
-// Called by -_devToolsOpenPanelDidEnd:returnCode:contextInfo: if the user
+// Called by -_xcodeOpenPanelDidEnd:returnCode:contextInfo: if the user
 // selects a directory that does not look like a valid Dev Tools directory.
 - (void)_showBadPathAlert:(NSString *)errorMessage
 {
@@ -239,7 +235,7 @@
         @"OK",  // defaultButton
         nil,  // alternateButton
         nil,  // otherButton
-        [_devToolsPathField window],  // docWindow
+        [_xcodeAppPathField window],  // docWindow
         [self retain],  // modalDelegate -- will release when alert ends
         @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
         (SEL)NULL,  // didDismissSelector
@@ -259,7 +255,7 @@
     [self autorelease];  // was retained by -_showBadPathAlert
 
     [self
-        performSelector:@selector(runOpenPanel:)
+        performSelector:@selector(promptForXcodeLocation:)
         withObject:nil
         afterDelay:(NSTimeInterval)0.0
         inModes:

@@ -25,8 +25,8 @@
 {
     NSString *_selectedXcodeAppPath;
     
-    IBOutlet NSTextField *_devToolsPathField;
-    IBOutlet NSButton *_selectPathButton;
+    IBOutlet NSTextField *_xcodeAppPathField;
+    IBOutlet NSButton *_locateXcodeButton;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
     IBOutlet NSTextField *_explanationField;
     IBOutlet NSButton *_okButton;  // Present only in the Locate Dev Tools window.
@@ -38,9 +38,9 @@
 
 /*!
  * Repeatedly displays an open panel sheet until the user either cancels or
- * selects a valid Dev Tools directory.
+ * selects a valid Xcode app bundle.
  */
-- (IBAction)runOpenPanel:(id)sender;
+- (IBAction)promptForXcodeLocation:(id)sender;
 
 /*!
  * Called by the popup button that lists available SDK versions.
