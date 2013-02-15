@@ -218,8 +218,6 @@
 
     for (NSString *dirItem in dirContents)
     {
-        NSLog(@"xxx dirItem %@", dirItem);
-        
         NSString *maybeAppPath = [applicationsDirPath stringByAppendingPathComponent:dirItem];
         NSString *maybeXcodeBinaryPath = [maybeAppPath stringByAppendingPathComponent:@"Contents/MacOS/Xcode"];
 
