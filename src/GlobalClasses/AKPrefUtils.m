@@ -7,7 +7,9 @@
 
 #import "AKPrefUtils.h"
 
+#import "ALSimpleTask.h"
 #import "DIGSLog.h"
+#import "AKDevTools.h"
 #import "AKFrameworkConstants.h"
 #import "AKPrefConstants.h"
 #import "AKDevToolsUtils.h"
@@ -208,7 +210,7 @@
         forKey:(id)DIGSLogVerbosityUserDefault];
 
     [defaultPrefsDictionary
-        setObject:[AKDevToolsUtils devToolsPathAccordingToXcodeSelect]
+        setObject:[self _defaultDevToolsPath]
         forKey:AKDevToolsPathPrefName];
 
     [defaultPrefsDictionary setObject:[NSNumber numberWithBool:NO] forKey:AKSearchInNewWindowPrefName];
@@ -278,6 +280,23 @@
 
     [[NSUserDefaults standardUserDefaults]
         registerDefaults:defaultPrefsDictionary];
+}
+
+#pragma mark - Private methods
+
++ (NSString *)_defaultDevToolsPath
+{
+    NSString *xcodeSelectPath = [AKDevToolsUtils pathReturnedByXcodeSelect];
+
+    if ([xcodeSelectPath length] == 0)
+    {
+        // We got nothing from xcode-select, so return a hard-coded default.
+        return @"/Applications/Xcode.app/Contents/Developer";
+    }
+    else
+    {
+        return [AKDevTools devToolsPathFromPossibleXcodePath:xcodeSelectPath];
+    }
 }
 
 @end
