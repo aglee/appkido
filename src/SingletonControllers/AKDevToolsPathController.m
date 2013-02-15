@@ -9,6 +9,7 @@
 #import "AKDevToolsPathController.h"
 
 #import "DIGSLog.h"
+#import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
@@ -29,9 +30,16 @@
 
 - (void)awakeFromNib
 {
+    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
+    NSString *xcodeAppPath = [AKDevToolsUtils xcodeAppPathFromDevToolsPath:devToolsPath];
+
+    NSLog(@"xxx devTools '%@' -- xcode '%@'", devToolsPath, xcodeAppPath);
+    
+    [self _setSelectedXcodeAppPath:xcodeAppPath];
+    
     // Put initial value in _devToolsPathField.
-    if ([AKPrefUtils devToolsPathPref])
-        [_devToolsPathField setStringValue:[AKPrefUtils devToolsPathPref]];
+    if (devToolsPath)
+        [_devToolsPathField setStringValue:devToolsPath];
     else
         [_devToolsPathField setStringValue:@""];
 
@@ -55,18 +63,18 @@
     
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
-    [openPanel setTitle:@"Select Dev Tools directory"];
-    [openPanel setPrompt:@"Select"];
+    [openPanel setTitle:@"Locate Xcode.app"];
+    [openPanel setPrompt:@"Select Xcode"];
     [openPanel setAllowsMultipleSelection:NO];
-    [openPanel setCanChooseDirectories:YES];
+    [openPanel setCanChooseDirectories:NO];
     [openPanel setCanChooseFiles:YES];
     [openPanel setDelegate:self];
     [openPanel setResolvesAliases:YES];
-    
+
     [openPanel
-         beginSheetForDirectory:[_devToolsPathField stringValue]
+         beginSheetForDirectory:_selectedXcodeAppPath
          file:nil
-         types:nil
+         types:[NSArray arrayWithObject:@"app"]
          modalForWindow:[_devToolsPathField window]
          modalDelegate:[self retain]  // will release later
          didEndSelector:@selector(_devToolsOpenPanelDidEnd:returnCode:contextInfo:)
@@ -84,13 +92,39 @@
 
 - (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url
 {
-    NSString *devToolsPath = [url path];
-    devToolsPath = [AKDevTools devToolsPathFromPossibleXcodePath:devToolsPath];
-    return [AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:nil];
+    NSString *path = [url path];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isDir = NO;
+
+    // Only allow directories.
+    if (![fm fileExistsAtPath:path isDirectory:&isDir])
+    {
+        return NO;
+    }
+
+    if (!isDir)
+    {
+        return NO;
+    }
+
+    // Allow any directory that is not an app bundle.
+    if (![[path pathExtension] isEqualToString:@"app"])
+    {
+        return YES;
+    }
+    
+    // Only allow app bundles if they seem to be Xcode.
+    return [fm fileExistsAtPath:[path stringByAppendingPathComponent:@"Contents/MacOS/Xcode"]];
 }
 
 #pragma mark -
 #pragma mark Private methods
+
+- (void)_setSelectedXcodeAppPath:(NSString *)xcodeAppPath
+{
+    [_selectedXcodeAppPath autorelease];
+    _selectedXcodeAppPath = [xcodeAppPath copy];
+}
 
 // Fills in the popup button that lists available SDK versions.  Gets this list
 // by looking in the directory specified by [AKPrefUtils devToolsPathPref].
@@ -158,26 +192,28 @@
 {
     DIGSLogDebug_EnteringMethod();
 
-    [self autorelease];  // was retained by -runOpenPanel
+    [self autorelease];  // was retained by -runOpenPanel:
 
     if (returnCode == NSOKButton)
     {
-        NSString *selectedDir = [[[panel URLs] lastObject] path];
+        NSString *xcodeAppPath = [[[panel URLs] lastObject] path];
         NSMutableArray *errorStrings = [NSMutableArray array];
 
         //If the user selected an Xcode.app, get the /Developer that resides within, if there is one.
-        selectedDir = [AKDevTools devToolsPathFromPossibleXcodePath:selectedDir];
+        [self _setSelectedXcodeAppPath:xcodeAppPath];
+        
+        NSString *devToolsPath = [AKDevToolsUtils devToolsPathFromPossibleXcodePath:xcodeAppPath];
 
-        if ([AKDevTools looksLikeValidDevToolsPath:selectedDir errorStrings:errorStrings])
+        if ([AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
         {
-            [_devToolsPathField setStringValue:selectedDir];
-            [AKPrefUtils setDevToolsPathPref:selectedDir];
+            [_devToolsPathField setStringValue:devToolsPath];
+            [AKPrefUtils setDevToolsPathPref:devToolsPath];
             [self _populateSDKPopUpButton];
         }
         else
         {
             NSString *errorMessage = [NSString stringWithFormat:@"\"%@\" doesn't look like a valid Dev Tools path.\n\n%@",
-                                      selectedDir,
+                                      devToolsPath,
                                       [errorStrings componentsJoinedByString:@"\n"]];
             [self
                 performSelector:@selector(_showBadPathAlert:)

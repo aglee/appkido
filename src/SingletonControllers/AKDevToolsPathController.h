@@ -10,19 +10,21 @@
 
 
 /*!
- * Manages the UI used for specifying which docset the application should load.
- * The user specifies how (and, if necessary, where) the Dev Tools are installed.
- * The user then selects one of the SDK versions supported by that Dev Tools
- * installation (e.g., 10.7 for Mac OS or 5.0 for iPhone SDK).
+ * Manages the UI used for specifying where the Dev Tools are installed. The
+ * user locates Xcode.app and we figure out what Dev Tools installation that
+ * implies. The user then selects one of the SDK versions supported by that
+ * Dev Tools installation (e.g., 10.7 for Mac OS or 5.0 for iPhone SDK).
  *
  * This UI is used in two places: (1) the modal window that appears on application
  * launch if we can't find the docset specified by the user's prefs (DevToolsPath.xib);
  * and (2) the Dev Tools tab of the preferences window (Pref.xib). The design of this
  * controller class is fragile in that if I add outlets I have to remember to add them
- * in both nibs.
+ * in both nibs. [agl] Someday use real NSViewController and NSWindowController.
  */
 @interface AKDevToolsPathController : NSObject
 {
+    NSString *_selectedXcodeAppPath;
+    
     IBOutlet NSTextField *_devToolsPathField;
     IBOutlet NSButton *_selectPathButton;
     IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;

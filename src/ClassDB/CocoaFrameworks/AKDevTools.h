@@ -29,30 +29,41 @@
 // users think about picking one.
 
 /*!
- * Abstract class that represents an Apple Dev Tools installation as it relates to
- * development for a particular platform. At the moment the supported platforms are
- * Mac and iOS, hence the subclasses AKMacDevTools and AKIPhoneDevTools.
+ * Abstract class that represents an Apple Dev Tools installation as it relates
+ * to development for a particular platform. At the moment the concrete
+ * subclasses are AKMacDevTools and AKIPhoneDevTools. Who knows, maybe someday
+ * there will be AKWristwatchDevTools and AKTelevisionDevTools. The version of
+ * AppKiDo that displays iOS documentation is called AppKiDo-for-iPhone, but it
+ * isn't iPhone-specific.
  *
- * Any given Dev Tools installation supports some set of SDK versions (e.g., "10.6",
- * "10.7" for the Mac platform). AppKiDo associates each supported SDK version with
- * two directories: a docset bundle and a headers directory. The data AppKiDo presents
- * comes from these two directories.
+ * A Dev Tools installation supports some set of SDK versions (e.g., "10.6",
+ * "10.7" for the Mac platform). AppKiDo associates each SDK version with two
+ * directories: a docset bundle and a headers directory. The data AppKiDo
+ * presents comes from these two directories.
  *
- * Prior to Xcode 4.3, the Dev Tools root directory was /Developer by default, although
- * the user could choose to install elsewhere. Xcode.app was in the Applications
- * subdirectory, and headers for the supported SDKs were in a different subdirectory.
- * Command-line tools were in yet another subdirectory.
+ * Prior to Xcode 4.3, the Dev Tools root directory was /Developer by default,
+ * although at some point Apple allowed this directory to be anywhere, thus
+ * allowing multiple Dev Tools installations. Throughout the AppKiDo code such
+ * installations are referred to as "old-style". Within an old-style Dev Tools
+ * directory, Xcode.app is in the Applications subdirectory, and headers for the
+ * supported SDKs are in a different subdirectory.
  *
- * As of Xcode 4.3, the Dev Tools directory structure got inverted. Everything that was
- * in /Developer is now in a similar directory structure at Xcode.app/Contents/Developer.
- * Xcode can be installed via the Mac App Store, which puts it in /Applications, or
- * anywhere else if you download it from developer.apple.com. A separate installation
- * step puts command-line tools such as git in /usr/bin (Xcode > Preferences > Downloads
- * > Components > Command Line Tools).
+ * As of Xcode 4.3, the Dev Tools directory structure got inverted. Most things
+ * that were in /Developer are now in a similar directory structure at
+ * Xcode.app/Contents/Developer, and Xcode can be wherever you want, although if
+ * you get it from the Mac App Store it will be installed in /Applications.
+ * Throughout the AppKiDo code such installations are referred to as using a
+ * "standalone Xcode", and "Dev Tools directory" means
+ * Xcode.app/Contents/Developer.
  *
- * Until 4.3, the SDK directories were always under the Dev Tools directory. The docsets,
- * however, have moved around over time, even before 4.3, so AppKiDo looks for them in
- * various places they might be.
+ * The SDK directories have always been under the Dev Tools directory. The
+ * docsets, however, have moved around over time. AppKiDo looks for them in
+ * various places they might be. As of 4.5 (and probably earlier) it looks like
+ * Apple has settled on ~/Library/Developer/Shared/Documentation/DocSets as the
+ * place where docsets get installed, complete with HTML documentation files.
+ * You may notice there are docset bundles inside Xcode.app, but they don't have
+ * local HTML files, just links to online docs, so AppKiDo doesn't use those
+ * docsets.
  */
 @interface AKDevTools : NSObject
 {
@@ -89,15 +100,12 @@
  */
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath errorStrings:(NSMutableArray *)errorStrings;
 
-/*! Typically /Developer, but can be wherever the user has installed the Dev Tools. */
-- (NSString *)devToolsPath;
-
 /*!
- * If given a path to a .app, assumes it's an Xcode app bundle and returns the
- * Dev Tools directory implied by that path. Otherwise assumes the path is
- * already a Dev Tools directory and returns it unmodified.
+ * For Xcode before 4.3, this is typically but not necessarily /Developer. For
+ * Xcode 4.3+, this is typically but not necessarily
+ * /Applications/Xcode.app/Contents/Developer.
  */
-+ (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath;
+- (NSString *)devToolsPath;
 
 
 #pragma mark -

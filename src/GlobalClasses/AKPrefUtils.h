@@ -12,16 +12,12 @@
 
 /*!
  * @class       AKPrefUtils
- * @discussion  Utility methods for getting and setting user preferences.
- *              These are mostly wrappers around NSUserDefaults methods.
+ * @discussion  Convenience methods for accessing AppKiDo user preferences
+ *              in the defaults database.
  */
 @interface AKPrefUtils : DIGSPrefUtils
-{
-}
 
-
-#pragma mark -
-#pragma mark App-specific getters and setters
+#pragma mark - AppKiDo preferences
 
 /*! Which frameworks we should display docs for. */
 + (NSArray *)selectedFrameworkNamesPref;
@@ -42,9 +38,7 @@
 + (BOOL)shouldSearchInNewWindow;
 + (void)setShouldSearchInNewWindow:(BOOL)flag;
 
-
-#pragma mark -
-#pragma mark Clearing preferences
+#pragma mark - Clearing groups of preferences
 
 /*!
  * @method      resetAllPrefsToDefaults

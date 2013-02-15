@@ -7,28 +7,13 @@
 
 #import "AKPrefUtils.h"
 
-#import "ALSimpleTask.h"
 #import "DIGSLog.h"
-#import "AKDevTools.h"
 #import "AKFrameworkConstants.h"
-#import "AKPrefConstants.h"
 #import "AKDevToolsUtils.h"
-
-
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKPrefUtils (Private)
-+ (void)_registerStandardDefaults;
-@end
-
 
 @implementation AKPrefUtils
 
-
-#pragma mark -
-#pragma mark Class initialization
+#pragma mark - Class initialization
 
 + (void)initialize
 {
@@ -42,9 +27,7 @@
 //    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
-
-#pragma mark -
-#pragma mark App-specific getters and setters
+#pragma mark - AppKiDo preferences
 
 + (NSArray *)selectedFrameworkNamesPref
 {
@@ -123,9 +106,7 @@
     [self setBoolValue:flag forPref:AKSearchInNewWindowPrefName];
 }
 
-
-#pragma mark -
-#pragma mark Clearing preferences
+#pragma mark - Clearing groups of preferences
 
 + (void)resetAllPrefsToDefaults
 {
@@ -182,13 +163,7 @@
     [userPrefs removeObjectForKey:AKIgnoreCasePrefKey];
 }
 
-@end
-
-
-#pragma mark -
-#pragma mark Private methods
-
-@implementation AKPrefUtils (Private)
+#pragma mark - Private methods
 
 // Register the default values for all user preferences, i.e., the
 // value to use for each preference unless the user specifies a
@@ -282,8 +257,6 @@
         registerDefaults:defaultPrefsDictionary];
 }
 
-#pragma mark - Private methods
-
 + (NSString *)_defaultDevToolsPath
 {
     NSString *xcodeSelectPath = [AKDevToolsUtils pathReturnedByXcodeSelect];
@@ -295,7 +268,7 @@
     }
     else
     {
-        return [AKDevTools devToolsPathFromPossibleXcodePath:xcodeSelectPath];
+        return [AKDevToolsUtils devToolsPathFromPossibleXcodePath:xcodeSelectPath];
     }
 }
 
