@@ -155,17 +155,44 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return _devToolsPath;
 }
 
-+ (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath {
+// A later call to looksLikeValidDevToolsPath:errorStrings: will perform a
+// stricter test of whether the path we return looks like it's a Dev Tools path.
++ (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath
+{
+    // Case 1: The given path isn't an app bundle. Assume it's a Dev Tools
+    // directory and we don't have to do any adjusting.
+    if (![[possibleXcodePath pathExtension] isEqualToString:@"app"])
+    {
+        return possibleXcodePath;
+    }
+
+    // Case 2: The given path is an Xcode app bundle, version 4.3 or higher,
+    // meaning it contains all Dev Tools within the bundle.
     NSString *devToolsPath = [possibleXcodePath stringByAppendingPathComponent:@"Contents/Developer"];
 
     NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
     BOOL isDir = NO;
-    if (!([fileManager fileExistsAtPath:devToolsPath isDirectory:&isDir] && isDir)) {
-        //That doesn't exist, so this isn't an Xcode path. A later test, namely looksLikeValidDevToolsPath:errorStrings:, will determine whether this is actually a dev tools path.
-        devToolsPath = possibleXcodePath;
+    if ([fileManager fileExistsAtPath:devToolsPath isDirectory:&isDir] && isDir) {
+        return devToolsPath;
     }
 
-    return devToolsPath;
+    // Case 3: The given path is an Xcode.app bundle but not the standalone
+    // type. Presumably it was selected from within a pre-4.3 Dev Tools
+    // directory. Up to a certain version -- I forget when -- the Xcode path had
+    // to be /Developer/Applications/Xcode.app, meaning we'd want to return
+    // /Developer here. But then Apple started allowing a directory other than
+    // /Developer to be the root Dev Tools directory, so we can't assume that.
+    NSString *pathToDirContainingApp = [possibleXcodePath stringByDeletingLastPathComponent];
+    NSString *nameOfDirContainingApp = [pathToDirContainingApp lastPathComponent];
+
+    if ([nameOfDirContainingApp isEqualToString:@"Applications"])
+    {
+        return [pathToDirContainingApp stringByDeletingLastPathComponent];
+    }
+
+    // Case 4: The path is probably not a valid Dev Tools path, but we have to
+    // return something.
+    return possibleXcodePath;
 }
 
 

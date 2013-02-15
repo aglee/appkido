@@ -22,11 +22,11 @@
 
 @class AKDocSetIndex;
 
-// [agl] Long-term, it probably makes sense to get rid of Dev Tools installations as a
+// [agl] Long-term, it *may* make sense to get rid of Dev Tools installations as a
 // core AppKiDo concept. Instead, there are SDKs in various expected places and there are
 // docsets in various expected places. We look for matching SDK/docset pairs (based on
 // version number), not Dev Tools installations. I suspect this is how Dash avoids making
-// users think about picking one
+// users think about picking one.
 
 /*!
  * Abstract class that represents an Apple Dev Tools installation as it relates to
@@ -43,11 +43,12 @@
  * subdirectory, and headers for the supported SDKs were in a different subdirectory.
  * Command-line tools were in yet another subdirectory.
  *
- * As of Xcode 4.3, Xcode.app is the Dev Tools root and is installed in /Applications
- * via the Mac App Store. Within the Xcode.app bundle -- specifically, under
- * /Applications/Xcode.app/Contents/Developer -- are other applications and resources
- * including headers for the supported SDKs. A separate installation step puts
- * command-line tools such as git in /usr/bin.
+ * As of Xcode 4.3, the Dev Tools directory structure got inverted. Everything that was
+ * in /Developer is now in a similar directory structure at Xcode.app/Contents/Developer.
+ * Xcode can be installed via the Mac App Store, which puts it in /Applications, or
+ * anywhere else if you download it from developer.apple.com. A separate installation
+ * step puts command-line tools such as git in /usr/bin (Xcode > Preferences > Downloads
+ * > Components > Command Line Tools).
  *
  * Until 4.3, the SDK directories were always under the Dev Tools directory. The docsets,
  * however, have moved around over time, even before 4.3, so AppKiDo looks for them in
@@ -91,6 +92,11 @@
 /*! Typically /Developer, but can be wherever the user has installed the Dev Tools. */
 - (NSString *)devToolsPath;
 
+/*!
+ * If given a path to a .app, assumes it's an Xcode app bundle and returns the
+ * Dev Tools directory implied by that path. Otherwise assumes the path is
+ * already a Dev Tools directory and returns it unmodified.
+ */
 + (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath;
 
 
