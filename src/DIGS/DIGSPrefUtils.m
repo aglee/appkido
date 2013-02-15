@@ -14,10 +14,6 @@
 
 @implementation DIGSPrefUtils
 
-
-#pragma mark -
-#pragma mark Low-level getters and setters
-
 + (BOOL)boolValueForPref:(NSString *)prefName
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:prefName];

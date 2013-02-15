@@ -7,22 +7,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AKPrefConstants.h"
-
 /*!
- * @class       AKPrefUtils
- * @discussion  Utility methods for getting and setting user preferences.
- *              These are mostly wrappers around NSUserDefaults methods.
+ * @class       DIGSPrefUtils
+ * @discussion  Convenience methods for getting and setting user preferences.
+ *              Implemented as wrappers around NSUserDefaults methods.
  */
 #import <Cocoa/Cocoa.h>
 
 @interface DIGSPrefUtils : NSObject
-{
-}
-
-
-#pragma mark -
-#pragma mark Low-level getters and setters
 
 + (BOOL)boolValueForPref:(NSString *)prefName;
 + (void)setBoolValue:(BOOL)value forPref:(NSString *)prefName;
@@ -38,6 +30,5 @@
 
 + (NSDictionary *)dictionaryValueForPref:(NSString *)prefName;
 + (void)setDictionaryValue:(NSDictionary *)value forPref:(NSString *)prefName;
-
 
 @end
