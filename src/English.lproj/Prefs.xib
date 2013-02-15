@@ -64,7 +64,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{424, 534}</string>
 				<object class="NSView" key="NSWindowView" id="811421789">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -73,6 +73,7 @@
 							<int key="NSvFlags">274</int>
 							<string key="NSFrame">{{-1, 10}, {479, 518}}</string>
 							<reference key="NSSuperview" ref="811421789"/>
+							<reference key="NSWindow"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSTabViewItem" id="64094721">
@@ -1009,6 +1010,7 @@
 												<int key="NSvFlags">266</int>
 												<string key="NSFrame">{{17, 413}, {425, 22}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="103309658"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="43683315">
@@ -1036,6 +1038,7 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{11, 377}, {136, 32}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="705243728"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="109398651">
@@ -1063,6 +1066,7 @@
 												<int key="NSvFlags">292</int>
 												<string key="NSFrame">{{14, 17}, {212, 17}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="570661209">
 													<int key="NSCellFlags">67108864</int>
@@ -1086,6 +1090,7 @@
 												<int key="NSvFlags">274</int>
 												<string key="NSFrame">{{14, 120}, {431, 186}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="498842063"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="587184511">
@@ -1117,13 +1122,33 @@
 												<int key="NSvFlags">265</int>
 												<string key="NSFrame">{{158, 443}, {287, 14}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="534318947">
-													<int key="NSCellFlags">69206017</int>
+													<int key="NSCellFlags">603979776</int>
 													<int key="NSCellFlags2">4194304</int>
 													<string key="NSContents">This determines the search paths for docs and SDKs.</string>
 													<reference key="NSSupport" ref="332749078"/>
 													<reference key="NSControlView" ref="986430987"/>
+													<bool key="NSDrawsBackground">YES</bool>
+													<reference key="NSBackgroundColor" ref="815753554"/>
+													<reference key="NSTextColor" ref="289956270"/>
+												</object>
+												<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+											</object>
+											<object class="NSTextField" id="1028041434">
+												<reference key="NSNextResponder" ref="460135358"/>
+												<int key="NSvFlags">268</int>
+												<string key="NSFrame">{{116, 317}, {141, 14}}</string>
+												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
+												<bool key="NSEnabled">YES</bool>
+												<object class="NSTextFieldCell" key="NSCell" id="628872722">
+													<int key="NSCellFlags">603979776</int>
+													<int key="NSCellFlags2">4194304</int>
+													<string key="NSContents">An SDK must be selected.</string>
+													<reference key="NSSupport" ref="332749078"/>
+													<reference key="NSControlView" ref="1028041434"/>
 													<bool key="NSDrawsBackground">YES</bool>
 													<reference key="NSBackgroundColor" ref="815753554"/>
 													<reference key="NSTextColor" ref="289956270"/>
@@ -1135,6 +1160,7 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{14, 311}, {100, 26}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="999479092"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSPopUpButtonCell" key="NSCell" id="706575967">
@@ -1169,6 +1195,7 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{14, 443}, {113, 17}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="252322994"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="827536990">
@@ -1191,6 +1218,7 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{14, 343}, {233, 17}}</string>
 												<reference key="NSSuperview" ref="460135358"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="469268845"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="653542823">
@@ -1207,6 +1235,7 @@
 										</object>
 										<string key="NSFrame">{{10, 33}, {459, 472}}</string>
 										<reference key="NSSuperview" ref="899787808"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="73916080"/>
 									</object>
 									<string key="NSLabel">Dev Tools</string>
@@ -1292,6 +1321,8 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{477, 534}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="899787808"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -1622,6 +1653,7 @@
 							<reference ref="469268845"/>
 							<reference ref="252322994"/>
 							<reference ref="986430987"/>
+							<reference ref="1028041434"/>
 						</object>
 						<reference key="parent" ref="803299957"/>
 					</object>
@@ -2229,6 +2261,20 @@
 						<reference key="object" ref="534318947"/>
 						<reference key="parent" ref="986430987"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1828</int>
+						<reference key="object" ref="1028041434"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="628872722"/>
+						</object>
+						<reference key="parent" ref="460135358"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1829</int>
+						<reference key="object" ref="628872722"/>
+						<reference key="parent" ref="1028041434"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2331,6 +2377,8 @@
 					<string>1817.IBPluginDependency</string>
 					<string>1822.IBPluginDependency</string>
 					<string>1823.IBPluginDependency</string>
+					<string>1828.IBPluginDependency</string>
+					<string>1829.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2430,6 +2478,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -2444,7 +2494,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1827</int>
+			<int key="maxID">1829</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2456,7 +2506,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>runOpenPanel:</string>
+							<string>promptForXcodeLocation:</string>
 							<string>selectSDKVersion:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -2469,13 +2519,13 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>runOpenPanel:</string>
+							<string>promptForXcodeLocation:</string>
 							<string>selectSDKVersion:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">runOpenPanel:</string>
+								<string key="name">promptForXcodeLocation:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2488,40 +2538,40 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_devToolsPathField</string>
 							<string>_explanationField</string>
+							<string>_locateXcodeButton</string>
 							<string>_okButton</string>
 							<string>_sdkVersionsPopUpButton</string>
-							<string>_selectPathButton</string>
+							<string>_xcodeAppPathField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSTextField</string>
-							<string>NSTextField</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSPopUpButton</string>
-							<string>NSButton</string>
+							<string>NSTextField</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_devToolsPathField</string>
 							<string>_explanationField</string>
+							<string>_locateXcodeButton</string>
 							<string>_okButton</string>
 							<string>_sdkVersionsPopUpButton</string>
-							<string>_selectPathButton</string>
+							<string>_xcodeAppPathField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_devToolsPathField</string>
+								<string key="name">_explanationField</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_explanationField</string>
-								<string key="candidateClassName">NSTextField</string>
+								<string key="name">_locateXcodeButton</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_okButton</string>
@@ -2532,8 +2582,8 @@
 								<string key="candidateClassName">NSPopUpButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_selectPathButton</string>
-								<string key="candidateClassName">NSButton</string>
+								<string key="name">_xcodeAppPathField</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 						</object>
 					</object>
@@ -2617,7 +2667,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_devToolsPathController</string>
-							<string>_devToolsPathField</string>
 							<string>_frameworksTable</string>
 							<string>_headerFontNameChoice</string>
 							<string>_headerFontSizeCombo</string>
@@ -2627,11 +2676,11 @@
 							<string>_prefsTabView</string>
 							<string>_sdkVersionsPopUpButton</string>
 							<string>_searchInNewWindowCheckbox</string>
+							<string>_xcodeAppPathField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>AKDevToolsPathController</string>
-							<string>NSTextField</string>
 							<string>NSTableView</string>
 							<string>NSPopUpButton</string>
 							<string>NSComboBox</string>
@@ -2641,6 +2690,7 @@
 							<string>NSTabView</string>
 							<string>NSPopUpButton</string>
 							<string>NSButton</string>
+							<string>NSTextField</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -2648,7 +2698,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_devToolsPathController</string>
-							<string>_devToolsPathField</string>
 							<string>_frameworksTable</string>
 							<string>_headerFontNameChoice</string>
 							<string>_headerFontSizeCombo</string>
@@ -2658,16 +2707,13 @@
 							<string>_prefsTabView</string>
 							<string>_sdkVersionsPopUpButton</string>
 							<string>_searchInNewWindowCheckbox</string>
+							<string>_xcodeAppPathField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_devToolsPathController</string>
 								<string key="candidateClassName">AKDevToolsPathController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_devToolsPathField</string>
-								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_frameworksTable</string>
@@ -2704,6 +2750,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">_searchInNewWindowCheckbox</string>
 								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_xcodeAppPathField</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 						</object>
 					</object>
