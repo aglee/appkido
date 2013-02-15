@@ -71,8 +71,6 @@
             ?: [self _oldStyleDevToolsPathFromXcodeAppPath:xcodeAppPath]);
 }
 
-// A later call to looksLikeValidDevToolsPath:errorStrings: will perform a
-// stricter test of whether the path we return looks like it's a Dev Tools path.
 + (NSString *)devToolsPathFromPossibleXcodePath:(NSString *)possibleXcodePath
 {
     // Case 1: The given path isn't an app bundle. Assume it's a Dev Tools

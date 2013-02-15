@@ -48,9 +48,6 @@
             AKSharedDocSetDirectory,
             
             // New directories to look in as of Xcode 4.3.
-// Xcode 4.3 contains a docset in its app bundle, but as of this writing it doesn't contain any
-// HTML docs. Maybe in the future, updates via Mac App Store will populate that docset?
-//            [AKDevToolsPathForStandaloneXcode stringByAppendingPathComponent:@"Documentation/DocSets"],
             [NSHomeDirectory() stringByAppendingPathComponent:AKSharedDocSetDirectory],
             
             nil];
