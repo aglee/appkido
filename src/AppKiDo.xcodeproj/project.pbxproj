@@ -2017,7 +2017,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = AK;
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Andy Lee";
 			};
 			buildConfigurationList = 73DA1ED0089AEA560016F230 /* Build configuration list for PBXProject "AppKiDo" */;
