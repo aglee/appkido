@@ -21,7 +21,7 @@
  * controller class is fragile in that if I add outlets I have to remember to add them
  * in both nibs. [agl] Someday use real NSViewController and NSWindowController.
  */
-@interface AKDevToolsPathController : NSObject
+@interface AKDevToolsPathController : NSObject <NSOpenSavePanelDelegate>
 {
     NSString *_selectedXcodeAppPath;
     

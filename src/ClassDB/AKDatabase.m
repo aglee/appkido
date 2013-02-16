@@ -648,41 +648,31 @@
 + (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools
                               errorStrings:(NSMutableArray *)errorStrings
 {
-DIGSLogDebug_EnteringMethod();
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir = NO;
     NSString *devToolsPath = [devTools devToolsPath];
     
     if (!([fm fileExistsAtPath:devToolsPath isDirectory:&isDir] && isDir))
     {
-        NSString *msg = [NSString stringWithFormat:@"There is no directory at path %@.",
-                         devToolsPath];
+        NSString *msg = [NSString stringWithFormat:@"There is no directory at %@.", devToolsPath];
         [errorStrings addObject:msg];
         return nil;
     }
 
-    if ([[devTools sdkVersionsThatHaveDocSets] count] == 0)
+    if ([[devTools sdkVersionsThatAreCoveredByDocSets] count] == 0)
     {
-        NSString *msg = [NSString stringWithFormat:@"The Dev Tools installed at %@ don't include any SDKs for which docsets have been downloaded.",
-                         [devTools devToolsPath]];
+        NSString *msg = [NSString stringWithFormat:@"No docsets were found for any SDKs installed in %@.", devToolsPath];
         [errorStrings addObject:msg];
         return nil;
     }
     
-    NSString *sdkVersion = [AKPrefUtils sdkVersionPref];
-
-    if (sdkVersion == nil)
-    {
-        [errorStrings addObject:@"No SDK version has been specified to display docs for."];
-        return nil;
-    }
-
-    NSString *docSetPath = [devTools docSetPathForSDKVersion:sdkVersion];
+    NSString *sdkVersion = [AKPrefUtils sdkVersionPref];  // If nil, the latest SDK available will be used.
+    NSString *docSetSDKVersion = [devTools docSetSDKVersionThatCoversSDKVersion:sdkVersion];
+    NSString *docSetPath = [devTools docSetPathForSDKVersion:docSetSDKVersion];
 
     if (docSetPath == nil)
     {
-        NSString *msg = [NSString stringWithFormat:@"No docset was found for SDK version %@.",
-                         sdkVersion];
+        NSString *msg = [NSString stringWithFormat:@"No docset was found for the %@ SDK.", sdkVersion];
         [errorStrings addObject:msg];
         return nil;
     }
@@ -691,8 +681,7 @@ DIGSLogDebug_EnteringMethod();
 
     if (basePathForHeaders == nil)
     {
-        NSString *msg = [NSString stringWithFormat:@"No SDK directory was found for SDK version %@.",
-                         sdkVersion];
+        NSString *msg = [NSString stringWithFormat:@"No %@ SDK was found in %@.", sdkVersion, devToolsPath];
         [errorStrings addObject:msg];
         return nil;
     }
@@ -703,7 +692,6 @@ DIGSLogDebug_EnteringMethod();
         [[[AKDocSetIndex alloc]
             initWithDocSetPath:docSetPath
             basePathForHeaders:basePathForHeaders] autorelease];
-DIGSLogDebug_ExitingMethod();
 }
 
 // Adds a framework if we haven't seen it before.  We call this each time

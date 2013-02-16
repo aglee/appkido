@@ -14,15 +14,6 @@
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
 
-
-@interface AKDevToolsPathController (Private)
-- (void)_populateSDKPopUpButton;
-@end
-
-
-@interface AKDevToolsPathController () <NSOpenSavePanelDelegate>
-@end
-
 @implementation AKDevToolsPathController
 
 #pragma mark -
@@ -40,7 +31,7 @@
         [_xcodeAppPathField setStringValue:xcodeAppPath];
     else
         [_xcodeAppPathField setStringValue:@""];
-    [self _populateSDKPopUpButton];
+    [self _updateUIToReflectPrefs];
 }
 
 
@@ -49,14 +40,6 @@
 
 - (IBAction)promptForXcodeLocation:(id)sender
 {
-    DIGSLogDebug_EnteringMethod();
-
-    if (_xcodeAppPathField == nil)
-        DIGSLogError(@"_xcodeAppPathField should not be nil");
-
-    if (_sdkVersionsPopUpButton == nil)
-        DIGSLogError(@"_docSetsPopUpButton should not be nil");
-    
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
     [openPanel setTitle:@"Locate Xcode.app"];
@@ -79,8 +62,6 @@
 
 - (IBAction)selectSDKVersion:(id)sender
 {
-    DIGSLogDebug_EnteringMethod();
-
     [AKPrefUtils setSDKVersionPref:[[(NSPopUpButton *)sender selectedItem] title]];
 }
 
@@ -122,11 +103,18 @@
     _selectedXcodeAppPath = [xcodeAppPath copy];
 }
 
-// Fills in the popup button that lists available SDK versions.  Gets this list
-// by looking in the directory specified by [AKPrefUtils devToolsPathPref].
-// If we find any SDKs for which we have a docset but no headers, we display
-// a message to this effect in _missingSDKWarningsField.
-- (void)_populateSDKPopUpButton
+- (void)_displaySearchPathsForDevTools:(AKDevTools *)devTools
+{
+    NSMutableString *explanationString = [NSMutableString string];
+
+    [explanationString appendFormat:@"Search paths for docsets: %@.\n\n",
+     [[devTools docSetSearchPaths] componentsJoinedByString:@", "]];
+    [explanationString appendFormat:@"Search path for SDKs: %@.\n\n", [devTools sdkSearchPath]];
+
+    [_explanationField setStringValue:explanationString];
+}
+
+- (void)_updateUIToReflectPrefs
 {
     NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
 #if APPKIDO_FOR_IPHONE
@@ -134,48 +122,27 @@
 #else
     AKMacDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
 #endif
-    NSMutableArray *sdkVersionsWithHeaders = [NSMutableArray array];
-    NSMutableArray *sdkVersionsWithoutHeaders = [NSMutableArray array];
-    NSEnumerator *sdkVersionsEnum = [[devTools sdkVersionsThatHaveDocSets] objectEnumerator];
-    NSString *sdkVersion;
-    
+    NSArray *sdkVersionsToOffer = [devTools sdkVersionsThatAreCoveredByDocSets];
+
+    // Populate the SDK versions popup.
     [_sdkVersionsPopUpButton removeAllItems];
-    while ((sdkVersion = [sdkVersionsEnum nextObject]))
+    for (NSString *sdkVersion in sdkVersionsToOffer)
     {
-        if ([devTools sdkPathForSDKVersion:sdkVersion] == nil)
-        {
-            DIGSLogInfo(@"found docs but not headers for version [%@]", sdkVersion);
-            [sdkVersionsWithoutHeaders addObject:sdkVersion];
-        }
-        else
-        {
-            [sdkVersionsWithHeaders addObject:sdkVersion];
-            [_sdkVersionsPopUpButton addItemWithTitle:sdkVersion];
-        }
+        [_sdkVersionsPopUpButton addItemWithTitle:sdkVersion];
     }
     
-    // Update the explanation string that tells where we looked for docsets and SDKs.
-    NSMutableString *explanationString = [NSMutableString string];
-    
-    if ([sdkVersionsWithoutHeaders count] > 0)
-    {
-        [explanationString appendFormat:@"Found docsets but not SDKs for these SDK versions: %@.\n\n",
-         [sdkVersionsWithoutHeaders componentsJoinedByString:@", "]];
-    }
-    [explanationString appendFormat:@"Search paths for docsets: %@.\n\n",
-     [[devTools docSetSearchPaths] componentsJoinedByString:@", "]];
-    [explanationString appendFormat:@"Search path for SDKs: %@.\n\n", [devTools sdkSearchPath]];
-    [_explanationField setStringValue:explanationString];
-    
-    // Take the "selected SDK version" pref setting from the selected item in the SDK popup.
+    // Select the appropriate item in the SDK versions popup.
     NSString *selectedSDKVersion = [AKPrefUtils sdkVersionPref];
-    if (selectedSDKVersion == nil
-        || ![[devTools sdkVersionsThatHaveDocSets] containsObject:selectedSDKVersion])
+    if ((selectedSDKVersion == nil)
+        || ([devTools docSetSDKVersionThatCoversSDKVersion:selectedSDKVersion] == nil))
     {
-        selectedSDKVersion = [sdkVersionsWithHeaders lastObject];
+        selectedSDKVersion = [sdkVersionsToOffer lastObject];
         [AKPrefUtils setSDKVersionPref:selectedSDKVersion];
     }
     [_sdkVersionsPopUpButton selectItemWithTitle:selectedSDKVersion];
+    
+    // Update the text that tells where we searched for docsets and SDKs.
+    [self _displaySearchPathsForDevTools:devTools];
     
     // Update the enabledness of the OK button.
     [_okButton setEnabled:(selectedSDKVersion != nil)];
@@ -186,25 +153,21 @@
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-    DIGSLogDebug_EnteringMethod();
-
     [self autorelease];  // was retained by -promptForXcodeLocation:
 
     if (returnCode == NSOKButton)
     {
-        NSString *xcodeAppPath = [[[panel URLs] lastObject] path];
+        NSString *proposedXcodeAppPath = [[[panel URLs] lastObject] path];
+        NSString *devToolsPath = [AKDevToolsUtils devToolsPathFromPossibleXcodePath:proposedXcodeAppPath];
         NSMutableArray *errorStrings = [NSMutableArray array];
 
-        //If the user selected an Xcode.app, get the /Developer that resides within, if there is one.
-        [self _setSelectedXcodeAppPath:xcodeAppPath];
-        
-        NSString *devToolsPath = [AKDevToolsUtils devToolsPathFromPossibleXcodePath:xcodeAppPath];
+        [self _setSelectedXcodeAppPath:proposedXcodeAppPath];
 
         if ([AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
         {
-            [_xcodeAppPathField setStringValue:xcodeAppPath];
+            [_xcodeAppPathField setStringValue:proposedXcodeAppPath];
             [AKPrefUtils setDevToolsPathPref:devToolsPath];
-            [self _populateSDKPopUpButton];
+            [self _updateUIToReflectPrefs];
         }
         else
         {
@@ -224,12 +187,8 @@
     }
 }
 
-// Called by -_xcodeOpenPanelDidEnd:returnCode:contextInfo: if the user
-// selects a directory that does not look like a valid Dev Tools directory.
 - (void)_showBadPathAlert:(NSString *)errorMessage
 {
-    DIGSLogDebug_EnteringMethod();
-
     NSBeginAlertSheet(
         @"Invalid Dev Tools path",  // title
         @"OK",  // defaultButton
@@ -245,13 +204,10 @@
     );
 }
 
-// Called when the alert sheet opened by -_showBadPathAlert is dismissed.
 - (void)_badPathAlertDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-    DIGSLogDebug_EnteringMethod();
-
     [self autorelease];  // was retained by -_showBadPathAlert
 
     [self

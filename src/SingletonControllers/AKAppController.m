@@ -17,23 +17,14 @@
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
 #import "AKTestDocParserWindowController.h"
-#import "AKDevTools.h"
 #import "AKDevToolsPanelController.h"
-#import "AKDevToolsPathController.h"
-#import "AKDevToolsUtils.h"
 #import "AKDocLocator.h"
-#import "AKDocSetIndex.h"
-#import "AKFileUtils.h"
-#import "AKFrameworkConstants.h"
-#import "AKIPhoneDevTools.h"
 #import "AKPrefUtils.h"
 #import "AKPrefPanelController.h"
 #import "AKQuicklistController.h"
 #import "AKSavedWindowState.h"
 #import "AKServicesProvider.h"
-#import "AKTextUtils.h"
 #import "AKTopic.h"
-#import "AKViewUtils.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 
@@ -127,7 +118,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     DIGSLogDebug_EnteringMethod();
 
-	// Create an AKDatabase instance.
+	// Try to create an AKDatabase instance.
     _appDatabase = [[self _instantiateDatabase] retain];
     if (_appDatabase == nil)
     {
@@ -666,10 +657,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
         }
 
         // If we couldn't make a database instance, have the user re-specify the
-        // Dev Tools setup info, and try again. Note that runDevToolsSetupPanel
-        // is intended to have the side effect of setting values for
-        // devToolsPathPref and sdkVersionPref.
-        [AKPrefUtils setDevToolsPathPref:nil];
+        // Dev Tools info, and try again. Note that runDevToolsSetupPanel may
+        // modify values for devToolsPathPref and sdkVersionPref (that's what
+        // it's for).
+//        [AKPrefUtils setDevToolsPathPref:nil];
         [AKPrefUtils setSDKVersionPref:nil];
         
         [self _displayDatabaseCreationErrorStrings:errorStrings];
@@ -682,11 +673,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_displayDatabaseCreationErrorStrings:(NSArray *)errorStrings
 {
+    NSString *alertText = [NSString stringWithFormat:(@"Try re-entering info about your Dev Tools setup.\n\n"
+                                                      @"The gory details:\n\n%@"),
+                           [errorStrings componentsJoinedByString:@"\n"]];
     NSAlert *alert = [NSAlert alertWithMessageText:@"Problem loading docs and/or SDK info"
                                      defaultButton:@"OK"
                                    alternateButton:nil
                                        otherButton:nil
-                         informativeTextWithFormat:@"%@", [errorStrings componentsJoinedByString:@"\n"]];
+                         informativeTextWithFormat:@"%@", alertText];
     [alert runModal];
 }
 
