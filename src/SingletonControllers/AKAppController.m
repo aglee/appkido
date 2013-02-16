@@ -64,33 +64,6 @@
 
 
 #pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKAppController (Private)
-
-// Private methods -- steps during launch
-- (void)_initGoMenu;
-- (void)_maybeAddDebugMenu;
-
-// Private methods -- window management
-- (NSWindow *)_frontmostBrowserWindow;
-- (AKWindowController *)_windowControllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout;
-- (void)_handleWindowWillCloseNotification:(NSNotification *)notification;
-- (void)_openInitialWindows;
-- (NSArray *)_allWindowsAsPrefArray;
-
-// Private methods -- version management
-- (AKAppVersion *)_latestAppVersion;
-
-// Private methods -- Favorites
-- (void)_getFavoritesFromPrefs;
-- (void)_putFavoritesIntoPrefs;
-- (void)_updateFavoritesMenu;
-
-@end
-
-
-#pragma mark -
 
 @implementation AKAppController
 
@@ -154,48 +127,13 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     DIGSLogDebug_EnteringMethod();
 
-	// Create an AKDatabase instance, or give the user the option to quit.
-    NSMutableArray *errorStrings = [NSMutableArray array];
-	while (_appDatabase == nil)
-	{
-		// If necessary, prompt the user for a valid Dev Tools path and SDK version.
-		while (![AKDevTools looksLikeValidDevToolsPath:[AKPrefUtils devToolsPathPref]
-                                          errorStrings:errorStrings])
-		{
-            if ([AKPrefUtils devToolsPathPref])
-            {
-                NSString *errorMessage = [NSString stringWithFormat:@"%@ doesn't seem to be a Dev Tools directory.\n\n%@",
-                                          [AKPrefUtils devToolsPathPref],
-                                          [errorStrings componentsJoinedByString:@"\n"]];
-                NSAlert *alert = [NSAlert alertWithMessageText:errorMessage
-                                                 defaultButton:@"OK"
-                                               alternateButton:nil
-                                                   otherButton:nil
-                                     informativeTextWithFormat:@""];
-                [alert runModal];
-                [errorStrings removeAllObjects];
-            }
-            
-			if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
-			{
-				// The user cancelled, so quit the application.
-				[[NSApplication sharedApplication] terminate:self];
-			}
-		}
-		DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
-
-		// Try to create a database instance based on the user's selected Dev Tools path and SDK version.
-#if APPKIDO_FOR_IPHONE
-		_appDatabase = [[AKDatabase databaseForIPhonePlatform] retain];
-#else
-		_appDatabase = [[AKDatabase databaseForMacPlatform] retain];
-#endif
-		if (_appDatabase == nil)
-		{
-			[AKPrefUtils setDevToolsPathPref:nil];
-			[AKPrefUtils setSDKVersionPref:nil];
-		}
-	}
+	// Create an AKDatabase instance.
+    _appDatabase = [[self _instantiateDatabase] retain];
+    if (_appDatabase == nil)
+    {
+        [[NSApplication sharedApplication] terminate:self];
+    }
+    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
 
     // Put up the splash window.
     [_splashVersionField setStringValue:[[AKAppVersion appVersion] displayString]];
@@ -708,10 +646,54 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #pragma mark -
 #pragma mark Private methods -- steps during launch
 
+- (AKDatabase *)_instantiateDatabase
+{
+    NSMutableArray *errorStrings = [NSMutableArray array];
+    AKDatabase *dbToReturn = nil;
+
+	while (1)
+	{
+		// Try to create a database instance.
+        [errorStrings removeAllObjects];
+#if APPKIDO_FOR_IPHONE
+		dbToReturn = [AKDatabase databaseForIPhonePlatformWithErrorStrings:errorStrings];
+#else
+		dbToReturn = [AKDatabase databaseForMacPlatformWithErrorStrings:errorStrings];
+#endif
+		if (dbToReturn)
+		{
+            return dbToReturn;
+        }
+
+        // If we couldn't make a database instance, have the user re-specify the
+        // Dev Tools setup info, and try again. Note that runDevToolsSetupPanel
+        // is intended to have the side effect of setting values for
+        // devToolsPathPref and sdkVersionPref.
+        [AKPrefUtils setDevToolsPathPref:nil];
+        [AKPrefUtils setSDKVersionPref:nil];
+        
+        [self _displayDatabaseCreationErrorStrings:errorStrings];
+        if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
+        {
+            return nil;
+        }
+    }
+}
+
+- (void)_displayDatabaseCreationErrorStrings:(NSArray *)errorStrings
+{
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Problem loading docs and/or SDK info"
+                                     defaultButton:@"OK"
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:@"%@", [errorStrings componentsJoinedByString:@"\n"]];
+    [alert runModal];
+}
+
 - (void)_initGoMenu
 {
     DIGSLogDebug_EnteringMethod();
-    
+
     NSMenu *goMenu = [_firstGoMenuDivider menu];
     NSInteger menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
 

@@ -115,6 +115,19 @@
             ?: [self _xcodeAppPathFromOldStyleDevToolsPath:devToolsPath]);
 }
 
++ (BOOL)devToolsPathIsOldStyle:(NSString *)devToolsPath
+{
+    for (NSString *pathComponent in [devToolsPath pathComponents])
+    {
+        if ([[pathComponent pathExtension] isEqualToString:@"app"])
+        {
+            return NO;
+        }
+    }
+
+    return YES;
+}
+
 #pragma mark - Private methods
 
 // Checks for [xcodeAppPath]/Contents/Developer, which indicates we have a

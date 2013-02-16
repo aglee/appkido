@@ -55,4 +55,7 @@
  */
 + (NSString *)xcodeAppPathFromDevToolsPath:(NSString *)devToolsPath;
 
+/*! Returns NO if any path component ends with ".app". */
++ (BOOL)devToolsPathIsOldStyle:(NSString *)devToolsPath;
+
 @end

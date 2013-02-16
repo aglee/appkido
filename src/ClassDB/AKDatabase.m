@@ -10,6 +10,7 @@
 #import "DIGSLog.h"
 
 #import "AKFrameworkConstants.h"
+#import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
 
 #import "AKClassNode.h"
@@ -22,55 +23,40 @@
 #import "AKOldDatabase.h"
 #import "AKDatabaseWithDocSet.h"
 
-
-@interface AKDatabase (Private)
-- (void)_seeIfFrameworkIsNew:(NSString *)fwName;
-- (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName;
-@end
-
-
 @implementation AKDatabase
 
 #pragma mark -
 #pragma mark Factory methods
 
-+ (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools
++ (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings
 {
-DIGSLogDebug_EnteringMethod();
-    NSString *sdkVersion = [AKPrefUtils sdkVersionPref];
-    NSString *docSetPath = [devTools docSetPathForSDKVersion:sdkVersion];
-    NSString *basePathForHeaders = [devTools sdkPathForSDKVersion:sdkVersion];
+    AKDatabase *dbToReturn = nil;
+    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
 
-    DIGSLogDebug(@"_docSetIndexForDevTools: -- docSetPath is [%@]", docSetPath);
-
-    if (docSetPath == nil || basePathForHeaders == nil)
-        return nil;
-
-    return
-        [[[AKDocSetIndex alloc]
-            initWithDocSetPath:docSetPath
-            basePathForHeaders:basePathForHeaders] autorelease];
-DIGSLogDebug_ExitingMethod();
-}
-
-
-+ (id)databaseForMacPlatform
-{
-    DIGSLogDebug_EnteringMethod();
-    
-    static AKDatabase *s_macOSDatabase = nil;
-
-    if (s_macOSDatabase == nil)
+    if (![AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
     {
-        NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
+        return nil;
+    }
+
+    if ([AKDevToolsUtils devToolsPathIsOldStyle:devToolsPath])
+    {
+        dbToReturn = [[AKOldDatabase alloc] initWithDevToolsPath:devToolsPath];
+    }
+    else
+    {
         AKDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
-        AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools];
+        AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools
+                                                      errorStrings:errorStrings];
+        if (docSetIndex == nil)
+        {
+            return nil;
+        }
 
-        if (docSetIndex)
-            s_macOSDatabase = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
-        else
-            s_macOSDatabase = [[AKOldDatabase alloc] initWithDevToolsPath:devToolsPath];
+        dbToReturn = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
+    }
 
+    if (dbToReturn)
+    {
         // For a new user of AppKiDo for Mac OS, only load the "essential"
         // frameworks by default and leave it up to them to add more as needed.
         // It would be nice to simply provide everything, but until we cut down
@@ -81,35 +67,38 @@ DIGSLogDebug_ExitingMethod();
         }
     }
 
-    DIGSLogDebug_ExitingMethod();
-    return s_macOSDatabase;
+    return dbToReturn;
 }
 
-+ (id)databaseForIPhonePlatform
++ (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings
 {
-    static AKDatabase *s_iPhoneDatabase = nil;
+    AKDatabase *dbToReturn = nil;
+    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
 
-    if (s_iPhoneDatabase == nil)
+    if (![AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
     {
-        NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
-        AKDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
-        AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools];
+        return nil;
+    }
+    
+    AKDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
+    AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools
+                                                  errorStrings:errorStrings];
+    if (docSetIndex == nil)
+    {
+        return nil;
+    }
+    
+    dbToReturn = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
 
-		if (docSetIndex)
-		{
-			s_iPhoneDatabase = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
-
-			// Assume a new user of AppKiDo-for-iPhone is going to want all possible
-			// frameworks in the iPhone SDK by default, and will deselect whichever
-			// ones they don't want.  The docset is small enough that we can do this.  [agl] Still?
-			if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
-            {
-				[AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
-            }
-		}
+    // Assume a new user of AppKiDo-for-iPhone is going to want all possible
+    // frameworks in the iPhone SDK by default, and will deselect whichever
+    // ones they don't want.  The docset is small enough that we can do this.  [agl] Still?
+    if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
+    {
+        [AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
     }
 
-    return s_iPhoneDatabase;
+    return dbToReturn;
 }
 
 
@@ -654,13 +643,68 @@ DIGSLogDebug_ExitingMethod();
     [offsetsByFilePath setObject:offsetValue forKey:filePath];
 }
 
-@end
+#pragma mark Private methods
 
++ (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools
+                              errorStrings:(NSMutableArray *)errorStrings
+{
+DIGSLogDebug_EnteringMethod();
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isDir = NO;
+    NSString *devToolsPath = [devTools devToolsPath];
+    
+    if (!([fm fileExistsAtPath:devToolsPath isDirectory:&isDir] && isDir))
+    {
+        NSString *msg = [NSString stringWithFormat:@"There is no directory at path %@.",
+                         devToolsPath];
+        [errorStrings addObject:msg];
+        return nil;
+    }
 
-#pragma mark -
-#pragma mark Delegate methods
+    if ([[devTools sdkVersionsThatHaveDocSets] count] == 0)
+    {
+        NSString *msg = [NSString stringWithFormat:@"The Dev Tools installed at %@ don't include any SDKs for which docsets have been downloaded.",
+                         [devTools devToolsPath]];
+        [errorStrings addObject:msg];
+        return nil;
+    }
+    
+    NSString *sdkVersion = [AKPrefUtils sdkVersionPref];
 
-@implementation AKDatabase (Private)
+    if (sdkVersion == nil)
+    {
+        [errorStrings addObject:@"No SDK version has been specified to display docs for."];
+        return nil;
+    }
+
+    NSString *docSetPath = [devTools docSetPathForSDKVersion:sdkVersion];
+
+    if (docSetPath == nil)
+    {
+        NSString *msg = [NSString stringWithFormat:@"No docset was found for SDK version %@.",
+                         sdkVersion];
+        [errorStrings addObject:msg];
+        return nil;
+    }
+
+    NSString *basePathForHeaders = [devTools sdkPathForSDKVersion:sdkVersion];
+
+    if (basePathForHeaders == nil)
+    {
+        NSString *msg = [NSString stringWithFormat:@"No SDK directory was found for SDK version %@.",
+                         sdkVersion];
+        [errorStrings addObject:msg];
+        return nil;
+    }
+
+    DIGSLogDebug(@"%@ -- docSetPath is [%@]", NSStringFromSelector(_cmd), docSetPath);
+
+    return
+        [[[AKDocSetIndex alloc]
+            initWithDocSetPath:docSetPath
+            basePathForHeaders:basePathForHeaders] autorelease];
+DIGSLogDebug_ExitingMethod();
+}
 
 // Adds a framework if we haven't seen it before.  We call this each time
 // we actually add a bit of API to the database, so that only frameworks

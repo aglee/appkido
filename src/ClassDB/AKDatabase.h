@@ -134,8 +134,11 @@
 #pragma mark -
 #pragma mark - Factory methods
 
-+ (id)databaseForMacPlatform;
-+ (id)databaseForIPhonePlatform;
+/*! On failure, returns nil with the reasons added to errorStrings. */
++ (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings;
+
+/*! On failure, returns nil with the reasons added to errorStrings. */
++ (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings;
 
 
 #pragma mark -
