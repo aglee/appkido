@@ -20,15 +20,6 @@
 #import "ALSimpleTask.h"
 
 @implementation ALSimpleTask
-{
-	NSString *_commandPath;
-	NSArray *_commandArguments;
-
-	NSTask *_task;
-	BOOL _taskDidLaunch;
-	NSMutableData *_taskOutputData;
-    int _taskExitStatus;
-}
 
 - (id)initWithCommandPath:(NSString *)commandPath arguments:(NSArray *)args
 {

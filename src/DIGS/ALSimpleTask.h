@@ -25,6 +25,16 @@
  * Is meant to be used just once, like NSTask.
  */
 @interface ALSimpleTask : NSObject
+{
+@private
+	NSString *_commandPath;
+	NSArray *_commandArguments;
+
+	NSTask *_task;
+	BOOL _taskDidLaunch;
+	NSMutableData *_taskOutputData;
+    int _taskExitStatus;
+}
 
 /*! Throws an exception (well, actually NSTask throws it) if args is nil. */
 - (id)initWithCommandPath:(NSString *)commandPath arguments:(NSArray *)args;

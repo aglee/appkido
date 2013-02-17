@@ -25,6 +25,11 @@
  * us doing our thing.
  */
 @interface AKLoadDatabaseOperation : NSOperation <AKDatabaseDelegate>
+{
+@private
+    AKDatabase *_appDatabase;
+    id <AKDatabaseDelegate> _databaseDelegate;
+}
 
 @property (nonatomic, retain) AKDatabase *appDatabase;
 @property (nonatomic, retain) id <AKDatabaseDelegate> databaseDelegate;

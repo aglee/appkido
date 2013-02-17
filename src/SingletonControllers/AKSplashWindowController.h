@@ -11,6 +11,12 @@
 #import "AKDatabaseDelegate.h"
 
 @interface AKSplashWindowController : NSWindowController <AKDatabaseDelegate>
+{
+@private
+    NSTextField *_splashVersionField;
+    NSTextField *_splashMessageField;
+    NSTextField *_splashMessage2Field;
+}
 
 @property (nonatomic, retain) IBOutlet NSTextField *splashVersionField;
 @property (nonatomic, retain) IBOutlet NSTextField *splashMessageField;

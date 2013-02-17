@@ -16,7 +16,17 @@ enum {
 };
 typedef NSUInteger TCMXMLWriterOptions;
 
-@interface TCMXMLWriter : NSObject {}
+@interface TCMXMLWriter : NSObject
+{
+@private
+    NSURL *_fileURL;
+    NSDateFormatter *_dateFormatter;
+    BOOL _currentTagHasContent;
+    NSMutableString *_indentationString;
+    TCMXMLWriterOptions _writerOptions;
+    NSOutputStream *_outputStream;
+    NSMutableArray *_elementNameStackArray;
+}
 
 @property (nonatomic,retain) NSURL *fileURL;
 @property (readonly) NSString *XMLString; // works for in memory streams and file URLs

@@ -16,6 +16,9 @@
 
 @implementation AKLoadDatabaseOperation
 
+@synthesize appDatabase = _appDatabase;
+@synthesize databaseDelegate = _databaseDelegate;
+
 #pragma mark - Init/awake/dealloc
 
 - (void)dealloc

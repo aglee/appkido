@@ -12,6 +12,10 @@
 
 @implementation AKSplashWindowController
 
+@synthesize splashVersionField = _splashVersionField;
+@synthesize splashMessageField = _splashMessageField;
+@synthesize splashMessage2Field = _splashMessage2Field;
+
 - (void)dealloc
 {
     [_splashVersionField release];
