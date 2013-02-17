@@ -1104,8 +1104,6 @@
 				73EE9E3D06856D120008CBEC /* AKDatabase.h */,
 				73EE9E3E06856D120008CBEC /* AKDatabase.m */,
 				734B75E116D077E20027514D /* AKDatabaseDelegate.h */,
-				73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */,
-				73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */,
 				738262880FE6C4880020E4F1 /* AKFramework.h */,
 				738262890FE6C4880020E4F1 /* AKFramework.m */,
 				73C8ABB60836AF2D0000E3F7 /* database nodes */,
@@ -1298,6 +1296,7 @@
 			isa = PBXGroup;
 			children = (
 				739CD2600E4498AC00CFA042 /* Dev Tools */,
+				734B75E716D14B700027514D /* docsets */,
 				730030820498501500A80007 /* database */,
 				73C8ABF50836B2EE0000E3F7 /* parsers */,
 			);
@@ -1404,6 +1403,16 @@
 				734B2D9F0810C882001D5F3A /* DIGSWindow.m */,
 			);
 			path = DIGS;
+			sourceTree = "<group>";
+		};
+		734B75E716D14B700027514D /* docsets */ = {
+			isa = PBXGroup;
+			children = (
+				73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */,
+				73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */,
+			);
+			name = docsets;
+			path = ClassDB;
 			sourceTree = "<group>";
 		};
 		735FA9FD0837CB06009379EB /* child topics of framework topics */ = {
