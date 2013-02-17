@@ -124,24 +124,24 @@
     NSMutableString *infoText = [NSMutableString string];
     NSString *sdkPath = [devTools sdkPathForSDKVersion:selectedSDKVersion];
 
-    if (sdkPath)
+    if (sdkPath == nil)
+    {
+        [infoText appendFormat:@"No %@ SDK was found in %@.", selectedSDKVersion, [devTools devToolsPath]];
+    }
+    else
     {
         [infoText appendFormat:@"The selected SDK is installed at %@.\n\n", sdkPath];
-    }
-    else
-    {
-        [infoText appendFormat:@"No %@ SDK found in %@.", selectedSDKVersion, [devTools devToolsPath]];
-    }
 
-    NSString *docSetPath = [devTools docSetPathForSDKVersion:docSetSDKVersion];
+        NSString *docSetPath = [devTools docSetPathForSDKVersion:docSetSDKVersion];
 
-    if (docSetPath)
-    {
-        [infoText appendFormat:@"This SDK is covered by the %@ docset at %@.", docSetSDKVersion, docSetPath];
-    }
-    else
-    {
-        [infoText appendFormat:@"No docset found in %@ that covers the %@ SDK.", [devTools devToolsPath], selectedSDKVersion];
+        if (docSetPath == nil)
+        {
+            [infoText appendFormat:@"No docset was found in %@ that covers the %@ SDK.", [devTools devToolsPath], selectedSDKVersion];
+        }
+        else
+        {
+            [infoText appendFormat:@"This SDK is covered by the %@ docset at %@.", docSetSDKVersion, docSetPath];
+        }
     }
 
     return infoText;
