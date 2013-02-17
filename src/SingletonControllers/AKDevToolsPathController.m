@@ -41,7 +41,9 @@
 - (IBAction)promptForXcodeLocation:(id)sender
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    
+
+    // Even though a .app bundle is a directory and not a file, we pretend
+    // otherwise when setting up the open panel.
     [openPanel setTitle:@"Locate Xcode.app"];
     [openPanel setPrompt:@"Select Xcode"];
     [openPanel setAllowsMultipleSelection:NO];
