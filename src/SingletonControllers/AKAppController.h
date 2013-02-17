@@ -10,8 +10,9 @@
 @class AKAboutWindowController;
 @class AKDatabase;
 @class AKDocLocator;
-@class AKWindowController;
 @class AKPrefPanelController;
+@class AKSplashWindowController;
+@class AKWindowController;
 
 /*!
  * @class       AKAppController
@@ -29,6 +30,9 @@
 {
     AKDatabase *_appDatabase;
 
+    AKSplashWindowController *_splashWindowController;
+    NSOperationQueue *_operationQueue;
+
     BOOL _finishedInitializing;  // Becomes true when -awakeFromNib finishes.
     AKPrefPanelController *_prefPanelController;  // Lazily instantiated.
     AKAboutWindowController *_aboutWindowController;  // Lazily instantiated.
@@ -40,19 +44,14 @@
     NSMutableArray *_favoritesList;
 
     // IB outlets.
-    IBOutlet NSWindow *_splashWindow;
-    IBOutlet NSTextField *_splashVersionField;
-    IBOutlet NSTextField *_splashMessageField;
-    IBOutlet NSTextField *_splashMessage2Field;
-
     IBOutlet NSMenuItem *_firstGoMenuDivider;
 }
 
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Finishing app startup
 
-+ (id)sharedInstance;
+/*! Called by AKLoadDatabaseOperation. */
+- (void)didFinishLoadingDatabase;
 
 
 #pragma mark -

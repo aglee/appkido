@@ -193,7 +193,7 @@
             DIGSLogDebug(@"Loading tokens for framework %@", fwName);
             DIGSLogDebug(@"===================================================");
 
-            if ([_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
+            if ([(id)_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
             {
                 [_delegate database:self willLoadTokensForFramework:fwName];
             }
@@ -210,7 +210,11 @@
     DIGSLogError_MissingOverride();
 }
 
-- (void)setDelegate:(id)delegate
+
+#pragma mark -
+#pragma mark Getters and setters
+
+- (void)setDelegate:(id <AKDatabaseDelegate>)delegate
 {
     _delegate = delegate;  // note this is NOT retained
 }

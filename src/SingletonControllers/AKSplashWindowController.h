@@ -8,6 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AKSplashWindowController : NSWindowController
+#import "AKDatabaseDelegate.h"
+
+@interface AKSplashWindowController : NSWindowController <AKDatabaseDelegate>
+
+@property (nonatomic, retain) IBOutlet NSTextField *splashVersionField;
+@property (nonatomic, retain) IBOutlet NSTextField *splashMessageField;
+@property (nonatomic, retain) IBOutlet NSTextField *splashMessage2Field;
 
 @end

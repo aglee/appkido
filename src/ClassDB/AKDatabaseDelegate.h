@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AKDatabaseDelegate : NSObject
+@class AKDatabase;
 
+@protocol AKDatabaseDelegate
+@optional
+- (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName;
 @end
+
+

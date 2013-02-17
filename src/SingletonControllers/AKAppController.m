@@ -16,14 +16,16 @@
 #import "AKAppVersion.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
-#import "AKTestDocParserWindowController.h"
 #import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
+#import "AKLoadDatabaseOperation.h"
 #import "AKPrefUtils.h"
 #import "AKPrefPanelController.h"
 #import "AKQuicklistController.h"
 #import "AKSavedWindowState.h"
 #import "AKServicesProvider.h"
+#import "AKSplashWindowController.h"
+#import "AKTestDocParserWindowController.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
@@ -48,7 +50,7 @@
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    return [[AKAppController sharedInstance] handleSearchScriptCommand:aCommand];
+    return [(AKAppController *)[NSApp delegate] handleSearchScriptCommand:aCommand];
 }
 
 @end
@@ -57,17 +59,6 @@
 #pragma mark -
 
 @implementation AKAppController
-
-#pragma mark -
-#pragma mark Factory methods
-
-static id s_sharedInstance = nil;  // Value will be set by -init.
-
-+ (id)sharedInstance
-{
-    return s_sharedInstance;
-}
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -103,80 +94,48 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     if ((self = [super init]))
     {
+        _operationQueue = [[NSOperationQueue alloc] init];
         _finishedInitializing = NO;
         _windowControllers = [[NSMutableArray alloc] init];
         _favoritesList = [[NSMutableArray alloc] init];
-
-        // It's okay to assume this class will be instantiated exactly once.
-        s_sharedInstance = self;
     }
 
     return self;
 }
 
-- (void)awakeFromNib
+- (void)dealloc
 {
-    DIGSLogDebug_EnteringMethod();
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	// Try to create an AKDatabase instance.
-    _appDatabase = [[self _instantiateDatabase] retain];
-    if (_appDatabase == nil)
-    {
-        [[NSApplication sharedApplication] terminate:self];
-    }
-    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
+    [_operationQueue release];
+    [_appDatabase release];
 
-    // Put up the splash window.
-    [_splashVersionField setStringValue:[[AKAppVersion appVersion] displayString]];
-    [_splashWindow setReleasedWhenClosed:YES];
-    [_splashWindow center];
-    [_splashWindow makeKeyAndOrderFront:nil];
+    [_aboutWindowController release];
+    [_windowControllers release];
+    [_prefPanelController release];
+    [_favoritesList release];
 
-    // Populate the database(s) by parsing files for each of the selected frameworks in the user's prefs.
-    [_splashMessageField setStringValue:@"Parsing files for framework:"];
-    [_splashMessageField display];
+    [super dealloc];
+}
 
-// [agl] working on performance
-#if MEASURE_PARSE_SPEED
-[self _timeParseStart];
-#endif //MEASURE_PARSE_SPEED
 
-    [_appDatabase setDelegate:self];  // So we can update the splash screen.
-    {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AKFoundationOnly"])
-        {
-            // Special debug mode so launch is quicker.
-            // defaults write com.digitalspokes.appkido AKFoundationOnly YES  # or NO
-            // defaults write com.appkido.appkidoforiphone AKFoundationOnly YES  # or NO
-            [_appDatabase loadTokensForFrameworks:[NSArray arrayWithObject:@"Foundation"]];
-        }
-        else
-        {
-            [_appDatabase loadTokensForFrameworks:[AKPrefUtils selectedFrameworkNamesPref]];
-        }
-    }
-    [_appDatabase setDelegate:nil];  // Avoid dangling weak references.
+#pragma mark - Finishing app startup
 
+- (void)didFinishLoadingDatabase
+{
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
 [self _timeParseEnd];
 #endif //MEASURE_PARSE_SPEED
 
-    [_splashMessage2Field setStringValue:@""];
-    [_splashMessage2Field display];
-
-    // Set up the "Go" menu.
-    [self _initGoMenu];
-
-    // Update the UI with the Favorites list from the user preferences.
-    [self _getFavoritesFromPrefs];
-
     // Take down the splash window.
-    [_splashWindow close];
-    _splashWindow = nil;
-    _splashVersionField = nil;
-    _splashMessageField = nil;
-    _splashMessage2Field = nil;
+    [[_splashWindowController window] close];
+    [_splashWindowController autorelease];
+    _splashWindowController = nil;
+
+    // Finish initializing the UI.
+    [self _initGoMenu];
+    [self _getFavoritesFromPrefs];
 
     // Register interest in window-close events.
     [[NSNotificationCenter defaultCenter]
@@ -189,21 +148,17 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // [agl] ??? Why not in DIGSFindBuffer's +initialize?
     (void)[DIGSFindBuffer sharedInstance];
 
-    DIGSLogDebug_ExitingMethod();
-}
+    // Reopen windows from the previous session.
+    [self _openInitialWindows];
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // Add the Debug menu if certain conditions are met.
+    [self _maybeAddDebugMenu];
+    
+    // Set the provider of system services.
+    [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
+    NSUpdateDynamicServices();
 
-    [_appDatabase release];
-
-    [_aboutWindowController release];
-    [_windowControllers release];
-    [_prefPanelController release];
-    [_favoritesList release];
-
-    [super dealloc];
+    _finishedInitializing = YES;
 }
 
 
@@ -589,19 +544,33 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    DIGSLogDebug_EnteringMethod();
-    
-    // Reopen windows from the previous session.
-    [self _openInitialWindows];
+	// Try to create an AKDatabase instance. If we have problems doing so, the
+    // user might opt to cancel launching the app.
+    _appDatabase = [[self _instantiateDatabase] retain];
+    if (_appDatabase == nil)
+    {
+        [[NSApplication sharedApplication] terminate:self];
+    }
+    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
 
-    // Add the Debug menu if certain conditions are met.
-    [self _maybeAddDebugMenu];
-    
-    // Set the provider of system services.
-    [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
-    NSUpdateDynamicServices();
+    // Put up the splash window.
+    _splashWindowController = [[AKSplashWindowController alloc] initWithWindowNibName:@"SplashWindow"];
+    [[_splashWindowController window] center];
+    [[_splashWindowController window] makeKeyAndOrderFront:nil];
 
-    _finishedInitializing = YES;
+    // Start loading the database asynchronously while the splash window stays
+    // on-screen. When the AKLoadDatabaseOperation finishes it will send us a
+    // didFinishLoadingDatabase message.
+// [agl] working on performance
+#if MEASURE_PARSE_SPEED
+[self _timeParseStart];
+#endif //MEASURE_PARSE_SPEED
+
+    AKLoadDatabaseOperation *op = [[[AKLoadDatabaseOperation alloc] init] autorelease];
+
+    [op setAppDatabase:_appDatabase];
+    [op setDatabaseDelegate:_splashWindowController];
+    [_operationQueue addOperation:op];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
@@ -621,16 +590,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     // Update prefs with the state of all open windows.
     [AKPrefUtils setArrayValue:[self _allWindowsAsPrefArray] forPref:AKSavedWindowStatesPrefName];
-}
-
-
-#pragma mark -
-#pragma mark AKDatabase delegate methods
-
-- (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName
-{
-    [_splashMessage2Field setStringValue:frameworkName];
-    [_splashMessage2Field display];
 }
 
 

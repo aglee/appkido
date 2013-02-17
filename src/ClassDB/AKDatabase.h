@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AKDatabaseDelegate.h"
+
 @class AKFramework;
 @class AKDocSetIndex;
 @class AKFileSection;
@@ -64,7 +66,7 @@
 @interface AKDatabase : NSObject
 {
 @protected
-    id _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
+    id <AKDatabaseDelegate> _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
 
     // --- Frameworks ---
 
@@ -164,11 +166,15 @@
  */
 - (void)loadTokensForFrameworkNamed:(NSString *)frameworkName;
 
+
+#pragma mark -
+#pragma mark Getters and setters -- frameworks
+
 /*!
  * @method      setDelegate:
  * @discussion  The delegate is notified when a framework is about to be loaded.
  */
-- (void)setDelegate:(id)delegate;
+- (void)setDelegate:(id <AKDatabaseDelegate>)delegate;
 
 
 #pragma mark -
@@ -304,11 +310,4 @@
 
 @end
 
-
-#pragma mark -
-#pragma mark Delegate methods
-
-@interface NSObject (AKDatabaseDelegate)
-- (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName;
-@end
 
