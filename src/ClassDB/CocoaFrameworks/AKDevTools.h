@@ -14,14 +14,6 @@
 /*! Xcode 4, up to 4.2, puts the docsets here. */
 #define AKLibraryDocSetDirectory @"/Library/Developer/Documentation/DocSets"
 
-/*! Starting with Xcode 4.3, this what AppKiDo should use as the Dev Tools directory. */
-#define AKDevToolsPathForStandaloneXcode @"/Applications/Xcode.app/Contents/Developer"
-
-/*! Any version of the Xcode tools older than 4.3 is installed here by the package installer. */
-#define AKDevToolsPathForOldStyleDevTools @"/Developer"
-
-@class AKDocSetIndex;
-
 // [agl] Long-term, it *may* make sense to get rid of Dev Tools installations as a
 // core AppKiDo concept. Instead, there are SDKs in various expected places and there are
 // docsets in various expected places. We look for matching SDK/docset pairs (based on
@@ -80,6 +72,12 @@
  * local HTML files, just links to online docs, so AppKiDo doesn't use those
  * docsets.
  *
+ * Historical note
+ * ===============
+ * In really, really ancient times docsets weren't used at all. The docs were in
+ * plain directories under "/Developer/ADC Reference Library". As of Feb 2013
+ * AppKiDo no longer supports this documentation structure.
+ *
  * [agl] Explain how AppKiDo docset can "cover" an SDK with a slighly different SDK version.
  */
 @interface AKDevTools : NSObject
@@ -111,6 +109,9 @@
 
 #pragma mark -
 #pragma mark Dev Tools paths
+
+/*! Returns NO if any path component ends with ".app". */
++ (BOOL)devToolsPathIsOldStyle:(NSString *)devToolsPath;
 
 /*! Used by looksLikeValidDevToolsPath:errorStrings:. */
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath;

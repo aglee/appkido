@@ -9,8 +9,8 @@
 
 #import "AKDatabaseDelegate.h"
 
-@class AKFramework;
 @class AKDocSetIndex;
+@class AKFramework;
 @class AKFileSection;
 @class AKDatabaseNode;
 @class AKClassNode;
@@ -67,6 +67,8 @@
 {
 @protected
     id <AKDatabaseDelegate> _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
+
+    AKDocSetIndex *_docSetIndex;
 
     // --- Frameworks ---
 
@@ -142,6 +144,11 @@
 /*! On failure, returns nil with the reasons added to errorStrings. */
 + (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings;
 
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+/*! Designated initializer. */
+- (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
 
 #pragma mark -
 #pragma mark Populating the database

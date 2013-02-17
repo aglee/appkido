@@ -17,7 +17,7 @@
 {
     // Are we using the standalone Xcode introduced by Xcode 4.3
     // or the older package-installation model?
-    if ([devToolsPath isEqualToString:AKDevToolsPathForOldStyleDevTools])
+    if ([AKDevTools devToolsPathIsOldStyle:devToolsPath])
     {
         return [NSArray arrayWithObjects:
                 @"Applications/Xcode.app",
@@ -63,7 +63,7 @@
 {
     // Are we using the standalone Xcode introduced by Xcode 4.3
     // or the older Dev Tools installation model?
-    if ([[self devToolsPath] isEqualToString:AKDevToolsPathForOldStyleDevTools])
+    if ([AKDevTools devToolsPathIsOldStyle:[self devToolsPath]])
     {
         return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
     }

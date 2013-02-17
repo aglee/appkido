@@ -60,7 +60,7 @@ The fundamental model object in AppKiDo is an API construct.  There are several 
 
 AppKiDo keeps track of these constructs and relationships using a data structure called the "framework database," or just "the database."  Each entry in the database contains information about an API construct.
 
-The database is an instance of the abstract class AKDatabase, which has two concrete subclasses: AKDatabaseWithDocSet and AKOldDatabase.  AKDatabaseWithDocSet is used with the documentation in Xcode 3 or later, which is organized into a bundle called a docset.  AKOldDatabase is used with older versions of Xcode, which organize the documentation into directories using rough conventions.
+The database is an instance of AKDatabase.
 
 The database is populated when AppKiDo is launched, and is read-only thereafter.  The result of a database query is zero or more instances of AKDatabaseNode and its descendant classes.
 

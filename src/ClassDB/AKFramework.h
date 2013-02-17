@@ -10,6 +10,11 @@
 
 @class AKDatabase;
 
+/*!
+ * Merely a wrapper around a framework name ("Foundation", "Core Data", etc.).
+ * Knowledge of what's actually in the framework (classes, functions, etc.) is
+ * in AKDatabase.
+ */
 @interface AKFramework : NSObject
 {
 @private

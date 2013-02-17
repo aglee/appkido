@@ -20,8 +20,12 @@
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
 #import "AKDocSetIndex.h"
-#import "AKOldDatabase.h"
-#import "AKDatabaseWithDocSet.h"
+
+#import "AKObjCHeaderParser.h"
+#import "AKCocoaBehaviorDocParser.h"
+#import "AKCocoaFunctionsDocParser.h"
+#import "AKCocoaGlobalsDocParser.h"
+
 
 @implementation AKDatabase
 
@@ -38,33 +42,23 @@
         return nil;
     }
 
-    if ([AKDevToolsUtils devToolsPathIsOldStyle:devToolsPath])
+    AKDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
+    AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools
+                                                  errorStrings:errorStrings];
+    if (docSetIndex == nil)
     {
-        dbToReturn = [[AKOldDatabase alloc] initWithDevToolsPath:devToolsPath];
-    }
-    else
-    {
-        AKDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
-        AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools
-                                                      errorStrings:errorStrings];
-        if (docSetIndex == nil)
-        {
-            return nil;
-        }
-
-        dbToReturn = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
+        return nil;
     }
 
-    if (dbToReturn)
+    dbToReturn = [[self alloc] initWithDocSetIndex:docSetIndex];
+
+    // For a new user of AppKiDo for Mac OS, only load the "essential"
+    // frameworks by default and leave it up to them to add more as needed.
+    // It would be nice to simply provide everything, but until we cut down
+    // the amount of startup time used by parsing, that will take too long.
+    if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
     {
-        // For a new user of AppKiDo for Mac OS, only load the "essential"
-        // frameworks by default and leave it up to them to add more as needed.
-        // It would be nice to simply provide everything, but until we cut down
-        // the amount of startup time used by parsing, that will take too long.
-        if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
-        {
-            [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
-        }
+        [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
     }
 
     return dbToReturn;
@@ -88,7 +82,7 @@
         return nil;
     }
     
-    dbToReturn = [[AKDatabaseWithDocSet alloc] initWithDocSetIndex:docSetIndex];
+    dbToReturn = [[self alloc] initWithDocSetIndex:docSetIndex];
 
     // Assume a new user of AppKiDo-for-iPhone is going to want all possible
     // frameworks in the iPhone SDK by default, and will deselect whichever
@@ -105,13 +99,20 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
+
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+- (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex
 {
     if ((self = [super init]))
     {
+        _docSetIndex = [docSetIndex retain];
+
         _frameworksByName = [[NSMutableDictionary alloc] init];
         _frameworkNames = [[NSMutableArray alloc] init];
-        _namesOfAvailableFrameworks = nil;
+        _namesOfAvailableFrameworks = [[docSetIndex selectableFrameworkNames] copy];
 
         _classNodesByName = [[NSMutableDictionary alloc] init];
         _classListsByFramework = [[NSMutableDictionary alloc] init];
@@ -136,8 +137,17 @@
     return self;
 }
 
+- (id)init
+{
+    DIGSLogError_NondesignatedInitializer();
+    [self release];
+    return nil;
+}
+
 - (void)dealloc
 {
+    [_docSetIndex release];
+
     [_frameworksByName release];
     [_frameworkNames release];
     [_namesOfAvailableFrameworks release];
@@ -170,7 +180,7 @@
 
 - (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
 {
-    return YES;
+    return [[_docSetIndex selectableFrameworkNames] containsObject:frameworkName];
 }
 
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames
@@ -207,7 +217,52 @@
 
 - (void)loadTokensForFrameworkNamed:(NSString *)frameworkName
 {
-    DIGSLogError_MissingOverride();
+    // Parse header files before HTML files, so that later when we parse a
+    // "Deprecated Methods" HTML file we can distinguish between instance
+    // methods, class methods, and delegate methods by querying the database.
+    // [agl] FIXME Any way to remove this dependence on parse order?
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing headers for framework %@, in base dir %@", frameworkName, [_docSetIndex basePathForHeaders]);
+    DIGSLogDebug(@"---------------------------------------------------");
+
+    // NOTE that we have to parse all headers in each directory, not just
+    // headers that the docset index explicitly associates with ZTOKENs.  For
+    // example, several DOMxxx classes, such as DOMComment, will be displayed
+    // as root classes if I don't parse their headers.  The ideal thing would
+    // be to be able to follow #imports, but I'm not being that smart.
+    AKFramework *aFramework = [self frameworkWithName:frameworkName];
+    NSSet *headerDirs = [_docSetIndex headerDirsForFramework:frameworkName];
+    NSEnumerator *headerDirEnum = [headerDirs objectEnumerator];
+    NSString *headerDir;
+    while ((headerDir = [headerDirEnum nextObject]) != nil)
+    {
+        [AKObjCHeaderParser recursivelyParseDirectory:headerDir forFramework:aFramework];
+    }
+
+    // Parse HTML files.
+    NSString *baseDirForDocs = [_docSetIndex baseDirForDocs];
+
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing HTML docs for framework %@, in base dir %@", frameworkName, baseDirForDocs);
+    DIGSLogDebug(@"---------------------------------------------------");
+
+    DIGSLogDebug(@"Parsing behavior docs for framework %@", frameworkName);
+    [AKCocoaBehaviorDocParser
+        parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
+        underBaseDir:baseDirForDocs
+        forFramework:aFramework];
+
+    DIGSLogDebug(@"Parsing functions docs for framework %@", frameworkName);
+    [AKCocoaFunctionsDocParser
+        parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
+        underBaseDir:baseDirForDocs
+        forFramework:aFramework];
+
+    DIGSLogDebug(@"Parsing globals docs for framework %@", frameworkName);
+    [AKCocoaGlobalsDocParser
+        parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
+        underBaseDir:baseDirForDocs
+        forFramework:aFramework];
 }
 
 

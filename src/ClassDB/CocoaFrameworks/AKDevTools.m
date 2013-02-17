@@ -86,6 +86,19 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 #pragma mark -
 #pragma mark Dev Tools paths
 
++ (BOOL)devToolsPathIsOldStyle:(NSString *)devToolsPath
+{
+    for (NSString *pathComponent in [devToolsPath pathComponents])
+    {
+        if ([[pathComponent pathExtension] isEqualToString:@"app"])
+        {
+            return NO;
+        }
+    }
+
+    return YES;
+}
+
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {
 #if APPKIDO_FOR_IPHONE
