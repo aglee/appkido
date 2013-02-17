@@ -334,7 +334,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         _aboutWindowController = [[AKAboutWindowController alloc] initWithWindowNibName:@"AboutWindow"];
     }
     
-    [_aboutWindowController showWindow:nil];
+    [[_aboutWindowController window] center];
     [[_aboutWindowController window] makeKeyAndOrderFront:nil];
 }
 

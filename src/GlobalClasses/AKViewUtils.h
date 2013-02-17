@@ -13,7 +13,7 @@
 @interface NSView (AppKiDo)
 
 /*!
-* @method      ak_setFrameHeight:
+ * @method      ak_setFrameHeight:
  * @discussion  Convenience method that's a wrapper around -setFrame:.
  */
 - (void)ak_setFrameHeight:(CGFloat)newHeight;
@@ -31,6 +31,13 @@
  *              previewKeyView instead of nextKeyView.
  */
 - (void)ak_printReverseKeyViewLoop;
+
+/*!
+ * @method      ak_removeAllElasticity
+ * @discussion  Sets elasticity to NSScrollElasticityNone in both directions for
+ *              all scroll views in self's view hierarchy, including self.
+ */
+- (void)ak_removeAllElasticity;
 
 @end
 

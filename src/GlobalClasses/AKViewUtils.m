@@ -80,6 +80,20 @@
     }
 }
 
+- (void)ak_removeAllElasticity
+{
+    if ([self isKindOfClass:[NSScrollView class]])
+    {
+        [(NSScrollView *)self setHorizontalScrollElasticity:NSScrollElasticityNone];
+        [(NSScrollView *)self setVerticalScrollElasticity:NSScrollElasticityNone];
+    }
+
+    for (NSView *subview in [self subviews])
+    {
+        [subview ak_removeAllElasticity];
+    }
+}
+
 @end
 
 

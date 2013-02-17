@@ -18,8 +18,6 @@
 {
     [super windowDidLoad];
 
-    [[self window] center];
-
     // Load the credits file into the web view.
     NSString *creditsPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"html"];
     NSError *err = nil;
@@ -37,7 +35,18 @@
                                                                  withString:versionString];
         [[_creditsView mainFrame] loadHTMLString:creditsString baseURL:nil];
     }
-    [[[_creditsView mainFrame] frameView] setAllowsScrolling:NO];
+}
+
+#pragma mark -
+#pragma mark WebFrameLoadDelegate methods
+
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+{
+    // I had this in windowDidLoad and it wasn't affecting elasticity. Learned
+    // on StackOverflow that I should do it here, which makes sense because the
+    // WebView may change elasticity during the course of loading content.
+    // <http://stackoverflow.com/questions/11170038/remove-elasticity-from-webview>
+    [_creditsView ak_removeAllElasticity];
 }
 
 #pragma mark -
