@@ -46,5 +46,5 @@ echo "Pushing the tag to the remote repository..."
 git push --tags
 
 echo
-echo "...Done! If you made a mistake and want to delete the tag, run akduntag.
+echo "...Done! If you made a mistake and want to delete the tag, run akduntag."
 echo

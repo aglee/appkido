@@ -47,3 +47,4 @@ git push origin ":refs/tags/$RELEASE_TAG"
 
 echo
 echo "...Done!"
+echo
