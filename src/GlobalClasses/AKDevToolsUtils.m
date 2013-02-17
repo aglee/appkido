@@ -42,12 +42,12 @@
 //
 + (NSString *)pathReturnedByXcodeSelect
 {
-	ALSimpleTask *tw = [[ALSimpleTask alloc] initWithCommandPath:@"/bin/bash"
+	ALSimpleTask *tw = [[[ALSimpleTask alloc] initWithCommandPath:@"/bin/bash"
 													   arguments:(@[
 																  @"-l",
 																  @"-c",
 																  @"echo -n `/usr/bin/xcode-select -print-path`"
-																  ])];
+																  ])] autorelease];
 	if (![tw runTask])
 	{
 		NSLog(@"Failed to launch xcode-select. Reason: %@.", [tw outputString]);
