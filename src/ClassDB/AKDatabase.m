@@ -269,6 +269,11 @@
 #pragma mark -
 #pragma mark Getters and setters
 
+- (AKDocSetIndex *)docSetIndex
+{
+    return _docSetIndex;
+}
+
 - (void)setDelegate:(id <AKDatabaseDelegate>)delegate
 {
     _delegate = delegate;  // note this is NOT retained

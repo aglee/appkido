@@ -175,7 +175,9 @@
 
 
 #pragma mark -
-#pragma mark Getters and setters -- frameworks
+#pragma mark Getters and setters
+
+- (AKDocSetIndex *)docSetIndex;
 
 /*!
  * @method      setDelegate:

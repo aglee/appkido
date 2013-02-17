@@ -53,6 +53,8 @@
 #pragma mark -
 #pragma mark Getters and setters
 
+- (NSString *)docSetPath;
+
 /*! 
  * Names of frameworks the user can choose from, with "essential"
  * frameworks forced to the beginning of the list but otherwise in

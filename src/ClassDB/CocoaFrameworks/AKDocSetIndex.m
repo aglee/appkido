@@ -8,43 +8,10 @@
 #import "AKDocSetIndex.h"
 
 #import "AKFileUtils.h"
-#import "AKFrameworkConstants.h"
-#import "AKIPhoneDevTools.h"
-#import "AKMacDevTools.h"
 #import "AKSQLTemplate.h"
 #import "AKTextUtils.h"
 
 #import "FMDatabase.h"
-
-
-@interface AKDocSetIndex ()
-
-- (NSMutableArray *)_allFrameworkNames;
-- (NSMutableArray *)_objectiveCFrameworkNames;
-- (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString;
-
-- (NSString *)_resourcesPath;
-- (NSString *)_pathToSqliteFile;
-- (FMDatabase *)_openSQLiteDB;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    forFramework:(NSString *)frameworkName;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    orType:(NSString *)tokenType2
-    forFramework:(NSString *)frameworkName;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    forFramework:(NSString *)frameworkName;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    orType:(NSString *)tokenType4
-    forFramework:(NSString *)frameworkName;
-- (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames;
-
-@end
-
-#pragma mark -
 
 @implementation AKDocSetIndex
 
@@ -111,6 +78,11 @@
 
 #pragma mark -
 #pragma mark Getters and setters
+
+- (NSString *)docSetPath
+{
+    return _docSetPath;
+}
 
 - (NSArray *)selectableFrameworkNames
 {
