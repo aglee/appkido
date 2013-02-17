@@ -2,12 +2,12 @@
 
 STAGING_DIR=~/AKDBUILD
 
-if [ ! "${1}" ]; then
+if [ ! "$1" ]; then
     echo "USAGE:"
-    echo "  `basename ${0}` <releasenumber>"
+    echo "  `basename $0` <releasenumber>"
     echo
-    echo "  Builds release tarballs for AppKiDo, AppKiDo-for-iPhone, and the"
-    echo "  AppKiDo source, using $STAGING_DIR as a staging area."
+    echo "  Builds release tarballs for AppKiDo and AppKiDo-for-iPhone, using"
+    echo "  $STAGING_DIR as a staging area."
     echo
     echo "  DO NOT use this for sneakypeeks -- use akdsneakypeek instead."
     echo
@@ -16,25 +16,23 @@ if [ ! "${1}" ]; then
     echo "  that are special to the shell."
     echo
     echo "EXAMPLE:"
-    echo "  `basename ${0}` 0.95"
+    echo "  `basename $0` 0.95"
     exit
 fi
 
-AKD_VERSION=${1}
-RELEASE_TAG=release-$AKD_VERSION
+AKD_VERSION="$1"
+RELEASE_TAG="release-$AKD_VERSION"
 GIT_REPO=http://github.com/aglee/appkido
 
-CHECKOUT_DIR=$STAGING_DIR/appkido
-XCODE_PROJECT_DIR=$CHECKOUT_DIR/AppKiDo
-XCODE_RELEASE_BUILD_DIR=$XCODE_PROJECT_DIR/build/Release
+CHECKOUT_DIR="$STAGING_DIR/appkido"
+XCODE_PROJECT_DIR="$CHECKOUT_DIR/AppKiDo"
+XCODE_RELEASE_BUILD_DIR="$XCODE_PROJECT_DIR/build/Release"
 
-AKD_EXECUTABLE=$XCODE_RELEASE_BUILD_DIR/AppKiDo.app/Contents/MacOS/AppKiDo
-AKD_APP_TARBALL=$STAGING_DIR/AppKiDo-$AKD_VERSION.tgz
+AKD_EXECUTABLE="$XCODE_RELEASE_BUILD_DIR/AppKiDo.app/Contents/MacOS/AppKiDo"
+AKD_APP_TARBALL="$STAGING_DIR/AppKiDo-$AKD_VERSION.tgz"
 
-AKD_FOR_IPHONE_EXECUTABLE=$XCODE_RELEASE_BUILD_DIR/AppKiDo-for-iPhone.app/Contents/MacOS/AppKiDo-for-iPhone
-AKD_FOR_IPHONE_APP_TARBALL=$STAGING_DIR/AppKiDo-for-iPhone-$AKD_VERSION.tgz
-
-SRC_TARBALL=$STAGING_DIR/AppKiDo-$AKD_VERSION-src.tgz
+AKD_FOR_IPHONE_EXECUTABLE="$XCODE_RELEASE_BUILD_DIR/AppKiDo-for-iPhone.app/Contents/MacOS/AppKiDo-for-iPhone"
+AKD_FOR_IPHONE_APP_TARBALL="$STAGING_DIR/AppKiDo-for-iPhone-$AKD_VERSION.tgz"
 
 echo
 echo "===== BUILDING APPKIDO AND APPKIDO-FOR-IPHONE ====="
@@ -65,37 +63,23 @@ fi
 #---------------------------------------------------------------------------
 
 echo
-echo "Deleting and recreating staging area $STAGING_DIR"
-rm -rf $STAGING_DIR
-mkdir -p $STAGING_DIR
-cd $STAGING_DIR
+echo "Deleting and recreating staging area $STAGING_DIR..."
+rm -rf "$STAGING_DIR"
+mkdir -p "$STAGING_DIR"
+cd "$STAGING_DIR"
 
 #---------------------------------------------------------------------------
 # Check out from github
 #---------------------------------------------------------------------------
 
 echo
-echo "Cloning the repository $GIT_REPO"
+echo "Cloning the repository $GIT_REPO..."
 ##git clone --depth 1 --branch master $GIT_REPO || exit
-git clone $GIT_REPO || exit
+git clone "$GIT_REPO" || exit
 
 echo
-echo "Checking out the tag $RELEASE_TAG"
-pushd $CHECKOUT_DIR ; git checkout tags/release-$AKD_VERSION ; popd
-
-echo "Deleting the .git directory"
-rm -rf $CHECKOUT_DIR/.git
-
-echo "Renaming 'src' to 'AppKiDo'"
-mv $CHECKOUT_DIR/src $XCODE_PROJECT_DIR
-
-#---------------------------------------------------------------------------
-# Create a tarball of the source without any build products in it.
-#---------------------------------------------------------------------------
-
-echo
-echo "Creating tarball containing the source code"
-tar -C $CHECKOUT_DIR -czf $SRC_TARBALL AppKiDo || exit
+echo "Checking out the tag $RELEASE_TAG..."
+pushd "$CHECKOUT_DIR" ; git checkout "tags/release-$AKD_VERSION" ; popd
 
 #---------------------------------------------------------------------------
 # Build
@@ -103,7 +87,7 @@ tar -C $CHECKOUT_DIR -czf $SRC_TARBALL AppKiDo || exit
 
 echo
 echo "Building the apps"
-cd $XCODE_PROJECT_DIR
+cd "$XCODE_PROJECT_DIR"
 xcodebuild -target All -configuration Release || exit
 ##xcodebuild -activetarget -configuration Release || exit
 
@@ -115,12 +99,12 @@ if [ "$SNEAKYPEEK" == "" ] ; then
 
 	echo
 	echo "Stripping the executables"
-	echo "  -- size of AppKiDo BEFORE is `stat -n -f "%z" $AKD_EXECUTABLE`"
-	strip $AKD_EXECUTABLE
-	echo "  -- size of AppKiDo AFTER  is `stat -n -f "%z" $AKD_EXECUTABLE`"
-	echo "  -- size of AppKiDo-for-iPhone BEFORE is `stat -n -f "%z" $AKD_FOR_IPHONE_EXECUTABLE`"
-	strip $AKD_FOR_IPHONE_EXECUTABLE
-	echo "  -- size of AppKiDo-for-iPhone AFTER  is `stat -n -f "%z" $AKD_FOR_IPHONE_EXECUTABLE`"
+	echo "  -- size of AppKiDo BEFORE is `stat -n -f "%z" "$AKD_EXECUTABLE"`"
+	strip "$AKD_EXECUTABLE"
+	echo "  -- size of AppKiDo AFTER  is `stat -n -f "%z" "$AKD_EXECUTABLE"`"
+	echo "  -- size of AppKiDo-for-iPhone BEFORE is `stat -n -f "%z" "$AKD_FOR_IPHONE_EXECUTABLE"`"
+	strip "$AKD_FOR_IPHONE_EXECUTABLE"
+	echo "  -- size of AppKiDo-for-iPhone AFTER  is `stat -n -f "%z" "$AKD_FOR_IPHONE_EXECUTABLE"`"
 
 else
 
@@ -134,9 +118,9 @@ fi
 #---------------------------------------------------------------------------
 
 echo
-echo "Creating tarballs containing the applications"
-tar -C $XCODE_RELEASE_BUILD_DIR -czf $AKD_APP_TARBALL AppKiDo.app
-tar -C $XCODE_RELEASE_BUILD_DIR -czf $AKD_FOR_IPHONE_APP_TARBALL AppKiDo-for-iPhone.app
+echo "Creating tarballs of the application binaries"
+tar -C "$XCODE_RELEASE_BUILD_DIR" -czf "$AKD_APP_TARBALL" AppKiDo.app
+tar -C "$XCODE_RELEASE_BUILD_DIR" -czf "$AKD_FOR_IPHONE_APP_TARBALL" AppKiDo-for-iPhone.app
 
 #---------------------------------------------------------------------------
 # Print sizes
@@ -146,16 +130,13 @@ echo
 echo "Sizes:"
 
 echo "  -- AppKiDo tarball is $AKD_APP_TARBALL"
-##echo "  -- size of app tarball is `stat -n -f "%z" $AKD_APP_TARBALL`"
+##echo "  -- size of app tarball is `stat -n -f "%z" "$AKD_APP_TARBALL"`"
 echo "  -- size of AppKiDo.app tarball is `du -h "$AKD_APP_TARBALL" | cut -f 1`"
 
 echo "  -- AppKiDo-for-iPhone tarball is $AKD_FOR_IPHONE_APP_TARBALL"
 echo "  -- size of AppKiDo-for-iPhone.app tarball is `du -h "$AKD_FOR_IPHONE_APP_TARBALL" | cut -f 1`"
 
-echo "  -- source tarball is $SRC_TARBALL"
-echo "  -- size of source tarball is `du -h "$SRC_TARBALL" | cut -f 1`"
-
 echo
-echo "===== DONE ====="
+echo "Done!"
 echo
 

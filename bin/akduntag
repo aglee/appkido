@@ -1,15 +1,15 @@
 #!/bin/bash
 
-if [ ! "$1" ]; then
+if [ ! "${1}" ]; then
     echo "USAGE:"
-    echo "  `basename $0` <releasenumber>"
+    echo "  `basename ${0}` <releasenumber>"
     echo
 	echo "  **NOTE: For historical reasons, the actual tag will have 'release-'"
 	echo "  prepended to <releasenumber>.**"
 	echo
-    echo "  Tags HEAD with the specified release number and pushes the new tag"
-	echo "  to the remote git repository."
-    echo
+    echo "  Deletes the specified tag and pushes the change to the remote git"
+	echo "  repository."
+	echo
 	echo "  When you run this you must be in the root directory of an AppKiDo"
 	echo "  repository (the one that contains .git, bin, doc, src, and web)."
     echo
@@ -23,7 +23,7 @@ if [ ! "$1" ]; then
 	echo "    git fetch --tags"
     echo
     echo "EXAMPLE:"
-    echo "  `basename $0` 0.95"
+    echo "  `basename ${0}` 0.95"
     exit
 fi
 
@@ -38,13 +38,12 @@ AKD_VERSION="$1"
 RELEASE_TAG="release-$AKD_VERSION"
 
 echo
-echo "Tagging with tag $RELEASE_TAG..."
-git tag "$RELEASE_TAG"
+echo "Deleting the tag $RELEASE_TAG..."
+git tag -d "$RELEASE_TAG"
 
 echo
-echo "Pushing the tag to the remote repository..."
-git push --tags
+echo "Pushing the change to the remote repository..."
+git push origin ":refs/tags/$RELEASE_TAG"
 
 echo
-echo "...Done! If you made a mistake and want to delete the tag, run akduntag.
-echo
+echo "...Done!"
