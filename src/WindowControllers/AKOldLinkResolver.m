@@ -376,32 +376,32 @@
 		{
 			NSLog(@"%s rootSection \"%@\" has no \"Functions by Task\"",__FUNCTION__, rootSection);
 			goto gmd_bad;
-		};
+		}
 		
 		AKFileSection *b = [ a childSectionContainingString: docName ];
 		if ( b == nil )	//	error
 		{
 			NSLog(@"%s section \"%@\" contains no \"%@\"",__FUNCTION__, b, docName);
 			goto gmd_bad;
-		};
+		}
 		
 		NSString *y = [ b sectionName ];
 		if ( y == nil )	//	error
 		{
 			NSLog(@"%s section \"%@\" has no sectionName",__FUNCTION__, b);
 			goto gmd_bad;
-		};
+		}
 
 		#ifdef DEBUG
 			if ( ![ y isEqualToString: subtopicName ] )
 			{
 				NSLog(@"%s changing subtopic \"%@\" -> \"%@\"",__FUNCTION__, subtopicName, y);
-			};
+			}
 		#endif
 		subtopicName = y;
 		
 		gmd_bad: ;
-	};
+	}
 // <--- thanks Gerriet
 
 

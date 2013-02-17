@@ -6,6 +6,7 @@
  */
 
 #import "DIGSWindow.h"
+#import "DIGSLog.h"
 
 @implementation DIGSWindow
 
@@ -22,7 +23,7 @@
 	if (aString == nil)
 	{
 		aString = @"*** nil ***";
-	};
+	}
 	
 	[super setTitle:aString];
 }

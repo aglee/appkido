@@ -160,7 +160,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay] subtopicName:@"General" docName: @"Overview"];
         currentDoc = [docLocator docToDisplay];
-    };
+    }
     
     return currentDoc;
 }
@@ -174,7 +174,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay] subtopicName:@"General" docName: @"Overview"];
         currentDoc = [docLocator docToDisplay];
-    };
+    }
     
     return [[[self currentDoc] fileSection] filePath];
 }

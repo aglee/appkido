@@ -65,7 +65,7 @@
         if (![fwNames containsObject:essentialFrameworkName])
         {
             [fwNames addObject:essentialFrameworkName];
-        };
+        }
     } 
 
     return fwNames;
