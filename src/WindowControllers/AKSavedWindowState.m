@@ -15,6 +15,17 @@
 @implementation AKSavedWindowState
 
 
+#pragma mark - Init/awake/dealloc
+
+- (void)dealloc
+{
+    [_savedWindowLayout release];
+    [_savedDocLocator release];
+    
+    [super dealloc];
+}
+
+
 #pragma mark -
 #pragma mark Preferences
 
