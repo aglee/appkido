@@ -14,13 +14,15 @@
 
 #import "AKAboutWindowController.h"
 #import "AKAppVersion.h"
+#import "AKClassNode.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
 #import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
+#import "AKDocSetIndex.h"
 #import "AKLoadDatabaseOperation.h"
-#import "AKPrefUtils.h"
 #import "AKPrefPanelController.h"
+#import "AKPrefUtils.h"
 #import "AKQuicklistController.h"
 #import "AKSavedWindowState.h"
 #import "AKServicesProvider.h"
@@ -119,9 +121,40 @@ static NSTimeInterval g_checkpointTime = 0.0;
 }
 
 
-#pragma mark - Finishing app startup
+#pragma mark - Application startup
 
-- (void)didFinishLoadingDatabase
+- (void)startApplicationStartup
+{
+	// Try to create an AKDatabase instance. If we have problems doing so, the
+    // user might opt to cancel launching the app.
+    _appDatabase = [[self _instantiateDatabase] retain];
+    if (_appDatabase == nil)
+    {
+        [NSApp terminate:nil];
+    }
+    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
+
+    // Put up the splash window.
+    _splashWindowController = [[AKSplashWindowController alloc] initWithWindowNibName:@"SplashWindow"];
+    [[_splashWindowController window] center];
+    [[_splashWindowController window] makeKeyAndOrderFront:nil];
+
+    // Start loading the database asynchronously while the splash window stays
+    // on-screen. When the AKLoadDatabaseOperation finishes it will send us a
+    // finishApplicationStartup message.
+// [agl] working on performance
+#if MEASURE_PARSE_SPEED
+[self _timeParseStart];
+#endif //MEASURE_PARSE_SPEED
+
+    AKLoadDatabaseOperation *op = [[[AKLoadDatabaseOperation alloc] init] autorelease];
+
+    [op setAppDatabase:_appDatabase];
+    [op setDatabaseDelegate:_splashWindowController];
+    [_operationQueue addOperation:op];
+}
+
+- (void)finishApplicationStartup
 {
 // [agl] working on performance
 #if MEASURE_PARSE_SPEED
@@ -133,6 +166,54 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashWindowController autorelease];
     _splashWindowController = nil;
 
+    // Sanity-check the database we just loaded. If it's missing NSObject
+    // documentation, the user probably has to download the docs.
+    //
+    // [agl] It would be nice to sanity-check the docset documentation *before*
+    // spending all that time iterating through header files and docset files.
+    // Xcode is clearly able to do it -- it knows whether to put an "Install"
+    // button by the docset.
+    //
+    // I see nothing in the docset's Info.plist that indicates whether it's
+    // downloaded. Purely guessing after browsing a few docsets, I notice that
+    // downloaded docsets *don't* seem to have a version.plist file next to
+    // Info.plist. But my sample size is too small to trust this as a reliable
+    // indicator. It might be worth asking the Apple docs people, or the answer
+    // might even be documented somewhere.
+    //
+    // One solution might be to query the sqlite database for the location of
+    // the NSObject class doc, and see if that file exists.
+    //
+    // Maybe someday this won't be a problem any more because I'll able to
+    // assume all downloaded docsets are in ~/Library/Developer.
+    //
+    // I'm going with the current solution purely because it's quick to
+    // implement. I can revisit when I have more time.
+    AKClassNode *nsObjectNode = [_appDatabase classWithName:@"NSObject"];
+
+    if ([nsObjectNode nodeDocumentation] == nil)
+    {
+        NSString *alertText = [NSString stringWithFormat:(@"The selected docset is missing HTML files.\n\n"
+                                                          @"You can tell Xcode to download the docset by going to Xcode > Preferences > Downloads > Documentation.\n\n"
+                                                          @"Alternatively, you can try selecting a different SDK."
+                                                          )];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Missing HTML files"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@"%@", alertText];
+        [alert runModal];
+
+        if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
+        {
+            [NSApp terminate:nil];
+        }
+        
+        [self performSelector:@selector(startApplicationStartup) withObject:nil afterDelay:0];
+        
+        return;
+    }
+    
     // Finish initializing the UI.
     [self _initGoMenu];
     [self _getFavoritesFromPrefs];
@@ -544,33 +625,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	// Try to create an AKDatabase instance. If we have problems doing so, the
-    // user might opt to cancel launching the app.
-    _appDatabase = [[self _instantiateDatabase] retain];
-    if (_appDatabase == nil)
-    {
-        [[NSApplication sharedApplication] terminate:self];
-    }
-    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
-
-    // Put up the splash window.
-    _splashWindowController = [[AKSplashWindowController alloc] initWithWindowNibName:@"SplashWindow"];
-    [[_splashWindowController window] center];
-    [[_splashWindowController window] makeKeyAndOrderFront:nil];
-
-    // Start loading the database asynchronously while the splash window stays
-    // on-screen. When the AKLoadDatabaseOperation finishes it will send us a
-    // didFinishLoadingDatabase message.
-// [agl] working on performance
-#if MEASURE_PARSE_SPEED
-[self _timeParseStart];
-#endif //MEASURE_PARSE_SPEED
-
-    AKLoadDatabaseOperation *op = [[[AKLoadDatabaseOperation alloc] init] autorelease];
-
-    [op setAppDatabase:_appDatabase];
-    [op setDatabaseDelegate:_splashWindowController];
-    [_operationQueue addOperation:op];
+    [self startApplicationStartup];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag

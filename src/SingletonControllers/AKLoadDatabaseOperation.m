@@ -65,7 +65,7 @@
 // Gets called on the main thread as the last thing this operation does.
 - (void)_finishOnMainThread
 {
-    [(AKAppController *)[NSApp delegate] didFinishLoadingDatabase];
+    [(AKAppController *)[NSApp delegate] finishApplicationStartup];
 }
 
 - (void)_tellDelegateWillLoadTokensForFramework:(NSString *)frameworkName
