@@ -25,7 +25,7 @@ RELEASE_TAG="release-$AKD_VERSION"
 GIT_REPO=http://github.com/aglee/appkido
 
 CHECKOUT_DIR="$STAGING_DIR/appkido"
-XCODE_PROJECT_DIR="$CHECKOUT_DIR/AppKiDo"
+XCODE_PROJECT_DIR="$CHECKOUT_DIR/src"
 XCODE_RELEASE_BUILD_DIR="$XCODE_PROJECT_DIR/build/Release"
 
 AKD_EXECUTABLE="$XCODE_RELEASE_BUILD_DIR/AppKiDo.app/Contents/MacOS/AppKiDo"
@@ -86,7 +86,7 @@ pushd "$CHECKOUT_DIR" ; git checkout "tags/release-$AKD_VERSION" ; popd
 #---------------------------------------------------------------------------
 
 echo
-echo "Building the apps"
+echo "Building the apps..."
 cd "$XCODE_PROJECT_DIR"
 xcodebuild -target All -configuration Release || exit
 ##xcodebuild -activetarget -configuration Release || exit
