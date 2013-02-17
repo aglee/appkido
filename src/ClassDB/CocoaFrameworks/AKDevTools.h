@@ -147,8 +147,7 @@
  */
 - (BOOL)isValidDocSetName:(NSString *)fileName;
 
-/*! Uses latest version if sdkVersion is nil. */
-- (NSString *)docSetPathForSDKVersion:(NSString *)sdkVersion;
+- (NSString *)docSetPathForSDKVersion:(NSString *)docSetSDKVersion;
 
 
 #pragma mark -

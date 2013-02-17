@@ -163,14 +163,9 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return NO;
 }
 
-- (NSString *)docSetPathForSDKVersion:(NSString *)sdkVersion
+- (NSString *)docSetPathForSDKVersion:(NSString *)docSetSDKVersion
 {
-    if (sdkVersion == nil)
-    {
-        sdkVersion = [[self sdkVersionsThatAreCoveredByDocSets] lastObject];
-    }
-    
-    return [_installedDocSetPathsBySDKVersion objectForKey:sdkVersion];
+    return [_installedDocSetPathsBySDKVersion objectForKey:docSetSDKVersion];
 }
 
 

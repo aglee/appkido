@@ -65,6 +65,7 @@
 - (IBAction)selectSDKVersion:(id)sender
 {
     [AKPrefUtils setSDKVersionPref:[[(NSPopUpButton *)sender selectedItem] title]];
+    [self _updateUIToReflectPrefs];
 }
 
 #pragma mark - NSOpenSavePanelDelegate methods
@@ -105,15 +106,45 @@
     _selectedXcodeAppPath = [xcodeAppPath copy];
 }
 
-- (void)_displaySearchPathsForDevTools:(AKDevTools *)devTools
+- (NSString *)_infoTextForDevTools:(AKDevTools *)devTools
+                selectedSDKVersion:(NSString *)selectedSDKVersion
+                  docSetSDKVersion:(NSString *)docSetSDKVersion
 {
-    NSMutableString *explanationString = [NSMutableString string];
+//    NSMutableString *explanationString = [NSMutableString string];
+//
+//    [explanationString appendFormat:@"Search paths for docsets: %@.\n\n",
+//     [[devTools docSetSearchPaths] componentsJoinedByString:@", "]];
+//    [explanationString appendFormat:@"Search path for SDKs: %@.\n\n", [devTools sdkSearchPath]];
 
-    [explanationString appendFormat:@"Search paths for docsets: %@.\n\n",
-     [[devTools docSetSearchPaths] componentsJoinedByString:@", "]];
-    [explanationString appendFormat:@"Search path for SDKs: %@.\n\n", [devTools sdkSearchPath]];
+    if (selectedSDKVersion == nil)
+    {
+        return @"";
+    }
 
-    [_explanationField setStringValue:explanationString];
+    NSMutableString *infoText = [NSMutableString string];
+    NSString *sdkPath = [devTools sdkPathForSDKVersion:selectedSDKVersion];
+
+    if (sdkPath)
+    {
+        [infoText appendFormat:@"The selected SDK is installed at %@.\n\n", sdkPath];
+    }
+    else
+    {
+        [infoText appendFormat:@"No %@ SDK found in %@.", selectedSDKVersion, [devTools devToolsPath]];
+    }
+
+    NSString *docSetPath = [devTools docSetPathForSDKVersion:docSetSDKVersion];
+
+    if (docSetPath)
+    {
+        [infoText appendFormat:@"This SDK is covered by the %@ docset at %@.", docSetSDKVersion, docSetPath];
+    }
+    else
+    {
+        [infoText appendFormat:@"No docset found in %@ that covers the %@ SDK.", [devTools devToolsPath], selectedSDKVersion];
+    }
+
+    return infoText;
 }
 
 - (void)_updateUIToReflectPrefs
@@ -135,16 +166,21 @@
     
     // Select the appropriate item in the SDK versions popup.
     NSString *selectedSDKVersion = [AKPrefUtils sdkVersionPref];
-    if ((selectedSDKVersion == nil)
-        || ([devTools docSetSDKVersionThatCoversSDKVersion:selectedSDKVersion] == nil))
+    NSString *docSetSDKVersion = [devTools docSetSDKVersionThatCoversSDKVersion:selectedSDKVersion];
+    if ((selectedSDKVersion == nil) || (docSetSDKVersion == nil))
     {
         selectedSDKVersion = [sdkVersionsToOffer lastObject];
+        docSetSDKVersion = [devTools docSetSDKVersionThatCoversSDKVersion:selectedSDKVersion];
+        
         [AKPrefUtils setSDKVersionPref:selectedSDKVersion];
     }
     [_sdkVersionsPopUpButton selectItemWithTitle:selectedSDKVersion];
     
-    // Update the text that tells where we searched for docsets and SDKs.
-    [self _displaySearchPathsForDevTools:devTools];
+    // Update the info text.
+    NSString *infoText = [self _infoTextForDevTools:devTools
+                                 selectedSDKVersion:selectedSDKVersion
+                                   docSetSDKVersion:docSetSDKVersion];
+    [_explanationField setStringValue:infoText];
     
     // Update the enabledness of the OK button.
     [_okButton setEnabled:(selectedSDKVersion != nil)];
