@@ -166,6 +166,10 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 - (NSString *)docSetPathForSDKVersion:(NSString *)docSetSDKVersion
 {
     return [_installedDocSetPathsBySDKVersion objectForKey:docSetSDKVersion];
+
+    // The following was useful for testing how we handle the case when a docset
+    // needs to be downloaded.
+    //return @"/Users/alee/Xcode2.app/Contents/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleOSX10_8.CoreReference.docset";
 }
 
 
