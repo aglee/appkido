@@ -1558,7 +1558,7 @@
 				732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */,
 				73CC2AD705EDAF5F006D882D /* AKDocParser.h */,
 				73CC2AD805EDAF5F006D882D /* AKDocParser.m */,
-				73D23BF30D4CBF9C00EF7503 /* Cocoa file parsers */,
+				73D23BF30D4CBF9C00EF7503 /* Cocoa doc file parsers */,
 			);
 			name = parsers;
 			path = ClassDB;
@@ -1618,17 +1618,17 @@
 			path = fmdb;
 			sourceTree = "<group>";
 		};
-		73D23BF30D4CBF9C00EF7503 /* Cocoa file parsers */ = {
+		73D23BF30D4CBF9C00EF7503 /* Cocoa doc file parsers */ = {
 			isa = PBXGroup;
 			children = (
+				734115030831B3BD0010896B /* AKCocoaBehaviorDocParser.h */,
+				734115040831B3BD0010896B /* AKCocoaBehaviorDocParser.m */,
 				73B316320617B04E006C9BA7 /* AKCocoaFunctionsDocParser.h */,
 				73B316330617B04E006C9BA7 /* AKCocoaFunctionsDocParser.m */,
 				73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */,
 				73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */,
-				734115030831B3BD0010896B /* AKCocoaBehaviorDocParser.h */,
-				734115040831B3BD0010896B /* AKCocoaBehaviorDocParser.m */,
 			);
-			name = "Cocoa file parsers";
+			name = "Cocoa doc file parsers";
 			path = ..;
 			sourceTree = "<group>";
 		};

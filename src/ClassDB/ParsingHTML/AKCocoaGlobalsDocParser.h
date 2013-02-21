@@ -14,14 +14,5 @@
  *              such as consts, enums, typedefs, and global variables.
  */
 @interface AKCocoaGlobalsDocParser : AKDocParser
-{
-@private
-    // These ivars are only used during _parseNamesOfGlobalsInFileSection:.
-    char _prevToken[AKParserTokenBufferSize];
-    const char *_currTokenStart;
-    const char *_currTokenEnd;
-    const char *_prevTokenStart;
-    const char *_prevTokenEnd;
-}
 
 @end

@@ -17,19 +17,15 @@
 #import "AKGlobalsNode.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKCocoaGlobalsDocParser (Private)
-- (void)_parseGlobalsFromMajorSections;
-- (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection usingGroupName:(NSString *)groupName;
-- (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)fileSection;
-- (NSSet *)_parseNamesOfGlobalsInFileSection:(AKFileSection *)fileSection;
-- (BOOL)_privatelyParseNonMarkupToken;
-@end
-
-
 @implementation AKCocoaGlobalsDocParser
+{
+    // These ivars are only used during _parseNamesOfGlobalsInFileSection:.
+    char _prevToken[AKParserTokenBufferSize];
+    const char *_currTokenStart;
+    const char *_currTokenEnd;
+    const char *_prevTokenStart;
+    const char *_prevTokenEnd;
+}
 
 
 #pragma mark -
@@ -79,13 +75,9 @@
     return [super shouldProcessFile:filePath];
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKCocoaGlobalsDocParser (Private)
 
 // Parse the file in the case where each major section corresponds to a
 // group of types/constants.
@@ -110,12 +102,13 @@
 
 // Each subsection of the given section contains one global.
 - (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection
-    usingGroupName:(NSString *)groupName
+                           usingGroupName:(NSString *)groupName
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKGroupNode *groupNode = [[_targetFramework owningDatabase] globalsGroupNamed:groupName inFrameworkNamed:[_targetFramework frameworkName]];
-
+    AKDatabase *targetDB = [_targetFramework owningDatabase];
+    AKGroupNode *groupNode = [targetDB globalsGroupNamed:groupName
+                                        inFrameworkNamed:[_targetFramework frameworkName]];
     if (!groupNode)
     {
         groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_targetFramework];
@@ -123,14 +116,12 @@
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
         [groupNode setNodeDocumentation:groupSection];
-        [[_targetFramework owningDatabase] addGlobalsGroup:groupNode];
+        [targetDB addGlobalsGroup:groupNode];
     }
 
     // Iterate through child sections.  Each child section corresponds
     // to a type/constant within the group.
-    NSEnumerator *childSectionEnum = [groupSection childSectionEnumerator];
-    AKFileSection *childSection;
-    while ((childSection = [childSectionEnum nextObject]))
+    for (AKFileSection *childSection in [groupSection childSectionEnumerator])
     {
         // Create a globals node and add it to the group.
         AKGlobalsNode *globalsNode = [self _globalsNodeFromFileSection:childSection];
@@ -161,21 +152,20 @@
     }
     else if ([behaviorNode isClassNode])
     {
-        globalsNodeName = [NSString stringWithFormat:@"%@ [%@]", [fileSection sectionName], [behaviorNode nodeName]];
+        globalsNodeName = [NSString stringWithFormat:@"%@ [%@]",
+                           [fileSection sectionName], [behaviorNode nodeName]];
     }
     else
     {
-        globalsNodeName = [NSString stringWithFormat:@"%@ <%@>", [fileSection sectionName], [behaviorNode nodeName]];
+        globalsNodeName = [NSString stringWithFormat:@"%@ <%@>",
+                           [fileSection sectionName], [behaviorNode nodeName]];
     }
 
-    AKGlobalsNode *globalsNode =
-        [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName owningFramework:_targetFramework];
+    AKGlobalsNode *globalsNode = [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
+                                                         owningFramework:_targetFramework];
 
     // Add any individual names we find in the minor section.
-    NSEnumerator *namesOfGlobalsEnum = [[self _parseNamesOfGlobalsInFileSection:fileSection] objectEnumerator];
-    NSString *nameOfGlobal;
-
-    while ((nameOfGlobal = [namesOfGlobalsEnum nextObject]))
+    for (NSString *nameOfGlobal in [self _parseNamesOfGlobalsInFileSection:fileSection])
     {
         [globalsNode addNameOfGlobal:nameOfGlobal];
     }
@@ -276,7 +266,7 @@
             }
         }
         else if ((strcmp(_token, "define") == 0)
-            && (strcmp(_prevToken, "#") == 0))
+                 && (strcmp(_prevToken, "#") == 0))
         {
             (void)[self _privatelyParseNonMarkupToken];
             [namesOfGlobals addObject:[NSString stringWithUTF8String:_token]];
@@ -298,7 +288,7 @@
 
         }
         else if ((strcmp(_token, "pre") == 0)
-            && (strcmp(_prevToken, "/") == 0))
+                 && (strcmp(_prevToken, "/") == 0))
         {
             break;
         }

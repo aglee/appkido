@@ -38,7 +38,7 @@
 //
 // DocName might contain extraneous whitespace (including
 // leading/trailing and newlines) and/or HTML character constants.  It's
-// too expensive to de-HTMLize during doc parsing (or is it? think about
+// too expensive to de-HTMLize during doc parsing ([agl] or is it? think about
 // this); so we defer de-HTMLizing to when we display the doc name.
 @interface AKDocParser : AKParser
 {
@@ -60,31 +60,19 @@
 #pragma mark Parsing
 
 /*!
- * @method      parseToken
- * @discussion  Parses a token, puts it into the protected ivar _token,
- *              and updates _current to point just after the token.
- *              Punctuation characters -- i.e., non-alphanumeric,
- *              non-whitespace characters -- are treated as individual
- *              tokens.
+ * Consumes a token from the input stream and puts it into _token. On exit,
+ * _current points just after the token.
  *
- *              This method is used by -_parseRootSection.  Subclasses can
- *              use it for their own custom parsing needs -- for example,
- *              to further analyze chunks of text after the initial parse.
+ * All non-alphanumeric, non-whitespace characters are considered punctuation
+ * and are treated as individual tokens.
  */
 - (BOOL)parseToken;
 
 /*!
- * @method      parseNonMarkupToken
- * @discussion  Parses a token, treating HTML tags (e.g., <font> or
- *              </font>) and character entities (e.g., &#8212;).  Puts the
- *              token into _token and updates _current to point just after
- *              the token.  Punctuation characters -- i.e., non-alphanumeric,
- *              non-whitespace characters -- are treated as individual
- *              tokens.
- *
- *              This method is used by -_parseRootSection.  Subclasses can
- *              use it for their own custom parsing needs -- for example,
- *              to further analyze chunks of text after the initial parse.
+ * Calls -parseToken one or more times. Skips over tokens that are HTML markup
+ * (tags, character entities, etc.) and consumes the next non-markup token in
+ * the input stream. Puts that token in _token. On exit, _current points just
+ * after the token.
  */
 - (BOOL)parseNonMarkupToken;
 
@@ -93,18 +81,12 @@
 #pragma mark Using parse results
 
 /*!
- * @method      rootSectionOfCurrentFile
- * @discussion  Returns the root of the file section hierarchy for the
- *              file most recently parsed by the receiver.
+ * Returns the root of the file section hierarchy for the file most recently
+ * parsed by the receiver.
  */
 - (AKFileSection *)rootSectionOfCurrentFile;
 
-/*!
- * @method      applyParseResults
- * @discussion  This is called each time a file is parsed.
- *
- *              The default behavior does nothing.
- */
+/*! Called after each file is parsed. Does nothing by default. */
 - (void)applyParseResults;
 
 
@@ -122,5 +104,6 @@
 // [agl] had to add another kludge to convert <span> tags to <h1> tags
 // so the Functions and TypesAndConstants pages get parsed properly.
 + (NSMutableData *)kludgeHTMLForTiger:(NSData *)sourceData;
+
 
 @end

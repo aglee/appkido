@@ -9,19 +9,11 @@
 
 #import "DIGSLog.h"
 
-#import "AKTextUtils.h"
 #import "AKDatabase.h"
+#import "AKFileSection.h"
 #import "AKFunctionNode.h"
 #import "AKGroupNode.h"
-#import "AKFileSection.h"
-
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKCocoaFunctionsDocParser (Private)
-- (NSDictionary *)_mapFunctionNamesToGroupNames;
-@end
+#import "AKTextUtils.h"
 
 
 @implementation AKCocoaFunctionsDocParser
@@ -40,27 +32,23 @@
         return;
     }
 
-//NSLog(@"\n\n\n---------- %@ ----------", [self currentPath]);  // [agl] REMOVE
     // Map function names to the names of the groups they belong to.
     NSDictionary *groupNamesByFunctionName = [self _mapFunctionNamesToGroupNames];
     NSString *defaultGroupName = nil;
 
     if ([groupNamesByFunctionName count] == 0)
     {
-        defaultGroupName = [@"Functions - " stringByAppendingString: [_rootSectionOfCurrentFile sectionName]];
-//NSLog(@"using default '%@' group name", defaultGroupName);  // [agl] REMOVE
+        defaultGroupName = [@"Functions - " stringByAppendingString:[_rootSectionOfCurrentFile sectionName]];
     }
 
     // Each subsection of the "Functions" section contains the documentation
     // for one function.
-    NSEnumerator *functionSectionsEnum = [functionsSection childSectionEnumerator];
-    AKFileSection *functionSection;
-    
-    while ((functionSection = [functionSectionsEnum nextObject]))
+    AKDatabase *targetDB = [_targetFramework owningDatabase];
+
+    for (AKFileSection *functionSection in [functionsSection childSectionEnumerator])
     {
         NSString *functionName = [functionSection sectionName];
-        NSString *groupName = defaultGroupName ? defaultGroupName : [groupNamesByFunctionName objectForKey:functionName];
-//NSLog(@"function name '%@', group name '%@'", functionName, groupName);  // [agl] REMOVE
+        NSString *groupName = defaultGroupName ?: [groupNamesByFunctionName objectForKey:functionName];
 
         if (groupName == nil)
         {
@@ -68,16 +56,17 @@
         }
         else
         {
-            AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName owningFramework:_targetFramework];
+            AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName
+                                                            owningFramework:_targetFramework];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode = [[_targetFramework owningDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_targetFramework frameworkName]];
-
+            AKGroupNode *groupNode = [targetDB functionsGroupNamed:groupName
+                                                  inFrameworkNamed:[_targetFramework frameworkName]];
             if (!groupNode)
             {
                 groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_targetFramework];
                 [groupNode setNodeDocumentation:functionSection];
-                [[_targetFramework owningDatabase] addFunctionsGroup:groupNode];
+                [targetDB addFunctionsGroup:groupNode];
             }
 
             [groupNode addSubnode:functionNode];
@@ -85,14 +74,9 @@
     }
 }
 
-@end
-
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKCocoaFunctionsDocParser (Private)
 
 // Scan the "Functions by Task" section, and remember what group each
 // function belongs to.  Keys of the returned dictionary will be function
@@ -115,14 +99,12 @@
     
     if (functionsByTaskSection != nil)
     {
-        NSEnumerator *functionGroupSectionsEnum = [functionsByTaskSection childSectionEnumerator];
-        AKFileSection *functionGroupSection;
-        
-        while ((functionGroupSection = [functionGroupSectionsEnum nextObject]))
+        for (AKFileSection *functionGroupSection in [functionsByTaskSection childSectionEnumerator])
         {
             // Temporarily take over the _current and _dataEnd ivars for our own use.
             const char *originalCurrent = _current;
             const char *originalDataEnd = _dataEnd;
+            
             _current = _dataStart + [functionGroupSection sectionOffset];
             _dataEnd = _current + [functionGroupSection sectionLength];
             
@@ -145,7 +127,8 @@
                         else
                         {
                             NSString *funcName = [NSString stringWithUTF8String:_token];
-                            [groupNamesByFunctionName setObject:[functionGroupSection sectionName] forKey:funcName];
+                            [groupNamesByFunctionName setObject:[functionGroupSection sectionName]
+                                                         forKey:funcName];
                         }
                     }
                 }

@@ -14,40 +14,6 @@
 #import "AKFileSection.h"
 
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKDocParser (Private)
-
-/*!
- * @method      _parseRootSection
- * @discussion  Partitions the current file into a hierarchy of
- *              AKFileSections, and returns the root section.
- *
- *              This method is called by -parseCurrentFile, which sets up
- *              preconditions and cleans up afterward.  You can override
- *              this, but do not call it directly.
- */
-- (AKFileSection *)_parseRootSection;
-
-- (AKFileSection *)_popSectionStack;
-- (AKFileSection *)_peekSectionStack;
-- (char)_headerLevelAtTopOfSectionStack;
-- (void)_rollUpSiblings;
-
-- (void)_processHeaderTag;
-- (void)_processAnchorTag;
-
-- (void)_skipPastClosingAngleBracket;
-
-- (NSString *)_parseTitleAtLevel:(char)headerLevel;
-
-+ (NSMutableData *)_kludgeDivTagsToH3:(NSData *)sourceData;
-+ (NSMutableData *)_kludgeSpanTagsToH1:(NSData *)sourceData;
-
-@end
-
 @implementation AKDocParser
 
 
@@ -64,7 +30,6 @@
 
     return self;
 }
-
 
 
 #pragma mark -
@@ -295,14 +260,14 @@
     return result;    
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
 
-@implementation AKDocParser (Private)
-
+// Called by -parseCurrentFile, which sets up preconditions and cleans up
+// afterward. Partitions the current file into a hierarchy of AKFileSections,
+// and returns the root section in that hierarchy.
+//
 // Pseudo-syntax for doc file:
 //
 //  <hA>rootSection.title</hA>           // where A is probably 1
@@ -548,16 +513,13 @@
                 _current++;
             }
 
-            NSString *anchorString =
-                [[NSString alloc]
-                    initWithBytes:anchorStart
-                    length:(_current - anchorStart)
-                    encoding:NSUTF8StringEncoding];
+            NSString *anchorString = [[NSString alloc] initWithBytes:anchorStart
+                                                              length:(_current - anchorStart)
+                                                            encoding:NSUTF8StringEncoding];
 
-            [[_targetFramework owningDatabase]
-                rememberOffset:(anchorStart - _dataStart)
-                ofAnchorString:anchorString
-                inHTMLFile:[self currentPath]];
+            [[_targetFramework owningDatabase] rememberOffset:(anchorStart - _dataStart)
+                                               ofAnchorString:anchorString
+                                                   inHTMLFile:[self currentPath]];
         }
     }
 }
@@ -667,11 +629,9 @@
 
     if (trimmedTitleStart)
     {
-        result =
-            [[NSString alloc]
-                initWithBytes:titleBuf
-                length:(trimmedTitleEnd - trimmedTitleStart + 1)
-                encoding:NSUTF8StringEncoding];
+        result = [[NSString alloc] initWithBytes:titleBuf
+                                          length:(trimmedTitleEnd - trimmedTitleStart + 1)
+                                        encoding:NSUTF8StringEncoding];
     }
     else
     {
@@ -714,12 +674,12 @@
 
     char *endOfLastDivTag = (char *)[sourceData bytes];
     char *startOfDivOpenTag = strstr(endOfLastDivTag, divOpenTag);
+    
     while (startOfDivOpenTag)
     {
         // Append the good text we just skipped to the new HTML.
-        [newHTMLData
-            appendBytes:endOfLastDivTag
-            length:(startOfDivOpenTag - endOfLastDivTag)];
+        [newHTMLData appendBytes:endOfLastDivTag
+                          length:(startOfDivOpenTag - endOfLastDivTag)];
 
         // Append an <h3> tag to the new HTML to replace the divOpenTag --
         // but take up exactly as much space as divOpenTag did.
@@ -733,9 +693,8 @@
         if (startOfDivCloseTag)
         {
             // Append the good text we just skipped to the new HTML.
-            [newHTMLData
-                appendBytes:endOfLastDivTag
-                length:(startOfDivCloseTag - endOfLastDivTag)];
+            [newHTMLData appendBytes:endOfLastDivTag
+                              length:(startOfDivCloseTag - endOfLastDivTag)];
 
             // Append "</h3>" to the new HTML to replace the divCloseTag --
             // but take up exactly as much space as divCloseTag did.
@@ -751,18 +710,16 @@
 
     // Add the remaining good text.  There will be at least one byte
     // of good text, namely the NULL terminator.
-    [newHTMLData
-        appendBytes:endOfLastDivTag
-        length:((char *)[sourceData bytes] + [sourceData length]
-                    - endOfLastDivTag)];
+    [newHTMLData appendBytes:endOfLastDivTag
+                      length:((char *)[sourceData bytes] + [sourceData length]
+                              - endOfLastDivTag)];
 
     return newHTMLData;
 }
 
 + (NSMutableData *)_kludgeSpanTagsToH1:(NSData *)sourceData
 {
-    NSMutableData *newHTMLData =
-        [NSMutableData dataWithCapacity:([sourceData length] + 32)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 32)];
     static char *spanOpenTag = "<span class=\"page_title\">";
     static char *spanCloseTag = "</span>";
     NSInteger spanOpenTagLength = strlen(spanOpenTag);
@@ -770,19 +727,19 @@
 
     char *endOfLastSpanTag = (char *)[sourceData bytes];
     char *startOfSpanOpenTag = strstr(endOfLastSpanTag, spanOpenTag);
+    
     while (startOfSpanOpenTag)
     {
         // Append the good text we just skipped to the new HTML.
-        [newHTMLData
-            appendBytes:endOfLastSpanTag
-            length:(startOfSpanOpenTag - endOfLastSpanTag)];
+        [newHTMLData appendBytes:endOfLastSpanTag
+                          length:(startOfSpanOpenTag - endOfLastSpanTag)];
 
         // Append an <h1> tag to the new HTML to replace the spanOpenTag --
         // but take up exactly as much space as spanOpenTag did.
         //                        .........................
         //                        <span class="page_title">
         [newHTMLData appendBytes:"<h1                     >"
-            length:spanOpenTagLength];
+                          length:spanOpenTagLength];
 
         // Look for the closing tag.
         endOfLastSpanTag = startOfSpanOpenTag + spanOpenTagLength;  // Skip over the spanOpenTag.
@@ -790,9 +747,8 @@
         if (startOfSpanCloseTag)
         {
             // Append the good text we just skipped to the new HTML.
-            [newHTMLData
-                appendBytes:endOfLastSpanTag
-                length:(startOfSpanCloseTag - endOfLastSpanTag)];
+            [newHTMLData appendBytes:endOfLastSpanTag
+                              length:(startOfSpanCloseTag - endOfLastSpanTag)];
 
             // Append "</h3>" to the new HTML to replace the spanCloseTag --
             // but take up exactly as much space as spanCloseTag did.
@@ -808,10 +764,9 @@
 
     // Add the remaining good text.  There will be at least one byte
     // of good text, namely the NULL terminator.
-    [newHTMLData
-        appendBytes:endOfLastSpanTag
-        length:((char *)[sourceData bytes] + [sourceData length]
-                    - endOfLastSpanTag)];
+    [newHTMLData appendBytes:endOfLastSpanTag
+                      length:((char *)[sourceData bytes] + [sourceData length]
+                              - endOfLastSpanTag)];
 
     return newHTMLData;
 }
