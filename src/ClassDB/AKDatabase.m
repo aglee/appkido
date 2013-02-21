@@ -108,7 +108,7 @@
 {
     if ((self = [super init]))
     {
-        _docSetIndex = [docSetIndex retain];
+        _docSetIndex = docSetIndex;
 
         _frameworksByName = [[NSMutableDictionary alloc] init];
         _frameworkNames = [[NSMutableArray alloc] init];
@@ -140,39 +140,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_docSetIndex release];
-
-    [_frameworksByName release];
-    [_frameworkNames release];
-    [_namesOfAvailableFrameworks release];
-
-    [_classNodesByName release];
-    [_classListsByFramework release];
-
-    [_protocolNodesByName release];
-    [_protocolListsByFramework release];
-
-    [_functionsGroupListsByFramework release];
-    [_functionsGroupsByFrameworkAndGroup release];
-
-    [_globalsGroupListsByFramework release];
-    [_globalsGroupsByFrameworkAndGroup release];
-
-    [_classNodesByHTMLPath release];
-    [_protocolNodesByHTMLPath release];
-    [_rootSectionsByHTMLPath release];
-    [_offsetsOfAnchorStringsInHTMLFiles release];
-
-    [_frameworkNamesByHTMLPath release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -197,20 +167,20 @@
     {
         if ([self frameworkNameIsSelectable:fwName])
         {
-            NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
+            @autoreleasepool {
 
-            DIGSLogDebug(@"===================================================");
-            DIGSLogDebug(@"Loading tokens for framework %@", fwName);
-            DIGSLogDebug(@"===================================================");
+                DIGSLogDebug(@"===================================================");
+                DIGSLogDebug(@"Loading tokens for framework %@", fwName);
+                DIGSLogDebug(@"===================================================");
 
-            if ([(id)_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
-            {
-                [_delegate database:self willLoadTokensForFramework:fwName];
+                if ([(id)_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
+                {
+                    [_delegate database:self willLoadTokensForFramework:fwName];
+                }
+
+                [self loadTokensForFrameworkNamed:fwName];
+
             }
-
-            [self loadTokensForFrameworkNamed:fwName];
-
-            [tempPool release];
         }
     }
 }
@@ -289,7 +259,7 @@
 
     if (aFramework == nil)
     {
-        aFramework = [[[AKFramework alloc] init] autorelease];
+        aFramework = [[AKFramework alloc] init];
         [aFramework setFWDatabase:self];
         [aFramework setFrameworkName:frameworkName];
 
@@ -753,9 +723,9 @@
     DIGSLogDebug(@"%@ -- docSetPath is [%@]", NSStringFromSelector(_cmd), docSetPath);
 
     return
-        [[[AKDocSetIndex alloc]
+        [[AKDocSetIndex alloc]
             initWithDocSetPath:docSetPath
-            basePathForHeaders:basePathForHeaders] autorelease];
+            basePathForHeaders:basePathForHeaders];
 }
 
 // Adds a framework if we haven't seen it before.  We call this each time

@@ -9,6 +9,7 @@
 
 #import "DIGSLog.h"
 #import "AKDatabase.h"
+#import "AKFramework.h"
 
 @implementation AKParser
 
@@ -26,7 +27,7 @@
     AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
 
     [parser processDirectory:dirPath recursively:YES];
-    [parser release];  // release here
+      // release here
 }
 
 + (void)parseFilesInPaths:(NSArray *)docPaths
@@ -41,7 +42,7 @@
         AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
 
         [parser processFile:docPath];
-        [parser release];  // release here
+          // release here
     }
 }
 
@@ -53,7 +54,7 @@
 {
     if ((self = [super init]))
     {
-        _parserFW = [aFramework retain];
+        _parserFW = aFramework;
     }
 
     return self;
@@ -62,16 +63,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_parserFW release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

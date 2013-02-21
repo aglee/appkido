@@ -51,7 +51,7 @@
 
 + (id)linkResolverWithDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithDatabase:database] autorelease];
+    return [[self alloc] initWithDatabase:database];
 }
 
 
@@ -63,7 +63,7 @@
 {
     if ((self = [super init]))
     {
-        _database = [database retain];
+        _database = database;
     }
 
     return self;
@@ -72,16 +72,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -95,7 +88,7 @@
     NSString *tokenName = [[linkAnchor pathComponents] lastObject];
 
     AKSearchQuery *searchQuery =
-        [[[AKSearchQuery alloc] initWithDatabase:_database] autorelease];
+        [[AKSearchQuery alloc] initWithDatabase:_database];
     [searchQuery setSearchString:tokenName];
     [searchQuery setIncludesEverything];
     [searchQuery setIgnoresCase:YES];

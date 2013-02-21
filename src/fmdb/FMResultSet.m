@@ -27,19 +27,13 @@
     return FMDBReturnAutoreleased(rs);
 }
 
-- (void)finalize {
-    [self close];
-    [super finalize];
-}
 
 - (void)dealloc {
     [self close];
     
     FMDBRelease(_query);
-    _query = nil;
     
     FMDBRelease(_columnNameToIndexMap);
-    _columnNameToIndexMap = nil;
     
 #if ! __has_feature(objc_arc)
     [super dealloc];

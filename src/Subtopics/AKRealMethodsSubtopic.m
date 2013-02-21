@@ -23,9 +23,9 @@
     includeAncestors:(BOOL)includeAncestors
 {
     return
-        [[[self alloc]
+        [[self alloc]
             initWithBehaviorNode:behaviorNode
-            includeAncestors:includeAncestors] autorelease];
+            includeAncestors:includeAncestors];
 }
 
 
@@ -37,7 +37,7 @@
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _behaviorNode = [behaviorNode retain];
+        _behaviorNode = behaviorNode;
     }
 
     return self;
@@ -46,16 +46,9 @@
 - (id)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_behaviorNode release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

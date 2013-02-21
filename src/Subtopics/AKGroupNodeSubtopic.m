@@ -25,7 +25,7 @@
 {
     if ((self = [super init]))
     {
-        _groupNode = [groupNode retain];
+        _groupNode = groupNode;
     }
 
     return self;
@@ -34,16 +34,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_groupNode release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -64,7 +57,7 @@
     while ((globalsNode = [subnodesEnum nextObject]))
     {
         AKDoc *newDoc =
-            [[[AKNodeDoc alloc] initWithNode:globalsNode] autorelease];
+            [[AKNodeDoc alloc] initWithNode:globalsNode];
 
         [docList addObject:newDoc];
     }

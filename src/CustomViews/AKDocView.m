@@ -62,7 +62,7 @@
     // [agl] can I do this in IB now?  if so, remember *NOT* to release in
     // -dealloc
     AKTextView *textView =
-        [[[AKTextView alloc] initWithFrame:[self bounds]] autorelease];
+        [[AKTextView alloc] initWithFrame:[self bounds]];
 
     [textView setAutoresizingMask:
         (NSViewWidthSizable | NSViewHeightSizable)];
@@ -78,8 +78,8 @@
 
     // Remove ourselves from the key view loop and splice the text view
     // in our place.
-    _originalPreviousKeyView = [[self previousKeyView] retain];
-    _originalNextKeyView = [[self nextKeyView] retain];
+    _originalPreviousKeyView = [self previousKeyView];
+    _originalNextKeyView = [self nextKeyView];
     [_originalPreviousKeyView setNextKeyView:textView];
     [textView setNextKeyView:_originalNextKeyView];
 
@@ -100,18 +100,6 @@
     [self applyPrefs];
 }
 
-- (void)dealloc
-{
-    [_docLocator release];
-    [_headerFontName release];
-    [_scrollView release];
-    [_webView release];
-    [_originalPreviousKeyView release];
-    [_originalNextKeyView release];
-    [_docListController release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -125,8 +113,6 @@
     }
 
     // Standard setter pattern.
-    [docLocator retain];
-    [_docLocator release];
     _docLocator = docLocator;
 
     // Update the display.
@@ -162,8 +148,6 @@
             headerFontChanged = YES;
 
             // Standard setter pattern.
-            [headerFontNamePref retain];
-            [_headerFontName release];
             _headerFontName = headerFontNamePref;
         }
 
@@ -305,8 +289,7 @@
     if (textData)
     {
         docString =
-            [[[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding]
-                autorelease];
+            [[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding];
     }
 
     [textView setRichText:NO];

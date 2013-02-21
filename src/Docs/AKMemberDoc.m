@@ -24,8 +24,8 @@
 {
     if ((self = [super init]))
     {
-        _memberNode = [memberNode retain];
-        _behaviorNode = [behaviorNode retain];
+        _memberNode = memberNode;
+        _behaviorNode = behaviorNode;
     }
 
     return self;
@@ -34,17 +34,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_memberNode release];
-    [_behaviorNode release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

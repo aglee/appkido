@@ -31,7 +31,7 @@
     id <AKDatabaseDelegate> _databaseDelegate;
 }
 
-@property (nonatomic, retain) AKDatabase *appDatabase;
-@property (nonatomic, retain) id <AKDatabaseDelegate> databaseDelegate;
+@property (nonatomic, strong) AKDatabase *appDatabase;
+@property (nonatomic, strong) id <AKDatabaseDelegate> databaseDelegate;
 
 @end

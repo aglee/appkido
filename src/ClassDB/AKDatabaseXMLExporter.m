@@ -53,7 +53,7 @@
 {
     if ((self = [super init]))
     {
-        _database = [database retain];
+        _database = database;
         _xmlWriter = [[TCMXMLWriter alloc] initWithOptions:TCMXMLWriterOptionOrderedAttributes | TCMXMLWriterOptionPrettyPrinted
                                                    fileURL:outfileURL];
     }
@@ -64,17 +64,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-    [_xmlWriter release];
-    
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -115,7 +107,6 @@
         [attributes setObject:[NSNumber numberWithBool:YES] forKey:@"isDeprecated"];
     }
     [_xmlWriter tag:memberTag attributes:attributes];
-    [attributes release];
 }
 
 
@@ -175,7 +166,6 @@
          usingGetSelector:@selector(documentedInstanceMethods)
          xmlTag:@"method"];
     }];
-    [attributes release];
 }
 
 
@@ -191,7 +181,6 @@
         [attributes setObject:[NSNumber numberWithBool:YES] forKey:@"isDeprecated"];
     }
     [_xmlWriter tag:subnodeTag attributes:attributes];
-    [attributes release];
 }
 
 - (void)exportGroupNode:(AKGroupNode *)groupNode
@@ -347,21 +336,18 @@
 {
     NSString *commentString = [[NSString alloc] initWithFormat:@"========== [ %@ ] ==========",[self _spreadString:aString]];
     [_xmlWriter comment:commentString];
-    [commentString release];
 }
 
 - (void)_writeDividerWithString:(NSString *)aString
 {
     NSString *commentString = [[NSString alloc] initWithFormat:@"===== %@ =====",aString];
     [_xmlWriter comment:commentString];
-    [commentString release];
 }
 
 - (void)_writeAltDividerWithString:(NSString *)aString
 {
     NSString *commentString = [[NSString alloc] initWithFormat:@"===== [%@] =====",aString];
     [_xmlWriter comment:commentString];
-    [commentString release];
 }
 
 - (void)_writeDividerWithString:(NSString *)string1
@@ -369,14 +355,12 @@
 {
     NSString *commentString = [[NSString alloc] initWithFormat:@"===== %@ %@ =====",string1, string2];
     [_xmlWriter comment:commentString];
-    [commentString release];
 }
 
 - (void)_writeShortDividerWithString:(NSString *)aString
 {
     NSString *commentString = [[NSString alloc] initWithFormat:@"## %@ ##",aString];
     [_xmlWriter comment:commentString];
-    [commentString release];
 }
 
 @end

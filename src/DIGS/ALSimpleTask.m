@@ -39,13 +39,6 @@
 	// We call this in dealloc because besides ensuring the task is stopped, it
 	// disconnects weak references.
 	[self _stopTask];
-
-    [_commandPath release];
-    [_commandArguments release];
-    [_task release];
-    [_taskOutputData release];
-    
-    [super dealloc];
 }
 
 - (BOOL)runTask

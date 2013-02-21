@@ -21,7 +21,7 @@
 
 + (id)subtopicForProtocolNode:(AKProtocolNode *)protocolNode
 {
-    return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
+    return [[self alloc] initWithProtocolNode:protocolNode];
 }
 
 
@@ -32,7 +32,7 @@
 {
     if ((self = [super init]))
     {
-        _protocolNode = [protocolNode retain];
+        _protocolNode = protocolNode;
     }
 
     return self;
@@ -41,16 +41,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_protocolNode release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

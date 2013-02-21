@@ -169,7 +169,7 @@
     }
 
     AKGlobalsNode *globalsNode =
-        [[[AKGlobalsNode alloc] initWithNodeName:globalsNodeName owningFramework:_parserFW] autorelease];
+        [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName owningFramework:_parserFW];
 
     // Add any individual names we find in the minor section.
     NSEnumerator *namesOfGlobalsEnum = [[self _parseNamesOfGlobalsInFileSection:fileSection] objectEnumerator];

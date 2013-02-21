@@ -31,8 +31,6 @@
 
 - (void)setFrameworkName:(NSString *)frameworkName
 {
-    [frameworkName retain];
-    [_frameworkName release];
     _frameworkName = frameworkName;
 }
 

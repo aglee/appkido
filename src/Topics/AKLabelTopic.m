@@ -17,7 +17,7 @@
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
-    AKLabelTopic *obj = [[[self alloc] init] autorelease];
+    AKLabelTopic *obj = [[self alloc] init];
 
     [obj setLabel:label];
 
@@ -28,12 +28,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_label release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -41,8 +35,6 @@
 
 - (void)setLabel:(NSString *)label
 {
-    [label retain];
-    [_label release];
     _label = label;
 }
 

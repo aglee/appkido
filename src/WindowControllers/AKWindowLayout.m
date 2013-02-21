@@ -23,7 +23,7 @@
         _toolbarIsVisible = YES;
         _quicklistDrawerIsOpen = YES;
         _quicklistMode = 0;
-        _frameworkPopupSelection = [AKFoundationFrameworkName retain];
+        _frameworkPopupSelection = AKFoundationFrameworkName;
         _searchIncludesClasses = YES;
         _searchIncludesMembers = YES;
         _searchIncludesFunctions = YES;
@@ -34,12 +34,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_frameworkPopupSelection release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -53,7 +47,7 @@
     }
 
     AKWindowLayout *windowLayout =
-        [[[AKWindowLayout alloc] init] autorelease];
+        [[AKWindowLayout alloc] init];
 
     [windowLayout setWindowFrame:
         NSRectFromString([prefDict objectForKey:AKWindowFramePrefKey])];
@@ -292,8 +286,6 @@
 
 - (void)setFrameworkPopupSelection:(NSString *)frameworkName
 {
-    [frameworkName retain];
-    [_frameworkPopupSelection release];
     _frameworkPopupSelection = frameworkName;
 }
 

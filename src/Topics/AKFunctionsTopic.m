@@ -50,7 +50,7 @@
     {
         AKGroupNode *groupNode = [groupNodes objectAtIndex:subtopicIndex];
 
-        return [[[AKFunctionsSubtopic alloc] initWithGroupNode:groupNode] autorelease];
+        return [[AKFunctionsSubtopic alloc] initWithGroupNode:groupNode];
     }
 }
 

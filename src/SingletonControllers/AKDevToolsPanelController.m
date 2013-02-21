@@ -20,7 +20,7 @@
 
 + (id)controller
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 
@@ -34,7 +34,6 @@
         if (![NSBundle loadNibNamed:@"DevToolsPath" owner:self])
         {
             DIGSLogDebug(@"Failed to load DevToolsPath");
-            [self release];
             return nil;
         }
     }
@@ -44,16 +43,10 @@
 
 - (void)dealloc
 {
-    DIGSLogDebug_EnteringMethod();
-    
     if ([_window delegate] == self)
     {
         [_window setDelegate:nil];
     }
-
-    [_devToolsPathController release];
-
-    [super dealloc];
 }
 
 

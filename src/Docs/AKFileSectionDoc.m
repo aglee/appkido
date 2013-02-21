@@ -21,7 +21,7 @@
 {
     if ((self = [super init]))
     {
-        _fileSection = [fileSection retain];
+        _fileSection = fileSection;
     }
 
     return self;
@@ -30,16 +30,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_fileSection release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

@@ -29,7 +29,7 @@
 
 + (id)topicWithClassNode:(AKClassNode *)classNode
 {
-    return [[[self alloc] initWithClassNode:classNode] autorelease];
+    return [[self alloc] initWithClassNode:classNode];
 }
 
 
@@ -40,7 +40,7 @@
 {
     if ((self = [super init]))
     {
-        _classNode = [classNode retain];
+        _classNode = classNode;
     }
 
     return self;
@@ -49,16 +49,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_classNode release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

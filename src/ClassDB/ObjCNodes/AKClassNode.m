@@ -53,16 +53,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_childClassNodes release];
-    [_categoryNodes release];
-
-    [_indexOfDelegateMethods release];
-    [_indexOfNotifications release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -237,10 +227,10 @@
         if ([methodName ak_contains:@":"])
         {
             methodNode =
-                [[[AKMethodNode alloc]
+                [[AKMethodNode alloc]
                     initWithNodeName:methodName
                     owningFramework:nodeOwningFW
-                    owningBehavior:self] autorelease];
+                    owningBehavior:self];
             [methodNode setIsDeprecated:YES];
             [self addDelegateMethod:methodNode];
         }
@@ -261,8 +251,6 @@
 
 - (void)_setParentClass:(AKClassNode *)node
 {
-    [node retain];
-    [_parentClassNode release];
     _parentClassNode = node;
 }
 

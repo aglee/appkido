@@ -26,7 +26,6 @@
     //int newRowHeight = round([font defaultLineHeightForFont] + 1.0);
     NSLayoutManager * lm = [[NSLayoutManager alloc] init]; 
  	NSInteger newRowHeight = round([lm defaultLineHeightForFont:font] + 1.0); 
- 	[lm release]; 
 
     [[[[self tableColumns] objectAtIndex:0] dataCell] setFont:font];
     [self setRowHeight:newRowHeight];

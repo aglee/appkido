@@ -37,12 +37,6 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_docList release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -150,7 +144,7 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 {
     if (_docList == nil)
     {
-        _docList = [[NSMutableArray array] retain];
+        _docList = [NSMutableArray array];
         [self populateDocList:_docList];
     }
 }

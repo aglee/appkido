@@ -99,8 +99,7 @@
     while ((majorSection = [majorSectionEnum nextObject]))
     {
         AKOverviewDoc *newDoc =
-            [[[AKOverviewDoc alloc] initWithFileSection:majorSection]
-                autorelease];
+            [[AKOverviewDoc alloc] initWithFileSection:majorSection];
         [docList addObject:newDoc];
     }
 
@@ -108,8 +107,7 @@
     // If the user selects this, we will display the selected node's
     // root file section for the given node.
     AKInheritanceDoc *inheritanceDoc =
-        [[[AKInheritanceDoc alloc] initWithFileSection:rootSection]
-            autorelease];
+        [[AKInheritanceDoc alloc] initWithFileSection:rootSection];
 
     [docList insertObject:inheritanceDoc atIndex:0];
 
@@ -147,9 +145,8 @@
         AKFileSection *headerFileSection =
             [AKFileSection withEntireFile:headerFilePath];
         AKHeaderFileDoc *headerFileDoc =
-            [[[AKHeaderFileDoc alloc]
-                initWithFileSection:headerFileSection]
-                autorelease];
+            [[AKHeaderFileDoc alloc]
+                initWithFileSection:headerFileSection];
 
         [docList addObject:headerFileDoc];
     }

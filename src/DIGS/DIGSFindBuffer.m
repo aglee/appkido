@@ -31,7 +31,7 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 {
     if (!s_sharedInstance)
     {
-        (void)[[self allocWithZone:[[NSApplication sharedApplication] zone]] init];
+        (void)[[self allocWithZone:nil] init];
     }
 
     return s_sharedInstance;
@@ -45,7 +45,6 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 {
     if (s_sharedInstance)
     {
-        [super dealloc];
         return s_sharedInstance;
     }
 
@@ -73,12 +72,6 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     if (self != s_sharedInstance)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-        [_findString release];
-        [_listenerPointers release];
-        [_listenerActions release];
-
-        [super dealloc];
     }
 }
 
@@ -149,8 +142,7 @@ static DIGSFindBuffer *s_sharedInstance = nil;
         return;
     }
 
-    [_findString autorelease];
-    _findString = [string copyWithZone:[self zone]];
+    _findString = [string copyWithZone:nil];
 
     if (flag)
     {

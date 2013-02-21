@@ -64,7 +64,7 @@
 {
     if ((self = [super init]))
     {
-        _database = [db retain];
+        _database = db;
 
         _searchString = nil;
 
@@ -75,7 +75,7 @@
         _ignoresCase = YES;
         _searchComparison = AKSearchForSubstring;
 
-        _searchResults = [[NSMutableArray array] retain];
+        _searchResults = [NSMutableArray array];
     }
 
     return self;
@@ -84,19 +84,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-    [_searchString release];
-
-    [_searchResults release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -115,8 +105,6 @@
     }
 
     // Update the _searchString ivar.
-    [s retain];
-    [_searchString release];
     _searchString = s;
 
     // Update other ivars.
@@ -311,7 +299,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_clearSearchResults
 {
-    [_searchResults release];
     _searchResults = nil;
 }
 

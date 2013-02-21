@@ -30,18 +30,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_subtopics release];
-
-    // Release non-UI outlets that were set in IB.  The window is
-    // self-releasing, so we don't release UI outlets.
-// [agl] Crashes when I do this -- maybe I misunderstand the retain status
-// of nib objects.
-//    [_docListController release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -149,7 +137,7 @@
     NSBrowserCell *browserCell;
 
     // Tweak the subtopics table.
-    browserCell = [[[NSBrowserCell alloc] initTextCell:@""] autorelease];
+    browserCell = [[NSBrowserCell alloc] initTextCell:@""];
     [browserCell setLeaf:NO];
     [browserCell setLoaded:YES];
     [[[_subtopicsTable tableColumns] objectAtIndex:0]

@@ -29,7 +29,7 @@
 
 + (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
-    return [[[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName] autorelease];
+    return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
 }
 
 
@@ -40,26 +40,14 @@
 {
     if ((self = [super init]))
     {
-        _topic = [topic retain];
-        _subtopicName = [subtopicName retain];
-        _docName = [docName retain];
+        _topic = topic;
+        _subtopicName = subtopicName;
+        _docName = docName;
     }
 
     return self;
 }
 
-- (void)dealloc
-{
-    [_topic release];
-    [_subtopicName release];
-    [_docName release];
-
-    [_cachedDisplayString release];
-    [_cachedSortName release];
-    [_cachedDoc release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -124,8 +112,6 @@
         [self _clearCachedObjects];
     }
 
-    [subtopicName retain];
-    [_subtopicName release];
     _subtopicName = subtopicName;
 }
 
@@ -141,8 +127,6 @@
         [self _clearCachedObjects];
     }
 
-    [docName retain];
-    [_docName release];
     _docName = docName;
 }
 
@@ -182,7 +166,6 @@
                     topicName];
         }
 
-        [_cachedDisplayString retain];
     }
 
     return _cachedDisplayString;
@@ -194,7 +177,7 @@
     {
         AKSubtopic *subtopic = [_topic subtopicWithName:_subtopicName];
 
-        _cachedDoc = [[subtopic docWithName:_docName] retain];
+        _cachedDoc = [subtopic docWithName:_docName];
     }
 
     return _cachedDoc;
@@ -338,7 +321,6 @@ compareDocLocators(id locOne, id locTwo, void *context)
             }
         }
 
-        [_cachedSortName retain];
     }
 
     return _cachedSortName;
@@ -403,13 +385,10 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
 - (void)_clearCachedObjects
 {
-    [_cachedDisplayString release];
     _cachedDisplayString = nil;
 
-    [_cachedSortName release];
     _cachedSortName = nil;
 
-    [_cachedDoc release];
     _cachedDoc = nil;
 }
 

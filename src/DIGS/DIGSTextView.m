@@ -45,12 +45,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_linkCursor release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -102,7 +96,7 @@
             DIGSLogWarning(
                 @"failed to load image named %@ for use as the link cursor",
                 [self linkCursorImageName]);
-            _linkCursor = [[NSCursor arrowCursor] retain];
+            _linkCursor = [NSCursor arrowCursor];
         }
     }
 }

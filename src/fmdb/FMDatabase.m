@@ -47,10 +47,6 @@
     return self;
 }
 
-- (void)finalize {
-    [self close];
-    [super finalize];
-}
 
 - (void)dealloc {
     [self close];
@@ -1112,10 +1108,6 @@ void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3
 @synthesize query=_query;
 @synthesize useCount=_useCount;
 
-- (void)finalize {
-    [self close];
-    [super finalize];
-}
 
 - (void)dealloc {
     [self close];

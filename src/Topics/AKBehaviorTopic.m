@@ -24,12 +24,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_subtopics release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -102,7 +96,7 @@
 {
     if (!_subtopics)
     {
-        _subtopics = [[self createSubtopicsArray] retain];
+        _subtopics = [self createSubtopicsArray];
     }
 
     return _subtopics;

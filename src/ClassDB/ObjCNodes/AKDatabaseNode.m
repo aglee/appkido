@@ -20,7 +20,7 @@
 
 + (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)aFramework
 {
-    return [[[self alloc] initWithNodeName:nodeName owningFramework:aFramework] autorelease];
+    return [[self alloc] initWithNodeName:nodeName owningFramework:aFramework];
 }
 
 
@@ -31,8 +31,8 @@
 {
     if ((self = [super init]))
     {
-        _nodeName = [nodeName retain];
-        _owningFramework = [aFramework retain];
+        _nodeName = nodeName;
+        _owningFramework = aFramework;
         _nodeDocumentation = nil;
         _isDeprecated = NO;
     }
@@ -43,18 +43,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_nodeName release];
-    [_owningFramework release];
-    [_nodeDocumentation release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -72,8 +63,6 @@
 
 - (void)setOwningFramework:(AKFramework *)aFramework
 {
-    [aFramework retain];
-    [_owningFramework release];
     _owningFramework = aFramework;
 }
 
@@ -84,8 +73,6 @@
 
 - (void)setNodeDocumentation:(AKFileSection *)fileSection
 {
-    [fileSection retain];
-    [_nodeDocumentation release];
     _nodeDocumentation = fileSection;
 }
 

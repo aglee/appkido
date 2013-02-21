@@ -29,12 +29,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_namesOfGlobals release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

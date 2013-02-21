@@ -71,7 +71,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ((self = [super init]))
     {
-        _database = [database retain];
+        _database = database;
 
         NSInteger maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
@@ -87,7 +87,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -113,23 +112,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_windowHistory removeAllObjects];
     AKClassNode *classNode = [_database classWithName:@"NSObject"];
     [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
-}
-
-- (void)dealloc
-{
-    [_database release];
-
-    [_windowHistory release];
-
-    [_topicBrowserController release];
-    [_quicklistController release];
-    [[_quicklistDrawer contentView] release];
-    [_quicklistDrawer release];
-    [_docTextMenu release];
-    [_backMenu release];
-    [_forwardMenu release];
-
-    [super dealloc];
 }
 
 
@@ -419,7 +401,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState
 {
-    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
+    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
 
     [self putWindowLayoutInto:windowLayout];
 
@@ -566,7 +548,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)rememberWindowLayout:(id)sender
 {
-    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
+    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
     [self putWindowLayoutInto:windowLayout];
 
     NSDictionary *prefDictionary = [windowLayout asPrefDictionary];
@@ -811,7 +793,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                 @"    activate\n"
                 @"end tell",
                 docPath];
-    NSAppleScript *appleScript = [[[NSAppleScript alloc] initWithSource:appleScriptCommand] autorelease];
+    NSAppleScript *appleScript = [[NSAppleScript alloc] initWithSource:appleScriptCommand];
     NSDictionary *errorInfo = nil;
     NSAppleEventDescriptor *appleEventDescriptor = [appleScript executeAndReturnError:&errorInfo];
 
@@ -942,7 +924,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_initToolbar
 {
-    NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:_AKToolbarID] autorelease];
+    NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:_AKToolbarID];
 
     // Set up toolbar properties. 
     [toolbar setAllowsUserCustomization:YES];

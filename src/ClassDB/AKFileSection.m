@@ -59,7 +59,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 + (AKFileSection *)withFile:(NSString *)filePath
 {
     AKFileSection *fileSection =
-        [[[self alloc] initWithFile:filePath] autorelease];
+        [[self alloc] initWithFile:filePath];
 
     [fileSection setSectionName:[filePath lastPathComponent]];
     [fileSection setSectionOffset:0];
@@ -72,7 +72,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 {
     // Find out the file size.
     NSFileWrapper *fileWrapper =
-        [[[NSFileWrapper alloc] initWithPath:filePath] autorelease];
+        [[NSFileWrapper alloc] initWithPath:filePath];
     NSDictionary *fileAttributes = [fileWrapper fileAttributes];
     int fileSize = [[fileAttributes objectForKey:NSFileSize] intValue];
 
@@ -94,7 +94,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 {
     if ((self = [super init]))
     {
-        _filePath = [filePath retain];
+        _filePath = filePath;
         _childSections = [[NSMutableArray alloc] init];
     }
 
@@ -104,7 +104,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -113,12 +112,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     // Note that _releaseFileContents references _filePath, so we need to call
     // it *before* releasing _filePath, which might get dealloc'ed.
     [self _releaseFileContents];
-
-    [_filePath release];
-    [_sectionName release];
-    [_childSections release];
-
-    [super dealloc];
 }
 
 
@@ -135,7 +128,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     if ((_fileContents == nil) && (_filePath != nil))
     {
         // See if the file is already in the cache.
-        _fileContents = [[s_fileCache objectForKey:_filePath] retain];
+        _fileContents = [s_fileCache objectForKey:_filePath];
 
         if (_fileContents != nil)
         {
@@ -171,8 +164,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 - (void)setSectionName:(NSString *)name
 {
-    [name retain];
-    [_sectionName release];
     _sectionName = name;
 }
 
@@ -306,7 +297,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 		NSData *data = [childSection sectionData];
 		NSString *d = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		NSRange rr = [d rangeOfString:name];
-		[d release];
 		if (rr.location != NSNotFound)
         {
             return childSection;
@@ -405,9 +395,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
             forKey:_filePath];
     }
 
-
     // Now we can release the ivar.
-    [_fileContents release];
     _fileContents = nil;
 }
 

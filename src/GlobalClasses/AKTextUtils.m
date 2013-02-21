@@ -187,10 +187,10 @@ extern char *ak_copystr(const char *s)
             dictionaryWithObject:[NSNumber numberWithInt:NSUTF8StringEncoding]
             forKey:NSCharacterEncodingDocumentOption];
     NSAttributedString *richTextString =
-        [[[NSAttributedString alloc]
+        [[NSAttributedString alloc]
             initWithHTML:stringData
             options:stringOptions
-            documentAttributes:(NSDictionary **)NULL] autorelease];
+            documentAttributes:NULL];
 
     return [richTextString string];
 }

@@ -57,7 +57,7 @@
          file:nil
          types:[NSArray arrayWithObject:@"app"]
          modalForWindow:[_xcodeAppPathField window]
-         modalDelegate:[self retain]  // will release later
+         modalDelegate:self
          didEndSelector:@selector(_xcodeOpenPanelDidEnd:returnCode:contextInfo:)
          contextInfo:(void *)NULL];
 }
@@ -102,7 +102,6 @@
 
 - (void)_setSelectedXcodeAppPath:(NSString *)xcodeAppPath
 {
-    [_selectedXcodeAppPath autorelease];
     _selectedXcodeAppPath = [xcodeAppPath copy];
 }
 
@@ -191,8 +190,6 @@
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-    [self autorelease];  // was retained by -promptForXcodeLocation:
-
     if (returnCode == NSOKButton)
     {
         NSString *proposedXcodeAppPath = [[[panel URLs] lastObject] path];
@@ -233,7 +230,7 @@
         nil,  // alternateButton
         nil,  // otherButton
         [_xcodeAppPathField window],  // docWindow
-        [self retain],  // modalDelegate -- will release when alert ends
+        self,  // modalDelegate -- will release when alert ends
         @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
         (SEL)NULL,  // didDismissSelector
         (void *)NULL,  // contextInfo
@@ -246,8 +243,6 @@
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-    [self autorelease];  // was retained by -_showBadPathAlert
-
     [self
         performSelector:@selector(promptForXcodeLocation:)
         withObject:nil

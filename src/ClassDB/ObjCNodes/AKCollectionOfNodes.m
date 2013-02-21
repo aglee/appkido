@@ -28,13 +28,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_nodeList release];
-    [_nodesByName release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

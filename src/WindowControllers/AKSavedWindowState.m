@@ -17,13 +17,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_savedWindowLayout release];
-    [_savedDocLocator release];
-    
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -36,7 +29,7 @@
         return nil;
     }
 
-    AKSavedWindowState *windowState = [[[self alloc] init] autorelease];
+    AKSavedWindowState *windowState = [[self alloc] init];
 
     // Get the window layout.
     NSDictionary *windowLayoutPrefDict =
@@ -82,8 +75,6 @@
 
 - (void)setSavedWindowLayout:(AKWindowLayout *)windowLayout
 {
-    [windowLayout retain];
-    [_savedWindowLayout release];
     _savedWindowLayout = windowLayout;
 }
 
@@ -94,8 +85,6 @@
 
 - (void)setSavedDocLocator:(AKDocLocator *)docLocator
 {
-    [docLocator retain];
-    [_savedDocLocator release];
     _savedDocLocator = docLocator;
 }
 

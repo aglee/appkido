@@ -30,7 +30,7 @@
         _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
         _indexOfInstanceMethods = [[AKCollectionOfNodes alloc] init];
 
-        _allOwningFrameworks = [[NSMutableArray arrayWithObject:theFramework] retain];
+        _allOwningFrameworks = [NSMutableArray arrayWithObject:theFramework];
 
         _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
     }
@@ -38,23 +38,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_headerFileWhereDeclared release];
-
-    [_protocolNodes release];
-    [_protocolNodeNames release];
-
-    [_indexOfProperties release];
-    [_indexOfClassMethods release];
-    [_indexOfInstanceMethods release];
-
-    [_allOwningFrameworks release];
-
-    [_nodeDocumentationByFrameworkName release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -77,8 +60,6 @@
 
 - (void)setHeaderFileWhereDeclared:(NSString *)aPath
 {
-    [aPath retain];
-    [_headerFileWhereDeclared release];
     _headerFileWhereDeclared = aPath;
 }
 

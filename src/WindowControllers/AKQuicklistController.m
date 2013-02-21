@@ -11,23 +11,26 @@
 
 #import "AKFrameworkConstants.h"
 #import "AKHTMLConstants.h"
+
 #import "AKPrefUtils.h"
 #import "AKSortUtils.h"
 #import "AKTextUtils.h"
-#import "AKDatabase.h"
-#import "AKClassNode.h"
-#import "AKProtocolNode.h"
-#import "AKMethodNode.h"
-#import "AKSearchQuery.h"
-#import "AKFileSection.h"
+
 #import "AKAppController.h"
+#import "AKClassNode.h"
+#import "AKClassTopic.h"
+#import "AKDatabase.h"
+#import "AKDocLocator.h"
+#import "AKFileSection.h"
+#import "AKMethodNode.h"
+#import "AKMultiRadioView.h"
+#import "AKPropertyNode.h"
+#import "AKProtocolNode.h"
+#import "AKProtocolTopic.h"
+#import "AKSearchQuery.h"
+#import "AKTableView.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
-#import "AKClassTopic.h"
-#import "AKProtocolTopic.h"
-#import "AKDocLocator.h"
-#import "AKTableView.h"
-#import "AKMultiRadioView.h"
 
 
 #pragma mark -
@@ -119,12 +122,6 @@ enum
 - (void)dealloc
 {
     [[DIGSFindBuffer sharedInstance] removeListener:self];
-
-    [_currentTableValues release];
-    [_searchQuery release];
-    [_pastSearchStrings release];
-
-    [super dealloc];
 }
 
 
@@ -614,8 +611,6 @@ enum
 
     // Make the transition to the newly computed table values, using the
     // standard setter pattern.
-    [tableValues retain];
-    [_currentTableValues release];
     _currentTableValues = tableValues;
 
     // Reload the table with the new values.
@@ -645,7 +640,7 @@ enum
                 nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_collectionClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_collectionClasses;
@@ -660,7 +655,7 @@ enum
         NSArray *arr = [NSArray arrayWithObjects:@"NSWindow", nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_windowClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_windowClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_windowClasses;
@@ -686,7 +681,7 @@ enum
         NSArray *arr = [NSArray arrayWithObjects:nameOfRootViewClass, nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_viewClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_viewClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_viewClasses;
@@ -701,7 +696,7 @@ enum
         NSArray *arr = [NSArray arrayWithObjects:@"NSCell", nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_cellClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_cellClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_cellClasses;
@@ -789,7 +784,7 @@ enum
         }
 
         classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDelegates = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_classesWithDelegates;
@@ -858,7 +853,7 @@ enum
         }
 
         classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDataSources = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_classesWithDataSources;
@@ -882,7 +877,7 @@ enum
             }
         }
 
-        s_dataSourceProtocols = [[self _sortedDocLocatorsForProtocols:protocolNodes] retain];
+        s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolNodes];
     }
 
     return s_dataSourceProtocols;

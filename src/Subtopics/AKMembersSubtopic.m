@@ -90,10 +90,9 @@
             [methodNodesByName objectForKey:methodName];
 
         AKMemberDoc *methodDoc =
-            [[[methodClass alloc]
+            [[methodClass alloc]
                 initWithMemberNode:methodNode
-                inheritedByBehavior:[self behaviorNode]]
-                autorelease];
+                inheritedByBehavior:[self behaviorNode]];
 
         [docList addObject:methodDoc];
     }

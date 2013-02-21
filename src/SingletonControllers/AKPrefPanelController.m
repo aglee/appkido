@@ -60,7 +60,6 @@ static AKPrefPanelController *s_sharedInstance = nil;
 {
     if (s_sharedInstance)
     {
-        [self release];
         return s_sharedInstance;
     }
 
@@ -78,7 +77,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
     // Tweak the Frameworks table.
     NSButtonCell *checkboxCell =
-        [[[NSButtonCell alloc] initTextCell:@""] autorelease];
+        [[NSButtonCell alloc] initTextCell:@""];
 
     [checkboxCell setButtonType:NSSwitchButton];
     [[_frameworksTable
@@ -86,13 +85,6 @@ static AKPrefPanelController *s_sharedInstance = nil;
         setDataCell:checkboxCell];
 }
 
-- (void)dealloc
-{
-    if (self != s_sharedInstance)
-    {
-        [super dealloc];
-    }
-}
 
 
 #pragma mark -

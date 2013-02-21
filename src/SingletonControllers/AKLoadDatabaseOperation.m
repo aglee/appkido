@@ -21,13 +21,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_appDatabase release];
-    _databaseDelegate = nil;
-
-    [super dealloc];
-}
 
 #pragma mark - NSOperation methods
 

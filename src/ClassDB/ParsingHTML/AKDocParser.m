@@ -65,13 +65,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_sectionStack release];
-    [_rootSectionOfCurrentFile release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -219,7 +212,12 @@
 
 - (NSMutableData *)loadDataToBeParsed
 {
-    NSMutableData *originalData = [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
+    NSMutableData *originalData = nil;
+    NSMutableData *afterFirstKludge = nil;
+    NSMutableData *afterSecondKludge = nil;
+
+    // Load the file.
+    originalData = [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
     if (!originalData)
     {
         DIGSLogWarning(@"could not load contents of file [%@]", [self currentPath]);
@@ -229,47 +227,45 @@
     // Add a NULL terminator so strstr() will work.
     [originalData setLength:([originalData length] + 1)];
 
-    // Perform the kludge.
-    NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
-    NSMutableData *afterFirstKludge = [[self class] _kludgeDivTagsToH3:originalData];
-    [afterFirstKludge retain];
-    [tempPool release];
-    [originalData release];
+    // Perform the first kludge.
+    @autoreleasepool
+    {
+        afterFirstKludge = [[self class] _kludgeDivTagsToH3:originalData];
+    }
+    originalData = nil;
 
-    tempPool = [[NSAutoreleasePool alloc] init];
-    NSMutableData *afterSecondKludge = [[self class] _kludgeSpanTagsToH1:afterFirstKludge];
-    [afterSecondKludge retain];
-    [tempPool release];
-    [afterFirstKludge release];
+    // Perform the second kludge.
+    @autoreleasepool
+    {
+        afterSecondKludge = [[self class] _kludgeSpanTagsToH1:afterFirstKludge];
+    }
+    afterFirstKludge = nil;
 
     // Remove the NULL terminator, which was copied by the kludge.
     [afterSecondKludge setLength:([afterSecondKludge length] - 1)];
-    [afterSecondKludge autorelease];
 
     return afterSecondKludge;
 }
 
 - (void)parseCurrentFile
 {
-    NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
     // Do the parse.
-    AKFileSection *rootSection = [self _parseRootSection];
+        AKFileSection *rootSection = [self _parseRootSection];
 
-    // Save the parse tree.
-    [rootSection retain];
-    [_rootSectionOfCurrentFile release];
-    _rootSectionOfCurrentFile = rootSection;
+        // Save the parse tree.
+        _rootSectionOfCurrentFile = rootSection;
 
-    // Apply the parse results to the database.
-    if (rootSection != nil)
-    {
-        [[_parserFW fwDatabase] rememberFrameworkName:[_parserFW frameworkName] forHTMLFile:[self currentPath]];
-        [[_parserFW fwDatabase] rememberRootSection:rootSection forHTMLFile:[self currentPath]];
-        [self applyParseResults];
+        // Apply the parse results to the database.
+        if (rootSection != nil)
+        {
+            [[_parserFW fwDatabase] rememberFrameworkName:[_parserFW frameworkName] forHTMLFile:[self currentPath]];
+            [[_parserFW fwDatabase] rememberRootSection:rootSection forHTMLFile:[self currentPath]];
+            [self applyParseResults];
+        }
+
     }
-
-    [tempPool release];
 }
 
 
@@ -448,7 +444,7 @@
         [parentSection addChildSection:childSection];
     }
 
-    [siblings release];  // release here
+      // release here
 }
 
 // on entry, _current points to the opening angle bracket of an <hX> tag;
@@ -553,10 +549,10 @@
             }
 
             NSString *anchorString =
-                [[[NSString alloc]
+                [[NSString alloc]
                     initWithBytes:anchorStart
                     length:(_current - anchorStart)
-                    encoding:NSUTF8StringEncoding] autorelease];
+                    encoding:NSUTF8StringEncoding];
 
             [[_parserFW fwDatabase]
                 rememberOffset:(anchorStart - _dataStart)
@@ -672,10 +668,10 @@
     if (trimmedTitleStart)
     {
         result =
-            [[[NSString alloc]
+            [[NSString alloc]
                 initWithBytes:titleBuf
                 length:(trimmedTitleEnd - trimmedTitleStart + 1)
-                encoding:NSUTF8StringEncoding] autorelease];
+                encoding:NSUTF8StringEncoding];
     }
     else
     {

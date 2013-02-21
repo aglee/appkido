@@ -21,7 +21,7 @@
 {
     if ((self = [super init]))
     {
-        _databaseNode = [databaseNode retain];
+        _databaseNode = databaseNode;
     }
 
     return self;
@@ -30,16 +30,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_databaseNode release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

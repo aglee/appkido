@@ -22,7 +22,7 @@
 {
     if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
-        _groupName = [groupName retain];
+        _groupName = groupName;
     }
 
     return self;
@@ -32,16 +32,9 @@
     owningFramework:(AKFramework *)theFramework
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_groupName release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

@@ -108,16 +108,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-    [_operationQueue release];
-    [_appDatabase release];
-
-    [_aboutWindowController release];
-    [_windowControllers release];
-    [_prefPanelController release];
-    [_favoritesList release];
-
-    [super dealloc];
 }
 
 
@@ -127,7 +117,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
 	// Try to create an AKDatabase instance. If we have problems doing so, the
     // user might opt to cancel launching the app.
-    _appDatabase = [[self _instantiateDatabase] retain];
+    _appDatabase = [self _instantiateDatabase];
     if (_appDatabase == nil)
     {
         [NSApp terminate:nil];
@@ -147,11 +137,16 @@ static NSTimeInterval g_checkpointTime = 0.0;
 [self _timeParseStart];
 #endif //MEASURE_PARSE_SPEED
 
-    AKLoadDatabaseOperation *op = [[[AKLoadDatabaseOperation alloc] init] autorelease];
+    AKLoadDatabaseOperation *op = [[AKLoadDatabaseOperation alloc] init];
 
     [op setAppDatabase:_appDatabase];
     [op setDatabaseDelegate:_splashWindowController];
     [_operationQueue addOperation:op];
+}
+
+- (void)setSplashWindowController:(AKSplashWindowController *)wc
+{
+    _splashWindowController = wc;
 }
 
 - (void)finishApplicationStartup
@@ -163,8 +158,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     // Take down the splash window.
     [[_splashWindowController window] close];
-    [_splashWindowController autorelease];
-    _splashWindowController = nil;
+    [self setSplashWindowController:nil];
 
     // Sanity-check the database we just loaded. If it's missing NSObject
     // documentation, the user probably has to download the docs.
@@ -236,7 +230,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _maybeAddDebugMenu];
     
     // Set the provider of system services.
-    [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
+    [NSApp setServicesProvider:[[AKServicesProvider alloc] init]];
     NSUpdateDynamicServices();
 
     _finishedInitializing = YES;
@@ -388,7 +382,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     AKDocLocator *fav = [_favoritesList objectAtIndex:fromIndex];
 
-    [fav retain];
     if (fromIndex > toIndex)
     {
         [_favoritesList removeObjectAtIndex:fromIndex];
@@ -399,7 +392,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
         [_favoritesList insertObject:fav atIndex:toIndex];
         [_favoritesList removeObjectAtIndex:fromIndex];
     }
-    [fav release];
     [self _putFavoritesIntoPrefs];
     [self applyUserPreferences];
 }
@@ -529,7 +521,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     AKDatabaseXMLExporter *exporter =
-        [[[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase fileURL:[savePanel URL]] autorelease];
+        [[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase fileURL:[savePanel URL]];
     [exporter doExport];
 }
 
@@ -717,16 +709,15 @@ static NSTimeInterval g_checkpointTime = 0.0;
         NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFrameworkNamed:fwName];
 
         // Construct the submenu of framework-related topics.
-        NSMenu *fwTopicSubmenu = [[[NSMenu alloc] initWithTitle:fwName] autorelease];
+        NSMenu *fwTopicSubmenu = [[NSMenu alloc] initWithTitle:fwName];
 
         if ([formalProtocolNodes count] > 0)
         {
             NSMenuItem *subitem =
-                [[[NSMenuItem alloc]
+                [[NSMenuItem alloc]
                     initWithTitle:AKProtocolsTopicName
                     action:@selector(jumpToFrameworkFormalProtocols:)
-                    keyEquivalent:@""]
-                    autorelease];
+                    keyEquivalent:@""];
 
             [fwTopicSubmenu addItem:subitem];
         }
@@ -734,11 +725,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([informalProtocolNodes count] > 0)
         {
             NSMenuItem *subitem =
-                [[[NSMenuItem alloc]
+                [[NSMenuItem alloc]
                     initWithTitle:AKInformalProtocolsTopicName
                     action:@selector(jumpToFrameworkInformalProtocols:)
-                    keyEquivalent:@""]
-                    autorelease];
+                    keyEquivalent:@""];
 
             [fwTopicSubmenu addItem:subitem];
         }
@@ -746,11 +736,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([functionsGroupNodes count] > 0)
         {
             NSMenuItem *subitem =
-                [[[NSMenuItem alloc]
+                [[NSMenuItem alloc]
                     initWithTitle:AKFunctionsTopicName
                     action:@selector(jumpToFrameworkFunctions:)
-                    keyEquivalent:@""]
-                    autorelease];
+                    keyEquivalent:@""];
 
             [fwTopicSubmenu addItem:subitem];
         }
@@ -758,22 +747,20 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([globalsGroupNodes count] > 0)
         {
             NSMenuItem *subitem =
-                [[[NSMenuItem alloc]
+                [[NSMenuItem alloc]
                     initWithTitle:AKGlobalsTopicName
                     action:@selector(jumpToFrameworkGlobals:)
-                    keyEquivalent:@""]
-                    autorelease];
+                    keyEquivalent:@""];
 
             [fwTopicSubmenu addItem:subitem];
         }
 
         // Construct the menu item to add to the Go menu, and add it.
         NSMenuItem *fwMenuItem =
-            [[[NSMenuItem alloc]
+            [[NSMenuItem alloc]
                 initWithTitle:fwName
                 action:nil
-                keyEquivalent:@""]
-                autorelease];
+                keyEquivalent:@""];
 
         [fwMenuItem setSubmenu:fwTopicSubmenu];
         menuIndex++;
@@ -795,7 +782,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         [debugMenuItem setEnabled:YES];
 
         // Create the submenu that will be under the "Debug" top-level menu item.
-        NSMenu *debugSubmenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
+        NSMenu *debugSubmenu = [[NSMenu alloc] initWithTitle:@"Debug"];
 
         [debugSubmenu setAutoenablesItems:YES];
         [debugSubmenu addItemWithTitle:@"Open Parser Testing Window" action:@selector(_testParser:) keyEquivalent:@""];
@@ -839,7 +826,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (AKWindowController *)_windowControllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout
 {
-    AKWindowController *windowController = [[[AKWindowController alloc] initWithDatabase:_appDatabase] autorelease];
+    AKWindowController *windowController = [[AKWindowController alloc] initWithDatabase:_appDatabase];
 
     [_windowControllers addObject:windowController];
     if (windowLayout)
@@ -909,7 +896,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([del isKindOfClass:[AKWindowController class]])
         {
             AKWindowController *wc = (AKWindowController *)del;
-            AKSavedWindowState *savedWindowState = [[[AKSavedWindowState alloc] init] autorelease];
+            AKSavedWindowState *savedWindowState = [[AKSavedWindowState alloc] init];
 
             [wc putSavedWindowStateInto:savedWindowState];
             [result addObject:[savedWindowState asPrefDictionary]];
@@ -1039,10 +1026,10 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     {
         AKDocLocator *favItem = [_favoritesList objectAtIndex:i];
         NSMenuItem *menuItem =
-            [[[NSMenuItem alloc]
+            [[NSMenuItem alloc]
                 initWithTitle:[favItem stringToDisplayInLists]
                 action:@selector(jumpToDocLocatorRepresentedBy:)
-                keyEquivalent:@""] autorelease];
+                keyEquivalent:@""];
 
         if (i < 9)
         {

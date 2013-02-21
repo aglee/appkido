@@ -23,9 +23,9 @@
     includeAncestors:(BOOL)includeAncestors
 {
     return
-        [[[self alloc]
+        [[self alloc]
             initWithClassNode:classNode
-            includeAncestors:includeAncestors] autorelease];
+            includeAncestors:includeAncestors];
 }
 
 
@@ -37,7 +37,7 @@
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _classNode = [classNode retain];
+        _classNode = classNode;
     }
 
     return self;
@@ -46,16 +46,9 @@
 - (id)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_classNode release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

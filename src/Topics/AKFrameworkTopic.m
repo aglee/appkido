@@ -26,7 +26,7 @@
 
 + (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database] autorelease];
+    return [[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database];
 }
 
 
@@ -37,7 +37,7 @@
 {
     if ((self = [super init]))
     {
-        _topicFramework = [[aDatabase frameworkWithName:frameworkName] retain];
+        _topicFramework = [aDatabase frameworkWithName:frameworkName];
     }
 
     return self;
@@ -46,16 +46,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_topicFramework release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

@@ -34,12 +34,6 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     return self;
 }
 
-- (void)dealloc
-{
-    [_typingAttributes release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -52,7 +46,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
         return nil;
     }
 
-    DIGSTextSelection *selectionState = [[[self alloc] init] autorelease];
+    DIGSTextSelection *selectionState = [[self alloc] init];
     NSString *visibleRectString =
         [prefDict objectForKey:_DIGS_VISIBLE_RECT_PREF_KEY];
     NSString *visibleRangeString =
@@ -140,8 +134,6 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 
 - (void)setTypingAttributes:(NSDictionary *)attrDict
 {
-    [attrDict retain];
-    [_typingAttributes release];
     _typingAttributes = attrDict;
 }
 
@@ -214,7 +206,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     [decoder decodeValueOfObjCType:@encode(NSRange) at:&_visibleCharsRange];
     [decoder decodeValueOfObjCType:@encode(NSRange) at:&_selectedCharsRange];
 
-    _typingAttributes = [[decoder decodeObject] retain];
+    _typingAttributes = [decoder decodeObject];
 
     return self;
 }

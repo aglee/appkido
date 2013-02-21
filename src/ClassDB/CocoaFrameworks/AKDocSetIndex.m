@@ -24,8 +24,8 @@
 
     if ((self = [super init]))
     {
-        _docSetPath = [docSetPath retain];
-        _basePathForHeaders = [basePathForHeaders retain];
+        _docSetPath = docSetPath;
+        _basePathForHeaders = basePathForHeaders;
 
         DIGSLogInfo(@"docset index -- [%@]", [self _pathToSqliteFile]);
         
@@ -33,26 +33,22 @@
         if (![[NSFileManager defaultManager] fileExistsAtPath:[self _pathToSqliteFile] isDirectory:&isDir])
         {
             DIGSLogDebug(@"AKDocSetIndex -- There is no docset at [%@]", _docSetPath);
-            [self release];
             return nil;
         }
         else if (isDir)
         {
             DIGSLogDebug(@"AKDocSetIndex -- Dsidx path [%@] is a directory, not a file", [self _pathToSqliteFile]);
-            [self release];
             return nil;
         }
 
         if (![[NSFileManager defaultManager] fileExistsAtPath:_basePathForHeaders isDirectory:&isDir])
         {
             DIGSLogWarning(@"AKDocSetIndex -- There is no directory [%@]", _basePathForHeaders);
-            [self release];
             return nil;
         }
         else if (!isDir)
         {
             DIGSLogDebug(@"AKDocSetIndex -- Header path [%@] is a file, not a directory", _basePathForHeaders);
-            [self release];
             return nil;
         }
     }
@@ -63,17 +59,9 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_docSetPath release];
-    [_basePathForHeaders release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -93,7 +81,7 @@
 #if APPKIDO_FOR_IPHONE
         s_selectableFrameworkNames = [[self _allFrameworkNames] retain];
 #else
-        s_selectableFrameworkNames = [[self _objectiveCFrameworkNames] retain];
+        s_selectableFrameworkNames = [self _objectiveCFrameworkNames];
 
         [s_selectableFrameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
         [s_selectableFrameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.

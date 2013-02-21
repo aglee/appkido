@@ -375,10 +375,10 @@
         if (memberNode == nil)
         {
             memberNode =
-                [[[methodNodeClass alloc]
+                [[methodNodeClass alloc]
                     initWithNodeName:memberName
                     owningFramework:_parserFW
-                    owningBehavior:behaviorNode] autorelease];;
+                    owningBehavior:behaviorNode];;
             [behaviorNode
                 performSelector:selectorForAddingNode
                 withObject:memberNode];

@@ -20,7 +20,7 @@
     if ((self = [super init]))
     {
         // [agl] TODO handle case where basePath is nil
-        _basePath = [basePath retain];
+        _basePath = basePath;
     }
     
     return self;
@@ -31,13 +31,6 @@
     return [self initWithBasePath:@""];
 }
 
-- (void)dealloc
-{
-    [_basePath release];
-    [_currentPath release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -76,13 +69,12 @@
     }
 
     // Remember the current file.
-    _currentPath = [[_basePath stringByAppendingPathComponent:filePath] retain];
+    _currentPath = [_basePath stringByAppendingPathComponent:filePath];
 
     // Do the job.
     [self processCurrentFile];
 
     // Un-remember the current file.
-    [_currentPath release];
     _currentPath = nil;
 }
 

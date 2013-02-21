@@ -23,7 +23,7 @@
 {
     if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
-        _owningBehavior = [behaviorNode retain];
+        _owningBehavior = behaviorNode;
     }
 
     return self;
@@ -33,16 +33,9 @@
     owningFramework:(AKFramework *)theFramework
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
-- (void)dealloc
-{
-    [_owningBehavior release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

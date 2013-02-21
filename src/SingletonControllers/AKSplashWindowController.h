@@ -18,8 +18,8 @@
     NSTextField *_splashMessage2Field;
 }
 
-@property (nonatomic, retain) IBOutlet NSTextField *splashVersionField;
-@property (nonatomic, retain) IBOutlet NSTextField *splashMessageField;
-@property (nonatomic, retain) IBOutlet NSTextField *splashMessage2Field;
+@property (nonatomic, strong) IBOutlet NSTextField *splashVersionField;
+@property (nonatomic, strong) IBOutlet NSTextField *splashMessageField;
+@property (nonatomic, strong) IBOutlet NSTextField *splashMessage2Field;
 
 @end

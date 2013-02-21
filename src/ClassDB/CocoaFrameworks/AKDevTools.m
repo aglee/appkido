@@ -51,7 +51,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
 + (id)devToolsWithPath:(NSString *)devToolsPath
 {
-    return [[[self alloc] initWithPath:devToolsPath] autorelease];
+    return [[self alloc] initWithPath:devToolsPath];
 }
 
 
@@ -62,7 +62,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 {
     if ((self = [super init]))
     {
-        _devToolsPath = [devToolsPath retain];
+        _devToolsPath = devToolsPath;
         _installedDocSetPathsBySDKVersion = [[NSMutableDictionary alloc] init];
         _installedSDKPathsBySDKVersion = [[NSMutableDictionary alloc] init];
 
@@ -73,14 +73,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return self;
 }
 
-- (void)dealloc
-{
-    [_devToolsPath release];
-    [_installedDocSetPathsBySDKVersion release];
-    [_installedSDKPathsBySDKVersion release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -108,7 +100,8 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 #endif
 }
 
-+ (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath errorStrings:(NSMutableArray *)errorStrings
++ (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath
+                      errorStrings:(NSMutableArray *)errorStrings
 {
     if (devToolsPath == nil)
     {
@@ -132,7 +125,8 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
         NSString *expectedSubdirPath = [devToolsPath stringByAppendingPathComponent:subdir];
         if (![AKFileUtils directoryExistsAtPath:expectedSubdirPath])
         {
-            NSString *errorString = [NSString stringWithFormat:@"The directory \"%@\" doesn't exist.", expectedSubdirPath];
+            NSString *errorString = [NSString stringWithFormat:@"The directory \"%@\" doesn't exist.",
+                                     expectedSubdirPath];
             [errorStrings addObject:errorString];
             return NO;
         }
@@ -252,7 +246,8 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
                 if (sdkVersion == nil)
                 {
-                    DIGSLogInfo(@"ODD -- docset's plist at %@ contains no 'DocSetPlatformVersion' key.", plistPath);
+                    DIGSLogInfo(@"ODD -- docset's plist at %@ contains no 'DocSetPlatformVersion' key.",
+                                plistPath);
                 }
                 else
                 {
@@ -309,6 +304,5 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 {
     [self _findSDKsInDirectory:[self sdkSearchPath]];
 }
-
 
 @end

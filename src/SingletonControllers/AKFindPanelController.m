@@ -51,7 +51,6 @@ static AKFindPanelController *s_sharedInstance = nil;
 {
     if (s_sharedInstance)
     {
-        [self release];
         return s_sharedInstance;
     }
 
@@ -78,8 +77,6 @@ static AKFindPanelController *s_sharedInstance = nil;
     if (self != s_sharedInstance)
     {
         [[DIGSFindBuffer sharedInstance] removeListener:self];
-
-        [super dealloc];
     }
 }
 

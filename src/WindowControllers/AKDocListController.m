@@ -26,12 +26,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_subtopicToDisplay release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -39,8 +33,6 @@
 
 - (void)setSubtopic:(AKSubtopic *)subtopic
 {
-    [subtopic retain];
-    [_subtopicToDisplay release];
     _subtopicToDisplay = subtopic;
 }
 
@@ -261,33 +253,30 @@
     // somebody's question on one of the dev lists, for example.  The
     // URL could also be helpful for debugging.
     NSMenuItem *copyURLItem =
-        [[[NSMenuItem alloc]
+        [[NSMenuItem alloc]
             initWithTitle:@"Copy Page URL"
             action:@selector(copyDocTextURL:)
-            keyEquivalent:@""]
-            autorelease];
+            keyEquivalent:@""];
     [copyURLItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:copyURLItem];
 
     // Add an item to the menu that allows the user to open the
     // currently displayed file in the default web browser.
     NSMenuItem *openURLInBrowserItem =
-        [[[NSMenuItem alloc]
+        [[NSMenuItem alloc]
             initWithTitle:@"Open Page in Browser"
             action:@selector(openDocURLInBrowser:)
-            keyEquivalent:@""]
-            autorelease];
+            keyEquivalent:@""];
     [openURLInBrowserItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:openURLInBrowserItem];
 
     // Add an item to the menu that allows the user to reveal the
     // currently displayed file in the Finder.
     NSMenuItem *revealInFinderItem =
-        [[[NSMenuItem alloc]
+        [[NSMenuItem alloc]
             initWithTitle:@"Reveal In Finder"
             action:@selector(revealDocFileInFinder:)
-            keyEquivalent:@""]
-            autorelease];
+            keyEquivalent:@""];
     [revealInFinderItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:revealInFinderItem];
 

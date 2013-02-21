@@ -32,8 +32,7 @@
         if (functionSection != nil)
         {
             AKDoc *newDoc =
-                [[[AKFunctionDoc alloc] initWithNode:functionNode]
-                    autorelease];
+                [[AKFunctionDoc alloc] initWithNode:functionNode];
             
             [docList addObject:newDoc];
         }

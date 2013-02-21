@@ -32,13 +32,11 @@
 - (void)dealloc
 {
     free(_buffer);
-
-    [super dealloc];
 }
 
 + (NSString *)extractMethodNameFromString:(NSString *)string
 {
-    AKMethodNameExtractor *methEx = [[[self alloc] initWithString:string] autorelease];
+    AKMethodNameExtractor *methEx = [[self alloc] initWithString:string];
 
     return [methEx extractMethodName];
 }
@@ -94,10 +92,9 @@
         }}
         char *elementEnd = _current;
 
-        lastTopLevelElement = [[[NSString alloc] initWithBytes:elementStart
+        lastTopLevelElement = [[NSString alloc] initWithBytes:elementStart
                                                         length:(elementEnd - elementStart)
-                                                      encoding:NSUTF8StringEncoding]
-                               autorelease];
+                                                      encoding:NSUTF8StringEncoding];
 
         if ([lastTopLevelElement hasSuffix:@":"])
         {

@@ -11,22 +11,22 @@
 
 @interface AKTestDocParserWindowController : NSWindowController
 {
-    NSTextField *_filePathField;
-    NSTabView *_tabView;
-    NSTextView *_parseResultTextView;
-    NSBrowser *_parseResultBrowser;
-    NSTextView *_fileSectionTextView;
-    NSTextField *_fileSectionInfoField;
+    NSTextField *__unsafe_unretained _filePathField;
+    NSTabView *__unsafe_unretained _tabView;
+    NSTextView *__unsafe_unretained _parseResultTextView;
+    NSBrowser *__unsafe_unretained _parseResultBrowser;
+    NSTextView *__unsafe_unretained _fileSectionTextView;
+    NSTextField *__unsafe_unretained _fileSectionInfoField;
     
     AKFileSection *_rootSection;  // Root section of parse result.
 }
 
-@property (assign) IBOutlet NSTextField *filePathField;
-@property (assign) IBOutlet NSTabView *tabView;
-@property (assign) IBOutlet NSTextView *parseResultTextView;
-@property (assign) IBOutlet NSBrowser *parseResultBrowser;
-@property (assign) IBOutlet NSTextView *fileSectionTextView;
-@property (assign) IBOutlet NSTextField *fileSectionInfoField;
+@property (unsafe_unretained) IBOutlet NSTextField *filePathField;
+@property (unsafe_unretained) IBOutlet NSTabView *tabView;
+@property (unsafe_unretained) IBOutlet NSTextView *parseResultTextView;
+@property (unsafe_unretained) IBOutlet NSBrowser *parseResultBrowser;
+@property (unsafe_unretained) IBOutlet NSTextView *fileSectionTextView;
+@property (unsafe_unretained) IBOutlet NSTextField *fileSectionInfoField;
 
 + (void)openNewParserWindow;
 

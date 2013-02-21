@@ -49,12 +49,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_rootSection release];
-    
-    [super dealloc];
-}
 
 - (NSView *)viewToSearch
 {
@@ -98,7 +92,7 @@
 {
     AKFileSection *fileSection = [_parseResultBrowser itemAtIndexPath:[_parseResultBrowser selectionIndexPath]];
     NSData *sectionData = [fileSection sectionData];
-    NSString *sectionString = [[[NSString alloc] initWithData:sectionData encoding:NSUTF8StringEncoding] autorelease];
+    NSString *sectionString = [[NSString alloc] initWithData:sectionData encoding:NSUTF8StringEncoding];
     
     [_fileSectionTextView setString:sectionString];
     [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%ld-%ld, %ld chars",
@@ -123,7 +117,6 @@
 {
     if ([notification object] == [self window])
     {
-        [[self retain] autorelease];
         [[[self class] _testDocParserWindowControllers] removeObject:self];
     }
 }
@@ -180,12 +173,11 @@
 
 - (void)_parseFileAtPath:(NSString *)fileToParse
 {
-    AKDocParser *dp = [[[AKDocParser alloc] initWithFramework:nil] autorelease];
+    AKDocParser *dp = [[AKDocParser alloc] initWithFramework:nil];
     
     [dp processFile:fileToParse];
     
-    [_rootSection release];
-    _rootSection = [[dp rootSectionOfCurrentFile] retain];
+    _rootSection = [dp rootSectionOfCurrentFile];
     
     NSString *textOutline = [_rootSection descriptionAsOutline];
     

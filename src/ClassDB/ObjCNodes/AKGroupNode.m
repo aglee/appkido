@@ -26,12 +26,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_subnodes release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

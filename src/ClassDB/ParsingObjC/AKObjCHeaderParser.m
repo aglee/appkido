@@ -394,10 +394,10 @@ static BOOL isPunctuation(char c)
             if (methodNode == nil)
             {
                 methodNode =
-                    [[[AKMethodNode alloc]
+                    [[AKMethodNode alloc]
                         initWithNodeName:methodName
                         owningFramework:_parserFW
-                        owningBehavior:behaviorNode] autorelease];
+                        owningBehavior:behaviorNode];
                 [behaviorNode performSelector:selectorForAddingNode withObject:methodNode];
             }
 

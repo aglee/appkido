@@ -50,16 +50,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_topicListsForBrowserColumns release];
-
-    // Release non-UI outlets that were set in IB.  The window is
-    // self-releasing, so we don't release UI outlets.
-    [_subtopicListController release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -

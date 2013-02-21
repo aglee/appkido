@@ -22,7 +22,7 @@
 {
     if ((self = [super initWithFileSection:fileSection]))
     {
-        _extraFrameworkName = [frameworkName retain];
+        _extraFrameworkName = frameworkName;
     }
 
     return self;
@@ -35,12 +35,6 @@
             andExtraFrameworkName:nil];
 }
 
-- (void)dealloc
-{
-    [_extraFrameworkName release];
-
-    [super dealloc];
-}
 
 
 #pragma mark -
