@@ -89,7 +89,7 @@
         [[_targetFramework owningDatabase]
             rememberThatClass:classNode
             isDocumentedInHTMLFile:[self currentPath]];
-        if (isMainClassReference)  // [agl] REMOVE why only if main?
+//        if (isMainClassReference)  // [agl] REMOVE why only if main?
         {
             [classNode
                 setNodeDocumentation:_rootSectionOfCurrentFile
