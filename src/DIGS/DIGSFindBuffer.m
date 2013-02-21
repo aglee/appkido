@@ -206,7 +206,10 @@ static DIGSFindBuffer *s_sharedInstance = nil;
         SEL actionSelector;
 
         [actionHolder getValue:&actionSelector];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [listenerObject performSelector:actionSelector withObject:self];
+#pragma clang diagnostic pop
     }
 }
 

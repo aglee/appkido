@@ -206,10 +206,9 @@ static BOOL isPunctuation(char c)
             // We've come across the declaration of a class method.
             // Note: I'm adding the method to the class node even if
             // resultNode is a category node.
-            [self
-                _parseMethodDeclarationFor:classNode
-                usingGetSelector:@selector(classMethodWithName:)
-                addSelector:@selector(addClassMethod:)];
+            [self _parseMethodDeclarationFor:classNode
+                             blockForGetting:blockForGettingMemberNode(classMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addClassMethod)];
         }
         else if (strcmp(token, "-") == 0)
         {
@@ -223,10 +222,9 @@ static BOOL isPunctuation(char c)
             // We've come across the declaration of an instance method.
             // Note: I'm adding the method to the class node even if
             // resultNode is a category node.
-            [self
-                _parseMethodDeclarationFor:classNode
-                usingGetSelector:@selector(instanceMethodWithName:)
-                addSelector:@selector(addInstanceMethod:)];
+            [self _parseMethodDeclarationFor:classNode
+                             blockForGetting:blockForGettingMemberNode(instanceMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addInstanceMethod)];
         }
     }
 
@@ -284,18 +282,16 @@ static BOOL isPunctuation(char c)
         else if (strcmp(token, "+") == 0)
         {
             // We've come across the declaration of a class method.
-            [self
-                _parseMethodDeclarationFor:resultNode
-                usingGetSelector:@selector(classMethodWithName:)
-                addSelector:@selector(addClassMethod:)];
+            [self _parseMethodDeclarationFor:resultNode
+                             blockForGetting:blockForGettingMemberNode(classMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addClassMethod)];
         }
         else if (strcmp(token, "-") == 0)
         {
             // We've come across the declaration of an instance method.
-            [self
-                _parseMethodDeclarationFor:resultNode
-                usingGetSelector:@selector(instanceMethodWithName:)
-                addSelector:@selector(addInstanceMethod:)];
+            [self _parseMethodDeclarationFor:resultNode
+                             blockForGetting:blockForGettingMemberNode(instanceMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addInstanceMethod)];
         }
     }
 }
@@ -339,8 +335,8 @@ static BOOL isPunctuation(char c)
 // This logic handles variable arg lists just fine; it omits the trailing
 // comma and ellipsis.
 - (void)_parseMethodDeclarationFor:(AKBehaviorNode *)behaviorNode
-    usingGetSelector:(SEL)selectorForGettingNode
-    addSelector:(SEL)selectorForAddingNode
+                   blockForGetting:(AKBlockForGettingMemberNode)getMemberNode
+                    blockForAdding:(AKBlockForAddingMemberNode)addMemberNode
 {
     // We append to methodName a token at a time, as we discover the
     // parts of the method signature.  When we've reached the semicolon
@@ -356,17 +352,14 @@ static BOOL isPunctuation(char c)
     {
         if (strcmp(token, ";") == 0)
         {
-            AKMethodNode *methodNode =
-                [behaviorNode performSelector:selectorForGettingNode withObject:methodName];
+            AKMethodNode *methodNode = getMemberNode(behaviorNode, methodName);
 
             if (methodNode == nil)
             {
-                methodNode =
-                    [[AKMethodNode alloc]
-                        initWithNodeName:methodName
-                        owningFramework:_targetFramework
-                        owningBehavior:behaviorNode];
-                [behaviorNode performSelector:selectorForAddingNode withObject:methodNode];
+                methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
+                                                    owningFramework:_targetFramework
+                                                     owningBehavior:behaviorNode];
+                addMemberNode(behaviorNode, methodNode);
             }
 
             [methodNode setArgumentTypes:argTypes];

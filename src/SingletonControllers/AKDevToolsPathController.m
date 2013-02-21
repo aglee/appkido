@@ -52,14 +52,16 @@
     [openPanel setDelegate:self];
     [openPanel setResolvesAliases:YES];
 
-    [openPanel
-         beginSheetForDirectory:_selectedXcodeAppPath
-         file:nil
-         types:[NSArray arrayWithObject:@"app"]
-         modalForWindow:[_xcodeAppPathField window]
-         modalDelegate:self
-         didEndSelector:@selector(_xcodeOpenPanelDidEnd:returnCode:contextInfo:)
-         contextInfo:(void *)NULL];
+    [openPanel setDirectoryURL:[NSURL fileURLWithPath:_selectedXcodeAppPath]];
+    [openPanel setAllowedFileTypes:@[@"app"]];
+    
+    [openPanel beginSheetModalForWindow:[_xcodeAppPathField window]
+                      completionHandler:^(NSInteger result) {
+                          if (result == NSFileHandlingPanelOKButton)
+                          {
+                              [self _handleProposedXcodeAppPath:[[openPanel URL] path]];
+                          }
+                      }];
 }
 
 - (IBAction)selectSDKVersion:(id)sender
@@ -185,40 +187,33 @@
     [_okButton setEnabled:(selectedSDKVersion != nil)];
 }
 
-// Called when the open panel sheet opened by -promptForXcodeLocation: is dismissed.
-- (void)_xcodeOpenPanelDidEnd:(NSOpenPanel *)panel
-    returnCode:(int)returnCode
-    contextInfo:(void *)contextInfo
+- (void)_handleProposedXcodeAppPath:(NSString *)proposedXcodeAppPath
 {
-    if (returnCode == NSOKButton)
+    NSString *devToolsPath = [AKDevToolsUtils devToolsPathFromPossibleXcodePath:proposedXcodeAppPath];
+    NSMutableArray *errorStrings = [NSMutableArray array];
+
+    [self _setSelectedXcodeAppPath:proposedXcodeAppPath];
+
+    if ([AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
     {
-        NSString *proposedXcodeAppPath = [[[panel URLs] lastObject] path];
-        NSString *devToolsPath = [AKDevToolsUtils devToolsPathFromPossibleXcodePath:proposedXcodeAppPath];
-        NSMutableArray *errorStrings = [NSMutableArray array];
-
-        [self _setSelectedXcodeAppPath:proposedXcodeAppPath];
-
-        if ([AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
-        {
-            [_xcodeAppPathField setStringValue:proposedXcodeAppPath];
-            [AKPrefUtils setDevToolsPathPref:devToolsPath];
-            [self _updateUIToReflectPrefs];
-        }
-        else
-        {
-            NSString *errorMessage = [NSString stringWithFormat:@"\"%@\" doesn't look like a valid Dev Tools path.\n\n%@",
-                                      devToolsPath,
-                                      [errorStrings componentsJoinedByString:@"\n"]];
-            [self
-                performSelector:@selector(_showBadPathAlert:)
-                withObject:errorMessage
-                afterDelay:(NSTimeInterval)0.0
-                inModes:
-                    [NSArray arrayWithObjects:
-                        NSDefaultRunLoopMode,
-                        NSModalPanelRunLoopMode,
-                        nil]];
-        }
+        [_xcodeAppPathField setStringValue:proposedXcodeAppPath];
+        [AKPrefUtils setDevToolsPathPref:devToolsPath];
+        [self _updateUIToReflectPrefs];
+    }
+    else
+    {
+        NSString *errorMessage = [NSString stringWithFormat:@"\"%@\" doesn't look like a valid Dev Tools path.\n\n%@",
+                                  devToolsPath,
+                                  [errorStrings componentsJoinedByString:@"\n"]];
+        [self
+         performSelector:@selector(_showBadPathAlert:)
+         withObject:errorMessage
+         afterDelay:(NSTimeInterval)0.0
+         inModes:
+         [NSArray arrayWithObjects:
+          NSDefaultRunLoopMode,
+          NSModalPanelRunLoopMode,
+          nil]];
     }
 }
 

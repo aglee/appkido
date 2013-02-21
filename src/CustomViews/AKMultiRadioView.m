@@ -147,7 +147,10 @@
         _selectedRadioMatrix = sender;
     }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [_radioTarget performSelector:_radioAction withObject:sender];
+#pragma clang diagnostic pop
 }
 
 @end

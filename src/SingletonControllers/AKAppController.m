@@ -502,26 +502,25 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (IBAction)exportDatabase:(id)sender
 {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
-    NSString *defaultFilename = [NSString stringWithFormat:@"AppKiDo-DB-%@.xml", [AKAppVersion appVersion]];
-
-    NSInteger modalResult = [savePanel runModalForDirectory:NSHomeDirectory() file:defaultFilename];
+    NSInteger modalResult = [savePanel runModal];
 
     if (modalResult != NSFileHandlingPanelOKButton)
     {
         return;
     }
 
-    BOOL fileOK = [[NSFileManager defaultManager] createFileAtPath:[savePanel filename] contents:nil attributes:nil];
-
+    BOOL fileOK = [[NSFileManager defaultManager] createFileAtPath:[[savePanel URL] path]
+                                                          contents:nil
+                                                        attributes:nil];
     if (!fileOK)
     {
         DIGSLogError_ExitingMethodPrematurely(
-            ([NSString stringWithFormat:@"failed to get create file at [%@]", [savePanel filename]]));
+            ([NSString stringWithFormat:@"failed to get create file at [%@]", [[savePanel URL] path]]));
         return;
     }
 
-    AKDatabaseXMLExporter *exporter =
-        [[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase fileURL:[savePanel URL]];
+    AKDatabaseXMLExporter *exporter = [[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase
+                                                                              fileURL:[savePanel URL]];
     [exporter doExport];
 }
 

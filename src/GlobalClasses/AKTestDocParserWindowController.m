@@ -74,13 +74,22 @@
     [op setCanChooseFiles:YES];
     [op setCanChooseDirectories:NO];
     [op setAllowsMultipleSelection:NO];
-    [op beginSheetForDirectory:nil
-                          file:nil
-                         types:nil
-                modalForWindow:[self window]
-                 modalDelegate:self
-                didEndSelector:@selector(_openPanelForTestParseDidEnd:returnCode:contextInfo:)
-                   contextInfo:NULL];
+    
+    [op beginSheetModalForWindow:[self window]
+               completionHandler:^(NSInteger result) {
+                   if (result == NSFileHandlingPanelCancelButton)
+                   {
+                       return;
+                   }
+
+                   NSString *selectedFilePath = [[op URL] path];
+
+                   if (selectedFilePath)
+                   {
+                       [_filePathField setStringValue:selectedFilePath];
+                       [self _parseFileAtPath:selectedFilePath];
+                   }
+               }];
 }
 
 - (IBAction)takeFileToParseFrom:(id)sender
@@ -153,24 +162,6 @@
 
 #pragma mark - Private methods
 
-- (void)_openPanelForTestParseDidEnd:(NSOpenPanel *)sheet
-                          returnCode:(int)returnCode
-                         contextInfo:(void *)contextInfo
-{
-    if (returnCode == NSCancelButton)
-    {
-        return;
-    }
-
-    NSString *selectedFilePath = [[sheet URL] path];
-    
-    if (selectedFilePath)
-    {
-        [_filePathField setStringValue:selectedFilePath];
-        [self _parseFileAtPath:selectedFilePath];
-    }
-}
-
 - (void)_parseFileAtPath:(NSString *)filePath
 {
     AKDocParser *dp = [[AKDocParser alloc] initWithFramework:nil];
@@ -184,6 +175,7 @@
     [_parseResultTextView setString:(textOutline ? textOutline : @"<error>")];
     [_parseResultBrowser loadColumnZero];
 }
+
 
 @end
 

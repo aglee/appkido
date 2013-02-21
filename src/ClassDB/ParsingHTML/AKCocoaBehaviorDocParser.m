@@ -47,7 +47,6 @@
     // Are we looking at a class's doc file or a protocol's or neither?
     // Retrieve or create an AKClassNode or AKProtocolNode accordingly.
     AKBehaviorNode *behaviorNode = nil;
-    BOOL isMainClassReference = NO;
 
     if ([self _currentFileIsClassReference])
     {
@@ -298,28 +297,25 @@
 }
 
 - (void)_addMembersFromMajorSection:(NSString *)htmlSectionName
-    toBehaviorNode:(AKBehaviorNode *)behaviorNode
-    usingMemberNodeClass:(Class)methodNodeClass
-    getSelector:(SEL)selectorForGettingNode
-    addSelector:(SEL)selectorForAddingNode
+                     toBehaviorNode:(AKBehaviorNode *)behaviorNode
+               usingMemberNodeClass:(Class)memberNodeClass
+                    blockForGetting:(AKBlockForGettingMemberNode)getMemberNode
+                     blockForAdding:(AKBlockForAddingMemberNode)addMemberNode
 {
     AKFileSection *majorSection = [_rootSectionOfCurrentFile childSectionWithName:htmlSectionName];
-    NSEnumerator *minorSectionEnum = [majorSection childSectionEnumerator];
-    AKFileSection *minorSection;
 
-    while ((minorSection = [minorSectionEnum nextObject]))
+    for (AKFileSection *minorSection in [majorSection childSectionEnumerator])
     {
         NSString *memberName = [minorSection sectionName];
-        AKMemberNode *memberNode = [behaviorNode performSelector:selectorForGettingNode
-                                                      withObject:memberName];
+        AKMemberNode *memberNode = getMemberNode(behaviorNode, memberName);
+        
         if (memberNode == nil)
         {
-            memberNode = [[methodNodeClass alloc] initWithNodeName:memberName
+            memberNode = [[memberNodeClass alloc] initWithNodeName:memberName
                                                    owningFramework:_targetFramework
                                                     owningBehavior:behaviorNode];
-            
-            [behaviorNode performSelector:selectorForAddingNode
-                               withObject:memberNode];
+
+            addMemberNode(behaviorNode, memberNode);
         }
 
         if ([memberNode nodeDocumentation] != nil)
@@ -381,22 +377,22 @@
     [self _addMembersFromMajorSection:AKPropertiesHTMLSectionName
                        toBehaviorNode:behaviorNode
                  usingMemberNodeClass:[AKPropertyNode class]
-                          getSelector:@selector(propertyNodeWithName:)
-                          addSelector:@selector(addPropertyNode:)];
+                      blockForGetting:blockForGettingMemberNode(propertyNodeWithName)
+                       blockForAdding:blockForAddingMemberNode(addPropertyNode)];
 
     // Add class method nodes.
     [self _addMembersFromMajorSection:AKClassMethodsHTMLSectionName
                        toBehaviorNode:behaviorNode
                  usingMemberNodeClass:[AKMethodNode class]
-                          getSelector:@selector(classMethodWithName:)
-                          addSelector:@selector(addClassMethod:)];
+                      blockForGetting:blockForGettingMemberNode(classMethodWithName)
+                       blockForAdding:blockForAddingMemberNode(addClassMethod)];
 
     // Add instance method nodes.
     [self _addMembersFromMajorSection:AKInstanceMethodsHTMLSectionName
                        toBehaviorNode:behaviorNode
                  usingMemberNodeClass:[AKMethodNode class]
-                          getSelector:@selector(instanceMethodWithName:)
-                          addSelector:@selector(addInstanceMethod:)];
+                      blockForGetting:blockForGettingMemberNode(instanceMethodWithName)
+                       blockForAdding:blockForAddingMemberNode(addInstanceMethod)];
 
     // Add member nodes specific to classes.
     if ([behaviorNode isClassNode])
@@ -405,20 +401,21 @@
         [self _addMembersFromMajorSection:AKDelegateMethodsHTMLSectionName
                            toBehaviorNode:behaviorNode
                      usingMemberNodeClass:[AKMethodNode class]
-                              getSelector:@selector(delegateMethodWithName:)
-                              addSelector:@selector(addDelegateMethod:)];
+                          blockForGetting:blockForGettingMemberNode(delegateMethodWithName)
+                           blockForAdding:blockForAddingMemberNode(addDelegateMethod)];
+
         [self _addMembersFromMajorSection:AKDelegateMethodsAlternateHTMLSectionName
                            toBehaviorNode:behaviorNode
                      usingMemberNodeClass:[AKMethodNode class]
-                              getSelector:@selector(delegateMethodWithName:)
-                              addSelector:@selector(addDelegateMethod:)];
+                          blockForGetting:blockForGettingMemberNode(delegateMethodWithName)
+                           blockForAdding:blockForAddingMemberNode(addDelegateMethod)];
 
         // Add method nodes for notifications.
         [self _addMembersFromMajorSection:AKNotificationsHTMLSectionName
                            toBehaviorNode:behaviorNode
                      usingMemberNodeClass:[AKNotificationNode class]
-                              getSelector:@selector(notificationWithName:)
-                              addSelector:@selector(addNotification:)];
+                          blockForGetting:blockForGettingMemberNode(notificationWithName)
+                           blockForAdding:blockForAddingMemberNode(addNotification)];
     }
 }
 

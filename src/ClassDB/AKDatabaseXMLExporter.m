@@ -50,8 +50,131 @@
 {
     [_xmlWriter instructXMLStandalone];
     [_xmlWriter tag:@"database" attributes:nil contentBlock:^{
-        [self _performSelector:@selector(_exportFrameworkNamed:)
-                     onStrings:[_database frameworkNames]];
+        for (NSString *frameworkName in [[_database frameworkNames] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)])
+        {
+            [self _exportFrameworkNamed:frameworkName];
+        }
+    }];
+}
+
+
+#pragma mark -
+#pragma mark Private methods -- exporting frameworks
+
+- (void)_exportFrameworkNamed:(NSString *)fwName
+{
+    [self _writeLongDividerWithString:fwName];
+    [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
+        // Export classes.
+        [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
+            for (AKClassNode *classNode in [_database classesForFrameworkNamed:fwName])
+            {
+                [self _exportClass:classNode];
+            }
+        }];
+
+        // Export protocols.
+        [self _exportProtocolsForFramework:fwName];
+
+        // Export functions.
+        [self _exportGroupNodes:[_database functionsGroupsForFrameworkNamed:fwName]
+                      inSection:@"functions"
+                    ofFramework:fwName
+                     subnodeTag:@"function"];
+
+        // Export globals.
+        [self _exportGroupNodes:[_database globalsGroupsForFrameworkNamed:fwName]
+                      inSection:@"globals"
+                    ofFramework:fwName
+                     subnodeTag:@"global"];
+    }];
+}
+
+- (void)_exportProtocolsForFramework:(NSString *)fwName
+{
+    [_xmlWriter tag:@"protocols" attributes:nil contentBlock:^{
+        // Write formal protocols.
+        [self _writeDividerWithString:fwName string:@"formal protocols"];
+
+        NSArray *formalProtocols = [_database formalProtocolsForFrameworkNamed:fwName];
+        for (AKProtocolNode *protocolNode in [AKSortUtils arrayBySortingArray:formalProtocols])
+        {
+            [self _exportProtocol:protocolNode];
+        }
+
+        // Write informal protocols.
+        [self _writeDividerWithString:fwName string:@"informal protocols"];
+
+        NSArray *informalProtocols = [_database informalProtocolsForFrameworkNamed:fwName];
+        for (AKProtocolNode *protocolNode in [AKSortUtils arrayBySortingArray:informalProtocols])
+        {
+            [self _exportProtocol:protocolNode];
+        }
+    }];
+}
+
+- (void)_exportGroupNodes:(NSArray *)groupNodes
+                inSection:(NSString *)frameworkSection
+              ofFramework:(NSString *)fwName
+               subnodeTag:(NSString *)subnodeTag
+{
+    [self _writeDividerWithString:fwName string:frameworkSection];
+    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
+        for (AKGroupNode *groupNode in [AKSortUtils arrayBySortingArray:groupNodes])
+        {
+            [self _exportGroupNode:groupNode usingSubnodeTag:subnodeTag];
+        }
+    }];
+}
+
+
+#pragma mark -
+#pragma mark Private methods -- exporting classes and protocols
+
+- (void)_exportClass:(AKClassNode *)classNode
+{
+    [_xmlWriter tag:@"class" attributes:@{ @"name": [classNode nodeName] } contentBlock:^{
+        [self _exportMembers:[classNode documentedProperties]
+                      ofType:@"properties"
+                      xmlTag:@"property"];
+
+        [self _exportMembers:[classNode documentedClassMethods]
+                      ofType:@"classmethods"
+                      xmlTag:@"method"];
+
+        [self _exportMembers:[classNode documentedInstanceMethods]
+                      ofType:@"instancemethods"
+                      xmlTag:@"method"];
+
+        [self _exportMembers:[classNode documentedDelegateMethods]
+                      ofType:@"delegatemethods"
+                      xmlTag:@"method"];
+
+        [self _exportMembers:[classNode documentedNotifications]
+                      ofType:@"notifications"
+                      xmlTag:@"notification"];
+    }];
+}
+
+- (void)_exportProtocol:(AKProtocolNode *)protocolNode
+{
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
+
+    [attributes setObject:[protocolNode nodeName] forKey:@"name"];
+    [attributes setObject:([protocolNode isInformal] ? @"informal" : @"formal") forKey:@"type"];
+
+    [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
+        [self _exportMembers:[protocolNode documentedProperties]
+                      ofType:@"properties"
+                      xmlTag:@"property"];
+
+        [self _exportMembers:[protocolNode documentedClassMethods]
+                      ofType:@"classmethods"
+                      xmlTag:@"method"];
+
+        [self _exportMembers:[protocolNode documentedInstanceMethods]
+                      ofType:@"instancemethods"
+                      xmlTag:@"method"];
     }];
 }
 
@@ -59,15 +182,15 @@
 #pragma mark -
 #pragma mark Private methods -- exporting members
 
-- (void)_exportMembers:(NSString *)membersType
-            ofBehavior:(AKBehaviorNode *)behaviorNode
-      usingGetSelector:(SEL)getSelector
+- (void)_exportMembers:(NSArray *)memberNodes
+                ofType:(NSString *)membersType
                 xmlTag:(NSString *)memberTag
 {
     [_xmlWriter tag:membersType attributes:nil contentBlock:^{
-        [self _performSelector:@selector(_exportMember:withXMLTag:)
-                       onNodes:[behaviorNode performSelector:getSelector]
-                          with:memberTag];
+        for (AKMemberNode *memberNode in [AKSortUtils arrayBySortingArray:memberNodes])
+        {
+            [self _exportMember:memberNode withXMLTag:memberTag];
+        }
     }];
 }
 
@@ -83,65 +206,6 @@
     }
 
     [_xmlWriter tag:memberTag attributes:attributes];
-}
-
-
-#pragma mark -
-#pragma mark Private methods -- exporting classes and protocols
-
-- (void)_exportClass:(AKClassNode *)classNode
-{
-    [_xmlWriter tag:@"class" attributes:@{ @"name": [classNode nodeName] } contentBlock:^{
-        [self _exportMembers:@"properties"
-                  ofBehavior:classNode
-            usingGetSelector:@selector(documentedProperties)
-                      xmlTag:@"property"];
-
-        [self _exportMembers:@"classmethods"
-                  ofBehavior:classNode
-            usingGetSelector:@selector(documentedClassMethods)
-                      xmlTag:@"method"];
-
-        [self _exportMembers:@"instancemethods"
-                  ofBehavior:classNode
-            usingGetSelector:@selector(documentedInstanceMethods)
-                      xmlTag:@"method"];
-
-        [self _exportMembers:@"delegatemethods"
-                  ofBehavior:classNode
-            usingGetSelector:@selector(documentedDelegateMethods)
-                      xmlTag:@"method"];
-
-        [self _exportMembers:@"notifications"
-                  ofBehavior:classNode
-            usingGetSelector:@selector(documentedNotifications)
-                      xmlTag:@"notification"];
-    }];
-}
-
-- (void)_exportProtocol:(AKProtocolNode *)protocolNode
-{
-    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
-
-    [attributes setObject:[protocolNode nodeName] forKey:@"name"];
-    [attributes setObject:([protocolNode isInformal] ? @"informal" : @"formal") forKey:@"type"];
-    
-    [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
-        [self _exportMembers:@"properties"
-                  ofBehavior:protocolNode
-            usingGetSelector:@selector(documentedProperties)
-                      xmlTag:@"property"];
-
-        [self _exportMembers:@"classmethods"
-                  ofBehavior:protocolNode
-            usingGetSelector:@selector(documentedClassMethods)
-                      xmlTag:@"method"];
-
-        [self _exportMembers:@"instancemethods"
-                  ofBehavior:protocolNode
-            usingGetSelector:@selector(documentedInstanceMethods)
-                      xmlTag:@"method"];
-    }];
 }
 
 
@@ -165,108 +229,16 @@
 - (void)_exportGroupNode:(AKGroupNode *)groupNode usingSubnodeTag:(NSString *)subnodeTag
 {
     [_xmlWriter tag:@"group" attributes:@{ @"name": [groupNode nodeName] } contentBlock:^{
-        [self _performSelector:@selector(_exportGroupSubnode:withXMLTag:)
-                       onNodes:[groupNode subnodes]
-                          with:subnodeTag];
-    }];
-}
-
-
-#pragma mark -
-#pragma mark Private methods -- exporting frameworks
-
-//- (void)_exportNodesInSection:(NSString *)frameworkSection
-//                  ofFramework:(NSString *)fwName
-//             usingGetSelector:(SEL)getSelector
-//               exportSelector:(SEL)exportSelector
-//{
-//    [self _writeDividerWithString:fwName string:frameworkSection];
-//    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
-//        [self _performSelector:exportSelector
-//                       onNodes:[_database performSelector:getSelector withObject:fwName]];
-//    }];
-//}
-
-- (void)_exportProtocolsForFramework:(NSString *)fwName
-{
-    [_xmlWriter tag:@"protocols" attributes:nil contentBlock:^{
-        [self _writeDividerWithString:fwName string:@"formal protocols"];
-        [self _performSelector:@selector(_exportProtocol:)
-                       onNodes:[_database formalProtocolsForFrameworkNamed:fwName]];
-        
-        // Write informal protocols.
-        [self _writeDividerWithString:fwName string:@"informal protocols"];
-        [self _performSelector:@selector(_exportProtocol:)
-                       onNodes:[_database informalProtocolsForFrameworkNamed:fwName]];
-    }];
-}
-
-- (void)_exportGroupNodesInSection:(NSString *)frameworkSection
-                       ofFramework:(NSString *)fwName
-                  usingGetSelector:(SEL)getSelector
-                        subnodeTag:(NSString *)subnodeTag
-{
-    [self _writeDividerWithString:fwName string:frameworkSection];
-    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
-        [self _performSelector:@selector(_exportGroupNode:usingSubnodeTag:)
-                       onNodes:[_database performSelector:getSelector withObject:fwName]
-                          with:subnodeTag];
-
-    }];
-}
-
-- (void)_exportFrameworkNamed:(NSString *)fwName
-{
-    [self _writeLongDividerWithString:fwName];
-    [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
-        [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
-            // export all classes now
-            for (AKClassNode *classNode in [_database classesForFrameworkNamed:fwName]) {
-                [self _exportClass:classNode];
-            }
-        }];
-        
-        [self _exportProtocolsForFramework:fwName];
-
-        [self _exportGroupNodesInSection:@"functions"
-                             ofFramework:fwName
-                        usingGetSelector:@selector(functionsGroupsForFrameworkNamed:)
-                              subnodeTag:@"function"];
-
-        [self _exportGroupNodesInSection:@"globals"
-                             ofFramework:fwName
-                        usingGetSelector:@selector(globalsGroupsForFrameworkNamed:)
-                              subnodeTag:@"global"];
+        for (AKDatabaseNode *subnode in [AKSortUtils arrayBySortingArray:[groupNode subnodes]])
+        {
+            [self _exportGroupSubnode:subnode withXMLTag:subnodeTag];
+        }
     }];
 }
 
 
 #pragma mark -
 #pragma mark Private methods -- low-level utilities
-
-- (void)_performSelector:(SEL)aSelector onStrings:(NSArray *)strings
-{
-    for (NSObject *element in [strings sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)])
-    {
-        [self performSelector:aSelector withObject:element];
-    }
-}
-
-- (void)_performSelector:(SEL)aSelector onNodes:(NSArray *)nodes
-{
-    for (NSObject *element in [AKSortUtils arrayBySortingArray:nodes])
-    {
-        [self performSelector:aSelector withObject:element];
-    }
-}
-
-- (void)_performSelector:(SEL)aSelector onNodes:(NSArray *)nodes with:(id)arg
-{
-    for (NSObject *element in [AKSortUtils arrayBySortingArray:nodes])
-    {
-        [self performSelector:aSelector withObject:element withObject:arg];
-    }
-}
 
 - (NSString *)_spreadString:(NSString *)s
 {

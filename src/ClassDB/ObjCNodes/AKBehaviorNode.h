@@ -7,10 +7,20 @@
 
 #import "AKDatabaseNode.h"
 
-@class AKProtocolNode;
-@class AKPropertyNode;
-@class AKMethodNode;
+@class AKBehaviorNode;
 @class AKCollectionOfNodes;
+@class AKMemberNode;
+@class AKMethodNode;
+@class AKPropertyNode;
+@class AKProtocolNode;
+
+typedef id (^AKBlockForGettingMemberNode)(AKBehaviorNode *behaviorNode, NSString *memberName);
+
+typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMemberNode *memberNode);
+
+#define blockForGettingMemberNode(xxxWithName) ^id (AKBehaviorNode *behaviorNode, NSString *memberName) { return [(id)behaviorNode xxxWithName:memberName]; }
+
+#define blockForAddingMemberNode(addXXXNode) ^void (AKBehaviorNode *behaviorNode, AKMemberNode *memberNode) { [(id)behaviorNode addXXXNode:(id)memberNode]; }
 
 /*!
  * Abstract class. Represents an Objective-C construct that can have methods.
