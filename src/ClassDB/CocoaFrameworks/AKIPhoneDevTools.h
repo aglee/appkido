@@ -9,7 +9,4 @@
 #import "AKDevTools.h"
 
 @interface AKIPhoneDevTools : AKDevTools
-{
-}
-
 @end

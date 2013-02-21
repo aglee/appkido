@@ -15,8 +15,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework
 {
     if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
@@ -25,7 +24,6 @@
 
     return self;
 }
-
 
 
 #pragma mark -
@@ -48,10 +46,7 @@
 
 - (AKDatabaseNode *)subnodeWithName:(NSString *)nodeName
 {
-    NSEnumerator *subnodeEnum = [_subnodes objectEnumerator];
-    AKDatabaseNode *subnode;
-
-    while ((subnode = [subnodeEnum nextObject]))
+    for (AKDatabaseNode *subnode in _subnodes)
     {
         if ([[subnode nodeName] isEqualToString:nodeName])
         {
@@ -62,5 +57,6 @@
     // If we got this far, the search failed.
     return nil;
 }
+
 
 @end

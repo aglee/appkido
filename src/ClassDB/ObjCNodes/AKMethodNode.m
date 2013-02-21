@@ -10,7 +10,10 @@
 #import "AKClassNode.h"
 
 @implementation AKMethodNode
-
+{
+@private
+    NSMutableArray *_argumentTypes;
+}
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -28,23 +31,18 @@
 }
 
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
 - (BOOL)isClassMethod
 {
-    return
-        ([(AKClassNode *)[self owningBehavior]
-            classMethodWithName:[self nodeName]] != nil);
+    return ([(AKClassNode *)[self owningBehavior] classMethodWithName:[self nodeName]] != nil);
 }
 
 - (BOOL)isDelegateMethod
 {
-    return
-        [[self owningBehavior] isClassNode]
-        && ([(AKClassNode *)[self owningBehavior]
-                delegateMethodWithName:[self nodeName]] != nil);
+    return ([[self owningBehavior] isClassNode]
+            && ([(AKClassNode *)[self owningBehavior] delegateMethodWithName:[self nodeName]] != nil));
 }
 
 - (NSArray *)argumentTypes

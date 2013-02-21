@@ -86,7 +86,7 @@
         
         // Store bits of information about the class node relating it to its
         // HTML documentation file.
-        [[_parserFW fwDatabase]
+        [[_parserFW owningDatabase]
             rememberThatClass:classNode
             isDocumentedInHTMLFile:[self currentPath]];
         if (isMainClassReference)  // [agl] REMOVE why only if main?
@@ -107,7 +107,7 @@
         
         // Store bits of information about the protocol node relating it to its
         // HTML documentation file.
-        [[_parserFW fwDatabase]
+        [[_parserFW owningDatabase]
             rememberThatProtocol:protocolNode
             isDocumentedInHTMLFile:[self currentPath]];
         [protocolNode
@@ -304,7 +304,7 @@
     // Get our hands on the node for the class whose documentation is
     // in _rootSectionOfCurrentFile.
     NSString *className = [self _parseBehaviorName];
-    AKClassNode *classNode = [[_parserFW fwDatabase] classWithName:className];
+    AKClassNode *classNode = [[_parserFW owningDatabase] classWithName:className];
 
     // We assume the database has already been populated from header files.
     // If a class isn't already in the database, we assume it's an accident
@@ -334,7 +334,7 @@
     NSString *protocolName = [self _parseBehaviorName];
 
     AKProtocolNode *protocolNode =
-        [[_parserFW fwDatabase] protocolWithName:protocolName];
+        [[_parserFW owningDatabase] protocolWithName:protocolName];
 
     // We assume the database has already been populated from header files.
     // [agl] FIXME -- I don't like this assumption -- presumes class knows
@@ -347,7 +347,7 @@
             [AKProtocolNode
                 nodeWithNodeName:protocolName
                 owningFramework:_parserFW];
-        [[_parserFW fwDatabase] addProtocolNode:protocolNode];
+        [[_parserFW owningDatabase] addProtocolNode:protocolNode];
     }
 
     return protocolNode;

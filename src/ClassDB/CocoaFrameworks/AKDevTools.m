@@ -16,6 +16,18 @@
 #import "DIGSLog.h"
 
 @implementation AKDevTools
+{
+@private
+    NSString *_devToolsPath;
+
+    // Paths to all docsets we find, both within this Dev Tools installation and
+    // in the various shared locations where docsets are installed.
+    NSMutableDictionary *_installedDocSetPathsBySDKVersion;
+
+    // Paths to all SDKs we find within this Dev Tools installation.
+    NSMutableDictionary *_installedSDKPathsBySDKVersion;
+}
+
 
 // Used for sorting SDK version strings. [agl] Why didn't I use AKSDKVersion to do the comparing?
 static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
@@ -72,7 +84,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
     return self;
 }
-
 
 
 #pragma mark -
@@ -219,6 +230,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 	// If we got this far, we did not find a match.
 	return nil;
 }
+
 
 #pragma mark -
 #pragma mark Private methods -- called during init

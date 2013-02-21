@@ -110,7 +110,7 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *aDatabase = [_topicFramework fwDatabase];
+    AKDatabase *aDatabase = [_topicFramework owningDatabase];
     NSString *frameworkName = [_topicFramework frameworkName];
 
     if ([aDatabase numberOfFunctionsGroupsForFrameworkNamed:frameworkName] > 0)

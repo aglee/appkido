@@ -13,20 +13,13 @@
 @class AKCollectionOfNodes;
 
 /*!
- * @class       AKBehaviorNode
- * @abstract    Abstract class that represents an Objective-C construct
- *              that can have methods.
- * @discussion  An AKBehaviorNode represents an Objective-C construct
- *              that can have methods -- i.e., a class, protocol, or
- *              category.
+ * Abstract class. Represents an Objective-C construct that can have methods.
+ * The concrete subclasses are AKClassNode, AKProtocolNode, and AKCategoryNode.
  */
 @interface AKBehaviorNode : AKDatabaseNode
 {
 // [agl] put back @private -- really only need _indexOfInstanceMethods
 //@private
-    // Fully qualified path name of the .h file where my behavior is
-    // declared.
-    NSString *_headerFileWhereDeclared;
 
     // Contains AKProtocolNodes, one for each protocol my behavior
     // conforms to.
@@ -60,44 +53,41 @@
     NSMutableDictionary *_nodeDocumentationByFrameworkName;
 }
 
+/*! Path to the .h file that declares this behavior. */
+@property (nonatomic, copy) NSString *headerFileWhereDeclared;
+
 
 #pragma mark -
 #pragma mark Getters and setters -- general
 
 /*!
- * @method      allOwningFrameworks
- * @discussion  Returned elements are instances of AKFramework.  The first
- *              one in the returned array is the node's -owningFramework.
+ * Returns instances of AKFramework. The first one in the returned array is
+ * [self owningFramework]. [agl] old note to self: classes can have multiple header paths; example?
  */
 - (NSArray *)allOwningFrameworks;
 
 - (BOOL)isClassNode;
 
-// nb classes can have multiple header paths
-- (NSString *)headerFileWhereDeclared;
-
-- (void)setHeaderFileWhereDeclared:(NSString *)aPath;
-
 - (void)addImplementedProtocol:(AKProtocolNode *)node;
 
 /*!
- * @method      implementedProtocols
- * @discussion  Returns an array of zero or more AKProtocolNodes, one
- *              for each protocol implemented by my behavior, including
- *              protocols implemented via inheritance.
+ * Returns zero or more AKProtocolNodes, one for each protocol implemented by
+ * the represented behavior. Includes protocols implemented by virtue of
+ * inheritance.
  */
 - (NSArray *)implementedProtocols;
 
-// frameworkName can be the main framework or an extra one
+/*! frameworkName can be the main framework or an extra one. */
 - (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName;
 
-- (void)setNodeDocumentation:(AKFileSection *)fileSection forFrameworkNamed:(NSString *)frameworkName;
+- (void)setNodeDocumentation:(AKFileSection *)fileSection
+           forFrameworkNamed:(NSString *)frameworkName;
 
 
 #pragma mark -
 #pragma mark Getters and setters -- properties
 
-/** Returns only properties that are in this class's documentation. */
+/*! Returns only properties that are in this class's documentation. */
 - (NSArray *)documentedProperties;
 
 - (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName;
@@ -144,6 +134,7 @@
  * because the docs lump all deprecated methods together.
  */
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-    owningFramework:(AKFramework *)nodeOwningFW;
+                                      owningFramework:(AKFramework *)nodeOwningFW;
+
 
 @end

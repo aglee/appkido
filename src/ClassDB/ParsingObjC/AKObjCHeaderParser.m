@@ -138,13 +138,13 @@ static BOOL isPunctuation(char c)
     // sitting on.
     (void)[self _parseTokenIntoBuffer:token];
     NSString *className = [NSString stringWithUTF8String:token];
-    AKClassNode *classNode = [[_parserFW fwDatabase] classWithName:className];
+    AKClassNode *classNode = [[_parserFW owningDatabase] classWithName:className];
 
     if (!classNode)
     {
         classNode = [AKClassNode nodeWithNodeName:className owningFramework:_parserFW];
     }
-    [[_parserFW fwDatabase] addClassNode:classNode];
+    [[_parserFW owningDatabase] addClassNode:classNode];
 
     AKBehaviorNode *resultNode = nil;
     while (([self _parseTokenIntoBuffer:token]))
@@ -167,12 +167,12 @@ static BOOL isPunctuation(char c)
             // we've come across the specification of its superclass.
             (void)[self _parseTokenIntoBuffer:token];
             NSString *parentClassName = [NSString stringWithUTF8String:token];
-            AKClassNode *parentClassNode = [[_parserFW fwDatabase] classWithName:parentClassName];
+            AKClassNode *parentClassNode = [[_parserFW owningDatabase] classWithName:parentClassName];
 
             if (!parentClassNode)
             {
                 parentClassNode = [AKClassNode nodeWithNodeName:parentClassName owningFramework:_parserFW];
-                [[_parserFW fwDatabase] addClassNode:parentClassNode];
+                [[_parserFW owningDatabase] addClassNode:parentClassNode];
             }
 
             // [agl] KLUDGE  Some .h files use #ifndef WIN32 to decide
@@ -286,12 +286,12 @@ static BOOL isPunctuation(char c)
     char token[AKTokenBufferSize];
     (void)[self _parseTokenIntoBuffer:token];
     NSString *protocolName = [NSString stringWithUTF8String:token];
-    AKProtocolNode *resultNode = [[_parserFW fwDatabase] protocolWithName:protocolName];
+    AKProtocolNode *resultNode = [[_parserFW owningDatabase] protocolWithName:protocolName];
 
     if (!resultNode)
     {
         resultNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
-        [[_parserFW fwDatabase] addProtocolNode:resultNode];
+        [[_parserFW owningDatabase] addProtocolNode:resultNode];
     }
 
     [resultNode setHeaderFileWhereDeclared:[self currentPath]];
@@ -351,12 +351,12 @@ static BOOL isPunctuation(char c)
         else
         {
             NSString *protocolName = [NSString stringWithUTF8String:token];
-            AKProtocolNode *protocolNode = [[_parserFW fwDatabase] protocolWithName:protocolName];
+            AKProtocolNode *protocolNode = [[_parserFW owningDatabase] protocolWithName:protocolName];
 
             if (!protocolNode)
             {
                 protocolNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
-                [[_parserFW fwDatabase] addProtocolNode:protocolNode];
+                [[_parserFW owningDatabase] addProtocolNode:protocolNode];
             }
 
             [behaviorNode addImplementedProtocol:protocolNode];

@@ -81,18 +81,6 @@
  * [agl] Explain how AppKiDo docset can "cover" an SDK with a slighly different SDK version.
  */
 @interface AKDevTools : NSObject
-{
-@private
-    NSString *_devToolsPath;
-
-    // Paths to all docsets we find, both within this Dev Tools installation and
-    // in the various shared locations where docsets are installed.
-    NSMutableDictionary *_installedDocSetPathsBySDKVersion;
-
-    // Paths to all SDKs we find within this Dev Tools installation.
-    NSMutableDictionary *_installedSDKPathsBySDKVersion;
-}
-
 
 #pragma mark -
 #pragma mark Factory methods

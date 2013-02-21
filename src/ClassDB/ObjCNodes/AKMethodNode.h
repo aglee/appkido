@@ -7,29 +7,14 @@
 
 #import "AKMemberNode.h"
 
-// nodeName is method name.
-
 /*!
- * @class       AKMethodNode
- * @abstract    Represents an Objective-C method.
- * @discussion  An AKMethodNode contains the name and signature of
- *              an Objective-C method.  The method may be either a class
- *              method or an instance method; AKMethodNode does not
- *              distinguish between the two.
+ * Represents an Objective-C method. Contains the name and signature of the
+ * method. Does not distinguish between class and instance methods.
  *
- *              An AKMethodNode instance can only belong to one
- *              AKBehaviorNode, regardless of how many behaviors
- *              declare a method with the same signature.
- *
- *              An AKMethodNode's -nodeName is the name of the method
- *              it represents -- i.e., a string that could be passed to
- *              NSSelectorFromString().
+ * An AKMethodNode instance must belong to at most one AKBehaviorNode instance,
+ * regardless of how many behaviors declare a method with the same signature.
  */
 @interface AKMethodNode : AKMemberNode
-{
-@private
-    NSMutableArray *_argumentTypes;
-}
 
 
 #pragma mark -

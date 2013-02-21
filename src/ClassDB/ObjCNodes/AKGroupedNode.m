@@ -12,13 +12,14 @@
 
 @implementation AKGroupedNode
 
+@synthesize groupName = _groupName;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
-    groupName:(NSString *)groupName
+       owningFramework:(AKFramework *)theFramework
+             groupName:(NSString *)groupName
 {
     if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
@@ -28,13 +29,11 @@
     return self;
 }
 
-- (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
 }
-
 
 
 #pragma mark -

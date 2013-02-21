@@ -16,6 +16,8 @@
  */
 @protocol AKSortable
 
+@required
+
 /*!
  * @method      sortName
  * @discussion  Returns the value on which I should be sorted by the

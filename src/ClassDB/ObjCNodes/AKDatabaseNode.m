@@ -9,9 +9,9 @@
 
 #import "DIGSLog.h"
 
-#import "AKTextUtils.h"
-#import "AKClassNode.h"
 #import "AKFileSection.h"
+#import "AKFramework.h"
+#import "AKTextUtils.h"
 
 @implementation AKDatabaseNode
 
@@ -44,46 +44,6 @@
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
-}
-
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (NSString *)nodeName
-{
-    return _nodeName;
-}
-
-- (AKFramework *)owningFramework
-{
-    return _owningFramework;
-}
-
-- (void)setOwningFramework:(AKFramework *)aFramework
-{
-    _owningFramework = aFramework;
-}
-
-- (AKFileSection *)nodeDocumentation
-{
-    return _nodeDocumentation;
-}
-
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-{
-    _nodeDocumentation = fileSection;
-}
-
-- (BOOL)isDeprecated
-{
-    return _isDeprecated;
-}
-
-- (void)setIsDeprecated:(BOOL)isDeprecated
-{
-    _isDeprecated = isDeprecated;
 }
 
 

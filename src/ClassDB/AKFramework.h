@@ -16,16 +16,8 @@
  * in AKDatabase.
  */
 @interface AKFramework : NSObject
-{
-@private
-    AKDatabase *_fwDatabase;  // weak reference
-    NSString *_frameworkName;
-}
 
-- (AKDatabase *)fwDatabase;
-- (void)setFWDatabase:(AKDatabase *)aDatabase;
-
-- (NSString *)frameworkName;
-- (void)setFrameworkName:(NSString *)frameworkName;
+@property (nonatomic, weak) AKDatabase *owningDatabase;
+@property (nonatomic, copy) NSString *frameworkName;
 
 @end

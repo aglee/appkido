@@ -8,8 +8,5 @@
 
 #import "AKPropertyNode.h"
 
-#import "AKClassNode.h"
-
 @implementation AKPropertyNode
-
 @end

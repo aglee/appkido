@@ -12,6 +12,13 @@
 #import "AKDatabaseNode.h"
 
 @implementation AKCollectionOfNodes
+{
+    // Contains all the AKDatabaseNodes that have been added to us.
+    NSMutableArray *_nodeList;
+
+    // Keys are node names.  Values are AKDatabaseNodes.
+    NSMutableDictionary *_nodesByName;
+}
 
 
 #pragma mark -
@@ -41,10 +48,8 @@
 - (NSArray *)nodesWithDocumentation
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [_nodeList objectEnumerator];
-    AKDatabaseNode *databaseNode;
 
-    while ((databaseNode = [en nextObject]))
+    for (AKDatabaseNode *databaseNode in _nodeList)
     {
         if ([databaseNode nodeDocumentation])
         {

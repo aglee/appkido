@@ -12,36 +12,13 @@
 @implementation AKFramework
 
 #pragma mark -
-#pragma mark Getters and setters
-
-- (AKDatabase *)fwDatabase
-{
-    return _fwDatabase;
-}
-
-- (void)setFWDatabase:(AKDatabase *)aDatabase
-{
-    _fwDatabase = aDatabase;
-}
-
-- (NSString *)frameworkName
-{
-    return _frameworkName;
-}
-
-- (void)setFrameworkName:(NSString *)frameworkName
-{
-    _frameworkName = frameworkName;
-}
-
-
-#pragma mark -
 #pragma mark NSObject methods
 
 - (NSString *)description
 {
     return _frameworkName;
 }
+
 
 - (BOOL)isEqual:(id)anObject
 {

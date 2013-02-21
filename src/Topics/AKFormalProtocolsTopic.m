@@ -27,7 +27,7 @@
 {
     NSMutableArray *columnValues = [NSMutableArray array];
     NSEnumerator *en =
-        [[[_topicFramework fwDatabase]
+        [[[_topicFramework owningDatabase]
             formalProtocolsForFrameworkNamed:[_topicFramework frameworkName]] objectEnumerator];
     AKProtocolNode *protocolNode;
 

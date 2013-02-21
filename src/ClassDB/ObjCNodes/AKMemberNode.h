@@ -15,27 +15,15 @@
  * methods, instance methods, delegate methods, and notifications.
  */
 @interface AKMemberNode : AKDatabaseNode
-{
-@private
-    AKBehaviorNode *_owningBehavior;
-}
 
+@property (nonatomic, readonly, weak) AKBehaviorNode *owningBehavior;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*!
- * @method      initWithNodeName:owningFramework:owningBehavior:
- * @discussion  Designated initializer.
- */
+/*! Designated initializer. */
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
-    owningBehavior:(AKBehaviorNode *)behaviorNode;
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (AKBehaviorNode *)owningBehavior;
+       owningFramework:(AKFramework *)theFramework
+        owningBehavior:(AKBehaviorNode *)behaviorNode;
 
 @end

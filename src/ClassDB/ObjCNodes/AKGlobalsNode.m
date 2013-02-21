@@ -15,20 +15,15 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework
 {
-    if ((self =
-            [super
-                initWithNodeName:nodeName
-                owningFramework:theFramework]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
     {
         _namesOfGlobals = [[NSMutableArray alloc] init];
     }
 
     return self;
 }
-
 
 
 #pragma mark -
@@ -43,5 +38,6 @@
 {
     return _namesOfGlobals;
 }
+
 
 @end

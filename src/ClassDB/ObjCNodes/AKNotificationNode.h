@@ -9,7 +9,4 @@
 #import "AKMemberNode.h"
 
 @interface AKNotificationNode : AKMemberNode
-{
-}
-
 @end

@@ -21,21 +21,21 @@
     // or the older package-installation model?
     if ([AKDevTools devToolsPathIsOldStyle:devToolsPath])
     {
-        return [NSArray arrayWithObjects:
+        return (@[
                 @"Platforms/iPhoneOS.platform",
                 @"Platforms/iPhoneSimulator.platform",
                 @"Applications/Xcode.app",
                 @"Documentation",
                 @"Examples",
-                nil];
+                ]);
     }
     else
     {
-        return [NSArray arrayWithObjects:
+        return (@[
                 @"Platforms/iPhoneOS.platform",
                 @"Platforms/iPhoneSimulator.platform",
                 @"Documentation",
-                nil];
+                ]);
     }
 }
 
@@ -47,15 +47,14 @@
     // contain NSFileVersion, and a newer one in AKSharedDocSetDirectory which did. So I moved
     // AKSharedDocSetDirectory later in this array so that it "wins" when docsets appear in both
     // places. This fixed the problem, at least for me.
-    return [NSArray arrayWithObjects:
+    return (@[
             [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"],
             AKLibraryDocSetDirectory,
             AKSharedDocSetDirectory,
-            
+
             // New directories to look in as of Xcode 4.3.
             [NSHomeDirectory() stringByAppendingPathComponent:AKSharedDocSetDirectory],
-            
-            nil];
+            ]);
 }
 
 - (BOOL)isValidDocSetName:(NSString *)fileName

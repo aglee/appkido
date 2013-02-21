@@ -8,15 +8,9 @@
 #import "AKDatabaseNode.h"
 
 /*!
- * @class       AKGroupNode
- * @abstract    Represents a collection of AKDatabaseNodes.
- * @discussion  An AKGroupNode is a wrapper around a collection of
- *              related AKDatabaseNodes, called its subnodes.  It does not
- *              correspond to a programming construct per se; it is just
- *              a way to have named aggregations of nodes.
- *
- *              An AKGroupNode's -nodeName depends on the type of subnodes
- *              it has and how the group node is used.
+ * Wrapper around a collection of AKDatabaseNodes, called its subnodes. An
+ * AKGroupNode does not correspond to any programming language construct; it is
+ * just a way to have named aggregations of nodes.
  */
 @interface AKGroupNode : AKDatabaseNode
 {

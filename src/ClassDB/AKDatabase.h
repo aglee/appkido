@@ -9,15 +9,15 @@
 
 #import "AKDatabaseDelegate.h"
 
-@class AKDocSetIndex;
-@class AKFramework;
-@class AKFileSection;
-@class AKDatabaseNode;
 @class AKClassNode;
-@class AKProtocolNode;
+@class AKDatabaseNode;
+@class AKDocSetIndex;
+@class AKFileSection;
+@class AKFramework;
 @class AKFunctionNode;
 @class AKGlobalsNode;
 @class AKGroupNode;
+@class AKProtocolNode;
 
 // [agl] TODO -- Should explain distinction between a node and a token.  A
 // node can map to multiple tokens.  For example a globals node for an enum
@@ -64,76 +64,6 @@
  *              "the database."
  */
 @interface AKDatabase : NSObject
-{
-@protected
-    id <AKDatabaseDelegate> _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
-
-    AKDocSetIndex *_docSetIndex;
-
-    // --- Frameworks ---
-
-    NSMutableDictionary *_frameworksByName;  // (NSString) -> (AKFramework)
-
-    // There are constants in AKFrameworkConstants.h for the names of some frameworks
-    // that need to be treated specially.
-    NSMutableArray *_frameworkNames;  // frameworks that have been loaded
-    NSMutableArray *_namesOfAvailableFrameworks;  // frameworks that the user could choose to load
-
-    // --- Classes ---
-
-    // (class name) -> (AKClassNode)
-    NSMutableDictionary *_classNodesByName;
-
-    // (framework name) -> (NSArray of AKClassNode)
-    NSMutableDictionary *_classListsByFramework;
-
-    // --- Protocols ---
-
-    // (protocol name) -> (AKProtocolNodes)
-    NSMutableDictionary *_protocolNodesByName;
-
-    // (framework name) -> (NSArray of AKProtocolNode)
-    NSMutableDictionary *_protocolListsByFramework;
-
-    // --- Functions ---
-
-    // (framework name) -> (NSArray of AKGroupNode)
-    NSMutableDictionary *_functionsGroupListsByFramework;
-
-    // (framework name) -> ((group name) -> AKGroupNode)
-    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;
-
-    // --- Globals ---
-
-    // (framework name) -> (NSArray of AKGroupNode)
-    NSMutableDictionary *_globalsGroupListsByFramework;
-
-    // (framework name) -> ((group name) -> AKGroupNode)
-    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;
-
-    // --- Hyperlink support ---
-
-    // (path to HTML file) -> (name of framework)
-    NSMutableDictionary *_frameworkNamesByHTMLPath;
-
-    // (path to HTML file) -> (AKClassNode)
-    NSMutableDictionary *_classNodesByHTMLPath;
-
-    // (path to HTML file) -> (AKProtocolNode)
-    NSMutableDictionary *_protocolNodesByHTMLPath;
-
-    // (path to HTML file) -> (root AKFileSection for that file)
-    // See AKDocParser for an explanation of root sections.
-    NSMutableDictionary *_rootSectionsByHTMLPath;
-
-    // Keys are anchor strings.  Each value is a dictionary whose keys are
-    // paths to HTML files and whose values are NSNumbers containing the
-    // byte offset of that anchor within that file.
-    //
-    // See the comment for -offsetOfAnchorString:inHTMLFile: to see what
-    // is meant by "anchor strings."
-    NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
-}
 
 #pragma mark -
 #pragma mark - Factory methods
@@ -144,11 +74,13 @@
 /*! On failure, returns nil with the reasons added to errorStrings. */
 + (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings;
 
+
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
+
 
 #pragma mark -
 #pragma mark Populating the database
@@ -161,17 +93,11 @@
 
 /*!
  * @method      loadTokensForFrameworks:
- * @discussion  Calls -loadTokensForFrameworkNamed:.  Sends delegate message for each
+ * @discussion  Sends delegate message for each
  *              framework loaded.  frameworkNames can be nil; by default, this causes
  *              all "essential" frameworks to be loaded.
  */
 - (void)loadTokensForFrameworks:(NSArray *)frameworkNames;
-
-/*!
- * @method      loadTokensForFrameworkNamed:
- * @discussion  Must override.  Called by -loadTokensForFrameworks:. Do not call directly.
- */
-- (void)loadTokensForFrameworkNamed:(NSString *)frameworkName;
 
 
 #pragma mark -
@@ -191,7 +117,7 @@
 
 /*
  * @method      frameworkWithName:
- * @discussion  Creates the AKFramework instance if it doesn't exist.
+ * @discussion  Creates the AKFramework instance if it doesn't exist. [agl] Possibly confusing? Not sure.
  */
 - (AKFramework *)frameworkWithName:(NSString *)frameworkName;
 
@@ -271,7 +197,7 @@
 - (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
 
 - (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
-    inFrameworkNamed:(NSString *)frameworkName;
+                                      inFrameworkNamed:(NSString *)frameworkName;
 
 
 #pragma mark -
@@ -283,7 +209,7 @@
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
 
 - (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
-    inFrameworkNamed:(NSString *)frameworkName;
+                                  inFrameworkNamed:(NSString *)frameworkName;
 
 
 #pragma mark -
@@ -314,8 +240,12 @@
  *              This method returns the byte offset of the given anchor
  *              string within the given file, or -1 if it is not present.
  */
-- (NSInteger)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
-- (void)rememberOffset:(NSInteger)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath;
+- (NSInteger)offsetOfAnchorString:(NSString *)anchorString
+                       inHTMLFile:(NSString *)filePath;
+- (void)rememberOffset:(NSInteger)anchorOffset
+        ofAnchorString:(NSString *)anchorString
+            inHTMLFile:(NSString *)filePath;
+
 
 @end
 

@@ -260,8 +260,8 @@
         // Apply the parse results to the database.
         if (rootSection != nil)
         {
-            [[_parserFW fwDatabase] rememberFrameworkName:[_parserFW frameworkName] forHTMLFile:[self currentPath]];
-            [[_parserFW fwDatabase] rememberRootSection:rootSection forHTMLFile:[self currentPath]];
+            [[_parserFW owningDatabase] rememberFrameworkName:[_parserFW frameworkName] forHTMLFile:[self currentPath]];
+            [[_parserFW owningDatabase] rememberRootSection:rootSection forHTMLFile:[self currentPath]];
             [self applyParseResults];
         }
 
@@ -554,7 +554,7 @@
                     length:(_current - anchorStart)
                     encoding:NSUTF8StringEncoding];
 
-            [[_parserFW fwDatabase]
+            [[_parserFW owningDatabase]
                 rememberOffset:(anchorStart - _dataStart)
                 ofAnchorString:anchorString
                 inHTMLFile:[self currentPath]];

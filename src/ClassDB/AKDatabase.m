@@ -28,6 +28,76 @@
 
 
 @implementation AKDatabase
+{
+    id <AKDatabaseDelegate> _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
+
+    AKDocSetIndex *_docSetIndex;
+
+    // --- Frameworks ---
+
+    NSMutableDictionary *_frameworksByName;  // (NSString) -> (AKFramework)
+
+    // There are constants in AKFrameworkConstants.h for the names of some frameworks
+    // that need to be treated specially.
+    NSMutableArray *_frameworkNames;  // frameworks that have been loaded
+    NSMutableArray *_namesOfAvailableFrameworks;  // frameworks that the user could choose to load
+
+    // --- Classes ---
+
+    // (class name) -> (AKClassNode)
+    NSMutableDictionary *_classNodesByName;
+
+    // (framework name) -> (NSArray of AKClassNode)
+    NSMutableDictionary *_classListsByFramework;
+
+    // --- Protocols ---
+
+    // (protocol name) -> (AKProtocolNodes)
+    NSMutableDictionary *_protocolNodesByName;
+
+    // (framework name) -> (NSArray of AKProtocolNode)
+    NSMutableDictionary *_protocolListsByFramework;
+
+    // --- Functions ---
+
+    // (framework name) -> (NSArray of AKGroupNode)
+    NSMutableDictionary *_functionsGroupListsByFramework;
+
+    // (framework name) -> ((group name) -> AKGroupNode)
+    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;
+
+    // --- Globals ---
+
+    // (framework name) -> (NSArray of AKGroupNode)
+    NSMutableDictionary *_globalsGroupListsByFramework;
+
+    // (framework name) -> ((group name) -> AKGroupNode)
+    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;
+
+    // --- Hyperlink support ---
+
+    // (path to HTML file) -> (name of framework)
+    NSMutableDictionary *_frameworkNamesByHTMLPath;
+
+    // (path to HTML file) -> (AKClassNode)
+    NSMutableDictionary *_classNodesByHTMLPath;
+
+    // (path to HTML file) -> (AKProtocolNode)
+    NSMutableDictionary *_protocolNodesByHTMLPath;
+
+    // (path to HTML file) -> (root AKFileSection for that file)
+    // See AKDocParser for an explanation of root sections.
+    NSMutableDictionary *_rootSectionsByHTMLPath;
+
+    // Keys are anchor strings.  Each value is a dictionary whose keys are
+    // paths to HTML files and whose values are NSNumbers containing the
+    // byte offset of that anchor within that file.
+    //
+    // See the comment for -offsetOfAnchorString:inHTMLFile: to see what
+    // is meant by "anchor strings."
+    NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
+}
+
 
 #pragma mark -
 #pragma mark Factory methods
@@ -99,11 +169,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-
-
-#pragma mark -
-#pragma mark Init/awake/dealloc
-
 - (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex
 {
     if ((self = [super init]))
@@ -144,7 +209,6 @@
 }
 
 
-
 #pragma mark -
 #pragma mark Populating the database
 
@@ -160,15 +224,12 @@
         frameworkNames = AKNamesOfEssentialFrameworks;
     }
 
-    NSEnumerator *fwNameEnum = [frameworkNames objectEnumerator];
-    NSString *fwName;
-
-    while ((fwName = [fwNameEnum nextObject]))
+    for (NSString *fwName in frameworkNames)
     {
         if ([self frameworkNameIsSelectable:fwName])
         {
-            @autoreleasepool {
-
+            @autoreleasepool
+            {
                 DIGSLogDebug(@"===================================================");
                 DIGSLogDebug(@"Loading tokens for framework %@", fwName);
                 DIGSLogDebug(@"===================================================");
@@ -178,61 +239,10 @@
                     [_delegate database:self willLoadTokensForFramework:fwName];
                 }
 
-                [self loadTokensForFrameworkNamed:fwName];
-
+                [self _loadTokensForFrameworkNamed:fwName];
             }
         }
     }
-}
-
-- (void)loadTokensForFrameworkNamed:(NSString *)frameworkName
-{
-    // Parse header files before HTML files, so that later when we parse a
-    // "Deprecated Methods" HTML file we can distinguish between instance
-    // methods, class methods, and delegate methods by querying the database.
-    // [agl] FIXME Any way to remove this dependence on parse order?
-    DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing headers for framework %@, in base dir %@", frameworkName, [_docSetIndex basePathForHeaders]);
-    DIGSLogDebug(@"---------------------------------------------------");
-
-    // NOTE that we have to parse all headers in each directory, not just
-    // headers that the docset index explicitly associates with ZTOKENs.  For
-    // example, several DOMxxx classes, such as DOMComment, will be displayed
-    // as root classes if I don't parse their headers.  The ideal thing would
-    // be to be able to follow #imports, but I'm not being that smart.
-    AKFramework *aFramework = [self frameworkWithName:frameworkName];
-    NSSet *headerDirs = [_docSetIndex headerDirsForFramework:frameworkName];
-    NSEnumerator *headerDirEnum = [headerDirs objectEnumerator];
-    NSString *headerDir;
-    while ((headerDir = [headerDirEnum nextObject]) != nil)
-    {
-        [AKObjCHeaderParser recursivelyParseDirectory:headerDir forFramework:aFramework];
-    }
-
-    // Parse HTML files.
-    NSString *baseDirForDocs = [_docSetIndex baseDirForDocs];
-
-    DIGSLogDebug(@"---------------------------------------------------");
-    DIGSLogDebug(@"Parsing HTML docs for framework %@, in base dir %@", frameworkName, baseDirForDocs);
-    DIGSLogDebug(@"---------------------------------------------------");
-
-    DIGSLogDebug(@"Parsing behavior docs for framework %@", frameworkName);
-    [AKCocoaBehaviorDocParser
-        parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
-        underBaseDir:baseDirForDocs
-        forFramework:aFramework];
-
-    DIGSLogDebug(@"Parsing functions docs for framework %@", frameworkName);
-    [AKCocoaFunctionsDocParser
-        parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
-        underBaseDir:baseDirForDocs
-        forFramework:aFramework];
-
-    DIGSLogDebug(@"Parsing globals docs for framework %@", frameworkName);
-    [AKCocoaGlobalsDocParser
-        parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
-        underBaseDir:baseDirForDocs
-        forFramework:aFramework];
 }
 
 
@@ -246,7 +256,7 @@
 
 - (void)setDelegate:(id <AKDatabaseDelegate>)delegate
 {
-    _delegate = delegate;  // note this is NOT retained
+    _delegate = delegate;  // [agl] note this is NOT retained
 }
 
 
@@ -260,7 +270,7 @@
     if (aFramework == nil)
     {
         aFramework = [[AKFramework alloc] init];
-        [aFramework setFWDatabase:self];
+        [aFramework setOwningDatabase:self];
         [aFramework setFrameworkName:frameworkName];
 
         [_frameworksByName setObject:aFramework forKey:frameworkName];
@@ -301,11 +311,8 @@
 - (NSArray *)rootClasses
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en;
-    AKClassNode *classNode;
 
-    en = [_classNodesByName objectEnumerator];
-    while ((classNode = [en nextObject]))
+    for (AKClassNode *classNode in [self allClasses])
     {
         if ([classNode parentClass] == nil)
         {
@@ -362,10 +369,8 @@
 - (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [[self _allProtocolsForFrameworkNamed:frameworkName] objectEnumerator];
-    AKProtocolNode *protocolNode;
 
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in [self _allProtocolsForFrameworkNamed:frameworkName])
     {
         if (![protocolNode isInformal])
         {
@@ -379,10 +384,8 @@
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [[self _allProtocolsForFrameworkNamed:frameworkName] objectEnumerator];
-    AKProtocolNode *protocolNode;
 
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in [self _allProtocolsForFrameworkNamed:frameworkName])
     {
         if ([protocolNode isInformal])
         {
@@ -490,7 +493,7 @@
 }
 
 - (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
-    inFrameworkNamed:(NSString *)frameworkName
+                                      inFrameworkNamed:(NSString *)frameworkName
 {
     // Get the functions groups for the given framework.
     NSMutableArray *groupList = [_functionsGroupListsByFramework objectForKey:frameworkName];
@@ -500,10 +503,7 @@
     }
 
     // Check each functions group to see if it contains the given function.
-    NSEnumerator *groupListEnum = [groupList objectEnumerator];
-    AKGroupNode *groupNode;
-
-    while ((groupNode = [groupListEnum nextObject]))
+    for (AKGroupNode *groupNode in groupList)
     {
         if ([groupNode subnodeWithName:functionName] != nil)
         {
@@ -529,7 +529,8 @@
     return [_globalsGroupListsByFramework objectForKey:frameworkName];
 }
 
-- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
+- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName
+                  inFrameworkNamed:(NSString *)frameworkName
 {
     return [[_globalsGroupsByFrameworkAndGroup objectForKey:frameworkName] objectForKey:groupName];
 }
@@ -573,7 +574,7 @@
 }
 
 - (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
-    inFrameworkNamed:(NSString *)frameworkName
+                                  inFrameworkNamed:(NSString *)frameworkName
 {
     // Get the globals groups for the given framework.
     NSMutableArray *groupList = [_globalsGroupListsByFramework objectForKey:frameworkName];
@@ -583,10 +584,7 @@
     }
 
     // Check each globals group to see if it contains the given global.
-    NSEnumerator *groupListEnum = [groupList objectEnumerator];
-    AKGroupNode *groupNode;
-
-    while ((groupNode = [groupListEnum nextObject]))
+    for (AKGroupNode *groupNode in groupList)
     {
         if ([groupNode subnodeWithName:nameOfGlobal] != nil)
         {
@@ -607,7 +605,8 @@
     return [_frameworkNamesByHTMLPath objectForKey:htmlFilePath];
 }
 
-- (void)rememberFrameworkName:(NSString *)frameworkName forHTMLFile:(NSString *)htmlFilePath
+- (void)rememberFrameworkName:(NSString *)frameworkName
+                  forHTMLFile:(NSString *)htmlFilePath
 {
     [_frameworkNamesByHTMLPath setObject:frameworkName forKey:htmlFilePath];
 }
@@ -617,7 +616,8 @@
     return [_classNodesByHTMLPath objectForKey:htmlFilePath];
 }
 
-- (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath
+- (void)rememberThatClass:(AKClassNode *)classNode
+   isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
     [_classNodesByHTMLPath setObject:classNode forKey:htmlFilePath];
 }
@@ -627,7 +627,8 @@
     return [_protocolNodesByHTMLPath objectForKey:htmlFilePath];
 }
 
-- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode isDocumentedInHTMLFile:(NSString *)htmlFilePath
+- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode
+      isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
     [_protocolNodesByHTMLPath setObject:protocolNode forKey:htmlFilePath];
 }
@@ -637,12 +638,14 @@
     return [_rootSectionsByHTMLPath objectForKey:filePath];
 }
 
-- (void)rememberRootSection:(AKFileSection *)rootSection forHTMLFile:(NSString *)filePath
+- (void)rememberRootSection:(AKFileSection *)rootSection
+                forHTMLFile:(NSString *)filePath
 {
     [_rootSectionsByHTMLPath setObject:rootSection forKey:filePath];
 }
 
-- (NSInteger)offsetOfAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
+- (NSInteger)offsetOfAnchorString:(NSString *)anchorString
+                       inHTMLFile:(NSString *)filePath
 {
     NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
 
@@ -661,7 +664,9 @@
     return [offsetValue intValue];
 }
 
-- (void)rememberOffset:(NSInteger)anchorOffset ofAnchorString:(NSString *)anchorString inHTMLFile:(NSString *)filePath
+- (void)rememberOffset:(NSInteger)anchorOffset
+        ofAnchorString:(NSString *)anchorString
+            inHTMLFile:(NSString *)filePath
 {
     NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
 
@@ -679,6 +684,52 @@
 
 #pragma mark Private methods
 
+- (void)_loadTokensForFrameworkNamed:(NSString *)frameworkName
+{
+    // Parse header files before HTML files, so that later when we parse a
+    // "Deprecated Methods" HTML file we can distinguish between instance
+    // methods, class methods, and delegate methods by querying the database.
+    // [agl] FIXME Any way to remove this dependence on parse order?
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing headers for framework %@, in base dir %@", frameworkName, [_docSetIndex basePathForHeaders]);
+    DIGSLogDebug(@"---------------------------------------------------");
+
+    // NOTE that we have to parse all headers in each directory, not just
+    // headers that the docset index explicitly associates with ZTOKENs.  For
+    // example, several DOMxxx classes, such as DOMComment, will be displayed
+    // as root classes if I don't parse their headers.  The ideal thing would
+    // be to be able to follow #imports, but I'm not being that smart.
+    AKFramework *aFramework = [self frameworkWithName:frameworkName];
+    NSSet *headerDirs = [_docSetIndex headerDirsForFramework:frameworkName];
+
+    for (NSString *headerDir in headerDirs)
+    {
+        [AKObjCHeaderParser recursivelyParseDirectory:headerDir forFramework:aFramework];
+    }
+
+    // Parse HTML files.
+    NSString *baseDirForDocs = [_docSetIndex baseDirForDocs];
+
+    DIGSLogDebug(@"---------------------------------------------------");
+    DIGSLogDebug(@"Parsing HTML docs for framework %@, in base dir %@", frameworkName, baseDirForDocs);
+    DIGSLogDebug(@"---------------------------------------------------");
+
+    DIGSLogDebug(@"Parsing behavior docs for framework %@", frameworkName);
+    [AKCocoaBehaviorDocParser parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
+                                   underBaseDir:baseDirForDocs
+                                   forFramework:aFramework];
+
+    DIGSLogDebug(@"Parsing functions docs for framework %@", frameworkName);
+    [AKCocoaFunctionsDocParser parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
+                                    underBaseDir:baseDirForDocs
+                                    forFramework:aFramework];
+
+    DIGSLogDebug(@"Parsing globals docs for framework %@", frameworkName);
+    [AKCocoaGlobalsDocParser parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
+                                  underBaseDir:baseDirForDocs
+                                  forFramework:aFramework];
+}
+
 + (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools
                               errorStrings:(NSMutableArray *)errorStrings
 {
@@ -695,7 +746,8 @@
 
     if ([[devTools sdkVersionsThatAreCoveredByDocSets] count] == 0)
     {
-        NSString *msg = [NSString stringWithFormat:@"No docsets were found for any SDKs installed in %@.", devToolsPath];
+        NSString *msg = [NSString stringWithFormat:@"No docsets were found for any SDKs installed in %@.",
+                         devToolsPath];
         [errorStrings addObject:msg];
         return nil;
     }
@@ -715,17 +767,16 @@
 
     if (basePathForHeaders == nil)
     {
-        NSString *msg = [NSString stringWithFormat:@"No %@ SDK was found in %@.", sdkVersion, devToolsPath];
+        NSString *msg = [NSString stringWithFormat:@"No %@ SDK was found in %@.",
+                         sdkVersion, devToolsPath];
         [errorStrings addObject:msg];
         return nil;
     }
 
     DIGSLogDebug(@"%@ -- docSetPath is [%@]", NSStringFromSelector(_cmd), docSetPath);
 
-    return
-        [[AKDocSetIndex alloc]
-            initWithDocSetPath:docSetPath
-            basePathForHeaders:basePathForHeaders];
+    return [[AKDocSetIndex alloc] initWithDocSetPath:docSetPath
+                                  basePathForHeaders:basePathForHeaders];
 }
 
 // Adds a framework if we haven't seen it before.  We call this each time

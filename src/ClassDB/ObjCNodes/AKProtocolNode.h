@@ -8,19 +8,11 @@
 #import "AKBehaviorNode.h"
 
 /*!
- * @class       AKProtocolNode
- * @abstract    Represents an Objective-C protocol.
- * @discussion  Represents an Objective-C protocol.  The protocol can be
- *              either formal or informal.  A protocol is assumed to be
- *              informal if no header file has been specified for it.
- *
- *              An AKProtocolNode's -nodeName is the name of the protocol
- *              it represents.
+ * Represents an Objective-C protocol, either formal or informal.  A protocol is
+ * assumed to be informal if no header file has been specified for it.
  */
 @interface AKProtocolNode : AKBehaviorNode
-{
-}
 
-- (BOOL)isInformal;
+@property (nonatomic, readonly, assign)  BOOL isInformal;
 
 @end

@@ -71,13 +71,13 @@
             AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName owningFramework:_parserFW];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode = [[_parserFW fwDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
+            AKGroupNode *groupNode = [[_parserFW owningDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
 
             if (!groupNode)
             {
                 groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_parserFW];
                 [groupNode setNodeDocumentation:functionSection];
-                [[_parserFW fwDatabase] addFunctionsGroup:groupNode];
+                [[_parserFW owningDatabase] addFunctionsGroup:groupNode];
             }
 
             [groupNode addSubnode:functionNode];

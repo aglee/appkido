@@ -53,16 +53,6 @@
     return NO;
 }
 
-- (NSString *)headerFileWhereDeclared
-{
-    return _headerFileWhereDeclared;
-}
-
-- (void)setHeaderFileWhereDeclared:(NSString *)aPath
-{
-    _headerFileWhereDeclared = aPath;
-}
-
 - (void)addImplementedProtocol:(AKProtocolNode *)node
 {
     if ([_protocolNodeNames containsObject:[node nodeName]])
@@ -174,12 +164,13 @@
 #pragma mark Getters and setters -- deprecated methods
 
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-    owningFramework:(AKFramework *)nodeOwningFW
+                                      owningFramework:(AKFramework *)nodeOwningFW
 {
     // Is this an instance method or a class method?  Note this assumes a
     // a method node for the method already exists, presumably because we
     // parsed the header files.
     AKMethodNode *methodNode = [self classMethodWithName:methodName];
+    
     if (methodNode == nil)
     {
         methodNode = [self instanceMethodWithName:methodName];
@@ -187,8 +178,8 @@
     
     if (methodNode == nil)
     {
-        DIGSLogInfo(
-            @"Couldn't find class method or instance method named %@ while processing deprecated methods for behavior %@",
+        DIGSLogInfo(@"Couldn't find class method or instance method named %@"
+                    @" while processing deprecated methods for behavior %@",
             methodName, [self nodeName]);
     }
     else
@@ -219,7 +210,8 @@
 {
     DIGSLogDebug(@"Unexpected: behavior node %@ getting a -setNodeDocumentation: message", [self nodeName]);
     [super setNodeDocumentation:fileSection];
-    [self setNodeDocumentation:fileSection forFrameworkNamed:[[self owningFramework] frameworkName]];
+    [self setNodeDocumentation:fileSection
+             forFrameworkNamed:[[self owningFramework] frameworkName]];
 }
 
 @end

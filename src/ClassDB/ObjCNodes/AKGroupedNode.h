@@ -11,26 +11,24 @@
 @interface AKGroupedNode : AKDatabaseNode
 {
 @private
-    NSString *_groupName;
+    NSString *_groupName;  // [agl] would _owningGroup make more sense?
 }
 
+@property (nonatomic, readonly, copy) NSString *groupName;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-
-#pragma mark -
-#pragma mark Init/awake/dealloc
-
-// Designated initializer.
+/*! Designated initializer. */
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
-    groupName:(NSString *)groupName;
+       owningFramework:(AKFramework *)theFramework
+             groupName:(NSString *)groupName;
 
 
 #pragma mark -
 #pragma mark Getters and setters
 
 - (NSString *)groupName;
+
 
 @end

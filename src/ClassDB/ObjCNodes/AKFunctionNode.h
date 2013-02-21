@@ -8,8 +8,8 @@
 
 #import "AKDatabaseNode.h"
 
+/*!
+ * Represents a C function.
+ */
 @interface AKFunctionNode : AKDatabaseNode
-{
-}
-
 @end

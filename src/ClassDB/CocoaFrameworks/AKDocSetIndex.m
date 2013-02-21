@@ -14,6 +14,29 @@
 #import "FMDatabase.h"
 
 @implementation AKDocSetIndex
+{
+@private
+    NSString *_docSetPath;  // Path to a .docset bundle.
+
+    // The ZHEADER table contains absolute paths to header files in
+    // /System/Library/Frameworks.  However, the files should actually be
+    // looked up under the appropriate SDK directory in the Dev Tools.
+    // In particular, the iPhone headers exist only under the Dev Tools
+    // directory -- there is no /System/Library/Frameworks/UIKit.framework
+    // on the Mac, for example.  We need to prefix that path with
+    // /(DEVTOOLS)/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator2.0.sdk
+    // to find the UIKit headers.  That prefix is was goes in _basePathForHeaders.
+    //
+    // I *think* I can get away with using the plain /System/Library/Frameworks
+    // header paths for the Core Reference docs, so this can be @"/" when
+    // the docset is a Core Reference docset.  Otherwise, the tricky thing
+    // is that there can be multiple SDKs for regular Mac OS; for example,
+    // under /(DEVTOOLS)/SDKs I have MacOSX10.4u.sdk and MacOSX10.5.sdk.
+    // I'll assume the user's actual OS will be the latest of these, and
+    //  that the documentation is the same for all.
+    NSString *_basePathForHeaders;
+}
+
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -61,7 +84,6 @@
     DIGSLogError_NondesignatedInitializer();
     return nil;
 }
-
 
 
 #pragma mark -
@@ -166,32 +188,26 @@
 
 - (NSArray *)behaviorDocPathsForFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:@"cl"
-            orType:@"intf"
-            orType:@"clm"
-            orType:@"instm"  // to pick up "XXX Additions Reference"
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:@"cl"
+                                   orType:@"intf"
+                                   orType:@"clm"
+                                   orType:@"instm"  // to pick up "XXX Additions Reference"
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)functionsDocPathsForFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:@"func"
-            orType:@"macro"
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:@"func"
+                                   orType:@"macro"
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)globalsDocPathsForFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:@"econst"
-            orType:@"data"
-            orType:@"tdef"
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:@"econst"
+                                   orType:@"data"
+                                   orType:@"tdef"
+                             forFramework:frameworkName];
 
 /* [agl] I don't think we need to filter globals file names when we have a docset.
     // KLUDGE -- Globals are declared in many files, but currently we only
@@ -240,7 +256,7 @@
     NSMutableArray *stringArray = [NSMutableArray array];
 
     // Open the database.
-    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    FMDatabase *sqliteDB = [self _openSQLiteDB];
     if (sqliteDB == nil)
     {
         return nil;
@@ -323,47 +339,41 @@
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
     forFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:tokenType
-            orType:nil
-            orType:nil
-            orType:nil
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:tokenType
+                                   orType:nil
+                                   orType:nil
+                                   orType:nil
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
-    orType:(NSString *)tokenType2
-    forFramework:(NSString *)frameworkName
+                               orType:(NSString *)tokenType2
+                         forFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:tokenType1
-            orType:tokenType2
-            orType:nil
-         orType:nil
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:tokenType1
+                                   orType:tokenType2
+                                   orType:nil
+                                   orType:nil
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    forFramework:(NSString *)frameworkName
+                               orType:(NSString *)tokenType2
+                               orType:(NSString *)tokenType3
+                         forFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:tokenType1
-            orType:tokenType2
-            orType:tokenType3
-            orType:nil
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:tokenType1
+                                   orType:tokenType2
+                                   orType:tokenType3
+                                   orType:nil
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    orType:(NSString *)tokenType4
-    forFramework:(NSString *)frameworkName
+                               orType:(NSString *)tokenType2
+                               orType:(NSString *)tokenType3
+                               orType:(NSString *)tokenType4
+                         forFramework:(NSString *)frameworkName
 {
     // Make sure we pass non-nil for all four tokenType arguments.
     if (tokenType2 == nil)
@@ -392,6 +402,7 @@
                                                orType:tokenType3
                                                orType:tokenType4
                                          forFramework:frameworkName];
+    
     [docPaths unionSet:[self _docPathsFromQuery:docPathsSecondQueryTemplate
                                   withTokenType:tokenType1
                                          orType:tokenType2
@@ -404,10 +415,7 @@
 
 - (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames
 {
-    NSEnumerator *essentialFrameworkNamesEnum = [AKNamesOfEssentialFrameworks reverseObjectEnumerator];
-    NSString *essentialFrameworkName;
-
-    while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
+    for (NSString *essentialFrameworkName in [AKNamesOfEssentialFrameworks reverseObjectEnumerator])
     {
         if ([fwNames containsObject:essentialFrameworkName])
         {
