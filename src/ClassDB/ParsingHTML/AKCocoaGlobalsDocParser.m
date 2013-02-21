@@ -66,8 +66,8 @@
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    if ([[_parserFW owningDatabase] classDocumentedInHTMLFile:filePath]
-        || [[_parserFW owningDatabase] protocolDocumentedInHTMLFile:filePath])
+    if ([[_targetFramework owningDatabase] classDocumentedInHTMLFile:filePath]
+        || [[_targetFramework owningDatabase] protocolDocumentedInHTMLFile:filePath])
     {
         // Don't process the file if it's already been processed as a
         // behavior doc.  This is to catch the case where the docset index
@@ -114,16 +114,16 @@
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKGroupNode *groupNode = [[_parserFW owningDatabase] globalsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
+    AKGroupNode *groupNode = [[_targetFramework owningDatabase] globalsGroupNamed:groupName inFrameworkNamed:[_targetFramework frameworkName]];
 
     if (!groupNode)
     {
-        groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_parserFW];
+        groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_targetFramework];
         // [agl] FIXME -- There is a slight flaw in this reasoning: the
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
         [groupNode setNodeDocumentation:groupSection];
-        [[_parserFW owningDatabase] addGlobalsGroup:groupNode];
+        [[_targetFramework owningDatabase] addGlobalsGroup:groupNode];
     }
 
     // Iterate through child sections.  Each child section corresponds
@@ -145,11 +145,11 @@
     // See if the file we're parsing is a behavior doc.  Relies on the
     // assumption that if so, the doc was already parsed as such and is
     // therefore known to the database.
-    id behaviorNode = [[_parserFW owningDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
+    id behaviorNode = [[_targetFramework owningDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
 
     if (behaviorNode == nil)
     {
-        behaviorNode = [[_parserFW owningDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
+        behaviorNode = [[_targetFramework owningDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
     }
 
     // Create a node.
@@ -169,7 +169,7 @@
     }
 
     AKGlobalsNode *globalsNode =
-        [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName owningFramework:_parserFW];
+        [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName owningFramework:_targetFramework];
 
     // Add any individual names we find in the minor section.
     NSEnumerator *namesOfGlobalsEnum = [[self _parseNamesOfGlobalsInFileSection:fileSection] objectEnumerator];

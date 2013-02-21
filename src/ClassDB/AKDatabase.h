@@ -65,6 +65,10 @@
  */
 @interface AKDatabase : NSObject
 
+@property (nonatomic, weak) id <AKDatabaseDelegate>delegate;
+@property (nonatomic, readonly, strong) AKDocSetIndex *docSetIndex;
+
+
 #pragma mark -
 #pragma mark - Factory methods
 
@@ -86,105 +90,67 @@
 #pragma mark Populating the database
 
 /*!
- * @method      frameworkNameIsSelectable:
- * @discussion  Is there a framework with the given name on the receiver's platform?
+ * For each given framework names, queries the docSetIndex for all API tokens in
+ * the that framework. Adds database nodes accordingly. Sends a delegate message
+ * for each framework loaded.
+ *
+ * If frameworkNames is nil, all "essential" frameworks are loaded. The meaning
+ * "essential" depends on the platform the database is for.
  */
-- (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName;
-
-/*!
- * @method      loadTokensForFrameworks:
- * @discussion  Sends delegate message for each
- *              framework loaded.  frameworkNames can be nil; by default, this causes
- *              all "essential" frameworks to be loaded.
- */
-- (void)loadTokensForFrameworks:(NSArray *)frameworkNames;
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (AKDocSetIndex *)docSetIndex;
-
-/*!
- * @method      setDelegate:
- * @discussion  The delegate is notified when a framework is about to be loaded.
- */
-- (void)setDelegate:(id <AKDatabaseDelegate>)delegate;
+- (void)loadTokensForFrameworksWithNames:(NSArray *)frameworkNames;
 
 
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
 
-/*
- * @method      frameworkWithName:
- * @discussion  Creates the AKFramework instance if it doesn't exist. [agl] Possibly confusing? Not sure.
- */
+/* Creates the AKFramework instance if it doesn't exist. [agl] Confusing semantics. */
 - (AKFramework *)frameworkWithName:(NSString *)frameworkName;
 
-/*!
- * @method      frameworkNames
- * @discussion  Returns the names of all frameworks that have been loaded, in no guaranteed order.
- */
+/*! Names of all frameworks that have been loaded, in no guaranteed order. */
 - (NSArray *)frameworkNames;
 
+/*! Same as -frameworkNames, but sorted alphabetically. */
 - (NSArray *)sortedFrameworkNames;
 
 - (BOOL)hasFrameworkWithName:(NSString *)frameworkName;
 
+/*! Names of all frameworks we can offer for the user to load. */
 - (NSArray *)namesOfAvailableFrameworks;
 
 
 #pragma mark -
 #pragma mark Getters and setters -- classes
 
-/*!
- * @method      classesForFrameworkNamed:
- * @discussion  Elements of the returned array are AKClassNodes.  Order is undefined.
- */
+/*! Array of AKClassNode. No guaranteed order. */
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
 
-/*!
- * @method      rootClasses
- * @discussion  Returns all classes that have no parent class.  Elements of
- *              the returned array are AKClassNodes.  Order is undefined.
- */
+/*! * Class without parent class. Array of AKClassNode. No guaranteed order. */
 - (NSArray *)rootClasses;
 
-/*!
- * @method      allClasses
- * @discussion  Returns all classes known to the receiver.  Elements of
- *              the returned array are AKClassNodes.  Order is undefined.
- */
+/*! Array of AKClassNode. No guaranteed order. */
 - (NSArray *)allClasses;
 
 - (AKClassNode *)classWithName:(NSString *)className;
 
-/*!
- * @method      addClassNode:
- * @discussion  Does nothing if the receiver already contains a class with the same name.
- */
+/*! Does nothing if we already contain a class with that name. */
 - (void)addClassNode:(AKClassNode *)classNode;
 
 
 #pragma mark -
 #pragma mark Getters and setters -- protocols
 
+/*! Array of AKProtocolNode. No guaranteed order. */
 - (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName;
 
+/*! Array of AKProtocolNode. No guaranteed order. */
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
 
-/*!
- * @method      allProtocols
- * @discussion  Returns a list of all protocols known to the receiver, in no guaranteed order.
- */
+/*! Array of AKProtocolNode. No guaranteed order. */
 - (NSArray *)allProtocols;
 
 - (AKProtocolNode *)protocolWithName:(NSString *)name;
 
-/*!
- * @method      addProtocolNode:
- * @discussion  Does nothing if the receiver already contains a protocol with the same name.
- */
+/*! Does nothing if we already contain a protocol with that name. */
 - (void)addProtocolNode:(AKProtocolNode *)classNode;
 
 
@@ -192,8 +158,12 @@
 #pragma mark Getters and setters -- functions
 
 - (NSInteger)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName;
+
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName;
-- (AKGroupNode *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName;
+
+- (AKGroupNode *)functionsGroupNamed:(NSString *)groupName
+                    inFrameworkNamed:(NSString *)frameworkName;
+
 - (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
 
 - (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
@@ -204,8 +174,12 @@
 #pragma mark Getters and setters -- globals
 
 - (NSInteger)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName;
+
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName;
-- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName;
+
+- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName
+                  inFrameworkNamed:(NSString *)frameworkName;
+
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
 
 - (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
@@ -228,6 +202,8 @@
 - (AKFileSection *)rootSectionForHTMLFile:(NSString *)filePath;
 - (void)rememberRootSection:(AKFileSection *)rootSection forHTMLFile:(NSString *)filePath;
 
+// [agl] Awkward having these here. Rethink design. Separate concerns between
+// the node graph and the documentation repository.
 /*!
  * @method      offsetOfAnchorString:inHTMLFile:
  * @discussion  When the user clicks a hyperlink, we are given the name of

@@ -110,8 +110,8 @@
         }
         else
         {
-            filename = [dirPath stringByAppendingPathComponent:filename];
-            [self processFile:filename];
+            NSString *filePath = [dirPath stringByAppendingPathComponent:filename];
+            [self processFile:filePath];
         }
     }
 }

@@ -68,16 +68,16 @@
         }
         else
         {
-            AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName owningFramework:_parserFW];
+            AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName owningFramework:_targetFramework];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode = [[_parserFW owningDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
+            AKGroupNode *groupNode = [[_targetFramework owningDatabase] functionsGroupNamed:groupName inFrameworkNamed:[_targetFramework frameworkName]];
 
             if (!groupNode)
             {
-                groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_parserFW];
+                groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_targetFramework];
                 [groupNode setNodeDocumentation:functionSection];
-                [[_parserFW owningDatabase] addFunctionsGroup:groupNode];
+                [[_targetFramework owningDatabase] addFunctionsGroup:groupNode];
             }
 
             [groupNode addSubnode:functionNode];

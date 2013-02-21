@@ -2476,7 +2476,7 @@
 		65B10A4709D7B6C300A8A637 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -2485,7 +2485,7 @@
 				PRODUCT_NAME = AppKiDo;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2493,7 +2493,7 @@
 		65B10A4809D7B6C300A8A637 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "Developer ID Application: Andrew Lee";
@@ -2503,7 +2503,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2571,7 +2571,7 @@
 		73DA1ED1089AEA560016F230 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2602,6 +2602,7 @@
 				"OTHER_CFLAGS[arch=i386]" = "-fsingle-precision-constant";
 				"OTHER_CFLAGS[arch=ppc]" = "-fsingle-precision-constant";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-#warnings",
@@ -2613,7 +2614,7 @@
 		73DA1ED2089AEA560016F230 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = NO;
 				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
@@ -2651,6 +2652,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = debugging;
+				VALID_ARCHS = x86_64;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-#warnings",

@@ -14,6 +14,32 @@
 #import "AKCollectionOfNodes.h"
 
 @implementation AKBehaviorNode
+{
+    // One AKProtocolNode for each protocol this behavior conforms to.
+    NSMutableArray *_protocolNodes;
+
+    // Indexes the contents of _protocolNodes.
+    NSMutableSet *_protocolNodeNames;
+
+    // Contains AKPropertyNodes, each representing a property of this class.
+    AKCollectionOfNodes *_indexOfProperties;
+
+    // Contains AKMethodNodes, one for each class method that has either
+    // been found in my .h file or been found in the documentation for my
+    // behavior.
+    AKCollectionOfNodes *_indexOfClassMethods;
+
+    // Contains AKMethodNodes, one for each instance method that has either
+    // been found in my .h file or been found in the documentation for my
+    // behavior.
+    AKCollectionOfNodes *_indexOfInstanceMethods;
+
+    NSMutableArray *_namesOfAllOwningFrameworks;
+
+    // Keys are names of owning frameworks. Values are the root file sections
+    // containing documentation for the framework.
+    NSMutableDictionary *_nodeDocumentationByFrameworkName;
+}
 
 
 #pragma mark -
@@ -30,7 +56,7 @@
         _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
         _indexOfInstanceMethods = [[AKCollectionOfNodes alloc] init];
 
-        _allOwningFrameworks = [NSMutableArray arrayWithObject:theFramework];
+        _namesOfAllOwningFrameworks = [NSMutableArray arrayWithObject:[theFramework frameworkName]];
 
         _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
     }
@@ -39,13 +65,12 @@
 }
 
 
-
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-- (NSArray *)allOwningFrameworks
+- (NSArray *)namesOfAllOwningFrameworks
 {
-    return _allOwningFrameworks;
+    return _namesOfAllOwningFrameworks;
 }
 
 - (BOOL)isClassNode
@@ -82,21 +107,27 @@
     return result;
 }
 
+- (NSArray *)instanceMethodNodes
+{
+    return [_indexOfInstanceMethods allNodes];
+}
+
 - (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName
 {
     return [_nodeDocumentationByFrameworkName objectForKey:frameworkName];
 }
 
-- (void)setNodeDocumentation:(AKFileSection *)fileSection forFrameworkNamed:(NSString *)frameworkName
+- (void)setNodeDocumentation:(AKFileSection *)fileSection
+           forFrameworkNamed:(NSString *)frameworkName
 {
     if ((frameworkName == nil) || [frameworkName isEqualToString:[[self owningFramework] frameworkName]])
     {
         [super setNodeDocumentation:fileSection];
     }
 
-    if (![_allOwningFrameworks containsObject:frameworkName])
+    if (![_namesOfAllOwningFrameworks containsObject:frameworkName])
     {
-        [_allOwningFrameworks addObject:frameworkName];
+        [_namesOfAllOwningFrameworks addObject:frameworkName];
     }
 
     [_nodeDocumentationByFrameworkName setObject:fileSection forKey:frameworkName];
@@ -198,11 +229,12 @@
 {
     [super setOwningFramework:aFramework];
 
-    // Move this framework name to the beginning of _allOwningFrameworks.
-    if (aFramework)
+    // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
+    NSString *frameworkName = [aFramework frameworkName];
+    if (frameworkName)
     {
-        [_allOwningFrameworks removeObject:aFramework];
-        [_allOwningFrameworks insertObject:aFramework atIndex:0];
+        [_namesOfAllOwningFrameworks removeObject:frameworkName];
+        [_namesOfAllOwningFrameworks insertObject:frameworkName atIndex:0];
     }
 }
 

@@ -86,14 +86,14 @@
         
         // Store bits of information about the class node relating it to its
         // HTML documentation file.
-        [[_parserFW owningDatabase]
+        [[_targetFramework owningDatabase]
             rememberThatClass:classNode
             isDocumentedInHTMLFile:[self currentPath]];
         if (isMainClassReference)  // [agl] REMOVE why only if main?
         {
             [classNode
                 setNodeDocumentation:_rootSectionOfCurrentFile
-                forFrameworkNamed:[_parserFW frameworkName]];
+                forFrameworkNamed:[_targetFramework frameworkName]];
         }
 
         behaviorNode = classNode;
@@ -107,12 +107,12 @@
         
         // Store bits of information about the protocol node relating it to its
         // HTML documentation file.
-        [[_parserFW owningDatabase]
+        [[_targetFramework owningDatabase]
             rememberThatProtocol:protocolNode
             isDocumentedInHTMLFile:[self currentPath]];
         [protocolNode
             setNodeDocumentation:_rootSectionOfCurrentFile
-            forFrameworkNamed:[_parserFW frameworkName]];
+            forFrameworkNamed:[_targetFramework frameworkName]];
         
         behaviorNode = protocolNode;
     }
@@ -304,7 +304,7 @@
     // Get our hands on the node for the class whose documentation is
     // in _rootSectionOfCurrentFile.
     NSString *className = [self _parseBehaviorName];
-    AKClassNode *classNode = [[_parserFW owningDatabase] classWithName:className];
+    AKClassNode *classNode = [[_targetFramework owningDatabase] classWithName:className];
 
     // We assume the database has already been populated from header files.
     // If a class isn't already in the database, we assume it's an accident
@@ -334,7 +334,7 @@
     NSString *protocolName = [self _parseBehaviorName];
 
     AKProtocolNode *protocolNode =
-        [[_parserFW owningDatabase] protocolWithName:protocolName];
+        [[_targetFramework owningDatabase] protocolWithName:protocolName];
 
     // We assume the database has already been populated from header files.
     // [agl] FIXME -- I don't like this assumption -- presumes class knows
@@ -346,8 +346,8 @@
         protocolNode =
             [AKProtocolNode
                 nodeWithNodeName:protocolName
-                owningFramework:_parserFW];
-        [[_parserFW owningDatabase] addProtocolNode:protocolNode];
+                owningFramework:_targetFramework];
+        [[_targetFramework owningDatabase] addProtocolNode:protocolNode];
     }
 
     return protocolNode;
@@ -377,7 +377,7 @@
             memberNode =
                 [[methodNodeClass alloc]
                     initWithNodeName:memberName
-                    owningFramework:_parserFW
+                    owningFramework:_targetFramework
                     owningBehavior:behaviorNode];;
             [behaviorNode
                 performSelector:selectorForAddingNode
@@ -428,7 +428,7 @@
                 AKMethodNode *methodNode =
                     [behaviorNode
                         addDeprecatedMethodIfAbsentWithName:methodName
-                        owningFramework:_parserFW];
+                        owningFramework:_targetFramework];
 
                 if (methodNode != nil)
                 {

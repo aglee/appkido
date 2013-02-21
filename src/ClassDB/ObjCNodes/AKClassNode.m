@@ -269,7 +269,7 @@
     }
 
     // Look for instance method names of the form setFooDelegate:.
-    for (AKMethodNode *methodNode in [_indexOfInstanceMethods allNodes])
+    for (AKMethodNode *methodNode in [self instanceMethodNodes])
     {
         NSString *methodName = [methodNode nodeName];
 

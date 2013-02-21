@@ -8,7 +8,6 @@
 
 #import "AKFramework.h"
 
-
 @implementation AKFramework
 
 #pragma mark -
@@ -18,7 +17,6 @@
 {
     return _frameworkName;
 }
-
 
 - (BOOL)isEqual:(id)anObject
 {

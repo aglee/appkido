@@ -24,25 +24,21 @@
         return;
     }
 
-    AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
+    AKParser *parser = [[self alloc] initWithFramework:aFramework];
 
     [parser processDirectory:dirPath recursively:YES];
-      // release here
 }
 
-+ (void)parseFilesInPaths:(NSArray *)docPaths
-    underBaseDir:(NSString *)baseDir
-    forFramework:(AKFramework *)aFramework
++ (void)parseFilesInSubpaths:(NSArray *)subpaths
+                underBaseDir:(NSString *)baseDir
+                forFramework:(AKFramework *)aFramework
 {
-    NSInteger numDocs = [docPaths count];
-    NSInteger i;
-    for (i = 0; i < numDocs; i++)
+    for (NSString *subpath in subpaths)
     {
-        NSString *docPath = [baseDir stringByAppendingPathComponent:[docPaths objectAtIndex:i]];
-        AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
+        NSString *fullPath = [baseDir stringByAppendingPathComponent:subpath];
+        AKParser *parser = [[self alloc] initWithFramework:aFramework];
 
-        [parser processFile:docPath];
-          // release here
+        [parser processFile:fullPath];
     }
 }
 
@@ -54,7 +50,7 @@
 {
     if ((self = [super init]))
     {
-        _parserFW = aFramework;
+        _targetFramework = aFramework;
     }
 
     return self;
@@ -65,7 +61,6 @@
     DIGSLogError_NondesignatedInitializer();
     return nil;
 }
-
 
 
 #pragma mark -
@@ -112,5 +107,6 @@
     _current = NULL;
     _dataEnd = NULL;
 }
+
 
 @end

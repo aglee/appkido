@@ -17,44 +17,17 @@
 
 
 #pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKObjCHeaderParser (Private)
-
-// -- parsing tokens and generating parse nodes
-- (BOOL)_parseTopLevelNode;
-- (void)_parseClassOrCategoryDeclaration;
-- (void)_parseProtocolDeclaration;
-- (void)_parseProtocolListFor:(AKBehaviorNode *)behaviorNode;
-- (void)_parseMethodDeclarationFor:(AKBehaviorNode *)behaviorNode
-    usingGetSelector:(SEL)selectorForGettingNode
-    addSelector:(SEL)selectorForAddingNode;
-- (BOOL)_parseTokenIntoBuffer:(char[AKTokenBufferSize])buffer;
-
-// -- skipping stuff in the input stream
-- (void)_skipJunk;
-- (void)_skipRemainderOfLine;
-- (void)_skipWhitespace;
-- (void)_skipPastEndOfToken;
-- (void)_skipPastClosingBrace;
-- (void)_skipPastClosingParen;
-
-@end
-
-
-#pragma mark -
 #pragma mark Character test functions
 
 // We only care about certain punctuation characters.  This isn't
 // full-blown Objective-C parsing.
 static BOOL isPunctuation(char c)
 {
-    return
-        (c == '{') || (c == '}')
-        || (c == '(') || (c == ')')
-        || (c == '<') || (c == '>')
-        || (c == ';') || (c == ':') || (c == ',')
-        || (c == '-') || (c == '+');
+    return ((c == '{') || (c == '}')
+            || (c == '(') || (c == ')')
+            || (c == '<') || (c == '>')
+            || (c == ';') || (c == ':') || (c == ',')
+            || (c == '-') || (c == '+'));
 }
 
 @implementation AKObjCHeaderParser
@@ -88,11 +61,6 @@ static BOOL isPunctuation(char c)
     }
 }
 
-@end
-
-
-@implementation AKObjCHeaderParser (Private)
-
 
 #pragma mark -
 #pragma mark Private methods -- parsing
@@ -102,7 +70,7 @@ static BOOL isPunctuation(char c)
 // class, a category, or a protocol.  Or nil.
 - (BOOL)_parseTopLevelNode
 {
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:token]))
     {
@@ -132,19 +100,19 @@ static BOOL isPunctuation(char c)
 // Consumes the @end token that closes the class or category declaration.
 - (void)_parseClassOrCategoryDeclaration
 {
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
 
     // Get or create the class node whose name is the class name we are
     // sitting on.
     (void)[self _parseTokenIntoBuffer:token];
     NSString *className = [NSString stringWithUTF8String:token];
-    AKClassNode *classNode = [[_parserFW owningDatabase] classWithName:className];
+    AKClassNode *classNode = [[_targetFramework owningDatabase] classWithName:className];
 
     if (!classNode)
     {
-        classNode = [AKClassNode nodeWithNodeName:className owningFramework:_parserFW];
+        classNode = [AKClassNode nodeWithNodeName:className owningFramework:_targetFramework];
     }
-    [[_parserFW owningDatabase] addClassNode:classNode];
+    [[_targetFramework owningDatabase] addClassNode:classNode];
 
     AKBehaviorNode *resultNode = nil;
     while (([self _parseTokenIntoBuffer:token]))
@@ -167,12 +135,12 @@ static BOOL isPunctuation(char c)
             // we've come across the specification of its superclass.
             (void)[self _parseTokenIntoBuffer:token];
             NSString *parentClassName = [NSString stringWithUTF8String:token];
-            AKClassNode *parentClassNode = [[_parserFW owningDatabase] classWithName:parentClassName];
+            AKClassNode *parentClassNode = [[_targetFramework owningDatabase] classWithName:parentClassName];
 
             if (!parentClassNode)
             {
-                parentClassNode = [AKClassNode nodeWithNodeName:parentClassName owningFramework:_parserFW];
-                [[_parserFW owningDatabase] addClassNode:parentClassNode];
+                parentClassNode = [AKClassNode nodeWithNodeName:parentClassName owningFramework:_targetFramework];
+                [[_targetFramework owningDatabase] addClassNode:parentClassNode];
             }
 
             // [agl] KLUDGE  Some .h files use #ifndef WIN32 to decide
@@ -199,7 +167,7 @@ static BOOL isPunctuation(char c)
 
             if (categoryNode == nil)
             {
-                categoryNode = [AKCategoryNode nodeWithNodeName:catName owningFramework:_parserFW];
+                categoryNode = [AKCategoryNode nodeWithNodeName:catName owningFramework:_targetFramework];
                 [classNode addCategory:categoryNode];
             }
 
@@ -268,7 +236,7 @@ static BOOL isPunctuation(char c)
 
         // Make sure the framework which the class's .h file lives in is
         // recognized as the node's main framework.
-        [classNode setOwningFramework:_parserFW];
+        [classNode setOwningFramework:_targetFramework];
     }
 }
 
@@ -283,15 +251,15 @@ static BOOL isPunctuation(char c)
 // AKProtocolNode.
 - (void)_parseProtocolDeclaration
 {
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
     (void)[self _parseTokenIntoBuffer:token];
     NSString *protocolName = [NSString stringWithUTF8String:token];
-    AKProtocolNode *resultNode = [[_parserFW owningDatabase] protocolWithName:protocolName];
+    AKProtocolNode *resultNode = [[_targetFramework owningDatabase] protocolWithName:protocolName];
 
     if (!resultNode)
     {
-        resultNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
-        [[_parserFW owningDatabase] addProtocolNode:resultNode];
+        resultNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_targetFramework];
+        [[_targetFramework owningDatabase] addProtocolNode:resultNode];
     }
 
     [resultNode setHeaderFileWhereDeclared:[self currentPath]];
@@ -336,7 +304,7 @@ static BOOL isPunctuation(char c)
 // Consumes the closing angle-bracket.
 - (void)_parseProtocolListFor:(AKBehaviorNode *)behaviorNode
 {
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:token]))
     {
@@ -351,12 +319,12 @@ static BOOL isPunctuation(char c)
         else
         {
             NSString *protocolName = [NSString stringWithUTF8String:token];
-            AKProtocolNode *protocolNode = [[_parserFW owningDatabase] protocolWithName:protocolName];
+            AKProtocolNode *protocolNode = [[_targetFramework owningDatabase] protocolWithName:protocolName];
 
             if (!protocolNode)
             {
-                protocolNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
-                [[_parserFW owningDatabase] addProtocolNode:protocolNode];
+                protocolNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_targetFramework];
+                [[_targetFramework owningDatabase] addProtocolNode:protocolNode];
             }
 
             [behaviorNode addImplementedProtocol:protocolNode];
@@ -382,7 +350,7 @@ static BOOL isPunctuation(char c)
     NSMutableArray *argTypes = [NSMutableArray array];
 
     // Process all tokens in the method declaration.
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:token]))
     {
@@ -396,7 +364,7 @@ static BOOL isPunctuation(char c)
                 methodNode =
                     [[AKMethodNode alloc]
                         initWithNodeName:methodName
-                        owningFramework:_parserFW
+                        owningFramework:_targetFramework
                         owningBehavior:behaviorNode];
                 [behaviorNode performSelector:selectorForAddingNode withObject:methodNode];
             }
@@ -419,7 +387,7 @@ static BOOL isPunctuation(char c)
             // way, add the colon to the method name.
             [methodName appendString:@":"];
 
-            char argTok[AKTokenBufferSize];
+            char argTok[AKParserTokenBufferSize];
             (void)[self _parseTokenIntoBuffer:argTok];
             if (strcmp(argTok, "(") != 0)
             {
@@ -474,7 +442,7 @@ static BOOL isPunctuation(char c)
     DIGSLogError(@"shouldn't have gotten this far");
 }
 
-- (BOOL)_parseTokenIntoBuffer:(char[AKTokenBufferSize])buffer
+- (BOOL)_parseTokenIntoBuffer:(char[AKParserTokenBufferSize])buffer
 {
     const char *tokenStart;
 
@@ -601,7 +569,7 @@ static BOOL isPunctuation(char c)
 // Consumes the closing brace.
 - (void)_skipPastClosingBrace
 {
-    char buffer[AKTokenBufferSize];
+    char buffer[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:buffer]))
     {
@@ -620,7 +588,7 @@ static BOOL isPunctuation(char c)
 // Consumes the closing paren.
 - (void)_skipPastClosingParen
 {
-    char buffer[AKTokenBufferSize];
+    char buffer[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:buffer]))
     {
@@ -634,5 +602,6 @@ static BOOL isPunctuation(char c)
         }
     }
 }
+
 
 @end

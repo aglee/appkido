@@ -162,20 +162,20 @@
         return;
     }
 
-    NSString *fileToParse = [[sheet filenames] lastObject];
+    NSString *selectedFilePath = [[sheet URL] path];
     
-    if (fileToParse)
+    if (selectedFilePath)
     {
-        [_filePathField setStringValue:fileToParse];
-        [self _parseFileAtPath:fileToParse];
+        [_filePathField setStringValue:selectedFilePath];
+        [self _parseFileAtPath:selectedFilePath];
     }
 }
 
-- (void)_parseFileAtPath:(NSString *)fileToParse
+- (void)_parseFileAtPath:(NSString *)filePath
 {
     AKDocParser *dp = [[AKDocParser alloc] initWithFramework:nil];
     
-    [dp processFile:fileToParse];
+    [dp processFile:filePath];
     
     _rootSection = [dp rootSectionOfCurrentFile];
     

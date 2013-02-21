@@ -17,7 +17,7 @@
 {
 @private
     // These ivars are only used during _parseNamesOfGlobalsInFileSection:.
-    char _prevToken[AKTokenBufferSize];
+    char _prevToken[AKParserTokenBufferSize];
     const char *_currTokenStart;
     const char *_currTokenEnd;
     const char *_prevTokenStart;

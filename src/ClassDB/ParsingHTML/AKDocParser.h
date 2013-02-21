@@ -10,31 +10,23 @@
 @class AKFileSection;
 
 /*
- * @class       AKDocParser
- * @abstract    Base class for parsers that parse HTML documentation
- *              files.
- * @discussion  An AKDocParser parses HTML files.  It uses the results to
- *              instantiate or update AKDatabaseNodes and update the
- *              AKDatabase those nodes belong to.
+ * Base class for parsers that parse HTML documentation files.
  *
- *              Subclasses parse specific types of doc files and
- *              instantiate different kinds of AKDatabaseNode, depending
- *              on what the files contain.
+ * Uses parse results to create and/or modify database nodes.
  *
- *              Doc files have a three-level hierarchical structure, which
- *              is reflected in the tree of AKFileSections that gets
- *              constructed during parsing.  There is a <b>root section</b>,
- *              whose child sections are called <b>major sections</b>.
- *              The child sections of a major section are called
- *              <b>minor sections</b>.
+ * Subclasses parse specific types of doc files and instantiate different kinds
+ * of AKDatabaseNode, depending on what the files contain.
  *
- *              In general, the root section corresponds to a topic (see
- *              AKTopic), the major sections to subtopics within the topic
- *              (see AKSubtopic), and the minor sections to docs within a
- *              subtopic (see AKDoc).  In some cases, when we done parsing,
- *              we promote a minor section to a major section, so things
- *              get grouped more logically for our purposes (see
- *              AKCocoaBehaviorDocParser).
+ * Doc files have a three-level hierarchical structure, which is reflected in a
+ * tree of AKFileSections that gets constructed during parsing.  There is a
+ * <b>root section</b>, whose child sections are called <b>major sections</b>.
+ * The child sections of a major section are called <b>minor sections</b>.
+ *
+ * In general, the root section corresponds to a topic (see AKTopic), the major
+ * sections to subtopics within the topic (see AKSubtopic), and the minor
+ * sections to docs within a subtopic (see AKDoc).  In some cases, when we are
+ * done parsing, we promote a minor section to a major section, so things get
+ * grouped more logically for our purposes (see AKCocoaBehaviorDocParser).
  */
 // [agl] illustrate thus:
 //  <h1>TopicName</h1>       <-->  root section
@@ -60,7 +52,7 @@
     AKFileSection *_rootSectionOfCurrentFile;
 
     // Contains the most recently parsed token.
-    char _token[AKTokenBufferSize];
+    char _token[AKParserTokenBufferSize];
 }
 
 

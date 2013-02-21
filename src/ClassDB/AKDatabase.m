@@ -29,65 +29,36 @@
 
 @implementation AKDatabase
 {
-    id <AKDatabaseDelegate> _delegate;  // NOT retained; see category NSObject+AKDatabaseDelegate
+    // Frameworks.
+    // Note: there are constants in AKFrameworkConstants.h for the names of some
+    // frameworks that need to be treated specially.
+    NSMutableDictionary *_frameworksByName;  // @{FRAMEWORK_NAME: AKFramework}
+    NSMutableArray *_frameworkNames;
+    NSMutableArray *_namesOfAvailableFrameworks;
 
-    AKDocSetIndex *_docSetIndex;
+    // Classes.
+    NSMutableDictionary *_classNodesByName;  // @{CLASS_NAME: AKClassNode}
+    NSMutableDictionary *_classListsByFramework;  // @{FRAMEWORK_NAME: @[AKClassNode]}
 
-    // --- Frameworks ---
+    // Protocol.
+    NSMutableDictionary *_protocolNodesByName;  // @{PROTOCOL_NAME -> @[AKProtocolNode]
+    NSMutableDictionary *_protocolListsByFramework;  // @{FRAMEWORK_NAME: @[AKProtocolNode]}
 
-    NSMutableDictionary *_frameworksByName;  // (NSString) -> (AKFramework)
+    // Functions.
+    NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
+    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
 
-    // There are constants in AKFrameworkConstants.h for the names of some frameworks
-    // that need to be treated specially.
-    NSMutableArray *_frameworkNames;  // frameworks that have been loaded
-    NSMutableArray *_namesOfAvailableFrameworks;  // frameworks that the user could choose to load
+    // Globals.
+    NSMutableDictionary *_globalsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
+    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
 
-    // --- Classes ---
+    // Hyperlink support.
+    NSMutableDictionary *_frameworkNamesByHTMLPath;  // @{PATH_TO_HTML_FILE: FRAMEWORK_NAME}
+    NSMutableDictionary *_classNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassNode}
+    NSMutableDictionary *_protocolNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolNode}
 
-    // (class name) -> (AKClassNode)
-    NSMutableDictionary *_classNodesByName;
-
-    // (framework name) -> (NSArray of AKClassNode)
-    NSMutableDictionary *_classListsByFramework;
-
-    // --- Protocols ---
-
-    // (protocol name) -> (AKProtocolNodes)
-    NSMutableDictionary *_protocolNodesByName;
-
-    // (framework name) -> (NSArray of AKProtocolNode)
-    NSMutableDictionary *_protocolListsByFramework;
-
-    // --- Functions ---
-
-    // (framework name) -> (NSArray of AKGroupNode)
-    NSMutableDictionary *_functionsGroupListsByFramework;
-
-    // (framework name) -> ((group name) -> AKGroupNode)
-    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;
-
-    // --- Globals ---
-
-    // (framework name) -> (NSArray of AKGroupNode)
-    NSMutableDictionary *_globalsGroupListsByFramework;
-
-    // (framework name) -> ((group name) -> AKGroupNode)
-    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;
-
-    // --- Hyperlink support ---
-
-    // (path to HTML file) -> (name of framework)
-    NSMutableDictionary *_frameworkNamesByHTMLPath;
-
-    // (path to HTML file) -> (AKClassNode)
-    NSMutableDictionary *_classNodesByHTMLPath;
-
-    // (path to HTML file) -> (AKProtocolNode)
-    NSMutableDictionary *_protocolNodesByHTMLPath;
-
-    // (path to HTML file) -> (root AKFileSection for that file)
     // See AKDocParser for an explanation of root sections.
-    NSMutableDictionary *_rootSectionsByHTMLPath;
+    NSMutableDictionary *_rootSectionsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKFileSection}
 
     // Keys are anchor strings.  Each value is a dictionary whose keys are
     // paths to HTML files and whose values are NSNumbers containing the
@@ -97,6 +68,8 @@
     // is meant by "anchor strings."
     NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
 }
+
+@synthesize docSetIndex = _docSetIndex;
 
 
 #pragma mark -
@@ -212,12 +185,7 @@
 #pragma mark -
 #pragma mark Populating the database
 
-- (BOOL)frameworkNameIsSelectable:(NSString *)frameworkName
-{
-    return [[_docSetIndex selectableFrameworkNames] containsObject:frameworkName];
-}
-
-- (void)loadTokensForFrameworks:(NSArray *)frameworkNames
+- (void)loadTokensForFrameworksWithNames:(NSArray *)frameworkNames
 {
     if (frameworkNames == nil)
     {
@@ -226,7 +194,7 @@
 
     for (NSString *fwName in frameworkNames)
     {
-        if ([self frameworkNameIsSelectable:fwName])
+        if ([[_docSetIndex selectableFrameworkNames] containsObject:fwName])
         {
             @autoreleasepool
             {
@@ -243,20 +211,6 @@
             }
         }
     }
-}
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (AKDocSetIndex *)docSetIndex
-{
-    return _docSetIndex;
-}
-
-- (void)setDelegate:(id <AKDatabaseDelegate>)delegate
-{
-    _delegate = delegate;  // [agl] note this is NOT retained
 }
 
 
@@ -715,19 +669,19 @@
     DIGSLogDebug(@"---------------------------------------------------");
 
     DIGSLogDebug(@"Parsing behavior docs for framework %@", frameworkName);
-    [AKCocoaBehaviorDocParser parseFilesInPaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
-                                   underBaseDir:baseDirForDocs
-                                   forFramework:aFramework];
+    [AKCocoaBehaviorDocParser parseFilesInSubpaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
+                                      underBaseDir:baseDirForDocs
+                                      forFramework:aFramework];
 
     DIGSLogDebug(@"Parsing functions docs for framework %@", frameworkName);
-    [AKCocoaFunctionsDocParser parseFilesInPaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
-                                    underBaseDir:baseDirForDocs
-                                    forFramework:aFramework];
+    [AKCocoaFunctionsDocParser parseFilesInSubpaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
+                                       underBaseDir:baseDirForDocs
+                                       forFramework:aFramework];
 
     DIGSLogDebug(@"Parsing globals docs for framework %@", frameworkName);
-    [AKCocoaGlobalsDocParser parseFilesInPaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
-                                  underBaseDir:baseDirForDocs
-                                  forFramework:aFramework];
+    [AKCocoaGlobalsDocParser parseFilesInSubpaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
+                                     underBaseDir:baseDirForDocs
+                                     forFramework:aFramework];
 }
 
 + (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools

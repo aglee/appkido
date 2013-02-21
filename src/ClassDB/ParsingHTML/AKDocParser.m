@@ -249,22 +249,22 @@
 
 - (void)parseCurrentFile
 {
-    @autoreleasepool {
-
-    // Do the parse.
-        AKFileSection *rootSection = [self _parseRootSection];
-
-        // Save the parse tree.
-        _rootSectionOfCurrentFile = rootSection;
+    @autoreleasepool
+    {
+        // Parse the file, to extract the hierarchy of sections therein.
+        _rootSectionOfCurrentFile = [self _parseRootSection];
 
         // Apply the parse results to the database.
-        if (rootSection != nil)
+        if (_rootSectionOfCurrentFile != nil)
         {
-            [[_parserFW owningDatabase] rememberFrameworkName:[_parserFW frameworkName] forHTMLFile:[self currentPath]];
-            [[_parserFW owningDatabase] rememberRootSection:rootSection forHTMLFile:[self currentPath]];
+            [[_targetFramework owningDatabase] rememberFrameworkName:[_targetFramework frameworkName]
+                                                         forHTMLFile:[self currentPath]];
+
+            [[_targetFramework owningDatabase] rememberRootSection:_rootSectionOfCurrentFile
+                                                       forHTMLFile:[self currentPath]];
+            
             [self applyParseResults];
         }
-
     }
 }
 
@@ -554,7 +554,7 @@
                     length:(_current - anchorStart)
                     encoding:NSUTF8StringEncoding];
 
-            [[_parserFW owningDatabase]
+            [[_targetFramework owningDatabase]
                 rememberOffset:(anchorStart - _dataStart)
                 ofAnchorString:anchorString
                 inHTMLFile:[self currentPath]];

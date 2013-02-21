@@ -55,7 +55,6 @@
 }
 
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
@@ -67,7 +66,7 @@
     // If we're looking at a class that spans multiple frameworks, add
     // doc names for those frameworks.
     AKFramework *classFramework = [_classNode owningFramework];
-    NSEnumerator *fwNameEnum = [[_classNode allOwningFrameworks] objectEnumerator];
+    NSEnumerator *fwNameEnum = [[_classNode namesOfAllOwningFrameworks] objectEnumerator];
     NSString *extraFrameworkName;
 
     while ((extraFrameworkName = [fwNameEnum nextObject]))
