@@ -17,16 +17,7 @@
 #import "AKWindowController.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKFindPanelController (Private)
-- (BOOL)_find:(BOOL)isForwardDirection;
-- (void)_findStringDidChange:(DIGSFindBuffer *)findWatcher;
-@end
-
 @implementation AKFindPanelController
-
 
 #pragma mark -
 #pragma mark Factory methods
@@ -165,13 +156,9 @@ static AKFindPanelController *s_sharedInstance = nil;
     }
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKFindPanelController (Private)
 
 - (NSView *)_viewToSearch
 {

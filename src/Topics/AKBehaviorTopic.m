@@ -10,21 +10,7 @@
 #import "DIGSLog.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKBehaviorTopic (Private)
-- (NSArray *)_subtopics;
-@end
-
-
 @implementation AKBehaviorTopic
-
-
-#pragma mark -
-#pragma mark Init/awake/dealloc
-
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -83,14 +69,9 @@
     return [self behaviorName];
 }
 
-@end
-
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKBehaviorTopic (Private)
 
 - (NSArray *)_subtopics
 {
@@ -103,5 +84,3 @@
 }
 
 @end
-
-

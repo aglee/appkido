@@ -16,22 +16,7 @@
 #import "AKDocLocator.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKDocView (Private)
-
-- (NSView *)_subview;
-- (void)_updateDocDisplay;
-- (void)_useScrollViewToDisplayPlainText:(NSData *)textData;
-- (void)_useWebViewToDisplayHTML:(NSData *)htmlData
-    fromFile:(NSString *)htmlFilePath;
-
-@end
-
-
 @implementation AKDocView
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -54,15 +39,13 @@
     _scrollView = [[NSScrollView alloc] initWithFrame:[self bounds]];
     [_scrollView setHasHorizontalScroller:NO];
     [_scrollView setHasVerticalScroller:YES];
-    [_scrollView setAutoresizingMask:
-        (NSViewWidthSizable | NSViewHeightSizable)];
+    [_scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [self addSubview:_scrollView];
 
     // Create a text view to be the document view of _scrollView.
     // [agl] can I do this in IB now?  if so, remember *NOT* to release in
     // -dealloc
-    AKTextView *textView =
-        [[AKTextView alloc] initWithFrame:[self bounds]];
+    AKTextView *textView = [[AKTextView alloc] initWithFrame:[self bounds]];
 
     [textView setAutoresizingMask:
         (NSViewWidthSizable | NSViewHeightSizable)];
@@ -87,11 +70,9 @@
     // at appropriate times.
     // [agl] can I do this in IB now?  if so, remember *NOT* to release in
     // -dealloc
-    _webView =
-        [[WebView alloc]
-            initWithFrame:[_scrollView frame]
-            frameName:nil
-            groupName:nil];
+    _webView = [[WebView alloc] initWithFrame:[_scrollView frame]
+                                    frameName:nil
+                                    groupName:nil];
     [_webView setAutoresizingMask:[_scrollView autoresizingMask]];
     [_webView setPolicyDelegate:_docListController];
     [_webView setUIDelegate:_docListController];
@@ -99,7 +80,6 @@
     // Update ivars with values from user prefs.
     [self applyPrefs];
 }
-
 
 
 #pragma mark -
@@ -137,10 +117,8 @@
     }
     else
     {
-        NSString *headerFontNamePref =
-            [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-        NSInteger headerFontSizePref =
-            [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
+        NSString *headerFontNamePref = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
+        NSInteger headerFontSizePref = [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
         BOOL headerFontChanged = NO;
 
         if (![_headerFontName isEqualToString:headerFontNamePref])
@@ -198,14 +176,9 @@
     return YES;
 }
 
-@end
-
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKDocView (Private)
 
 // Returns our first and only subview, which will be either _scrollView or
 // _webView.
@@ -263,9 +236,8 @@
     {
         // Remove _webView from the key view loop.
         id firstResponder = [[self window] firstResponder];
-        BOOL wasKey =
-            [firstResponder isKindOfClass:[NSView class]]
-                && [firstResponder isDescendantOf:_webView];
+        BOOL wasKey = ([firstResponder isKindOfClass:[NSView class]]
+                       && [firstResponder isDescendantOf:_webView]);
         [_originalPreviousKeyView setNextKeyView:_originalNextKeyView];
 
         // Swap in _scrollView as our subview.
@@ -276,20 +248,20 @@
         [_originalPreviousKeyView setNextKeyView:textView];
         [textView setNextKeyView:_originalNextKeyView];
         if (wasKey)
+        {
             [[self window] makeFirstResponder:textView];
+        }
     }
 
     // Display the plain text in _scrollView.
-    NSString *fontName =
-        [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-    NSInteger fontSize =
-        [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
+    NSString *fontName = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
+    NSInteger fontSize = [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
     NSFont *plainTextFont = [NSFont fontWithName:fontName size:fontSize];
     NSString *docString = @"";
+    
     if (textData)
     {
-        docString =
-            [[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding];
+        docString = [[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding];
     }
 
     [textView setRichText:NO];
@@ -306,7 +278,7 @@
 }
 
 - (void)_useWebViewToDisplayHTML:(NSData *)htmlData
-    fromFile:(NSString *)htmlFilePath
+                        fromFile:(NSString *)htmlFilePath
 {
     // Make _webView our subview if it isn't already.
     NSView *currentSubview = [self _subview];

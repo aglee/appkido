@@ -36,27 +36,7 @@
 #import "AKOldLinkResolver.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKWindowController (Private)
-- (void)_initToolbar;
-- (NSString *)_tooltipForJumpToSuperclass;
-- (void)_refreshNavigationButtons;
-- (void)_refreshBackButton;
-- (void)_refreshForwardButton;
-- (void)_refreshSuperclassButton;
-- (void)_navigateToHistoryIndex:(NSInteger)historyIndex;
-- (void)_addHistoryItem:(AKDocLocator *)newHistoryItem;
-- (AKTopic *)_currentTopic;
-- (CGFloat)_computeBrowserFraction;
-- (CGFloat)_computeBrowserHeight;
-- (void)_rememberCurrentTextSelection;
-@end
-
-
 @implementation AKWindowController
-
 
 #pragma mark -
 #pragma mark Private constants -- toolbar identifiers
@@ -914,13 +894,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [(NSWindow *)[aNotification object] orderFront:nil];
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKWindowController (Private)
 
 - (void)_initToolbar
 {

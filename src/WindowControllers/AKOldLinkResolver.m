@@ -29,39 +29,7 @@
 #import "AKOverviewDoc.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKOldLinkResolver (Private)
-
-/*!
- * Returns the name of the framework referred to by aString, or nil if
- * there is no match.  aString can be a framework name that's in the
- * AKDatabase (in which case it is returned as is), a string of the form
- * "XXX.framework" (in which case XXX is returned), or the string
- * "ApplicationKit" (in which case "AppKit" is returned).
- */
-- (NSString *)_frameworkNameImpliedBy:(NSString *)aString;
-
-- (NSInteger)_offsetOfAnchor:(NSString *)anchor
-    inFileSection:(AKFileSection *)fileSection;
-
-- (NSString *)_subtopicNameImpliedBySectionName:(NSString *)subtopicDesc;
-
-- (AKDocLocator *)_docLocatorForLinkAnchor:(NSString *)linkAnchor
-    rootSection:(AKFileSection *)rootSection
-    topic:(AKTopic *)docTopic
-    behaviorNode:(AKBehaviorNode *)behaviorNode
-    frameworkName:(NSString *)frameworkName;
-
-- (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
-    containingOffset:(NSUInteger)offset;
-
-@end
-
-
 @implementation AKOldLinkResolver
-
 
 #pragma mark -
 #pragma mark AKLinkResolver methods
@@ -156,6 +124,11 @@
 #pragma mark -
 #pragma mark Private methods
 
+// Returns the name of the framework referred to by aString, or nil if
+// there is no match.  aString can be a framework name that's in the
+// AKDatabase (in which case it is returned as is), a string of the form
+// "XXX.framework" (in which case XXX is returned), or the string
+// "ApplicationKit" (in which case "AppKit" is returned).
 - (NSString *)_frameworkNameImpliedBy:(NSString *)aString
 {
     // Is it the name of a framework already in the database?

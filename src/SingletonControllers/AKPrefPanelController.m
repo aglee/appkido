@@ -13,22 +13,7 @@
 #import "AKAppController.h"
 #import "AKDevToolsPathController.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKPrefPanelController (Private)
-
-- (void)_updateAppearanceTabFromPrefs;
-- (void)_updatePrefsFromAppearanceTab;
-- (void)_updateSearchTabFromPrefs;
-- (void)_updatePrefsFromSearchTab;
-- (NSArray *)_namesOfAvailableFrameworks;
-
-@end
-
 @implementation AKPrefPanelController
-
 
 #pragma mark -
 #pragma mark Private constants
@@ -223,28 +208,21 @@ static AKPrefPanelController *s_sharedInstance = nil;
     }
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKPrefPanelController (Private)
 
 // Update control settings in the prefs panel based on user preference
 // values given by NSUserDefaults.
 - (void)_updateAppearanceTabFromPrefs
 {
     // The list-font-name pref.
-    NSString *listFontName =
-        [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    NSInteger listFontNameIndex =
-        [_listFontNameChoice indexOfItemWithTitle:listFontName];
+    NSString *listFontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
+    NSInteger listFontNameIndex = [_listFontNameChoice indexOfItemWithTitle:listFontName];
 
     if (listFontNameIndex < 0)
     {
-        listFontNameIndex =
-            [_listFontNameChoice indexOfItemWithTitle:@"Helvetica"];
+        listFontNameIndex = [_listFontNameChoice indexOfItemWithTitle:@"Helvetica"];
 
         if (listFontNameIndex < 0)
         {
@@ -254,19 +232,15 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_listFontNameChoice selectItemAtIndex:listFontNameIndex];
 
     // The list-font-size pref.
-    [_listFontSizeCombo setIntegerValue:
-        [AKPrefUtils intValueForPref:AKListFontSizePrefName]];
+    [_listFontSizeCombo setIntegerValue:[AKPrefUtils intValueForPref:AKListFontSizePrefName]];
 
     // The header-font-name pref.
-    NSString *headerFontName =
-        [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-    NSInteger headerFontNameIndex =
-        [_headerFontNameChoice indexOfItemWithTitle:headerFontName];
+    NSString *headerFontName = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
+    NSInteger headerFontNameIndex = [_headerFontNameChoice indexOfItemWithTitle:headerFontName];
 
     if (headerFontNameIndex < 0)
     {
-        headerFontNameIndex =
-            [_headerFontNameChoice indexOfItemWithTitle:@"Monaco"];
+        headerFontNameIndex = [_headerFontNameChoice indexOfItemWithTitle:@"Monaco"];
 
         if (headerFontNameIndex < 0)
         {
@@ -276,19 +250,15 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_headerFontNameChoice selectItemAtIndex:headerFontNameIndex];
 
     // The header-font-size pref.
-    [_headerFontSizeCombo setIntegerValue:
-        [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName]];
+    [_headerFontSizeCombo setIntegerValue:[AKPrefUtils intValueForPref:AKHeaderFontSizePrefName]];
 
     // The doc-magnification pref.
-    NSInteger magnificationChoiceTag =
-        [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
-    NSInteger magnificationIndex =
-        [_magnificationChoice indexOfItemWithTag:magnificationChoiceTag];
+    NSInteger magnificationChoiceTag = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
+    NSInteger magnificationIndex = [_magnificationChoice indexOfItemWithTag:magnificationChoiceTag];
 
     if (magnificationIndex < 0)
     {
-        magnificationIndex =
-            [_magnificationChoice indexOfItemWithTag:100];
+        magnificationIndex = [_magnificationChoice indexOfItemWithTag:100];
     }
     [_magnificationChoice selectItemAtIndex:magnificationIndex];
 
@@ -301,29 +271,24 @@ static AKPrefPanelController *s_sharedInstance = nil;
 - (void)_updatePrefsFromAppearanceTab
 {
     // The list-font-name pref.
-    [AKPrefUtils
-        setStringValue:[[_listFontNameChoice selectedItem] title]
-        forPref:AKListFontNamePrefName];
+    [AKPrefUtils setStringValue:[[_listFontNameChoice selectedItem] title]
+                        forPref:AKListFontNamePrefName];
 
     // The list-font-size pref.
-    [AKPrefUtils
-        setIntValue:[_listFontSizeCombo intValue]
-        forPref:AKListFontSizePrefName];
+    [AKPrefUtils setIntValue:[_listFontSizeCombo intValue]
+                     forPref:AKListFontSizePrefName];
 
     // The header-font-name pref.
-    [AKPrefUtils
-        setStringValue:[[_headerFontNameChoice selectedItem] title]
-        forPref:AKHeaderFontNamePrefName];
+    [AKPrefUtils setStringValue:[[_headerFontNameChoice selectedItem] title]
+                        forPref:AKHeaderFontNamePrefName];
 
     // The header-font-size pref.
-    [AKPrefUtils
-        setIntValue:[_headerFontSizeCombo intValue]
-        forPref:AKHeaderFontSizePrefName];
+    [AKPrefUtils setIntValue:[_headerFontSizeCombo intValue]
+                     forPref:AKHeaderFontSizePrefName];
 
     // The doc-magnification pref.
-    [AKPrefUtils
-        setIntValue:[_magnificationChoice selectedTag]
-        forPref:AKDocMagnificationPrefName];
+    [AKPrefUtils setIntValue:[_magnificationChoice selectedTag]
+                     forPref:AKDocMagnificationPrefName];
 
     // The small-contextual-menus pref.
     // [agl] fill in small-contextual-menus pref
@@ -345,8 +310,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
 
 - (NSArray *)_namesOfAvailableFrameworks
 {
-    return
-        [[[NSApp delegate] appDatabase] namesOfAvailableFrameworks];
+    return [[[NSApp delegate] appDatabase] namesOfAvailableFrameworks];
 }
 
 @end

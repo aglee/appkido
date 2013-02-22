@@ -29,30 +29,6 @@
 #define MEASURE_SEARCH_SPEED 0
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKSearchQuery (Private)
-
-- (void)_clearSearchResults;
-
-- (BOOL)_matchesString:(NSString *)s;
-- (BOOL)_matchesNode:(AKDatabaseNode *)node;
-
-- (void)_searchClassNames;
-- (void)_searchProtocolNames;
-- (void)_searchNamesOfClassMembers;
-- (void)_searchNamesOfProtocolMembers;
-- (void)_searchFunctionNames;
-- (void)_searchNamesOfGlobals;
-
-- (void)_searchNodes:(NSArray *)nodeArray
-         forSubtopic:(NSString *)subtopicName
-     ofBehaviorTopic:(AKBehaviorTopic *)topic;
-
-@end
-
-
 @implementation AKSearchQuery
 
 
@@ -286,13 +262,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return _searchResults;
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKSearchQuery (Private)
 
 - (void)_clearSearchResults
 {

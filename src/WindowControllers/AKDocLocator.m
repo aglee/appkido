@@ -13,16 +13,7 @@
 #import "AKDoc.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKDocLocator (Private)
-- (void)_clearCachedObjects;
-@end
-
-
 @implementation AKDocLocator
-
 
 #pragma mark -
 #pragma mark Factory methods
@@ -149,21 +140,19 @@
         }
         else if (_docName == nil)
         {
-            _cachedDisplayString =
-                [NSString stringWithFormat:@"%@  %C  %@",
-                    _subtopicName,  // [agl] displayed string?
-                    kLeftDoubleAngle,
-                    topicName];
+            _cachedDisplayString = [NSString stringWithFormat:@"%@  %C  %@",
+                                    _subtopicName,  // [agl] displayed string?
+                                    kLeftDoubleAngle,
+                                    topicName];
         }
         else
         {
             AKDoc *doc = [self docToDisplay];
 
-            _cachedDisplayString =
-                [NSString stringWithFormat:@"%@  %C  %@",
-                    [doc stringToDisplayInDocList],
-                    kLeftDoubleAngle,
-                    topicName];
+            _cachedDisplayString = [NSString stringWithFormat:@"%@  %C  %@",
+                                    [doc stringToDisplayInDocList],
+                                    kLeftDoubleAngle,
+                                    topicName];
         }
 
     }
@@ -366,22 +355,16 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
+    return [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
             [self className],
             [_topic pathInTopicBrowser],
             _subtopicName,
             _docName];
 }
 
-@end
-
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKDocLocator (Private)
 
 - (void)_clearCachedObjects
 {

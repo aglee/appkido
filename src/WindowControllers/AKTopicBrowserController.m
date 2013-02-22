@@ -24,18 +24,7 @@
 #import "AKProtocolNode.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKTopicBrowserController (Private)
-- (NSInteger)_numberOfRowsInColumn:(NSInteger)column;
-- (void)_setUpChildTopics;
-- (void)_setUpTopicsForZeroethBrowserColumn;
-@end
-
-
 @implementation AKTopicBrowserController
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -214,13 +203,9 @@
     return YES;
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKTopicBrowserController (Private)
 
 - (NSInteger)_numberOfRowsInColumn:(NSInteger)column
 {

@@ -15,16 +15,7 @@
 #import "AKFileSection.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKClassOverviewSubtopic (Private)
-- (void)_addDocsForExtraFramework:extraFrameworkName
-    toList:(NSMutableArray *)docList;
-@end
-
 @implementation AKClassOverviewSubtopic
-
 
 #pragma mark -
 #pragma mark Factory methods
@@ -95,16 +86,12 @@
     return AKClassDescriptionAlternateHTMLSectionName;
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
 
-@implementation AKClassOverviewSubtopic (Private)
-
 - (void)_addDocsForExtraFramework:extraFrameworkName
-    toList:(NSMutableArray *)docList
+                           toList:(NSMutableArray *)docList
 {
     AKFileSection *extraRootSection = [_classNode documentationAssociatedWithFrameworkNamed:extraFrameworkName];
 

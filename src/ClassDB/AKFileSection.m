@@ -31,15 +31,6 @@ static NSMutableDictionary *s_fileCache = nil;
 static NSMutableDictionary *s_fileCacheCounts = nil;
 
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKFileSection (Private)
-- (void)_releaseFileContents;
-@end
-
-
 @implementation AKFileSection
 
 
@@ -58,8 +49,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 + (AKFileSection *)withFile:(NSString *)filePath
 {
-    AKFileSection *fileSection =
-        [[self alloc] initWithFile:filePath];
+    AKFileSection *fileSection = [[self alloc] initWithFile:filePath];
 
     [fileSection setSectionName:[filePath lastPathComponent]];
     [fileSection setSectionOffset:0];
@@ -71,8 +61,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 + (AKFileSection *)withEntireFile:(NSString *)filePath
 {
     // Find out the file size.
-    NSFileWrapper *fileWrapper =
-        [[NSFileWrapper alloc] initWithPath:filePath];
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithPath:filePath];
     NSDictionary *fileAttributes = [fileWrapper fileAttributes];
     int fileSize = [[fileAttributes objectForKey:NSFileSize] intValue];
 
@@ -134,23 +123,19 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
         {
             // The file is already in the cache, so increment the cache
             // count.
-            int cacheCount =
-                [[s_fileCacheCounts objectForKey:_filePath] intValue];
+            int cacheCount = [[s_fileCacheCounts objectForKey:_filePath] intValue];
 
-            [s_fileCacheCounts
-                setObject:[NSNumber numberWithInt:(cacheCount + 1)]
-                forKey:_filePath];
+            [s_fileCacheCounts setObject:[NSNumber numberWithInt:(cacheCount + 1)]
+                                  forKey:_filePath];
         }
         else
         {
             // The file wasn't in the cache, so add it with a cache
             // count of 1.
-            _fileContents =
-                [[NSData alloc] initWithContentsOfFile:_filePath];
+            _fileContents = [[NSData alloc] initWithContentsOfFile:_filePath];
             [s_fileCache setObject:_fileContents forKey:_filePath];
-            [s_fileCacheCounts
-                setObject:[NSNumber numberWithInt:1]
-                forKey:_filePath];
+            [s_fileCacheCounts setObject:[NSNumber numberWithInt:1]
+                                  forKey:_filePath];
         }
     }
 
@@ -237,10 +222,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 {
     NSInteger numSubs = [_childSections count];
 
-    return
-        (numSubs == 0)
-        ? nil
-        : [_childSections objectAtIndex:(numSubs - 1)];
+    return ((numSubs == 0)
+            ? nil
+            : [_childSections objectAtIndex:(numSubs - 1)]);
 }
 
 - (NSInteger)indexOfChildSectionWithName:(NSString *)name
@@ -274,7 +258,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 }
 
 - (void)insertChildSection:(AKFileSection *)childSection
-    atIndex:(NSInteger)childSectionIndex
+                   atIndex:(NSInteger)childSectionIndex
 {
     [_childSections insertObject:childSection atIndex:childSectionIndex];
 }
@@ -351,22 +335,13 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:
-            @"<%@: sectionName=%@, filePath=%@>",
-            [self className],
-            _sectionName,
-            [self filePath]];
+    return [NSString stringWithFormat:@"<%@: sectionName=%@, filePath=%@>",
+            [self className], _sectionName, [self filePath]];
 }
-
-@end
-
 
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKFileSection (Private)
 
 // Releases the _fileContents ivar and decrements the corresponding cache
 // count.

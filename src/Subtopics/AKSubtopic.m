@@ -12,16 +12,7 @@
 #import "AKDoc.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKSubtopic (Private)
-- (void)_makeSureDocListIsReady;
-@end
-
-
 @implementation AKSubtopic
-
 
 #pragma mark -
 #pragma mark AKXyzSubtopicName
@@ -32,11 +23,6 @@ NSString *AKClassMethodsSubtopicName    = @"Class Methods";
 NSString *AKInstanceMethodsSubtopicName = @"Instance Methods";
 NSString *AKDelegateMethodsSubtopicName = @"Delegate Methods";
 NSString *AKNotificationsSubtopicName   = @"Notifications";
-
-
-#pragma mark -
-#pragma mark Init/awake/dealloc
-
 
 
 #pragma mark -
@@ -101,10 +87,9 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 {
     [self _makeSureDocListIsReady];
 
-    NSInteger docIndex =
-        (docName == nil)
-        ? -1
-        : [self indexOfDocWithName:docName];
+    NSInteger docIndex = ((docName == nil)
+                          ? -1
+                          : [self indexOfDocWithName:docName]);
 
     return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
 }
@@ -124,21 +109,13 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:
-            @"<%@: subtopicName=%@>",
-            [self className],
-            [self subtopicName]];
+    return [NSString stringWithFormat:@"<%@: subtopicName=%@>",
+            [self className],[self subtopicName]];
 }
-
-@end
-
 
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKSubtopic (Private)
 
 - (void)_makeSureDocListIsReady
 {
