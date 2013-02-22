@@ -91,7 +91,7 @@
 
 - (NSData *)sectionData;
 
-- (NSEnumerator *)childSectionEnumerator;
+- (NSArray *)childSections;
 - (NSInteger)numberOfChildSections;
 - (AKFileSection *)childSectionAtIndex:(NSInteger)childSectionIndex;
 - (AKFileSection *)childSectionWithName:(NSString *)name;

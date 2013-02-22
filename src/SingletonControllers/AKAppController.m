@@ -296,10 +296,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)applyUserPreferences
 {
     // Apply the newly saved preferences to all open windows.
-    NSEnumerator *en = [_windowControllers objectEnumerator];
-    AKWindowController *wc;
-
-    while ((wc = [en nextObject]))
+    for (AKWindowController *wc in _windowControllers)
     {
         if (![wc isKindOfClass:[AKWindowController class]])
         {
@@ -696,10 +693,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     NSMenu *goMenu = [_firstGoMenuDivider menu];
     NSInteger menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
 
-    NSEnumerator *fwNameEnum = [[_appDatabase sortedFrameworkNames] objectEnumerator];
-    NSString *fwName;
-
-    while ((fwName = [fwNameEnum nextObject]))
+    for (NSString *fwName in [_appDatabase sortedFrameworkNames])
     {
         // See what information we have for this framework.
         NSArray *formalProtocolNodes = [_appDatabase formalProtocolsForFrameworkNamed:fwName];

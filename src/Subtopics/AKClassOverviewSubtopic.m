@@ -106,24 +106,16 @@
 - (void)_addDocsForExtraFramework:extraFrameworkName
     toList:(NSMutableArray *)docList
 {
-    AKFileSection *extraRootSection =
-        [_classNode documentationAssociatedWithFrameworkNamed:extraFrameworkName];
+    AKFileSection *extraRootSection = [_classNode documentationAssociatedWithFrameworkNamed:extraFrameworkName];
 
     if (extraRootSection)
     {
-        NSArray *extraSections =
-            [self pertinentChildSectionsOf:extraRootSection];
-        NSEnumerator *sectionEnum = [extraSections objectEnumerator];
-        AKFileSection *majorSection;
-
         // Add docs that correspond to sections of the file section.
-        while ((majorSection = [sectionEnum nextObject]))
+        for (AKFileSection *majorSection in [self pertinentChildSectionsOf:extraRootSection])
         {
             NSString *sectionName = [majorSection sectionName];
-            AKOverviewDoc *sectionDoc =
-                [[AKOverviewDoc alloc]
-                    initWithFileSection:majorSection
-                    andExtraFrameworkName:extraFrameworkName];
+            AKOverviewDoc *sectionDoc = [[AKOverviewDoc alloc] initWithFileSection:majorSection
+                                                             andExtraFrameworkName:extraFrameworkName];
 
             NSInteger docIndex = [self indexOfDocWithName:sectionName];
 

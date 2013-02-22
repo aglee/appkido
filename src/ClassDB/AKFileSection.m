@@ -203,9 +203,9 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     }
 }
 
-- (NSEnumerator *)childSectionEnumerator
+- (NSArray *)childSections
 {
-    return [_childSections objectEnumerator];
+    return [_childSections copy];
 }
 
 - (NSInteger)numberOfChildSections
@@ -220,10 +220,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 - (AKFileSection *)childSectionWithName:(NSString *)name
 {
-    NSEnumerator *en = [_childSections objectEnumerator];
-    AKFileSection *childSection;
-
-    while ((childSection = [en nextObject]))
+    for (AKFileSection *childSection in _childSections)
     {
         NSString *childSectionName = [childSection sectionName];
 
@@ -289,10 +286,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 - (AKFileSection *)childSectionContainingString:(NSString *)name  // thanks Gerriet
 {
-   NSEnumerator *en = [_childSections objectEnumerator];
-   AKFileSection *childSection;
-
-   while ((childSection = [en nextObject]))
+   for (AKFileSection *childSection in _childSections)
    {
 		NSData *data = [childSection sectionData];
 		NSString *d = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -327,7 +321,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     [s appendString:@"\n"];
     
     // Print child sections.
-    for (AKFileSection *childSection in [self childSectionEnumerator])
+    for (AKFileSection *childSection in _childSections)
     {
         [childSection _printTreeWithDepth:(depth + 1) intoString:s];
     }

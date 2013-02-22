@@ -289,14 +289,12 @@
 {
     NSMutableArray *columnValues = [NSMutableArray array];
     AKDatabase *db = [_windowController database];
-    NSEnumerator *classEnum = [[AKSortUtils arrayBySortingArray:[db rootClasses]] objectEnumerator];
-    AKClassNode *classNode;
 
     // Set up the ":: classes ::" section of this browser column.  We want
     // the browser column to list all classes that don't have superclasses.
     [columnValues addObject:[AKLabelTopic topicWithLabel:@":: classes ::"]];
 
-    while ((classNode = [classEnum nextObject]))
+    for (AKClassNode *classNode in [AKSortUtils arrayBySortingArray:[db rootClasses]])
     {
         [columnValues addObject:[AKClassTopic topicWithClassNode:classNode]];
     }
@@ -305,10 +303,7 @@
     // We want the browser column to list all known frameworks.
     [columnValues addObject:[AKLabelTopic topicWithLabel:@":: other topics ::"]];
 
-    NSEnumerator *fwNameEnum = [[db sortedFrameworkNames] objectEnumerator];
-    NSString *fwName;
-
-    while ((fwName = [fwNameEnum nextObject]))
+    for (NSString *fwName in [db sortedFrameworkNames])
     {
         [columnValues addObject:[AKFrameworkTopic topicWithFrameworkNamed:fwName inDatabase:db]];
     }

@@ -47,20 +47,17 @@
 
 - (NSArray *)pertinentChildSectionsOf:(AKFileSection *)rootSection
 {
-    NSArray *sectionsToOmit =
-        [NSArray arrayWithObjects:
-            AKContentsHTMLSectionName,
-            AKClassMethodsHTMLSectionName,
-            AKInstanceMethodsHTMLSectionName,
-            AKDelegateMethodsHTMLSectionName,
-            AKDelegateMethodsAlternateHTMLSectionName,
-            AKNotificationsHTMLSectionName,
-            nil];
+    NSArray *sectionsToOmit = (@[
+                               AKContentsHTMLSectionName,
+                               AKClassMethodsHTMLSectionName,
+                               AKInstanceMethodsHTMLSectionName,
+                               AKDelegateMethodsHTMLSectionName,
+                               AKDelegateMethodsAlternateHTMLSectionName,
+                               AKNotificationsHTMLSectionName,
+                               ]);
     NSMutableArray *pertinentSections = [NSMutableArray array];
-    NSEnumerator *en = [rootSection childSectionEnumerator];
-    AKFileSection *childSection;
 
-    while ((childSection = [en nextObject]))
+    for (AKFileSection *childSection in [rootSection childSections])
     {
         // There are some sections we don't want to list, because
         // they're accessed by a different navigation route.
@@ -91,16 +88,10 @@
 {
     // Add whichever of the standard sections are available.
     AKFileSection *rootSection = [[self behaviorNode] nodeDocumentation];
-    NSEnumerator *majorSectionEnum =
-        [[self pertinentChildSectionsOf:rootSection]
-            objectEnumerator];
-    AKFileSection *majorSection;
 
-    while ((majorSection = [majorSectionEnum nextObject]))
+    for (AKFileSection *majorSection in [self pertinentChildSectionsOf:rootSection])
     {
-        AKOverviewDoc *newDoc =
-            [[AKOverviewDoc alloc] initWithFileSection:majorSection];
-        [docList addObject:newDoc];
+        [docList addObject:[[AKOverviewDoc alloc] initWithFileSection:majorSection]];
     }
 
     // Add the "Inheritance" option as the first item.

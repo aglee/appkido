@@ -7,10 +7,10 @@
 
 #import "AKFunctionsSubtopic.h"
 
-#import "AKSortUtils.h"
 #import "AKFileSection.h"
-#import "AKGroupNode.h"
 #import "AKFunctionDoc.h"
+#import "AKGroupNode.h"
+#import "AKSortUtils.h"
 
 @implementation AKFunctionsSubtopic
 
@@ -20,19 +20,13 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    NSEnumerator *subnodesEnum =
-        [[AKSortUtils arrayBySortingArray:[_groupNode subnodes]]
-            objectEnumerator];
-    AKDatabaseNode *functionNode;
-
-    while ((functionNode = [subnodesEnum nextObject]))
+    for (AKDatabaseNode *functionNode in [AKSortUtils arrayBySortingArray:[_groupNode subnodes]])
     {
         AKFileSection *functionSection = [functionNode nodeDocumentation];
 
         if (functionSection != nil)
         {
-            AKDoc *newDoc =
-                [[AKFunctionDoc alloc] initWithNode:functionNode];
+            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithNode:functionNode];
             
             [docList addObject:newDoc];
         }

@@ -29,7 +29,6 @@
 #define MEASURE_SEARCH_SPEED 0
 
 
-
 #pragma mark -
 #pragma mark Forward declarations of private methods
 
@@ -48,8 +47,8 @@
 - (void)_searchNamesOfGlobals;
 
 - (void)_searchNodes:(NSArray *)nodeArray
-    forSubtopic:(NSString *)subtopicName
-    ofBehaviorTopic:(AKBehaviorTopic *)topic;
+         forSubtopic:(NSString *)subtopicName
+     ofBehaviorTopic:(AKBehaviorTopic *)topic;
 
 @end
 
@@ -86,7 +85,6 @@
     DIGSLogError_NondesignatedInitializer();
     return nil;
 }
-
 
 
 #pragma mark -
@@ -291,7 +289,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 @end
 
 
-
 #pragma mark -
 #pragma mark Private methods
 
@@ -306,37 +303,33 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
 // [agl] working on performance
 #if MEASURE_SEARCH_SPEED
-g_NSStringComparisons++;
+    g_NSStringComparisons++;
 #endif //MEASURE_SEARCH_SPEED
-
-//DIGSLogDebug(@"[%@] (%@)", _searchString, s);  // [agl] REMOVE
 
     switch (_searchComparison)
     {
-        case AKSearchForSubstring: {
-            return
-                _ignoresCase
-                ? [s ak_containsCaseInsensitive:_searchString]
-                : [s ak_contains:_searchString];
+        case AKSearchForSubstring:
+        {
+            return (_ignoresCase
+                    ? [s ak_containsCaseInsensitive:_searchString]
+                    : [s ak_contains:_searchString]);
         }
 
-        case AKSearchForExactMatch: {
-            return
-                _ignoresCase
-                ? ([s compare:_searchString options:NSCaseInsensitiveSearch] == 0)
-                : [s isEqualToString:_searchString];
+        case AKSearchForExactMatch:
+        {
+            return (_ignoresCase
+                    ? ([s compare:_searchString options:NSCaseInsensitiveSearch] == 0)
+                    : [s isEqualToString:_searchString]);
         }
 
-        case AKSearchForPrefix: {
+        case AKSearchForPrefix:
+        {
             if (_ignoresCase)
             {
-                return
-                    ([s length] >= _rangeForEntireSearchString.length)
-                    &&
-                    ([s
-                        compare:_searchString
-                        options:NSCaseInsensitiveSearch
-                        range:_rangeForEntireSearchString] == 0);
+                return (([s length] >= _rangeForEntireSearchString.length)
+                        && ([s compare:_searchString
+                               options:NSCaseInsensitiveSearch
+                                 range:_rangeForEntireSearchString] == 0));
             }
             else
             {
@@ -344,9 +337,9 @@ g_NSStringComparisons++;
             }
         }
 
-        default: {
-            DIGSLogDebug(@"Unexpected search comparison mode %d",
-                _searchComparison);
+        default:
+        {
+            DIGSLogDebug(@"Unexpected search comparison mode %d", _searchComparison);
             return NO;
         }
     }
@@ -359,10 +352,7 @@ g_NSStringComparisons++;
 
 - (void)_searchClassNames
 {
-    NSEnumerator *en = [[_database allClasses] objectEnumerator];
-    AKClassNode *classNode;
-
-    while ((classNode = [en nextObject]))
+    for (AKClassNode *classNode in [_database allClasses])
     {
         if ([self _matchesNode:classNode])
         {
@@ -375,10 +365,7 @@ g_NSStringComparisons++;
 
 - (void)_searchProtocolNames
 {
-    NSEnumerator *en = [[_database allProtocols] objectEnumerator];
-    AKProtocolNode *protocolNode;
-
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in [_database allProtocols])
     {
         if ([self _matchesNode:protocolNode])
         {
@@ -391,95 +378,68 @@ g_NSStringComparisons++;
 
 - (void)_searchNamesOfClassMembers
 {
-    NSEnumerator *en = [[_database allClasses] objectEnumerator];
-    AKClassNode *classNode;
-
-    while ((classNode = [en nextObject]))
+    for (AKClassNode *classNode in [_database allClasses])
     {
         AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
         // Search the class's properties.
-        [self
-            _searchNodes:[classNode documentedProperties]
-            forSubtopic:AKPropertiesSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[classNode documentedProperties]
+               forSubtopic:AKPropertiesSubtopicName
+           ofBehaviorTopic:topic];
 
         // Search the class's class methods.
-        [self
-            _searchNodes:[classNode documentedClassMethods]
-            forSubtopic:AKClassMethodsSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[classNode documentedClassMethods]
+               forSubtopic:AKClassMethodsSubtopicName
+           ofBehaviorTopic:topic];
 
         // Search the class's instance methods.
-        [self
-            _searchNodes:[classNode documentedInstanceMethods]
-            forSubtopic:AKInstanceMethodsSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[classNode documentedInstanceMethods]
+               forSubtopic:AKInstanceMethodsSubtopicName
+           ofBehaviorTopic:topic];
 
         // Search the class's delegate methods.
-        [self
-            _searchNodes:[classNode documentedDelegateMethods]
-            forSubtopic:AKDelegateMethodsSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[classNode documentedDelegateMethods]
+               forSubtopic:AKDelegateMethodsSubtopicName
+           ofBehaviorTopic:topic];
 
         // Search the class's notifications.
-        [self
-            _searchNodes:[classNode documentedNotifications]
-            forSubtopic:AKNotificationsSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[classNode documentedNotifications]
+               forSubtopic:AKNotificationsSubtopicName
+           ofBehaviorTopic:topic];
     }
 }
 
 - (void)_searchNamesOfProtocolMembers
 {
-    NSEnumerator *en = [[_database allProtocols] objectEnumerator];
-    AKProtocolNode *protocolNode;
-
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in [_database allProtocols])
     {
-        AKProtocolTopic *topic =
-            [AKProtocolTopic topicWithProtocolNode:protocolNode];
+        AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
         // Search the protocol's properties.
-        [self
-            _searchNodes:[protocolNode documentedProperties]
-            forSubtopic:AKPropertiesSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[protocolNode documentedProperties]
+               forSubtopic:AKPropertiesSubtopicName
+           ofBehaviorTopic:topic];
 
         // Search the protocol's class methods.
-        [self
-            _searchNodes:[protocolNode documentedClassMethods]
-            forSubtopic:AKClassMethodsSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[protocolNode documentedClassMethods]
+               forSubtopic:AKClassMethodsSubtopicName
+           ofBehaviorTopic:topic];
 
         // Search the protocol's instance methods.
-        [self
-            _searchNodes:[protocolNode documentedInstanceMethods]
-            forSubtopic:AKInstanceMethodsSubtopicName
-            ofBehaviorTopic:topic];
+        [self _searchNodes:[protocolNode documentedInstanceMethods]
+               forSubtopic:AKInstanceMethodsSubtopicName
+           ofBehaviorTopic:topic];
     }
 }
 
 // Search the functions in each of the function groups for each framework.
 - (void)_searchFunctionNames
 {
-    NSEnumerator *fwNameEnum = [[_database frameworkNames] objectEnumerator];
-    NSString *fwName;
-
-    while ((fwName = [fwNameEnum nextObject]))
+    for (NSString *fwName in [_database frameworkNames])
     {
-        NSArray *functionGroups =
-            [_database functionsGroupsForFrameworkNamed:fwName];
-        NSEnumerator *groupEnum = [functionGroups objectEnumerator];
-        AKGroupNode *groupNode;
-
-        while ((groupNode = [groupEnum nextObject]))
+        for (AKGroupNode *groupNode in [_database functionsGroupsForFrameworkNamed:fwName])
         {
-            NSEnumerator *subnodeEnum =
-                [[groupNode subnodes] objectEnumerator];
-            AKDatabaseNode *subnode;
-
-            while ((subnode = [subnodeEnum nextObject]))
+            for (AKDatabaseNode *subnode in [groupNode subnodes])
             {
                 if ([self _matchesNode:subnode])
                 {
@@ -495,23 +455,11 @@ g_NSStringComparisons++;
 // Search the globals in each of the groups of globals for each framework.
 - (void)_searchNamesOfGlobals
 {
-    NSEnumerator *fwNameEnum = [[_database frameworkNames] objectEnumerator];
-    NSString *fwName;
-
-    while ((fwName = [fwNameEnum nextObject]))
+    for (NSString *fwName in [_database frameworkNames])
     {
-        NSArray *globalsGroups =
-            [_database globalsGroupsForFrameworkNamed:fwName];
-        NSEnumerator *groupEnum = [globalsGroups objectEnumerator];
-        AKGroupNode *groupNode;
-
-        while ((groupNode = [groupEnum nextObject]))
+        for (AKGroupNode *groupNode in [_database globalsGroupsForFrameworkNamed:fwName])
         {
-            NSEnumerator *subnodeEnum =
-                [[groupNode subnodes] objectEnumerator];
-            AKGlobalsNode *subnode;
-
-            while ((subnode = [subnodeEnum nextObject]))
+            for (AKGlobalsNode *subnode in [groupNode subnodes])
             {
                 BOOL matchFound = NO;
 
@@ -524,11 +472,7 @@ g_NSStringComparisons++;
                 }
                 else
                 {
-                    NSEnumerator *globalNameEnum =
-                        [[subnode namesOfGlobals] objectEnumerator];
-                    NSString *globalName;
-
-                    while ((globalName = [globalNameEnum nextObject]))
+                    for (NSString *globalName in [subnode namesOfGlobals])
                     {
                         if ([self _matchesString:globalName])
                         {
@@ -540,12 +484,11 @@ g_NSStringComparisons++;
 
                 if (matchFound)
                 {
-                    AKTopic *topic =
-                        [AKGlobalsTopic
-                            topicWithFrameworkNamed:fwName
-                            inDatabase:_database];
-
-                    [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:[groupNode nodeName] docName:[subnode nodeName]]];
+                    AKTopic *topic = [AKGlobalsTopic topicWithFrameworkNamed:fwName
+                                                                  inDatabase:_database];
+                    [_searchResults addObject:[AKDocLocator withTopic:topic
+                                                         subtopicName:[groupNode nodeName]
+                                                              docName:[subnode nodeName]]];
                 }
             }
         }
@@ -553,13 +496,10 @@ g_NSStringComparisons++;
 }
 
 - (void)_searchNodes:(NSArray *)nodeArray
-    forSubtopic:(NSString *)subtopicName
-    ofBehaviorTopic:(AKBehaviorTopic *)topic
+         forSubtopic:(NSString *)subtopicName
+     ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
-    NSEnumerator *nodeEnum = [nodeArray objectEnumerator];
-    AKDatabaseNode *node;
-
-    while ((node = [nodeEnum nextObject]))
+    for (AKDatabaseNode *node in nodeArray)
     {
         if ([self _matchesNode:node])
         {

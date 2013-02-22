@@ -127,11 +127,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
         return NO;
     }
     
-    NSArray *expectedSubdirs = [self expectedSubdirsForDevToolsPath:devToolsPath];
-    NSEnumerator *expectedSubdirsEnum = [expectedSubdirs objectEnumerator];
-    NSString *subdir;
-    
-    while ((subdir = [expectedSubdirsEnum nextObject]))
+    for (NSString *subdir in [self expectedSubdirsForDevToolsPath:devToolsPath])
     {
         NSString *expectedSubdirPath = [devToolsPath stringByAppendingPathComponent:subdir];
         if (![AKFileUtils directoryExistsAtPath:expectedSubdirPath])

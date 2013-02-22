@@ -87,15 +87,11 @@
     AKFileSection *rootSection = nil;
     AKTopic *docTopic = nil;
 
-    NSEnumerator *en = [[filePath pathComponents] objectEnumerator];
-    NSString *pathComponent;
-
-    while ((pathComponent = [en nextObject]))
+    for (NSString *pathComponent in [filePath pathComponents])
     {
-        NSString *possibleFrameworkName =
-            fwName
-            ? nil
-            : [self _frameworkNameImpliedBy:pathComponent];
+        NSString *possibleFrameworkName = (fwName
+                                           ? nil
+                                           : [self _frameworkNameImpliedBy:pathComponent]);
         NSString *upperPathComponent = [pathComponent uppercaseString];
 
         if (possibleFrameworkName != nil)
@@ -126,7 +122,7 @@
 // directory called <framework_name>_Functions.
 //        else if ([upperPathComponent isEqualToString:@"FUNCTIONS"])
         else if ([upperPathComponent isEqualToString:@"FUNCTIONS"]
-				||[upperPathComponent hasSuffix:@"_FUNCTIONS"])
+                 ||[upperPathComponent hasSuffix:@"_FUNCTIONS"])
         {
             behaviorNode = nil;
             rootSection = [_database rootSectionForHTMLFile:filePath];
@@ -138,8 +134,8 @@
 // directories, called <framework_name>_Constants and <framework_name>_DataTypes.
 //        else if ([upperPathComponent isEqualToString:@"TYPESANDCONSTANTS"])
         else if ([upperPathComponent isEqualToString:@"TYPESANDCONSTANTS"]
-				|| [upperPathComponent hasSuffix:@"_CONSTANTS"]
-				|| [upperPathComponent hasSuffix:@"_DATATYPES"])
+                 || [upperPathComponent hasSuffix:@"_CONSTANTS"]
+                 || [upperPathComponent hasSuffix:@"_DATATYPES"])
         {
             behaviorNode = nil;
             rootSection = [_database rootSectionForHTMLFile:filePath];
@@ -149,23 +145,16 @@
         }
     }
 
-    return
-        [self
-            _docLocatorForLinkAnchor:[linkURL fragment]
-            rootSection:rootSection
-            topic:docTopic
-            behaviorNode:behaviorNode
-            frameworkName:fwName];
+    return [self _docLocatorForLinkAnchor:[linkURL fragment]
+                              rootSection:rootSection
+                                    topic:docTopic
+                             behaviorNode:behaviorNode
+                            frameworkName:fwName];
 }
-
-@end
-
 
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKOldLinkResolver (Private)
 
 - (NSString *)_frameworkNameImpliedBy:(NSString *)aString
 {
@@ -182,9 +171,7 @@
     }
 
     // Is it a known framework name followed by ".framework"?
-    NSEnumerator *en = [[_database frameworkNames] objectEnumerator];
-    NSString *fwName;
-    while ((fwName = [en nextObject]))
+    for (NSString *fwName in [_database frameworkNames])
     {
         NSString *fwDirName = [fwName stringByAppendingString:@".framework"];
 
@@ -207,14 +194,9 @@
         }
     }
 */
-    fwName = [_database frameworkForHTMLFile:aString];
-    if (fwName)
-    {
-        return fwName;
-    }
 
-    // If we got this far, we don't have a match.
-    return nil;
+    // Possibly nil.
+    return [_database frameworkForHTMLFile:aString];
 }
 
 // Returns a byte offset within the HTML file that lies within the file
@@ -223,11 +205,8 @@
 - (NSInteger)_offsetOfAnchor:(NSString *)anchorString
     inFileSection:(AKFileSection *)fileSection
 {
-    NSInteger anchorOffset =
-        [_database
-            offsetOfAnchorString:anchorString
-            inHTMLFile:[fileSection filePath]];
-
+    NSInteger anchorOffset = [_database offsetOfAnchorString:anchorString
+                                                  inHTMLFile:[fileSection filePath]];
     if (anchorOffset < 0)
     {
         return -1;
@@ -250,8 +229,7 @@
     //
     // [agl] KLUDGE ON TOP OF KLUDGE
     // Now, with Tiger, we search for a closing </div> as well.
-    const char *dataEnd =
-        (char *)[textBytes bytes] + [textBytes length] - 4;
+    const char *dataEnd = (char *)[textBytes bytes] + [textBytes length] - 4;
 
     while (anchorPtr < dataEnd)
     {
@@ -262,12 +240,12 @@
                 break;
             }
             else if ((anchorPtr[2] == 'h')
-                && (anchorPtr[3] >= '1') && (anchorPtr[3] <= '9'))
+                     && (anchorPtr[3] >= '1') && (anchorPtr[3] <= '9'))
             {
                 break;
             }
             else if ((anchorPtr[2] == 'd') && (anchorPtr[3] == 'i')
-                && (anchorPtr[4] == 'v'))
+                     && (anchorPtr[4] == 'v'))
             {
                 break;
             }
@@ -284,36 +262,21 @@
 // desc is a major section's -sectionName
 - (NSString *)_subtopicNameImpliedBySectionName:(NSString *)sectionName
 {
-    NSArray *namePairs =
-        [NSArray arrayWithObjects:
-            AKProtocolDescriptionHTMLSectionName,
-                AKOverviewSubtopicName,
-            AKClassDescriptionHTMLSectionName,
-                AKOverviewSubtopicName,
-            AKClassAtAGlanceHTMLSectionName,
-                AKOverviewSubtopicName,
-            AKProgrammingTopicsHTMLSectionName,
-                AKOverviewSubtopicName,
-            AKAdoptedProtocolsHTMLSectionName,
-                AKOverviewSubtopicName,
-            AKConstantsHTMLSectionName,
-                AKOverviewSubtopicName,
-            AKMethodTypesHTMLSectionName,
-                AKOverviewSubtopicName,
-            AKPropertiesHTMLSectionName,
-                AKPropertiesSubtopicName,
-            AKClassMethodsHTMLSectionName,
-                AKClassMethodsSubtopicName,
-            AKInstanceMethodsHTMLSectionName,
-                AKInstanceMethodsSubtopicName,
-            AKDelegateMethodsHTMLSectionName,
-                AKDelegateMethodsSubtopicName,
-            AKDelegateMethodsAlternateHTMLSectionName,
-                AKDelegateMethodsSubtopicName,
-            AKNotificationsHTMLSectionName,
-                AKNotificationsSubtopicName,
-            nil];
-
+    NSArray *namePairs = (@[
+                          AKProtocolDescriptionHTMLSectionName, AKOverviewSubtopicName,
+                          AKClassDescriptionHTMLSectionName, AKOverviewSubtopicName,
+                          AKClassAtAGlanceHTMLSectionName, AKOverviewSubtopicName,
+                          AKProgrammingTopicsHTMLSectionName, AKOverviewSubtopicName,
+                          AKAdoptedProtocolsHTMLSectionName, AKOverviewSubtopicName,
+                          AKConstantsHTMLSectionName, AKOverviewSubtopicName,
+                          AKMethodTypesHTMLSectionName, AKOverviewSubtopicName,
+                          AKPropertiesHTMLSectionName, AKPropertiesSubtopicName,
+                          AKClassMethodsHTMLSectionName, AKClassMethodsSubtopicName,
+                          AKInstanceMethodsHTMLSectionName, AKInstanceMethodsSubtopicName,
+                          AKDelegateMethodsHTMLSectionName, AKDelegateMethodsSubtopicName,
+                          AKDelegateMethodsAlternateHTMLSectionName, AKDelegateMethodsSubtopicName,
+                          AKNotificationsHTMLSectionName, AKNotificationsSubtopicName,
+                          ]);
     NSString *uppercaseSectionName = [sectionName uppercaseString];
     NSInteger numStrings = [namePairs count];
     NSInteger i;
@@ -336,10 +299,10 @@
 }
 
 - (AKDocLocator *)_docLocatorForLinkAnchor:(NSString *)linkAnchor
-    rootSection:(AKFileSection *)rootSection
-    topic:(AKTopic *)docTopic
-    behaviorNode:(AKBehaviorNode *)behaviorNode
-    frameworkName:(NSString *)frameworkName
+                               rootSection:(AKFileSection *)rootSection
+                                     topic:(AKTopic *)docTopic
+                              behaviorNode:(AKBehaviorNode *)behaviorNode
+                             frameworkName:(NSString *)frameworkName
 {
     // What major and minor sections of the file is the anchor located in?
     if ((!linkAnchor) || (!rootSection) || (!docTopic))
@@ -351,10 +314,8 @@
 
     if (offset < 0)
     {
-        DIGSLogError_ExitingMethodPrematurely(
-            ([NSString stringWithFormat:
-                @"couldn't find anchor \"%@\" in file %@",
-                linkAnchor, [rootSection filePath]]));
+        DIGSLogError_ExitingMethodPrematurely(([NSString stringWithFormat:@"couldn't find anchor \"%@\" in file %@",
+                                               linkAnchor, [rootSection filePath]]));
         return nil;
     }
 
@@ -442,7 +403,7 @@
 // [agl] make a note of the assumptions about child sections that this
 // relies on: same file, sequential, non-overlapping.
 - (AKFileSection *)_childSectionOf:(AKFileSection *)fileSection
-    containingOffset:(NSUInteger)offset
+                  containingOffset:(NSUInteger)offset
 {
     if (offset < [fileSection sectionOffset])
     {
@@ -454,11 +415,9 @@
         return nil;
     }
 
-    NSEnumerator *en = [fileSection childSectionEnumerator];
-    AKFileSection *sub;
     AKFileSection *prevSub = nil;
 
-    while ((sub = [en nextObject]))
+    for (AKFileSection *sub in [fileSection childSections])
     {
         if (offset < [sub sectionOffset])
         {
@@ -477,12 +436,10 @@
         lastDescendant = lastSub;
     }
 
-    NSUInteger totalSectionLength =
-        [lastDescendant sectionOffset]
-        + [lastDescendant sectionLength]
-        - [fileSection sectionLength];
-    NSUInteger endingOffset =
-        [fileSection sectionOffset] + totalSectionLength;
+    NSUInteger totalSectionLength = ([lastDescendant sectionOffset]
+                                     + [lastDescendant sectionLength]
+                                     - [fileSection sectionLength]);
+    NSUInteger endingOffset = [fileSection sectionOffset] + totalSectionLength;
 
     if (offset < endingOffset)
     {

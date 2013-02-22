@@ -86,13 +86,9 @@
     }
 
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSEnumerator *en;
-    NSString *filename;
-    NSString *startPath =
-        [[_basePath stringByAppendingPathComponent:dirPath]
-            stringByStandardizingPath];
-    en = [[fm contentsOfDirectoryAtPath:startPath error:NULL] objectEnumerator];
-    while ((filename = [en nextObject]))
+    NSString *startPath = [[_basePath stringByAppendingPathComponent:dirPath] stringByStandardizingPath];
+
+    for (NSString *filename in [fm contentsOfDirectoryAtPath:startPath error:NULL])
     {
         BOOL isDir;
 
@@ -102,10 +98,8 @@
         {
             if (recurseFlag)
             {
-                [self
-                    processDirectory:
-                        [dirPath stringByAppendingPathComponent:filename]
-                    recursively:YES];
+                [self processDirectory:[dirPath stringByAppendingPathComponent:filename]
+                           recursively:YES];
             }
         }
         else

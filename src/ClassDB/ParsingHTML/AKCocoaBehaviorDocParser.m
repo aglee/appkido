@@ -324,7 +324,7 @@
 {
     AKFileSection *majorSection = [_rootSectionOfCurrentFile childSectionWithName:htmlSectionName];
 
-    for (AKFileSection *minorSection in [majorSection childSectionEnumerator])
+    for (AKFileSection *minorSection in [majorSection childSections])
     {
         NSString *memberName = [minorSection sectionName];
         AKMemberNode *memberNode = getMemberNode(behaviorNode, memberName);
@@ -362,18 +362,12 @@
     // Look for major sections that contain method docs.  There can be more
     // than one -- e.g., "Deprecated in Mac OS X v10.3" and
     // "Deprecated in Mac OS X v10.4".
-    NSEnumerator *majorSectionEnum = [_rootSectionOfCurrentFile childSectionEnumerator];
-    AKFileSection *majorSection;
-    
-    while ((majorSection = [majorSectionEnum nextObject]))
+    for (AKFileSection *majorSection in [_rootSectionOfCurrentFile childSections])
     {
         if ([[majorSection sectionName] hasPrefix:@"Deprecated in"])
         {
             // Add each of the methods in the major section to the behavior node.
-            NSEnumerator *minorSectionEnum = [majorSection childSectionEnumerator];
-            AKFileSection *minorSection;
-            
-            while ((minorSection = [minorSectionEnum nextObject]))
+            for (AKFileSection *minorSection in [majorSection childSections])
             {
                 NSString *methodName = [minorSection sectionName];
                 AKMethodNode *methodNode = [behaviorNode addDeprecatedMethodIfAbsentWithName:methodName

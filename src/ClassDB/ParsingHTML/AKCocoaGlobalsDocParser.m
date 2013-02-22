@@ -83,19 +83,15 @@
 // group of types/constants.
 - (void)_parseGlobalsFromMajorSections
 {
-    NSEnumerator *majorSectionEnum = [_rootSectionOfCurrentFile childSectionEnumerator];
-    AKFileSection *majorSection;
-
     // Iterate through major sections.  Each major section corresponds
     // to a group of types/constants.
-    while ((majorSection = [majorSectionEnum nextObject]))
+    for (AKFileSection *majorSection in [_rootSectionOfCurrentFile childSections])
     {
         if ([[majorSection sectionName] isEqualToString:@"Constants"]
              || [[majorSection sectionName] isEqualToString:@"Data Types"])
         {
-            [self
-                _parseGlobalsGroupFromFileSection:majorSection
-                usingGroupName:[majorSection sectionName]];
+            [self _parseGlobalsGroupFromFileSection:majorSection
+                                     usingGroupName:[majorSection sectionName]];
         }
     }
 }
@@ -122,7 +118,7 @@
 
     // Iterate through child sections.  Each child section corresponds
     // to a type/constant within the group.
-    for (AKFileSection *childSection in [groupSection childSectionEnumerator])
+    for (AKFileSection *childSection in [groupSection childSections])
     {
         // Create a globals node and add it to the group.
         AKGlobalsNode *globalsNode = [self _globalsNodeFromFileSection:childSection];
@@ -174,7 +170,7 @@
     
     // [agl] 2012-07-16 I noticed NSCocoaErrorDomain wasn't getting added, among lots of
     // other constants. Seems I now need to go another level deep to parse those.
-    for (AKFileSection *fs in [fileSection childSectionEnumerator])
+    for (AKFileSection *fs in [fileSection childSections])
     {
         for (NSString *name in [self _parseNamesOfGlobalsInFileSection:fs])
         {

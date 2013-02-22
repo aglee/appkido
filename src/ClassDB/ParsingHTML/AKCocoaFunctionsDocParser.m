@@ -43,7 +43,7 @@
 
     // Each subsection of the "Functions" section contains the documentation
     // for one function.
-    for (AKFileSection *functionSection in [functionsSection childSectionEnumerator])
+    for (AKFileSection *functionSection in [functionsSection childSections])
     {
         NSString *functionName = [functionSection sectionName];
         NSString *groupName = defaultGroupName ?: [groupNamesByFunctionName objectForKey:functionName];
@@ -100,7 +100,7 @@
     
     if (functionsByTaskSection != nil)
     {
-        for (AKFileSection *functionGroupSection in [functionsByTaskSection childSectionEnumerator])
+        for (AKFileSection *functionGroupSection in [functionsByTaskSection childSections])
         {
             // Temporarily take over the _current and _dataEnd ivars for our own use.
             const char *originalCurrent = _current;

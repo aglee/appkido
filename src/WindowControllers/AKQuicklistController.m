@@ -34,43 +34,6 @@
 
 
 #pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKQuicklistController (Private)
-
-- (void)_selectQuicklistMode:(NSInteger)mode;
-
-- (void)_reloadQuicklistTable;
-
-- (NSArray *)_collectionClasses;
-- (NSArray *)_windowClasses;
-- (NSArray *)_viewClasses;
-- (NSArray *)_cellClasses;
-- (NSArray *)_classesWithDelegates;
-// Getting rid of "Delegate protocols" in Quicklist.
-//- (NSArray *)_delegateProtocols;
-- (NSArray *)_classesWithDataSources;
-- (NSArray *)_dataSourceProtocols;
-- (NSArray *)_classesForFramework:(NSString *)frameworkName;
-
-- (NSArray *)_sortedDocLocatorsForClasses:(NSArray *)classNodes;
-- (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolNodes;
-
-- (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames;
-- (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)nodeSet;
-
-- (void)_jumpToSearchResultAtIndex:(NSInteger)resultIndex;
-- (void)_jumpToSearchResultWithPrefix:(NSString *)searchString;
-- (void)_findStringDidChange:(DIGSFindBuffer *)findBuffer;
-
-- (void)_updateSearchOptionsPopup;
-
-- (void)_updateSearchQuery;
-
-@end
-
-
-#pragma mark -
 #pragma mark Private constants
 
 // Pasteboard type used for drag and drop when the quicklist is in
@@ -96,7 +59,6 @@ enum
 };
 
 @implementation AKQuicklistController
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -222,9 +184,7 @@ enum
 
     if (row >= 0)
     {
-        AKAppController *appController = [NSApp delegate];
-
-        [appController removeFavoriteAtIndex:row];
+        [(AKAppController *)[NSApp delegate] removeFavoriteAtIndex:row];
     }
 }
 
@@ -346,10 +306,7 @@ enum
     // We don't want that.
     [_frameworkPopup setAutoenablesItems:NO];
 
-    NSEnumerator *fwEnum = [[[_windowController database] sortedFrameworkNames] objectEnumerator];
-    NSString *fwName;
-
-    while ((fwName = [fwEnum nextObject]))
+    for (NSString *fwName in [[_windowController database] sortedFrameworkNames])
     {
         [_frameworkPopup addItemWithTitle:fwName];
     }
@@ -358,12 +315,21 @@ enum
     [_searchField setStringValue:[[DIGSFindBuffer sharedInstance] findString]];
 
     // Match the search options popup to the user's preferences.
-    [_includeClassesItem setState:
-        ([AKPrefUtils boolValueForPref:AKIncludeClassesAndProtocolsPrefKey] ? NSOnState : NSOffState)];
-    [_includeMethodsItem setState:([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey] ? NSOnState : NSOffState)];
-    [_includeFunctionsItem setState:([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey] ? NSOnState : NSOffState)];
-    [_includeGlobalsItem setState:([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey] ? NSOnState : NSOffState)];
-    [_ignoreCaseItem setState:([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey] ? NSOnState : NSOffState)];
+    [_includeClassesItem setState:([AKPrefUtils boolValueForPref:AKIncludeClassesAndProtocolsPrefKey]
+                                   ? NSOnState
+                                   : NSOffState)];
+    [_includeMethodsItem setState:([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey]
+                                   ? NSOnState
+                                   : NSOffState)];
+    [_includeFunctionsItem setState:([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey]
+                                     ? NSOnState
+                                     : NSOffState)];
+    [_includeGlobalsItem setState:([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey]
+                                   ? NSOnState
+                                   : NSOffState)];
+    [_ignoreCaseItem setState:([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey]
+                               ? NSOnState
+                               : NSOffState)];
 
     // We want everything in the search options popup to be enabled.
     [_searchOptionsPopup setAutoenablesItems:NO];
@@ -401,11 +367,10 @@ enum
         return YES;
     }
     else if ((itemAction == @selector(selectPreviousSearchResult:))
-        || (itemAction == @selector(selectNextSearchResult:)))
+             || (itemAction == @selector(selectNextSearchResult:)))
     {
-        return
-            (([[_searchQuery queryResults] count] > 0)
-            || ([[_searchQuery searchString] length] > 0));
+        return (([[_searchQuery queryResults] count] > 0)
+                || ([[_searchQuery searchString] length] > 0));
     }
 
     return NO;
@@ -421,8 +386,8 @@ enum
 }
 
 - (id)tableView:(NSTableView *)aTableView
-    objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(NSInteger)rowIndex
+objectValueForTableColumn:(NSTableColumn *)aTableColumn
+            row:(NSInteger)rowIndex
 {
     AKDocLocator *quicklistItem = [_currentTableValues objectAtIndex:rowIndex];
 
@@ -434,8 +399,8 @@ enum
 #pragma mark NSTableView delegate methods
 
 - (BOOL)tableView:(NSTableView*)tableView
-    acceptDrop:(id <NSDraggingInfo>)info
-    row:(int)row
+       acceptDrop:(id <NSDraggingInfo>)info
+              row:(int)row
     dropOperation:(NSTableViewDropOperation)operation
 {
     if (_currentQuicklistMode != _AKFavoritesQuicklistMode)
@@ -471,9 +436,9 @@ enum
 }
 
 - (NSDragOperation)tableView:(NSTableView*)tableView
-    validateDrop:(id <NSDraggingInfo>)info
-    proposedRow:(int)row
-    proposedDropOperation:(NSTableViewDropOperation)operation
+                validateDrop:(id <NSDraggingInfo>)info
+                 proposedRow:(int)row
+       proposedDropOperation:(NSTableViewDropOperation)operation
 {
     if (_currentQuicklistMode != _AKFavoritesQuicklistMode)
     {
@@ -484,27 +449,23 @@ enum
 }
 
 - (BOOL)tableView:(NSTableView *)tableView
-    writeRows:(NSArray*)rows
-    toPasteboard:(NSPasteboard*)pboard
+        writeRows:(NSArray*)rows
+     toPasteboard:(NSPasteboard*)pboard
 {
     if (_currentQuicklistMode != _AKFavoritesQuicklistMode)
     {
         return NO;
     }
 
-    [pboard declareTypes:[NSArray arrayWithObjects:_AKQuicklistPasteboardType, nil] owner:self];
+    [pboard declareTypes:@[_AKQuicklistPasteboardType] owner:self];
     [pboard setPropertyList:rows forType:_AKQuicklistPasteboardType];
 
     return YES;
 }
 
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKQuicklistController (Private)
 
 - (void)_selectQuicklistMode:(NSInteger)mode
 {
@@ -627,17 +588,16 @@ enum
 
     if (!s_collectionClasses)
     {
-        NSArray *arr =
-            [NSArray arrayWithObjects:
-                @"NSString",
-                @"NSAttributedString",
-                @"NSData",
-                @"NSValue",
-                @"NSArray",
-                @"NSDictionary",
-                @"NSSet",
-                @"NSDate",
-                nil];
+        NSArray *arr = (@[
+                        @"NSString",
+                        @"NSAttributedString",
+                        @"NSData",
+                        @"NSValue",
+                        @"NSArray",
+                        @"NSDictionary",
+                        @"NSSet",
+                        @"NSDate",
+                        ]);
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
         s_collectionClasses = [self _sortedDocLocatorsForClasses:classNodes];
@@ -709,22 +669,17 @@ enum
     if (!s_classesWithDelegates)
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
-        NSArray *classNodes = [[_windowController database] allClasses];
-        NSEnumerator *en = [classNodes objectEnumerator];
-        AKClassNode *classNode;
 
-        while ((classNode = [en nextObject]))
+        for (AKClassNode *classNode in [[_windowController database] allClasses])
         {
             BOOL classHasDelegate = NO;
 
             // See if the class doc contains a "Delegate Methods" section.
-            AKFileSection *delegateMethodsSection =
-                [[classNode nodeDocumentation] childSectionWithName:AKDelegateMethodsHTMLSectionName];
+            AKFileSection *delegateMethodsSection = [[classNode nodeDocumentation] childSectionWithName:AKDelegateMethodsHTMLSectionName];
 
             if (!delegateMethodsSection)
             {
-                delegateMethodsSection =
-                    [[classNode nodeDocumentation] childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
+                delegateMethodsSection =[[classNode nodeDocumentation] childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
             }
 
             if (delegateMethodsSection)
@@ -735,10 +690,7 @@ enum
             // If not, see if the class has a method with a name like setFooDelegate:.
             if (!classHasDelegate)
             {
-                NSEnumerator *methodEnum = [[classNode documentedInstanceMethods] objectEnumerator];
-                AKMethodNode *methodNode;
-
-                while ((methodNode = [methodEnum nextObject]))
+                for (AKMethodNode *methodNode in [classNode documentedInstanceMethods])
                 {
                     NSString *methodName = [methodNode nodeName];
 
@@ -753,10 +705,7 @@ enum
             // If not, see if the class has a property named "delegate" or "fooDelegate".
             if (!classHasDelegate)
             {
-                NSEnumerator *propertyEnum = [[classNode documentedProperties] objectEnumerator];
-                AKPropertyNode *propertyNode;
-
-                while ((propertyNode = [propertyEnum nextObject]))
+                for (AKPropertyNode *propertyNode in [classNode documentedProperties])
                 {
                     NSString *propertyName = [propertyNode nodeName];
 
@@ -769,8 +718,7 @@ enum
             }
 
             // If not, see if there's a protocol named thisClassDelegate.
-            NSString *possibleDelegateProtocolName =
-                [[classNode nodeName] stringByAppendingString:@"Delegate"];
+            NSString *possibleDelegateProtocolName = [[classNode nodeName] stringByAppendingString:@"Delegate"];
             if ([[_windowController database] protocolWithName:possibleDelegateProtocolName])
             {
                 classHasDelegate = YES;
@@ -783,7 +731,7 @@ enum
             }
         }
 
-        classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
+        NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
         s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
@@ -797,19 +745,13 @@ enum
     if (!s_classesWithDataSources)
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
-        NSArray *classNodes = [[_windowController database] allClasses];
-        NSEnumerator *en = [classNodes objectEnumerator];
-        AKClassNode *classNode;
 
-        while ((classNode = [en nextObject]))
+        for (AKClassNode *classNode in [[_windowController database] allClasses])
         {
             BOOL classHasDataSource = NO;
 
             // See if the class has a -setDataSource: method.
-            NSEnumerator *methodEnum = [[classNode documentedInstanceMethods] objectEnumerator];
-            AKMethodNode *methodNode;
-
-            while ((methodNode = [methodEnum nextObject]))
+            for (AKMethodNode *methodNode in [classNode documentedInstanceMethods])
             {
                 NSString *methodName = [methodNode nodeName];
 
@@ -823,10 +765,7 @@ enum
             // If not, see if the class has a property named "dataSource".
             if (!classHasDataSource)
             {
-                NSEnumerator *propertyEnum = [[classNode documentedProperties] objectEnumerator];
-                AKPropertyNode *propertyNode;
-
-                while ((propertyNode = [propertyEnum nextObject]))
+                for (AKPropertyNode *propertyNode in [classNode documentedProperties])
                 {
                     NSString *propertyName = [propertyNode nodeName];
 
@@ -852,7 +791,7 @@ enum
             }
         }
 
-        classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
+        NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
         s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
@@ -865,11 +804,9 @@ enum
 
     if (!s_dataSourceProtocols)
     {
-        NSEnumerator *en = [[[_windowController database] allProtocols] objectEnumerator];
-        AKProtocolNode *protocolNode;
         NSMutableArray *protocolNodes = [NSMutableArray array];
 
-        while ((protocolNode = [en nextObject]))
+        for (AKProtocolNode *protocolNode in [[_windowController database] allProtocols])
         {
             if ([[protocolNode nodeName] ak_contains:@"DataSource"])
             {
@@ -893,10 +830,8 @@ enum
 - (NSArray *)_sortedDocLocatorsForClasses:(NSArray *)classNodes
 {
     NSMutableArray *quicklistItems = [NSMutableArray array];
-    NSEnumerator *en = [classNodes objectEnumerator];
-    AKClassNode *classNode;
 
-    while ((classNode = [en nextObject]))
+    for (AKClassNode *classNode in classNodes)
     {
         // Don't list classes that don't have HTML documentation.  They
         // may have cropped up in header files and either not been
@@ -915,10 +850,8 @@ enum
 - (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolNodes
 {
     NSMutableArray *quicklistItems = [NSMutableArray array];
-    NSEnumerator *en = [protocolNodes objectEnumerator];
-    AKProtocolNode *protocolNode;
 
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in protocolNodes)
     {
         // Don't list protocols that don't have HTML documentation.  They
         // may have cropped up in header files and either not been
@@ -938,10 +871,8 @@ enum
 {
     NSMutableSet *nodeSet = [NSMutableSet setWithCapacity:100];
     AKDatabase *db = [_windowController database];
-    NSEnumerator *en = [classNames objectEnumerator];
-    NSString *name;
 
-    while ((name = [en nextObject]))
+    for (NSString *name in classNames)
     {
         AKClassNode *classNode = [db classWithName:name];
 
@@ -954,11 +885,9 @@ enum
 - (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)nodeSet
 {
     NSMutableSet *resultSet = [NSMutableSet setWithCapacity:([nodeSet count] * 2)];
-    NSEnumerator *en = [nodeSet objectEnumerator];
-    AKClassNode *node;
 
     // Add descendant classes of the classes that were found.
-    while ((node = [en nextObject]))
+    for (AKClassNode *node in nodeSet)
     {
         [resultSet unionSet:[node descendantClasses]];
     }
@@ -1043,10 +972,7 @@ enum
     }
 
     // Add the new list.
-    NSEnumerator *stringEnum = [_pastSearchStrings objectEnumerator];
-    NSString *searchString;
-
-    while ((searchString = [stringEnum nextObject]))
+    for (NSString *searchString in _pastSearchStrings)
     {
         [_searchOptionsPopup addItemWithTitle:searchString];
     }

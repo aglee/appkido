@@ -14,25 +14,6 @@
 #import "AKDocParser.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKDoc (Private)
-
-- (NSData *)_rolledUpTextForFileSection:(AKFileSection *)fileSection;
-
-- (void)_addDescendantSectionsOf:(AKFileSection *)fileSection
-    depthFirstToArray:(NSMutableArray *)sectionArray;
-
-- (NSData *)_kludgeHTML:(NSData *)htmlData;
-- (NSMutableData *)_kludgeOne:(NSData *)sourceData;
-- (void)_kludgeThree:(NSMutableData *)sourceData;
-- (void)_kludgeFour:(NSMutableData *)sourceData;
-- (NSMutableData *)_kludgeFive:(NSData *)sourceData;
-
-@end
-
-
 @implementation AKDoc
 
 
@@ -65,10 +46,9 @@
     }
     else
     {
-        NSData *textData =
-            [self textIncludesDescendantSections]
-            ? [self _rolledUpTextForFileSection:fileSection]
-            : [fileSection sectionData];
+        NSData *textData = ([self textIncludesDescendantSections]
+                            ? [self _rolledUpTextForFileSection:fileSection]
+                            : [fileSection sectionData]);
 
         return [self _kludgeHTML:textData];
     }
@@ -98,38 +78,24 @@
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:
-            @"<%@: docName=%@>",
-            [self className],
-            [self docName]];
+    return [NSString stringWithFormat:@"<%@: docName=%@>", [self className], [self docName]];
 }
-
-@end
-
 
 
 #pragma mark -
 #pragma mark Private methods
 
-@implementation AKDoc (Private)
-
 - (NSData *)_rolledUpTextForFileSection:(AKFileSection *)fileSection
 {
     // Put all the file sections we want to roll up into an array.
-    NSMutableArray *sectionArray =
-        [NSMutableArray arrayWithObject:fileSection];
+    NSMutableArray *sectionArray = [NSMutableArray arrayWithObject:fileSection];
 
-    [self
-        _addDescendantSectionsOf:fileSection
-        depthFirstToArray:sectionArray];
+    [self _addDescendantSectionsOf:fileSection depthFirstToArray:sectionArray];
 
     // Concatenate the text from all the sections.
     NSMutableData *rolledUpData = [NSMutableData data];
-    NSEnumerator *elemEnum = [sectionArray objectEnumerator];
-    AKFileSection *elem;
 
-    while ((elem = [elemEnum nextObject]))
+    for (AKFileSection *elem in sectionArray)
     {
         [rolledUpData appendData:[elem sectionData]];
     }
@@ -138,7 +104,7 @@
 }
 
 - (void)_addDescendantSectionsOf:(AKFileSection *)fileSection
-    depthFirstToArray:(NSMutableArray *)sectionArray
+               depthFirstToArray:(NSMutableArray *)sectionArray
 {
     NSInteger numSubs = [fileSection numberOfChildSections];
 
@@ -153,9 +119,7 @@
         AKFileSection *sub = [fileSection childSectionAtIndex:i];
 
         [sectionArray addObject:sub];
-        [self
-            _addDescendantSectionsOf:sub
-            depthFirstToArray:sectionArray];
+        [self _addDescendantSectionsOf:sub depthFirstToArray:sectionArray];
     }
 }
 

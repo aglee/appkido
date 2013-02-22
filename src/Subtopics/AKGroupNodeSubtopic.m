@@ -38,7 +38,6 @@
 }
 
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
@@ -49,12 +48,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    NSEnumerator *subnodesEnum =
-        [[AKSortUtils arrayBySortingArray:[_groupNode subnodes]]
-            objectEnumerator];
-    AKGlobalsNode *globalsNode;
-
-    while ((globalsNode = [subnodesEnum nextObject]))
+    for (AKGlobalsNode *globalsNode in [AKSortUtils arrayBySortingArray:[_groupNode subnodes]])
     {
         AKDoc *newDoc =
             [[AKNodeDoc alloc] initWithNode:globalsNode];

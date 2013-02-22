@@ -35,16 +35,7 @@
 #import "AKOverviewDoc.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKLinkResolver (Private)
-
-@end
-
-
 @implementation AKLinkResolver
-
 
 #pragma mark -
 #pragma mark Factory methods
@@ -76,7 +67,6 @@
 }
 
 
-
 #pragma mark -
 #pragma mark Resolving links
 
@@ -87,24 +77,20 @@
     NSString *linkAnchor = [normalizedLinkURL fragment];
     NSString *tokenName = [[linkAnchor pathComponents] lastObject];
 
-    AKSearchQuery *searchQuery =
-        [[AKSearchQuery alloc] initWithDatabase:_database];
+    AKSearchQuery *searchQuery = [[AKSearchQuery alloc] initWithDatabase:_database];
+    
     [searchQuery setSearchString:tokenName];
     [searchQuery setIncludesEverything];
     [searchQuery setIgnoresCase:YES];
     [searchQuery setSearchComparison:AKSearchForExactMatch];
-    NSEnumerator *searchResultsEnum =
-        [[searchQuery queryResults] objectEnumerator];
-    AKDocLocator *docLocator;
 
-    while ((docLocator = [searchResultsEnum nextObject]))
+    for (AKDocLocator *docLocator in [searchQuery queryResults])
     {
         AKFileSection *docSection = [[docLocator docToDisplay] fileSection];
 
         if (docSection == nil)
         {
-            docSection =
-                [[[docLocator topicToDisplay] topicNode] nodeDocumentation];
+            docSection = [[[docLocator topicToDisplay] topicNode] nodeDocumentation];
         }
 
         if ([[docSection filePath] isEqualToString:filePath])
@@ -116,14 +102,5 @@
     // If we got this far, there was no match.
     return nil;
 }
-
-@end
-
-
-
-#pragma mark -
-#pragma mark Private methods
-
-@implementation AKLinkResolver (Private)
 
 @end

@@ -15,17 +15,7 @@
 #import "AKMemberDoc.h"
 
 
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKMembersSubtopic (Private)
-- (NSArray *)_ancestorNodesWeCareAbout;
-- (NSDictionary *)_subtopicMethodsByName;
-@end
-
-
 @implementation AKMembersSubtopic
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -78,35 +68,24 @@
 
     // Create an AKMemberDoc instance for each method we want to list.
     Class methodClass = [[self class] memberDocClass];
-    NSArray *sortedMethodNames =
-        [[methodNodesByName allKeys]
-            sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    NSEnumerator *methodNamesEnum = [sortedMethodNames objectEnumerator];
-    NSString *methodName;
+    NSArray *sortedMethodNames = [[methodNodesByName allKeys]
+                                  sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 
-    while ((methodName = [methodNamesEnum nextObject]))
+    for (NSString *methodName in sortedMethodNames)
     {
-        AKMethodNode *methodNode =
-            [methodNodesByName objectForKey:methodName];
-
-        AKMemberDoc *methodDoc =
-            [[methodClass alloc]
-                initWithMemberNode:methodNode
-                inheritedByBehavior:[self behaviorNode]];
-
+        AKMethodNode *methodNode = [methodNodesByName objectForKey:methodName];
+        AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberNode:methodNode
+                                                     inheritedByBehavior:[self behaviorNode]];
         [docList addObject:methodDoc];
     }
 }
-
-@end
-
 
 
 #pragma mark -
 #pragma mark Private methods
 
-@implementation AKMembersSubtopic (Private)
-
+// Get a list of all behaviors that declare methods we want to
+// include in our doc list.
 - (NSArray *)_ancestorNodesWeCareAbout
 {
     if (![self behaviorNode])
@@ -115,8 +94,7 @@
     }
 
     // Get a list of all behaviors that declare methods we want to list.
-    NSMutableArray *ancestorNodes =
-        [NSMutableArray arrayWithObject:[self behaviorNode]];
+    NSMutableArray *ancestorNodes = [NSMutableArray arrayWithObject:[self behaviorNode]];
 
     if (_includesAncestors)
     {
@@ -134,9 +112,7 @@
 
         // Add protocols we conform to to the list.  They will
         // be the last behaviors we check.
-        [ancestorNodes
-            addObjectsFromArray:
-                [[self behaviorNode] implementedProtocols]];
+        [ancestorNodes addObjectsFromArray:[[self behaviorNode] implementedProtocols]];
     }
 
     return ancestorNodes;
@@ -144,33 +120,22 @@
 
 - (NSDictionary *)_subtopicMethodsByName
 {
-    // Get a list of all behaviors that declare methods we want to
-    // include in our doc list.
-    NSArray *ancestorNodes = [self _ancestorNodesWeCareAbout];
-
     // Match each inherited method name to the ancestor we get it from.
     // Because of the order in which we traverse ancestors, the
     // the *earliest* ancestor that implements each method is what will
     // remain in the dictionary.
     NSMutableDictionary *methodsByName = [NSMutableDictionary dictionary];
-    NSEnumerator *ancestorEnum = [ancestorNodes objectEnumerator];
-    AKBehaviorNode *ancestorNode;
 
-    while ((ancestorNode = [ancestorEnum nextObject]) != nil)
+    for (AKBehaviorNode *ancestorNode in [self _ancestorNodesWeCareAbout])
     {
-        NSEnumerator *methodNodeEnum =
-            [[self memberNodesForBehavior:ancestorNode] objectEnumerator];
-        AKMethodNode *methodNode;
-
-        while ((methodNode = [methodNodeEnum nextObject]) != nil)
+        for (AKMethodNode *methodNode in [self memberNodesForBehavior:ancestorNode])
         {
-            [methodsByName
-                setObject:methodNode
-                forKey:[methodNode nodeName]];
+            [methodsByName setObject:methodNode forKey:[methodNode nodeName]];
         }
     }
 
     return methodsByName;
 }
+
 
 @end

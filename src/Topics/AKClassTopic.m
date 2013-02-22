@@ -129,10 +129,8 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    NSEnumerator *en = [[AKSortUtils arrayBySortingArray:[_classNode childClasses]] objectEnumerator];
-    AKClassNode *subclassNode;
 
-    while ((subclassNode = [en nextObject]))
+    for (AKClassNode *subclassNode in [AKSortUtils arrayBySortingArray:[_classNode childClasses]])
     {
         [columnValues addObject:[AKClassTopic topicWithClassNode:subclassNode]];
     }

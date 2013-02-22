@@ -21,9 +21,7 @@
     [self _registerStandardDefaults];
 
     // Set logging verbosity, based on user preferences.
-    DIGSSetVerbosityLevel(
-        [[NSUserDefaults standardUserDefaults]
-            integerForKey:(id)DIGSLogVerbosityUserDefault]);
+    DIGSSetVerbosityLevel( [[NSUserDefaults standardUserDefaults] integerForKey:(id)DIGSLogVerbosityUserDefault]);
 //    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
@@ -33,8 +31,7 @@
 {
     // Note that if you pass nil to -arrayWithArray:, it returns an empty
     // array rather than nil.
-    NSArray *prefArray =
-        [self arrayValueForPref:AKSelectedFrameworksPrefName];
+    NSArray *prefArray = [self arrayValueForPref:AKSelectedFrameworksPrefName];
 
     if (prefArray == nil)
     {
@@ -48,19 +45,13 @@
     if (frameworkIndex != NSNotFound)
     {
         [fwNames removeObjectAtIndex:frameworkIndex];
-        [fwNames
-            insertObject:AKAppKitFrameworkName
-            atIndex:frameworkIndex];
+        [fwNames insertObject:AKAppKitFrameworkName atIndex:frameworkIndex];
     }
 
     // It seems prefs files can be messed up from earlier app versions.  In
     // particular, required frameworks can be missing from the prefs setting.
     // Thanks to Gerriet for pointing this out.
-    NSEnumerator *essentialFrameworkNamesEnum =
-        [AKNamesOfEssentialFrameworks objectEnumerator];
-    NSString *essentialFrameworkName;
-
-    while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
+    for (NSString *essentialFrameworkName in AKNamesOfEssentialFrameworks)
     {
         if (![fwNames containsObject:essentialFrameworkName])
         {
@@ -177,74 +168,58 @@
 // because the default for this is simply the empty list.
 + (void)_registerStandardDefaults
 {
-    NSMutableDictionary *defaultPrefsDictionary
-        = [NSMutableDictionary dictionary];
+    NSMutableDictionary *defaultPrefsDictionary = [NSMutableDictionary dictionary];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:DIGS_VERBOSITY_WARNING]
-        forKey:(id)DIGSLogVerbosityUserDefault];
+    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:DIGS_VERBOSITY_WARNING]
+                               forKey:(id)DIGSLogVerbosityUserDefault];
 
-    [defaultPrefsDictionary
-        setObject:[self _defaultDevToolsPath]
-        forKey:AKDevToolsPathPrefName];
+    [defaultPrefsDictionary setObject:[self _defaultDevToolsPath]
+                               forKey:AKDevToolsPathPrefName];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:NO] forKey:AKSearchInNewWindowPrefName];
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:NO]
+                               forKey:AKSearchInNewWindowPrefName];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:20]
+                               forKey:AKMaxSearchStringsPrefName];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+                               forKey:AKIncludeClassesAndProtocolsPrefKey];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+                               forKey:AKIncludeMethodsPrefKey];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+                               forKey:AKIncludeFunctionsPrefKey];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+                               forKey:AKIncludeGlobalsPrefKey];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+                               forKey:AKIgnoreCasePrefKey];
+
+    [defaultPrefsDictionary setObject:@"Lucida Grande"
+                               forKey:AKListFontNamePrefName];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:12]
+                               forKey:AKListFontSizePrefName];
+
+    [defaultPrefsDictionary setObject:@"Monaco"
+                               forKey:AKHeaderFontNamePrefName];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:10]
+                               forKey:AKHeaderFontSizePrefName];
+
+    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:100]
+                               forKey:AKDocMagnificationPrefName];
     
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:20]
-        forKey:AKMaxSearchStringsPrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeClassesAndProtocolsPrefKey];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeMethodsPrefKey];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeFunctionsPrefKey];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeGlobalsPrefKey];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIgnoreCasePrefKey];
-
-    [defaultPrefsDictionary
-        setObject:@"Lucida Grande"
-        forKey:AKListFontNamePrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:12]
-        forKey:AKListFontSizePrefName];
-
-    [defaultPrefsDictionary
-        setObject:@"Monaco"
-        forKey:AKHeaderFontNamePrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:10]
-        forKey:AKHeaderFontSizePrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:100]
-        forKey:AKDocMagnificationPrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKUseTexturedWindowsPrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:50]
-        forKey:AKMaxHistoryPrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSArray array]
-        forKey:AKFavoritesPrefName];
+    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+                               forKey:AKUseTexturedWindowsPrefName];
+    
+    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:50]
+                               forKey:AKMaxHistoryPrefName];
+    
+    [defaultPrefsDictionary setObject:[NSArray array]
+                               forKey:AKFavoritesPrefName];
 
 // Don't register a default for the selected-frameworks pref.  We'll set it
 // in -[AKAppController awakeFromNib] if it hasn't been set.  We do it there
@@ -253,8 +228,7 @@
 //        setObject:AKNamesOfEssentialFrameworks
 //        forKey:AKSelectedFrameworksPrefName];
 
-    [[NSUserDefaults standardUserDefaults]
-        registerDefaults:defaultPrefsDictionary];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefsDictionary];
 }
 
 + (NSString *)_defaultDevToolsPath

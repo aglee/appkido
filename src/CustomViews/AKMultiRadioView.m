@@ -32,11 +32,8 @@
 {
     // Make sure at most one co-matrix has a non-empty selection,
     // and remember which co-matrix it is.
-    NSEnumerator *en = [[self subviews] objectEnumerator];
-    id subview;
-
     _selectedRadioMatrix = nil;
-    while ((subview = [en nextObject]))
+    for (id subview in [self subviews])
     {
         if ([subview isKindOfClass:[NSMatrix class]]
             && ([(NSMatrix *)subview mode] == NSRadioModeMatrix))
@@ -94,11 +91,9 @@
 - (BOOL)selectCellWithTag:(NSInteger)tag
 {
     BOOL didSelect = NO;
-    NSEnumerator *en = [[self subviews] objectEnumerator];
-    id subview;
 
     _selectedRadioMatrix = nil;
-    while ((subview = [en nextObject]))
+    for (id subview in [self subviews])
     {
         if ([subview isKindOfClass:[NSMatrix class]]
             && ([(NSMatrix *)subview mode] == NSRadioModeMatrix))
@@ -135,9 +130,8 @@
 {
     if ([sender superview] != self)
     {
-        DIGSLogWarning(
-            @"AKMultiRadioView [%@] doesn't have [%@] as a subview",
-            self, sender);
+        DIGSLogWarning(@"AKMultiRadioView [%@] doesn't have [%@] as a subview",
+                       self, sender);
         return;
     }
 
@@ -152,5 +146,6 @@
     [_radioTarget performSelector:_radioAction withObject:sender];
 #pragma clang diagnostic pop
 }
+
 
 @end
