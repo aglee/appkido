@@ -19,7 +19,8 @@
 @interface AKFrameworkTopic : AKTopic
 {
 @protected
-    AKFramework *_topicFramework;
+    AKDatabase *_topicDatabase;
+    NSString *_topicFrameworkName;
 }
 
 

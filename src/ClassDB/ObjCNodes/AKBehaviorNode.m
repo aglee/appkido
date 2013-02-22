@@ -39,9 +39,11 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
+- (id)initWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:owningFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _protocolNodes = [[NSMutableArray alloc] init];
         _protocolNodeNames = [[NSMutableSet alloc] init];
@@ -67,9 +69,8 @@
 {
     if ([_protocolNodeNames containsObject:[node nodeName]])
     {
-        DIGSLogWarning(
-            @"trying to add protocol [%@] again to behavior [%@]",
-            [node nodeName], [self nodeName]);
+        DIGSLogWarning(@"trying to add protocol [%@] again to behavior [%@]",
+                       [node nodeName], [self nodeName]);
     }
     else
     {
@@ -81,10 +82,8 @@
 - (NSArray *)implementedProtocols
 {
     NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolNodes];
-    NSEnumerator *en = [_protocolNodes objectEnumerator];
-    AKProtocolNode *protocolNode;
 
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in _protocolNodes)
     {
         [result addObjectsFromArray:[protocolNode implementedProtocols]];
     }
@@ -159,7 +158,7 @@
 #pragma mark Getters and setters -- deprecated methods
 
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-                                      owningFramework:(AKFramework *)nodeOwningFW
+                                        frameworkName:(NSString *)frameworkName
 {
     // Is this an instance method or a class method?  Note this assumes a
     // a method node for the method already exists, presumably because we
@@ -175,7 +174,7 @@
     {
         DIGSLogInfo(@"Couldn't find class method or instance method named %@"
                     @" while processing deprecated methods for behavior %@",
-            methodName, [self nodeName]);
+                    methodName, [self nodeName]);
     }
     else
     {

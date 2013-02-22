@@ -10,7 +10,6 @@
 #import "DIGSLog.h"
 #import "AKTextUtils.h"
 #import "AKDatabase.h"
-#import "AKFramework.h"
 #import "AKFileSection.h"
 
 
@@ -20,9 +19,9 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFramework:(AKFramework *)aFramework
+- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithFramework:aFramework]))
+    if ((self = [super initWithDatabase:database frameworkName:frameworkName]))
     {
         _sectionStack = [[NSMutableArray alloc] init];
         _token[0] = '\0';
@@ -214,6 +213,11 @@
 
 - (void)parseCurrentFile
 {
+    if ([[self currentPath] ak_contains:@"NNString"])
+    {
+        [self self];  // [agl] REMOVE
+    }
+    
     @autoreleasepool
     {
         // Parse the file, to extract the hierarchy of sections therein.
@@ -222,11 +226,11 @@
         // Apply the parse results to the database.
         if (_rootSectionOfCurrentFile != nil)
         {
-            [[_targetFramework owningDatabase] rememberFrameworkName:[_targetFramework frameworkName]
-                                                         forHTMLFile:[self currentPath]];
+            [_targetDatabase rememberFrameworkName:_targetFrameworkName
+                                       forHTMLFile:[self currentPath]];
 
-            [[_targetFramework owningDatabase] rememberRootSection:_rootSectionOfCurrentFile
-                                                       forHTMLFile:[self currentPath]];
+            [_targetDatabase rememberRootSection:_rootSectionOfCurrentFile
+                                     forHTMLFile:[self currentPath]];
             
             [self applyParseResults];
         }
@@ -517,9 +521,9 @@
                                                               length:(_current - anchorStart)
                                                             encoding:NSUTF8StringEncoding];
 
-            [[_targetFramework owningDatabase] rememberOffset:(anchorStart - _dataStart)
-                                               ofAnchorString:anchorString
-                                                   inHTMLFile:[self currentPath]];
+            [_targetDatabase rememberOffset:(anchorStart - _dataStart)
+                             ofAnchorString:anchorString
+                                 inHTMLFile:[self currentPath]];
         }
     }
 }

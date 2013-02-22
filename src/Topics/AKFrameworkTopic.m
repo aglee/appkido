@@ -11,7 +11,6 @@
 #import "AKFrameworkConstants.h"
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
-#import "AKFramework.h"
 #import "AKAppController.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKInformalProtocolsTopic.h"
@@ -37,7 +36,8 @@
 {
     if ((self = [super init]))
     {
-        _topicFramework = [aDatabase frameworkWithName:frameworkName];
+        _topicDatabase = aDatabase;
+        _topicFrameworkName = frameworkName;
     }
 
     return self;
@@ -92,48 +92,52 @@
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
     [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
-    [prefDict setObject:[_topicFramework frameworkName] forKey:AKFrameworkNamePrefKey];
+    [prefDict setObject:_topicFrameworkName forKey:AKFrameworkNamePrefKey];
 
     return prefDict;
 }
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return [_topicFramework frameworkName];
+    return _topicFrameworkName;
 }
 
 - (NSString *)pathInTopicBrowser
 {
-    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, [self stringToDisplayInTopicBrowser]];
+    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator,
+            [self stringToDisplayInTopicBrowser]];
 }
 
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *aDatabase = [_topicFramework owningDatabase];
-    NSString *frameworkName = [_topicFramework frameworkName];
 
-    if ([aDatabase numberOfFunctionsGroupsForFrameworkNamed:frameworkName] > 0)
+    if ([_topicDatabase numberOfFunctionsGroupsForFrameworkNamed:_topicFrameworkName] > 0)
     {
-        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
+        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                               inDatabase:_topicDatabase]];
     }
 
-    if ([aDatabase numberOfGlobalsGroupsForFrameworkNamed:frameworkName] > 0)
+    if ([_topicDatabase numberOfGlobalsGroupsForFrameworkNamed:_topicFrameworkName] > 0)
     {
-        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
+        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                             inDatabase:_topicDatabase]];
     }
 
-    if ([[aDatabase formalProtocolsForFrameworkNamed:frameworkName] count] > 0)
+    if ([[_topicDatabase formalProtocolsForFrameworkNamed:_topicFrameworkName] count] > 0)
     {
-        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
+        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                                     inDatabase:_topicDatabase]];
     }
 
-    if ([[aDatabase informalProtocolsForFrameworkNamed:frameworkName] count] > 0)
+    if ([[_topicDatabase informalProtocolsForFrameworkNamed:_topicFrameworkName] count] > 0)
     {
-        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
+        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                                       inDatabase:_topicDatabase]];
     }
 
     return columnValues;
 }
+
 
 @end

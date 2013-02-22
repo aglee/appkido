@@ -103,8 +103,7 @@
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
 
-/* Creates the AKFramework instance if it doesn't exist. [agl] Confusing semantics. */
-- (AKFramework *)frameworkWithName:(NSString *)frameworkName;
+- (void)addFrameworkName:(NSString *)frameworkName;
 
 /*! Names of all frameworks that have been loaded, in no guaranteed order. */
 - (NSArray *)frameworkNames;

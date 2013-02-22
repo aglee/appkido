@@ -108,7 +108,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * because the docs lump all deprecated methods together.
  */
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-                                      owningFramework:(AKFramework *)nodeOwningFW;
+                                        frameworkName:(NSString *)frameworkName;
 
 
 @end

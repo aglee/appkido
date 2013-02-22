@@ -9,7 +9,6 @@
 
 #import "DIGSLog.h"
 #import "AKDatabase.h"
-#import "AKFramework.h"
 
 @implementation AKParser
 
@@ -17,27 +16,30 @@
 #pragma mark -
 #pragma mark Class methods
 
-+ (void)recursivelyParseDirectory:(NSString *)dirPath forFramework:(AKFramework *)aFramework
++ (void)recursivelyParseDirectory:(NSString *)dirPath
+                      forDatabase:(AKDatabase *)database
+                    frameworkName:(NSString *)frameworkName
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:dirPath])
     {
         return;
     }
 
-    AKParser *parser = [[self alloc] initWithFramework:aFramework];
-
+    AKParser *parser = [[self alloc] initWithDatabase:database
+                                        frameworkName:frameworkName];
     [parser processDirectory:dirPath recursively:YES];
 }
 
 + (void)parseFilesInSubpaths:(NSArray *)subpaths
                 underBaseDir:(NSString *)baseDir
-                forFramework:(AKFramework *)aFramework
+                 forDatabase:(AKDatabase *)database
+               frameworkName:(NSString *)frameworkName
 {
     for (NSString *subpath in subpaths)
     {
         NSString *fullPath = [baseDir stringByAppendingPathComponent:subpath];
-        AKParser *parser = [[self alloc] initWithFramework:aFramework];
-
+        AKParser *parser = [[self alloc] initWithDatabase:database
+                                            frameworkName:frameworkName];
         [parser processFile:fullPath];
     }
 }
@@ -46,11 +48,12 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFramework:(AKFramework *)aFramework
+- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super init]))
     {
-        _targetFramework = aFramework;
+        _targetDatabase = database;
+        _targetFrameworkName = frameworkName;
     }
 
     return self;

@@ -43,8 +43,6 @@
 
     // Each subsection of the "Functions" section contains the documentation
     // for one function.
-    AKDatabase *targetDB = [_targetFramework owningDatabase];
-
     for (AKFileSection *functionSection in [functionsSection childSectionEnumerator])
     {
         NSString *functionName = [functionSection sectionName];
@@ -57,16 +55,19 @@
         else
         {
             AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName
-                                                            owningFramework:_targetFramework];
+                                                                   database:_targetDatabase
+                                                              frameworkName:_targetFrameworkName];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode = [targetDB functionsGroupNamed:groupName
-                                                  inFrameworkNamed:[_targetFramework frameworkName]];
+            AKGroupNode *groupNode = [_targetDatabase functionsGroupNamed:groupName
+                                                         inFrameworkNamed:_targetFrameworkName];
             if (!groupNode)
             {
-                groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_targetFramework];
+                groupNode = [AKGroupNode nodeWithNodeName:groupName
+                                                 database:_targetDatabase
+                                            frameworkName:_targetFrameworkName];
                 [groupNode setNodeDocumentation:functionSection];
-                [targetDB addFunctionsGroup:groupNode];
+                [_targetDatabase addFunctionsGroup:groupNode];
             }
 
             [groupNode addSubnode:functionNode];

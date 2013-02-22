@@ -26,9 +26,7 @@
 
 - (NSInteger)numberOfSubtopics
 {
-    return
-        [[_topicFramework owningDatabase]
-            numberOfGlobalsGroupsForFrameworkNamed:[_topicFramework frameworkName]];
+    return [_topicDatabase numberOfGlobalsGroupsForFrameworkNamed:_topicFrameworkName];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
@@ -38,10 +36,7 @@
         return nil;
     }
 
-    NSArray *groupNodes =
-        [AKSortUtils
-            arrayBySortingArray:
-                [[_topicFramework owningDatabase] globalsGroupsForFrameworkNamed:[_topicFramework frameworkName]]];
+    NSArray *groupNodes = [AKSortUtils arrayBySortingArray:[_topicDatabase globalsGroupsForFrameworkNamed:_topicFrameworkName]];
 
 
     if ((unsigned)subtopicIndex >= [groupNodes count])
@@ -60,5 +55,6 @@
 {
     return NO;
 }
+
 
 @end

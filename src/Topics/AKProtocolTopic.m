@@ -93,26 +93,22 @@
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-    NSString *stringFormat =
-        [_protocolNode isInformal]
-        ? @"%@ INFORMAL protocol <%@>"
-        : @"%@ protocol <%@>";
+    NSString *stringFormat = ([_protocolNode isInformal]
+                              ? @"%@ INFORMAL protocol <%@>"
+                              : @"%@ protocol <%@>");
 
-    return
-        [NSString stringWithFormat:stringFormat,
-            [[_protocolNode owningFramework] frameworkName], [_protocolNode nodeName]];
+    return [NSString stringWithFormat:stringFormat,
+            [_protocolNode owningFrameworkName], [_protocolNode nodeName]];
 }
 
 - (NSString *)pathInTopicBrowser
 {
-    NSString *whichProtocols =
-        [_protocolNode isInformal]
-        ? AKInformalProtocolsTopicName
-        : AKProtocolsTopicName;
+    NSString *whichProtocols = ([_protocolNode isInformal]
+                                ? AKInformalProtocolsTopicName
+                                : AKProtocolsTopicName);
 
-    return
-        [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
-            AKTopicBrowserPathSeparator, [[_protocolNode owningFramework] frameworkName],
+    return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
+            AKTopicBrowserPathSeparator, [_protocolNode owningFrameworkName],
             AKTopicBrowserPathSeparator, whichProtocols,
             AKTopicBrowserPathSeparator, [_protocolNode nodeName]];
 }

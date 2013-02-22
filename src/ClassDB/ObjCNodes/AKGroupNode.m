@@ -15,9 +15,11 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
+- (id)initWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:owningFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _subnodes = [[NSMutableArray alloc] init];
     }

@@ -423,7 +423,7 @@
         // When the subtopic is "General", the doc name is actually the section name.
         if ([subtopicName isEqualToString:AKOverviewSubtopicName])
         {
-            if ([frameworkName isEqualToString:[[behaviorNode owningFramework] frameworkName]])
+            if ([frameworkName isEqualToString:[behaviorNode owningFrameworkName]])
             {
                 docName = majorSectionName;
             }

@@ -28,8 +28,8 @@
 
 - (NSString *)commentString
 {
-    AKFramework *methodFrameworkName = [_memberNode owningFramework];
-    BOOL methodIsInSameFramework = [methodFrameworkName isEqual:[_behaviorNode owningFramework]];
+    NSString *methodFrameworkName = [_memberNode owningFrameworkName];
+    BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:[_behaviorNode owningFrameworkName]];
     AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
 
     if (_behaviorNode == ownerOfMethod)
@@ -41,7 +41,8 @@
         }
         else
         {
-            return [NSString stringWithFormat:@"This property comes from the %@ framework.", methodFrameworkName];
+            return [NSString stringWithFormat:@"This property comes from the %@ framework.",
+                    methodFrameworkName];
         }
     }
     else
@@ -51,7 +52,8 @@
         {
             if ([ownerOfMethod isClassNode])
             {
-                return [NSString stringWithFormat:@"This property is inherited from class %@.", [ownerOfMethod nodeName]];
+                return [NSString stringWithFormat:@"This property is inherited from class %@.",
+                        [ownerOfMethod nodeName]];
             }
             else
             {
@@ -62,18 +64,17 @@
         {
             if ([ownerOfMethod isClassNode])
             {
-                return
-                    [NSString stringWithFormat:
-                        @"This property is inherited from %@ class %@.", methodFrameworkName, [ownerOfMethod nodeName]];
+                return [NSString stringWithFormat:@"This property is inherited from %@ class %@.",
+                        methodFrameworkName, [ownerOfMethod nodeName]];
             }
             else
             {
-                return
-                    [NSString stringWithFormat:
-                        @"This property is declared in %@ protocol <%@>.", methodFrameworkName, [ownerOfMethod nodeName]];
+                return [NSString stringWithFormat:@"This property is declared in %@ protocol <%@>.",
+                        methodFrameworkName, [ownerOfMethod nodeName]];
             }
         }
     }
 }
+
 
 @end

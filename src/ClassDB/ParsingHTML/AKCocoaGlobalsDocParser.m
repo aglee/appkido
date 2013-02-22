@@ -31,9 +31,9 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFramework:(AKFramework *)aFramework
+- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithFramework:aFramework]))
+    if ((self = [super initWithDatabase:database frameworkName:frameworkName]))
     {
         _prevToken[0] = '\0';
         _currTokenStart = NULL;
@@ -62,8 +62,8 @@
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    if ([[_targetFramework owningDatabase] classDocumentedInHTMLFile:filePath]
-        || [[_targetFramework owningDatabase] protocolDocumentedInHTMLFile:filePath])
+    if ([_targetDatabase classDocumentedInHTMLFile:filePath]
+        || [_targetDatabase protocolDocumentedInHTMLFile:filePath])
     {
         // Don't process the file if it's already been processed as a
         // behavior doc.  This is to catch the case where the docset index
@@ -106,17 +106,18 @@
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKDatabase *targetDB = [_targetFramework owningDatabase];
-    AKGroupNode *groupNode = [targetDB globalsGroupNamed:groupName
-                                        inFrameworkNamed:[_targetFramework frameworkName]];
+    AKGroupNode *groupNode = [_targetDatabase globalsGroupNamed:groupName
+                                               inFrameworkNamed:_targetFrameworkName];
     if (!groupNode)
     {
-        groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_targetFramework];
+        groupNode = [AKGroupNode nodeWithNodeName:groupName
+                                         database:_targetDatabase
+                                    frameworkName:_targetFrameworkName];
         // [agl] FIXME -- There is a slight flaw in this reasoning: the
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
         [groupNode setNodeDocumentation:groupSection];
-        [targetDB addGlobalsGroup:groupNode];
+        [_targetDatabase addGlobalsGroup:groupNode];
     }
 
     // Iterate through child sections.  Each child section corresponds
@@ -136,11 +137,11 @@
     // See if the file we're parsing is a behavior doc.  Relies on the
     // assumption that if so, the doc was already parsed as such and is
     // therefore known to the database.
-    id behaviorNode = [[_targetFramework owningDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
+    id behaviorNode = [_targetDatabase classDocumentedInHTMLFile:[fileSection filePath]];
 
     if (behaviorNode == nil)
     {
-        behaviorNode = [[_targetFramework owningDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
+        behaviorNode = [_targetDatabase protocolDocumentedInHTMLFile:[fileSection filePath]];
     }
 
     // Create a node.
@@ -162,7 +163,8 @@
     }
 
     AKGlobalsNode *globalsNode = [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
-                                                         owningFramework:_targetFramework];
+                                                                database:_targetDatabase
+                                                           frameworkName:_targetFrameworkName];
 
     // Add any individual names we find in the minor section.
     for (NSString *nameOfGlobal in [self _parseNamesOfGlobalsInFileSection:fileSection])

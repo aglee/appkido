@@ -98,9 +98,8 @@
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-    return
-        [NSString stringWithFormat:@"%@ class %@",
-            [[_classNode owningFramework] frameworkName], [_classNode nodeName]];
+    return [NSString stringWithFormat:@"%@ class %@",
+            [_classNode owningFrameworkName], [_classNode nodeName]];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -115,8 +114,7 @@
 
     while ((superNode = [superNode parentClass]))
     {
-        path =
-            [AKTopicBrowserPathSeparator stringByAppendingString:
+        path = [AKTopicBrowserPathSeparator stringByAppendingString:
                 [[superNode nodeName] stringByAppendingString:path]];
     }
 

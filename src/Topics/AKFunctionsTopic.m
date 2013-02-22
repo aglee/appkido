@@ -8,12 +8,10 @@
 #import "AKFunctionsTopic.h"
 
 #import "AKDatabase.h"
-#import "AKFramework.h"
 #import "AKSortUtils.h"
 #import "AKFunctionsSubtopic.h"
 
 @implementation AKFunctionsTopic
-
 
 #pragma mark -
 #pragma mark AKTopic methods
@@ -25,9 +23,7 @@
 
 - (NSInteger)numberOfSubtopics
 {
-    return
-        [[_topicFramework owningDatabase]
-            numberOfFunctionsGroupsForFrameworkNamed:[_topicFramework frameworkName]];
+    return [_topicDatabase numberOfFunctionsGroupsForFrameworkNamed:_topicFrameworkName];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
@@ -37,10 +33,9 @@
         return nil;
     }
 
-    NSArray *groupNodes =
-        [AKSortUtils
-            arrayBySortingArray:
-                [[_topicFramework owningDatabase] functionsGroupsForFrameworkNamed:[_topicFramework frameworkName]]];
+    // [agl] Do we care about the cost of computing this every time?
+    NSArray *groupNodes = [AKSortUtils arrayBySortingArray:
+                [_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName]];
 
     if ((unsigned)subtopicIndex >= [groupNodes count])
     {
@@ -58,5 +53,6 @@
 {
     return NO;
 }
+
 
 @end

@@ -82,12 +82,12 @@
 
     // If this is a method that is added by a framework that is not the class's
     // main framework, show that.
-    AKFramework *memberFramework = [_memberNode owningFramework];
-    BOOL memberIsInSameFramework = [memberFramework isEqual:[_behaviorNode owningFramework]];
+    NSString *memberFrameworkName = [_memberNode owningFrameworkName];
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:[_behaviorNode owningFrameworkName]];
 
     if (!memberIsInSameFramework)
     {
-        displayString = [NSString stringWithFormat:@"%@ [%@]", displayString, [memberFramework frameworkName]];
+        displayString = [NSString stringWithFormat:@"%@ [%@]", displayString, memberFrameworkName];
     }
     
     // In the Feb 2007 docs (maybe earlier?), deprecated methods are documented
@@ -109,8 +109,8 @@
 // override this method.
 - (NSString *)commentString
 {
-    AKFramework *memberFramework = [_memberNode owningFramework];
-    BOOL memberIsInSameFramework = [memberFramework isEqual:[_behaviorNode owningFramework]];
+    NSString *memberFrameworkName = [_memberNode owningFrameworkName];
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:[_behaviorNode owningFrameworkName]];
     AKBehaviorNode *owningBehavior = [_memberNode owningBehavior];
 
     if (_behaviorNode == owningBehavior)
@@ -122,7 +122,8 @@
         }
         else
         {
-            return [NSString stringWithFormat:@"This method is added by a category in %@.", [memberFramework frameworkName]];
+            return [NSString stringWithFormat:@"This method is added by a category in %@.",
+                    memberFrameworkName];
         }
     }
     else if ([owningBehavior isClassNode])
@@ -130,13 +131,13 @@
         // We inherited this method from an ancestor class.
         if (memberIsInSameFramework)
         {
-            return [NSString stringWithFormat:@"This method is inherited from class %@.", [owningBehavior nodeName]];
+            return [NSString stringWithFormat:@"This method is inherited from class %@.",
+                    [owningBehavior nodeName]];
         }
         else
         {
-            return
-                [NSString stringWithFormat:@"This method is inherited from %@ class %@.",
-                    [memberFramework frameworkName], [owningBehavior nodeName]];
+            return [NSString stringWithFormat:@"This method is inherited from %@ class %@.",
+                    memberFrameworkName, [owningBehavior nodeName]];
         }
     }
     else
@@ -144,15 +145,16 @@
         // We implement this method in order to conform to a protocol.
         if (memberIsInSameFramework)
         {
-            return [NSString stringWithFormat:@"This method is declared in protocol <%@>.", [owningBehavior nodeName]];
+            return [NSString stringWithFormat:@"This method is declared in protocol <%@>.",
+                    [owningBehavior nodeName]];
         }
         else
         {
-            return
-                [NSString stringWithFormat:
-                    @"This method is declared in %@ protocol <%@>.", [memberFramework frameworkName], [owningBehavior nodeName]];
+            return [NSString stringWithFormat:@"This method is declared in %@ protocol <%@>.",
+                    memberFrameworkName, [owningBehavior nodeName]];
         }
     }
 }
+
 
 @end

@@ -18,10 +18,11 @@
 #pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-       owningFramework:(AKFramework *)owningFramework
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
              groupName:(NSString *)groupName
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:owningFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _groupName = groupName;
     }
@@ -29,7 +30,7 @@
     return self;
 }
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
+- (id)initWithNodeName:(NSString *)nodeName database:database frameworkName:(NSString *)frameworkName
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;

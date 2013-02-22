@@ -164,7 +164,7 @@
 
 - (void)_parseFileAtPath:(NSString *)filePath
 {
-    AKDocParser *dp = [[AKDocParser alloc] initWithFramework:nil];
+    AKDocParser *dp = [[AKDocParser alloc] initWithDatabase:nil frameworkName:nil];
     
     [dp processFile:filePath];
     

@@ -21,7 +21,8 @@
 
 /*! Designated initializer. */
 - (id)initWithNodeName:(NSString *)nodeName
-       owningFramework:(AKFramework *)owningFramework
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
              groupName:(NSString *)groupName;
 
 

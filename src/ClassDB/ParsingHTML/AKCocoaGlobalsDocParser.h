@@ -8,11 +8,8 @@
 #import "AKDocParser.h"
 
 /*
- * @class       AKCocoaGlobalsDocParser
- * @abstract    Parses an HTML file that documents a framework's data globals.
- * @discussion  Parses an HTML file that documents a framework's data globals
- *              such as consts, enums, typedefs, and global variables.
+ * Parses an HTML file that documents a framework's data globals such as consts,
+ * enums, typedefs, and global variables.
  */
 @interface AKCocoaGlobalsDocParser : AKDocParser
-
 @end

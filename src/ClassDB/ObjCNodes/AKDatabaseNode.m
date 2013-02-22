@@ -9,30 +9,33 @@
 
 #import "DIGSLog.h"
 
-#import "AKFileSection.h"
-#import "AKFramework.h"
-#import "AKTextUtils.h"
-
 @implementation AKDatabaseNode
 
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
++ (id)nodeWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    return [[self alloc] initWithNodeName:nodeName owningFramework:owningFramework];
+    return [[self alloc] initWithNodeName:nodeName
+                                 database:database
+                            frameworkName:frameworkName];
 }
 
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
+- (id)initWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
     if ((self = [super init]))
     {
         _nodeName = nodeName;
-        _owningFramework = owningFramework;
+        _owningDatabase = database;
+        _owningFrameworkName = frameworkName;
         _nodeDocumentation = nil;
         _isDeprecated = NO;
     }

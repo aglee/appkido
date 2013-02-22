@@ -33,6 +33,7 @@
     // Note: there are constants in AKFrameworkConstants.h for the names of some
     // frameworks that need to be treated specially.
     NSMutableDictionary *_frameworksByName;  // @{FRAMEWORK_NAME: AKFramework}
+    NSMutableSet *_setOfFrameworkNames;
     NSMutableArray *_frameworkNames;
     NSMutableArray *_namesOfAvailableFrameworks;
 
@@ -149,6 +150,7 @@
         _docSetIndex = docSetIndex;
 
         _frameworksByName = [[NSMutableDictionary alloc] init];
+        _setOfFrameworkNames = [[NSMutableSet alloc] init];
         _frameworkNames = [[NSMutableArray alloc] init];
         _namesOfAvailableFrameworks = [[docSetIndex selectableFrameworkNames] copy];
 
@@ -217,20 +219,9 @@
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
 
-- (AKFramework *)frameworkWithName:(NSString *)frameworkName
+- (void)addFrameworkName:(NSString *)frameworkName
 {
-    AKFramework *aFramework = [_frameworksByName objectForKey:frameworkName];
-
-    if (aFramework == nil)
-    {
-        aFramework = [[AKFramework alloc] init];
-        [aFramework setOwningDatabase:self];
-        [aFramework setFrameworkName:frameworkName];
-
-        [_frameworksByName setObject:aFramework forKey:frameworkName];
-    }
-
-    return aFramework;
+    [self _seeIfFrameworkIsNew:frameworkName];
 }
 
 - (NSArray *)frameworkNames
@@ -293,7 +284,7 @@
     NSString *className = [classNode nodeName];
     if ([_classNodesByName objectForKey:className])
     {
-        DIGSLogDebug(@"Trying to add class [%@] again", className);
+        DIGSLogDebug3(@"Trying to add class [%@] again", className);
         return;
     }
 
@@ -301,7 +292,7 @@
     [_classNodesByName setObject:classNode forKey:className];
 
     // Add the class to our lookup by framework name.
-    NSString *frameworkName = [[classNode owningFramework] frameworkName];
+    NSString *frameworkName = [classNode owningFrameworkName];
     NSMutableArray *classNodes = [_classListsByFramework objectForKey:frameworkName];
 
     if (classNodes == nil)
@@ -374,7 +365,7 @@
     [_protocolNodesByName setObject:protocolNode forKey:protocolName];
 
     // Add the class to our lookup by framework name.
-    NSString *frameworkName = [[protocolNode owningFramework] frameworkName];
+    NSString *frameworkName = [protocolNode owningFrameworkName];
     NSMutableArray *protocolNodes = [_protocolListsByFramework objectForKey:frameworkName];
 
     if (protocolNodes == nil)
@@ -410,7 +401,7 @@
 
 - (void)addFunctionsGroup:(AKGroupNode *)groupNode
 {
-    NSString *frameworkName = [[groupNode owningFramework] frameworkName];
+    NSString *frameworkName = [groupNode owningFrameworkName];
 
     // See if we have any functions groups in the framework yet.
     NSMutableArray *groupList = nil;
@@ -491,7 +482,7 @@
 
 - (void)addGlobalsGroup:(AKGroupNode *)groupNode
 {
-    NSString *frameworkName = [[groupNode owningFramework] frameworkName];
+    NSString *frameworkName = [groupNode owningFrameworkName];
 
     // See if we have any globals groups in the framework yet.
     NSMutableArray *groupList = nil;
@@ -653,12 +644,13 @@
     // example, several DOMxxx classes, such as DOMComment, will be displayed
     // as root classes if I don't parse their headers.  The ideal thing would
     // be to be able to follow #imports, but I'm not being that smart.
-    AKFramework *aFramework = [self frameworkWithName:frameworkName];
     NSSet *headerDirs = [_docSetIndex headerDirsForFramework:frameworkName];
 
     for (NSString *headerDir in headerDirs)
     {
-        [AKObjCHeaderParser recursivelyParseDirectory:headerDir forFramework:aFramework];
+        [AKObjCHeaderParser recursivelyParseDirectory:headerDir
+                                          forDatabase:self
+                                        frameworkName:frameworkName];
     }
 
     // Parse HTML files.
@@ -671,17 +663,20 @@
     DIGSLogDebug(@"Parsing behavior docs for framework %@", frameworkName);
     [AKCocoaBehaviorDocParser parseFilesInSubpaths:[_docSetIndex behaviorDocPathsForFramework:frameworkName]
                                       underBaseDir:baseDirForDocs
-                                      forFramework:aFramework];
+                                       forDatabase:self
+                                     frameworkName:frameworkName];
 
     DIGSLogDebug(@"Parsing functions docs for framework %@", frameworkName);
     [AKCocoaFunctionsDocParser parseFilesInSubpaths:[_docSetIndex functionsDocPathsForFramework:frameworkName]
                                        underBaseDir:baseDirForDocs
-                                       forFramework:aFramework];
+                                        forDatabase:self
+                                      frameworkName:frameworkName];
 
     DIGSLogDebug(@"Parsing globals docs for framework %@", frameworkName);
     [AKCocoaGlobalsDocParser parseFilesInSubpaths:[_docSetIndex globalsDocPathsForFramework:frameworkName]
                                      underBaseDir:baseDirForDocs
-                                     forFramework:aFramework];
+                                      forDatabase:self
+                                    frameworkName:frameworkName];
 }
 
 + (AKDocSetIndex *)_docSetIndexForDevTools:(AKDevTools *)devTools
@@ -742,6 +737,7 @@
     {
         [_frameworkNames addObject:fwName];
     }
+    [_setOfFrameworkNames addObject:fwName];
 }
 
 - (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName

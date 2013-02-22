@@ -27,8 +27,8 @@
 
 - (NSString *)commentString
 {
-    AKFramework *methodFramework = [_memberNode owningFramework];
-    BOOL methodIsInSameFramework = [methodFramework isEqual:[_behaviorNode owningFramework]];
+    NSString *methodFrameworkName = [_memberNode owningFrameworkName];
+    BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:[_behaviorNode owningFrameworkName]];
     AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
 
     if (_behaviorNode == ownerOfMethod)
@@ -40,7 +40,7 @@
         }
         else
         {
-            return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFramework];
+            return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFrameworkName];
         }
     }
     else if ([ownerOfMethod isClassNode])
@@ -54,7 +54,7 @@
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is used by %@ class %@.", methodFramework, [ownerOfMethod nodeName]];
+                    @"This delegate method is used by %@ class %@.", methodFrameworkName, [ownerOfMethod nodeName]];
         }
     }
     else
@@ -68,7 +68,7 @@
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is declared in %@ protocol %@.", methodFramework, [ownerOfMethod nodeName]];
+                    @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, [ownerOfMethod nodeName]];
         }
     }
 }

@@ -27,17 +27,12 @@
 
 @implementation AKClassNode
 {
-
-
-
+    // Elements are strings.
     NSMutableArray *_namesOfAllOwningFrameworks;
 
     // Keys are names of owning frameworks. Values are the root file sections
     // containing documentation for the framework.
     NSMutableDictionary *_nodeDocumentationByFrameworkName;
-
-
-
 
     // Contains AKClassNodes, one for each child class.
     NSMutableArray *_childClassNodes;
@@ -59,12 +54,14 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
+- (id)initWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:owningFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
-        [_namesOfAllOwningFrameworks addObject:[owningFramework frameworkName]];
+        [_namesOfAllOwningFrameworks addObject:frameworkName];
 
         _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
@@ -260,10 +257,10 @@
 }
 
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-                                      owningFramework:(AKFramework *)owningFramework
+                                        frameworkName:(NSString *)frameworkName
 {
     AKMethodNode *methodNode = [super addDeprecatedMethodIfAbsentWithName:methodName
-                                                          owningFramework:owningFramework];
+                                                            frameworkName:frameworkName];
 
     // If it's neither an instance method nor a class method, but it looks
     // like it might be a delegate method, assume it is one.
@@ -273,7 +270,8 @@
         if ([methodName ak_contains:@":"])
         {
             methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
-                                                owningFramework:owningFramework
+                                                       database:[self owningDatabase]
+                                                  frameworkName:frameworkName
                                                  owningBehavior:self];
             [methodNode setIsDeprecated:YES];
             [self addDelegateMethod:methodNode];
@@ -293,12 +291,11 @@
 #pragma mark -
 #pragma mark AKDatabaseNode methods
 
-- (void)setOwningFramework:(AKFramework *)aFramework
+- (void)setOwningFrameworkName:(NSString *)frameworkName
 {
-    [super setOwningFramework:aFramework];
+    [super setOwningFrameworkName:frameworkName];
 
     // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
-    NSString *frameworkName = [aFramework frameworkName];
     if (frameworkName)
     {
         [_namesOfAllOwningFrameworks removeObject:frameworkName];

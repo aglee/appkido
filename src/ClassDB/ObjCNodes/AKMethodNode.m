@@ -19,10 +19,14 @@
 #pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)owningFramework
-    owningBehavior:(AKBehaviorNode *)behaviorNode
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
+        owningBehavior:(AKBehaviorNode *)behaviorNode
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:owningFramework owningBehavior:behaviorNode]))
+    if ((self = [super initWithNodeName:nodeName
+                               database:database
+                          frameworkName:frameworkName
+                         owningBehavior:behaviorNode]))
     {
         _argumentTypes = [[NSMutableArray alloc] init];
     }

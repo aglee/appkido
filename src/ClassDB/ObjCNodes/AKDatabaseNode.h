@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 
 #import "AKSortable.h"
-#import "AKFramework.h"
 
 
+@class AKDatabase;
 @class AKFileSection;
 
 
@@ -35,7 +35,10 @@
 @property (nonatomic, readonly, copy) NSString *nodeName;
 
 /*! Most nodes belong to exactly one framework. The exception is AKClassNode. */
-@property (nonatomic, weak) AKFramework *owningFramework;
+@property (nonatomic, retain) AKDatabase *owningDatabase;
+
+/*! Most nodes belong to exactly one framework. The exception is AKClassNode. */
+@property (nonatomic, copy) NSString *owningFrameworkName;
 
 /*! Documentation for the API construct the node represents. Possibly nil. */
 @property (nonatomic, retain) AKFileSection *nodeDocumentation;
@@ -46,14 +49,18 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework;
++ (id)nodeWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName;
 
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework;
+- (id)initWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName;
 
 
 #pragma mark -
