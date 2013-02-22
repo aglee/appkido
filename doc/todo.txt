@@ -1,7 +1,6 @@
-* re-check small icon issue in A4i
-* smart search for properties
+* re-check small icon retina issue in A4i
+* smart search for properties (setFoo)
 * Use Sparkle for updates.
-* Option-Command-H should Hide Others.
 * Offer all fonts, not just hand-picked.
 
 ----
@@ -33,7 +32,6 @@
 
 * Store database on disk so it doesn't have to be reparsed on every launch.
 	* Treat anchors as primary way of linking.
-* Remove the old-style database classes and the references to them.
 * Put a splitter between the subtopic list and doc list -- or maybe recalculate subtopic list width depending on font.
 
 * service for putting multi-line method into clipboard
@@ -41,13 +39,11 @@
 * services in separate app
 * add error handling to parser API
 * add service to copy method name to clipboard
-* Test on 10.5
 * add speech support (or rather don't remove it)
 * start saving dSYMs
 * hot key to activate
-* ARC (when ready to require 10.6)
 
-* rename digitalspokes plist
+* rename digitalspokes plist to com.appkido.etc
 	* maybe try to get the domain name back?
 
 * go back to [AKDatabase defaultDatabase]
