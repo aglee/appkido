@@ -755,32 +755,35 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)revealDocFileInFinder:(id)sender
 {
-    // Figure out what file is being displayed in the doc view.
     NSString *docPath = [self currentDocPath];
     
     if (docPath == nil)
     {
         return;
     }
-    
-    // Construct and execute an AppleScript command that asks the Finder
-    // to reveal the file.
-    NSString *appleScriptCommand =
-        [NSString
-            stringWithFormat:
-                @"tell application \"Finder\"\n"
-                @"    reveal posix file \"%@\"\n"
-                @"    activate\n"
-                @"end tell",
-                docPath];
-    NSAppleScript *appleScript = [[NSAppleScript alloc] initWithSource:appleScriptCommand];
-    NSDictionary *errorInfo = nil;
-    NSAppleEventDescriptor *appleEventDescriptor = [appleScript executeAndReturnError:&errorInfo];
 
-    if (appleEventDescriptor == nil)
-    {
-        DIGSLogError(@"Error executing AppleScript: %@", errorInfo);
-    }
+    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] selectFile:docPath
+                     inFileViewerRootedAtPath:containingDirPath];
+    
+//    // Construct and execute an AppleScript command that asks the Finder
+//    // to reveal the file.
+//    NSString *appleScriptCommand =
+//        [NSString
+//            stringWithFormat:
+//                @"tell application \"Finder\"\n"
+//                @"    reveal posix file \"%@\"\n"
+//                @"    activate\n"
+//                @"end tell",
+//                docPath];
+//    NSAppleScript *appleScript = [[NSAppleScript alloc] initWithSource:appleScriptCommand];
+//    NSDictionary *errorInfo = nil;
+//    NSAppleEventDescriptor *appleEventDescriptor = [appleScript executeAndReturnError:&errorInfo];
+//
+//    if (appleEventDescriptor == nil)
+//    {
+//        DIGSLogError(@"Error executing AppleScript: %@", errorInfo);
+//    }
 }
 
 - (IBAction)copyDocTextURL:(id)sender
