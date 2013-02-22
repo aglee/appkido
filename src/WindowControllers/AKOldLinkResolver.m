@@ -107,7 +107,7 @@
             AKClassNode *classNode = [_database classDocumentedInHTMLFile:filePath];
 
             behaviorNode = classNode;
-            rootSection = [classNode nodeDocumentationForFrameworkNamed:fwName];
+            rootSection = [classNode documentationAssociatedWithFrameworkNamed:fwName];
             docTopic = [AKClassTopic topicWithClassNode:classNode];
 
             break;

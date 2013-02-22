@@ -91,9 +91,6 @@
         [protocolNode setNodeDocumentation:_rootSectionOfCurrentFile];
         [protocolNode setOwningFramework:_targetFramework];
 
-        [protocolNode associateDocumentation:_rootSectionOfCurrentFile
-                          withFrameworkNamed:[_targetFramework frameworkName]];
-
         behaviorNode = protocolNode;
     }
     else

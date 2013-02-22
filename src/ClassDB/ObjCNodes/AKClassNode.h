@@ -44,6 +44,29 @@
 
 
 #pragma mark -
+#pragma mark Getters and setters -- multiple owning frameworks
+
+/*!
+ * Names of all frameworks the class belongs to. The first element of the
+ * returned array is the name of the framework the class was declared in (its
+ * owningFramework). After that, the order of the array is the order in which it
+ * was discovered that the class belongs to the framework.
+ */
+- (NSArray *)namesOfAllOwningFrameworks;
+
+- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName;
+
+/*!
+ * It's possible for a class to belong to multiple frameworks. The usual example
+ * I give is NSString, which is declared in Foundation and also has methods in
+ * AppKit by way of a category. We keep track of all the frameworks that "own" a
+ * class, and all the doc files that are associated with each framework.
+ */
+- (void)associateDocumentation:(AKFileSection *)fileSection
+            withFrameworkNamed:(NSString *)frameworkName;
+
+
+#pragma mark -
 #pragma mark Getters and setters -- delegate methods
 
 /*! Returns only methods that are in this class's documentation. */
@@ -65,5 +88,6 @@
 
 /*! Does nothing if a notification with the same name already exists. */
 - (void)addNotification:(AKNotificationNode *)notificationNode;
+
 
 @end

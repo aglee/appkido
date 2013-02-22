@@ -27,6 +27,18 @@
 
 @implementation AKClassNode
 {
+
+
+
+    NSMutableArray *_namesOfAllOwningFrameworks;
+
+    // Keys are names of owning frameworks. Values are the root file sections
+    // containing documentation for the framework.
+    NSMutableDictionary *_nodeDocumentationByFrameworkName;
+
+
+
+
     // Contains AKClassNodes, one for each child class.
     NSMutableArray *_childClassNodes;
 
@@ -51,6 +63,11 @@
 {
     if ((self = [super initWithNodeName:nodeName owningFramework:owningFramework]))
     {
+        _namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
+        [_namesOfAllOwningFrameworks addObject:[owningFramework frameworkName]];
+
+        _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
+
         _childClassNodes = [[NSMutableArray alloc] init];
         _categoryNodes = [[NSMutableArray alloc] init];
 
@@ -150,6 +167,38 @@
 
 
 #pragma mark -
+#pragma mark Getters and setters -- multiple owning frameworks
+
+- (NSArray *)namesOfAllOwningFrameworks
+{
+    return _namesOfAllOwningFrameworks;
+}
+
+- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName
+{
+    return [_nodeDocumentationByFrameworkName objectForKey:frameworkName];
+}
+
+- (void)associateDocumentation:(AKFileSection *)fileSection
+            withFrameworkNamed:(NSString *)frameworkName
+{
+    if (frameworkName == nil)
+    {
+        DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
+                       [self nodeName], [fileSection filePath]);
+        return;
+    }
+
+    if (![_namesOfAllOwningFrameworks containsObject:frameworkName])
+    {
+        [_namesOfAllOwningFrameworks addObject:frameworkName];
+    }
+
+    [_nodeDocumentationByFrameworkName setObject:fileSection forKey:frameworkName];
+}
+
+
+#pragma mark -
 #pragma mark Getters and setters -- delegate methods
 
 - (NSArray *)documentedDelegateMethods
@@ -240,6 +289,22 @@
     return methodNode;
 }
 
+
+#pragma mark -
+#pragma mark AKDatabaseNode methods
+
+- (void)setOwningFramework:(AKFramework *)aFramework
+{
+    [super setOwningFramework:aFramework];
+
+    // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
+    NSString *frameworkName = [aFramework frameworkName];
+    if (frameworkName)
+    {
+        [_namesOfAllOwningFrameworks removeObject:frameworkName];
+        [_namesOfAllOwningFrameworks insertObject:frameworkName atIndex:0];
+    }
+}
 
 #pragma mark -
 #pragma mark Private methods

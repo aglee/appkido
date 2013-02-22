@@ -109,7 +109,7 @@
     toList:(NSMutableArray *)docList
 {
     AKFileSection *extraRootSection =
-        [_classNode nodeDocumentationForFrameworkNamed:extraFrameworkName];
+        [_classNode documentationAssociatedWithFrameworkNamed:extraFrameworkName];
 
     if (extraRootSection)
     {

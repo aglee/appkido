@@ -43,15 +43,6 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 
 // [agl] Old note to self says that classes can have multiple header paths. Example?
 
-/*!
- * Names of all frameworks the behavior belongs to.  The first element of the
- * returned array is the name of its primary framework (its owningFramework --
- * which should be the framework that declares the behavior). After that, the
- * order of the array is the order in which it was discovered that the behavior
- * belongs to the framework.
- */
-- (NSArray *)namesOfAllOwningFrameworks;
-
 - (BOOL)isClassNode;
 
 - (void)addImplementedProtocol:(AKProtocolNode *)node;
@@ -65,19 +56,6 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 
 /*! Returns zero or more AKMethodNodes. */
 - (NSArray *)instanceMethodNodes;
-
-/*! frameworkName can be the main framework or an extra one. */
-- (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName;
-
-/*!
- * It's possible for a behavior to have multiple owning frameworks. The classic
- * example is NSString, which is declared in Foundation (so Foundation is its
- * owningFramework) and also has methods declared by a category in AppKit. So
- * when we associate documentation with a behavior, we have to specify which
- * framework that documentation is for.
- */
-- (void)associateDocumentation:(AKFileSection *)fileSection
-            withFrameworkNamed:(NSString *)frameworkName;
 
 
 #pragma mark -
