@@ -47,12 +47,27 @@
 
 <table><tr><td>
 
+<h2>Version WIP (Whenevuary 15, 2013)</h2>
+<ul>
+<li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (see NSString -- "AppKit Additions" wasn't showing up).</li>
+<li>Option
+<li>Code changes (of interest only if you're working on the code):
+	<ul>
+	<li>Now uses ARC, hence requires 10.7. Fixed resulting warnings about the use of performSelector, either by using blocks or by using #pragma to temporarily disable the warning.</li>
+	<li>Replaced NSEnumeration with fast enumeration everywhere. Probably doesn't make a noticeable difference, but it makes the code seem less ancient.</li>
+	<li>Replaced deprecated method calls with their recommended replacements.</li>
+	<li>Got rid of the AKFramework class. A simple string containing the framework name is used to indicate belonging to a framework.</li>
+	</ul>
+</li>
+</ul>
+
 <h2>Version 0.994 (February 17, 2013)</h2>
 <ul>
 <li>(Thanks to Peter Hosey.) In the Dev Tools prefs you now indicate where Xcode.app is, and AppKiDo figures out which type of Xcode you have -- whether it's a standalone Xcode with all the Dev Tools inside it, or the old-style Dev Tools where Xcode is in /Developer/Applications.</li>
 <li>Improved handling and reporting of errors that arise from Dev Tools setup.</li>
 <li>Added a sanity check for whether the docset needs to be downloaded. If so, an alert appears explaining this fact, and then you get the Dev Tools setup window where you can try selecting a different Xcode installation or a different SDK version. This should reduce the occurrences where AppKiDo launches and the windows don't have any docs in them.</li>
 <li>Dropped support for very old Dev Tools installations that don't use docsets. I'm not sure AppKiDo can even run on systems that old any more.</li>
+<li>Splash window no longer ties up main thread -- for example you can Quit or Hide Others while it's displaying. Makes accidental launch a bit less annoying.</li>
 <li>Edited the credits in the About box.</li>
 <li>A little thing -- the About box uses a WebView, which by default has elasticity when you use the trackpad to scroll. Removed that elasticity.</li>
 <li>(In case you're wondering, there *was* an 0.993, but I forgot to code-sign it. Many thanks to Rainer Brockerhoff for catching this quickly and for his extremely helpful validation app, <a href="http://brockerhoff.net/RB/AppCheckerLite/">RB App Checker Lite</a>.)</li>
