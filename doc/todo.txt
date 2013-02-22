@@ -1,25 +1,18 @@
 * re-check small icon issue in A4i
-* Add Sparkle
 * smart search for properties
-* Accept monkeydom's pull request to emit correct XML
-* Get rid of compiler warnings.
 * Use Sparkle for updates.
 * Option-Command-H should Hide Others.
+* Offer all fonts, not just hand-picked.
 
 ----
 
-* Launch improvements:
-	* Make the splash panel cancellable.
-	* Use NSOperation for parsing during launch.
-	* In splash screen, don't say parsing framework unless it exists (e.g. UIKit for Mac OS).
-* Detect when docset is incomplete (needs to be downloaded, or hasn't finished downloading).
 * syntax highlighting for header files
 * figure out why command-line build different from in Xcode
 * Get rid of Dev Tools concept and just present available SDKs.
 * Use the stylesheet that comes with the docset.
 * Give option to use custom stylesheet.
 * not just "Copy Link" but "Open Link in Browser"
-* Use NSTabView for doc view.
+* Use tabless NSTabView for doc view.
 * Autoselect after search
 	* try searching for "scrollPoint".  Or "view".
 	* search NSBrowserDelegate, is it not auto-selected because begins with "<"?
