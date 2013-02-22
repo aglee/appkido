@@ -26,14 +26,14 @@
 #import "AKCocoaFunctionsDocParser.h"
 #import "AKCocoaGlobalsDocParser.h"
 
-
 @implementation AKDatabase
 {
+    AKDocSetIndex *_docSetIndex;
+    
     // Frameworks.
     // Note: there are constants in AKFrameworkConstants.h for the names of some
     // frameworks that need to be treated specially.
     NSMutableDictionary *_frameworksByName;  // @{FRAMEWORK_NAME: AKFramework}
-    NSMutableSet *_setOfFrameworkNames;
     NSMutableArray *_frameworkNames;
     NSMutableArray *_namesOfAvailableFrameworks;
 
@@ -69,9 +69,6 @@
     // is meant by "anchor strings."
     NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
 }
-
-@synthesize docSetIndex = _docSetIndex;
-
 
 #pragma mark -
 #pragma mark Factory methods
@@ -139,7 +136,6 @@
     return dbToReturn;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -150,7 +146,6 @@
         _docSetIndex = docSetIndex;
 
         _frameworksByName = [[NSMutableDictionary alloc] init];
-        _setOfFrameworkNames = [[NSMutableSet alloc] init];
         _frameworkNames = [[NSMutableArray alloc] init];
         _namesOfAvailableFrameworks = [[docSetIndex selectableFrameworkNames] copy];
 
@@ -183,7 +178,6 @@
     return nil;
 }
 
-
 #pragma mark -
 #pragma mark Populating the database
 
@@ -215,7 +209,6 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
 
@@ -243,7 +236,6 @@
 {
     return _namesOfAvailableFrameworks;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- classes
@@ -306,7 +298,6 @@
     // Add the framework to our framework list if it's not there already.
     [self _seeIfFrameworkIsNew:frameworkName];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- protocols
@@ -379,7 +370,6 @@
     // Add the framework to our framework list if it's not there already.
     [self _seeIfFrameworkIsNew:frameworkName];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- functions
@@ -460,7 +450,6 @@
     return nil;
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
@@ -540,7 +529,6 @@
     // If we got this far, we couldn't find the global.
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- hyperlink support
@@ -731,13 +719,13 @@
 // Adds a framework if we haven't seen it before.  We call this each time
 // we actually add a bit of API to the database, so that only frameworks
 // that we find tokens in are in our list of framework names.
+// [agl] Linear search has been okay so far.
 - (void)_seeIfFrameworkIsNew:(NSString *)fwName
 {
     if (![_frameworkNames containsObject:fwName])
     {
         [_frameworkNames addObject:fwName];
     }
-    [_setOfFrameworkNames addObject:fwName];
 }
 
 - (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName

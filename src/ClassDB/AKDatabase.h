@@ -66,8 +66,6 @@
 @interface AKDatabase : NSObject
 
 @property (nonatomic, weak) id <AKDatabaseDelegate>delegate;
-@property (nonatomic, readonly, strong) AKDocSetIndex *docSetIndex;
-
 
 #pragma mark -
 #pragma mark - Factory methods
@@ -78,13 +76,11 @@
 /*! On failure, returns nil with the reasons added to errorStrings. */
 + (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings;
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
-
 
 #pragma mark -
 #pragma mark Populating the database
@@ -98,7 +94,6 @@
  * "essential" depends on the platform the database is for.
  */
 - (void)loadTokensForFrameworksWithNames:(NSArray *)frameworkNames;
-
 
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
@@ -115,7 +110,6 @@
 
 /*! Names of all frameworks we can offer for the user to load. */
 - (NSArray *)namesOfAvailableFrameworks;
-
 
 #pragma mark -
 #pragma mark Getters and setters -- classes
@@ -134,7 +128,6 @@
 /*! Does nothing if we already contain a class with that name. */
 - (void)addClassNode:(AKClassNode *)classNode;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- protocols
 
@@ -152,7 +145,6 @@
 /*! Does nothing if we already contain a protocol with that name. */
 - (void)addProtocolNode:(AKProtocolNode *)classNode;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- functions
 
@@ -168,7 +160,6 @@
 - (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
                                       inFrameworkNamed:(NSString *)frameworkName;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
@@ -183,7 +174,6 @@
 
 - (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
                                   inFrameworkNamed:(NSString *)frameworkName;
-
 
 #pragma mark -
 #pragma mark Getters and setters -- hyperlink support
@@ -221,7 +211,4 @@
         ofAnchorString:(NSString *)anchorString
             inHTMLFile:(NSString *)filePath;
 
-
 @end
-
-
