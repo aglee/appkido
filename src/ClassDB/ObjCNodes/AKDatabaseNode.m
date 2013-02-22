@@ -18,21 +18,21 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)aFramework
++ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
 {
-    return [[self alloc] initWithNodeName:nodeName owningFramework:aFramework];
+    return [[self alloc] initWithNodeName:nodeName owningFramework:owningFramework];
 }
 
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)aFramework
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
 {
     if ((self = [super init]))
     {
         _nodeName = nodeName;
-        _owningFramework = aFramework;
+        _owningFramework = owningFramework;
         _nodeDocumentation = nil;
         _isDeprecated = NO;
     }

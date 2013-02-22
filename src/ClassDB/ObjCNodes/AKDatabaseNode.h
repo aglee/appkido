@@ -46,14 +46,14 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework;
++ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework;
 
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework;
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework;
 
 
 #pragma mark -

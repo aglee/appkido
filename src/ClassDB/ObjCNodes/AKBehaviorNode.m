@@ -45,9 +45,9 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
+    if ((self = [super initWithNodeName:nodeName owningFramework:owningFramework]))
     {
         _protocolNodes = [[NSMutableArray alloc] init];
         _protocolNodeNames = [[NSMutableSet alloc] init];
@@ -56,7 +56,8 @@
         _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
         _indexOfInstanceMethods = [[AKCollectionOfNodes alloc] init];
 
-        _namesOfAllOwningFrameworks = [NSMutableArray arrayWithObject:[theFramework frameworkName]];
+        _namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
+        [_namesOfAllOwningFrameworks addObject:[owningFramework frameworkName]];
 
         _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
     }
@@ -120,8 +121,16 @@
 - (void)setNodeDocumentation:(AKFileSection *)fileSection
            forFrameworkNamed:(NSString *)frameworkName
 {
-    if ((frameworkName == nil) || [frameworkName isEqualToString:[[self owningFramework] frameworkName]])
+    if (frameworkName == nil)
     {
+        DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
+                       [self nodeName], [fileSection filePath]);
+        return;
+    }
+
+    if ([frameworkName isEqualToString:[[self owningFramework] frameworkName]])
+    {
+        // We message super -- messaging self would lead to infinite recursion.
         [super setNodeDocumentation:fileSection];
     }
 
@@ -241,7 +250,6 @@
 - (void)setNodeDocumentation:(AKFileSection *)fileSection
 {
     DIGSLogDebug(@"Unexpected: behavior node %@ getting a -setNodeDocumentation: message", [self nodeName]);
-    [super setNodeDocumentation:fileSection];
     [self setNodeDocumentation:fileSection
              forFrameworkNamed:[[self owningFramework] frameworkName]];
 }

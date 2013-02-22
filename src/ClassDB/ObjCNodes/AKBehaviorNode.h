@@ -63,6 +63,13 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 /*! frameworkName can be the main framework or an extra one. */
 - (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName;
 
+/*!
+ * It's possible for a behavior to have multiple owning frameworks. The classic
+ * example is NSString, which is declared in Foundation (so Foundation is its
+ * owningFramework) and also has methods declared by a category in AppKit. So
+ * when we associate documentation with a behavior, we have to specify which
+ * framework that documentation is for.
+ */
 - (void)setNodeDocumentation:(AKFileSection *)fileSection
            forFrameworkNamed:(NSString *)frameworkName;
 

@@ -23,7 +23,7 @@
 
 /*! Designated initializer. */
 - (id)initWithNodeName:(NSString *)nodeName
-       owningFramework:(AKFramework *)theFramework
+       owningFramework:(AKFramework *)owningFramework
         owningBehavior:(AKBehaviorNode *)behaviorNode;
 
 @end

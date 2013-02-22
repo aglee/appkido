@@ -30,7 +30,7 @@
     return self;
 }
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework
+- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)owningFramework
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;

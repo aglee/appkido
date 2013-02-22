@@ -314,7 +314,6 @@
             memberNode = [[memberNodeClass alloc] initWithNodeName:memberName
                                                    owningFramework:_targetFramework
                                                     owningBehavior:behaviorNode];
-
             addMemberNode(behaviorNode, memberNode);
         }
 
