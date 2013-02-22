@@ -118,20 +118,14 @@
     return [_nodeDocumentationByFrameworkName objectForKey:frameworkName];
 }
 
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-           forFrameworkNamed:(NSString *)frameworkName
+- (void)associateDocumentation:(AKFileSection *)fileSection
+            withFrameworkNamed:(NSString *)frameworkName
 {
     if (frameworkName == nil)
     {
         DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
                        [self nodeName], [fileSection filePath]);
         return;
-    }
-
-    if ([frameworkName isEqualToString:[[self owningFramework] frameworkName]])
-    {
-        // We message super -- messaging self would lead to infinite recursion.
-        [super setNodeDocumentation:fileSection];
     }
 
     if (![_namesOfAllOwningFrameworks containsObject:frameworkName])
@@ -245,13 +239,6 @@
         [_namesOfAllOwningFrameworks removeObject:frameworkName];
         [_namesOfAllOwningFrameworks insertObject:frameworkName atIndex:0];
     }
-}
-
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-{
-    DIGSLogDebug(@"Unexpected: behavior node %@ getting a -setNodeDocumentation: message", [self nodeName]);
-    [self setNodeDocumentation:fileSection
-             forFrameworkNamed:[[self owningFramework] frameworkName]];
 }
 
 @end

@@ -14,6 +14,9 @@
 @class AKPropertyNode;
 @class AKProtocolNode;
 
+#pragma mark -
+#pragma mark Blocks as alternatives to performSelector
+
 typedef id (^AKBlockForGettingMemberNode)(AKBehaviorNode *behaviorNode, NSString *memberName);
 
 typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMemberNode *memberNode);
@@ -21,6 +24,9 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 #define blockForGettingMemberNode(xxxWithName) ^id (AKBehaviorNode *behaviorNode, NSString *memberName) { return [(id)behaviorNode xxxWithName:memberName]; }
 
 #define blockForAddingMemberNode(addXXXNode) ^void (AKBehaviorNode *behaviorNode, AKMemberNode *memberNode) { [(id)behaviorNode addXXXNode:(id)memberNode]; }
+
+
+#pragma mark -
 
 /*!
  * Abstract class. Represents an Objective-C construct that can have methods.
@@ -70,8 +76,8 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * when we associate documentation with a behavior, we have to specify which
  * framework that documentation is for.
  */
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-           forFrameworkNamed:(NSString *)frameworkName;
+- (void)associateDocumentation:(AKFileSection *)fileSection
+            withFrameworkNamed:(NSString *)frameworkName;
 
 
 #pragma mark -

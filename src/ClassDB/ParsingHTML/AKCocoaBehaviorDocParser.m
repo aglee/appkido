@@ -47,8 +47,9 @@
     // Are we looking at a class's doc file or a protocol's or neither?
     // Retrieve or create an AKClassNode or AKProtocolNode accordingly.
     AKBehaviorNode *behaviorNode = nil;
+    BOOL isMainClassReference = NO;
 
-    if ([self _currentFileIsClassReference])
+    if ([self _currentFileIsClassReference:&isMainClassReference])
     {
         AKClassNode *classNode = [self _classForRootSection];
 
@@ -61,9 +62,15 @@
         // HTML documentation file.
         [[_targetFramework owningDatabase] rememberThatClass:classNode
                                       isDocumentedInHTMLFile:[self currentPath]];
-        
-        [classNode setNodeDocumentation:_rootSectionOfCurrentFile
-                      forFrameworkNamed:[_targetFramework frameworkName]];
+
+        if (isMainClassReference)
+        {
+            [classNode setNodeDocumentation:_rootSectionOfCurrentFile];
+            [classNode setOwningFramework:_targetFramework];
+        }
+
+        [classNode associateDocumentation:_rootSectionOfCurrentFile
+                       withFrameworkNamed:[_targetFramework frameworkName]];
 
         behaviorNode = classNode;
     }
@@ -72,16 +79,21 @@
         AKProtocolNode *protocolNode = [self _protocolForRootSection];
 
         if (protocolNode == nil)
+        {
             return;
+        }
         
         // Store bits of information about the protocol node relating it to its
         // HTML documentation file.
         [[_targetFramework owningDatabase] rememberThatProtocol:protocolNode
                                          isDocumentedInHTMLFile:[self currentPath]];
 
-        [protocolNode setNodeDocumentation:_rootSectionOfCurrentFile
-                         forFrameworkNamed:[_targetFramework frameworkName]];
-        
+        [protocolNode setNodeDocumentation:_rootSectionOfCurrentFile];
+        [protocolNode setOwningFramework:_targetFramework];
+
+        [protocolNode associateDocumentation:_rootSectionOfCurrentFile
+                          withFrameworkNamed:[_targetFramework frameworkName]];
+
         behaviorNode = protocolNode;
     }
     else
@@ -89,7 +101,10 @@
         return;
     }
 
-    // Parse methods in the file and add them to the behavior node.
+    // If we got this far, we are looking at docs for a class or protocol. Add
+    // method nodes for the methods documented in the file. There are two cases:
+    // either the file contains deprecated methods or it contains regular
+    // un-deprecated methods.
     if ([self _currentFileIsDeprecatedMethodsFile])
     {
         [self _addDeprecatedMethodsToBehaviorNode:behaviorNode];
@@ -142,28 +157,31 @@
     }
 }
 
-- (BOOL)_currentFileIsClassReference
+- (BOOL)_currentFileIsClassReference:(BOOL *)isMainClassReference
 {
     // Exclude table-of-contents files, which can look deceptively like class
     // doc files.
     if ([[self currentPath] hasSuffix:@"toc.html"])
     {
+        *isMainClassReference = NO;
         return NO;
     }
-    
+
     // See if the current file contains methods added to a class by a framework
     // other than the class's main framework, like the NSAttributedString
     // methods added by AppKit.
     if ([[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions Reference"]
-            || [[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions"])
+        || [[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions"])
     {
+        *isMainClassReference = NO;
         return YES;
     }
-    
+
     // See if the current file is a "Deprecated Methods" file.  Files of this
     // form were added in the Feb 2007 update (maybe earlier, I haven't checked).
     if ([self _currentFileIsDeprecatedMethodsFile])
     {
+        *isMainClassReference = NO;
         return YES;
     }
 
@@ -173,23 +191,26 @@
     if ([rootSectionName hasSuffix:@"Class Reference"]
         || [rootSectionName hasSuffix:@"Class Objective-C Reference"])
     {
+        *isMainClassReference = YES;
         return YES;
     }
-    
+
     // Assume we have a class's main doc file if it has a major section named
     // "Class Description".
     if ([_rootSectionOfCurrentFile hasChildSectionWithName:AKClassDescriptionHTMLSectionName])
     {
+        *isMainClassReference = YES;
         return YES;
     }
-    
+
     // Assume we have a class's main doc file if it's somewhere in a ...Classes
     // directory and the file name matches the name of the root section.
     NSString *filenameSansExtension = [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
-    
+
     if ([[self currentPath] ak_contains:@"Classes"]
         && [rootSectionName isEqualToString:filenameSansExtension])
     {
+        *isMainClassReference = YES;
         return YES;
     }
 
