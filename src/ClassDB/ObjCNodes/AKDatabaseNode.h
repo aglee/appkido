@@ -34,8 +34,7 @@
 /*! The meaning of a node's nodeName depends on the type of node. */
 @property (nonatomic, readonly, copy) NSString *nodeName;
 
-/*! Most nodes belong to exactly one framework. The exception is AKClassNode. */
-@property (nonatomic, retain) AKDatabase *owningDatabase;
+@property (nonatomic, weak) AKDatabase *owningDatabase;
 
 /*! Most nodes belong to exactly one framework. The exception is AKClassNode. */
 @property (nonatomic, copy) NSString *owningFrameworkName;
