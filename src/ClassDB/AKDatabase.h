@@ -98,8 +98,6 @@
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
 
-- (void)addFrameworkName:(NSString *)frameworkName;
-
 /*! Names of all frameworks that have been loaded, in no guaranteed order. */
 - (NSArray *)frameworkNames;
 

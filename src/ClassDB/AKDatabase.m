@@ -212,11 +212,6 @@
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
 
-- (void)addFrameworkName:(NSString *)frameworkName
-{
-    [self _seeIfFrameworkIsNew:frameworkName];
-}
-
 - (NSArray *)frameworkNames
 {
     return _frameworkNames;
