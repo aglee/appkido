@@ -395,7 +395,6 @@
 		7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */; };
 		7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */; };
 		7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
-		7399B31A0E632A5C001AE672 /* AKGroupedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C90DC1D264004FB7ED /* AKGroupedNode.h */; };
 		7399B31B0E632A5C001AE672 /* AKDevToolsPathController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsPathController.h */; };
 		7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7368B9AD0E0EFB2200AFEA2D /* AKCollectionOfNodes.h */; };
 		7399B31D0E632A5C001AE672 /* AKPropertyNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F3B0E396A71002AFB76 /* AKPropertyNode.h */; };
@@ -529,7 +528,6 @@
 		7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */; };
 		7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */; };
 		7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
-		7399B3AC0E632A5C001AE672 /* AKGroupedNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6CA0DC1D264004FB7ED /* AKGroupedNode.m */; };
 		7399B3AD0E632A5C001AE672 /* AKDevToolsPathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsPathController.m */; };
 		7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfNodes.m */; };
 		7399B3AF0E632A5C001AE672 /* AKPropertyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F3C0E396A71002AFB76 /* AKPropertyNode.m */; };
@@ -552,8 +550,6 @@
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
 		73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
-		73B6B6CB0DC1D264004FB7ED /* AKGroupedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C90DC1D264004FB7ED /* AKGroupedNode.h */; };
-		73B6B6CC0DC1D264004FB7ED /* AKGroupedNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6CA0DC1D264004FB7ED /* AKGroupedNode.m */; };
 		73B914950E089D180012C16F /* AKDevToolsPathController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsPathController.h */; };
 		73B914960E089D180012C16F /* AKDevToolsPathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsPathController.m */; };
 		73C735A70F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
@@ -866,8 +862,6 @@
 		73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.sdef; path = AppKiDo.sdef; sourceTree = "<group>"; };
 		73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFunctionNode.h; sourceTree = "<group>"; };
 		73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFunctionNode.m; sourceTree = "<group>"; };
-		73B6B6C90DC1D264004FB7ED /* AKGroupedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGroupedNode.h; sourceTree = "<group>"; };
-		73B6B6CA0DC1D264004FB7ED /* AKGroupedNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGroupedNode.m; sourceTree = "<group>"; };
 		73B722C104B5FF1900A80003 /* AKColoredBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKColoredBox.h; path = CustomViews/AKColoredBox.h; sourceTree = "<group>"; };
 		73B722C204B5FF1900A80003 /* AKColoredBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKColoredBox.m; path = CustomViews/AKColoredBox.m; sourceTree = "<group>"; };
 		73B914930E089D180012C16F /* AKDevToolsPathController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsPathController.h; sourceTree = "<group>"; };
@@ -1637,8 +1631,6 @@
 			children = (
 				73B313A90617441B006C9BA7 /* AKGroupNode.h */,
 				73B313AA0617441B006C9BA7 /* AKGroupNode.m */,
-				73B6B6C90DC1D264004FB7ED /* AKGroupedNode.h */,
-				73B6B6CA0DC1D264004FB7ED /* AKGroupedNode.m */,
 				73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */,
 				73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */,
 				7362078A0616C02F0007F07A /* AKGlobalsNode.h */,
@@ -1795,7 +1787,6 @@
 				73D23C0F0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h in Headers */,
 				73D23C890D4CCE2800EF7503 /* AKDocSetIndex.h in Headers */,
 				73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */,
-				73B6B6CB0DC1D264004FB7ED /* AKGroupedNode.h in Headers */,
 				73B914950E089D180012C16F /* AKDevToolsPathController.h in Headers */,
 				7368B9AF0E0EFB2200AFEA2D /* AKCollectionOfNodes.h in Headers */,
 				73E86F3D0E396A71002AFB76 /* AKPropertyNode.h in Headers */,
@@ -1929,7 +1920,6 @@
 				7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */,
 				7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */,
 				7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */,
-				7399B31A0E632A5C001AE672 /* AKGroupedNode.h in Headers */,
 				7399B31B0E632A5C001AE672 /* AKDevToolsPathController.h in Headers */,
 				7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */,
 				7399B31D0E632A5C001AE672 /* AKPropertyNode.h in Headers */,
@@ -2224,7 +2214,6 @@
 				73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */,
 				73D23C880D4CCE2800EF7503 /* AKDocSetIndex.m in Sources */,
 				73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */,
-				73B6B6CC0DC1D264004FB7ED /* AKGroupedNode.m in Sources */,
 				73B914960E089D180012C16F /* AKDevToolsPathController.m in Sources */,
 				7368B9B00E0EFB2200AFEA2D /* AKCollectionOfNodes.m in Sources */,
 				73E86F3E0E396A71002AFB76 /* AKPropertyNode.m in Sources */,
@@ -2357,7 +2346,6 @@
 				7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */,
 				7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */,
 				7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */,
-				7399B3AC0E632A5C001AE672 /* AKGroupedNode.m in Sources */,
 				7399B3AD0E632A5C001AE672 /* AKDevToolsPathController.m in Sources */,
 				7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */,
 				7399B3AF0E632A5C001AE672 /* AKPropertyNode.m in Sources */,
