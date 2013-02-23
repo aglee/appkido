@@ -133,7 +133,7 @@
 		65B109D509D7B6C300A8A637 /* search-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306804984FF600A80007 /* search-tool.tiff */; };
 		65B109D609D7B6C300A8A637 /* superclass-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306904984FF600A80007 /* superclass-tool.tiff */; };
 		65B109D709D7B6C300A8A637 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 73B9158706133DBF00066E17 /* Credits.html */; };
-		65B109D909D7B6C300A8A637 /* AppKiDo-source-intro.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */; };
+		65B109D909D7B6C300A8A637 /* about-the-code.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* about-the-code.markdown */; };
 		65B109DB09D7B6C300A8A637 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		65B109DC09D7B6C300A8A637 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
 		65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
@@ -426,7 +426,7 @@
 		7399B33D0E632A5C001AE672 /* search-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306804984FF600A80007 /* search-tool.tiff */; };
 		7399B33E0E632A5C001AE672 /* superclass-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306904984FF600A80007 /* superclass-tool.tiff */; };
 		7399B33F0E632A5C001AE672 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 73B9158706133DBF00066E17 /* Credits.html */; };
-		7399B3410E632A5C001AE672 /* AppKiDo-source-intro.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */; };
+		7399B3410E632A5C001AE672 /* about-the-code.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* about-the-code.markdown */; };
 		7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		7399B3470E632A5C001AE672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
@@ -669,7 +669,7 @@
 		7300310E0498501500A80007 /* AKWindowSubcontroller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKWindowSubcontroller.m; sourceTree = "<group>"; };
 		73026980082FD33700D5198D /* AKTestDocParserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTestDocParserWindowController.h; sourceTree = "<group>"; };
 		73026981082FD33700D5198D /* AKTestDocParserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTestDocParserWindowController.m; sourceTree = "<group>"; };
-		7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "AppKiDo-source-intro.txt"; sourceTree = "<group>"; };
+		7302DF980767B65200F9FEC0 /* about-the-code.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "about-the-code.markdown"; sourceTree = "<group>"; };
 		7306485D04CC7D760013934B /* AKQuicklistController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKQuicklistController.h; sourceTree = "<group>"; };
 		7306485E04CC7D760013934B /* AKQuicklistController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKQuicklistController.m; sourceTree = "<group>"; };
 		730A35920688A09B00699C6D /* AKBehaviorOverviewSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKBehaviorOverviewSubtopic.h; sourceTree = "<group>"; };
@@ -983,7 +983,7 @@
 			isa = PBXGroup;
 			children = (
 				73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */,
-				7302DF980767B65200F9FEC0 /* AppKiDo-source-intro.txt */,
+				7302DF980767B65200F9FEC0 /* about-the-code.markdown */,
 				733DF63F14E18FAB007E6313 /* DocSetIndexTables.txt */,
 				732BD61605ED913B0055715D /* ---- S U P P O R T   C L A S S E S ---- */,
 				732BD5FB05ED90900055715D /* ----------- M O D E L S ----------- */,
@@ -1141,14 +1141,14 @@
 				7300310C0498501500A80007 /* AKWindowController_Toolbar.m */,
 				7300310D0498501500A80007 /* AKWindowSubcontroller.h */,
 				7300310E0498501500A80007 /* AKWindowSubcontroller.m */,
+				7306485D04CC7D760013934B /* AKQuicklistController.h */,
+				7306485E04CC7D760013934B /* AKQuicklistController.m */,
 				730031010498501500A80007 /* AKTopicBrowserController.h */,
 				730031020498501500A80007 /* AKTopicBrowserController.m */,
 				730031060498501500A80007 /* AKSubtopicListController.h */,
 				730031070498501500A80007 /* AKSubtopicListController.m */,
 				730031030498501500A80007 /* AKDocListController.h */,
 				730031040498501500A80007 /* AKDocListController.m */,
-				7306485D04CC7D760013934B /* AKQuicklistController.h */,
-				7306485E04CC7D760013934B /* AKQuicklistController.m */,
 			);
 			name = "per-window controllers";
 			path = WindowControllers;
@@ -2046,7 +2046,7 @@
 				65B109D509D7B6C300A8A637 /* search-tool.tiff in Resources */,
 				65B109D609D7B6C300A8A637 /* superclass-tool.tiff in Resources */,
 				65B109D709D7B6C300A8A637 /* Credits.html in Resources */,
-				65B109D909D7B6C300A8A637 /* AppKiDo-source-intro.txt in Resources */,
+				65B109D909D7B6C300A8A637 /* about-the-code.markdown in Resources */,
 				73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */,
 				7399B3FB0E638B54001AE672 /* app-icon-iphone.icns in Resources */,
 				73C891DE14E10B7600A54FF6 /* AppKiDo.xib in Resources */,
@@ -2090,7 +2090,7 @@
 				7399B33D0E632A5C001AE672 /* search-tool.tiff in Resources */,
 				7399B33E0E632A5C001AE672 /* superclass-tool.tiff in Resources */,
 				7399B33F0E632A5C001AE672 /* Credits.html in Resources */,
-				7399B3410E632A5C001AE672 /* AppKiDo-source-intro.txt in Resources */,
+				7399B3410E632A5C001AE672 /* about-the-code.markdown in Resources */,
 				7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */,
 				73D07C0914E11D2700383E06 /* AppKiDo.xib in Resources */,
 				73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */,
