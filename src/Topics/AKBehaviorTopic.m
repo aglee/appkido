@@ -82,7 +82,7 @@
 {
     if (!_subtopics)
     {
-        _subtopics = [self createSubtopicsArray];
+        _subtopics = [[self createSubtopicsArray] retain];
     }
 
     return _subtopics;

@@ -158,21 +158,19 @@
 
         if (_subtopicName == nil)
         {
-            _cachedDisplayString = topicName;
+            _cachedDisplayString = [topicName retain];
         }
         else if (_docName == nil)
         {
-            _cachedDisplayString = [NSString stringWithFormat:@"%@  %C  %@",
+            _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
                                     _subtopicName,  // [agl] displayed string?
                                     kLeftDoubleAngle,
                                     topicName];
         }
         else
         {
-            AKDoc *doc = [self docToDisplay];
-
-            _cachedDisplayString = [NSString stringWithFormat:@"%@  %C  %@",
-                                    [doc stringToDisplayInDocList],
+            _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
+                                    [[self docToDisplay] stringToDisplayInDocList],
                                     kLeftDoubleAngle,
                                     topicName];
         }
@@ -188,7 +186,7 @@
     {
         AKSubtopic *subtopic = [_topic subtopicWithName:_subtopicName];
 
-        _cachedDoc = [subtopic docWithName:_docName];
+        _cachedDoc = [[subtopic docWithName:_docName] retain];
     }
 
     return _cachedDoc;
@@ -316,17 +314,17 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
         if (_subtopicName == nil)
         {
-            _cachedSortName = topicName;
+            _cachedSortName = [topicName retain];
         }
         else
         {
             if (_docName == nil)
             {
-                _cachedSortName = [NSString stringWithFormat:@"%@-%@", _subtopicName, topicName];
+                _cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _subtopicName, topicName];
             }
             else
             {
-                _cachedSortName = [NSString stringWithFormat:@"%@-%@", _docName, topicName];
+                _cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _docName, topicName];
             }
         }
 
@@ -386,10 +384,13 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
 - (void)_clearCachedObjects
 {
+    [_cachedDisplayString release];
     _cachedDisplayString = nil;
 
+    [_cachedSortName release];
     _cachedSortName = nil;
 
+    [_cachedDoc release];
     _cachedDoc = nil;
 }
 
