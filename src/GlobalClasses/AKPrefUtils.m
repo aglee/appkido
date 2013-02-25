@@ -170,52 +170,52 @@
 {
     NSMutableDictionary *defaultPrefsDictionary = [NSMutableDictionary dictionary];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:DIGS_VERBOSITY_WARNING]
+    [defaultPrefsDictionary setObject:@(DIGS_VERBOSITY_WARNING)
                                forKey:(id)DIGSLogVerbosityUserDefault];
 
     [defaultPrefsDictionary setObject:[self _defaultDevToolsPath]
                                forKey:AKDevToolsPathPrefName];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:NO]
+    [defaultPrefsDictionary setObject:@NO
                                forKey:AKSearchInNewWindowPrefName];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:20]
+    [defaultPrefsDictionary setObject:@20
                                forKey:AKMaxSearchStringsPrefName];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+    [defaultPrefsDictionary setObject:@YES
                                forKey:AKIncludeClassesAndProtocolsPrefKey];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+    [defaultPrefsDictionary setObject:@YES
                                forKey:AKIncludeMethodsPrefKey];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+    [defaultPrefsDictionary setObject:@YES
                                forKey:AKIncludeFunctionsPrefKey];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+    [defaultPrefsDictionary setObject:@YES
                                forKey:AKIncludeGlobalsPrefKey];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+    [defaultPrefsDictionary setObject:@YES
                                forKey:AKIgnoreCasePrefKey];
 
     [defaultPrefsDictionary setObject:@"Lucida Grande"
                                forKey:AKListFontNamePrefName];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:12]
+    [defaultPrefsDictionary setObject:@12
                                forKey:AKListFontSizePrefName];
 
     [defaultPrefsDictionary setObject:@"Monaco"
                                forKey:AKHeaderFontNamePrefName];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:10]
+    [defaultPrefsDictionary setObject:@10
                                forKey:AKHeaderFontSizePrefName];
 
-    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:100]
+    [defaultPrefsDictionary setObject:@100
                                forKey:AKDocMagnificationPrefName];
     
-    [defaultPrefsDictionary setObject:[NSNumber numberWithBool:YES]
+    [defaultPrefsDictionary setObject:@YES
                                forKey:AKUseTexturedWindowsPrefName];
     
-    [defaultPrefsDictionary setObject:[NSNumber numberWithInt:50]
+    [defaultPrefsDictionary setObject:@50
                                forKey:AKMaxHistoryPrefName];
     
     [defaultPrefsDictionary setObject:[NSArray array]

@@ -208,7 +208,7 @@
 
     if ([memberNode isDeprecated])
     {
-        [attributes setObject:[NSNumber numberWithBool:YES] forKey:@"isDeprecated"];
+        [attributes setObject:@YES forKey:@"isDeprecated"];
     }
 
     [_xmlWriter tag:memberTag attributes:attributes];
@@ -226,7 +226,7 @@
     
     if ([databaseNode isDeprecated])
     {
-        [attributes setObject:[NSNumber numberWithBool:YES] forKey:@"isDeprecated"];
+        [attributes setObject:@YES forKey:@"isDeprecated"];
     }
     
     [_xmlWriter tag:subnodeTag attributes:attributes];

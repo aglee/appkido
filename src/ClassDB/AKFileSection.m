@@ -127,7 +127,7 @@
 //            // count.
 //            int cacheCount = [[s_fileCacheCounts objectForKey:_filePath] intValue];
 //
-//            [s_fileCacheCounts setObject:[NSNumber numberWithInt:(cacheCount + 1)]
+//            [s_fileCacheCounts setObject:@(cacheCount + 1)
 //                                  forKey:_filePath];
 //        }
 //        else
@@ -357,7 +357,7 @@
 //    else
 //    {
 //        // Decrement the cache count.
-//        [s_fileCacheCounts setObject:[NSNumber numberWithInt:(cacheCount - 1)]
+//        [s_fileCacheCounts setObject:@(cacheCount - 1)
 //                              forKey:_filePath];
 //    }
 //

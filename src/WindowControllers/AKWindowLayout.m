@@ -82,25 +82,25 @@
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
     [prefDict setObject:NSStringFromRect(_windowFrame) forKey:AKWindowFramePrefKey];
-    [prefDict setObject:[NSNumber numberWithBool:_toolbarIsVisible] forKey:AKToolbarIsVisiblePrefKey];
-    [prefDict setObject:[NSNumber numberWithDouble:_middleViewHeight] forKey:AKMiddleViewHeightPrefKey];
-    [prefDict setObject:[NSNumber numberWithBool:_browserIsVisible] forKey:AKBrowserIsVisiblePrefKey];
-    [prefDict setObject:[NSNumber numberWithDouble:_browserFraction] forKey:AKBrowserFractionPrefKey];
-    [prefDict setObject:[NSNumber numberWithInteger:_numberOfBrowserColumns] forKey:AKNumberOfBrowserColumnsPrefKey];
-    [prefDict setObject:[NSNumber numberWithBool:_quicklistDrawerIsOpen] forKey:AKQuicklistDrawerIsOpenPrefKey];
-    [prefDict setObject:[NSNumber numberWithDouble:_quicklistDrawerWidth] forKey:AKQuicklistDrawerWidthPrefKey];
-    [prefDict setObject:[NSNumber numberWithDouble:_quicklistMode] forKey:AKQuicklistModePrefKey];
+    [prefDict setObject:@(_toolbarIsVisible) forKey:AKToolbarIsVisiblePrefKey];
+    [prefDict setObject:@(_middleViewHeight) forKey:AKMiddleViewHeightPrefKey];
+    [prefDict setObject:@(_browserIsVisible) forKey:AKBrowserIsVisiblePrefKey];
+    [prefDict setObject:@(_browserFraction) forKey:AKBrowserFractionPrefKey];
+    [prefDict setObject:@(_numberOfBrowserColumns) forKey:AKNumberOfBrowserColumnsPrefKey];
+    [prefDict setObject:@(_quicklistDrawerIsOpen) forKey:AKQuicklistDrawerIsOpenPrefKey];
+    [prefDict setObject:@(_quicklistDrawerWidth) forKey:AKQuicklistDrawerWidthPrefKey];
+    [prefDict setObject:@(_quicklistMode) forKey:AKQuicklistModePrefKey];
 
     if (_frameworkPopupSelection)
     {
         [prefDict setObject:_frameworkPopupSelection forKey:AKFrameworkPopupSelectionPrefKey];
     }
 
-    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesClasses] forKey:AKIncludeClassesAndProtocolsPrefKey];
-    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesMembers] forKey:AKIncludeMethodsPrefKey];
-    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesFunctions] forKey:AKIncludeFunctionsPrefKey];
-    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesGlobals] forKey:AKIncludeGlobalsPrefKey];
-    [prefDict setObject:[NSNumber numberWithBool:_searchIgnoresCase] forKey:AKIgnoreCasePrefKey];
+    [prefDict setObject:@(_searchIncludesClasses) forKey:AKIncludeClassesAndProtocolsPrefKey];
+    [prefDict setObject:@(_searchIncludesMembers) forKey:AKIncludeMethodsPrefKey];
+    [prefDict setObject:@(_searchIncludesFunctions) forKey:AKIncludeFunctionsPrefKey];
+    [prefDict setObject:@(_searchIncludesGlobals) forKey:AKIncludeGlobalsPrefKey];
+    [prefDict setObject:@(_searchIgnoresCase) forKey:AKIgnoreCasePrefKey];
 
     return prefDict;
 }

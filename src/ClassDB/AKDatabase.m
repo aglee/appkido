@@ -588,7 +588,7 @@
         [_offsetsOfAnchorStringsInHTMLFiles setObject:offsetsByFilePath forKey:anchorString];
     }
 
-    NSNumber *offsetValue = [NSNumber numberWithInteger:anchorOffset];
+    NSNumber *offsetValue = @(anchorOffset);
 
     [offsetsByFilePath setObject:offsetValue forKey:filePath];
 }
