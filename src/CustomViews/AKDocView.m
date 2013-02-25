@@ -93,7 +93,7 @@
 
 - (void)setDocLocator:(AKDocLocator *)docLocator
 {
-    if ([docLocator isEqual:_docLocator])  // handles nil cases
+    if ([docLocator isEqual:_docLocator])  // handles nil cases [agl] does it?
     {
         return;
     }
@@ -156,7 +156,7 @@
 
     if (currentSubview == _webView)
     {
-        return _webView;
+        return _webView;  // [agl] ??? No call to makeFirstResponder:?
     }
     else
     {

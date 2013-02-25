@@ -29,6 +29,7 @@
 #import "AKSplashWindowController.h"
 #import "AKTestDocParserWindowController.h"
 #import "AKTopic.h"
+#import "AKViewUtils.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 

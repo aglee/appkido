@@ -42,14 +42,6 @@ static BOOL isPunctuation(char c)
 #pragma mark -
 #pragma mark AKParser methods
 
-/*
- * On entry, the file name is in _currentFile; the file
- * contents are in _fileContents; _dataStart and _current
- * both point to the beginning of the data; and _dataEnd points
- * the byte after the last data byte.  Subclasses can modify
- * _current as they do their thing, as a convenient way of
- * keeping their place.
- */
 - (void)parseCurrentFile
 {
     // Keep parsing until we run out of top-level nodes.

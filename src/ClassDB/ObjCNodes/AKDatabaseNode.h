@@ -9,10 +9,8 @@
 
 #import "AKSortable.h"
 
-
 @class AKDatabase;
 @class AKFileSection;
-
 
 /*!
  * Base class for entries in an AKDatabase.
@@ -59,7 +57,6 @@
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName;
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -67,13 +64,5 @@
 - (id)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName;
-
-
-#pragma mark -
-#pragma mark AKSortable methods
-
-/*! Returns the node name by default. */
-- (NSString *)sortName;
-
 
 @end

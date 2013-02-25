@@ -237,42 +237,43 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (BOOL)jumpToLinkURL:(NSURL *)linkURL
 {
-    NSString *filePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
-    NSURL *docFileURL = [NSURL fileURLWithPath:filePath];
+    // Interpret the link URL as relative to the current doc URL.
+    NSString *currentDocFilePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
+    NSURL *currentDocFileURL = [NSURL fileURLWithPath:currentDocFilePath];
+    NSURL *destinationURL = [NSURL URLWithString:[linkURL relativeString] relativeToURL:currentDocFileURL];
 
-    linkURL = [NSURL URLWithString:[linkURL relativeString] relativeToURL:docFileURL];
-
-    // If the link URL is a "file:" URL, try to convert it to an AKDocLocator.
-    AKDocLocator *linkDestination = nil;
-    if ([linkURL isFileURL])
+    // If we have a file: URL, try to derive a doc locator from it.
+    AKDocLocator *docLocator = nil;
+    if (![destinationURL isFileURL])
     {
-        // If the link can be converted to an AKDocLocator, jump to that
-        // locator.  Otherwise, try opening the file in the user's browser.
-        linkDestination = [[AKLinkResolver linkResolverWithDatabase:_database] docLocatorForURL:linkURL];
+        AKLinkResolver *linkResolver = [AKLinkResolver linkResolverWithDatabase:_database];
+        docLocator = [linkResolver docLocatorForURL:destinationURL];
 
-        if (linkDestination == nil)
+        if (docLocator == nil)
         {
             DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
-            linkDestination = [[AKOldLinkResolver linkResolverWithDatabase:_database] docLocatorForURL:linkURL];
+            linkResolver = [AKOldLinkResolver linkResolverWithDatabase:_database];
+            docLocator = [linkResolver docLocatorForURL:destinationURL];
         }
     }
 
-    // Now we know whether we can follow the link within the app or we have to use NSWorkspace.
-    if (linkDestination)
+    // If we managed to derive a doc locator, jump to it. Otherwise, try opening
+    // the file in the user's browser.
+    if (docLocator)
     {
-        [self jumpToDocLocator:linkDestination];
+        [self jumpToDocLocator:docLocator];
         [self focusOnDocListTable];
         [[_topLevelSplitView window] makeKeyAndOrderFront:nil];
         return YES;
     }
-    else if ([[NSWorkspace sharedWorkspace] openURL:linkURL])
+    else if ([[NSWorkspace sharedWorkspace] openURL:destinationURL])
     {
-        DIGSLogDebug(@"NSWorkspace opened URL [%@]", linkURL);
+        DIGSLogDebug(@"NSWorkspace opened URL [%@]", destinationURL);
         return YES;
     }
     else
     {
-        DIGSLogWarning(@"NSWorkspace couldn't open URL [%@]", linkURL);
+        DIGSLogWarning(@"NSWorkspace couldn't open URL [%@]", destinationURL);
         return NO;
     }
 }

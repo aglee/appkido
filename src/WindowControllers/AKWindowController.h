@@ -154,15 +154,14 @@
             docName:(NSString *)docName;
 
 /*!
- * linkObj must be either an NSURL or a string containing an absolute URL.
  * Returns YES if we are able to jump to the URL, either within the app if
- *possible or, if necessary, via NSWorkspace.
+ * possible or, if necessary, in the user's browser.
  */
 - (BOOL)jumpToLinkURL:(NSURL *)linkURL;
 
 /*!
- * Tries to give first responder status to the doc text view. Returns that view
- * if successful.
+ * Tries to give first responder status to the doc view. Returns that view if
+ * successful.
  */
 - (NSView *)focusOnDocView;
 
