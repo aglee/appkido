@@ -50,8 +50,8 @@
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    if ([_targetDatabase classDocumentedInHTMLFile:filePath]
-        || [_targetDatabase protocolDocumentedInHTMLFile:filePath])
+    if ([[self targetDatabase] classDocumentedInHTMLFile:filePath]
+        || [[self targetDatabase] protocolDocumentedInHTMLFile:filePath])
     {
         // Don't process the file if it's already been processed as a
         // behavior doc.  This is to catch the case where the docset index
@@ -89,18 +89,18 @@
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKGroupNode *groupNode = [_targetDatabase globalsGroupNamed:groupName
-                                               inFrameworkNamed:_targetFrameworkName];
+    AKGroupNode *groupNode = [[self targetDatabase] globalsGroupNamed:groupName
+                                               inFrameworkNamed:[self targetFrameworkName]];
     if (!groupNode)
     {
         groupNode = [AKGroupNode nodeWithNodeName:groupName
-                                         database:_targetDatabase
-                                    frameworkName:_targetFrameworkName];
+                                         database:[self targetDatabase]
+                                    frameworkName:[self targetFrameworkName]];
         // [agl] FIXME -- There is a slight flaw in this reasoning: the
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
         [groupNode setNodeDocumentation:groupSection];
-        [_targetDatabase addGlobalsGroup:groupNode];
+        [[self targetDatabase] addGlobalsGroup:groupNode];
     }
 
     // Iterate through child sections.  Each child section corresponds
@@ -120,11 +120,11 @@
     // See if the file we're parsing is a behavior doc.  Relies on the
     // assumption that if so, the doc was already parsed as such and is
     // therefore known to the database.
-    id behaviorNode = [_targetDatabase classDocumentedInHTMLFile:[fileSection filePath]];
+    id behaviorNode = [[self targetDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
 
     if (behaviorNode == nil)
     {
-        behaviorNode = [_targetDatabase protocolDocumentedInHTMLFile:[fileSection filePath]];
+        behaviorNode = [[self targetDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
     }
 
     // Create a node.
@@ -146,8 +146,8 @@
     }
 
     AKGlobalsNode *globalsNode = [[[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
-                                                                 database:_targetDatabase
-                                                            frameworkName:_targetFrameworkName]
+                                                                 database:[self targetDatabase]
+                                                            frameworkName:[self targetFrameworkName]]
                                   autorelease];
 
     // Add any individual names we find in the minor section.

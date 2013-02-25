@@ -53,19 +53,19 @@
         else
         {
             AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName
-                                                                   database:_targetDatabase
-                                                              frameworkName:_targetFrameworkName];
+                                                                   database:[self targetDatabase]
+                                                              frameworkName:[self targetFrameworkName]];
             [functionNode setNodeDocumentation:functionSection];
 
-            AKGroupNode *groupNode = [_targetDatabase functionsGroupNamed:groupName
-                                                         inFrameworkNamed:_targetFrameworkName];
+            AKGroupNode *groupNode = [[self targetDatabase] functionsGroupNamed:groupName
+                                                         inFrameworkNamed:[self targetFrameworkName]];
             if (!groupNode)
             {
                 groupNode = [AKGroupNode nodeWithNodeName:groupName
-                                                 database:_targetDatabase
-                                            frameworkName:_targetFrameworkName];
+                                                 database:[self targetDatabase]
+                                            frameworkName:[self targetFrameworkName]];
                 [groupNode setNodeDocumentation:functionSection];
-                [_targetDatabase addFunctionsGroup:groupNode];
+                [[self targetDatabase] addFunctionsGroup:groupNode];
             }
 
             [groupNode addSubnode:functionNode];

@@ -12,6 +12,9 @@
 
 @implementation AKParser
 
+@synthesize targetDatabase = _targetDatabase;
+@synthesize targetFrameworkName = _targetFrameworkName;
+
 #pragma mark -
 #pragma mark Class methods
 

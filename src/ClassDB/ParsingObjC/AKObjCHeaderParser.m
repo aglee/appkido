@@ -102,15 +102,15 @@ static BOOL isPunctuation(char c)
     // sitting on.
     (void)[self _parseTokenIntoBuffer:token];
     NSString *className = [NSString stringWithUTF8String:token];
-    AKClassNode *classNode = [_targetDatabase classWithName:className];
+    AKClassNode *classNode = [[self targetDatabase] classWithName:className];
 
     if (!classNode)
     {
         classNode = [AKClassNode nodeWithNodeName:className
-                                         database:_targetDatabase
-                                    frameworkName:_targetFrameworkName];
+                                         database:[self targetDatabase]
+                                    frameworkName:[self targetFrameworkName]];
     }
-    [_targetDatabase addClassNode:classNode];
+    [[self targetDatabase] addClassNode:classNode];
 
     AKBehaviorNode *resultNode = nil;
     while (([self _parseTokenIntoBuffer:token]))
@@ -133,14 +133,14 @@ static BOOL isPunctuation(char c)
             // we've come across the specification of its superclass.
             (void)[self _parseTokenIntoBuffer:token];
             NSString *parentClassName = [NSString stringWithUTF8String:token];
-            AKClassNode *parentClassNode = [_targetDatabase classWithName:parentClassName];
+            AKClassNode *parentClassNode = [[self targetDatabase] classWithName:parentClassName];
 
             if (!parentClassNode)
             {
                 parentClassNode = [AKClassNode nodeWithNodeName:parentClassName
-                                                       database:_targetDatabase
-                                                  frameworkName:_targetFrameworkName];
-                [_targetDatabase addClassNode:parentClassNode];
+                                                       database:[self targetDatabase]
+                                                  frameworkName:[self targetFrameworkName]];
+                [[self targetDatabase] addClassNode:parentClassNode];
             }
 
             // [agl] KLUDGE  Some .h files use #ifndef WIN32 to decide
@@ -168,8 +168,8 @@ static BOOL isPunctuation(char c)
             if (categoryNode == nil)
             {
                 categoryNode = [AKCategoryNode nodeWithNodeName:catName
-                                                       database:_targetDatabase
-                                                  frameworkName:_targetFrameworkName];
+                                                       database:[self targetDatabase]
+                                                  frameworkName:[self targetFrameworkName]];
                 [classNode addCategory:categoryNode];
             }
 
@@ -236,7 +236,7 @@ static BOOL isPunctuation(char c)
 
         // Make sure the framework which the class's .h file lives in is
         // recognized as the node's main framework.
-        [classNode setOwningFrameworkName:_targetFrameworkName];
+        [classNode setOwningFrameworkName:[self targetFrameworkName]];
     }
 }
 
@@ -254,14 +254,14 @@ static BOOL isPunctuation(char c)
     char token[AKParserTokenBufferSize];
     (void)[self _parseTokenIntoBuffer:token];
     NSString *protocolName = [NSString stringWithUTF8String:token];
-    AKProtocolNode *resultNode = [_targetDatabase protocolWithName:protocolName];
+    AKProtocolNode *resultNode = [[self targetDatabase] protocolWithName:protocolName];
 
     if (!resultNode)
     {
         resultNode = [AKProtocolNode nodeWithNodeName:protocolName
-                                             database:_targetDatabase
-                                        frameworkName:_targetFrameworkName];
-        [_targetDatabase addProtocolNode:resultNode];
+                                             database:[self targetDatabase]
+                                        frameworkName:[self targetFrameworkName]];
+        [[self targetDatabase] addProtocolNode:resultNode];
     }
 
     [resultNode setHeaderFileWhereDeclared:[self currentPath]];
@@ -319,14 +319,14 @@ static BOOL isPunctuation(char c)
         else
         {
             NSString *protocolName = [NSString stringWithUTF8String:token];
-            AKProtocolNode *protocolNode = [_targetDatabase protocolWithName:protocolName];
+            AKProtocolNode *protocolNode = [[self targetDatabase] protocolWithName:protocolName];
 
             if (!protocolNode)
             {
                 protocolNode = [AKProtocolNode nodeWithNodeName:protocolName
-                                                       database:_targetDatabase
-                                                  frameworkName:_targetFrameworkName];
-                [_targetDatabase addProtocolNode:protocolNode];
+                                                       database:[self targetDatabase]
+                                                  frameworkName:[self targetFrameworkName]];
+                [[self targetDatabase] addProtocolNode:protocolNode];
             }
 
             [behaviorNode addImplementedProtocol:protocolNode];
@@ -363,8 +363,8 @@ static BOOL isPunctuation(char c)
             if (methodNode == nil)
             {
                 methodNode = [[[AKMethodNode alloc] initWithNodeName:methodName
-                                                            database:_targetDatabase
-                                                       frameworkName:_targetFrameworkName
+                                                            database:[self targetDatabase]
+                                                       frameworkName:[self targetFrameworkName]
                                                       owningBehavior:behaviorNode]
                               autorelease];
                 addMemberNode(behaviorNode, methodNode);

@@ -57,17 +57,17 @@
 
         // Store bits of information about the class node relating it to its
         // HTML documentation file.
-        [_targetDatabase rememberThatClass:classNode
+        [[self targetDatabase] rememberThatClass:classNode
                     isDocumentedInHTMLFile:[self currentPath]];
 
         if (isMainClassReference)
         {
             [classNode setNodeDocumentation:_rootSectionOfCurrentFile];
-            [classNode setOwningFrameworkName:_targetFrameworkName];
+            [classNode setOwningFrameworkName:[self targetFrameworkName]];
         }
 
         [classNode associateDocumentation:_rootSectionOfCurrentFile
-                       withFrameworkNamed:_targetFrameworkName];
+                       withFrameworkNamed:[self targetFrameworkName]];
 
         behaviorNode = classNode;
     }
@@ -82,11 +82,11 @@
         
         // Store bits of information about the protocol node relating it to its
         // HTML documentation file.
-        [_targetDatabase rememberThatProtocol:protocolNode
+        [[self targetDatabase] rememberThatProtocol:protocolNode
                        isDocumentedInHTMLFile:[self currentPath]];
 
         [protocolNode setNodeDocumentation:_rootSectionOfCurrentFile];
-        [protocolNode setOwningFrameworkName:_targetFrameworkName];
+        [protocolNode setOwningFrameworkName:[self targetFrameworkName]];
 
         behaviorNode = protocolNode;
     }
@@ -270,7 +270,7 @@
     // Get our hands on the node for the class whose documentation is
     // in _rootSectionOfCurrentFile.
     NSString *className = [self _parseBehaviorName];
-    AKClassNode *classNode = [_targetDatabase classWithName:className];
+    AKClassNode *classNode = [[self targetDatabase] classWithName:className];
 
     // We assume the database has already been populated from header files.
     // If a class isn't already in the database, we assume it's an accident
@@ -282,7 +282,7 @@
 //    {
 //        classNode = [AKClassNode nodeWithNodeName:className owningFrameworkName:_frameworkName];
 //    }
-//    [_targetDatabase addClassNode:classNode];
+//    [[self targetDatabase] addClassNode:classNode];
 
     return classNode;
 }
@@ -295,7 +295,7 @@
 //    NSString *protocolName = [_rootSectionOfCurrentFile sectionName];
     NSString *protocolName = [self _parseBehaviorName];
 
-    AKProtocolNode *protocolNode = [_targetDatabase protocolWithName:protocolName];
+    AKProtocolNode *protocolNode = [[self targetDatabase] protocolWithName:protocolName];
 
     // We assume the database has already been populated from header files.
     // [agl] FIXME -- I don't like this assumption -- presumes class knows
@@ -305,9 +305,9 @@
     if (!protocolNode)
     {
         protocolNode = [AKProtocolNode nodeWithNodeName:protocolName
-                                               database:_targetDatabase
-                                          frameworkName:_targetFrameworkName];
-        [_targetDatabase addProtocolNode:protocolNode];
+                                               database:[self targetDatabase]
+                                          frameworkName:[self targetFrameworkName]];
+        [[self targetDatabase] addProtocolNode:protocolNode];
     }
 
     return protocolNode;
@@ -329,8 +329,8 @@
         if (memberNode == nil)
         {
             memberNode = [[[memberNodeClass alloc] initWithNodeName:memberName
-                                                           database:_targetDatabase
-                                                      frameworkName:_targetFrameworkName
+                                                           database:[self targetDatabase]
+                                                      frameworkName:[self targetFrameworkName]
                                                      owningBehavior:behaviorNode]
                           autorelease];
             addMemberNode(behaviorNode, memberNode);
@@ -369,7 +369,7 @@
             {
                 NSString *methodName = [minorSection sectionName];
                 AKMethodNode *methodNode = [behaviorNode addDeprecatedMethodIfAbsentWithName:methodName
-                                                                               frameworkName:_targetFrameworkName];
+                                                                               frameworkName:[self targetFrameworkName]];
                 if (methodNode != nil)
                 {
                     [methodNode setNodeDocumentation:minorSection];

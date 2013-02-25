@@ -30,16 +30,20 @@
  */
 @interface AKParser : DIGSFileProcessor
 {
-@protected
+@private
     AKDatabase *_targetDatabase;
     NSString *_targetFrameworkName;
 
+@protected
     // These ivars are only used during parsing.  They point to
     // various positions within the data being parsed.
     const char *_dataStart;
     const char *_current;
     const char *_dataEnd;
 }
+
+@property (nonatomic, readonly, retain) AKDatabase *targetDatabase;
+@property (nonatomic, readonly, copy) NSString *targetFrameworkName;
 
 #pragma mark -
 #pragma mark Class methods

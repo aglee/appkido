@@ -226,10 +226,10 @@
         // Apply the parse results to the database.
         if (_rootSectionOfCurrentFile != nil)
         {
-            [_targetDatabase rememberFrameworkName:_targetFrameworkName
+            [[self targetDatabase] rememberFrameworkName:[self targetFrameworkName]
                                        forHTMLFile:[self currentPath]];
 
-            [_targetDatabase rememberRootSection:_rootSectionOfCurrentFile
+            [[self targetDatabase] rememberRootSection:_rootSectionOfCurrentFile
                                      forHTMLFile:[self currentPath]];
             
             [self applyParseResults];
@@ -518,7 +518,7 @@
                                                               length:(_current - anchorStart)
                                                             encoding:NSUTF8StringEncoding];
 
-            [_targetDatabase rememberOffset:(anchorStart - _dataStart)
+            [[self targetDatabase] rememberOffset:(anchorStart - _dataStart)
                              ofAnchorString:anchorString
                                  inHTMLFile:[self currentPath]];
         }
