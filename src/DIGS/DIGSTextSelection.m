@@ -50,9 +50,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     }
 
     DIGSTextSelection *selectionState = [[[self alloc] init] autorelease];
-    NSString *visibleRectString = prefDict[_DIGS_VISIBLE_RECT_PREF_KEY];
-    NSString *visibleRangeString = prefDict[_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
-    NSString *selectedRangeString = prefDict[_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
+    NSString *visibleRectString = [prefDict objectForKey:_DIGS_VISIBLE_RECT_PREF_KEY];
+    NSString *visibleRangeString = [prefDict objectForKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
+    NSString *selectedRangeString = [prefDict objectForKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
 
     if (visibleRectString)
     {
@@ -76,9 +76,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    prefDict[_DIGS_VISIBLE_RECT_PREF_KEY] = NSStringFromRect(_visibleRect);
-    prefDict[_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY] = NSStringFromRange(_visibleCharsRange);
-    prefDict[_DIGS_SELECTED_CHARS_RANGE_PREF_KEY] = NSStringFromRange(_selectedCharsRange);
+    [prefDict setObject:NSStringFromRect(_visibleRect) forKey:_DIGS_VISIBLE_RECT_PREF_KEY];
+    [prefDict setObject:NSStringFromRange(_visibleCharsRange) forKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
+    [prefDict setObject:NSStringFromRange(_selectedCharsRange) forKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
 
     return prefDict;
 }

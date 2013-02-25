@@ -52,15 +52,15 @@
 
     AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
 
-    [windowLayout setWindowFrame:NSRectFromString(prefDict[AKWindowFramePrefKey])];
-    [windowLayout setToolbarIsVisible:[prefDict[AKToolbarIsVisiblePrefKey] boolValue]];
-    [windowLayout setMiddleViewHeight:[prefDict[AKMiddleViewHeightPrefKey] floatValue]];
-    [windowLayout setBrowserIsVisible:[prefDict[AKBrowserIsVisiblePrefKey] boolValue]];
-    [windowLayout setBrowserFraction:[prefDict[AKBrowserFractionPrefKey] floatValue]];
-    [windowLayout setNumberOfBrowserColumns:[prefDict[AKNumberOfBrowserColumnsPrefKey] intValue]];
-    [windowLayout setQuicklistDrawerIsOpen:[prefDict[AKQuicklistDrawerIsOpenPrefKey] boolValue]];
-    [windowLayout setQuicklistDrawerWidth:[prefDict[AKQuicklistDrawerWidthPrefKey] floatValue]];
-    [windowLayout setQuicklistMode:[prefDict[AKQuicklistModePrefKey] intValue]];
+    [windowLayout setWindowFrame:NSRectFromString([prefDict objectForKey:AKWindowFramePrefKey])];
+    [windowLayout setToolbarIsVisible:[[prefDict objectForKey:AKToolbarIsVisiblePrefKey] boolValue]];
+    [windowLayout setMiddleViewHeight:[[prefDict objectForKey:AKMiddleViewHeightPrefKey] floatValue]];
+    [windowLayout setBrowserIsVisible:[[prefDict objectForKey:AKBrowserIsVisiblePrefKey] boolValue]];
+    [windowLayout setBrowserFraction:[[prefDict objectForKey:AKBrowserFractionPrefKey] floatValue]];
+    [windowLayout setNumberOfBrowserColumns:[[prefDict objectForKey:AKNumberOfBrowserColumnsPrefKey] intValue]];
+    [windowLayout setQuicklistDrawerIsOpen:[[prefDict objectForKey:AKQuicklistDrawerIsOpenPrefKey] boolValue]];
+    [windowLayout setQuicklistDrawerWidth:[[prefDict objectForKey:AKQuicklistDrawerWidthPrefKey] floatValue]];
+    [windowLayout setQuicklistMode:[[prefDict objectForKey:AKQuicklistModePrefKey] intValue]];
 
     NSString *frameworkSelection = [prefDict objectForKey:AKFrameworkPopupSelectionPrefKey];
     if (frameworkSelection != nil)
@@ -81,26 +81,26 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    prefDict[AKWindowFramePrefKey] = NSStringFromRect(_windowFrame);
-    prefDict[AKToolbarIsVisiblePrefKey] = [NSNumber numberWithBool:_toolbarIsVisible];
-    prefDict[AKMiddleViewHeightPrefKey] = [NSNumber numberWithDouble:_middleViewHeight];
-    prefDict[AKBrowserIsVisiblePrefKey] = [NSNumber numberWithBool:_browserIsVisible];
-    prefDict[AKBrowserFractionPrefKey] = [NSNumber numberWithDouble:_browserFraction];
-    prefDict[AKNumberOfBrowserColumnsPrefKey] = [NSNumber numberWithInteger:_numberOfBrowserColumns];
-    prefDict[AKQuicklistDrawerIsOpenPrefKey] = [NSNumber numberWithBool:_quicklistDrawerIsOpen];
-    prefDict[AKQuicklistDrawerWidthPrefKey] = [NSNumber numberWithDouble:_quicklistDrawerWidth];
-    prefDict[AKQuicklistModePrefKey] = [NSNumber numberWithDouble:_quicklistMode];
+    [prefDict setObject:NSStringFromRect(_windowFrame) forKey:AKWindowFramePrefKey];
+    [prefDict setObject:[NSNumber numberWithBool:_toolbarIsVisible] forKey:AKToolbarIsVisiblePrefKey];
+    [prefDict setObject:[NSNumber numberWithDouble:_middleViewHeight] forKey:AKMiddleViewHeightPrefKey];
+    [prefDict setObject:[NSNumber numberWithBool:_browserIsVisible] forKey:AKBrowserIsVisiblePrefKey];
+    [prefDict setObject:[NSNumber numberWithDouble:_browserFraction] forKey:AKBrowserFractionPrefKey];
+    [prefDict setObject:[NSNumber numberWithInteger:_numberOfBrowserColumns] forKey:AKNumberOfBrowserColumnsPrefKey];
+    [prefDict setObject:[NSNumber numberWithBool:_quicklistDrawerIsOpen] forKey:AKQuicklistDrawerIsOpenPrefKey];
+    [prefDict setObject:[NSNumber numberWithDouble:_quicklistDrawerWidth] forKey:AKQuicklistDrawerWidthPrefKey];
+    [prefDict setObject:[NSNumber numberWithDouble:_quicklistMode] forKey:AKQuicklistModePrefKey];
 
     if (_frameworkPopupSelection)
     {
-        prefDict[AKFrameworkPopupSelectionPrefKey] = _frameworkPopupSelection;
+        [prefDict setObject:_frameworkPopupSelection forKey:AKFrameworkPopupSelectionPrefKey];
     }
 
-    prefDict[AKIncludeClassesAndProtocolsPrefKey] = [NSNumber numberWithBool:_searchIncludesClasses];
-    prefDict[AKIncludeMethodsPrefKey] = [NSNumber numberWithBool:_searchIncludesMembers];
-    prefDict[AKIncludeFunctionsPrefKey] = [NSNumber numberWithBool:_searchIncludesFunctions];
-    prefDict[AKIncludeGlobalsPrefKey] = [NSNumber numberWithBool:_searchIncludesGlobals];
-    prefDict[AKIgnoreCasePrefKey] = [NSNumber numberWithBool:_searchIgnoresCase];
+    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesClasses] forKey:AKIncludeClassesAndProtocolsPrefKey];
+    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesMembers] forKey:AKIncludeMethodsPrefKey];
+    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesFunctions] forKey:AKIncludeFunctionsPrefKey];
+    [prefDict setObject:[NSNumber numberWithBool:_searchIncludesGlobals] forKey:AKIncludeGlobalsPrefKey];
+    [prefDict setObject:[NSNumber numberWithBool:_searchIgnoresCase] forKey:AKIgnoreCasePrefKey];
 
     return prefDict;
 }

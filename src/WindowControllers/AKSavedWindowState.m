@@ -37,13 +37,13 @@
     AKSavedWindowState *windowState = [[[self alloc] init] autorelease];
 
     // Get the window layout.
-    NSDictionary *windowLayoutPrefDict = prefDict[AKWindowLayoutPrefKey];
+    NSDictionary *windowLayoutPrefDict = [prefDict objectForKey:AKWindowLayoutPrefKey];
     AKWindowLayout *windowLayout = [AKWindowLayout fromPrefDictionary:windowLayoutPrefDict];
 
     [windowState setSavedWindowLayout:windowLayout];
 
     // Get the window's selected history item.
-    NSDictionary *historyItemPrefDict = prefDict[AKSelectedDocPrefKey];
+    NSDictionary *historyItemPrefDict = [prefDict objectForKey:AKSelectedDocPrefKey];
     AKDocLocator *historyItem = [AKDocLocator fromPrefDictionary:historyItemPrefDict];
 
     [windowState setSavedDocLocator:historyItem];
@@ -55,8 +55,8 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    prefDict[AKWindowLayoutPrefKey] = [_savedWindowLayout asPrefDictionary];
-    prefDict[AKSelectedDocPrefKey] = [_savedDocLocator asPrefDictionary];
+    [prefDict setObject:[_savedWindowLayout asPrefDictionary] forKey:AKWindowLayoutPrefKey];
+    [prefDict setObject:[_savedDocLocator asPrefDictionary] forKey:AKSelectedDocPrefKey];
 
     return prefDict;
 }
