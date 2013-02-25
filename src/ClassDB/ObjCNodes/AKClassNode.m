@@ -19,35 +19,11 @@
 
 #import "AKAppController.h"  // [agl] KLUDGE doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
 
-
 @interface AKClassNode ()
 @property (nonatomic, weak) AKClassNode *parentClass;
 @end
 
-
 @implementation AKClassNode
-{
-    // Elements are strings.
-    NSMutableArray *_namesOfAllOwningFrameworks;
-
-    // Keys are names of owning frameworks. Values are the root file sections
-    // containing documentation for the framework.
-    NSMutableDictionary *_nodeDocumentationByFrameworkName;
-
-    // Contains AKClassNodes, one for each child class.
-    NSMutableArray *_childClassNodes;
-
-    // Contains AKCategoryNodes, one for each category that extends this class.
-    NSMutableArray *_categoryNodes;
-
-    // Contains AKMethodNodes, one for each delegate method that has been
-    // found in the documentation for this class.
-    AKCollectionOfNodes *_indexOfDelegateMethods;
-
-    // Contains AKNotificationNodes, one for each notification that has been
-    // found in the documentation for this class.
-    AKCollectionOfNodes *_indexOfNotifications;
-}
 
 @synthesize parentClass = _parentClassNode;
 
@@ -75,6 +51,17 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_namesOfAllOwningFrameworks release];
+    [_nodeDocumentationByFrameworkName release];
+    [_childClassNodes release];
+    [_categoryNodes release];
+    _indexOfDelegateMethods = nil;
+    [_indexOfNotifications release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters -- general
@@ -162,7 +149,6 @@
     return result;
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- multiple owning frameworks
 
@@ -194,13 +180,12 @@
     [_nodeDocumentationByFrameworkName setObject:fileSection forKey:frameworkName];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- delegate methods
 
 - (NSArray *)documentedDelegateMethods
 {
-    NSMutableArray *methodList = [[_indexOfDelegateMethods nodesWithDocumentation] mutableCopy];
+    NSMutableArray *methodList = [[[_indexOfDelegateMethods nodesWithDocumentation] mutableCopy] autorelease];
 
     // Handle classes like WebView that have different *kinds* of delegates.
     [self _addExtraDelegateMethodsTo:methodList];
@@ -217,7 +202,6 @@
 {
     [_indexOfDelegateMethods addNode:methodNode];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- notifications
@@ -236,7 +220,6 @@
 {
     [_indexOfNotifications addNode:notificationNode];
 }
-
 
 #pragma mark -
 #pragma mark AKBehaviorNode methods
@@ -269,10 +252,11 @@
     {
         if ([methodName ak_contains:@":"])
         {
-            methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
-                                                       database:[self owningDatabase]
-                                                  frameworkName:frameworkName
-                                                 owningBehavior:self];
+            methodNode = [[[AKMethodNode alloc] initWithNodeName:methodName
+                                                        database:[self owningDatabase]
+                                                   frameworkName:frameworkName
+                                                  owningBehavior:self]
+                          autorelease];
             [methodNode setIsDeprecated:YES];
             [self addDelegateMethod:methodNode];
         }
@@ -286,7 +270,6 @@
     
     return methodNode;
 }
-
 
 #pragma mark -
 #pragma mark AKDatabaseNode methods

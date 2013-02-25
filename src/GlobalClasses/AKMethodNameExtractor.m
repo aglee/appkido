@@ -11,6 +11,9 @@
 
 @implementation AKMethodNameExtractor
 
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
 - (id)initWithString:(NSString *)string
 {
     self = [super init];
@@ -32,11 +35,16 @@
 - (void)dealloc
 {
     free(_buffer);
+
+    [super dealloc];
 }
+
+#pragma mark -
+#pragma mark Parsing
 
 + (NSString *)extractMethodNameFromString:(NSString *)string
 {
-    AKMethodNameExtractor *methEx = [[self alloc] initWithString:string];
+    AKMethodNameExtractor *methEx = [[[self alloc] initWithString:string] autorelease];
 
     return [methEx extractMethodName];
 }
@@ -92,9 +100,9 @@
         }}
         char *elementEnd = _current;
 
-        lastTopLevelElement = [[NSString alloc] initWithBytes:elementStart
+        lastTopLevelElement = [[[NSString alloc] initWithBytes:elementStart
                                                         length:(elementEnd - elementStart)
-                                                      encoding:NSUTF8StringEncoding];
+                                                      encoding:NSUTF8StringEncoding] autorelease];
 
         if ([lastTopLevelElement hasSuffix:@":"])
         {
@@ -113,7 +121,8 @@
     return ([methodName length] ? methodName : nil);
 }
 
-#pragma mark - Private methods
+#pragma mark -
+#pragma mark Private methods
 
 - (BOOL)_isValidUnaryMethodName:(NSString *)string
 {

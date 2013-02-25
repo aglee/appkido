@@ -32,9 +32,8 @@
 {
 @private
     // Elements are AKDocs.  The array is populated by populateDocList:.
-    NSMutableArray *_docList;
+    NSMutableArray *_docList;  // [agl] revisit the way we do this; seems screwy
 }
-
 
 #pragma mark -
 #pragma mark AKXyzSubtopicName
@@ -49,7 +48,6 @@ extern NSString *AKInstanceMethodsSubtopicName;
 extern NSString *AKDelegateMethodsSubtopicName;
 extern NSString *AKNotificationsSubtopicName;
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -57,7 +55,6 @@ extern NSString *AKNotificationsSubtopicName;
 - (NSString *)subtopicName;
 
 - (NSString *)stringToDisplayInSubtopicList;
-
 
 #pragma mark -
 #pragma mark Managing the doc list

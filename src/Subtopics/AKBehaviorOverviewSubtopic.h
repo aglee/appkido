@@ -37,27 +37,23 @@
  *              AKBehaviorOverviewSubtopic's doc list.
  */
 @interface AKBehaviorOverviewSubtopic : AKSubtopic
-{
-}
-
 
 #pragma mark -
 #pragma mark Getters and setters
 
-// must override
+/*! Subclasses must override. */
 - (AKBehaviorNode *)behaviorNode;
 
-// for internal use
+/*! For internal use. */
 - (NSString *)htmlNameOfDescriptionSection;
 
-// for internal use
+/*! For internal use. */
 - (NSString *)altHtmlNameOfDescriptionSection;
-
 
 #pragma mark -
 #pragma mark Utility methods
 
-// for internal use
+/*! For internal use. */
 - (NSArray *)pertinentChildSectionsOf:(AKFileSection *)rootSection;
 
 @end

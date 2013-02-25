@@ -19,7 +19,6 @@
 
 @implementation AKBehaviorOverviewSubtopic
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -40,7 +39,6 @@
     DIGSLogError_MissingOverride();
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark Utility methods
@@ -70,7 +68,6 @@
     return pertinentSections;
 }
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
@@ -91,14 +88,14 @@
 
     for (AKFileSection *majorSection in [self pertinentChildSectionsOf:rootSection])
     {
-        [docList addObject:[[AKOverviewDoc alloc] initWithFileSection:majorSection]];
+        [docList addObject:[[[AKOverviewDoc alloc] initWithFileSection:majorSection] autorelease]];
     }
 
     // Add the "Inheritance" option as the first item.
     // If the user selects this, we will display the selected node's
     // root file section for the given node.
-    AKInheritanceDoc *inheritanceDoc =
-        [[AKInheritanceDoc alloc] initWithFileSection:rootSection];
+    AKInheritanceDoc *inheritanceDoc = [[[AKInheritanceDoc alloc] initWithFileSection:rootSection]
+                                        autorelease];
 
     [docList insertObject:inheritanceDoc atIndex:0];
 
@@ -115,7 +112,7 @@
         NSString *docName = [doc docName];
 
         if ([docName isEqualToString:descriptionSectionName]
-                || [docName isEqualToString:altDescriptionSectionName])
+            || [docName isEqualToString:altDescriptionSectionName])
         {
             if (i > 0)
             {
@@ -128,20 +125,15 @@
     }
 
     // Add the "Header File" doc if appropriate.
-    NSString *headerFilePath =
-        [[self behaviorNode] headerFileWhereDeclared];
+    NSString *headerFilePath = [[self behaviorNode] headerFileWhereDeclared];
 
     if ([[NSFileManager defaultManager] fileExistsAtPath:headerFilePath])
     {
-        AKFileSection *headerFileSection =
-            [AKFileSection withEntireFile:headerFilePath];
-        AKHeaderFileDoc *headerFileDoc =
-            [[AKHeaderFileDoc alloc]
-                initWithFileSection:headerFileSection];
-
+        AKFileSection *headerFileSection = [AKFileSection withEntireFile:headerFilePath];
+        AKHeaderFileDoc *headerFileDoc = [[[AKHeaderFileDoc alloc] initWithFileSection:headerFileSection]
+                                          autorelease];
         [docList addObject:headerFileDoc];
     }
 }
 
 @end
-

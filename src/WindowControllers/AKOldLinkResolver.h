@@ -12,7 +12,4 @@
  * docset indexes.
  */
 @interface AKOldLinkResolver : AKLinkResolver
-{
-}
-
 @end

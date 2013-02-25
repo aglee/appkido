@@ -14,10 +14,15 @@
 
 @implementation AKSavedWindowState
 
-
 #pragma mark - Init/awake/dealloc
 
+- (void)dealloc
+{
+    [_savedWindowLayout release];
+    [_savedDocLocator release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Preferences
@@ -29,21 +34,17 @@
         return nil;
     }
 
-    AKSavedWindowState *windowState = [[self alloc] init];
+    AKSavedWindowState *windowState = [[[self alloc] init] autorelease];
 
     // Get the window layout.
-    NSDictionary *windowLayoutPrefDict =
-        [prefDict objectForKey:AKWindowLayoutPrefKey];
-    AKWindowLayout *windowLayout =
-        [AKWindowLayout fromPrefDictionary:windowLayoutPrefDict];
+    NSDictionary *windowLayoutPrefDict = prefDict[AKWindowLayoutPrefKey];
+    AKWindowLayout *windowLayout = [AKWindowLayout fromPrefDictionary:windowLayoutPrefDict];
 
     [windowState setSavedWindowLayout:windowLayout];
 
     // Get the window's selected history item.
-    NSDictionary *historyItemPrefDict =
-        [prefDict objectForKey:AKSelectedDocPrefKey];
-    AKDocLocator *historyItem =
-        [AKDocLocator fromPrefDictionary:historyItemPrefDict];
+    NSDictionary *historyItemPrefDict = prefDict[AKSelectedDocPrefKey];
+    AKDocLocator *historyItem = [AKDocLocator fromPrefDictionary:historyItemPrefDict];
 
     [windowState setSavedDocLocator:historyItem];
 
@@ -54,16 +55,11 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict
-        setObject:[_savedWindowLayout asPrefDictionary]
-        forKey:AKWindowLayoutPrefKey];
-    [prefDict
-        setObject:[_savedDocLocator asPrefDictionary]
-        forKey:AKSelectedDocPrefKey];
+    prefDict[AKWindowLayoutPrefKey] = [_savedWindowLayout asPrefDictionary];
+    prefDict[AKSelectedDocPrefKey] = [_savedDocLocator asPrefDictionary];
 
     return prefDict;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -75,7 +71,8 @@
 
 - (void)setSavedWindowLayout:(AKWindowLayout *)windowLayout
 {
-    _savedWindowLayout = windowLayout;
+    [_savedWindowLayout autorelease];
+    _savedWindowLayout = [windowLayout retain];
 }
 
 - (AKDocLocator *)savedDocLocator
@@ -85,7 +82,8 @@
 
 - (void)setSavedDocLocator:(AKDocLocator *)docLocator
 {
-    _savedDocLocator = docLocator;
+    [_savedDocLocator autorelease];
+    _savedDocLocator = [docLocator retain];
 }
 
 @end

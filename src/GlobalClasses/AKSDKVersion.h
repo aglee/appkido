@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface AKSDKVersion : NSObject
 {
 @private
@@ -22,7 +21,6 @@
 
 + (id)versionFromString:(NSString *)versionString;
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -34,7 +32,6 @@
 
 - (int)patchNumber;
 - (void)setPatchNumber:(int)n;
-
 
 #pragma mark -
 #pragma mark Comparing versions

@@ -12,26 +12,22 @@
 
 @implementation AKDelegateMethodsSubtopic
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {
-    return
-        [self includesAncestors]
-        ? [@"ALL " stringByAppendingString:AKDelegateMethodsSubtopicName]
-        : AKDelegateMethodsSubtopicName;
+    return ([self includesAncestors]
+            ? [@"ALL " stringByAppendingString:AKDelegateMethodsSubtopicName]
+            : AKDelegateMethodsSubtopicName);
 }
 
 - (NSString *)stringToDisplayInSubtopicList
 {
-    return
-        [self includesAncestors]
-        ? [@"       " stringByAppendingString:[self subtopicName]]
-        : [@"5.  " stringByAppendingString:[self subtopicName]];
+    return ([self includesAncestors]
+            ? [@"       " stringByAppendingString:[self subtopicName]]
+            : [@"5.  " stringByAppendingString:[self subtopicName]]);
 }
-
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods

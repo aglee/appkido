@@ -34,7 +34,7 @@
 /*! The meaning of a node's nodeName depends on the type of node. */
 @property (nonatomic, readonly, copy) NSString *nodeName;
 
-@property (nonatomic, weak) AKDatabase *owningDatabase;
+@property (nonatomic, unsafe_unretained) AKDatabase *owningDatabase;
 
 /*! Most nodes belong to exactly one framework. The exception is AKClassNode. */
 @property (nonatomic, copy) NSString *owningFrameworkName;
@@ -43,7 +43,6 @@
 @property (nonatomic, retain) AKFileSection *nodeDocumentation;
 
 @property (nonatomic, assign) BOOL isDeprecated;
-
 
 #pragma mark -
 #pragma mark Factory methods

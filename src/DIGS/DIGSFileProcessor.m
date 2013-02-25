@@ -11,7 +11,6 @@
 
 @implementation DIGSFileProcessor
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -20,7 +19,7 @@
     if ((self = [super init]))
     {
         // [agl] TODO handle case where basePath is nil
-        _basePath = basePath;
+        _basePath = [basePath copy];
     }
     
     return self;
@@ -31,7 +30,13 @@
     return [self initWithBasePath:@""];
 }
 
+- (void)dealloc
+{
+    [_basePath release];
+    [_currentPath release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -45,7 +50,6 @@
 {
     return _currentPath;
 }
-
 
 #pragma mark -
 #pragma mark Processing files
@@ -69,7 +73,8 @@
     }
 
     // Remember the current file.
-    _currentPath = [_basePath stringByAppendingPathComponent:filePath];
+    [_currentPath autorelease];
+    _currentPath = [[_basePath stringByAppendingPathComponent:filePath] retain];
 
     // Do the job.
     [self processCurrentFile];

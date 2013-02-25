@@ -10,10 +10,7 @@
 @class AKDevToolsPathController;
 
 /*!
- * @class       AKPrefPanelController
- * @abstract    Controller for the application-wide Preferences panel.
- * @discussion  A single instance of AKPrefPanelController is managed by the
- *   app-wide singleton instance of AKAppController.
+ * Controller for the application-wide Preferences panel.
  */
 @interface AKPrefPanelController : NSObject
 {
@@ -43,16 +40,10 @@
     IBOutlet NSButton *_searchInNewWindowCheckbox;
 }
 
-
 #pragma mark -
 #pragma mark Factory methods
 
-/*!
- * @method      sharedInstance
- * @discussion  Returns the one and only instance of this class.
- */
 + (AKPrefPanelController *)sharedInstance;
-
 
 #pragma mark -
 #pragma mark Action methods

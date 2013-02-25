@@ -15,7 +15,10 @@
  * regardless of how many behaviors declare a method with the same signature.
  */
 @interface AKMethodNode : AKMemberNode
-
+{
+@private
+    NSMutableArray *_argumentTypes;
+}
 
 #pragma mark -
 #pragma mark Getters and setters

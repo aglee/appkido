@@ -14,7 +14,6 @@
 
 @implementation AKInformalProtocolsTopic
 
-
 #pragma mark -
 #pragma mark AKTopic methods
 

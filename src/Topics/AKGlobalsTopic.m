@@ -15,7 +15,6 @@
 
 @implementation AKGlobalsTopic
 
-
 #pragma mark -
 #pragma mark AKTopic methods
 
@@ -47,7 +46,7 @@
     {
         AKGroupNode *groupNode = [groupNodes objectAtIndex:subtopicIndex];
 
-        return [[AKGroupNodeSubtopic alloc] initWithGroupNode:groupNode];
+        return [[[AKGroupNodeSubtopic alloc] initWithGroupNode:groupNode] autorelease];
     }
 }
 
@@ -55,6 +54,5 @@
 {
     return NO;
 }
-
 
 @end

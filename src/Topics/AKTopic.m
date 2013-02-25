@@ -14,7 +14,6 @@
 
 @implementation AKTopic
 
-
 #pragma mark -
 #pragma mark AKXyzTopicName
 
@@ -24,7 +23,6 @@ NSString *AKProtocolsTopicName         = @"Protocols";
 NSString *AKInformalProtocolsTopicName = @"Informal Protocols";
 NSString *AKFunctionsTopicName         = @"Functions";
 NSString *AKGlobalsTopicName           = @"Types & Constants";
-
 
 #pragma mark -
 #pragma mark Preferences
@@ -78,7 +76,6 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -91,7 +88,6 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 {
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark Names for various display contexts
@@ -111,7 +107,6 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 {
     return [self stringToDisplayInTopicBrowser];
 }
-
 
 #pragma mark -
 #pragma mark Populating the topic browser
@@ -136,7 +131,6 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 {
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark Populating the subtopics table
@@ -178,17 +172,13 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (AKSubtopic *)subtopicWithName:(NSString *)subtopicName
 {
-    NSInteger subtopicIndex =
-        (subtopicName == nil)
-        ? -1
-        : [self indexOfSubtopicWithName:subtopicName];
-
-    return
-        (subtopicIndex < 0)
-        ? nil
-        : [self subtopicAtIndex:subtopicIndex];
+    NSInteger subtopicIndex = ((subtopicName == nil)
+                               ? -1
+                               : [self indexOfSubtopicWithName:subtopicName]);
+    return ((subtopicIndex < 0)
+            ? nil
+            : [self subtopicAtIndex:subtopicIndex]);
 }
-
 
 #pragma mark -
 #pragma mark AKSortable methods
@@ -198,9 +188,8 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return [self stringToDisplayInLists];
 }
 
-
 #pragma mark -
-#pragma mark Object methods
+#pragma mark NSObject methods
 
 - (BOOL)isEqual:(id)anObject
 {
@@ -212,10 +201,6 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     // Compare topics by comparing their browser paths.
     return ([[anObject pathInTopicBrowser] isEqualToString:[self pathInTopicBrowser]]);
 }
-
-
-#pragma mark -
-#pragma mark NSObject methods
 
 - (NSString *)description
 {

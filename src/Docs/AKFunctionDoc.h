@@ -8,7 +8,4 @@
 #import "AKNodeDoc.h"
 
 @interface AKFunctionDoc : AKNodeDoc
-{
-}
-
 @end

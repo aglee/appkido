@@ -21,6 +21,13 @@
 
 #pragma mark - Init/awake/dealloc
 
+- (void)dealloc
+{
+    [_appDatabase release];
+    [(id)_databaseDelegate release];
+
+    [super dealloc];
+}
 
 #pragma mark - NSOperation methods
 
@@ -47,7 +54,8 @@
                         waitUntilDone:NO];
 }
 
-#pragma mark - AKDatabase delegate methods
+#pragma mark -
+#pragma mark AKDatabase delegate methods
 
 - (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName
 {
@@ -56,7 +64,8 @@
                         waitUntilDone:NO];
 }
 
-#pragma mark - Private methods
+#pragma mark -
+#pragma mark Private methods
 
 // Gets called on the main thread as the last thing this operation does.
 - (void)_finishOnMainThread

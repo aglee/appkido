@@ -8,17 +8,7 @@
 #import <Cocoa/Cocoa.h>
 
 /*!
- * @class       DIGSWindow
- * @abstract    Small tweak to NSWindow.
- * @discussion  Originally this was a placeholder class that you could pose as
- *              if you wanted to modify the behavior of NSWindows but not
- *              NSPanels.  I don't need this ability any more, because I'm
- *              getting rid of metal windows.  All DIGSWindow contains now is
- *              an override of -setTitle: that protects against nil being passed
- *              as the title.
+ * A tweak suggested by Gerriet Denkmann. Overrides -setTitle: to handle nil.
  */
 @interface DIGSWindow : NSWindow
-{
-}
-
 @end

@@ -25,9 +25,9 @@
     BOOL                _columnNamesSetup;
 }
 
-@property (atomic, strong) NSString *query;
-@property (atomic, strong) NSMutableDictionary *columnNameToIndexMap;
-@property (atomic, strong) FMStatement *statement;
+@property (atomic, retain) NSString *query;
+@property (atomic, retain) NSMutableDictionary *columnNameToIndexMap;
+@property (atomic, retain) FMStatement *statement;
 
 + (id)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB;
 

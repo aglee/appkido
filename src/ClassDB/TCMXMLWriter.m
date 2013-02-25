@@ -12,10 +12,10 @@
 
 @interface TCMXMLWriter ()
 @property BOOL currentTagHasContent;
-@property (nonatomic, strong) NSMutableString *indentationString;
+@property (nonatomic, retain) NSMutableString *indentationString;
 @property TCMXMLWriterOptions writerOptions;
-@property (nonatomic, strong) NSOutputStream *outputStream;
-@property (nonatomic, strong) NSMutableArray *elementNameStackArray;
+@property (nonatomic, retain) NSOutputStream *outputStream;
+@property (nonatomic, retain) NSMutableArray *elementNameStackArray;
 - (void)writeAttributes:(NSDictionary *)anAttributeDictionary;
 - (void)writeString:(NSString *)aString;
 - (void)createAndOpenStream;
@@ -59,6 +59,12 @@
 
 - (void)dealloc {
 	if (self.fileURL) [self.outputStream close];
+	self.outputStream = nil;
+	self.fileURL = nil;
+	self.elementNameStackArray = nil;
+	self.indentationString = nil;
+	self.dateFormatter = nil;
+	[super dealloc];
 }
 
 
@@ -121,6 +127,7 @@
 		[escapedString replaceOccurrencesOfString:@"<" withString:@"&lt;" options:NSLiteralSearch range:NSMakeRange(0,escapedString.length)];
 		[escapedString replaceOccurrencesOfString:@"\"" withString:@"&quot;" options:NSLiteralSearch range:NSMakeRange(0,escapedString.length)];
 		[self writeString:escapedString];
+		[escapedString release];
 	} else {
 		[self writeString:string];
 	}
@@ -134,6 +141,7 @@
 	[escapedString replaceOccurrencesOfString:@"<" withString:@"&lt;"  options:NSLiteralSearch range:NSMakeRange(0,escapedString.length)];
 	[escapedString replaceOccurrencesOfString:@"]]>" withString:@"]]&gt;"  options:NSLiteralSearch range:NSMakeRange(0,escapedString.length)];
 	[self writeString:escapedString];
+	[escapedString release];
 }
 
 - (void)writeAttributes:(NSDictionary *)anAttributeDictionary {
@@ -151,6 +159,7 @@
 		for (NSString *key in sortedAttributeKeys) {
 			writerBlock(key, [anAttributeDictionary objectForKey:key], NULL);
 		}
+		[sortedAttributeKeys release];
 	} else {
 		[anAttributeDictionary enumerateKeysAndObjectsUsingBlock:writerBlock];
 	}
@@ -175,6 +184,7 @@
 		[tempDictionary addEntriesFromDictionary:anAttributeDictionary];
 		[tempDictionary removeObjectForKey:@"version"];
 		[self writeAttributes:tempDictionary];		
+		[tempDictionary release];
 	} else {
 		[self writeAttributes:anAttributeDictionary];
 	}
@@ -308,6 +318,7 @@
 		NSMutableString *escapedString = [aCDataString mutableCopy];
 		[escapedString replaceOccurrencesOfString:@"]]>" withString:@"]]" @"]]><![CDATA[" @">" options:NSLiteralSearch range:NSMakeRange(0,escapedString.length)];
 		[self writeString:escapedString];
+		[escapedString release];
 	} else {
 		[self writeString:aCDataString];
 	}
@@ -331,7 +342,7 @@
 
 - (NSString *)XMLString {
 	NSData *outputData = self.XMLData;
-	return [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
+	return [[[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding] autorelease];
 }
 
 @end

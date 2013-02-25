@@ -12,7 +12,6 @@
 
 @implementation AKParser
 
-
 #pragma mark -
 #pragma mark Class methods
 
@@ -25,8 +24,8 @@
         return;
     }
 
-    AKParser *parser = [[self alloc] initWithDatabase:database
-                                        frameworkName:frameworkName];
+    AKParser *parser = [[[self alloc] initWithDatabase:database
+                                         frameworkName:frameworkName] autorelease];
     [parser processDirectory:dirPath recursively:YES];
 }
 
@@ -38,12 +37,11 @@
     for (NSString *subpath in subpaths)
     {
         NSString *fullPath = [baseDir stringByAppendingPathComponent:subpath];
-        AKParser *parser = [[self alloc] initWithDatabase:database
-                                            frameworkName:frameworkName];
+        AKParser *parser = [[[self alloc] initWithDatabase:database
+                                             frameworkName:frameworkName] autorelease];
         [parser processFile:fullPath];
     }
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -52,8 +50,8 @@
 {
     if ((self = [super init]))
     {
-        _targetDatabase = database;
-        _targetFrameworkName = frameworkName;
+        _targetDatabase = [database retain];
+        _targetFrameworkName = [frameworkName copy];
     }
 
     return self;
@@ -65,6 +63,13 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_targetDatabase release];
+    [_targetFrameworkName release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Parsing
@@ -79,7 +84,6 @@
     DIGSLogError_MissingOverride();
 }
 
-
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
 
@@ -87,7 +91,7 @@
 - (void)processCurrentFile
 {
     // Set up.
-    NSMutableData *fileContents = [self loadDataToBeParsed];
+    NSMutableData *fileContents = [[self loadDataToBeParsed] retain];
 
     if (fileContents)
     {
@@ -109,7 +113,7 @@
     _dataStart = NULL;
     _current = NULL;
     _dataEnd = NULL;
+    [fileContents release];
 }
-
 
 @end

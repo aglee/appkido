@@ -8,27 +8,25 @@
 #import "AKTopic.h"
 
 @class AKDatabase;
-@class AKFramework;
 
-// represents one framework; subclasses represent different kinds of fw
-// provides implementations for several AKTopic abstract methods, but not
-// -childTopics, because that depends on the type of fw
-//
-// -childTopics should return instances of
-// AKChildTopicOfFrameworkTopic
+/*!
+ * Represents a framework topic. Subclasses represent different kinds of topic.
+ * Provides implementations for several AKTopic abstract methods, but not
+ * -childTopics, because that depends on the type of framework.
+ *
+ * -childTopics should return instances of AKChildTopicOfFrameworkTopic.
+ */
 @interface AKFrameworkTopic : AKTopic
 {
-@protected
+@protected  // [agl] revisit protected ivars
     AKDatabase *_topicDatabase;
     NSString *_topicFrameworkName;
 }
-
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

@@ -9,9 +9,7 @@
 #import "AKAppVersion.h"
 #import "AKTextUtils.h"
 
-
 NSString *AKHomePageURL = @"http://appkido.com/";
-
 
 @implementation AKAppVersion
 
@@ -76,7 +74,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     }    
     
     // Construct and return an instance with the parts we have.
-    AKAppVersion *appVersion = [[AKAppVersion alloc] init];
+    AKAppVersion *appVersion = [[[AKAppVersion alloc] init] autorelease];
     
     [appVersion setMajor:majorNumber];
     [appVersion setMinor:minorNumber];
@@ -163,8 +161,8 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     return versionString;
 }
 
-
-#pragma mark - Private methods
+#pragma mark -
+#pragma mark Private methods
 
 // If nilIsGreatest, then nil is "greater than" anything except itself.
 // Otherwise, nil is "less than" anything except itself.

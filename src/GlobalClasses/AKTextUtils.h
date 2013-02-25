@@ -7,31 +7,21 @@
 
 #import <Foundation/Foundation.h>
 
-
 #pragma mark -
 #pragma mark C string utilities
 
-/*!
- * Creates a new buffer containing a copy of s.  Does a malloc and a strcpy.
- */
+/*! Creates a new buffer containing a copy of s.  Does a malloc and a strcpy. */
 extern char *ak_copystr(const char *s);
-
 
 #pragma mark -
 #pragma mark NSString extensions
 
 @interface NSString (AppKiDo)
 
-/*!
- * @method      ak_contains:
- * @discussion  Does a case-sensitive substring search.
- */
+/*! Does a case-sensitive substring search. */
 - (BOOL)ak_contains:(NSString *)searchString;
 
-/*!
- * @method      ak_containsCaseInsensitive:
- * @discussion  Does a case-insensitive substring search.
- */
+/*! Does a case-insensitive substring search. */
 - (BOOL)ak_containsCaseInsensitive:(NSString *)searchString;
 
 /*!
@@ -56,9 +46,9 @@ extern char *ak_copystr(const char *s);
  *              mask and wrapFlag.
  */
 - (NSRange)ak_findString:(NSString *)string
-    selectedRange:(NSRange)selectedRange
-    options:(NSUInteger)mask
-    wrap:(BOOL)wrapFlag;
+           selectedRange:(NSRange)selectedRange
+                 options:(NSUInteger)mask
+                    wrap:(BOOL)wrapFlag;
 
 /*!
  * @method      ak_trimWhitespace

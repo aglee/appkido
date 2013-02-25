@@ -9,23 +9,18 @@
 
 @implementation AKFileUtils
 
-
 #pragma mark -
 #pragma mark Existence checking
 
 + (BOOL)directoryExistsAtPath:(NSString *)path
 {
     BOOL isDir = NO;
-    BOOL exists =
-        [[NSFileManager defaultManager]
-            fileExistsAtPath:path
-            isDirectory:&isDir];
+    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir];
 
     return (exists && isDir);
 }
 
-+ (NSString *)subdirectoryOf:(NSString *)dir
-    withName:(NSString *)subdir
++ (NSString *)subdirectoryOf:(NSString *)dir withName:(NSString *)subdir
 {
     if ((dir == nil) || (subdir == nil))
     {
@@ -38,26 +33,23 @@
 }
 
 + (NSString *)subdirectoryOf:(NSString *)dir
-    withName:(NSString *)subdir1
-    orName:(NSString *)subdir2
+                    withName:(NSString *)subdir1
+                      orName:(NSString *)subdir2
 {
     NSString *path = [self subdirectoryOf:dir withName:subdir1];
 
-    return
-        path
-        ? path
-        : [self subdirectoryOf:dir withName:subdir2];
+    return (path ?: [self subdirectoryOf:dir withName:subdir2]);
 }
 
-+ (NSString *)subdirectoryOf:(NSString *)dir
-    withNameEndingWith:(NSString *)suffix
++ (NSString *)subdirectoryOf:(NSString *)dir withNameEndingWith:(NSString *)suffix
 {
     if ((dir == nil) || (suffix == nil))
     {
         return nil;
     }
 
-	NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
+	NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir
+                                                                               error:NULL];
 	unsigned int i;
 
 	for (i = 0; i < [dirContents count]; i++)

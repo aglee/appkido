@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 /*!
  * Manages the UI used for specifying where the Dev Tools are installed. The
  * user locates Xcode.app and we figure out what Dev Tools installation that
@@ -23,6 +22,7 @@
  */
 @interface AKDevToolsPathController : NSObject <NSOpenSavePanelDelegate>
 {
+@private
     NSString *_selectedXcodeAppPath;
     
     IBOutlet NSTextField *_xcodeAppPathField;
@@ -31,7 +31,6 @@
     IBOutlet NSTextField *_explanationField;
     IBOutlet NSButton *_okButton;  // Present only in the Locate Dev Tools window.
 }
-
 
 #pragma mark -
 #pragma mark Action methods

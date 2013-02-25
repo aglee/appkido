@@ -27,7 +27,13 @@
     char *_current;  // Points to the character within _buffer that we're currently parsing.
 }
 
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
 - (id)initWithString:(NSString *)string;
+
+#pragma mark -
+#pragma mark Parsing
 
 + (NSString *)extractMethodNameFromString:(NSString *)string;
 - (NSString *)extractMethodName;

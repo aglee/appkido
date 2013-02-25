@@ -16,12 +16,11 @@
 @class AKWindowLayout;
 
 /*!
- * @class       AKQuicklistController
- * @abstract    Controller for a browser window's quicklist drawer.
- * @discussion  xxx.
+ * Controller for a browser window's quicklist drawer.
  */
 @interface AKQuicklistController : AKWindowSubcontroller
 {
+@private
     // Contains the values currently displayed in _quicklistTable.  Elements
     // are AKDocLocators.
     NSArray *_currentTableValues;
@@ -53,7 +52,6 @@
     IBOutlet NSButton *_removeFavoriteButton;
 }
 
-
 #pragma mark -
 #pragma mark Window layout
 
@@ -61,12 +59,10 @@
 
 - (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout;
 
-
 #pragma mark -
 #pragma mark Navigation
 
 - (void)searchForString:(NSString *)aString;
-
 
 #pragma mark -
 #pragma mark Action methods

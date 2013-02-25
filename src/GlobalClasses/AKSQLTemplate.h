@@ -17,12 +17,8 @@
  * the broken-up NSString into, say the sqlite3 command line or a GUI that
  * executes sqlite queries. And you can open the .sql file in programs that
  * provide syntax-highlighting.
- *
- * The SQL 
  */
 @interface AKSQLTemplate : NSObject
-{
-}
 
 + (NSString *)templateNamed:(NSString *)templateName;
 

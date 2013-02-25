@@ -15,7 +15,14 @@
  * methods.  Unlike an AKGroupNode, an AKCollectionOfNodes is not itself a node.
  */
 @interface AKCollectionOfNodes : NSObject
+{
+@private
+    // Contains all the AKDatabaseNodes that have been added to us.
+    NSMutableArray *_nodeList;
 
+    // Keys are node names.  Values are AKDatabaseNodes.
+    NSMutableDictionary *_nodesByName;
+}
 
 #pragma mark -
 #pragma mark Getters and setters

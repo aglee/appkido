@@ -14,27 +14,6 @@
 #import "AKCollectionOfNodes.h"
 
 @implementation AKBehaviorNode
-{
-    // One AKProtocolNode for each protocol this behavior conforms to.
-    NSMutableArray *_protocolNodes;
-
-    // Indexes the contents of _protocolNodes.
-    NSMutableSet *_protocolNodeNames;
-
-    // Contains AKPropertyNodes, each representing a property of this class.
-    AKCollectionOfNodes *_indexOfProperties;
-
-    // Contains AKMethodNodes, one for each class method that has either
-    // been found in my .h file or been found in the documentation for my
-    // behavior.
-    AKCollectionOfNodes *_indexOfClassMethods;
-
-    // Contains AKMethodNodes, one for each instance method that has either
-    // been found in my .h file or been found in the documentation for my
-    // behavior.
-    AKCollectionOfNodes *_indexOfInstanceMethods;
-}
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -56,6 +35,16 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_protocolNodes release];
+    [_protocolNodeNames release];
+    [_indexOfProperties release];
+    [_indexOfClassMethods release];
+    [_indexOfInstanceMethods release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters -- general
@@ -96,7 +85,6 @@
     return [_indexOfInstanceMethods allNodes];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- properties
 
@@ -114,7 +102,6 @@
 {
     [_indexOfProperties addNode:propertyNode];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- class methods
@@ -134,7 +121,6 @@
     [_indexOfClassMethods addNode:methodNode];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- instance methods
 
@@ -152,7 +138,6 @@
 {
     [_indexOfInstanceMethods addNode:methodNode];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- deprecated methods
@@ -183,6 +168,5 @@
     
     return methodNode;
 }
-
 
 @end

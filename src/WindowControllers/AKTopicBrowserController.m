@@ -23,7 +23,6 @@
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
 
-
 @implementation AKTopicBrowserController
 
 #pragma mark -
@@ -39,7 +38,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_topicListsForBrowserColumns release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Navigation
@@ -51,11 +55,13 @@
     {
         return;
     }
+    
     if (whereTo == nil)
     {
         DIGSLogInfo(@"can't navigate to a nil locator");
         return;
     }
+    
     if ([whereTo topicToDisplay] == nil)
     {
         DIGSLogInfo(@"can't navigate to a nil topic");
@@ -77,10 +83,9 @@
         // Update the topic browser.
         if (![_topicBrowser setPath:newBrowserPath])
         {
-            DIGSLogError_ExitingMethodPrematurely(
-                ([NSString stringWithFormat:
-                    @"can't navigate to browser path [%@]",
-                    newBrowserPath]));
+            DIGSLogError_ExitingMethodPrematurely(([NSString stringWithFormat:
+                                                    @"can't navigate to browser path [%@]",
+                                                    newBrowserPath]));
             return;
         }
 
@@ -106,7 +111,6 @@
     [_subtopicListController jumpToSubtopicWithIndex:subtopicIndex];
 }
 
-
 #pragma mark -
 #pragma mark Action methods
 
@@ -129,10 +133,8 @@
 
 - (IBAction)doBrowserAction:(id)sender
 {
-    [_windowController jumpToTopic:
-        [[_topicBrowser selectedCell] representedObject]];
+    [[self owningWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
 }
-
 
 #pragma mark -
 #pragma mark AKSubcontroller methods
@@ -163,19 +165,17 @@
     return [_subtopicListController validateItem:anItem];
 }
 
-
 #pragma mark -
 #pragma mark NSBrowser delegate methods
 
-- (void)browser:(NSBrowser *)sender createRowsForColumn:(NSInteger)column
-    inMatrix:(NSMatrix *)matrix
+- (void)browser:(NSBrowser *)sender
+createRowsForColumn:(NSInteger)column
+       inMatrix:(NSMatrix *)matrix
 {
     // Put an upper bound on the font size, because NSBrowser seems to be
     // stubborn about changing its row height.
-    NSString *fontName =
-        [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    NSInteger fontSizePref =
-        [AKPrefUtils intValueForPref:AKListFontSizePrefName];
+    NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
+    NSInteger fontSizePref = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
     NSInteger fontSize = (fontSizePref > 16) ? 16 : fontSizePref;
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];
     NSInteger numRows = [self _numberOfRowsInColumn:column];
@@ -184,15 +184,15 @@
     [matrix renewRows:numRows columns:1];
 }
 
-- (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell
-    atRow:(int)row column:(int)column
+- (void)browser:(NSBrowser *)sender
+willDisplayCell:(id)cell
+          atRow:(int)row
+         column:(int)column
 {
-    NSArray *topicList =
-        [_topicListsForBrowserColumns objectAtIndex:column];
+    NSArray *topicList = [_topicListsForBrowserColumns objectAtIndex:column];
     AKTopic *topic = [topicList objectAtIndex:row];
 
     [cell setRepresentedObject:topic];
-
     [cell setTitle:[topic stringToDisplayInTopicBrowser]];
     [cell setEnabled:[topic browserCellShouldBeEnabled]];
     [cell setLeaf:![topic browserCellHasChildren]];
@@ -202,7 +202,6 @@
 {
     return YES;
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -273,7 +272,7 @@
 - (void)_setUpTopicsForZeroethBrowserColumn
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *db = [_windowController database];
+    AKDatabase *db = [[self owningWindowController] database];
 
     // Set up the ":: classes ::" section of this browser column.  We want
     // the browser column to list all classes that don't have superclasses.

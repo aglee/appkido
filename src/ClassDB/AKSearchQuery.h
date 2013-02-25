@@ -38,7 +38,6 @@ typedef enum {
     NSString *_searchString;
     NSRange _rangeForEntireSearchString;  // used for prefix searches;
                                           //  saves calls to NSMakeRange()
-
     // Search flags.
     BOOL _includesClassesAndProtocols;
     BOOL _includesMembers;
@@ -52,16 +51,11 @@ typedef enum {
     NSMutableArray *_searchResults;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*!
- * @method      initWithDatabase:
- * @discussion  Designated initializer.
- */
+/*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)db;
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -90,14 +84,10 @@ typedef enum {
 - (AKSearchComparison)searchComparison;
 - (void)setSearchComparison:(AKSearchComparison)searchComparison;
 
-
 #pragma mark -
 #pragma mark Searching
 
-/*!
- * @method      queryResults
- * @discussion  Returns a sorted array of AKDocLocators.
- */
+/*! Returns a sorted array of AKDocLocators. */
 - (NSArray *)queryResults;
 
 @end

@@ -16,7 +16,7 @@
  */
 @interface AKMemberNode : AKDatabaseNode
 
-@property (nonatomic, readonly, weak) AKBehaviorNode *owningBehavior;
+@property (nonatomic, readonly, unsafe_unretained) AKBehaviorNode *owningBehavior;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

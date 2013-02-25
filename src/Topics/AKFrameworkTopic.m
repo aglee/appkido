@@ -19,15 +19,13 @@
 
 @implementation AKFrameworkTopic
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
-    return [[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database];
+    return [[[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -36,8 +34,8 @@
 {
     if ((self = [super init]))
     {
-        _topicDatabase = aDatabase;
-        _topicFrameworkName = frameworkName;
+        _topicDatabase = [aDatabase retain];
+        _topicFrameworkName = [frameworkName copy];
     }
 
     return self;
@@ -49,7 +47,13 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_topicDatabase release];
+    [_topicFrameworkName release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKTopic methods
@@ -138,6 +142,5 @@
 
     return columnValues;
 }
-
 
 @end

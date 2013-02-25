@@ -7,47 +7,28 @@
 
 #import "DIGSFindBuffer.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface DIGSFindBuffer (Private)
-- (void)_setFindString:(NSString *)string writeToPasteboard:(BOOL)flag;
-- (void)_loadFindStringFromPasteboard;
-- (void)_writeFindStringToPasteboard;
-- (void)_handleAppDidActivateNotification:(NSNotification *)notification;
-- (void)_notifyListeners;
-@end
-
 @implementation DIGSFindBuffer
-
 
 #pragma mark -
 #pragma mark Factory methods
 
-static DIGSFindBuffer *s_sharedInstance = nil;
-
 + (DIGSFindBuffer *)sharedInstance
 {
+    static DIGSFindBuffer *s_sharedInstance = nil;
+    
     if (!s_sharedInstance)
     {
-        (void)[[self allocWithZone:nil] init];
+        s_sharedInstance = [[self alloc] init];
     }
 
     return s_sharedInstance;
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)init
 {
-    if (s_sharedInstance)
-    {
-        return s_sharedInstance;
-    }
-
     if ((self = [super init]))
     {
         _findString = @"";
@@ -55,13 +36,10 @@ static DIGSFindBuffer *s_sharedInstance = nil;
         _listenerActions = [[NSMutableArray alloc] init];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
-            selector:@selector(_handleAppDidActivateNotification:)
-            name:NSApplicationDidBecomeActiveNotification
-            object:NSApp];
-
+                                                 selector:@selector(_handleAppDidActivateNotification:)
+                                                     name:NSApplicationDidBecomeActiveNotification
+                                                   object:NSApp];
         [self _loadFindStringFromPasteboard];
-
-        s_sharedInstance = self;
     }
 
     return self;
@@ -69,12 +47,14 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 
 - (void)dealloc
 {
-    if (self != s_sharedInstance)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    }
-}
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
+    [_findString release];
+    [_listenerPointers release];
+    [_listenerActions release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -92,7 +72,6 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     }
     [self _setFindString:string writeToPasteboard:YES];
 }
-
 
 #pragma mark -
 #pragma mark Managing listeners
@@ -123,18 +102,11 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     }
 }
 
-@end
-
-
 #pragma mark -
 #pragma mark Private methods
 
-@implementation DIGSFindBuffer (Private)
-
-/*
- * Sets my find buffer and updates the UI accordingly.  If flag is YES,
- * copies my find buffer to the system find-pasteboard.
- */
+// Sets the find buffer and updates the UI accordingly.  If flag is YES,
+// copies the find buffer to the system find-pasteboard.
 - (void)_setFindString:(NSString *)string writeToPasteboard:(BOOL)flag
 {
     if ([string isEqualToString:_findString])
@@ -142,7 +114,8 @@ static DIGSFindBuffer *s_sharedInstance = nil;
         return;
     }
 
-    _findString = [string copyWithZone:nil];
+    [_findString autorelease];
+    _findString = [string copy];
 
     if (flag)
     {
@@ -176,9 +149,7 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     [pasteboard setString:[self findString] forType:NSStringPboardType];
 }
 
-/*
- * This is called whenever the application I am in is activated.
- */
+// This is called whenever the application is activated.
 - (void)_handleAppDidActivateNotification:(NSNotification *)ignored
 {
     NSString *oldFindString = _findString;
@@ -190,9 +161,7 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     }
 }
 
-/*
- * Tells my listeners that the find string has changed.
- */
+// Tells listeners that the find string has changed.
 - (void)_notifyListeners
 {
     NSInteger numListeners = [_listenerPointers count];

@@ -9,7 +9,4 @@
 #import "AKMemberDoc.h"
 
 @interface AKPropertyDoc : AKMemberDoc
-{
-}
-
 @end

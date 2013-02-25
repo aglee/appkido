@@ -8,8 +8,5 @@
 #import "AKRealMethodsSubtopic.h"
 
 @interface AKInstanceMethodsSubtopic : AKRealMethodsSubtopic
-{
-}
-
 @end
 

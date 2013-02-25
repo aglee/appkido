@@ -23,15 +23,13 @@
 
 @implementation AKProtocolTopic
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
 {
-    return [[self alloc] initWithProtocolNode:protocolNode];
+    return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -40,7 +38,7 @@
 {
     if ((self = [super init]))
     {
-        _protocolNode = protocolNode;
+        _protocolNode = [protocolNode retain];
     }
 
     return self;
@@ -52,7 +50,12 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_protocolNode retain];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKTopic methods
@@ -118,7 +121,6 @@
     return NO;
 }
 
-
 #pragma mark -
 #pragma mark AKBehaviorTopic methods
 
@@ -134,68 +136,52 @@
 
 - (NSArray *)createSubtopicsArray
 {
-    AKProtocolOverviewSubtopic *overviewSubtopic =
-        [AKProtocolOverviewSubtopic subtopicForProtocolNode:_protocolNode];
+    AKProtocolOverviewSubtopic *overviewSubtopic;
+    overviewSubtopic = [AKProtocolOverviewSubtopic subtopicForProtocolNode:_protocolNode];
 
-    AKPropertiesSubtopic *propertiesSubtopic =
-        [AKPropertiesSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:NO];
-    AKPropertiesSubtopic *allPropertiesSubtopic =
-        [AKPropertiesSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:YES];
-
-    AKClassMethodsSubtopic *classMethodsSubtopic =
-        [AKClassMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:NO];
-    AKClassMethodsSubtopic *allClassMethodsSubtopic =
-        [AKClassMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:YES];
-
-    AKInstanceMethodsSubtopic *instMethodsSubtopic =
-        [AKInstanceMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:NO];
-    AKInstanceMethodsSubtopic *allInstanceMethodsSubtopic =
-        [AKInstanceMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:YES];
-
-    AKDelegateMethodsSubtopic *delegateMethodsSubtopic =
-        [AKDelegateMethodsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:NO];
-    AKDelegateMethodsSubtopic *allDelegateMethodsSubtopic =
-        [AKDelegateMethodsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:YES];
-
-    AKNotificationsSubtopic *notificationsSubtopic =
-        [AKNotificationsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:NO];
-    AKNotificationsSubtopic *allNotificationsSubtopic =
-        [AKNotificationsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:YES];
-
-    return
-        [NSArray arrayWithObjects:
+    AKPropertiesSubtopic *propertiesSubtopic;
+    propertiesSubtopic = [AKPropertiesSubtopic subtopicForBehaviorNode:_protocolNode
+                                                     includeAncestors:NO];
+    AKPropertiesSubtopic *allPropertiesSubtopic;
+    allPropertiesSubtopic = [AKPropertiesSubtopic subtopicForBehaviorNode:_protocolNode
+                                                         includeAncestors:YES];
+    AKClassMethodsSubtopic *classMethodsSubtopic;
+    classMethodsSubtopic = [AKClassMethodsSubtopic subtopicForBehaviorNode:_protocolNode
+                                                          includeAncestors:NO];
+    AKClassMethodsSubtopic *allClassMethodsSubtopic;
+    allClassMethodsSubtopic = [AKClassMethodsSubtopic subtopicForBehaviorNode:_protocolNode
+                                                             includeAncestors:YES];
+    AKInstanceMethodsSubtopic *instMethodsSubtopic;
+    instMethodsSubtopic = [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_protocolNode
+                                                            includeAncestors:NO];
+    AKInstanceMethodsSubtopic *allInstanceMethodsSubtopic;
+    allInstanceMethodsSubtopic = [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_protocolNode
+                                                                   includeAncestors:YES];
+    AKDelegateMethodsSubtopic *delegateMethodsSubtopic;
+    delegateMethodsSubtopic = [AKDelegateMethodsSubtopic subtopicForClassNode:nil
+                                                             includeAncestors:NO];
+    AKDelegateMethodsSubtopic *allDelegateMethodsSubtopic;
+    allDelegateMethodsSubtopic = [AKDelegateMethodsSubtopic subtopicForClassNode:nil
+                                                                includeAncestors:YES];
+    AKNotificationsSubtopic *notificationsSubtopic;
+    notificationsSubtopic = [AKNotificationsSubtopic subtopicForClassNode:nil
+                                                         includeAncestors:NO];
+    AKNotificationsSubtopic *allNotificationsSubtopic;
+    allNotificationsSubtopic = [AKNotificationsSubtopic subtopicForClassNode:nil
+                                                            includeAncestors:YES];
+    return (@[
             overviewSubtopic,
             propertiesSubtopic,
-                allPropertiesSubtopic,
+            allPropertiesSubtopic,
             classMethodsSubtopic,
-                allClassMethodsSubtopic,
+            allClassMethodsSubtopic,
             instMethodsSubtopic,
-                allInstanceMethodsSubtopic,
+            allInstanceMethodsSubtopic,
             delegateMethodsSubtopic,
-                allDelegateMethodsSubtopic,
+            allDelegateMethodsSubtopic,
             notificationsSubtopic,
-                allNotificationsSubtopic,
-            nil];
+            allNotificationsSubtopic,
+            ]);
 }
 
 @end

@@ -50,33 +50,22 @@
     NSMutableArray *_listenerActions;
 }
 
-
 #pragma mark -
 #pragma mark Factory methods
 
-/*!
- * @method      sharedInstance
- * @discussion  Returns the singleton instance of this class.
- */
 + (DIGSFindBuffer *)sharedInstance;
-
 
 #pragma mark -
 #pragma mark Getters and setters
 
-/*!
- * @method      findString
- * @discussion  Returns the contents of the find buffer.
- */
+/*! Returns the contents of the find buffer. */
 - (NSString *)findString;
 
 /*!
- * @method      setFindString:
- * @discussion  Sets the find buffer, updates the system find-pasteboard,
- *              and notifies my listeners of the change.
+ * Sets the find buffer, updates the system find-pasteboard, and notifies
+ * listeners of the change.
  */
 - (void)setFindString:(NSString *)string;
-
 
 #pragma mark -
 #pragma mark Managing listeners

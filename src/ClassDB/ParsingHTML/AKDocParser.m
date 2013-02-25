@@ -12,9 +12,7 @@
 #import "AKDatabase.h"
 #import "AKFileSection.h"
 
-
 @implementation AKDocParser
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -30,6 +28,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_sectionStack release];
+    [_rootSectionOfCurrentFile release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Parsing
@@ -161,7 +166,6 @@
     return NO;
 }
 
-
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
 
@@ -169,7 +173,6 @@
 {
     return [[filePath pathExtension] isEqualToString:@"html"];
 }
-
 
 #pragma mark -
 #pragma mark AKParser methods
@@ -194,34 +197,31 @@
     // Perform the first kludge.
     @autoreleasepool
     {
-        afterFirstKludge = [[self class] _kludgeDivTagsToH3:originalData];
+        afterFirstKludge = [[[self class] _kludgeDivTagsToH3:originalData] retain];
     }
+    [originalData release];
     originalData = nil;
 
     // Perform the second kludge.
     @autoreleasepool
     {
-        afterSecondKludge = [[self class] _kludgeSpanTagsToH1:afterFirstKludge];
+        afterSecondKludge = [[[self class] _kludgeSpanTagsToH1:afterFirstKludge] retain];
     }
+    [afterFirstKludge release];
     afterFirstKludge = nil;
 
     // Remove the NULL terminator, which was copied by the kludge.
     [afterSecondKludge setLength:([afterSecondKludge length] - 1)];
 
-    return afterSecondKludge;
+    return [afterSecondKludge autorelease];
 }
 
 - (void)parseCurrentFile
 {
-    if ([[self currentPath] ak_contains:@"NNString"])
-    {
-        [self self];  // [agl] REMOVE
-    }
-    
     @autoreleasepool
     {
         // Parse the file, to extract the hierarchy of sections therein.
-        _rootSectionOfCurrentFile = [self _parseRootSection];
+        _rootSectionOfCurrentFile = [[self _parseRootSection] retain];
 
         // Apply the parse results to the database.
         if (_rootSectionOfCurrentFile != nil)
@@ -237,7 +237,6 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark Using parse results
 
@@ -251,7 +250,6 @@
     // Do nothing by default.
 }
 
-
 #pragma mark -
 #pragma mark Heinous kludge
 
@@ -263,7 +261,6 @@
 
     return result;    
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -633,9 +630,9 @@
 
     if (trimmedTitleStart)
     {
-        result = [[NSString alloc] initWithBytes:titleBuf
-                                          length:(trimmedTitleEnd - trimmedTitleStart + 1)
-                                        encoding:NSUTF8StringEncoding];
+        result = [[[NSString alloc] initWithBytes:titleBuf
+                                           length:(trimmedTitleEnd - trimmedTitleStart + 1)
+                                         encoding:NSUTF8StringEncoding] autorelease];
     }
     else
     {

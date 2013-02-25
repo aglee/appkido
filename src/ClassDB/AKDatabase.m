@@ -27,48 +27,8 @@
 #import "AKCocoaGlobalsDocParser.h"
 
 @implementation AKDatabase
-{
-    AKDocSetIndex *_docSetIndex;
-    
-    // Frameworks.
-    // Note: there are constants in AKFrameworkConstants.h for the names of some
-    // frameworks that need to be treated specially.
-    NSMutableDictionary *_frameworksByName;  // @{FRAMEWORK_NAME: AKFramework}
-    NSMutableArray *_frameworkNames;
-    NSMutableArray *_namesOfAvailableFrameworks;
 
-    // Classes.
-    NSMutableDictionary *_classNodesByName;  // @{CLASS_NAME: AKClassNode}
-    NSMutableDictionary *_classListsByFramework;  // @{FRAMEWORK_NAME: @[AKClassNode]}
-
-    // Protocol.
-    NSMutableDictionary *_protocolNodesByName;  // @{PROTOCOL_NAME -> @[AKProtocolNode]
-    NSMutableDictionary *_protocolListsByFramework;  // @{FRAMEWORK_NAME: @[AKProtocolNode]}
-
-    // Functions.
-    NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
-    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
-
-    // Globals.
-    NSMutableDictionary *_globalsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
-    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
-
-    // Hyperlink support.
-    NSMutableDictionary *_frameworkNamesByHTMLPath;  // @{PATH_TO_HTML_FILE: FRAMEWORK_NAME}
-    NSMutableDictionary *_classNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassNode}
-    NSMutableDictionary *_protocolNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolNode}
-
-    // See AKDocParser for an explanation of root sections.
-    NSMutableDictionary *_rootSectionsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKFileSection}
-
-    // Keys are anchor strings.  Each value is a dictionary whose keys are
-    // paths to HTML files and whose values are NSNumbers containing the
-    // byte offset of that anchor within that file.
-    //
-    // See the comment for -offsetOfAnchorString:inHTMLFile: to see what
-    // is meant by "anchor strings."
-    NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
-}
+@synthesize delegate = _delegate;
 
 #pragma mark -
 #pragma mark Factory methods
@@ -91,7 +51,7 @@
         return nil;
     }
 
-    dbToReturn = [[self alloc] initWithDocSetIndex:docSetIndex];
+    dbToReturn = [[[self alloc] initWithDocSetIndex:docSetIndex] autorelease];
 
     // For a new user of AppKiDo for Mac OS, only load the "essential"
     // frameworks by default and leave it up to them to add more as needed.
@@ -123,7 +83,7 @@
         return nil;
     }
     
-    dbToReturn = [[self alloc] initWithDocSetIndex:docSetIndex];
+    dbToReturn = [[[self alloc] initWithDocSetIndex:docSetIndex] autorelease];
 
     // Assume a new user of AppKiDo-for-iPhone is going to want all possible
     // frameworks in the iPhone SDK by default, and will deselect whichever
@@ -143,7 +103,7 @@
 {
     if ((self = [super init]))
     {
-        _docSetIndex = docSetIndex;
+        _docSetIndex = [docSetIndex retain];
 
         _frameworksByName = [[NSMutableDictionary alloc] init];
         _frameworkNames = [[NSMutableArray alloc] init];
@@ -176,6 +136,29 @@
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
+}
+
+- (void)dealloc
+{
+    [_docSetIndex release];
+    [_frameworksByName release];
+    [_frameworkNames release];
+    [_namesOfAvailableFrameworks release];
+    [_classNodesByName release];
+    [_classListsByFramework release];
+    [_protocolNodesByName release];
+    [_protocolListsByFramework release];
+    [_functionsGroupListsByFramework release];
+    [_functionsGroupsByFrameworkAndGroup release];
+    [_globalsGroupListsByFramework release];
+    [_globalsGroupsByFrameworkAndGroup release];
+    [_frameworkNamesByHTMLPath release];
+    [_classNodesByHTMLPath release];
+    [_protocolNodesByHTMLPath release];
+    [_rootSectionsByHTMLPath release];
+    [_offsetsOfAnchorStringsInHTMLFiles release];
+
+    [super dealloc];
 }
 
 #pragma mark -
@@ -610,6 +593,7 @@
     [offsetsByFilePath setObject:offsetValue forKey:filePath];
 }
 
+#pragma mark -
 #pragma mark Private methods
 
 - (void)_loadTokensForFrameworkNamed:(NSString *)frameworkName
@@ -707,8 +691,8 @@
 
     DIGSLogDebug(@"%@ -- docSetPath is [%@]", NSStringFromSelector(_cmd), docSetPath);
 
-    return [[AKDocSetIndex alloc] initWithDocSetPath:docSetPath
-                                  basePathForHeaders:basePathForHeaders];
+    return [[[AKDocSetIndex alloc] initWithDocSetPath:docSetPath
+                                   basePathForHeaders:basePathForHeaders] autorelease];
 }
 
 // Adds a framework if we haven't seen it before.  We call this each time
@@ -729,5 +713,3 @@
 }
 
 @end
-
-

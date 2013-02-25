@@ -8,7 +8,4 @@
 #import "AKGroupNodeSubtopic.h"
 
 @interface AKFunctionsSubtopic : AKGroupNodeSubtopic
-{
-}
-
 @end

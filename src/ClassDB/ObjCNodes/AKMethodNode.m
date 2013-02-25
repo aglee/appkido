@@ -10,10 +10,6 @@
 #import "AKClassNode.h"
 
 @implementation AKMethodNode
-{
-@private
-    NSMutableArray *_argumentTypes;
-}
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -34,6 +30,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_argumentTypes release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters

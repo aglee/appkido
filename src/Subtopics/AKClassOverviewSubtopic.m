@@ -14,7 +14,6 @@
 #import "AKOverviewDoc.h"
 #import "AKFileSection.h"
 
-
 @implementation AKClassOverviewSubtopic
 
 #pragma mark -
@@ -22,9 +21,8 @@
 
 + (id)subtopicForClassNode:(AKClassNode *)classNode
 {
-    return [[self alloc] initWithClassNode:classNode];
+    return [[[self alloc] initWithClassNode:classNode] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -33,7 +31,7 @@
 {
     if ((self = [super init]))
     {
-        _classNode = classNode;
+        _classNode = [classNode retain];
     }
 
     return self;
@@ -45,6 +43,12 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_classNode release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKSubtopic methods
@@ -67,7 +71,6 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark AKBehaviorOverviewSubtopic methods
 
@@ -86,7 +89,6 @@
     return AKClassDescriptionAlternateHTMLSectionName;
 }
 
-
 #pragma mark -
 #pragma mark Private methods
 
@@ -101,9 +103,9 @@
         for (AKFileSection *majorSection in [self pertinentChildSectionsOf:extraRootSection])
         {
             NSString *sectionName = [majorSection sectionName];
-            AKOverviewDoc *sectionDoc = [[AKOverviewDoc alloc] initWithFileSection:majorSection
-                                                             andExtraFrameworkName:extraFrameworkName];
-
+            AKOverviewDoc *sectionDoc = [[[AKOverviewDoc alloc] initWithFileSection:majorSection
+                                                              andExtraFrameworkName:extraFrameworkName]
+                                         autorelease];
             NSInteger docIndex = [self indexOfDocWithName:sectionName];
 
             if (docIndex < 0)
@@ -119,4 +121,3 @@
 }
 
 @end
-

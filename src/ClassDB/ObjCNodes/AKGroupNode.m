@@ -11,7 +11,6 @@
 
 @implementation AKGroupNode
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -27,6 +26,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_subnodes release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -59,6 +64,5 @@
     // If we got this far, the search failed.
     return nil;
 }
-
 
 @end

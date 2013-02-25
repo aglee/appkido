@@ -19,10 +19,10 @@
  */
 @interface AKSavedWindowState : NSObject
 {
+@private
     AKWindowLayout *_savedWindowLayout;
     AKDocLocator *_savedDocLocator;
 }
-
 
 #pragma mark -
 #pragma mark Preferences
@@ -30,7 +30,6 @@
 + (AKSavedWindowState *)fromPrefDictionary:(NSDictionary *)prefDict;
 
 - (NSDictionary *)asPrefDictionary;
-
 
 #pragma mark -
 #pragma mark Getters and setters

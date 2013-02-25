@@ -14,13 +14,12 @@
 
 @implementation AKFunctionsSubtopic
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    for (AKDatabaseNode *functionNode in [AKSortUtils arrayBySortingArray:[_groupNode subnodes]])
+    for (AKDatabaseNode *functionNode in [AKSortUtils arrayBySortingArray:[[self groupNode] subnodes]])
     {
         AKFileSection *functionSection = [functionNode nodeDocumentation];
 

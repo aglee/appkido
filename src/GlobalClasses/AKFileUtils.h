@@ -13,29 +13,20 @@
  */
 @interface AKFileUtils : NSObject
 
-
 #pragma mark -
 #pragma mark Existence checking
 
 + (BOOL)directoryExistsAtPath:(NSString *)path;
 
-/*!
- * @method      subdirectoryOf:withName:
- * @discussion  Returns nil if the specified subdirectory doesn't exist.
- */
-+ (NSString *)subdirectoryOf:(NSString *)dir
-    withName:(NSString *)subdir;
+/*! Returns nil if the specified subdirectory doesn't exist. */
++ (NSString *)subdirectoryOf:(NSString *)dir withName:(NSString *)subdir;
 
-// Returns nil if neither specified subdirectory exists.
-/*!
- * @method      subdirectoryOf:withName:
- * @discussion  Returns nil if neither subdirectory exists.
- */
+/*! Returns nil if neither subdirectory exists. */
 + (NSString *)subdirectoryOf:(NSString *)dir
-    withName:(NSString *)subdir1
-    orName:(NSString *)subdir2;
+                    withName:(NSString *)subdir1
+                      orName:(NSString *)subdir2;
 
 + (NSString *)subdirectoryOf:(NSString *)dir
-    withNameEndingWith:(NSString *)suffix;
+          withNameEndingWith:(NSString *)suffix;
 
 @end

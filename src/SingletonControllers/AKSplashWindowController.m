@@ -16,8 +16,8 @@
 @synthesize splashMessageField = _splashMessageField;
 @synthesize splashMessage2Field = _splashMessage2Field;
 
-
-#pragma mark - AKDatabase delegate methods
+#pragma mark -
+#pragma mark AKDatabase delegate methods
 
 - (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName
 {
@@ -25,7 +25,8 @@
     [_splashMessage2Field display];
 }
 
-#pragma mark - NSWindowController methods
+#pragma mark -
+#pragma mark NSWindowController methods
 
 - (void)windowDidLoad
 {

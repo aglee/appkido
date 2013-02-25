@@ -11,7 +11,6 @@
 
 @implementation AKGlobalsNode
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -27,6 +26,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_namesOfGlobals release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -40,6 +45,5 @@
 {
     return _namesOfGlobals;
 }
-
 
 @end

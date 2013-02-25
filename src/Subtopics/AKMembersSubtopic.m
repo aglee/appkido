@@ -14,7 +14,6 @@
 #import "AKMethodNode.h"
 #import "AKMemberDoc.h"
 
-
 @implementation AKMembersSubtopic
 
 #pragma mark -
@@ -29,7 +28,6 @@
 
     return self;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -57,7 +55,6 @@
     return nil;
 }
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
@@ -74,12 +71,12 @@
     for (NSString *methodName in sortedMethodNames)
     {
         AKMethodNode *methodNode = [methodNodesByName objectForKey:methodName];
-        AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberNode:methodNode
-                                                     inheritedByBehavior:[self behaviorNode]];
+        AKMemberDoc *methodDoc = [[[methodClass alloc] initWithMemberNode:methodNode
+                                                      inheritedByBehavior:[self behaviorNode]]
+                                  autorelease];
         [docList addObject:methodDoc];
     }
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -136,6 +133,5 @@
 
     return methodsByName;
 }
-
 
 @end

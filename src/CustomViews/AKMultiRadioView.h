@@ -26,18 +26,17 @@
  */
 @interface AKMultiRadioView : NSView
 {
+@private
     NSMatrix *_selectedRadioMatrix;
     SEL _radioAction;  // gets set in -awakeFromNib
     id _radioTarget;  // gets set in -awakeFromNib
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
 
 - (NSInteger)selectedTag;
 - (BOOL)selectCellWithTag:(NSInteger)tag;
-
 
 #pragma mark -
 #pragma mark Action methods

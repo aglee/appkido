@@ -9,8 +9,17 @@
 
 #import "DIGSLog.h"
 
-
 @implementation AKBehaviorTopic
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+- (void)dealloc
+{
+    [_subtopics release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -20,7 +29,6 @@
     DIGSLogError_MissingOverride();
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark AKTopic methods
@@ -50,7 +58,6 @@
     return [[self _subtopics] objectAtIndex:subtopicIndex];
 }
 
-
 #pragma mark -
 #pragma mark Initialization support
 
@@ -60,7 +67,6 @@
     return nil;
 }
 
-
 #pragma mark -
 #pragma mark AKSortable methods
 
@@ -68,7 +74,6 @@
 {
     return [self behaviorName];
 }
-
 
 #pragma mark -
 #pragma mark Private methods

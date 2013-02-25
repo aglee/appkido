@@ -16,18 +16,6 @@
 #import "DIGSLog.h"
 
 @implementation AKDevTools
-{
-@private
-    NSString *_devToolsPath;
-
-    // Paths to all docsets we find, both within this Dev Tools installation and
-    // in the various shared locations where docsets are installed.
-    NSMutableDictionary *_installedDocSetPathsBySDKVersion;
-
-    // Paths to all SDKs we find within this Dev Tools installation.
-    NSMutableDictionary *_installedSDKPathsBySDKVersion;
-}
-
 
 // Used for sorting SDK version strings. [agl] Why didn't I use AKSDKVersion to do the comparing?
 static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
@@ -57,15 +45,13 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
         return NSOrderedSame;  // all left components equal all right components
 }
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)devToolsWithPath:(NSString *)devToolsPath
 {
-    return [[self alloc] initWithPath:devToolsPath];
+    return [[[self alloc] initWithPath:devToolsPath] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -74,7 +60,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 {
     if ((self = [super init]))
     {
-        _devToolsPath = devToolsPath;
+        _devToolsPath = [devToolsPath copy];
         _installedDocSetPathsBySDKVersion = [[NSMutableDictionary alloc] init];
         _installedSDKPathsBySDKVersion = [[NSMutableDictionary alloc] init];
 
@@ -85,6 +71,14 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return self;
 }
 
+- (void)dealloc
+{
+    [_devToolsPath release];
+    [_installedDocSetPathsBySDKVersion release];
+    [_installedSDKPathsBySDKVersion release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Dev Tools paths
@@ -148,7 +142,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return _devToolsPath;
 }
 
-
 #pragma mark -
 #pragma mark Docset paths
 
@@ -172,7 +165,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     // needs to be downloaded.
     //return @"/Users/alee/Xcode2.app/Contents/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleOSX10_8.CoreReference.docset";
 }
-
 
 #pragma mark -
 #pragma mark SDK paths
@@ -209,7 +201,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return [_installedSDKPathsBySDKVersion objectForKey:sdkVersion];
 }
 
-
 #pragma mark -
 #pragma mark SDK versions
 
@@ -226,7 +217,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 	// If we got this far, we did not find a match.
 	return nil;
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- called during init

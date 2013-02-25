@@ -21,6 +21,7 @@
  */
 @interface AKSubtopicListController : AKWindowSubcontroller
 {
+@private
     // Elements are instances of AKSubtopic classes.  Order of elements
     // matches order of subtopics listed in _subtopicsTable.  This is a
     // derived attribute based on the window's currently selected topic.
@@ -33,11 +34,10 @@
     IBOutlet AKTableView *_subtopicsTable;
 }
 
-
 #pragma mark -
 #pragma mark Navigation
 
-// may modify whereTo
+/*! May modify whereTo. */
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
 
 /*!
@@ -51,14 +51,9 @@
  */
 - (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex;
 
-
 #pragma mark -
 #pragma mark Action methods
 
-/*!
- * @method      doSubtopicTableAction:
- * @discussion  [agl] fill this in
- */
 - (IBAction)doSubtopicTableAction:(id)sender;
 
 @end

@@ -13,9 +13,7 @@
 #import "AKFileSection.h"
 #import "AKDocParser.h"
 
-
 @implementation AKDoc
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -72,7 +70,6 @@
     return @"";
 }
 
-
 #pragma mark -
 #pragma mark NSObject methods
 
@@ -80,7 +77,6 @@
 {
     return [NSString stringWithFormat:@"<%@: docName=%@>", [self className], [self docName]];
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -151,8 +147,7 @@
 
 - (NSMutableData *)_kludgeOne:(NSData *)sourceData
 {
-    NSMutableData *newHTMLData =
-        [NSMutableData dataWithCapacity:([sourceData length] + 64)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 64)];
 
     // Find all <pre>...</pre> elements in the source HTML.
     char *endOfPreElement = (char *)[sourceData bytes];
@@ -200,18 +195,18 @@
             {
                 // Replace \n with <br>.
                 [newHTMLData appendBytes:"<br>" length:4];
-                isNewLine = YES;
+//                isNewLine = YES;
             }
             else if (c == '\r')
             {
                 // Discard \r characters.
-                isNewLine = YES;
+//                isNewLine = YES;
             }
             else
             {
                 // Copy the source character as is.
                 [newHTMLData appendBytes:cp length:1];
-                isNewLine = NO;
+//                isNewLine = NO;
             }
         }
 
@@ -225,10 +220,8 @@
 
     // Add the remaining non-<pre> text.  There will be at least one byte
     // of non-<pre> text, namely the NULL terminator.
-    [newHTMLData
-        appendBytes:endOfPreElement
-        length:((char *)[sourceData bytes] + [sourceData length]
-                    - endOfPreElement)];
+    [newHTMLData appendBytes:endOfPreElement
+                      length:((char *)[sourceData bytes] + [sourceData length] - endOfPreElement)];
 
     return newHTMLData;
 }

@@ -18,22 +18,22 @@
  */
 @interface AKLinkResolver : NSObject
 {
+@private
     AKDatabase *_database;
 }
 
+@property (nonatomic, readonly, strong) AKDatabase *database;
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)linkResolverWithDatabase:(AKDatabase *)database;
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database;
-
 
 #pragma mark -
 #pragma mark Resolving links

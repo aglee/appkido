@@ -28,9 +28,7 @@
 // [agl] working on performance
 #define MEASURE_SEARCH_SPEED 0
 
-
 @implementation AKSearchQuery
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -39,7 +37,7 @@
 {
     if ((self = [super init]))
     {
-        _database = db;
+        _database = [db retain];
 
         _searchString = nil;
 
@@ -50,7 +48,7 @@
         _ignoresCase = YES;
         _searchComparison = AKSearchForSubstring;
 
-        _searchResults = [NSMutableArray array];
+        _searchResults = [[NSMutableArray alloc] init];
     }
 
     return self;
@@ -62,6 +60,14 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_database release];
+    [_searchString release];
+    [_searchResults release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -79,7 +85,8 @@
     }
 
     // Update the _searchString ivar.
-    _searchString = s;
+    [_searchString autorelease];
+    _searchString = [s copy];
 
     // Update other ivars.
     _rangeForEntireSearchString = NSMakeRange(0, [s length]);
@@ -178,44 +185,8 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark Searching
-
-
-// [agl] working on performance
-#if MEASURE_SEARCH_SPEED
-static int g_NSStringComparisons = 0;
-static NSTimeInterval g_startTime = 0.0;
-static NSTimeInterval g_checkpointTime = 0.0;
-
-- (void)_timeSearchStart
-{
-    g_NSStringComparisons = 0;
-    g_startTime = [NSDate timeIntervalSinceReferenceDate];
-    g_checkpointTime = g_startTime;
-    NSLog(@"---------------------------------");
-    NSLog(@"START: searching for [%@]...", _searchString);
-}
-
-- (void)_timeSearchCheckpoint:(NSString *)description
-{
-    NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
-    NSLog(@"...CHECKPOINT: %@", description);
-    NSLog(@"               compared %d strings", g_NSStringComparisons);
-    NSLog(@"               %.3f seconds since last checkpoint",
-        now - g_checkpointTime);
-    g_checkpointTime = now;
-}
-
-- (void)_timeSearchEnd
-{
-    NSLog(@"...DONE: got %d results, took %.3f seconds total",
-        [_searchResults count],
-        [NSDate timeIntervalSinceReferenceDate] - g_startTime);
-}
-#endif //MEASURE_SEARCH_SPEED
-
 
 - (NSArray *)queryResults
 {
@@ -262,6 +233,40 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return _searchResults;
 }
 
+#pragma mark -
+#pragma mark Instrumentation
+
+// [agl] working on performance
+#if MEASURE_SEARCH_SPEED
+static int g_NSStringComparisons = 0;
+static NSTimeInterval g_startTime = 0.0;
+static NSTimeInterval g_checkpointTime = 0.0;
+
+- (void)_timeSearchStart
+{
+    g_NSStringComparisons = 0;
+    g_startTime = [NSDate timeIntervalSinceReferenceDate];
+    g_checkpointTime = g_startTime;
+    NSLog(@"---------------------------------");
+    NSLog(@"START: searching for [%@]...", _searchString);
+}
+
+- (void)_timeSearchCheckpoint:(NSString *)description
+{
+    NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
+    NSLog(@"...CHECKPOINT: %@", description);
+    NSLog(@"               compared %d strings", g_NSStringComparisons);
+    NSLog(@"               %.3f seconds since last checkpoint", now - g_checkpointTime);
+    g_checkpointTime = now;
+}
+
+- (void)_timeSearchEnd
+{
+    NSLog(@"...DONE: got %d results, took %.3f seconds total",
+          [_searchResults count],
+          [NSDate timeIntervalSinceReferenceDate] - g_startTime);
+}
+#endif //MEASURE_SEARCH_SPEED
 
 #pragma mark -
 #pragma mark Private methods
@@ -415,9 +420,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
             {
                 if ([self _matchesNode:subnode])
                 {
-                    AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:_database];
+                    AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName
+                                                                    inDatabase:_database];
 
-                    [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:[groupNode nodeName] docName:[subnode nodeName]]];
+                    [_searchResults addObject:[AKDocLocator withTopic:topic
+                                                         subtopicName:[groupNode nodeName]
+                                                              docName:[subnode nodeName]]];
                 }
             }
         }
@@ -475,11 +483,11 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         if ([self _matchesNode:node])
         {
-            [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:subtopicName docName:[node nodeName]]];
+            [_searchResults addObject:[AKDocLocator withTopic:topic
+                                                 subtopicName:subtopicName
+                                                      docName:[node nodeName]]];
         }
     }
 }
 
 @end
-
-

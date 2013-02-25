@@ -16,16 +16,15 @@
 #import "AKTestDocParserWindowController.h"
 #import "AKWindowController.h"
 
-
 @implementation AKFindPanelController
 
 #pragma mark -
 #pragma mark Factory methods
 
-static AKFindPanelController *s_sharedInstance = nil;
-
 + (AKFindPanelController *)sharedInstance
 {
+    static AKFindPanelController *s_sharedInstance = nil;
+    
     if (!s_sharedInstance)
     {
         s_sharedInstance = [[self alloc] init];
@@ -34,24 +33,15 @@ static AKFindPanelController *s_sharedInstance = nil;
     return s_sharedInstance;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)init
 {
-    if (s_sharedInstance)
-    {
-        return s_sharedInstance;
-    }
-
     if ((self = [super init]))
     {
-        [[DIGSFindBuffer sharedInstance]
-            addListener:self
-            withSelector:@selector(_findStringDidChange:)];
-
-        s_sharedInstance = self;
+        [[DIGSFindBuffer sharedInstance] addListener:self
+                                        withSelector:@selector(_findStringDidChange:)];
     }
 
     return self;
@@ -59,18 +49,15 @@ static AKFindPanelController *s_sharedInstance = nil;
 
 - (void)awakeFromNib
 {
-    [_findTextField setStringValue:
-        [[DIGSFindBuffer sharedInstance] findString]];
+    [_findTextField setStringValue: [[DIGSFindBuffer sharedInstance] findString]];
 }
 
 - (void)dealloc
 {
-    if (self != s_sharedInstance)
-    {
-        [[DIGSFindBuffer sharedInstance] removeListener:self];
-    }
-}
+    [[DIGSFindBuffer sharedInstance] removeListener:self];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Action methods
@@ -84,6 +71,7 @@ static AKFindPanelController *s_sharedInstance = nil;
 - (IBAction)findNextAndOrderFindPanelOut:(id)sender
 {
     [_findNextButton performClick:nil];
+    
     if (_lastFindWasSuccessful)
     {
         [[_findTextField window] orderOut:sender];
@@ -98,8 +86,7 @@ static AKFindPanelController *s_sharedInstance = nil;
 {
     if (_findTextField)
     {
-        [[DIGSFindBuffer sharedInstance]
-            setFindString:[_findTextField stringValue]];
+        [[DIGSFindBuffer sharedInstance] setFindString:[_findTextField stringValue]];
     }
     (void)[self _find:YES];
 }
@@ -108,8 +95,7 @@ static AKFindPanelController *s_sharedInstance = nil;
 {
     if (_findTextField)
     {
-        [[DIGSFindBuffer sharedInstance]
-            setFindString:[_findTextField stringValue]];
+        [[DIGSFindBuffer sharedInstance] setFindString:[_findTextField stringValue]];
     }
     (void)[self _find:NO];
 }
@@ -121,11 +107,9 @@ static AKFindPanelController *s_sharedInstance = nil;
     if ([fr isKindOfClass:[NSTextView class]])
     {
         NSTextView *textView = (NSTextView *)fr;
-        NSString *selection =
-            [[textView string] substringWithRange:[textView selectedRange]];
+        NSString *selection = [[textView string] substringWithRange:[textView selectedRange]];
 
-        [[DIGSFindBuffer sharedInstance]
-            setFindString:[selection ak_trimWhitespace]];
+        [[DIGSFindBuffer sharedInstance] setFindString:[selection ak_trimWhitespace]];
     }
     else if ([fr isKindOfClass:[NSView class]])
     {
@@ -136,16 +120,13 @@ static AKFindPanelController *s_sharedInstance = nil;
             if ([view isKindOfClass:[WebView class]])
             {
                 WebView *webView = (WebView *)view;
-                NSString *selection =
-                    [[[webView selectedDOMRange] markupString]
-                        ak_stripHTML];
+                NSString *selection = [[[webView selectedDOMRange] markupString] ak_stripHTML];
 
                 // Note that ak_stripHTML can have a newline at the end
                 // of its result, even if the user's selected text doesn't
                 // end with a newline.  This happens, for example, if the
                 // selected text is in the middle of a <pre> element.
-                [[DIGSFindBuffer sharedInstance]
-                    setFindString:[selection ak_trimWhitespace]];
+                [[DIGSFindBuffer sharedInstance] setFindString:[selection ak_trimWhitespace]];
 
                 break;
             }
@@ -155,7 +136,6 @@ static AKFindPanelController *s_sharedInstance = nil;
         }
     }
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -195,19 +175,16 @@ static AKFindPanelController *s_sharedInstance = nil;
     {
         NSString *findString = [[DIGSFindBuffer sharedInstance] findString];
 
-        _lastFindWasSuccessful =
-            [(WebView *)viewToSearch
-                searchFor:findString
-                direction:isForwardDirection
-                caseSensitive:NO
-                wrap:YES];
+        _lastFindWasSuccessful = [(WebView *)viewToSearch searchFor:findString
+                                                          direction:isForwardDirection
+                                                      caseSensitive:NO
+                                                               wrap:YES];
     }
-    else if([viewToSearch isKindOfClass:[NSTextView class]])
+    else if ([viewToSearch isKindOfClass:[NSTextView class]])
     {
         NSTextView *textView = (NSTextView *)viewToSearch;
         NSString *textContents = [textView string];
-        NSString *findString =
-            [[DIGSFindBuffer sharedInstance] findString];
+        NSString *findString = [[DIGSFindBuffer sharedInstance] findString];
 
         if ([textContents length])
         {
@@ -219,7 +196,10 @@ static AKFindPanelController *s_sharedInstance = nil;
                 options |= NSBackwardsSearch;
             }
 
-            range = [textContents ak_findString:findString selectedRange:[textView selectedRange] options:options wrap:YES];
+            range = [textContents ak_findString:findString
+                                  selectedRange:[textView selectedRange]
+                                        options:options
+                                           wrap:YES];
 
             if (range.length)
             {

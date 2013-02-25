@@ -22,9 +22,31 @@
  * and "subclass", to avoid confusion.
  */
 @interface AKClassNode : AKBehaviorNode
+{
+@private
+    // Elements are strings.
+    NSMutableArray *_namesOfAllOwningFrameworks;
 
-@property (nonatomic, readonly, weak) AKClassNode *parentClass;
+    // Keys are names of owning frameworks. Values are the root file sections
+    // containing documentation for the framework.
+    NSMutableDictionary *_nodeDocumentationByFrameworkName;
 
+    // Contains AKClassNodes, one for each child class.
+    NSMutableArray *_childClassNodes;
+
+    // Contains AKCategoryNodes, one for each category that extends this class.
+    NSMutableArray *_categoryNodes;
+
+    // Contains AKMethodNodes, one for each delegate method that has been
+    // found in the documentation for this class.
+    AKCollectionOfNodes *_indexOfDelegateMethods;
+
+    // Contains AKNotificationNodes, one for each notification that has been
+    // found in the documentation for this class.
+    AKCollectionOfNodes *_indexOfNotifications;
+}
+
+@property (nonatomic, readonly, unsafe_unretained) AKClassNode *parentClass;
 
 #pragma mark -
 #pragma mark Getters and setters -- general
@@ -41,7 +63,6 @@
 - (void)addCategory:(AKCategoryNode *)node;
 - (AKCategoryNode *)categoryNamed:(NSString *)catName;
 - (NSArray *)allCategories;
-
 
 #pragma mark -
 #pragma mark Getters and setters -- multiple owning frameworks
@@ -65,7 +86,6 @@
 - (void)associateDocumentation:(AKFileSection *)fileSection
             withFrameworkNamed:(NSString *)frameworkName;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- delegate methods
 
@@ -77,7 +97,6 @@
 /*! Does nothing if a delegate method with the same name already exists. */
 - (void)addDelegateMethod:(AKMethodNode *)methodNode;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- notifications
 
@@ -88,6 +107,5 @@
 
 /*! Does nothing if a notification with the same name already exists. */
 - (void)addNotification:(AKNotificationNode *)notificationNode;
-
 
 @end

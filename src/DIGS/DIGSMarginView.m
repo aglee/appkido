@@ -7,19 +7,7 @@
 
 #import "DIGSMarginView.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface DIGSMarginView (Private)
-- (void)_figureOutWhichSubviewIsWhich;
-- (void)_doTheHardCalc:(NSRect *)frameOnePtr :(NSRect *)frameTwoPtr;
-- (void)_doTheEasyCalc:(NSRect *)framePtr;
-@end
-
-
 @implementation DIGSMarginView
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -31,7 +19,6 @@
     // Set remaining ivars.
     [self _figureOutWhichSubviewIsWhich];
 }
-
 
 #pragma mark -
 #pragma mark NSView methods
@@ -53,19 +40,16 @@
     [_viewTwo setFrame:newFrameTwo];
 }
 
-
 #pragma mark -
 #pragma mark Private methods
 
-/*
- * Called by awakeFromNib.
- *
- * Sets _viewOne, _viewTwo, _initialFrameOne, _initialFrameTwo,
- * _isViewOneFlexible, and _isViewTwoFlexible.
- *
- * If the views are top-and-bottom, _viewOne will be the *bottom* one.  If
- * the views are side-by-side, _viewOne will be the *left* one.
- */
+// Called by awakeFromNib.
+//
+// Sets _viewOne, _viewTwo, _initialFrameOne, _initialFrameTwo,
+// _isViewOneFlexible, and _isViewTwoFlexible.
+//
+// If the views are top-and-bottom, _viewOne will be the *bottom* one.  If
+// the views are side-by-side, _viewOne will be the *left* one.
 - (void)_figureOutWhichSubviewIsWhich
 {
     NSArray *subs = [self subviews];
@@ -78,9 +62,8 @@
     {
         // FIXME [agl] also make sure both views completely contained
         // FIXME [agl] also make sure views don't overlap
-        [NSException
-            raise:@"a DIGSMarginView must have exactly 2 subviews"
-            format:@"a DIGSMarginView must have exactly 2 subviews"];
+        [NSException raise:@"a DIGSMarginView must have exactly 2 subviews"
+                    format:@"a DIGSMarginView must have exactly 2 subviews"];
         return;
     }
 
@@ -122,50 +105,38 @@
     // Set _isViewOneFlexible and _isViewTwoFlexible.
     if (_isSideBySide)
     {
-        _isViewOneFlexible =
-            ([_viewOne autoresizingMask] & NSViewWidthSizable) != 0;
-        _isViewTwoFlexible =
-            ([_viewTwo autoresizingMask] & NSViewWidthSizable) != 0;
+        _isViewOneFlexible = ([_viewOne autoresizingMask] & NSViewWidthSizable) != 0;
+        _isViewTwoFlexible = ([_viewTwo autoresizingMask] & NSViewWidthSizable) != 0;
     }
     else
     {
-        _isViewOneFlexible =
-            ([_viewOne autoresizingMask] & NSViewHeightSizable) != 0;
-        _isViewTwoFlexible =
-            ([_viewTwo autoresizingMask] & NSViewHeightSizable) != 0;
+        _isViewOneFlexible = ([_viewOne autoresizingMask] & NSViewHeightSizable) != 0;
+        _isViewTwoFlexible = ([_viewTwo autoresizingMask] & NSViewHeightSizable) != 0;
     }
 }
 
-/*
- * Called by resizeSubviewsWithOldSize:.
- */
+// Called by resizeSubviewsWithOldSize:.
 - (void)_doTheHardCalc:(NSRect *)frameOnePtr :(NSRect *)frameTwoPtr
 {
     NSSize newSize = [self bounds].size;
-    CGFloat initialTotalLength =
-        _isSideBySide
-        ? _initialSize.width
-        : _initialSize.height;
-    CGFloat newTotalLength =
-        _isSideBySide
-        ? newSize.width
-        : newSize.height;
-    CGFloat *coordOnePtr =
-        _isSideBySide
-        ? &(frameOnePtr->origin.x)
-        : &(frameOnePtr->origin.y);
-    CGFloat *lengthOnePtr =
-        _isSideBySide
-        ? &(frameOnePtr->size.width)
-        : &(frameOnePtr->size.height);
-    CGFloat *coordTwoPtr =
-        _isSideBySide
-        ? &(frameTwoPtr->origin.x)
-        : &(frameTwoPtr->origin.y);
-    CGFloat *lengthTwoPtr =
-        _isSideBySide
-        ? &(frameTwoPtr->size.width)
-        : &(frameTwoPtr->size.height);
+    CGFloat initialTotalLength = (_isSideBySide
+                                  ? _initialSize.width
+                                  : _initialSize.height);
+    CGFloat newTotalLength = (_isSideBySide
+                              ? newSize.width
+                              : newSize.height);
+    CGFloat *coordOnePtr = (_isSideBySide
+                            ? &(frameOnePtr->origin.x)
+                            : &(frameOnePtr->origin.y));
+    CGFloat *lengthOnePtr = (_isSideBySide
+                             ? &(frameOnePtr->size.width)
+                             : &(frameOnePtr->size.height));
+    CGFloat *coordTwoPtr = (_isSideBySide
+                            ? &(frameTwoPtr->origin.x)
+                            : &(frameTwoPtr->origin.y));
+    CGFloat *lengthTwoPtr = (_isSideBySide
+                             ? &(frameTwoPtr->size.width)
+                             : &(frameTwoPtr->size.height));
     CGFloat totalMargin = initialTotalLength - *lengthOnePtr - *lengthTwoPtr;
     CGFloat marginOne = *coordOnePtr;
     CGFloat marginTwo = *coordTwoPtr - *coordOnePtr - *lengthOnePtr;
@@ -213,37 +184,30 @@
     {
         // If we got this far, we have two flexible views.  Scale them
         // both to fit availableLength.
-        *lengthOnePtr *=
-            availableLength / (initialTotalLength - totalMargin);
+        *lengthOnePtr *= availableLength / (initialTotalLength - totalMargin);
         *lengthTwoPtr = availableLength - *lengthOnePtr;
     }
 
-    // Slide view two as necessary so as to keep its distance from
-    // view one.
+    // Slide view two as necessary so as to keep its distance from  view one.
     *coordTwoPtr = marginOne + *lengthOnePtr + marginTwo;
 }
 
-/*
- * Called by resizeSubviewsWithOldSize:.
- *
- * These calculations are done in the opposite axis from the ones
- * in _doTheHardCalc::.
- */
+// Called by resizeSubviewsWithOldSize:.
+//
+// These calculations are done in the opposite axis from the ones
+// in _doTheHardCalc::.
 - (void)_doTheEasyCalc:(NSRect *)framePtr
 {
     NSSize newSize = [self bounds].size;
-    CGFloat initialTotalLength =
-        _isSideBySide
-        ? _initialSize.height
-        : _initialSize.width;
-    CGFloat newTotalLength =
-        _isSideBySide
-        ? newSize.height
-        : newSize.width;
-    CGFloat *lengthPtr =
-        _isSideBySide
-        ? &(framePtr->size.height)
-        : &(framePtr->size.width);
+    CGFloat initialTotalLength = (_isSideBySide
+                                  ? _initialSize.height
+                                  : _initialSize.width);
+    CGFloat newTotalLength = (_isSideBySide
+                              ? newSize.height
+                              : newSize.width);
+    CGFloat *lengthPtr = (_isSideBySide
+                          ? &(framePtr->size.height)
+                          : &(framePtr->size.width));
     CGFloat totalMargin = initialTotalLength - *lengthPtr;
     CGFloat availableLength = newTotalLength - totalMargin;
 

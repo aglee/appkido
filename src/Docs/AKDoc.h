@@ -29,9 +29,6 @@
  *              list.
  */
 @interface AKDoc : NSObject
-{
-}
-
 
 #pragma mark -
 #pragma mark Getters and setters

@@ -11,7 +11,6 @@
 
 @implementation AKMultiRadioView
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -72,7 +71,6 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -120,7 +118,6 @@
 
     return didSelect;
 }
-
 
 #pragma mark -
 #pragma mark Action methods

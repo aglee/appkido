@@ -13,26 +13,22 @@
 
 @implementation AKPropertiesSubtopic
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {
-    return
-        [self includesAncestors]
-        ? [@"ALL " stringByAppendingString:AKPropertiesSubtopicName]
-        : AKPropertiesSubtopicName;
+    return ([self includesAncestors]
+            ? [@"ALL " stringByAppendingString:AKPropertiesSubtopicName]
+            : AKPropertiesSubtopicName);
 }
 
 - (NSString *)stringToDisplayInSubtopicList
 {
-    return
-        [self includesAncestors]
-        ? [@"       " stringByAppendingString:[self subtopicName]]
-        : [@"2.  " stringByAppendingString:[self subtopicName]];
+    return ([self includesAncestors]
+            ? [@"       " stringByAppendingString:[self subtopicName]]
+            : [@"2.  " stringByAppendingString:[self subtopicName]]);
 }
-
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods

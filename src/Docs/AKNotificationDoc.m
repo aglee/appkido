@@ -12,7 +12,6 @@
 
 @implementation AKNotificationDoc
 
-
 #pragma mark -
 #pragma mark AKMemberDoc methods
 
@@ -21,17 +20,17 @@
     return methodName;
 }
 
-
 #pragma mark -
 #pragma mark AKDoc methods
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [_memberNode owningFrameworkName];
-    BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:[_behaviorNode owningFrameworkName]];
-    AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
+    NSString *methodFrameworkName = [[self memberNode] owningFrameworkName];
+    NSString *behaviorFrameworkName = [[self behaviorNode] owningFrameworkName];
+    BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
+    AKBehaviorNode *ownerOfMethod = [[self memberNode] owningBehavior];
 
-    if (_behaviorNode == ownerOfMethod)
+    if ([self behaviorNode] == ownerOfMethod)
     {
         // We're the first class/protocol to declare this method.
         if (methodIsInSameFramework)
@@ -59,6 +58,5 @@
         }
     }
 }
-
 
 @end

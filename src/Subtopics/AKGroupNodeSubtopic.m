@@ -17,6 +17,7 @@
 
 @implementation AKGroupNodeSubtopic
 
+@synthesize groupNode = _groupNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -25,7 +26,7 @@
 {
     if ((self = [super init]))
     {
-        _groupNode = groupNode;
+        _groupNode = [groupNode retain];
     }
 
     return self;
@@ -37,6 +38,12 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_groupNode release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKSubtopic methods
@@ -50,8 +57,7 @@
 {
     for (AKGlobalsNode *globalsNode in [AKSortUtils arrayBySortingArray:[_groupNode subnodes]])
     {
-        AKDoc *newDoc =
-            [[AKNodeDoc alloc] initWithNode:globalsNode];
+        AKDoc *newDoc = [[[AKNodeDoc alloc] initWithNode:globalsNode] autorelease];
 
         [docList addObject:newDoc];
     }

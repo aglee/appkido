@@ -27,7 +27,7 @@
 {
     if ((self = [super init]))
     {
-        _database = database;
+        _database = [database retain];
         _xmlWriter = [[TCMXMLWriter alloc] initWithOptions:(TCMXMLWriterOptionOrderedAttributes
                                                             | TCMXMLWriterOptionPrettyPrinted)
                                                    fileURL:outfileURL];
@@ -42,6 +42,13 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_database release];
+    [_xmlWriter release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark The main export method
@@ -56,7 +63,6 @@
         }
     }];
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- exporting frameworks
@@ -158,7 +164,7 @@
 
 - (void)_exportProtocol:(AKProtocolNode *)protocolNode
 {
-    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
     [attributes setObject:[protocolNode nodeName] forKey:@"name"];
     [attributes setObject:([protocolNode isInformal] ? @"informal" : @"formal") forKey:@"type"];
@@ -196,7 +202,7 @@
 
 - (void)_exportMember:(AKMemberNode *)memberNode withXMLTag:(NSString *)memberTag
 {
-    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
     [attributes setObject:[memberNode nodeName] forKey:@"name"];
 
@@ -214,7 +220,7 @@
 
 - (void)_exportGroupSubnode:(AKDatabaseNode *)databaseNode withXMLTag:(NSString *)subnodeTag
 {
-    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     
     [attributes setObject:[databaseNode nodeName] forKey:@"name"];
     
@@ -235,7 +241,6 @@
         }
     }];
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- low-level utilities
@@ -261,36 +266,35 @@
     return result;
 }
 
-
 - (void)_writeLongDividerWithString:(NSString *)aString
 {
-    NSString *commentString = [[NSString alloc] initWithFormat:@"========== [ %@ ] ==========",
+    NSString *commentString = [NSString stringWithFormat:@"========== [ %@ ] ==========",
                                [self _spreadString:aString]];
     [_xmlWriter comment:commentString];
 }
 
 - (void)_writeDividerWithString:(NSString *)aString
 {
-    NSString *commentString = [[NSString alloc] initWithFormat:@"===== %@ =====", aString];
+    NSString *commentString = [NSString stringWithFormat:@"===== %@ =====", aString];
     [_xmlWriter comment:commentString];
 }
 
 - (void)_writeAltDividerWithString:(NSString *)aString
 {
-    NSString *commentString = [[NSString alloc] initWithFormat:@"===== [%@] =====", aString];
+    NSString *commentString = [NSString stringWithFormat:@"===== [%@] =====", aString];
     [_xmlWriter comment:commentString];
 }
 
 - (void)_writeDividerWithString:(NSString *)string1
     string:(NSString *)string2
 {
-    NSString *commentString = [[NSString alloc] initWithFormat:@"===== %@ %@ =====", string1, string2];
+    NSString *commentString = [NSString stringWithFormat:@"===== %@ %@ =====", string1, string2];
     [_xmlWriter comment:commentString];
 }
 
 - (void)_writeShortDividerWithString:(NSString *)aString
 {
-    NSString *commentString = [[NSString alloc] initWithFormat:@"## %@ ##", aString];
+    NSString *commentString = [NSString stringWithFormat:@"## %@ ##", aString];
     [_xmlWriter comment:commentString];
 }
 

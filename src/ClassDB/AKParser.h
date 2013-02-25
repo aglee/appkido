@@ -34,13 +34,12 @@
     AKDatabase *_targetDatabase;
     NSString *_targetFrameworkName;
 
-    // These protected ivars are only used during parsing.  They point to
-    // various positions in the data being parsed.
+    // These ivars are only used during parsing.  They point to
+    // various positions within the data being parsed.
     const char *_dataStart;
     const char *_current;
     const char *_dataEnd;
 }
-
 
 #pragma mark -
 #pragma mark Class methods
@@ -54,13 +53,11 @@
                  forDatabase:(AKDatabase *)database
                frameworkName:(NSString *)frameworkName;
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName;
-
 
 #pragma mark -
 #pragma mark Parsing
@@ -85,6 +82,5 @@
  * "while (_current < _dataEnd)".
  */
 - (void)parseCurrentFile;
-
 
 @end

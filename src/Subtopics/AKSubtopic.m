@@ -11,7 +11,6 @@
 
 #import "AKDoc.h"
 
-
 @implementation AKSubtopic
 
 #pragma mark -
@@ -24,6 +23,15 @@ NSString *AKInstanceMethodsSubtopicName = @"Instance Methods";
 NSString *AKDelegateMethodsSubtopicName = @"Delegate Methods";
 NSString *AKNotificationsSubtopicName   = @"Notifications";
 
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+- (void)dealloc
+{
+    [_docList release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -38,7 +46,6 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 {
     return [self subtopicName];
 }
-
 
 #pragma mark -
 #pragma mark Managing the doc list
@@ -94,7 +101,6 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
     return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
 }
 
-
 #pragma mark -
 #pragma mark Protected methods
 
@@ -102,7 +108,6 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 {
     DIGSLogError_MissingOverride();
 }
-
 
 #pragma mark -
 #pragma mark NSObject methods
@@ -113,7 +118,6 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
             [self className],[self subtopicName]];
 }
 
-
 #pragma mark -
 #pragma mark Private methods
 
@@ -121,7 +125,7 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 {
     if (_docList == nil)
     {
-        _docList = [NSMutableArray array];
+        _docList = [[NSMutableArray alloc] init];
         [self populateDocList:_docList];
     }
 }

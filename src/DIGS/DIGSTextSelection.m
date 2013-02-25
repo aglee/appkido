@@ -7,7 +7,6 @@
 
 #import "DIGSTextSelection.h"
 
-
 #pragma mark -
 #pragma mark Private constants
 
@@ -16,7 +15,6 @@ static NSString *_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY  = @"VisibleCharsRange";
 static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 
 @implementation DIGSTextSelection
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -34,7 +32,12 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     return self;
 }
 
+- (void)dealloc
+{
+    [_typingAttributes release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Preferences
@@ -46,13 +49,10 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
         return nil;
     }
 
-    DIGSTextSelection *selectionState = [[self alloc] init];
-    NSString *visibleRectString =
-        [prefDict objectForKey:_DIGS_VISIBLE_RECT_PREF_KEY];
-    NSString *visibleRangeString =
-        [prefDict objectForKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
-    NSString *selectedRangeString =
-        [prefDict objectForKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
+    DIGSTextSelection *selectionState = [[[self alloc] init] autorelease];
+    NSString *visibleRectString = prefDict[_DIGS_VISIBLE_RECT_PREF_KEY];
+    NSString *visibleRangeString = prefDict[_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
+    NSString *selectedRangeString = prefDict[_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
 
     if (visibleRectString)
     {
@@ -61,14 +61,12 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 
     if (visibleRangeString)
     {
-        [selectionState setVisibleCharsRange:
-            NSRangeFromString(visibleRangeString)];
+        [selectionState setVisibleCharsRange:NSRangeFromString(visibleRangeString)];
     }
 
     if (selectedRangeString)
     {
-        [selectionState setSelectedCharsRange:
-            NSRangeFromString(selectedRangeString)];
+        [selectionState setSelectedCharsRange:NSRangeFromString(selectedRangeString)];
     }
 
     return selectionState;
@@ -78,21 +76,12 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict
-        setObject:NSStringFromRect(_visibleRect)
-        forKey:_DIGS_VISIBLE_RECT_PREF_KEY];
-
-    [prefDict
-        setObject:NSStringFromRange(_visibleCharsRange)
-        forKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
-
-    [prefDict
-        setObject:NSStringFromRange(_selectedCharsRange)
-        forKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
+    prefDict[_DIGS_VISIBLE_RECT_PREF_KEY] = NSStringFromRect(_visibleRect);
+    prefDict[_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY] = NSStringFromRange(_visibleCharsRange);
+    prefDict[_DIGS_SELECTED_CHARS_RANGE_PREF_KEY] = NSStringFromRange(_selectedCharsRange);
 
     return prefDict;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -137,7 +126,6 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     _typingAttributes = attrDict;
 }
 
-
 #pragma mark -
 #pragma mark Interacting with text views
 
@@ -152,14 +140,11 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     // character range.
     NSTextContainer *textContainer = [textView textContainer];
     NSLayoutManager *layoutManager = [textContainer layoutManager];
-    NSRange glyphRange =
-        [layoutManager glyphRangeForBoundingRect:_visibleRect
-            inTextContainer:textContainer];
-
+    NSRange glyphRange = [layoutManager glyphRangeForBoundingRect:_visibleRect
+                                                  inTextContainer:textContainer];
     _visibleRect = [textView visibleRect];
-    _visibleCharsRange =
-        [layoutManager characterRangeForGlyphRange:glyphRange
-            actualGlyphRange:nil];
+    _visibleCharsRange = [layoutManager characterRangeForGlyphRange:glyphRange
+                                                   actualGlyphRange:nil];
 
     // Remember the selection range.
     _selectedCharsRange = [textView selectedRange];
@@ -195,7 +180,6 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     // Apply the remembered typing attributes.
     [textView setTypingAttributes:_typingAttributes];
 }
-
 
 #pragma mark -
 #pragma mark NSCoding protocol methods

@@ -49,7 +49,7 @@
 @property (atomic, assign) int busyRetryTimeout;
 @property (atomic, assign) BOOL crashOnErrors;
 @property (atomic, assign) BOOL logsErrors;
-@property (atomic, strong) NSMutableDictionary *cachedStatements;
+@property (atomic, retain) NSMutableDictionary *cachedStatements;
 
 
 + (id)databaseWithPath:(NSString*)inPath;
@@ -123,7 +123,7 @@
 }
 
 @property (atomic, assign) long useCount;
-@property (atomic, strong) NSString *query;
+@property (atomic, retain) NSString *query;
 @property (atomic, assign) sqlite3_stmt *statement;
 
 - (void)close;

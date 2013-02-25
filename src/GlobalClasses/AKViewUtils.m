@@ -9,8 +9,6 @@
 
 #import "DIGSLog.h"
 
-
-
 #pragma mark -
 #pragma mark NSView extensions
 
@@ -32,9 +30,8 @@
     NSLog(@"BEGIN key view sequence:");
     while (YES)
     {
-        NSLog(
-            @"  %@ at %p (acceptsFirstResponder = %@)",
-            [view className], view, ([view acceptsFirstResponder] ? @"YES" : @"NO"));
+        NSLog(@"  %@ at %p (acceptsFirstResponder = %@)",
+              [view className], view, ([view acceptsFirstResponder] ? @"YES" : @"NO"));
 
         if ([visitedViews containsObject:view])
         {
@@ -60,9 +57,8 @@
     NSLog(@"BEGIN reverse key view sequence:");
     while (YES)
     {
-        NSLog(
-            @"  %@ at %p (acceptsFirstResponder = %@)",
-            [view className], view, ([view acceptsFirstResponder] ? @"YES" : @"NO"));
+        NSLog(@"  %@ at %p (acceptsFirstResponder = %@)",
+              [view className], view, ([view acceptsFirstResponder] ? @"YES" : @"NO"));
 
         if ([visitedViews containsObject:view])
         {
@@ -96,8 +92,6 @@
 
 @end
 
-
-
 #pragma mark -
 #pragma mark NSSplitView extensions
 
@@ -114,14 +108,12 @@
 
     if ([subviews count] != 2)
     {
-        DIGSLogError_ExitingMethodPrematurely(
-            @"expected splitview to have exactly two subviews");
+        DIGSLogError_ExitingMethodPrematurely(@"expected splitview to have exactly two subviews");
         return;
     }
 
     NSView *otherSubview = [self ak_siblingOfSubview:subview];
-    CGFloat otherNewHeight =
-        [self frame].size.height - [self dividerThickness] - newHeight;
+    CGFloat otherNewHeight = [self frame].size.height - [self dividerThickness] - newHeight;
 
     [subview ak_setFrameHeight:newHeight];
     [otherSubview ak_setFrameHeight:otherNewHeight];
@@ -141,8 +133,7 @@
 
     if ([subviews count] != 2)
     {
-        DIGSLogError_ExitingMethodPrematurely(
-            @"expected splitview to have exactly two subviews");
+        DIGSLogError_ExitingMethodPrematurely(@"expected splitview to have exactly two subviews");
         return nil;
     }
 
@@ -156,8 +147,7 @@
     }
     else
     {
-        DIGSLogError_ExitingMethodPrematurely(
-            @"the given view is not a subview of this splitview");
+        DIGSLogError_ExitingMethodPrematurely(@"the given view is not a subview of this splitview");
         return nil;
     }
 }

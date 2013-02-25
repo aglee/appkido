@@ -42,12 +42,13 @@
 //
 + (NSString *)pathReturnedByXcodeSelect
 {
-	ALSimpleTask *tw = [[ALSimpleTask alloc] initWithCommandPath:@"/bin/bash"
-													   arguments:(@[
-																  @"-l",
-																  @"-c",
-																  @"echo -n `/usr/bin/xcode-select -print-path`"
-																  ])];
+	ALSimpleTask *tw = [[[ALSimpleTask alloc] initWithCommandPath:@"/bin/bash"
+                                                        arguments:(@[
+                                                                   @"-l",
+                                                                   @"-c",
+                                                                   @"echo -n `/usr/bin/xcode-select -print-path`"
+                                                                   ])]
+                        autorelease];
 	if (![tw runTask])
 	{
 		NSLog(@"Failed to launch xcode-select. Reason: %@.", [tw outputString]);
@@ -84,9 +85,10 @@
     // meaning it contains all Dev Tools within the bundle.
     NSString *devToolsPath = [possibleXcodePath stringByAppendingPathComponent:@"Contents/Developer"];
 
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDir = NO;
-    if ([fileManager fileExistsAtPath:devToolsPath isDirectory:&isDir] && isDir) {
+    if ([fileManager fileExistsAtPath:devToolsPath isDirectory:&isDir] && isDir)
+    {
         return devToolsPath;
     }
 
@@ -115,7 +117,8 @@
             ?: [self _xcodeAppPathFromOldStyleDevToolsPath:devToolsPath]);
 }
 
-#pragma mark - Private methods
+#pragma mark -
+#pragma mark Private methods
 
 // Checks for [xcodeAppPath]/Contents/Developer, which indicates we have a
 // standalone Xcode that contains the Dev Tools.

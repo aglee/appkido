@@ -8,22 +8,18 @@
 #import "AKProtocolOverviewSubtopic.h"
 
 #import "DIGSLog.h"
-
 #import "AKProtocolNode.h"
-
 #import "AKHTMLConstants.h"
 
 @implementation AKProtocolOverviewSubtopic
-
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)subtopicForProtocolNode:(AKProtocolNode *)protocolNode
 {
-    return [[self alloc] initWithProtocolNode:protocolNode];
+    return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -32,7 +28,7 @@
 {
     if ((self = [super init]))
     {
-        _protocolNode = protocolNode;
+        _protocolNode = [protocolNode retain];
     }
 
     return self;
@@ -44,7 +40,12 @@
     return nil;
 }
 
-
+- (void)dealloc
+{
+    [_protocolNode retain];
+    
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKBehaviorOverviewSubtopic methods

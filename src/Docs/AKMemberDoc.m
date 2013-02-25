@@ -15,17 +15,19 @@
 
 @implementation AKMemberDoc
 
+@synthesize memberNode = _memberNode;
+@synthesize behaviorNode = _behaviorNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithMemberNode:(AKMemberNode *)memberNode
-    inheritedByBehavior:(AKBehaviorNode *)behaviorNode
+     inheritedByBehavior:(AKBehaviorNode *)behaviorNode
 {
     if ((self = [super init]))
     {
-        _memberNode = memberNode;
-        _behaviorNode = behaviorNode;
+        _memberNode = [memberNode retain];
+        _behaviorNode = [behaviorNode retain];
     }
 
     return self;
@@ -37,7 +39,13 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_memberNode release];
+    [_behaviorNode release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Manipulating node names
@@ -47,7 +55,6 @@
     DIGSLogError_MissingOverride();
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark AKDoc methods
@@ -68,15 +75,15 @@
         if ([owningBehavior isClassNode])
         {
             // We inherited this member from an ancestor class.
-            displayString =
-                [NSString stringWithFormat:@"%@ (%@)", displayString, [owningBehavior nodeName]];
+            displayString = [NSString stringWithFormat:@"%@ (%@)",
+                             displayString, [owningBehavior nodeName]];
         }
         else
         {
             // This member is a method we implement in order to conform to
             // a protocol.
-            displayString =
-                [NSString stringWithFormat:@"%@ <%@>", displayString, [owningBehavior nodeName]];
+            displayString = [NSString stringWithFormat:@"%@ <%@>",
+                             displayString, [owningBehavior nodeName]];
         }
     }
 
@@ -87,7 +94,8 @@
 
     if (!memberIsInSameFramework)
     {
-        displayString = [NSString stringWithFormat:@"%@ [%@]", displayString, memberFrameworkName];
+        displayString = [NSString stringWithFormat:@"%@ [%@]",
+                         displayString, memberFrameworkName];
     }
     
     // In the Feb 2007 docs (maybe earlier?), deprecated methods are documented
@@ -155,6 +163,5 @@
         }
     }
 }
-
 
 @end

@@ -27,9 +27,9 @@
 
 - (void)setSubtopic:(AKSubtopic *)subtopic
 {
-    _subtopicToDisplay = subtopic;
+    [_subtopicToDisplay autorelease];
+    _subtopicToDisplay = [subtopic retain];
 }
-
 
 #pragma mark -
 #pragma mark Navigation
@@ -98,7 +98,6 @@
     (void)[[_docListTable window] makeFirstResponder:_docListTable];
 }
 
-
 #pragma mark -
 #pragma mark Action methods
 
@@ -110,9 +109,8 @@
                          : [[_subtopicToDisplay docAtIndex:selectedRow] docName]);
 
     // Tell the main window to select the doc at the selected index.
-    [_windowController jumpToDocName:docName];
+    [[self owningWindowController] jumpToDocName:docName];
 }
-
 
 #pragma mark -
 #pragma mark AKSubcontroller methods
@@ -131,7 +129,6 @@
     return NO;
 }
 
-
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
@@ -146,7 +143,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
     return [[_subtopicToDisplay docAtIndex:rowIndex] stringToDisplayInDocList];
 }
-
 
 #pragma mark -
 #pragma mark WebPolicyDelegate methods
@@ -166,7 +162,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         NSEvent *currentEvent = [NSApp currentEvent];
         AKWindowController *wc = (([currentEvent modifierFlags] & NSCommandKeyMask)
                                   ? [[NSApp delegate] controllerForNewWindow]
-                                  : _windowController);
+                                  : [self owningWindowController]);
 
         // Use a delayed perform to avoid mucking with the WebView's
         // display while it's in the middle of processing a UI event.
@@ -179,19 +175,18 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
 }
 
-
 #pragma mark -
 #pragma mark WebUIDelegate methods
 
 - (NSArray *)webView:(WebView *)sender
-    contextMenuItemsForElement:(NSDictionary *)element
+contextMenuItemsForElement:(NSDictionary *)element
     defaultMenuItems:(NSArray *)defaultMenuItems
 {
     NSURL *linkURL = [element objectForKey:WebElementLinkURLKey];
     NSMutableArray *newMenuItems = [NSMutableArray array];
     
     // Don't have a contextual menu if there is nothing in the doc view.
-    if ([_windowController currentDoc] == nil)
+    if ([[self owningWindowController] currentDoc] == nil)
     {
         return newMenuItems;
     }
@@ -236,25 +231,25 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     // then be pasted into an email message if the user is answering
     // somebody's question on one of the dev lists, for example.  The
     // URL could also be helpful for debugging.
-    NSMenuItem *copyURLItem = [[NSMenuItem alloc] initWithTitle:@"Copy Page URL"
-                                                         action:@selector(copyDocTextURL:)
-                                                  keyEquivalent:@""];
+    NSMenuItem *copyURLItem = [[[NSMenuItem alloc] initWithTitle:@"Copy Page URL"
+                                                          action:@selector(copyDocTextURL:)
+                                                   keyEquivalent:@""] autorelease];
     [copyURLItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:copyURLItem];
 
     // Add an item to the menu that allows the user to open the
     // currently displayed file in the default web browser.
-    NSMenuItem *openURLInBrowserItem = [[NSMenuItem alloc] initWithTitle:@"Open Page in Browser"
-                                                                  action:@selector(openDocURLInBrowser:)
-                                                           keyEquivalent:@""];
+    NSMenuItem *openURLInBrowserItem = [[[NSMenuItem alloc] initWithTitle:@"Open Page in Browser"
+                                                                   action:@selector(openDocURLInBrowser:)
+                                                            keyEquivalent:@""] autorelease];
     [openURLInBrowserItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:openURLInBrowserItem];
 
     // Add an item to the menu that allows the user to reveal the
     // currently displayed file in the Finder.
-    NSMenuItem *revealInFinderItem = [[NSMenuItem alloc]initWithTitle:@"Reveal In Finder"
-                                                               action:@selector(revealDocFileInFinder:)
-                                                        keyEquivalent:@""];
+    NSMenuItem *revealInFinderItem = [[[NSMenuItem alloc]initWithTitle:@"Reveal In Finder"
+                                                                action:@selector(revealDocFileInFinder:)
+                                                         keyEquivalent:@""] autorelease];
     [revealInFinderItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:revealInFinderItem];
 

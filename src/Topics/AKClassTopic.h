@@ -15,17 +15,15 @@
     AKClassNode *_classNode;
 }
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)topicWithClassNode:(AKClassNode *)classNode;
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-// Designated initializer
+/*! Designated initializer. */
 - (id)initWithClassNode:(AKClassNode *)classNode;
 
 @end

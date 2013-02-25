@@ -51,7 +51,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ((self = [super init]))
     {
-        _database = database;
+        _database = [database retain];
 
         NSInteger maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
@@ -94,6 +94,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
 }
 
+- (void)dealloc
+{
+    [_database release];
+    [_windowHistory release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -134,11 +141,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     
     if (currentDoc == nil)
     {
-        docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay] subtopicName:@"General" docName: @"Overview"];
+        docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay]
+                                subtopicName:@"General"
+                                     docName: @"Overview"];
         currentDoc = [docLocator docToDisplay];
     }
     
-    return [[[self currentDoc] fileSection] filePath];
+    return [[currentDoc fileSection] filePath];
 }
 
 - (NSURL *)currentDocURL
@@ -153,7 +162,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return [[[NSURL fileURLWithPath:docPath] absoluteURL] standardizedURL];
 }
 
-
 #pragma mark -
 #pragma mark User preferences
 
@@ -162,7 +170,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_topicBrowserController applyUserPreferences];
     [_quicklistController applyUserPreferences];
 }
-
 
 #pragma mark -
 #pragma mark Navigation
@@ -285,7 +292,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[_topicBrowser window] makeKeyAndOrderFront:nil];
 }
 
-- (void)searchForString:(NSString *)aString {
+- (void)searchForString:(NSString *)aString
+{
     NSInteger state = [_quicklistDrawer state];
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
@@ -293,7 +301,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
     [_quicklistController searchForString:aString];
 }
-
 
 #pragma mark -
 #pragma mark Window layout
@@ -381,14 +388,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState
 {
-    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
+    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
 
     [self putWindowLayoutInto:windowLayout];
 
     [savedWindowState setSavedWindowLayout:windowLayout];
     [savedWindowState setSavedDocLocator:[self currentHistoryItem]];
 }
-
 
 #pragma mark -
 #pragma mark UI item validation
@@ -412,12 +418,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         return (_windowHistoryIndex < ((int)[_windowHistory count] - 1));
     }
     else if ((itemAction == @selector(doBackMenuAction:))
-        || (itemAction == @selector(doForwardMenuAction:)))
+             || (itemAction == @selector(doForwardMenuAction:)))
     {
         return YES;
     }
     else if ((itemAction == @selector(jumpToSuperclass:))
-        || (itemAction == @selector(jumpToAncestorClass:)))
+             || (itemAction == @selector(jumpToAncestorClass:)))
     {
         return ([[self _currentTopic] parentClassOfTopic] != nil);
     }
@@ -426,11 +432,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         return YES;
     }
     else if ((itemAction == @selector(jumpToFrameworkFormalProtocols:))
-        || (itemAction == @selector(jumpToFrameworkInformalProtocols:))
-        || (itemAction == @selector(jumpToFrameworkFunctions:))
-        || (itemAction == @selector(jumpToFrameworkGlobals:))
-        || (itemAction == @selector(jumpToDocLocatorRepresentedBy:))
-        || (itemAction == @selector(rememberWindowLayout:)))
+             || (itemAction == @selector(jumpToFrameworkInformalProtocols:))
+             || (itemAction == @selector(jumpToFrameworkFunctions:))
+             || (itemAction == @selector(jumpToFrameworkGlobals:))
+             || (itemAction == @selector(jumpToDocLocatorRepresentedBy:))
+             || (itemAction == @selector(rememberWindowLayout:)))
     {
         return YES;
     }
@@ -522,13 +528,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-
 #pragma mark -
 #pragma mark Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender
 {
-    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
+    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
     [self putWindowLayoutInto:windowLayout];
 
     NSDictionary *prefDictionary = [windowLayout asPrefDictionary];
@@ -610,7 +615,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         [_quicklistDrawer close];
     }
 }
-
 
 #pragma mark -
 #pragma mark Action methods -- navigation
@@ -800,7 +804,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[NSWorkspace sharedWorkspace] openURL:[self currentDocURL]];
 }
 
-
 #pragma mark -
 #pragma mark Action methods -- search (forwarded to the quicklist controller)
 
@@ -840,7 +843,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_quicklistController selectNextSearchResult:sender];
 }
 
-
 #pragma mark -
 #pragma mark NSMenuValidation protocol methods
 
@@ -848,7 +850,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     return [self validateItem:aCell];
 }
-
 
 #pragma mark -
 #pragma mark NSToolbarItemValidation protocol methods
@@ -864,7 +865,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     return isValid;
 }
-
 
 #pragma mark -
 #pragma mark NSSplitView delegate methods
@@ -882,7 +882,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-
 #pragma mark -
 #pragma mark NSWindow delegate methods
 
@@ -896,7 +895,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     [(NSWindow *)[aNotification object] orderFront:nil];
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -919,10 +917,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (NSString *)_tooltipForJumpToSuperclass
 {
-    return
-        [NSString stringWithFormat:
-            @"Go to superclass (%@)"
-                @"\n(Control-click or right-click for menu)",
+    return [NSString stringWithFormat:@"Go to superclass (%@)"
+            @"\n(Control-click or right-click for menu)",
             [[[self _currentTopic] parentClassOfTopic] nodeName]];
 }
 
@@ -954,7 +950,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         if (menuItemName)
         {
-            [_backMenu addItemWithTitle:menuItemName action:@selector(doBackMenuAction:) keyEquivalent:@""];
+            [_backMenu addItemWithTitle:menuItemName
+                                 action:@selector(doBackMenuAction:)
+                          keyEquivalent:@""];
         }
     }
 }
@@ -979,7 +977,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         AKDocLocator *historyItem = [_windowHistory objectAtIndex:i];
         NSString *menuItemName = [historyItem stringToDisplayInLists];
 
-        [_forwardMenu addItemWithTitle:menuItemName action:@selector(doForwardMenuAction:) keyEquivalent:@""];
+        [_forwardMenu addItemWithTitle:menuItemName
+                                action:@selector(doForwardMenuAction:)
+                         keyEquivalent:@""];
     }
 }
 
@@ -1005,8 +1005,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     while (ancestorNode != nil)
     {
         [_superclassesMenu addItemWithTitle:[ancestorNode nodeName]
-            action:@selector(jumpToAncestorClass:)
-            keyEquivalent:@""];
+                                     action:@selector(jumpToAncestorClass:)
+                              keyEquivalent:@""];
 
         ancestorNode = [ancestorNode parentClass];
     }
@@ -1028,7 +1028,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Update our marker index into the history array.
     _windowHistoryIndex = historyIndex;
-    DIGSLogDebug(@"jumped to history index %ld, history count=%ld", (long)_windowHistoryIndex, (long)[_windowHistory count]);
+    DIGSLogDebug(@"jumped to history index %ld, history count=%ld",
+                 (long)_windowHistoryIndex, (long)[_windowHistory count]);
 
     // Update miscellaneous parts of the UI that reflect our current
     // position in history.
@@ -1069,12 +1070,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Add the current navigation state to the navigation history.
     [_windowHistory addObject:newHistoryItem];
     _windowHistoryIndex = [_windowHistory count] - 1;
-    DIGSLogDebug(
-        @"added history item [%@][%@][%@] at index %ld",
-        [[newHistoryItem topicToDisplay] pathInTopicBrowser],
-        [newHistoryItem subtopicName],
-        [newHistoryItem docName],
-        (long)_windowHistoryIndex);
+    DIGSLogDebug(@"added history item [%@][%@][%@] at index %ld",
+                 [[newHistoryItem topicToDisplay] pathInTopicBrowser],
+                 [newHistoryItem subtopicName],
+                 [newHistoryItem docName],
+                 (long)_windowHistoryIndex);
 
     // Any time the history changes, we want to do the following UI updates.
     [self _refreshNavigationButtons];

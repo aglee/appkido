@@ -39,6 +39,7 @@
 // to subcontrollers
 @interface AKWindowController : NSObject <NSToolbarDelegate>
 {
+@private
     AKDatabase *_database;
 
     // The window's navigation history.  Elements are AKDocLocators.
@@ -88,13 +89,11 @@
     IBOutlet NSDrawer *_quicklistDrawer;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database;
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -126,13 +125,8 @@
 #pragma mark -
 #pragma mark User preferences
 
-/*!
- * @method      applyUserPreferences
- * @discussion  Tells my subordinate controller objects to apply the user
- *   preference settings.
- */
+/*! Tells my subordinate controllers to apply the user preference settings. */
 - (void)applyUserPreferences;
-
 
 #pragma mark -
 #pragma mark Navigation
@@ -154,20 +148,21 @@
 
 - (void)jumpToDocLocator:(AKDocLocator *)docLocator;
 
-// all the other "jumpTo" methods come through here
+/*! All the other "jumpTo" methods come through here. */
 - (void)jumpToTopic:(AKTopic *)obj
-    subtopicName:(NSString *)subtopicName
-    docName:(NSString *)docName;
+       subtopicName:(NSString *)subtopicName
+            docName:(NSString *)docName;
 
-// linkObj must be either an NSURL or a string containing an absolute URL.
-// Returns YES if we are able to jump to the URL, either within the app if
-// possible or, if necessary, via NSWorkspace.
+/*!
+ * linkObj must be either an NSURL or a string containing an absolute URL.
+ * Returns YES if we are able to jump to the URL, either within the app if
+ *possible or, if necessary, via NSWorkspace.
+ */
 - (BOOL)jumpToLinkURL:(NSURL *)linkURL;
 
 /*!
- * @method      focusOnDocView
- * @discussion  Tries to give first responder status to the doc text view.
- *              Returns that view if successful.
+ * Tries to give first responder status to the doc text view. Returns that view
+ * if successful.
  */
 - (NSView *)focusOnDocView;
 
@@ -177,7 +172,6 @@
 
 - (void)searchForString:(NSString *)aString;
 
-
 #pragma mark -
 #pragma mark Window layout
 
@@ -186,7 +180,6 @@
 - (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout;
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
-
 
 #pragma mark -
 #pragma mark UI item validation
@@ -263,7 +256,6 @@
 - (IBAction)copyDocTextURL:(id)sender;
 
 - (IBAction)openDocURLInBrowser:(id)sender;
-
 
 #pragma mark -
 #pragma mark Action methods -- search (forwarded to the quicklist controller)

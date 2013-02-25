@@ -12,7 +12,6 @@
 
 @implementation AKOverviewDoc
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -22,7 +21,7 @@
 {
     if ((self = [super initWithFileSection:fileSection]))
     {
-        _extraFrameworkName = frameworkName;
+        _extraFrameworkName = [frameworkName copy];
     }
 
     return self;
@@ -30,12 +29,15 @@
 
 - (id)initWithFileSection:(AKFileSection *)fileSection
 {
-    return
-        [self initWithFileSection:fileSection
-            andExtraFrameworkName:nil];
+    return [self initWithFileSection:fileSection andExtraFrameworkName:nil];
 }
 
+- (void)dealloc
+{
+    [_extraFrameworkName release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Utility methods
@@ -52,7 +54,6 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark AKDoc methods
 
@@ -60,10 +61,8 @@
 // framework), qualify the docName with the name of the extra framework.
 - (NSString *)docName
 {
-    return
-        [[self class]
-            qualifyDocName:[self _unqualifiedDocName]
-            withFrameworkName:_extraFrameworkName];
+    return [[self class] qualifyDocName:[self _unqualifiedDocName]
+                      withFrameworkName:_extraFrameworkName];
 }
 
 - (NSString *)stringToDisplayInDocList
@@ -73,8 +72,7 @@
     // string not to be displayed in the NSTableView cell.  So far I haven't
     // encountered any cases of internal newlines in doc names, so I don't
     // handle that case.
-    NSString *displayableDocName =
-        [[[self _unqualifiedDocName] ak_stripHTML] ak_trimWhitespace];
+    NSString *displayableDocName = [[[self _unqualifiedDocName] ak_stripHTML] ak_trimWhitespace];
 
     if (_extraFrameworkName == nil)
     {
@@ -82,13 +80,10 @@
     }
     else
     {
-        return
-            [NSString stringWithFormat:@"    %@ [%@ Additions]",
-                displayableDocName,
-                _extraFrameworkName];
+        return [NSString stringWithFormat:@"    %@ [%@ Additions]",
+                displayableDocName, _extraFrameworkName];
     }
 }
-
 
 #pragma mark -
 #pragma mark Protected methods

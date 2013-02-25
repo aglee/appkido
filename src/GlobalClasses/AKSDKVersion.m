@@ -8,16 +8,14 @@
 
 #import "AKSDKVersion.h"
 
-
 @implementation AKSDKVersion
-
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)versionFromString:(NSString *)versionString
 {
-	id version = [[self alloc] init];
+	id version = [[[self alloc] init] autorelease];
 	NSArray *versionParts = [versionString componentsSeparatedByString:@"."];
 	
 	if ([versionParts count] > 0)
@@ -37,7 +35,6 @@
 	
 	return version;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -72,33 +69,6 @@
 	_patchNumber = n;
 }
 
-
-#pragma mark -
-#pragma mark NSObject methods
-
-- (NSString *)description
-{
-	if (_patchNumber == 0)
-	{
-		return [NSString stringWithFormat:@"%d.%d", _majorNumber, _minorNumber];
-	}
-	else
-	{
-		return [NSString stringWithFormat:@"%d.%d.%d", _majorNumber, _minorNumber, _patchNumber];
-	}
-}
-
-- (BOOL)isEqual:(id)other
-{
-	if (![other isKindOfClass:[AKSDKVersion class]])
-	{
-		return NO;
-	}
-	
-	return ((_majorNumber == [other majorNumber]) && (_minorNumber == [other minorNumber]) && (_patchNumber == [other patchNumber]));
-}
-
-
 #pragma mark -
 #pragma mark Comparing versions
 
@@ -110,7 +80,8 @@
 	}
 	else
 	{
-		return ((_majorNumber == [otherVersion majorNumber]) && (_minorNumber == [otherVersion minorNumber]));
+		return ((_majorNumber == [otherVersion majorNumber])
+                && (_minorNumber == [otherVersion minorNumber]));
 	}
 }
 
@@ -134,6 +105,33 @@
 	
 	// If we got this far, we've exhausted all the ways we could be greater than otherVersion.
 	return NO;
+}
+
+#pragma mark -
+#pragma mark NSObject methods
+
+- (NSString *)description
+{
+	if (_patchNumber == 0)
+	{
+		return [NSString stringWithFormat:@"%d.%d", _majorNumber, _minorNumber];
+	}
+	else
+	{
+		return [NSString stringWithFormat:@"%d.%d.%d", _majorNumber, _minorNumber, _patchNumber];
+	}
+}
+
+- (BOOL)isEqual:(id)other
+{
+	if (![other isKindOfClass:[AKSDKVersion class]])
+	{
+		return NO;
+	}
+
+	return ((_majorNumber == [other majorNumber])
+            && (_minorNumber == [other minorNumber])
+            && (_patchNumber == [other patchNumber]));
 }
 
 @end

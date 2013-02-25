@@ -32,7 +32,6 @@
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 
-
 #pragma mark -
 #pragma mark Private constants
 
@@ -84,8 +83,13 @@ enum
 - (void)dealloc
 {
     [[DIGSFindBuffer sharedInstance] removeListener:self];
-}
 
+    [_currentTableValues release];
+    [_searchQuery release];
+    [_pastSearchStrings release];
+    
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Window layout
@@ -123,7 +127,6 @@ enum
     [windowLayout setSearchIgnoresCase:([_ignoreCaseItem state] == NSOnState)];
 }
 
-
 #pragma mark -
 #pragma mark Navigation
 
@@ -132,7 +135,6 @@ enum
     [_searchField setStringValue:aString];
     [self doSearch:self];
 }
-
 
 #pragma mark -
 #pragma mark Action methods
@@ -168,7 +170,7 @@ enum
         [_removeFavoriteButton setEnabled:(_currentQuicklistMode == _AKFavoritesQuicklistMode)];
 
         // Tell the main window to navigate to the selected doc.
-        [_windowController jumpToDocLocator:quicklistItem];
+        [[self owningWindowController] jumpToDocLocator:quicklistItem];
     }
 }
 
@@ -287,15 +289,14 @@ enum
     [self _jumpToSearchResultAtIndex:(_indexWithinSearchResults + 1)];
 }
 
-
 #pragma mark -
 #pragma mark AKSubcontroller methods
 
 - (void)doAwakeFromNib
 {
     // Set our _searchQuery ivar.  We do it here instead of in -init
-    // because we need to be sure [_windowController database] has been set.
-    _searchQuery = [[AKSearchQuery alloc] initWithDatabase:[_windowController database]];
+    // because we need to be sure [[self windowController] database] has been set.
+    _searchQuery = [[AKSearchQuery alloc] initWithDatabase:[[self owningWindowController] database]];
 
     // Set up _quicklistTable to do drag and drop.
     [_quicklistTable registerForDraggedTypes:[NSArray arrayWithObject:_AKQuicklistPasteboardType]];
@@ -306,7 +307,7 @@ enum
     // We don't want that.
     [_frameworkPopup setAutoenablesItems:NO];
 
-    for (NSString *fwName in [[_windowController database] sortedFrameworkNames])
+    for (NSString *fwName in [[[self owningWindowController] database] sortedFrameworkNames])
     {
         [_frameworkPopup addItemWithTitle:fwName];
     }
@@ -376,7 +377,6 @@ enum
     return NO;
 }
 
-
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
@@ -393,7 +393,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     return [quicklistItem stringToDisplayInLists];
 }
-
 
 #pragma mark -
 #pragma mark NSTableView delegate methods
@@ -462,7 +461,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     return YES;
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -600,7 +598,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
                         ]);
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_collectionClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_collectionClasses;
@@ -615,7 +613,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         NSArray *arr = [NSArray arrayWithObjects:@"NSWindow", nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_windowClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_windowClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_windowClasses;
@@ -629,7 +627,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSString *nameOfRootViewClass;
 
-        if ([[_windowController database] classWithName:@"UIView"] != nil)
+        if ([[[self owningWindowController] database] classWithName:@"UIView"] != nil)
         {
             nameOfRootViewClass = @"UIView";
         }
@@ -641,7 +639,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         NSArray *arr = [NSArray arrayWithObjects:nameOfRootViewClass, nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_viewClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_viewClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_viewClasses;
@@ -656,7 +654,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         NSArray *arr = [NSArray arrayWithObjects:@"NSCell", nil];
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
 
-        s_cellClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_cellClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_cellClasses;
@@ -670,7 +668,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[_windowController database] allClasses])
+        for (AKClassNode *classNode in [[[self owningWindowController] database] allClasses])
         {
             BOOL classHasDelegate = NO;
 
@@ -719,7 +717,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
             // If not, see if there's a protocol named thisClassDelegate.
             NSString *possibleDelegateProtocolName = [[classNode nodeName] stringByAppendingString:@"Delegate"];
-            if ([[_windowController database] protocolWithName:possibleDelegateProtocolName])
+            if ([[[self owningWindowController] database] protocolWithName:possibleDelegateProtocolName])
             {
                 classHasDelegate = YES;
             }
@@ -732,7 +730,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         }
 
         NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classNodes];
+        s_classesWithDelegates = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_classesWithDelegates;
@@ -746,7 +744,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[_windowController database] allClasses])
+        for (AKClassNode *classNode in [[[self owningWindowController] database] allClasses])
         {
             BOOL classHasDataSource = NO;
 
@@ -779,7 +777,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
             // If not, see if there's a protocol named thisClassDataSource.
             NSString *possibleDataSourceProtocolName = [[classNode nodeName] stringByAppendingString:@"DataSource"];
-            if ([[_windowController database] protocolWithName:possibleDataSourceProtocolName])
+            if ([[[self owningWindowController] database] protocolWithName:possibleDataSourceProtocolName])
             {
                 classHasDataSource = YES;
             }
@@ -792,7 +790,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         }
 
         NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classNodes];
+        s_classesWithDataSources = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
     return s_classesWithDataSources;
@@ -806,7 +804,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableArray *protocolNodes = [NSMutableArray array];
 
-        for (AKProtocolNode *protocolNode in [[_windowController database] allProtocols])
+        for (AKProtocolNode *protocolNode in [[[self owningWindowController] database] allProtocols])
         {
             if ([[protocolNode nodeName] ak_contains:@"DataSource"])
             {
@@ -814,7 +812,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             }
         }
 
-        s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolNodes];
+        s_dataSourceProtocols = [[self _sortedDocLocatorsForProtocols:protocolNodes] retain];
     }
 
     return s_dataSourceProtocols;
@@ -822,7 +820,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-    NSArray *classNodes = [[_windowController database] classesForFrameworkNamed:fwName];
+    NSArray *classNodes = [[[self owningWindowController] database] classesForFrameworkNamed:fwName];
 
     return [self _sortedDocLocatorsForClasses:classNodes];
 }
@@ -870,7 +868,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 - (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames
 {
     NSMutableSet *nodeSet = [NSMutableSet setWithCapacity:100];
-    AKDatabase *db = [_windowController database];
+    AKDatabase *db = [[self owningWindowController] database];
 
     for (NSString *name in classNames)
     {

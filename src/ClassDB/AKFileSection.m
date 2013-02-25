@@ -14,7 +14,6 @@
 #import "AKTextUtils.h"
 #import "AKFileSection.h"
 
-
 #pragma mark -
 #pragma mark Static variables
 
@@ -23,33 +22,31 @@
 //
 // Note: we assume files are read-only so we don't have to worry about
 // a stale cache.
-static NSMutableDictionary *s_fileCache = nil;
+//[agl] ??? static NSMutableDictionary *s_fileCache = nil;
 
 // Keys are file paths, values are NSValues whose intValues are the
 // number of times the file is referenced by an AKFileSection's
 // _fileContents instance.
-static NSMutableDictionary *s_fileCacheCounts = nil;
-
+//[agl] ??? static NSMutableDictionary *s_fileCacheCounts = nil;
 
 @implementation AKFileSection
 
-
-#pragma mark -
-#pragma mark Class initializer
-
-+ (void)initialize
-{
-    s_fileCache = [[NSMutableDictionary alloc] init];
-    s_fileCacheCounts = [[NSMutableDictionary alloc] init];
-}
-
+// [agl] ???
+//#pragma mark -
+//#pragma mark Class initializer
+//
+//+ (void)initialize
+//{
+//    s_fileCache = [[NSMutableDictionary alloc] init];
+//    s_fileCacheCounts = [[NSMutableDictionary alloc] init];
+//}
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (AKFileSection *)withFile:(NSString *)filePath
 {
-    AKFileSection *fileSection = [[self alloc] initWithFile:filePath];
+    AKFileSection *fileSection = [[[self alloc] initWithFile:filePath] autorelease];
 
     [fileSection setSectionName:[filePath lastPathComponent]];
     [fileSection setSectionOffset:0];
@@ -61,7 +58,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 + (AKFileSection *)withEntireFile:(NSString *)filePath
 {
     // Find out the file size.
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithPath:filePath];
+    NSFileWrapper *fileWrapper = [[[NSFileWrapper alloc] initWithPath:filePath] autorelease];
     NSDictionary *fileAttributes = [fileWrapper fileAttributes];
     int fileSize = [[fileAttributes objectForKey:NSFileSize] intValue];
 
@@ -75,7 +72,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     return fileSection;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -83,7 +79,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 {
     if ((self = [super init]))
     {
-        _filePath = filePath;
+        _filePath = [filePath copy];
         _childSections = [[NSMutableArray alloc] init];
     }
 
@@ -100,9 +96,15 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 {
     // Note that _releaseFileContents references _filePath, so we need to call
     // it *before* releasing _filePath, which might get dealloc'ed.
-    [self _releaseFileContents];
-}
+//[agl] ???    [self _releaseFileContents];
 
+    [_filePath release];
+    [_fileContents release];
+    [_sectionName release];
+    [_childSections release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -116,27 +118,26 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 {
     if ((_fileContents == nil) && (_filePath != nil))
     {
-        // See if the file is already in the cache.
-        _fileContents = [s_fileCache objectForKey:_filePath];
-
-        if (_fileContents != nil)
-        {
-            // The file is already in the cache, so increment the cache
-            // count.
-            int cacheCount = [[s_fileCacheCounts objectForKey:_filePath] intValue];
-
-            [s_fileCacheCounts setObject:[NSNumber numberWithInt:(cacheCount + 1)]
-                                  forKey:_filePath];
-        }
-        else
-        {
-            // The file wasn't in the cache, so add it with a cache
-            // count of 1.
+//        // See if the file is already in the cache.
+//        _fileContents = [s_fileCache objectForKey:_filePath];
+//
+//        if (_fileContents != nil)
+//        {
+//            // The file is already in the cache, so increment the cache
+//            // count.
+//            int cacheCount = [[s_fileCacheCounts objectForKey:_filePath] intValue];
+//
+//            [s_fileCacheCounts setObject:[NSNumber numberWithInt:(cacheCount + 1)]
+//                                  forKey:_filePath];
+//        }
+//        else
+//        {
+//            // The file wasn't in the cache, so add it with a cache
+//            // count of 1.
             _fileContents = [[NSData alloc] initWithContentsOfFile:_filePath];
-            [s_fileCache setObject:_fileContents forKey:_filePath];
-            [s_fileCacheCounts setObject:[NSNumber numberWithInt:1]
-                                  forKey:_filePath];
-        }
+//            [s_fileCache setObject:_fileContents forKey:_filePath];
+//            [s_fileCacheCounts setObject:@1 forKey:_filePath];
+//        }
     }
 
     return _fileContents;
@@ -149,7 +150,8 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 - (void)setSectionName:(NSString *)name
 {
-    _sectionName = name;
+    [_sectionName autorelease];
+    _sectionName = [name copy];
 }
 
 - (NSUInteger)sectionOffset
@@ -190,7 +192,7 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
 - (NSArray *)childSections
 {
-    return [_childSections copy];
+    return [[_childSections copy] autorelease];
 }
 
 - (NSInteger)numberOfChildSections
@@ -273,7 +275,8 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
    for (AKFileSection *childSection in _childSections)
    {
 		NSData *data = [childSection sectionData];
-		NSString *d = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSString *d = [[[NSString alloc] initWithData:data
+                                             encoding:NSUTF8StringEncoding] autorelease];
 		NSRange rr = [d rangeOfString:name];
 		if (rr.location != NSNotFound)
         {
@@ -283,7 +286,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 
    return nil;
 }
-
 
 #pragma mark -
 #pragma mark Debugging
@@ -320,7 +322,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
     return s;
 }
 
-
 #pragma mark -
 #pragma mark AKSortable methods
 
@@ -328,7 +329,6 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
 {
     return _sectionName;
 }
-
 
 #pragma mark -
 #pragma mark NSObject methods
@@ -339,35 +339,31 @@ static NSMutableDictionary *s_fileCacheCounts = nil;
             [self className], _sectionName, [self filePath]];
 }
 
-
 #pragma mark -
 #pragma mark Private methods
 
-// Releases the _fileContents ivar and decrements the corresponding cache
-// count.
-- (void)_releaseFileContents
-{
-    // Decrement the cache count.
-    int cacheCount =
-        [[s_fileCacheCounts objectForKey:_filePath] intValue];
-
-    if (cacheCount == 1)
-    {
-        // This was the last reference -- remove the file from the cache.
-        [s_fileCache removeObjectForKey:_filePath];
-    }
-    else
-    {
-        // Decrement the cache count.
-        [s_fileCacheCounts
-            setObject:[NSNumber numberWithInt:(cacheCount - 1)]
-            forKey:_filePath];
-    }
-
-    // Now we can release the ivar.
-    _fileContents = nil;
-}
+// Called by dealloc. Releases the _fileContents ivar and decrements the corresponding cache count.
+//[agl] ??? This logic doesn't make any sense.
+//- (void)_releaseFileContents
+//{
+//    // Decrement the cache count.
+//    int cacheCount = [[s_fileCacheCounts objectForKey:_filePath] intValue];
+//
+//    if (cacheCount == 1)
+//    {
+//        // This was the last reference -- remove the file from the cache.
+//        [s_fileCache removeObjectForKey:_filePath];
+//    }
+//    else
+//    {
+//        // Decrement the cache count.
+//        [s_fileCacheCounts setObject:[NSNumber numberWithInt:(cacheCount - 1)]
+//                              forKey:_filePath];
+//    }
+//
+//    // Now we can release the ivar.
+//    [_fileContents release];
+//    _fileContents = nil;
+//}
 
 @end
-
-

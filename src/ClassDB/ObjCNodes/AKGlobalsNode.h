@@ -21,7 +21,6 @@
     NSMutableArray *_namesOfGlobals;
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 

@@ -24,7 +24,7 @@
         [AKPrefUtils intValueForPref:AKListFontSizePrefName];
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];
     //int newRowHeight = round([font defaultLineHeightForFont] + 1.0);
-    NSLayoutManager * lm = [[NSLayoutManager alloc] init]; 
+    NSLayoutManager * lm = [[[NSLayoutManager alloc] init] autorelease];
  	NSInteger newRowHeight = round([lm defaultLineHeightForFont:font] + 1.0); 
 
     [[[[self tableColumns] objectAtIndex:0] dataCell] setFont:font];

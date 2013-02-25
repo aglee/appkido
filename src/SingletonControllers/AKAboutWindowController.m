@@ -21,8 +21,9 @@
     // Load the credits file into the web view.
     NSString *creditsPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"html"];
     NSError *err = nil;
-    NSString *creditsString = [NSString stringWithContentsOfFile:creditsPath encoding:NSUTF8StringEncoding error:&err];
-    
+    NSString *creditsString = [NSString stringWithContentsOfFile:creditsPath
+                                                        encoding:NSUTF8StringEncoding
+                                                           error:&err];
     if (creditsString == nil)
     {
         NSLog(@"Error loading credits file from [%@] - [%@]", creditsPath, err);
@@ -66,13 +67,14 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         // Use a delayed perform to avoid mucking with the WebView's
         // display while it's in the middle of processing a UI event.
         // Note that the return value of -jumpToLinkURL: will be lost.
-        [[NSWorkspace sharedWorkspace] performSelector:@selector(openURL:) withObject:[request URL] afterDelay:0];
+        [[NSWorkspace sharedWorkspace] performSelector:@selector(openURL:)
+                                            withObject:[request URL]
+                                            afterDelay:0];
     }
     else
     {
         [listener use];
     }
 }
-
 
 @end

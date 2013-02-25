@@ -15,29 +15,25 @@
 
 @implementation AKRealMethodsSubtopic
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
-    includeAncestors:(BOOL)includeAncestors
+             includeAncestors:(BOOL)includeAncestors
 {
-    return
-        [[self alloc]
-            initWithBehaviorNode:behaviorNode
-            includeAncestors:includeAncestors];
+    return [[[self alloc] initWithBehaviorNode:behaviorNode
+                              includeAncestors:includeAncestors] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
-    includeAncestors:(BOOL)includeAncestors
+          includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _behaviorNode = behaviorNode;
+        _behaviorNode = [behaviorNode retain];
     }
 
     return self;
@@ -49,7 +45,12 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_behaviorNode release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods

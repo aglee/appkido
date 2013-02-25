@@ -7,22 +7,33 @@
 
 #import "AKDocLocator.h"
 
-#import "AKFileSection.h"
 #import "AKTopic.h"
 #import "AKSubtopic.h"
 #import "AKDoc.h"
 
-
 @implementation AKDocLocator
+{
+    // The topic selected in the window's topic browser.
+    AKTopic *_topic;
+
+    // The selected item in the window's subtopics table.
+    NSString *_subtopicName;
+
+    // The selected item in the window's doc list.
+    NSString *_docName;
+
+    NSString *_cachedDisplayString;
+    NSString *_cachedSortName;
+    AKDoc *_cachedDoc;
+}
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
-    return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
+    return [[[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -31,15 +42,25 @@
 {
     if ((self = [super init]))
     {
-        _topic = topic;
-        _subtopicName = subtopicName;
-        _docName = docName;
+        _topic = [topic retain];
+        _subtopicName = [subtopicName copy];
+        _docName = [docName copy];
     }
 
     return self;
 }
 
+- (void)dealloc
+{
+    [_topic release];
+    [_subtopicName release];
+    [_docName release];
+    [_cachedDisplayString release];
+    [_cachedSortName release];
+    [_cachedDoc release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Preferences
@@ -51,9 +72,9 @@
         return nil;
     }
 
-    id topicPref           = [prefDict objectForKey:AKTopicPrefKey];
+    id topicPref = [prefDict objectForKey:AKTopicPrefKey];
     NSString *subtopicName = [prefDict objectForKey:AKSubtopicPrefKey];
-    NSString *docName      = [prefDict objectForKey:AKDocNamePrefKey];
+    NSString *docName = [prefDict objectForKey:AKDocNamePrefKey];
 
     AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
 
@@ -82,7 +103,6 @@
     return prefDict;
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -103,7 +123,8 @@
         [self _clearCachedObjects];
     }
 
-    _subtopicName = subtopicName;
+    [_subtopicName autorelease];
+    _subtopicName = [subtopicName copy];
 }
 
 - (NSString *)docName
@@ -118,7 +139,8 @@
         [self _clearCachedObjects];
     }
 
-    _docName = docName;
+    [_docName autorelease];
+    _docName = [docName copy];
 }
 
 - (NSString *)stringToDisplayInLists
@@ -171,7 +193,6 @@
 
     return _cachedDoc;
 }
-
 
 #pragma mark -
 #pragma mark Sorting
@@ -284,7 +305,6 @@ compareDocLocators(id locOne, id locTwo, void *context)
     [array sortUsingFunction:&compareDocLocators context:NULL];
 }
 
-
 #pragma mark -
 #pragma mark AKSortable methods
 
@@ -314,7 +334,6 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
     return _cachedSortName;
 }
-
 
 #pragma mark -
 #pragma mark NSObject methods
@@ -362,7 +381,6 @@ compareDocLocators(id locOne, id locTwo, void *context)
             _docName];
 }
 
-
 #pragma mark -
 #pragma mark Private methods
 
@@ -376,4 +394,3 @@ compareDocLocators(id locOne, id locTwo, void *context)
 }
 
 @end
-

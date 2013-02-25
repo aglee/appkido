@@ -19,9 +19,6 @@
  *              forwarded to them from the owning controller.
  */
 @interface AKSubcontroller : NSObject
-{
-}
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -41,7 +38,6 @@
  */
 - (void)doAwakeFromNib;
 
-
 #pragma mark -
 #pragma mark User preferences
 
@@ -51,7 +47,6 @@
  *              control.  The default implementation does nothing.
  */
 - (void)applyUserPreferences;
-
 
 #pragma mark -
 #pragma mark UI item validation

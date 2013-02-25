@@ -15,7 +15,6 @@
 #import "AKDoc.h"
 #import "AKDocLocator.h"
 
-
 @implementation AKDocView
 
 #pragma mark -
@@ -81,6 +80,13 @@
     [self applyPrefs];
 }
 
+- (void)dealloc
+{
+    [_docLocator release];
+    [_headerFontName release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -93,12 +99,12 @@
     }
 
     // Standard setter pattern.
-    _docLocator = docLocator;
+    [_docLocator autorelease];
+    _docLocator = [docLocator retain];
 
     // Update the display.
     [self _updateDocDisplay];
 }
-
 
 #pragma mark -
 #pragma mark UI behavior
@@ -126,7 +132,8 @@
             headerFontChanged = YES;
 
             // Standard setter pattern.
-            _headerFontName = headerFontNamePref;
+            [_headerFontName autorelease];
+            _headerFontName = [headerFontNamePref copy];
         }
 
         if (_headerFontSize != headerFontSizePref)
@@ -166,7 +173,6 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark NSView methods
 
@@ -175,7 +181,6 @@
 {
     return YES;
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -261,7 +266,7 @@
     
     if (textData)
     {
-        docString = [[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding];
+        docString = [[[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding] autorelease];
     }
 
     [textView setRichText:NO];

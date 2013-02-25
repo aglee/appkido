@@ -45,14 +45,12 @@
     NSDictionary *_typingAttributes;
 }
 
-
 #pragma mark -
 #pragma mark Preferences
 
 + (DIGSTextSelection *)fromPrefDictionary:(NSDictionary *)prefDict;
 
 - (NSDictionary *)asPrefDictionary;
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -69,15 +67,10 @@
 - (NSDictionary *)typingAttributes;
 - (void)setTypingAttributes:(NSDictionary *)attrDict;
 
-
 #pragma mark -
 #pragma mark Interacting with text views
 
-/*!
- * @method      takeSelectionFromTextView:
- * @discussion  Takes a snapshot of the selection state of the given text
- *              view.
- */
+/*! Takes a snapshot of the selection state of the given text view. */
 - (void)takeSelectionFromTextView:(NSTextView *)textView;
 
 /*!

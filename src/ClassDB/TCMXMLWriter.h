@@ -28,10 +28,10 @@ typedef NSUInteger TCMXMLWriterOptions;
     NSMutableArray *_elementNameStackArray;
 }
 
-@property (nonatomic,strong) NSURL *fileURL;
-@property (unsafe_unretained, readonly) NSString *XMLString; // works for in memory streams and file URLs
-@property (unsafe_unretained, readonly) NSData *XMLData; // works for in memory streams and file URLs
-@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic,retain) NSURL *fileURL;
+@property (readonly) NSString *XMLString; // works for in memory streams and file URLs
+@property (readonly) NSData *XMLData; // works for in memory streams and file URLs
+@property (nonatomic, retain) NSDateFormatter *dateFormatter;
 
 - (id)initWithOptions:(TCMXMLWriterOptions)anOptionField; // stores marshalled stuff in string
 - (id)initWithOptions:(TCMXMLWriterOptions)anOptionField fileURL:(NSURL *)aFileURL;

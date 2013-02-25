@@ -28,6 +28,7 @@
  */
 @interface AKAppController : NSObject
 {
+@private
     AKDatabase *_appDatabase;
 
     AKSplashWindowController *_splashWindowController;
@@ -47,8 +48,8 @@
     IBOutlet NSMenuItem *_firstGoMenuDivider;
 }
 
-
-#pragma mark - Application startup
+#pragma mark -
+#pragma mark Application startup
 
 /*!
  * Called by applicationDidFinishLaunching: -- and possibly again by
@@ -62,36 +63,22 @@
  */
 - (void)finishApplicationStartup;
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
 - (AKDatabase *)appDatabase;
 
-
 #pragma mark -
 #pragma mark Navigation
 
-/*!
- * @method      selectedTextView
- * @discussion  If a text view has keyboard focus, returns that text view.
- */
+/*! If a text view has keyboard focus, returns that text view. */
 - (NSTextView *)selectedTextView;
 
-/*!
- * @method      frontmostWindowController
- * @discussion  Search the window list for the topmost browser window.
- *              Returns that window's window controller, or nil.
- */
+/*! Search the window controller of the topmost browser window, or nil. */
 - (AKWindowController *)frontmostWindowController;
 
-/*!
- * @method      openNewWindow
- * @discussion  Opens a new browser window.  Returns the newly created
- *              window controller.
- */
+/*! Opens a new browser window.  Returns the newly created window controller. */
 - (AKWindowController *)controllerForNewWindow;
-
 
 #pragma mark -
 #pragma mark Preferences
@@ -103,27 +90,20 @@
  */
 - (void)applyUserPreferences;
 
-
 #pragma mark -
 #pragma mark External search requests
 
 - (void)searchForString:(NSString *)searchString;
-
 
 #pragma mark -
 #pragma mark AppleScript support
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
 
-
 #pragma mark -
 #pragma mark Managing the user's Favorites list
 
-/*!
- * @method      favoritesList
- * @discussion  Returns an array of AKDocLocators for the items in the
- *              user's Favorites list.
- */
+/*! Returns AKDocLocators for the items in the user's Favorites list. */
 - (NSArray *)favoritesList;
 
 - (void)addFavorite:(AKDocLocator *)docLocator;
@@ -131,7 +111,6 @@
 - (void)removeFavoriteAtIndex:(NSInteger)favoritesIndex;
 
 - (void)moveFavoriteFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
-
 
 #pragma mark -
 #pragma mark UI item validation
@@ -145,51 +124,25 @@
  */
 - (BOOL)validateItem:(id)anItem;
 
-
 #pragma mark -
 #pragma mark Action methods
 
-/*!
- * @method      openAboutPanel:
- * @discussion  Action method that displays the About panel.
- */
 - (IBAction)openAboutPanel:(id)sender;
 
-/*!
- * @method      checkForNewerVersion:
- * @discussion  Action method that checks whether a newer version of
- *              the app is available.
- */
 - (IBAction)checkForNewerVersion:(id)sender;
 
-/*!
- * @method      openPrefsPanel:
- * @discussion  Action method that tells my AKPrefPanelController to open
- *              the preferences panel.
- */
 - (IBAction)openPrefsPanel:(id)sender;
 
-/*!
- * @method      openNewWindow:
- * @discussion  Action method that opens a new browser window.
- */
 - (IBAction)openNewWindow:(id)sender;
 
 /*!
- * @method      scrollToTextSelection:
- * @discussion  Action method that tells me to scroll the currently
- *              first-responding text view, if there is one, to show
- *              the text that is selected in the view.
+ * Scrolls the currently first-responding text view, if there is one, to show
+ * the text that is selected in the view.
  */
 - (IBAction)scrollToTextSelection:(id)sender;
 
-/*!
- * @method      exportDatabase:
- * @discussion  Action method that lets the user export the contents of
- *              the framework database to a text file.
- */
+/*! Lets the user export the contents of the framework database as XML. */
 - (IBAction)exportDatabase:(id)sender;
-
 
 #pragma mark -
 #pragma mark Action methods for debugging only

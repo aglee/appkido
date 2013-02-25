@@ -10,18 +10,18 @@
 #import "AKSubcontroller.h"
 
 @class AKWindowController;
-@class AKDatabase;
 
 /*!
- * @class       AKWindowSubcontroller
- * @abstract    Base class for controller objects subordinate to
- *              AKWindowController.
+ * Base class for controller objects subordinate to AKWindowController.
  * @discussion  This base class holds a reference to the owning
  *              AKWindowController.
  */
 @interface AKWindowSubcontroller : AKSubcontroller
 {
-    IBOutlet AKWindowController *_windowController;
+@private
+    IBOutlet AKWindowController *_windowController;  // [agl] double-check memory management
 }
+
+- (AKWindowController *)owningWindowController;
 
 @end

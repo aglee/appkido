@@ -14,15 +14,13 @@
 
 @implementation AKDevToolsPanelController
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)controller
 {
-    return [[self alloc] init];
+    return [[[self alloc] init] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -47,8 +45,9 @@
     {
         [_window setDelegate:nil];
     }
-}
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Running the panel
@@ -64,7 +63,6 @@
 
 	return (result == NSRunStoppedResponse);
 }
-
 
 #pragma mark -
 #pragma mark Action methods

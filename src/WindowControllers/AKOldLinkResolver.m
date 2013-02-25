@@ -28,7 +28,6 @@
 #import "AKGlobalsTopic.h"
 #import "AKOverviewDoc.h"
 
-
 @implementation AKOldLinkResolver
 
 #pragma mark -
@@ -68,7 +67,7 @@
         }
         else if ([upperPathComponent isEqualToString:@"CLASSES"])
         {
-            AKClassNode *classNode = [_database classDocumentedInHTMLFile:filePath];
+            AKClassNode *classNode = [[self database] classDocumentedInHTMLFile:filePath];
 
             behaviorNode = classNode;
             rootSection = [classNode documentationAssociatedWithFrameworkNamed:fwName];
@@ -78,7 +77,7 @@
         }
         else if ([upperPathComponent isEqualToString:@"PROTOCOLS"])
         {
-            AKProtocolNode *protocolNode = [_database protocolDocumentedInHTMLFile:filePath];
+            AKProtocolNode *protocolNode = [[self database] protocolDocumentedInHTMLFile:filePath];
 
             behaviorNode = protocolNode;
             rootSection = [protocolNode nodeDocumentation];
@@ -93,8 +92,8 @@
                  ||[upperPathComponent hasSuffix:@"_FUNCTIONS"])
         {
             behaviorNode = nil;
-            rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:_database];
+            rootSection = [[self database] rootSectionForHTMLFile:filePath];
+            docTopic = [AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:[self database]];
 
             break;
         }
@@ -106,8 +105,8 @@
                  || [upperPathComponent hasSuffix:@"_DATATYPES"])
         {
             behaviorNode = nil;
-            rootSection = [_database rootSectionForHTMLFile:filePath];
-            docTopic = [AKGlobalsTopic topicWithFrameworkNamed:fwName inDatabase:_database];
+            rootSection = [[self database] rootSectionForHTMLFile:filePath];
+            docTopic = [AKGlobalsTopic topicWithFrameworkNamed:fwName inDatabase:[self database]];
 
             break;
         }
@@ -132,7 +131,7 @@
 - (NSString *)_frameworkNameImpliedBy:(NSString *)aString
 {
     // Is it the name of a framework already in the database?
-    if ([_database hasFrameworkWithName:aString])
+    if ([[self database] hasFrameworkWithName:aString])
     {
         return aString;
     }
@@ -144,7 +143,7 @@
     }
 
     // Is it a known framework name followed by ".framework"?
-    for (NSString *fwName in [_database frameworkNames])
+    for (NSString *fwName in [[self database] frameworkNames])
     {
         NSString *fwDirName = [fwName stringByAppendingString:@".framework"];
 
@@ -156,7 +155,7 @@
 
 /*
     // Is it a path name with a framework's mainDocDir as a prefix?
-    en = [[_database namesOfAvailableFrameworks] objectEnumerator];
+    en = [[[self database] namesOfAvailableFrameworks] objectEnumerator];
     id fw;
     while ((fw = [en nextObject]))
     {
@@ -169,7 +168,7 @@
 */
 
     // Possibly nil.
-    return [_database frameworkForHTMLFile:aString];
+    return [[self database] frameworkForHTMLFile:aString];
 }
 
 // Returns a byte offset within the HTML file that lies within the file
@@ -178,7 +177,7 @@
 - (NSInteger)_offsetOfAnchor:(NSString *)anchorString
     inFileSection:(AKFileSection *)fileSection
 {
-    NSInteger anchorOffset = [_database offsetOfAnchorString:anchorString
+    NSInteger anchorOffset = [[self database] offsetOfAnchorString:anchorString
                                                   inHTMLFile:[fileSection filePath]];
     if (anchorOffset < 0)
     {

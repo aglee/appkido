@@ -16,7 +16,6 @@
 
 @implementation AKSubtopicListController
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -30,7 +29,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_subtopics release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Navigation
@@ -40,8 +44,8 @@
     // Is the topic changing?  (The "!=" test handles nil cases.)
     AKTopic *currentTopic = [whereFrom topicToDisplay];
     AKTopic *newTopic = [whereTo topicToDisplay];
-    BOOL topicIsChanging =
-        (currentTopic != newTopic) && ![currentTopic isEqual:newTopic];
+    BOOL topicIsChanging = ((currentTopic != newTopic)
+                            && ![currentTopic isEqual:newTopic]);
 
     if (topicIsChanging)
     {
@@ -74,10 +78,9 @@
     {
         // Figure out what subtopic index to select.  Try to select the
         // subtopic whose name matches the current one.
-        NSInteger subtopicIndex =
-            (newSubtopicName == nil)
-            ? [newTopic indexOfSubtopicWithName:currentSubtopicName]
-            : [newTopic indexOfSubtopicWithName:newSubtopicName];
+        NSInteger subtopicIndex = ((newSubtopicName == nil)
+                                   ? [newTopic indexOfSubtopicWithName:currentSubtopicName]
+                                   : [newTopic indexOfSubtopicWithName:newSubtopicName]);
 
         if (subtopicIndex < 0)
         {
@@ -85,7 +88,8 @@
         }
 
         // Select the subtopic at that index.
-        [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:subtopicIndex] byExtendingSelection:NO];
+        [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:subtopicIndex]
+                     byExtendingSelection:NO];
 
         AKSubtopic *subtopic = [_subtopics objectAtIndex:subtopicIndex];
 
@@ -103,15 +107,12 @@
 {
     if (subtopicIndex != [_subtopicsTable selectedRow])
     {
-        NSString *newSubtopicName =
-            [[_subtopics objectAtIndex:subtopicIndex]
-                subtopicName];
+        NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
 
-        [_windowController jumpToSubtopicWithName:newSubtopicName];
+        [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
         [_docListController focusOnDocListTable];
     }
 }
-
 
 #pragma mark -
 #pragma mark Action methods
@@ -119,29 +120,24 @@
 - (IBAction)doSubtopicTableAction:(id)sender
 {
     NSInteger selectedRow = [_subtopicsTable selectedRow];
-    NSString *newSubtopicName =
-        (selectedRow < 0)
-        ? nil
-        : [[_subtopics objectAtIndex:selectedRow] subtopicName];
+    NSString *newSubtopicName = ((selectedRow < 0)
+                                 ? nil
+                                 : [[_subtopics objectAtIndex:selectedRow] subtopicName]);
 
     // Tell the main window to select the subtopic at the selected index.
-    [_windowController jumpToSubtopicWithName:newSubtopicName];
+    [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
 }
-
 
 #pragma mark -
 #pragma mark AKSubcontroller methods
 
 - (void)doAwakeFromNib
 {
-    NSBrowserCell *browserCell;
-
     // Tweak the subtopics table.
-    browserCell = [[NSBrowserCell alloc] initTextCell:@""];
+    NSBrowserCell *browserCell = [[[NSBrowserCell alloc] initTextCell:@""] autorelease];
     [browserCell setLeaf:NO];
     [browserCell setLoaded:YES];
-    [[[_subtopicsTable tableColumns] objectAtIndex:0]
-        setDataCell:browserCell];
+    [[[_subtopicsTable tableColumns] objectAtIndex:0] setDataCell:browserCell];
 
     // Populate the subtopics table.
     [_subtopicsTable reloadData];
@@ -163,7 +159,6 @@
     return [_docListController validateItem:anItem];
 }
 
-
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
@@ -173,18 +168,19 @@
 }
 
 - (id)tableView:(NSTableView *)aTableView
-    objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(NSInteger)rowIndex
+objectValueForTableColumn:(NSTableColumn *)aTableColumn
+            row:(NSInteger)rowIndex
 {
     return [[_subtopics objectAtIndex:rowIndex] stringToDisplayInSubtopicList];
 }
 
-
 #pragma mark -
 #pragma mark NSTableView delegate methods
 
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell
-    forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+- (void)tableView:(NSTableView *)aTableView
+  willDisplayCell:(id)aCell
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(NSInteger)rowIndex
 {
     if ([aCell isKindOfClass:[NSBrowserCell class]])
     {
@@ -195,4 +191,3 @@
 }
 
 @end
-

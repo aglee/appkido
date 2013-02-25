@@ -10,8 +10,6 @@
 // This import picks up AppKit extensions to Foundation string classes.
 #import <AppKit/AppKit.h>
 
-
-
 #pragma mark -
 #pragma mark C string utilities
 
@@ -21,7 +19,6 @@ extern char *ak_copystr(const char *s)
     strcpy(copy, s);
     return copy;
 }
-
 
 #pragma mark -
 #pragma mark NSString extensions
@@ -37,8 +34,7 @@ extern char *ak_copystr(const char *s)
 
 - (BOOL)ak_containsCaseInsensitive:(NSString *)searchString
 {
-    NSRange r =
-        [self rangeOfString:searchString options:NSCaseInsensitiveSearch];
+    NSRange r = [self rangeOfString:searchString options:NSCaseInsensitiveSearch];
 
     return (r.location != NSNotFound);
 }
@@ -72,9 +68,9 @@ extern char *ak_copystr(const char *s)
 }
 
 - (NSRange)ak_findString:(NSString *)string
-    selectedRange:(NSRange)selectedRange
-    options:(NSUInteger)options
-    wrap:(BOOL)wrap
+           selectedRange:(NSRange)selectedRange
+                 options:(NSUInteger)options
+                    wrap:(BOOL)wrap
 {
     BOOL forwards = ((options & NSBackwardsSearch) == 0);
     NSUInteger length = [self length];
@@ -84,22 +80,18 @@ extern char *ak_copystr(const char *s)
     {
         searchRange.location = NSMaxRange(selectedRange);
         searchRange.length = length - searchRange.location;
-        range =
-            [self
-                rangeOfString:string
-                options:options
-                range:searchRange];
+        range = [self rangeOfString:string
+                            options:options
+                              range:searchRange];
 
         if ((range.length == 0) && wrap)
         {
             // If not found look at the first part of the string.
             searchRange.location = 0;
             searchRange.length = selectedRange.location;
-            range =
-                [self
-                    rangeOfString:string
-                    options:options
-                    range:searchRange];
+            range = [self rangeOfString:string
+                                options:options
+                                  range:searchRange];
         }
     }
     else
@@ -107,16 +99,14 @@ extern char *ak_copystr(const char *s)
         searchRange.location = 0;
         searchRange.length = selectedRange.location;
         range =
-            [self rangeOfString:string options:options range:searchRange];
+        [self rangeOfString:string options:options range:searchRange];
         if ((range.length == 0) && wrap)
         {
             searchRange.location = NSMaxRange(selectedRange);
             searchRange.length = length - searchRange.location;
-            range =
-                [self
-                    rangeOfString:string
-                    options:options
-                    range:searchRange];
+            range = [self rangeOfString:string
+                                options:options
+                                  range:searchRange];
         }
     }
 
@@ -125,8 +115,7 @@ extern char *ak_copystr(const char *s)
 
 - (NSString *)ak_trimWhitespace
 {
-    NSCharacterSet *whitespaceChars =
-        [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSCharacterSet *whitespaceChars = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     NSInteger originalLength = [self length];
     NSInteger startIndex = 0;
     NSInteger endIndex = startIndex + originalLength - 1;
@@ -182,15 +171,10 @@ extern char *ak_copystr(const char *s)
     // The HTML fragment won't have the UTF8 specifier that's at the top of
     // the HTML file, so use an options dictionary to force UTF8.
     NSData *stringData = [self dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *stringOptions =
-        [NSDictionary
-            dictionaryWithObject:[NSNumber numberWithInt:NSUTF8StringEncoding]
-            forKey:NSCharacterEncodingDocumentOption];
-    NSAttributedString *richTextString =
-        [[NSAttributedString alloc]
-            initWithHTML:stringData
-            options:stringOptions
-            documentAttributes:NULL];
+    NSDictionary *stringOptions = @{ NSCharacterEncodingDocumentOption: @(NSUTF8StringEncoding) };
+    NSAttributedString *richTextString = [[[NSAttributedString alloc] initWithHTML:stringData
+                                                                           options:stringOptions
+                                                                documentAttributes:NULL] autorelease];
 
     return [richTextString string];
 }

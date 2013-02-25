@@ -19,7 +19,6 @@
     NSMutableArray *_subnodes;
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 

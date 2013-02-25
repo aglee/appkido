@@ -33,9 +33,9 @@
 
 + (void)openNewParserWindow
 {
-    AKTestDocParserWindowController *instance = [[self alloc] initWithWindowNibName:@"TestDocParser"];
-    
-    [[instance window] makeKeyAndOrderFront:nil];
+    AKTestDocParserWindowController *wc = [[[self alloc] initWithWindowNibName:@"TestDocParser"] autorelease];
+
+    [[wc window] makeKeyAndOrderFront:nil];
 }
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
@@ -48,7 +48,6 @@
     
     return self;
 }
-
 
 - (NSView *)viewToSearch
 {
@@ -64,8 +63,8 @@
     return nil;
 }
 
-
-#pragma mark - Action methods
+#pragma mark -
+#pragma mark Action methods
 
 - (IBAction)chooseFileToParse:(id)sender
 {
@@ -99,10 +98,11 @@
 
 - (IBAction)doBrowserAction:(id)sender
 {
-    AKFileSection *fileSection = [_parseResultBrowser itemAtIndexPath:[_parseResultBrowser selectionIndexPath]];
+    NSIndexPath *selectionIndexPath = [_parseResultBrowser selectionIndexPath];
+    AKFileSection *fileSection = [_parseResultBrowser itemAtIndexPath:selectionIndexPath];
     NSData *sectionData = [fileSection sectionData];
-    NSString *sectionString = [[NSString alloc] initWithData:sectionData encoding:NSUTF8StringEncoding];
-    
+    NSString *sectionString = [[[NSString alloc] initWithData:sectionData
+                                                     encoding:NSUTF8StringEncoding] autorelease];
     [_fileSectionTextView setString:sectionString];
     [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%ld-%ld, %ld chars",
                                            (long)[fileSection sectionOffset],
@@ -110,7 +110,8 @@
                                            (long)[fileSection sectionLength]]];
 }
 
-#pragma mark - NSWindowController methods
+#pragma mark -
+#pragma mark NSWindowController methods
 
 - (void)windowDidLoad
 {
@@ -120,7 +121,8 @@
     [_fileSectionTextView setFont:[NSFont fontWithName:@"Courier" size:13.0]];
 }
 
-#pragma mark - NSWindowDelegate methods
+#pragma mark -
+#pragma mark NSWindowDelegate methods
 
 - (void)windowWillClose:(NSNotification *)notification
 {
@@ -130,7 +132,8 @@
     }
 }
 
-#pragma mark - NSBrowserDelegate methods
+#pragma mark -
+#pragma mark NSBrowserDelegate methods
 
 // Note we are using "item-based" API.
 // <https://developer.apple.com/library/mac/#samplecode/SimpleCocoaBrowser/Listings/AppController_m.html#//apple_ref/doc/uid/DTS40008872-AppController_m-DontLinkElementID_4>
@@ -160,11 +163,12 @@
     return [(AKFileSection *)item sectionName];
 }
 
-#pragma mark - Private methods
+#pragma mark -
+#pragma mark Private methods
 
 - (void)_parseFileAtPath:(NSString *)filePath
 {
-    AKDocParser *dp = [[AKDocParser alloc] initWithDatabase:nil frameworkName:nil];
+    AKDocParser *dp = [[[AKDocParser alloc] initWithDatabase:nil frameworkName:nil] autorelease];
     
     [dp processFile:filePath];
     
@@ -176,6 +180,4 @@
     [_parseResultBrowser loadColumnZero];
 }
 
-
 @end
-

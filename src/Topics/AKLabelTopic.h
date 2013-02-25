@@ -9,15 +9,14 @@
 
 @interface AKLabelTopic : AKTopic
 {
+@private
     NSString *_label;
 }
-
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label;
-
 
 #pragma mark -
 #pragma mark Getters and setters

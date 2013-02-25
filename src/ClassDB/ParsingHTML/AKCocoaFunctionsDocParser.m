@@ -15,9 +15,7 @@
 #import "AKGroupNode.h"
 #import "AKTextUtils.h"
 
-
 @implementation AKCocoaFunctionsDocParser
-
 
 #pragma mark -
 #pragma mark AKDocParser methods
@@ -74,7 +72,6 @@
         }
     }
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -145,5 +142,3 @@
 }
 
 @end
-
-

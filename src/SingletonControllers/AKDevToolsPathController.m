@@ -34,6 +34,12 @@
     [self _updateUIToReflectPrefs];
 }
 
+- (void)dealloc
+{
+    [_selectedXcodeAppPath release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Action methods
@@ -70,7 +76,8 @@
     [self _updateUIToReflectPrefs];
 }
 
-#pragma mark - NSOpenSavePanelDelegate methods
+#pragma mark -
+#pragma mark NSOpenSavePanelDelegate methods
 
 - (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url
 {
@@ -137,11 +144,13 @@
 
         if (docSetPath == nil)
         {
-            [infoText appendFormat:@"No docset was found in %@ that covers the %@ SDK.", [devTools devToolsPath], selectedSDKVersion];
+            [infoText appendFormat:@"No docset was found in %@ that covers the %@ SDK.",
+             [devTools devToolsPath], selectedSDKVersion];
         }
         else
         {
-            [infoText appendFormat:@"This SDK is covered by the %@ docset at %@.", docSetSDKVersion, docSetPath];
+            [infoText appendFormat:@"This SDK is covered by the %@ docset at %@.",
+             docSetSDKVersion, docSetPath];
         }
     }
 
@@ -168,6 +177,7 @@
     // Select the appropriate item in the SDK versions popup.
     NSString *selectedSDKVersion = [AKPrefUtils sdkVersionPref];
     NSString *docSetSDKVersion = [devTools docSetSDKVersionThatCoversSDKVersion:selectedSDKVersion];
+    
     if ((selectedSDKVersion == nil) || (docSetSDKVersion == nil))
     {
         selectedSDKVersion = [sdkVersionsToOffer lastObject];
@@ -205,48 +215,43 @@
         NSString *errorMessage = [NSString stringWithFormat:@"\"%@\" doesn't look like a valid Dev Tools path.\n\n%@",
                                   devToolsPath,
                                   [errorStrings componentsJoinedByString:@"\n"]];
-        [self
-         performSelector:@selector(_showBadPathAlert:)
-         withObject:errorMessage
-         afterDelay:(NSTimeInterval)0.0
-         inModes:
-         [NSArray arrayWithObjects:
-          NSDefaultRunLoopMode,
-          NSModalPanelRunLoopMode,
-          nil]];
+        [self performSelector:@selector(_showBadPathAlert:)
+                   withObject:errorMessage
+                   afterDelay:(NSTimeInterval)0.0
+                      inModes:[NSArray arrayWithObjects:
+                               NSDefaultRunLoopMode,
+                               NSModalPanelRunLoopMode,
+                               nil]];
     }
 }
 
 - (void)_showBadPathAlert:(NSString *)errorMessage
 {
-    NSBeginAlertSheet(
-        @"Invalid Dev Tools path",  // title
-        @"OK",  // defaultButton
-        nil,  // alternateButton
-        nil,  // otherButton
-        [_xcodeAppPathField window],  // docWindow
-        self,  // modalDelegate -- will release when alert ends
-        @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
-        (SEL)NULL,  // didDismissSelector
-        (void *)NULL,  // contextInfo
-        @"%@",  // msg
-        errorMessage
-    );
+    NSBeginAlertSheet(@"Invalid Dev Tools path",  // title
+                      @"OK",  // defaultButton
+                      nil,  // alternateButton
+                      nil,  // otherButton
+                      [_xcodeAppPathField window],  // docWindow
+                      self,  // modalDelegate -- will release when alert ends
+                      @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
+                      (SEL)NULL,  // didDismissSelector
+                      (void *)NULL,  // contextInfo
+                      @"%@",  // msg
+                      errorMessage
+                      );
 }
 
 - (void)_badPathAlertDidEnd:(NSOpenPanel *)panel
     returnCode:(int)returnCode
     contextInfo:(void *)contextInfo
 {
-    [self
-        performSelector:@selector(promptForXcodeLocation:)
-        withObject:nil
-        afterDelay:(NSTimeInterval)0.0
-        inModes:
-            [NSArray arrayWithObjects:
-                NSDefaultRunLoopMode,
-                NSModalPanelRunLoopMode,
-                nil]];
+    [self performSelector:@selector(promptForXcodeLocation:)
+               withObject:nil
+               afterDelay:(NSTimeInterval)0.0
+                  inModes:[NSArray arrayWithObjects:
+                           NSDefaultRunLoopMode,
+                           NSModalPanelRunLoopMode,
+                           nil]];
 }
 
 @end

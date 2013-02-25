@@ -14,7 +14,6 @@
 
 @implementation AKFormalProtocolsTopic
 
-
 #pragma mark -
 #pragma mark AKTopic methods
 
@@ -35,6 +34,5 @@
 
     return [AKSortUtils arrayBySortingArray:columnValues];
 }
-
 
 @end

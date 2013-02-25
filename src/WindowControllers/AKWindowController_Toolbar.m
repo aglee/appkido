@@ -9,7 +9,6 @@
 
 @implementation AKWindowController (Toolbar)
 
-
 #pragma mark -
 #pragma mark Private constants -- toolbar identifiers
 
@@ -21,16 +20,14 @@ static NSString *_AKSuperclassToolID   = @"AKSuperclassToolID";
 static NSString *_AKAddColumnToolID    = @"AKAddColumnToolID";
 static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
 
-
 #pragma mark -
 #pragma mark NSToolbar delegate methods
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar
-    itemForItemIdentifier:(NSString *)itemIdentifier
-    willBeInsertedIntoToolbar:(BOOL)flag
+     itemForItemIdentifier:(NSString *)itemIdentifier
+ willBeInsertedIntoToolbar:(BOOL)flag
 {
-    NSToolbarItem *toolbarItem =
-        [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
+    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
     
     if ([itemIdentifier isEqualToString:_AKQuicklistToolID])
     {
@@ -130,8 +127,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
 {
-    return
-        [NSArray arrayWithObjects:
+    return (@[
             _AKQuicklistToolID,
             _AKBrowserToolID,
             _AKBackToolID,
@@ -142,20 +138,19 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
             NSToolbarSeparatorItemIdentifier,
             NSToolbarSpaceItemIdentifier,
             NSToolbarFlexibleSpaceItemIdentifier,
-            nil];
+            ]);
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
-    return
-        [NSArray arrayWithObjects:
+    return (@[
             _AKQuicklistToolID,
             _AKBrowserToolID,
             NSToolbarSeparatorItemIdentifier,
             _AKBackToolID,
             _AKForwardToolID,
-            _AKSuperclassToolID,
-            nil];
+            _AKSuperclassToolID
+            ]);
 }
 
 @end

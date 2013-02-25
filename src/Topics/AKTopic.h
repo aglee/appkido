@@ -39,22 +39,17 @@
  *              AKTopic is an abstract class.
  */
 @interface AKTopic : NSObject <AKSortable>
-{
-}
-
 
 #pragma mark -
 #pragma mark AKXyzTopicName
 
 extern NSString *AKTopicBrowserPathSeparator;
 
-// Canned strings displayed in the topic browser for certain types of
-// topics.
+// Canned strings displayed in the topic browser for certain types of topics.
 extern NSString *AKProtocolsTopicName;
 extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKGlobalsTopicName;
-
 
 #pragma mark -
 #pragma mark Preferences
@@ -74,7 +69,6 @@ extern NSString *AKGlobalsTopicName;
 // [agl] note className should always be in the dict
 - (NSDictionary *)asPrefDictionary;
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -87,43 +81,41 @@ extern NSString *AKGlobalsTopicName;
  */
 - (AKDatabaseNode *)topicNode;
 
-
 #pragma mark -
 #pragma mark Names for various display contexts
 
-// subclasses must override
+/*! Subclasses must override. */
 - (NSString *)stringToDisplayInTopicBrowser;
 
 - (NSString *)stringToDisplayInDescriptionField;
 
 - (NSString *)stringToDisplayInLists;
 
-
 #pragma mark -
 #pragma mark Populating the topic browser
 
-// subclasses must override
+/*! Subclasses must override. */
 - (NSString *)pathInTopicBrowser;
 
-// subclasses may override; defaults to YES
+/*! Subclasses may override. Defaults to YES. */
 - (BOOL)browserCellShouldBeEnabled;
 
-// subclasses may override; defaults to YES
+/*! Subclasses may override. Defaults to YES. */
 - (BOOL)browserCellHasChildren;
 
-// subclasses must override if they may have children
-// returns array of AKTopics
+/*!
+ * Subclasses must override if they may have children. Returns array of
+ * AKTopics.
+ */
 - (NSArray *)childTopics;
-
 
 #pragma mark -
 #pragma mark Populating the subtopics table
 
-// subclasses must override
+/*! Subclasses must override. */
 - (NSInteger)numberOfSubtopics;
 
-// subclasses must override; not guaranteed to return the same instance
-// every time
+/*! Subclasses must override. May not return the same object every time. */
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex;
 
 - (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName;

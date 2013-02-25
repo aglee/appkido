@@ -7,10 +7,7 @@
 
 #import "AKInstanceMethodDoc.h"
 
-#import "AKBehaviorNode.h"
-
 @implementation AKInstanceMethodDoc
-
 
 #pragma mark -
 #pragma mark AKMemberDoc methods

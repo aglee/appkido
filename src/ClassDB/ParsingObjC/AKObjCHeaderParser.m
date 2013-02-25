@@ -15,7 +15,6 @@
 #import "AKCategoryNode.h"
 #import "AKMethodNode.h"
 
-
 #pragma mark -
 #pragma mark Character test functions
 
@@ -32,7 +31,6 @@ static BOOL isPunctuation(char c)
 
 @implementation AKObjCHeaderParser
 
-
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
 
@@ -40,7 +38,6 @@ static BOOL isPunctuation(char c)
 {
     return [[filePath pathExtension] isEqualToString:@"h"];
 }
-
 
 #pragma mark -
 #pragma mark AKParser methods
@@ -60,7 +57,6 @@ static BOOL isPunctuation(char c)
     {
     }
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- parsing
@@ -366,10 +362,11 @@ static BOOL isPunctuation(char c)
 
             if (methodNode == nil)
             {
-                methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
-                                                           database:_targetDatabase
-                                                      frameworkName:_targetFrameworkName
-                                                     owningBehavior:behaviorNode];
+                methodNode = [[[AKMethodNode alloc] initWithNodeName:methodName
+                                                            database:_targetDatabase
+                                                       frameworkName:_targetFrameworkName
+                                                      owningBehavior:behaviorNode]
+                              autorelease];
                 addMemberNode(behaviorNode, methodNode);
             }
 
@@ -606,6 +603,5 @@ static BOOL isPunctuation(char c)
         }
     }
 }
-
 
 @end

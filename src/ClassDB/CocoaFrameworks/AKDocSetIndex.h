@@ -12,6 +12,28 @@
  * found inside a .docset bundle.  The database is in a file called docSet.dsidx.
  */
 @interface AKDocSetIndex : NSObject
+{
+@private
+    NSString *_docSetPath;  // Path to a .docset bundle.
+
+    // The ZHEADER table contains absolute paths to header files in
+    // /System/Library/Frameworks.  However, the files should actually be
+    // looked up under the appropriate SDK directory in the Dev Tools.
+    // In particular, the iPhone headers exist only under the Dev Tools
+    // directory -- there is no /System/Library/Frameworks/UIKit.framework
+    // on the Mac, for example.  We need to prefix that path with
+    // /(DEVTOOLS)/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator2.0.sdk
+    // to find the UIKit headers.  That prefix is was goes in _basePathForHeaders.
+    //
+    // I *think* I can get away with using the plain /System/Library/Frameworks
+    // header paths for the Core Reference docs, so this can be @"/" when
+    // the docset is a Core Reference docset.  Otherwise, the tricky thing
+    // is that there can be multiple SDKs for regular Mac OS; for example,
+    // under /(DEVTOOLS)/SDKs I have MacOSX10.4u.sdk and MacOSX10.5.sdk.
+    // I'll assume the user's actual OS will be the latest of these, and
+    //  that the documentation is the same for all.
+    NSString *_basePathForHeaders;
+}
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -26,7 +48,6 @@
  * not a directory.
  */
 - (id)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders;
-
 
 #pragma mark -
 #pragma mark Getters and setters

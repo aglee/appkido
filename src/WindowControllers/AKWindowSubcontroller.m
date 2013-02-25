@@ -9,4 +9,9 @@
 
 @implementation AKWindowSubcontroller
 
+- (AKWindowController *)owningWindowController
+{
+    return _windowController;
+}
+
 @end

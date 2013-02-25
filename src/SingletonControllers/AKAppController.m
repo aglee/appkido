@@ -32,11 +32,8 @@
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 
-
-
 // [agl] working on parse performance
 #define MEASURE_PARSE_SPEED 1
-
 
 #pragma mark -
 #pragma mark Forwarding of applescript commands
@@ -47,7 +44,6 @@
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
 @end
 
-
 @implementation NSApplication (NSAppScriptingAdditions)
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
@@ -56,7 +52,6 @@
 }
 
 @end
-
 
 #pragma mark -
 
@@ -108,10 +103,20 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [_appDatabase release];
+    [_splashWindowController release];
+    [_operationQueue release];
+    [_prefPanelController release];
+    [_aboutWindowController release];
+    [_windowControllers release];
+    [_favoritesList release];
+
+    [super dealloc];
 }
 
-
-#pragma mark - Application startup
+#pragma mark -
+#pragma mark Application startup
 
 - (void)startApplicationStartup
 {
@@ -144,11 +149,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_operationQueue addOperation:op];
 }
 
-- (void)setSplashWindowController:(AKSplashWindowController *)wc
-{
-    _splashWindowController = wc;
-}
-
 - (void)finishApplicationStartup
 {
 // [agl] working on performance
@@ -158,7 +158,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     // Take down the splash window.
     [[_splashWindowController window] close];
-    [self setSplashWindowController:nil];
+    [_splashWindowController release];
+    _splashWindowController = nil;
 
     // Sanity-check the database we just loaded. If it's missing NSObject
     // documentation, the user probably has to download the docs.
@@ -213,11 +214,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _getFavoritesFromPrefs];
 
     // Register interest in window-close events.
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector:@selector(_handleWindowWillCloseNotification:)
-        name:NSWindowWillCloseNotification
-        object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_handleWindowWillCloseNotification:)
+                                                 name:NSWindowWillCloseNotification
+                                               object:nil];
 
     // Force the DIGSFindBuffer to initialize.
     // [agl] ??? Why not in DIGSFindBuffer's +initialize?
@@ -230,12 +230,11 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _maybeAddDebugMenu];
     
     // Set the provider of system services.
-    [NSApp setServicesProvider:[[AKServicesProvider alloc] init]];
+    [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
     NSUpdateDynamicServices();
 
     _finishedInitializing = YES;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -244,7 +243,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     return _appDatabase;
 }
-
 
 #pragma mark -
 #pragma mark Navigation
@@ -289,7 +287,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return windowController;
 }
 
-
 #pragma mark -
 #pragma mark Preferences
 
@@ -308,7 +305,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
         }
     }
 }
-
 
 #pragma mark -
 #pragma mark External search requests
@@ -335,7 +331,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [wc searchForString:searchString];
 }
 
-
 #pragma mark -
 #pragma mark AppleScript support
 
@@ -344,7 +339,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self searchForString:[aCommand directParameter]];
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark Managing the user's Favorites list
@@ -393,7 +387,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self applyUserPreferences];
 }
 
-
 #pragma mark -
 #pragma mark Action methods
 
@@ -423,34 +416,26 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if (![latestVersion isNewerThanVersion:thisVersion])
     {
-        NSRunAlertPanel(
-            @"Up to date",  // title
-            @"You have the latest version of AppKiDo.",  // msg
-            @"OK",  // defaultButton
-            nil,  // alternateButton
-            nil);  // otherButton
+        NSRunAlertPanel(@"Up to date",  // title
+                        @"You have the latest version of AppKiDo.",  // msg
+                        @"OK",  // defaultButton
+                        nil,  // alternateButton
+                        nil);  // otherButton
 
         return;
     }
 
     // If we got this far, the user does not have the latest version.
-    NSString *alertMessage =
-        [NSString
-            stringWithFormat:
-                @"Version %@ of AppKiDo is available for download."
-                @"  You are currently running version %@."
-                @"\n\nWould you like to go to the AppKiDo web page?",
-            [latestVersion displayString],
-            [thisVersion displayString]];
-
-    NSInteger whichButton =
-        NSRunAlertPanel(
-            @"Newer version available",  // title
-            alertMessage,  // msg
-            @"Yes, go to web site",  // defaultButton
-            nil,  // alternateButton
-            @"No");  // otherButton
-
+    NSString *alertMessage = [NSString stringWithFormat:(@"Version %@ of AppKiDo is available for download."
+                                                         @"  You are currently running version %@."
+                                                         @"\n\nWould you like to go to the AppKiDo web page?"),
+                              [latestVersion displayString],
+                              [thisVersion displayString]];
+    NSInteger whichButton = NSRunAlertPanel(@"Newer version available",  // title
+                                            alertMessage,  // msg
+                                            @"Yes, go to web site",  // defaultButton
+                                            nil,  // alternateButton
+                                            @"No");  // otherButton
     if (whichButton == NSAlertDefaultReturn)
     {
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:AKHomePageURL]];
@@ -511,13 +496,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
                                                         attributes:nil];
     if (!fileOK)
     {
-        DIGSLogError_ExitingMethodPrematurely(
-            ([NSString stringWithFormat:@"failed to get create file at [%@]", [[savePanel URL] path]]));
+        DIGSLogError_ExitingMethodPrematurely(([NSString stringWithFormat:@"failed to get create file at [%@]",
+                                                [[savePanel URL] path]]));
         return;
     }
 
-    AKDatabaseXMLExporter *exporter = [[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase
-                                                                              fileURL:[savePanel URL]];
+    AKDatabaseXMLExporter *exporter = [[[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase
+                                                                               fileURL:[savePanel URL]]
+                                       autorelease];
     [exporter doExport];
 }
 
@@ -549,7 +535,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-
 #pragma mark -
 #pragma mark UI item validation
 
@@ -562,16 +547,16 @@ static NSTimeInterval g_checkpointTime = 0.0;
         return YES;
     }
     else if ((itemAction == @selector(openNewWindow:))
-        || (itemAction == @selector(openLinkInNewWindow:))
-        || (itemAction == @selector(openPrefsPanel:))
-        || (itemAction == @selector(checkForNewerVersion:))
-        || (itemAction == @selector(openAboutPanel:))
-        || (itemAction == @selector(exportDatabase:)))
+             || (itemAction == @selector(openLinkInNewWindow:))
+             || (itemAction == @selector(openPrefsPanel:))
+             || (itemAction == @selector(checkForNewerVersion:))
+             || (itemAction == @selector(openAboutPanel:))
+             || (itemAction == @selector(exportDatabase:)))
     {
         return YES;
     }
     else if ((itemAction == @selector(_testParser:))
-        || (itemAction == @selector(_printKeyViewLoop:)))
+             || (itemAction == @selector(_printKeyViewLoop:)))
     {
         return YES;
     }
@@ -589,7 +574,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-
 #pragma mark -
 #pragma mark NSMenuValidation protocol methods
 
@@ -598,7 +582,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return [self validateItem:aCell];
 }
 
-
 #pragma mark -
 #pragma mark NSToolbarItemValidation protocol methods
 
@@ -606,7 +589,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     return [self validateItem:theItem];
 }
-
 
 #pragma mark -
 #pragma mark NSApplication delegate methods
@@ -634,7 +616,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Update prefs with the state of all open windows.
     [AKPrefUtils setArrayValue:[self _allWindowsAsPrefArray] forPref:AKSavedWindowStatesPrefName];
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- steps during launch
@@ -702,58 +683,48 @@ static NSTimeInterval g_checkpointTime = 0.0;
         NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFrameworkNamed:fwName];
 
         // Construct the submenu of framework-related topics.
-        NSMenu *fwTopicSubmenu = [[NSMenu alloc] initWithTitle:fwName];
+        NSMenu *fwTopicSubmenu = [[[NSMenu alloc] initWithTitle:fwName] autorelease];
 
         if ([formalProtocolNodes count] > 0)
         {
-            NSMenuItem *subitem =
-                [[NSMenuItem alloc]
-                    initWithTitle:AKProtocolsTopicName
-                    action:@selector(jumpToFrameworkFormalProtocols:)
-                    keyEquivalent:@""];
+            NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKProtocolsTopicName
+                                                              action:@selector(jumpToFrameworkFormalProtocols:)
+                                                       keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
         }
 
         if ([informalProtocolNodes count] > 0)
         {
-            NSMenuItem *subitem =
-                [[NSMenuItem alloc]
-                    initWithTitle:AKInformalProtocolsTopicName
-                    action:@selector(jumpToFrameworkInformalProtocols:)
-                    keyEquivalent:@""];
+            NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKInformalProtocolsTopicName
+                                                              action:@selector(jumpToFrameworkInformalProtocols:)
+                                                       keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
         }
 
         if ([functionsGroupNodes count] > 0)
         {
-            NSMenuItem *subitem =
-                [[NSMenuItem alloc]
-                    initWithTitle:AKFunctionsTopicName
-                    action:@selector(jumpToFrameworkFunctions:)
-                    keyEquivalent:@""];
+            NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKFunctionsTopicName
+                                                              action:@selector(jumpToFrameworkFunctions:)
+                                                       keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
         }
 
         if ([globalsGroupNodes count] > 0)
         {
-            NSMenuItem *subitem =
-                [[NSMenuItem alloc]
-                    initWithTitle:AKGlobalsTopicName
-                    action:@selector(jumpToFrameworkGlobals:)
-                    keyEquivalent:@""];
+            NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKGlobalsTopicName
+                                                              action:@selector(jumpToFrameworkGlobals:)
+                                                       keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
         }
 
         // Construct the menu item to add to the Go menu, and add it.
-        NSMenuItem *fwMenuItem =
-            [[NSMenuItem alloc]
-                initWithTitle:fwName
-                action:nil
-                keyEquivalent:@""];
+        NSMenuItem *fwMenuItem = [[[NSMenuItem alloc] initWithTitle:fwName
+                                                             action:nil
+                                                      keyEquivalent:@""] autorelease];
 
         [fwMenuItem setSubmenu:fwTopicSubmenu];
         menuIndex++;
@@ -770,22 +741,26 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         // Create the "Debug" top-level menu item.
         NSMenu *mainMenu = [NSApp mainMenu];
-        NSMenuItem *debugMenuItem =
-            [mainMenu addItemWithTitle:@"Debug" action:@selector(_testParser:) keyEquivalent:@""];
+        NSMenuItem *debugMenuItem = [mainMenu addItemWithTitle:@"Debug"
+                                                        action:@selector(_testParser:)
+                                                 keyEquivalent:@""];
         [debugMenuItem setEnabled:YES];
 
         // Create the submenu that will be under the "Debug" top-level menu item.
-        NSMenu *debugSubmenu = [[NSMenu alloc] initWithTitle:@"Debug"];
+        NSMenu *debugSubmenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
 
         [debugSubmenu setAutoenablesItems:YES];
-        [debugSubmenu addItemWithTitle:@"Open Parser Testing Window" action:@selector(_testParser:) keyEquivalent:@""];
-        [debugSubmenu addItemWithTitle:@"Print Key View Loop" action:@selector(_printKeyViewLoop:) keyEquivalent:@""];
+        [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
+                                action:@selector(_testParser:)
+                         keyEquivalent:@""];
+        [debugSubmenu addItemWithTitle:@"Print Key View Loop"
+                                action:@selector(_printKeyViewLoop:)
+                         keyEquivalent:@""];
 
         // Attach the submenu to the "Debug" top-level menu item.
         [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
     }
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- window management
@@ -819,15 +794,15 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (AKWindowController *)_windowControllerForNewWindowWithLayout:(AKWindowLayout *)windowLayout
 {
-    AKWindowController *windowController = [[AKWindowController alloc] initWithDatabase:_appDatabase];
+    AKWindowController *wc = [[[AKWindowController alloc] initWithDatabase:_appDatabase] autorelease];
 
-    [_windowControllers addObject:windowController];
+    [_windowControllers addObject:wc];
     if (windowLayout)
     {
-        [windowController takeWindowLayoutFrom:windowLayout];
+        [wc takeWindowLayoutFrom:windowLayout];
     }
 
-    return windowController;
+    return wc;
 }
 
 - (void)_handleWindowWillCloseNotification:(NSNotification *)notification
@@ -889,7 +864,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([del isKindOfClass:[AKWindowController class]])
         {
             AKWindowController *wc = (AKWindowController *)del;
-            AKSavedWindowState *savedWindowState = [[AKSavedWindowState alloc] init];
+            AKSavedWindowState *savedWindowState = [[[AKSavedWindowState alloc] init] autorelease];
 
             [wc putSavedWindowStateInto:savedWindowState];
             [result addObject:[savedWindowState asPrefDictionary]];
@@ -898,7 +873,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     return result;
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- version management
@@ -943,7 +917,6 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     
     return [AKAppVersion appVersionFromString:latestAppVersionString];
 }
-
 
 #pragma mark -
 #pragma mark Private methods -- Favorites
@@ -1018,11 +991,9 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     for (i = 0; i < numFavs; i++)
     {
         AKDocLocator *favItem = [_favoritesList objectAtIndex:i];
-        NSMenuItem *menuItem =
-            [[NSMenuItem alloc]
-                initWithTitle:[favItem stringToDisplayInLists]
-                action:@selector(jumpToDocLocatorRepresentedBy:)
-                keyEquivalent:@""];
+        NSMenuItem *menuItem = [[[NSMenuItem alloc] initWithTitle:[favItem stringToDisplayInLists]
+                                                           action:@selector(jumpToDocLocatorRepresentedBy:)
+                                                    keyEquivalent:@""] autorelease];
 
         if (i < 9)
         {

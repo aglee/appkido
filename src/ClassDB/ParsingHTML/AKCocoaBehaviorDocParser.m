@@ -19,9 +19,7 @@
 #import "AKProtocolNode.h"
 #import "AKTextUtils.h"
 
-
 @implementation AKCocoaBehaviorDocParser
-
 
 #pragma mark -
 #pragma mark AKDocParser methods
@@ -33,7 +31,6 @@
     // Parse the "Constants" section if there is one. <== [agl] I see this comment -- where is it actually done?
     [super applyParseResults];
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -331,10 +328,11 @@
         
         if (memberNode == nil)
         {
-            memberNode = [[memberNodeClass alloc] initWithNodeName:memberName
-                                                          database:_targetDatabase
-                                                     frameworkName:_targetFrameworkName
-                                                    owningBehavior:behaviorNode];
+            memberNode = [[[memberNodeClass alloc] initWithNodeName:memberName
+                                                           database:_targetDatabase
+                                                      frameworkName:_targetFrameworkName
+                                                     owningBehavior:behaviorNode]
+                          autorelease];
             addMemberNode(behaviorNode, memberNode);
         }
 

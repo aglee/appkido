@@ -34,27 +34,26 @@
 #import "AKGlobalsTopic.h"
 #import "AKOverviewDoc.h"
 
-
 @implementation AKLinkResolver
+
+@synthesize database = _database;
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)linkResolverWithDatabase:(AKDatabase *)database
 {
-    return [[self alloc] initWithDatabase:database];
+    return [[[self alloc] initWithDatabase:database] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database
 {
     if ((self = [super init]))
     {
-        _database = database;
+        _database = [database retain];
     }
 
     return self;
@@ -66,6 +65,12 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_database release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Resolving links
@@ -77,7 +82,7 @@
     NSString *linkAnchor = [normalizedLinkURL fragment];
     NSString *tokenName = [[linkAnchor pathComponents] lastObject];
 
-    AKSearchQuery *searchQuery = [[AKSearchQuery alloc] initWithDatabase:_database];
+    AKSearchQuery *searchQuery = [[[AKSearchQuery alloc] initWithDatabase:_database] autorelease];
     
     [searchQuery setSearchString:tokenName];
     [searchQuery setIncludesEverything];

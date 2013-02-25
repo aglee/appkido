@@ -16,17 +16,7 @@
 #import "AKGroupNode.h"
 #import "AKGlobalsNode.h"
 
-
 @implementation AKCocoaGlobalsDocParser
-{
-    // These ivars are only used during _parseNamesOfGlobalsInFileSection:.
-    char _prevToken[AKParserTokenBufferSize];
-    const char *_currTokenStart;
-    const char *_currTokenEnd;
-    const char *_prevTokenStart;
-    const char *_prevTokenEnd;
-}
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -45,7 +35,6 @@
     return self;
 }
 
-
 #pragma mark -
 #pragma mark AKDocParser methods
 
@@ -55,7 +44,6 @@
 
     [self _parseGlobalsFromMajorSections];
 }
-
 
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
@@ -74,7 +62,6 @@
 
     return [super shouldProcessFile:filePath];
 }
-
 
 #pragma mark -
 #pragma mark Private methods
@@ -158,9 +145,10 @@
                            [fileSection sectionName], [behaviorNode nodeName]];
     }
 
-    AKGlobalsNode *globalsNode = [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
-                                                                database:_targetDatabase
-                                                           frameworkName:_targetFrameworkName];
+    AKGlobalsNode *globalsNode = [[[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
+                                                                 database:_targetDatabase
+                                                            frameworkName:_targetFrameworkName]
+                                  autorelease];
 
     // Add any individual names we find in the minor section.
     for (NSString *nameOfGlobal in [self _parseNamesOfGlobalsInFileSection:fileSection])

@@ -24,16 +24,11 @@
     NSString *_currentPath;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
 - (id)initWithBasePath:(NSString *)basePath;
-
-/*! Returns [self -initWithBasePath:@""]. */
-- (id)init;
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -52,7 +47,6 @@
  * I'm not in the middle of processing files.
  */
 - (NSString *)currentPath;
-
 
 #pragma mark -
 #pragma mark Processing files

@@ -9,7 +9,6 @@
 
 @implementation AKInheritanceDoc
 
-
 #pragma mark -
 #pragma mark AKOverviewDoc methods
 

@@ -8,18 +8,18 @@
 #import "AKFileSectionDoc.h"
 
 /*!
- * @class       AKOverviewDoc
+ * Represents the "Overview" doc under the "General" subtopic.
  */
 @interface AKOverviewDoc : AKFileSectionDoc
 {
+@private
     NSString *_extraFrameworkName;
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-// Designated initializer -- okay to use super's DI
+/*! Designated initializer -- okay to use super's DI. */
 - (id)initWithFileSection:(AKFileSection *)fileSection
     andExtraFrameworkName:(NSString *)frameworkName;
 
@@ -33,14 +33,12 @@
  */
 - (id)initWithFileSection:(AKFileSection *)fileSection;
 
-
 #pragma mark -
 #pragma mark Utility methods
 
 // An overview doc list may contain docs for more than one framework.
 // If frameworkName is nil, returns docName unchanged.
 + (NSString *)qualifyDocName:(NSString *)docName withFrameworkName:(NSString *)frameworkName;
-
 
 #pragma mark -
 #pragma mark Protected methods

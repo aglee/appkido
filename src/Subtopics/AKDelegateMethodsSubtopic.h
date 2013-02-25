@@ -8,7 +8,5 @@
 #import "AKPseudoMethodsSubtopic.h"
 
 @interface AKDelegateMethodsSubtopic : AKPseudoMethodsSubtopic
-{
-}
 @end
 

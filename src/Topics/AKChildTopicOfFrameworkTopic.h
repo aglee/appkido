@@ -7,14 +7,13 @@
 
 #import "AKFrameworkTopic.h"
 
-// intermediate class holding shared behavior of topics that are related to
-// a framework topic; when a framework is selected in the browser, the
-// next column is populated with instances of this
-//
-// subclasses reflect the type of framework and must implement:
-//      -stringToDisplayInTopicBrowser
+/*!
+ * Intermediate class holding shared behavior of topics that are related to a
+ * a framework topic. When a framework is selected in the browser, the next
+ * next column is populated with instances of this.
+ *
+ * Subclasses reflect the type of framework and must implement
+ * -stringToDisplayInTopicBrowser.
+ */
 @interface AKChildTopicOfFrameworkTopic : AKFrameworkTopic
-{
-}
-
 @end

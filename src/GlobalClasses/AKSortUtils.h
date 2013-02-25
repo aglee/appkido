@@ -10,26 +10,15 @@
 #import "AKSortable.h"
 
 /*!
- * @class       AKSortUtils
- * @discussion  Utility methods that sort collections of objects that
- *              implement AKSortable either formally or informally.
+ * Utility methods that sort collections of objects that implement AKSortable
+ * either formally or informally.
  */
 @interface AKSortUtils : NSObject
-{
-}
 
-/*!
- * @method      arrayBySortingArray:
- * @discussion  Sorts the elements of the given array alphabetically by
- *              the value they return for -sortName.
- */
+/*! Sorts the array elements alphabetically by their -sortName. */
 + (NSArray *)arrayBySortingArray:(NSArray *)nodeArray;
 
-/*!
- * @method      arrayBySortingSet:
- * @discussion  Sorts the elements of the given set alphabetically by
- *              the value they return for -sortName.
- */
+/*! Sorts the set elements alphabetically by their -sortName. */
 + (NSArray *)arrayBySortingSet:(NSSet *)nodeSet;
 
 @end

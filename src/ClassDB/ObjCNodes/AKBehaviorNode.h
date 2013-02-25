@@ -33,10 +33,30 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * The concrete subclasses are AKClassNode, AKProtocolNode, and AKCategoryNode.
  */
 @interface AKBehaviorNode : AKDatabaseNode
+{
+@private
+    // One AKProtocolNode for each protocol this behavior conforms to.
+    NSMutableArray *_protocolNodes;
+
+    // Indexes the contents of _protocolNodes.
+    NSMutableSet *_protocolNodeNames;
+
+    // Contains AKPropertyNodes, each representing a property of this class.
+    AKCollectionOfNodes *_indexOfProperties;
+
+    // Contains AKMethodNodes, one for each class method that has either
+    // been found in my .h file or been found in the documentation for my
+    // behavior.
+    AKCollectionOfNodes *_indexOfClassMethods;
+
+    // Contains AKMethodNodes, one for each instance method that has either
+    // been found in my .h file or been found in the documentation for my
+    // behavior.
+    AKCollectionOfNodes *_indexOfInstanceMethods;
+}
 
 /*! Path to the .h file that declares this behavior. */
 @property (nonatomic, copy) NSString *headerFileWhereDeclared;
-
 
 #pragma mark -
 #pragma mark Getters and setters -- general
@@ -57,7 +77,6 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 /*! Returns zero or more AKMethodNodes. */
 - (NSArray *)instanceMethodNodes;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- properties
 
@@ -68,7 +87,6 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 
 /*! Does nothing if a property with the same name already exists. */
 - (void)addPropertyNode:(AKPropertyNode *)propertyNode;
-
 
 #pragma mark -
 #pragma mark Getters and setters -- class methods
@@ -84,7 +102,6 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 /*! Does nothing if a class method with the same name already exists. */
 - (void)addClassMethod:(AKMethodNode *)methodNode;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- instance methods
 
@@ -99,7 +116,6 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 /*! Does nothing if an instance method with the same name already exists. */
 - (void)addInstanceMethod:(AKMethodNode *)methodNode;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- deprecated methods
 
@@ -109,6 +125,5 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  */
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
                                         frameworkName:(NSString *)frameworkName;
-
 
 @end

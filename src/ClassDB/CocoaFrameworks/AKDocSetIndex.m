@@ -14,29 +14,6 @@
 #import "FMDatabase.h"
 
 @implementation AKDocSetIndex
-{
-@private
-    NSString *_docSetPath;  // Path to a .docset bundle.
-
-    // The ZHEADER table contains absolute paths to header files in
-    // /System/Library/Frameworks.  However, the files should actually be
-    // looked up under the appropriate SDK directory in the Dev Tools.
-    // In particular, the iPhone headers exist only under the Dev Tools
-    // directory -- there is no /System/Library/Frameworks/UIKit.framework
-    // on the Mac, for example.  We need to prefix that path with
-    // /(DEVTOOLS)/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator2.0.sdk
-    // to find the UIKit headers.  That prefix is was goes in _basePathForHeaders.
-    //
-    // I *think* I can get away with using the plain /System/Library/Frameworks
-    // header paths for the Core Reference docs, so this can be @"/" when
-    // the docset is a Core Reference docset.  Otherwise, the tricky thing
-    // is that there can be multiple SDKs for regular Mac OS; for example,
-    // under /(DEVTOOLS)/SDKs I have MacOSX10.4u.sdk and MacOSX10.5.sdk.
-    // I'll assume the user's actual OS will be the latest of these, and
-    //  that the documentation is the same for all.
-    NSString *_basePathForHeaders;
-}
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -47,8 +24,8 @@
 
     if ((self = [super init]))
     {
-        _docSetPath = docSetPath;
-        _basePathForHeaders = basePathForHeaders;
+        _docSetPath = [docSetPath copy];
+        _basePathForHeaders = [basePathForHeaders copy];
 
         DIGSLogInfo(@"docset index -- [%@]", [self _pathToSqliteFile]);
         
@@ -85,6 +62,13 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_docSetPath release];
+    [_basePathForHeaders release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -103,7 +87,7 @@
 #if APPKIDO_FOR_IPHONE
         s_selectableFrameworkNames = [[self _allFrameworkNames] retain];
 #else
-        s_selectableFrameworkNames = [self _objectiveCFrameworkNames];
+        s_selectableFrameworkNames = [[self _objectiveCFrameworkNames] retain];
 
         [s_selectableFrameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
         [s_selectableFrameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.
@@ -234,7 +218,6 @@
     return result;
 */
 }
-
 
 #pragma mark -
 #pragma mark Private methods

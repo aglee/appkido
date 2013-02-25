@@ -11,11 +11,11 @@
 #import <Cocoa/Cocoa.h>
 
 /*!
- * @class       AKFindPanelController
- * @discussion  Controller for the application-wide Find panel.
+ * Controller for the application-wide Find panel.
  */
 @interface AKFindPanelController : NSObject
 {
+@private
     // Did we find anything the last time we tried?  Used to decide what
     // to display in _statusTextField.
     BOOL _lastFindWasSuccessful;
@@ -26,16 +26,10 @@
     IBOutlet NSTextField *_statusTextField;
 }
 
-
 #pragma mark -
 #pragma mark Factory methods
 
-/*!
- * @method      sharedInstance
- * @discussion  Returns the one and only instance of this class.
- */
 + (AKFindPanelController *)sharedInstance;
-
 
 #pragma mark -
 #pragma mark Action methods

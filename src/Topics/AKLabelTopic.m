@@ -11,33 +11,36 @@
 
 @implementation AKLabelTopic
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
-    AKLabelTopic *obj = [[self alloc] init];
+    AKLabelTopic *topic = [[[self alloc] init] autorelease];
 
-    [obj setLabel:label];
+    [topic setLabel:label];
 
-    return obj;
+    return topic;
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
+- (void)dealloc
+{
+    [_label release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters
 
 - (void)setLabel:(NSString *)label
 {
-    _label = label;
+    [_label autorelease];
+    _label = [label copy];
 }
-
 
 #pragma mark -
 #pragma mark AKTopic methods
@@ -91,7 +94,6 @@
 {
     return NO;
 }
-
 
 #pragma mark -
 #pragma mark AKSortable methods

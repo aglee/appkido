@@ -28,6 +28,7 @@
  */
 @interface AKDocListController : AKWindowSubcontroller
 {
+@private
     // The subtopic whose list of docs we should display.
     AKSubtopic *_subtopicToDisplay;
 
@@ -37,34 +38,24 @@
     IBOutlet NSTextField *_docCommentField;
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
 - (void)setSubtopic:(AKSubtopic *)subtopic;
 
-
 #pragma mark -
 #pragma mark Navigation
 
-// may modify whereTo
+/*! May modify whereTo. */
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
 
-/*!
- * @method      focusOnDocListTable
- * @discussion  Assigns first responder status to the doc list table.
- */
+/*! Makes the doc list table first responder. */
 - (void)focusOnDocListTable;
-
 
 #pragma mark -
 #pragma mark Action methods
 
-/*!
- * @method      doDocListTableAction:
- * @discussion  Responds to the user's selection of an item in the doc
- *              list table.
- */
+/*! Called when the user select an item in the doc list table. */
 - (IBAction)doDocListTableAction:(id)sender;
 
 @end

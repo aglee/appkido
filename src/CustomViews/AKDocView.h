@@ -17,6 +17,7 @@
 
 @interface AKDocView : NSView
 {
+@private
     AKDocLocator *_docLocator;
 
     NSString *_headerFontName;

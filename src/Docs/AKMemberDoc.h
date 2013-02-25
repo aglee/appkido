@@ -12,25 +12,26 @@
 
 @interface AKMemberDoc : AKDoc
 {
+@private
     AKMemberNode *_memberNode;
     AKBehaviorNode *_behaviorNode;
 }
 
+@property (nonatomic, readonly, retain) AKMemberNode *memberNode;
+@property (nonatomic, readonly, retain) AKBehaviorNode *behaviorNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (id)initWithMemberNode:(AKMemberNode *)memberNode
-    inheritedByBehavior:(AKBehaviorNode *)behaviorNode;
-
+     inheritedByBehavior:(AKBehaviorNode *)behaviorNode;
 
 #pragma mark -
 #pragma mark Manipulating node names
 
-/*! Must override this. */
+/*! Subclasses must override this. */
 + (NSString *)punctuateNodeName:(NSString *)memberName;
-
 
 #pragma mark -
 #pragma mark AKDoc methods

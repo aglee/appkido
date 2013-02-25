@@ -9,7 +9,6 @@
 
 @implementation AKSubcontroller
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -18,7 +17,6 @@
     // Do nothing.
 }
 
-
 #pragma mark -
 #pragma mark User preferences
 
@@ -26,7 +24,6 @@
 {
     // Do nothing.
 }
-
 
 #pragma mark -
 #pragma mark UI item validation

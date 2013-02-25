@@ -11,6 +11,12 @@
 
 @implementation AKDatabaseNode
 
+@synthesize nodeName = _nodeName;
+@synthesize owningDatabase = _owningDatabase;
+@synthesize owningFrameworkName = _owningFrameworkName;
+@synthesize nodeDocumentation = _nodeDocumentation;
+@synthesize isDeprecated = _isDeprecated;
+
 #pragma mark -
 #pragma mark Factory methods
 
@@ -18,11 +24,10 @@
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
-    return [[self alloc] initWithNodeName:nodeName
-                                 database:database
-                            frameworkName:frameworkName];
+    return [[[self alloc] initWithNodeName:nodeName
+                                  database:database
+                             frameworkName:frameworkName] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -33,9 +38,9 @@
 {
     if ((self = [super init]))
     {
-        _nodeName = nodeName;
+        _nodeName = [nodeName copy];
         _owningDatabase = database;
-        _owningFrameworkName = frameworkName;
+        _owningFrameworkName = [frameworkName copy];
         _nodeDocumentation = nil;
         _isDeprecated = NO;
     }
@@ -49,6 +54,14 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_nodeName release];
+    [_owningFrameworkName release];
+    [_nodeDocumentation release];
+
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKSortable methods
@@ -57,7 +70,6 @@
 {
     return _nodeName;
 }
-
 
 #pragma mark -
 #pragma mark NSObject methods

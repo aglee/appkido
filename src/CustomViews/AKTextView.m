@@ -9,7 +9,6 @@
 
 @implementation AKTextView
 
-
 #pragma mark -
 #pragma mark NSView methods
 

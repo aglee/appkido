@@ -8,9 +8,8 @@
 #import <Foundation/Foundation.h>
 
 /*!
- * @class       DIGSPrefUtils
- * @discussion  Convenience methods for getting and setting user preferences.
- *              Implemented as wrappers around NSUserDefaults methods.
+ * Convenience methods for getting and setting user preferences. Implemented as
+ * wrappers around NSUserDefaults methods.
  */
 #import <Cocoa/Cocoa.h>
 

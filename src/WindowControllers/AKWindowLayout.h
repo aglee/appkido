@@ -40,14 +40,12 @@
     BOOL _searchIgnoresCase;
 }
 
-
 #pragma mark -
 #pragma mark Preferences
 
 + (AKWindowLayout *)fromPrefDictionary:(NSDictionary *)prefDictionary;
 
 - (NSDictionary *)asPrefDictionary;
-
 
 #pragma mark -
 #pragma mark Getters and setters

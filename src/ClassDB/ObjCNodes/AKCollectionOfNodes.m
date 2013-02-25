@@ -12,14 +12,6 @@
 #import "AKDatabaseNode.h"
 
 @implementation AKCollectionOfNodes
-{
-    // Contains all the AKDatabaseNodes that have been added to us.
-    NSMutableArray *_nodeList;
-
-    // Keys are node names.  Values are AKDatabaseNodes.
-    NSMutableDictionary *_nodesByName;
-}
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -35,7 +27,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_nodeList release];
+    [_nodesByName release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Getters and setters

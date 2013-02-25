@@ -21,14 +21,13 @@
 static NSString *_AKCheckboxesColumnID     = @"checkboxes";
 static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 
-
 #pragma mark -
 #pragma mark Factory methods
 
-static AKPrefPanelController *s_sharedInstance = nil;
-
 + (AKPrefPanelController *)sharedInstance
 {
+    static AKPrefPanelController *s_sharedInstance = nil;
+    
     if (!s_sharedInstance)
     {
         s_sharedInstance = [[self alloc] init];
@@ -37,40 +36,19 @@ static AKPrefPanelController *s_sharedInstance = nil;
     return s_sharedInstance;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
-
-- (id)init
-{
-    if (s_sharedInstance)
-    {
-        return s_sharedInstance;
-    }
-
-    if ((self = [super init]))
-    {
-        s_sharedInstance = self;
-    }
-
-    return self;
-}
 
 - (void)awakeFromNib
 {
     [[_prefsTabView window] center];
 
     // Tweak the Frameworks table.
-    NSButtonCell *checkboxCell =
-        [[NSButtonCell alloc] initTextCell:@""];
+    NSButtonCell *checkboxCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
 
     [checkboxCell setButtonType:NSSwitchButton];
-    [[_frameworksTable
-        tableColumnWithIdentifier:_AKCheckboxesColumnID]
-        setDataCell:checkboxCell];
+    [[_frameworksTable tableColumnWithIdentifier:_AKCheckboxesColumnID] setDataCell:checkboxCell];
 }
-
-
 
 #pragma mark -
 #pragma mark Action methods
@@ -102,13 +80,10 @@ static AKPrefPanelController *s_sharedInstance = nil;
         if ([sender clickedColumn] == 0)
         {
             // The user toggled a framework.
-            NSString *clickedFramework =
-                [[self _namesOfAvailableFrameworks]
-                    objectAtIndex:[sender clickedRow]];
-            NSMutableArray *selectedFrameworks =
-                [NSMutableArray
-                    arrayWithArray:
-                        [AKPrefUtils selectedFrameworkNamesPref]];
+            NSArray *frameworkNames = [self _namesOfAvailableFrameworks];
+            NSString *clickedFramework = [frameworkNames objectAtIndex:[sender clickedRow]];
+            NSArray *namesOfSelectedFrameworks = [AKPrefUtils selectedFrameworkNamesPref];
+            NSMutableArray *selectedFrameworks = [NSMutableArray arrayWithArray:namesOfSelectedFrameworks];
 
             if ([selectedFrameworks containsObject:clickedFramework])
             {
@@ -143,7 +118,6 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [self _updatePrefsFromSearchTab];
 }
 
-
 #pragma mark -
 #pragma mark NSTableView datasource methods
 
@@ -153,27 +127,22 @@ static AKPrefPanelController *s_sharedInstance = nil;
 }
 
 - (id)tableView:(NSTableView *)aTableView
-    objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(NSInteger)rowIndex
+objectValueForTableColumn:(NSTableColumn *)aTableColumn
+            row:(NSInteger)rowIndex
 {
-    return
-        [[self _namesOfAvailableFrameworks]
-            objectAtIndex:rowIndex];
+    return [[self _namesOfAvailableFrameworks] objectAtIndex:rowIndex];
 }
-
 
 #pragma mark -
 #pragma mark NSTableView delegate methods
 
 - (void)tableView:(NSTableView *)aTableView
-    willDisplayCell:(id)aCell
-    forTableColumn:(NSTableColumn *)aTableColumn
-    row:(int)rowIndex
+  willDisplayCell:(id)aCell
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(int)rowIndex
 {
     NSString *columnID = [aTableColumn identifier];
-    NSString *fwName =
-        [[self _namesOfAvailableFrameworks]
-            objectAtIndex:rowIndex];
+    NSString *fwName = [[self _namesOfAvailableFrameworks] objectAtIndex:rowIndex];
 
     if ([columnID isEqualToString:_AKCheckboxesColumnID])
     {
@@ -188,8 +157,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
             // All other frameworks are up to the user to include or not.
             [aCell setEnabled:YES];
 
-            if ([[AKPrefUtils selectedFrameworkNamesPref]
-                    containsObject:fwName])
+            if ([[AKPrefUtils selectedFrameworkNamesPref] containsObject:fwName])
             {
                 // The framework is currently included.
                 [aCell setState:NSOnState];
@@ -207,7 +175,6 @@ static AKPrefPanelController *s_sharedInstance = nil;
         [aCell setTitle:fwName];
     }
 }
-
 
 #pragma mark -
 #pragma mark Private methods

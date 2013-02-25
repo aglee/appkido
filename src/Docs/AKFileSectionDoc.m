@@ -8,11 +8,9 @@
 #import "AKFileSectionDoc.h"
 
 #import "DIGSLog.h"
-
 #import "AKFileSection.h"
 
 @implementation AKFileSectionDoc
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -21,7 +19,7 @@
 {
     if ((self = [super init]))
     {
-        _fileSection = fileSection;
+        _fileSection = [fileSection retain];
     }
 
     return self;
@@ -33,7 +31,12 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_fileSection release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKDoc methods

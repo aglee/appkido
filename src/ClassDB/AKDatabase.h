@@ -64,8 +64,51 @@
  *              "the database."
  */
 @interface AKDatabase : NSObject
+{
+@private
+    AKDocSetIndex *_docSetIndex;
+    
+    // Frameworks.
+    // Note: there are constants in AKFrameworkConstants.h for the names of some
+    // frameworks that need to be treated specially.
+    NSMutableDictionary *_frameworksByName;  // @{FRAMEWORK_NAME: AKFramework}
+    NSMutableArray *_frameworkNames;
+    NSMutableArray *_namesOfAvailableFrameworks;
 
-@property (nonatomic, weak) id <AKDatabaseDelegate>delegate;
+    // Classes.
+    NSMutableDictionary *_classNodesByName;  // @{CLASS_NAME: AKClassNode}
+    NSMutableDictionary *_classListsByFramework;  // @{FRAMEWORK_NAME: @[AKClassNode]}
+
+    // Protocol.
+    NSMutableDictionary *_protocolNodesByName;  // @{PROTOCOL_NAME -> @[AKProtocolNode]
+    NSMutableDictionary *_protocolListsByFramework;  // @{FRAMEWORK_NAME: @[AKProtocolNode]}
+
+    // Functions.
+    NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
+    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
+
+    // Globals.
+    NSMutableDictionary *_globalsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
+    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
+
+    // Hyperlink support.
+    NSMutableDictionary *_frameworkNamesByHTMLPath;  // @{PATH_TO_HTML_FILE: FRAMEWORK_NAME}
+    NSMutableDictionary *_classNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassNode}
+    NSMutableDictionary *_protocolNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolNode}
+
+    // See AKDocParser for an explanation of root sections.
+    NSMutableDictionary *_rootSectionsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKFileSection}
+
+    // Keys are anchor strings.  Each value is a dictionary whose keys are
+    // paths to HTML files and whose values are NSNumbers containing the
+    // byte offset of that anchor within that file.
+    //
+    // See the comment for -offsetOfAnchorString:inHTMLFile: to see what
+    // is meant by "anchor strings."
+    NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
+}
+
+@property (nonatomic, unsafe_unretained) id <AKDatabaseDelegate>delegate;
 
 #pragma mark -
 #pragma mark - Factory methods

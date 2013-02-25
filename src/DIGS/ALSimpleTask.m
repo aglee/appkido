@@ -39,6 +39,13 @@
 	// We call this in dealloc because besides ensuring the task is stopped, it
 	// disconnects weak references.
 	[self _stopTask];
+    
+    [_commandPath release];
+    [_commandArguments release];
+    [_task release];
+    [_taskOutputData release];
+
+    [super dealloc];
 }
 
 - (BOOL)runTask
@@ -101,12 +108,13 @@
 
 - (NSData *)outputData
 {
-	return [_taskOutputData copy];
+	return [[_taskOutputData copy] autorelease];
 }
 
 - (NSString *)outputString
 {
-	return [[NSString alloc] initWithData:_taskOutputData encoding:NSUTF8StringEncoding];
+	return [[[NSString alloc] initWithData:_taskOutputData
+                                  encoding:NSUTF8StringEncoding] autorelease];
 }
 
 - (int)exitStatus
@@ -114,7 +122,8 @@
     return _taskExitStatus;
 }
 
-#pragma mark - Private methods
+#pragma mark -
+#pragma mark Private methods
 
 // Called when data is available from the task's file handle.
 // [aNotification object] is the file handle.
@@ -142,7 +151,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:NSFileHandleReadCompletionNotification
 												  object:[[_task standardOutput] fileHandleForReading]];
-
 	if (_taskDidLaunch)
 	{
 		[_task terminate];

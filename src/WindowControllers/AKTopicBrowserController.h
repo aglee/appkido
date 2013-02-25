@@ -23,6 +23,7 @@
  */
 @interface AKTopicBrowserController : AKWindowSubcontroller
 {
+@private
     // Values to display in all the columns of the browser.  Each element
     // is an array of values to be displayed in one column of the browser.
     // Values are instances of AKTopic classes.
@@ -36,20 +37,14 @@
     IBOutlet NSTextField *_topicDescriptionField;
 }
 
-
 #pragma mark -
 #pragma mark Navigation
 
-// may modify whereTo
+/*! May modify whereTo. */
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
 
-/*!
- * @method      jumpToSubtopicWithIndex:
- * @discussion  A pass-through method.  Forwards the message to my
- *   subtopics controller.
- */
+/*! A pass-through method. Forwards the message to my subtopics controller. */
 - (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex;
-
 
 #pragma mark -
 #pragma mark Action methods
@@ -59,10 +54,8 @@
 - (IBAction)addBrowserColumn:(id)sender;
 
 /*!
- * @method      doBrowserAction:
- * @discussion  Tells my subordinate controllers to reflect the topic
- *   selected in the topic browser.
- * @param       sender
+ * Tells my subordinate controllers to reflect the topic selected in the topic
+ * browser.
  */
 - (IBAction)doBrowserAction:(id)sender;
 

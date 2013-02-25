@@ -44,7 +44,8 @@
     [(AKAppController *)[NSApp delegate] searchForString:searchString];
 }
 
-#pragma mark - Methods listed in the NSServices section of Info.plist
+#pragma mark -
+#pragma mark Methods listed in the NSServices section of Info.plist
 
 - (void)searchForString:(NSPasteboard *)pboard
                userData:(NSString *)userData

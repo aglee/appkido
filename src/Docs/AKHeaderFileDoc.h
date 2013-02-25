@@ -5,12 +5,7 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "AKOverviewDoc.h"
 
 @interface AKHeaderFileDoc : AKOverviewDoc
-{
-}
-
 @end

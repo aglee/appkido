@@ -22,6 +22,7 @@
  */
 @interface AKDevToolsPanelController : NSObject
 {
+@private
     IBOutlet NSWindow *_window;
     IBOutlet AKDevToolsPathController *_devToolsPathController;
 }
@@ -30,7 +31,6 @@
 #pragma mark Factory methods
 
 + (id)controller;
-
 
 #pragma mark -
 #pragma mark Running the panel
@@ -41,7 +41,6 @@
  * returns YES.  If the user cancels, returns NO.
  */
 - (BOOL)runDevToolsSetupPanel;
-
 
 #pragma mark -
 #pragma mark Action methods

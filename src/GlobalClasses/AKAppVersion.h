@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-
 /*! URL of the downloads page for AppKiDo. */
 extern NSString *AKHomePageURL;
-
 
 /*!
  * The required format of a version string is X.YY{P}{spZ} where:

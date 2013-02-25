@@ -13,7 +13,6 @@
 
 @implementation AKNodeDoc
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -21,7 +20,7 @@
 {
     if ((self = [super init]))
     {
-        _databaseNode = databaseNode;
+        _databaseNode = [databaseNode retain];
     }
 
     return self;
@@ -33,7 +32,12 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    [_databaseNode release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark AKDoc methods

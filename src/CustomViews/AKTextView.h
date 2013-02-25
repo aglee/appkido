@@ -14,7 +14,4 @@
  * insertBacktab: to navigate to next and previous key views.
  */
 @interface AKTextView : DIGSTextView
-{
-}
-
 @end

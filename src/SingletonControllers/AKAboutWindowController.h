@@ -12,6 +12,7 @@
 
 @interface AKAboutWindowController : NSWindowController
 {
+@private
     IBOutlet WebView *_creditsView;
 }
 
