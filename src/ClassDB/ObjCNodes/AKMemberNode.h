@@ -15,6 +15,10 @@
  * methods, instance methods, delegate methods, and notifications.
  */
 @interface AKMemberNode : AKDatabaseNode
+{
+@private
+    AKBehaviorNode *_owningBehavior;
+}
 
 @property (nonatomic, readonly, unsafe_unretained) AKBehaviorNode *owningBehavior;
 

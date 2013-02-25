@@ -35,6 +35,8 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 @interface AKBehaviorNode : AKDatabaseNode
 {
 @private
+    NSString *_headerFileWhereDeclared;
+
     // One AKProtocolNode for each protocol this behavior conforms to.
     NSMutableArray *_protocolNodes;
 

@@ -67,6 +67,7 @@
 {
 @private
     AKDocSetIndex *_docSetIndex;
+    id <AKDatabaseDelegate> _delegate;
     
     // Frameworks.
     // Note: there are constants in AKFrameworkConstants.h for the names of some
@@ -108,7 +109,7 @@
     NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
 }
 
-@property (nonatomic, unsafe_unretained) id <AKDatabaseDelegate>delegate;
+@property (nonatomic, unsafe_unretained) id <AKDatabaseDelegate> delegate;
 
 #pragma mark -
 #pragma mark - Factory methods

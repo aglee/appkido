@@ -30,6 +30,14 @@
  * AKFileSection that contains HTML.
  */
 @interface AKDatabaseNode : NSObject <AKSortable>
+{
+@private
+    NSString *_nodeName;
+    AKDatabase *_owningDatabase;
+    NSString *_owningFrameworkName;
+    AKFileSection *_nodeDocumentation;
+    BOOL _isDeprecated;
+}
 
 /*! The meaning of a node's nodeName depends on the type of node. */
 @property (nonatomic, readonly, copy) NSString *nodeName;

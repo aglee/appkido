@@ -25,7 +25,7 @@
 
 @implementation AKClassNode
 
-@synthesize parentClass = _parentClassNode;
+@synthesize parentClass = _parentClass;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -141,9 +141,9 @@
     NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryNodes];
 
     // Get categories from ancestor classes.
-    if (_parentClassNode)
+    if (_parentClass)
     {
-        [result addObjectsFromArray:[_parentClassNode allCategories]];
+        [result addObjectsFromArray:[_parentClass allCategories]];
     }
 
     return result;
@@ -234,7 +234,7 @@
     NSMutableArray *result = [NSMutableArray arrayWithArray:[super implementedProtocols]];
 
     // Get protocols from ancestor classes.
-    [result addObjectsFromArray:[_parentClassNode implementedProtocols]];
+    [result addObjectsFromArray:[_parentClass implementedProtocols]];
 
     return result;
 }

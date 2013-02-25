@@ -12,20 +12,6 @@
 #import "AKDoc.h"
 
 @implementation AKDocLocator
-{
-    // The topic selected in the window's topic browser.
-    AKTopic *_topic;
-
-    // The selected item in the window's subtopics table.
-    NSString *_subtopicName;
-
-    // The selected item in the window's doc list.
-    NSString *_docName;
-
-    NSString *_cachedDisplayString;
-    NSString *_cachedSortName;
-    AKDoc *_cachedDoc;
-}
 
 #pragma mark -
 #pragma mark Factory methods

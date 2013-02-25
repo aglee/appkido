@@ -15,6 +15,8 @@
 
 @implementation AKBehaviorNode
 
+@synthesize headerFileWhereDeclared = _headerFileWhereDeclared;
+
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -37,6 +39,7 @@
 
 - (void)dealloc
 {
+    [_headerFileWhereDeclared release];
     [_protocolNodes release];
     [_protocolNodeNames release];
     [_indexOfProperties release];

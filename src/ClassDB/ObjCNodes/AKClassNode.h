@@ -24,6 +24,8 @@
 @interface AKClassNode : AKBehaviorNode
 {
 @private
+    AKClassNode *_parentClass;
+    
     // Elements are strings.
     NSMutableArray *_namesOfAllOwningFrameworks;
 
