@@ -8,6 +8,7 @@
 #import <AppKit/AppKit.h>
 
 @class AKDocLocator;
+@class AKDocListController;
 @class WebView;
 
 
@@ -37,17 +38,15 @@
     // because we want to render plain text without being confused by angle
     // brackets in #import directives.
     NSScrollView *_scrollView;
-    WebView *_webView;  // nil if WebKit is not available.
+    WebView *_webView;
 
-    IBOutlet id _docListController;
+    IBOutlet AKDocListController *_docListController;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
 
 - (void)setDocLocator:(AKDocLocator *)docLocator;
-
 
 #pragma mark -
 #pragma mark UI behavior
