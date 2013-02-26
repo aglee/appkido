@@ -87,19 +87,19 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_topicBrowser</string>
-						<reference key="source" ref="310502495"/>
-						<reference key="destination" ref="633501576"/>
-					</object>
-					<int key="connectionID">1138</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">view</string>
 						<reference key="source" ref="310502495"/>
 						<reference key="destination" ref="775816682"/>
 					</object>
 					<int key="connectionID">1508</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">topicBrowser</string>
+						<reference key="source" ref="310502495"/>
+						<reference key="destination" ref="633501576"/>
+					</object>
+					<int key="connectionID">1510</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -188,7 +188,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1509</int>
+			<int key="maxID">1510</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -244,13 +244,13 @@
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">_topicBrowser</string>
+						<string key="NS.key.0">topicBrowser</string>
 						<string key="NS.object.0">AKBrowser</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">_topicBrowser</string>
+						<string key="NS.key.0">topicBrowser</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">_topicBrowser</string>
+							<string key="name">topicBrowser</string>
 							<string key="candidateClassName">AKBrowser</string>
 						</object>
 					</object>
