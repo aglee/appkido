@@ -31,6 +31,7 @@
 #import "AKTopic.h"
 #import "AKViewUtils.h"
 #import "AKWindowController.h"
+#import "AK_WindowController.h"
 #import "AKWindowLayout.h"
 
 // [agl] working on parse performance
@@ -162,51 +163,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_splashWindowController release];
     _splashWindowController = nil;
 
-    // Sanity-check the database we just loaded. If it's missing NSObject
-    // documentation, the user probably has to download the docs.
-    //
-    // [agl] It would be nice to sanity-check the docset documentation *before*
-    // spending all that time iterating through header files and docset files.
-    // Xcode is clearly able to do it -- it knows whether to put an "Install"
-    // button by the docset.
-    //
-    // I see nothing in the docset's Info.plist that indicates whether it's
-    // downloaded. Purely guessing after browsing a few docsets, I notice that
-    // downloaded docsets *don't* seem to have a version.plist file next to
-    // Info.plist. But my sample size is too small to trust this as a reliable
-    // indicator. It might be worth asking the Apple docs people, or the answer
-    // might even be documented somewhere.
-    //
-    // One solution might be to query the sqlite database for the location of
-    // the NSObject class doc, and see if that file exists.
-    //
-    // Maybe someday this won't be a problem any more because I'll able to
-    // assume all downloaded docsets are in ~/Library/Developer.
-    //
-    // I'm going with the current solution purely because it's quick to
-    // implement. I can revisit when I have more time.
-    AKClassNode *nsObjectNode = [_appDatabase classWithName:@"NSObject"];
-
-    if ([nsObjectNode nodeDocumentation] == nil)
+    // See whether the docset contains local HTML files we can use.
+    if (![self _sanityCheckTheDatabase])
     {
-        NSString *alertText = [NSString stringWithFormat:(@"The selected docset is missing HTML files.\n\n"
-                                                          @"You can tell Xcode to download the docset by going to Xcode > Preferences > Downloads > Documentation.\n\n"
-                                                          @"Alternatively, you can try selecting a different SDK."
-                                                          )];
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Missing HTML files"
-                                         defaultButton:@"OK"
-                                       alternateButton:nil
-                                           otherButton:nil
-                             informativeTextWithFormat:@"%@", alertText];
-        [alert runModal];
-
-        if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
-        {
-            [NSApp terminate:nil];
-        }
-        
-        [self performSelector:@selector(startApplicationStartup) withObject:nil afterDelay:0];
-        
         return;
     }
     
@@ -668,6 +627,60 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [alert runModal];
 }
 
+// If the database is missing NSObject documentation, the user probably has
+// to download the docs.
+//
+// [agl] It would be nice to sanity-check the docset documentation *before*
+// spending all that time iterating through header files and docset files.
+// Xcode is clearly able to do it -- it knows whether to put an "Install"
+// button by the docset.
+//
+// I see nothing in the docset's Info.plist that indicates whether it's
+// downloaded. Purely guessing after browsing a few docsets, I notice that
+// downloaded docsets *don't* seem to have a version.plist file next to
+// Info.plist. But my sample size is too small to trust this as a reliable
+// indicator. It might be worth asking the Apple docs people, or the answer
+// might even be documented somewhere.
+//
+// One solution might be to query the sqlite database for the location of
+// the NSObject class doc, and see if that file exists.
+//
+// Maybe someday this won't be a problem any more because I'll able to
+// assume all downloaded docsets are in ~/Library/Developer.
+//
+// I'm going with the current solution purely because it's quick to
+// implement. I can revisit when I have more time.
+- (BOOL)_sanityCheckTheDatabase
+{
+    // If we find NSObject docs, assume the docset has been downloaded.
+    if ([[_appDatabase classWithName:@"NSObject"] nodeDocumentation])
+    {
+        return YES;
+    }
+
+    // Prompt the user to either select a different docset or quit.
+    NSString *alertText = [NSString stringWithFormat:(@"The selected docset is missing HTML files.\n\n"
+                                                      @"You can tell Xcode to download the docset by going to Xcode > Preferences > Downloads > Documentation.\n\n"
+                                                      @"Alternatively, you can try selecting a different SDK."
+                                                      )];
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Missing HTML files"
+                                     defaultButton:@"OK"
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:@"%@", alertText];
+    [alert runModal];
+
+    if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
+    {
+        [NSApp terminate:nil];
+    }
+
+    // The user didn't quit, so redo app startup from the top.
+    [self performSelector:@selector(startApplicationStartup) withObject:nil afterDelay:0];
+
+    return NO;
+}
+
 - (void)_initGoMenu
 {
     DIGSLogDebug_EnteringMethod();
@@ -731,6 +744,35 @@ static NSTimeInterval g_checkpointTime = 0.0;
         menuIndex++;
         [goMenu insertItem:fwMenuItem atIndex:menuIndex];
     }
+}
+
+- (void)_openInitialWindows
+{
+    AK_WindowController *wc = [[[AK_WindowController alloc] initWithDatabase:_appDatabase] retain];
+    [wc showWindow:nil];
+
+//    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
+//
+//    if ([savedWindows count] == 0)
+//    {
+//        (void)[self controllerForNewWindow];
+//    }
+//    else
+//    {
+//        NSInteger numWindows = [savedWindows count];
+//        NSInteger i;
+//
+//        for (i = numWindows - 1; i >= 0; i--)
+//        {
+//            NSDictionary *prefDict = [savedWindows objectAtIndex:i];
+//            AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
+//            AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
+//            AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
+//
+//            [wc jumpToDocLocator:[savedWindowState savedDocLocator]];
+//            [wc openWindowWithQuicklistDrawer:[[savedWindowState savedWindowLayout] quicklistDrawerIsOpen]];
+//        }
+//    }
 }
 
 // Add the Debug menu if the user is "Andy Lee" with login name "alee".
@@ -813,32 +855,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     if ([windowDelegate isKindOfClass:[AKWindowController class]])
     {
         [_windowControllers removeObjectIdenticalTo:windowDelegate];
-    }
-}
-
-- (void)_openInitialWindows
-{
-    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
-
-    if ([savedWindows count] == 0)
-    {
-        (void)[self controllerForNewWindow];
-    }
-    else
-    {
-        NSInteger numWindows = [savedWindows count];
-        NSInteger i;
-
-        for (i = numWindows - 1; i >= 0; i--)
-        {
-            NSDictionary *prefDict = [savedWindows objectAtIndex:i];
-            AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
-            AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
-            AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
-
-            [wc jumpToDocLocator:[savedWindowState savedDocLocator]];
-            [wc openWindowWithQuicklistDrawer:[[savedWindowState savedWindowLayout] quicklistDrawerIsOpen]];
-        }
     }
 }
 

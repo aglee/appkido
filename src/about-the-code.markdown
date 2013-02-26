@@ -136,3 +136,38 @@ What happens when you run AppKiDo
     * Save window states so they can be restored in the next session.
 
 
+ *
+ * The information displayed in a browser window is hierarchical.
+ *
+ * At any given time, exactly one "topic" (also called the "main topic") is
+ * selected. This is the object selected in the "topic browser" at the top of
+ * the window.
+ *
+ * "Subtopics" of the selected topic are listed in the "subtopic list" in the
+ * middle left area of the window. If there are any subtopics in the list,
+ * exactly one is selected.
+ *
+ * "Docs" that are available for the selected subtopic are listed in the
+ * "doc list" in the middle right area of the window. If there are any docs in
+ * the list, exactly one is selected.
+ *
+ * The HTML content of the selected doc is displayed in the "doc view" at the
+ * bottom of the window.
+ *
+ *<pre>
+ *  +-----------------------------------------------------------+
+ *  |                                                           |
+ *  |                     Topic Browser                         |
+ *  |     |                                                     |
+ *  +-----|----------------------+------------------------------+
+ *  |     v                      |                              |
+ *  |   Subtopic  List          --->     Doc List               |
+ *  |                            |     |                        |
+ *  +----------------------------+-----|------------------------+
+ *  |                                  v                        |
+ *  |                        Doc View                           |
+ *  |                                                           |
+ *  +-----------------------------------------------------------+
+
+
+
