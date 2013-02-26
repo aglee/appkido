@@ -683,6 +683,7 @@
 		73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKInheritanceDoc.m; sourceTree = "<group>"; };
 		7320C13416DBAB2800797F95 /* AKFileSectionCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFileSectionCache.h; path = ClassDB/AKFileSectionCache.h; sourceTree = SOURCE_ROOT; };
 		7320C13516DBAB2F00797F95 /* AKFileSectionCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFileSectionCache.m; path = ClassDB/AKFileSectionCache.m; sourceTree = SOURCE_ROOT; };
+		7320C16F16DC5B9F00797F95 /* DIGSFindBufferDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIGSFindBufferDelegate.h; sourceTree = "<group>"; };
 		7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewUtils.h; sourceTree = "<group>"; };
 		7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewUtils.m; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };
@@ -1354,6 +1355,7 @@
 				734B2D910810C882001D5F3A /* DIGSFileProcessor.m */,
 				734B2D920810C882001D5F3A /* DIGSFindBuffer.h */,
 				734B2D930810C882001D5F3A /* DIGSFindBuffer.m */,
+				7320C16F16DC5B9F00797F95 /* DIGSFindBufferDelegate.h */,
 				734B2D9A0810C882001D5F3A /* DIGSTextSelection.h */,
 				734B2D9B0810C882001D5F3A /* DIGSTextSelection.m */,
 				734B2D960810C882001D5F3A /* DIGSMarginView.h */,

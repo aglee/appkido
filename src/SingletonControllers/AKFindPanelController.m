@@ -40,8 +40,7 @@
 {
     if ((self = [super init]))
     {
-        [[DIGSFindBuffer sharedInstance] addListener:self
-                                        withSelector:@selector(_findStringDidChange:)];
+        [[DIGSFindBuffer sharedInstance] addDelegate:self];
     }
 
     return self;
@@ -54,7 +53,7 @@
 
 - (void)dealloc
 {
-    [[DIGSFindBuffer sharedInstance] removeListener:self];
+    [[DIGSFindBuffer sharedInstance] removeDelegate:self];
 
     [super dealloc];
 }
@@ -135,6 +134,14 @@
             view = [view superview];
         }
     }
+}
+
+#pragma mark -
+#pragma mark DIGSFindBufferDelegate methods
+
+- (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer
+{
+    [_findTextField setStringValue:[findBuffer findString]];
 }
 
 #pragma mark -
@@ -223,11 +230,6 @@
     }
 
     return _lastFindWasSuccessful;
-}
-
-- (void)_findStringDidChange:(DIGSFindBuffer *)findWatcher
-{
-    [_findTextField setStringValue:[findWatcher findString]];
 }
 
 @end

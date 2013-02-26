@@ -5,20 +5,19 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import <Cocoa/Cocoa.h>
-
 #import "AKWindowSubcontroller.h"
+#import "DIGSFindBufferDelegate.h"
 
-@class AKSearchQuery;
-@class AKTableView;
 @class AKDocLocator;
 @class AKMultiRadioView;
+@class AKSearchQuery;
+@class AKTableView;
 @class AKWindowLayout;
 
 /*!
  * Controller for a browser window's quicklist drawer.
  */
-@interface AKQuicklistController : AKWindowSubcontroller
+@interface AKQuicklistController : AKWindowSubcontroller <DIGSFindBufferDelegate>
 {
 @private
     // Contains the values currently displayed in _quicklistTable.  Elements

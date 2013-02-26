@@ -6,33 +6,25 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "DIGSFindBufferDelegate.h"
+
+// [agl] Logic is flawed when you add/remove the same delegate object multiply.
 
 /*!
- * @class       DIGSFindBuffer
- * @abstract    Holds your application's search string.
- * @discussion  DIGSFindBuffer is a singleton class that holds the string
- *              your application should use for text searches.  This
- *              string is called the "find buffer."  When your application
- *              sets the find buffer, via -setFindString:, DIGSFindBuffer
- *              puts it into the find-pasteboard so that other applications
- *              will pick it up.  Conversely, when other applications write
- *              to the find-pasteboard, DIGSFindBuffer updates its find
- *              buffer accordingly the next time your application gets an
- *              appDidActivate notification.
+ * Singleton class that holds the string your application should use for text
+ * searches.
  *
- *              Objects can register interest in the find buffer via
- *              -addListener:withSelector:.  The DIGSFindBuffer messages
- *              its listeners whenever it discovers the find-pasteboard
- *              has changed.  Listener objects can use -findString to find
- *              out what the new find buffer is and react accordingly.  An
- *              example of a listener object might be the controller for
- *              your application's Find panel.
+ * When your application calls -setFindString:, DIGSFindBuffer puts the new
+ * find string into the system-wide find-pasteboard so that other applications
+ * will pick it up. Conversely, when other applications write to the
+ * find-pasteboard, DIGSFindBuffer picks up the new find string the next time
+ * your application gets an appDidActivate notification.
  *
- *              Note that DIGSFindBuffer does not retain its listeners.
- *              Listeners must unregister interest, via -removeListener:,
- *              before being deallocated -- i.e., in their -dealloc
- *              methods.  This is the same pattern used by
- *              NSNotificationCenters, which do not retain their observers.
+ * A DIGSFindBuffer can have any number of delegates. It messages the delegates
+ * whenever the find string changes. There is no guaranteed order in which the
+ * delegates are messaged. As in the usual single-delegate pattern, delegates
+ * are weak references and must be unregistered before being deallocated to
+ * avoid dangling pointers.
  */
 @interface DIGSFindBuffer : NSObject
 {
@@ -40,15 +32,16 @@
     // The current find string.
     NSString *_findString;
 
-    // Elements are NSValues containing pointers to my listener objects.
-    // The pointers are wrapped in NSValues so the listener objects
-    // themselves do not get retained when they are added.
-    NSMutableArray *_listenerPointers;
-
-    // Elements are NSValues containing selectors that specify the actions
-    // my listeners will take when I notify them.
-    NSMutableArray *_listenerActions;
+    // NSValues containing unretained pointers to the delegates.
+    // [agl] Could maybe implement this as a bag to allow nested calls to add/removeDelegate.
+    NSMutableArray *_delegatePointerValues;
 }
+
+/*!
+ * The setter sets the find buffer, updates the system find-pasteboard, and
+ * notifies delegates of the change.
+ */
+@property (nonatomic, copy) NSString *findString;
 
 #pragma mark -
 #pragma mark Factory methods
@@ -56,37 +49,11 @@
 + (DIGSFindBuffer *)sharedInstance;
 
 #pragma mark -
-#pragma mark Getters and setters
+#pragma mark Delegates
 
-/*! Returns the contents of the find buffer. */
-- (NSString *)findString;
+/*! Does nothing if the object is already among our delegates. */
+- (void)addDelegate:(id <DIGSFindBufferDelegate>)delegate;
 
-/*!
- * Sets the find buffer, updates the system find-pasteboard, and notifies
- * listeners of the change.
- */
-- (void)setFindString:(NSString *)string;
-
-#pragma mark -
-#pragma mark Managing listeners
-
-/*!
- * @method      addListener:withSelector:
- * @discussion  Adds listenerObject to my collection of listeners, if it's
- *              not already there.
- * @param       listenerObject
- *                  An object that implements the method specified by
- *                  handlerSelector.
- * @param       handlerSelector
- *                  Must specify a method that takes a single argument
- *                  that is an instance of DIGSFindBuffer.
- */
-- (void)addListener:(id)listenerObject withSelector:(SEL)handlerSelector;
-
-/*!
- * @method      removeListener:
- * @discussion  Removes listenerObject from my collection of listeners.
- */
-- (void)removeListener:(id)listenerObject;
+- (void)removeDelegate:(id <DIGSFindBufferDelegate>)delegate;
 
 @end

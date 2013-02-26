@@ -9,11 +9,12 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "DIGSFindBufferDelegate.h"
 
 /*!
  * Controller for the application-wide Find panel.
  */
-@interface AKFindPanelController : NSObject
+@interface AKFindPanelController : NSObject <DIGSFindBufferDelegate>
 {
 @private
     // Did we find anything the last time we tried?  Used to decide what

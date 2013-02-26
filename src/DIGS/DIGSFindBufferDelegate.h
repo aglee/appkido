@@ -1,5 +1,5 @@
 //
-//  AKFindBufferDelegate.h
+//  DIGSFindBufferDelegate.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 2/25/13.
@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol AKFindBufferDelegate <NSObject>
+@class DIGSFindBuffer;
 
+@protocol DIGSFindBufferDelegate <NSObject>
+@required
+- (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer;
 @end

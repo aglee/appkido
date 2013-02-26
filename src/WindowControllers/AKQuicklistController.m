@@ -74,7 +74,7 @@ enum
         _searchQuery = nil;  // Wait for -doAwakeFromNib to set this.
         _pastSearchStrings = [[NSMutableArray alloc] init];
 
-        [[DIGSFindBuffer sharedInstance] addListener:self withSelector:@selector(_findStringDidChange:)];
+        [[DIGSFindBuffer sharedInstance] addDelegate:self];
     }
 
     return self;
@@ -82,7 +82,7 @@ enum
 
 - (void)dealloc
 {
-    [[DIGSFindBuffer sharedInstance] removeListener:self];
+    [[DIGSFindBuffer sharedInstance] removeDelegate:self];
 
     [_currentTableValues release];
     [_searchQuery release];
@@ -375,6 +375,15 @@ enum
     }
 
     return NO;
+}
+
+#pragma mark -
+#pragma mark DIGSFindBufferDelegate methods
+
+- (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer
+{
+    [_searchField setStringValue:[findBuffer findString]];
+    [_searchField selectText:nil];
 }
 
 #pragma mark -
@@ -948,12 +957,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     }
 
     [self _jumpToSearchResultAtIndex:searchResultIndex];
-}
-
-- (void)_findStringDidChange:(DIGSFindBuffer *)findBuffer
-{
-    [_searchField setStringValue:[findBuffer findString]];
-    [_searchField selectText:nil];
 }
 
 - (void)_updateSearchOptionsPopup
