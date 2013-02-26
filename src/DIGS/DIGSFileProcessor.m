@@ -9,7 +9,14 @@
 
 #import "DIGSLog.h"
 
+@interface DIGSFileProcessor ()
+@property (nonatomic, copy) NSString *currentPath;
+@end
+
 @implementation DIGSFileProcessor
+
+@synthesize basePath = _basePath;
+@synthesize currentPath = _currentPath;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -39,19 +46,6 @@
 }
 
 #pragma mark -
-#pragma mark Getters and setters
-
-- (NSString *)basePath
-{
-    return _basePath;
-}
-
-- (NSString *)currentPath
-{
-    return _currentPath;
-}
-
-#pragma mark -
 #pragma mark Processing files
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
@@ -73,19 +67,18 @@
     }
 
     // Remember the current file.
-    [_currentPath autorelease];
-    _currentPath = [[_basePath stringByAppendingPathComponent:filePath] retain];
+    [self setCurrentPath:[_basePath stringByAppendingPathComponent:filePath]];
 
     // Do the job.
     [self processCurrentFile];
 
     // Un-remember the current file.
-    _currentPath = nil;
+    [self setCurrentPath:nil];
 }
 
 - (void)processDirectory:(NSString *)dirPath recursively:(BOOL)recurseFlag
 {
-    if ((dirPath == nil) || ([dirPath length] == 0))
+    if ([dirPath length] == 0)
     {
         return;
     }

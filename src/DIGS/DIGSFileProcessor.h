@@ -24,6 +24,9 @@
     NSString *_currentPath;
 }
 
+@property (nonatomic, readonly, copy) NSString *basePath;
+@property (nonatomic, readonly, copy) NSString *currentPath;
+
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
