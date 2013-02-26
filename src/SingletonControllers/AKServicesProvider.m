@@ -19,10 +19,8 @@
                               error:(NSString **)errorMessagePtr
 {
     // Make sure the pasteboard contains a string.
-    NSArray *classes = [NSArray arrayWithObject:[NSString class]];
-    NSDictionary *options = [NSDictionary dictionary];
     
-    if (![pboard canReadObjectForClasses:classes options:options])
+    if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}])
     {
         *errorMessagePtr = NSLocalizedString(@"Error: the pasteboard doesn't contain a string.", nil);
         return;

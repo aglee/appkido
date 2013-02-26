@@ -794,9 +794,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)copyDocTextURL:(id)sender
 {
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-    NSArray *pasteboardTypes = [NSArray arrayWithObject:NSStringPboardType];
 
-    [pasteboard declareTypes:pasteboardTypes owner:nil];
+    [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
     [pasteboard setString:[[self currentDocURL] absoluteString] forType:NSStringPboardType];
 }
 
