@@ -1,5 +1,5 @@
 //
-//  AK_DocViewController.h
+//  AKDocViewController.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 2/26/13.
@@ -8,7 +8,7 @@
 
 #import "AKViewController.h"
 
-@interface AK_DocViewController : AKViewController
+@interface AKDocViewController : AKViewController
 
 /*!
  * Tries to give first responder status to the doc view. Returns that view if

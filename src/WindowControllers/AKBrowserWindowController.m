@@ -14,10 +14,10 @@
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDoc.h"
-#import "AK_DocListViewController.h"
+#import "AKDocListViewController.h"
 #import "AKDocLocator.h"
 #import "AKDocView.h"
-#import "AK_DocViewController.h"
+#import "AKDocViewController.h"
 #import "AKFileSection.h"
 #import "AKFindPanelController.h"
 #import "AKFormalProtocolsTopic.h"
@@ -47,6 +47,8 @@
 @synthesize docListView = _docListView;
 @synthesize docView = _docView;
 
+@synthesize docCommentField = _docCommentField;
+
 @synthesize backButton = _backButton;
 @synthesize forwardButton = _forwardButton;
 @synthesize superclassButton = _superclassButton;
@@ -68,7 +70,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (id)initWithDatabase:(AKDatabase *)database
 {
-    if ((self = [super initWithWindowNibName:@"AKWindow"]))
+    if ((self = [super initWithWindowNibName:@"BrowserWindow"]))
     {
         _database = [database retain];
 
@@ -223,6 +225,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [_topicBrowserController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
     [_subtopicListController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
+
+    [_docListController setSubtopic:[_subtopicListController selectedSubtopic]];
+    [_docListController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
+
+    [_docCommentField setStringValue:[_docListController docComment]];
+
     [self _addHistoryItem:newHistoryItem];
 }
 
@@ -818,46 +826,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
 }
 
-- (void)_setUpViewControllers
-{
-    // Topic browser.
-    _topicBrowserController = [[AKTopicBrowserViewController alloc] initWithNibName:@"TopicBrowserView"
-                                                                              bundle:nil];
-    [self _plugVC:_topicBrowserController atView:_topicBrowserView];
-
-    // Subtopics list.
-    _subtopicListController = [[AKSubtopicListViewController alloc] initWithNibName:@"SubtopicListView"
-                                                                              bundle:nil];
-    [self _plugVC:_subtopicListController atView:_subtopicListView];
-
-//    // Doc list.
-//    _docListController = [[AK_DocListViewController alloc] initWithNibName:@"DocListView"
-//                                                                    bundle:nil];
-//    [self _plugVC:_docListController atView:_docListView];
-//
-//    // Doc view.
-//    _docViewController = [[AK_DocViewController alloc] initWithNibName:@"DocView"
-//                                                                bundle:nil];
-//    [self _plugVC:_docViewController atView:_docView];
-
-
-
-
-    [[_topicBrowserController topicBrowser] loadColumnZero];
-}
-
-- (void)_plugVC:(AKViewController *)vc atView:(NSView *)placeholderView
-{
-    [[vc view] setAutoresizingMask:[placeholderView autoresizingMask]];
-    [[placeholderView superview] replaceSubview:placeholderView with:[vc view]];
-
-    // Patch the vc into the responder chain.
-    // [agl] do I need to unpatch on dealloc?
-    NSResponder *nextResponder = [self nextResponder];
-    [self setNextResponder:vc];
-    [vc setNextResponder:nextResponder];
-}
-
 #pragma mark -
 #pragma mark NSMenuValidation protocol methods
 
@@ -928,6 +896,48 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Attach the toolbar to the browser window.
     [[self window] setToolbar:toolbar];
+}
+
+- (void)_setUpViewControllers
+{
+    // Topic browser.
+    _topicBrowserController = [[AKTopicBrowserViewController alloc] initWithNibName:@"TopicBrowserView"
+                                                                             bundle:nil];
+    [self _plugVC:_topicBrowserController atView:_topicBrowserView];
+
+    // Subtopics list.
+    _subtopicListController = [[AKSubtopicListViewController alloc] initWithNibName:@"SubtopicListView"
+                                                                             bundle:nil];
+    [self _plugVC:_subtopicListController atView:_subtopicListView];
+
+    // Doc list.
+    _docListController = [[AKDocListViewController alloc] initWithNibName:@"DocListView"
+                                                                   bundle:nil];
+    [self _plugVC:_docListController atView:_docListView];
+
+//    // Doc view.
+//    _docViewController = [[AKDocViewController alloc] initWithNibName:@"DocView"
+//                                                               bundle:nil];
+//    [self _plugVC:_docViewController atView:_docView];
+
+
+
+
+    [[_topicBrowserController topicBrowser] loadColumnZero];
+}
+
+- (void)_plugVC:(AKViewController *)vc atView:(NSView *)placeholderView
+{
+    [[vc view] setFrame:[placeholderView frame]];
+    [[vc view] setAutoresizingMask:[placeholderView autoresizingMask]];
+    
+    [[placeholderView superview] replaceSubview:placeholderView with:[vc view]];
+
+    // Patch the vc into the responder chain.
+    // [agl] do I need to unpatch on dealloc?
+    NSResponder *nextResponder = [self nextResponder];
+    [self setNextResponder:vc];
+    [vc setNextResponder:nextResponder];
 }
 
 - (NSString *)_tooltipForJumpToSuperclass

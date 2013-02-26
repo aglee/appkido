@@ -7,12 +7,13 @@
 
 #import "AKViewController.h"
 
+@class AKSubtopic;
 @class AKTableView;
-@class AK_DocListViewController;
+@class AKDocListViewController;
 @class AKDocLocator;
 
 /*!
- * Manages the "subtopic list", which displays the subtopics of the window's
+ * Manages the "subtopic list", which lists the subtopics of the window's
  * currently selected topic.
  */
 @interface AKSubtopicListViewController : AKViewController
@@ -28,6 +29,11 @@
 }
 
 @property (nonatomic, assign) IBOutlet AKTableView *subtopicsTable;
+
+#pragma mark -
+#pragma mark Getters and setters
+
+- (AKSubtopic *)selectedSubtopic;
 
 #pragma mark -
 #pragma mark Navigation

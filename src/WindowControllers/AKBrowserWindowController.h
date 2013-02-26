@@ -10,9 +10,9 @@
 
 @class AKDatabase;
 @class AKDoc;
-@class AK_DocListViewController;
+@class AKDocListViewController;
 @class AKDocLocator;
-@class AK_DocViewController;
+@class AKDocViewController;
 @class AK_QuicklistViewController;
 @class AKSavedWindowState;
 @class AKTopic;
@@ -56,8 +56,8 @@
     // View controllers that manage different portions of the window.
     AKTopicBrowserViewController *_topicBrowserController;
     AKSubtopicListViewController *_subtopicListController;
-    AK_DocListViewController *_docListController;
-    AK_DocViewController *_docViewController;
+    AKDocListViewController *_docListController;
+    AKDocViewController *_docViewController;
     AK_QuicklistViewController *_quicklistController;
 
     // Drawer where we put the Quicklist view.
@@ -71,6 +71,8 @@
     NSView *_subtopicListView;
     NSView *_docListView;
     NSView *_docView;
+    
+    NSTextField *_docCommentField;
 
     NSButton *_backButton;
     NSButton *_forwardButton;
@@ -90,6 +92,8 @@
 @property (nonatomic, assign) IBOutlet NSView *subtopicListView;
 @property (nonatomic, assign) IBOutlet NSView *docListView;
 @property (nonatomic, assign) IBOutlet NSView *docView;
+
+@property (nonatomic, assign) IBOutlet NSTextField *docCommentField;
 
 @property (nonatomic, assign) IBOutlet NSButton *backButton;
 @property (nonatomic, assign) IBOutlet NSButton *forwardButton;

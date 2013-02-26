@@ -56,7 +56,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{350, 350}</string>
 				<object class="NSView" key="NSWindowView" id="455086034">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -70,7 +70,8 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrameSize">{548, 174}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
-									<reference key="NSNextKeyView" ref="294746084"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="325794021"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NSView</string>
 								</object>
@@ -97,7 +98,8 @@
 															</object>
 															<string key="NSFrame">{{212, 20}, {316, 153}}</string>
 															<reference key="NSSuperview" ref="172926322"/>
-															<reference key="NSNextKeyView" ref="192904312"/>
+															<reference key="NSWindow"/>
+															<reference key="NSNextKeyView" ref="294746084"/>
 															<string key="NSReuseIdentifierKey">_NS:9</string>
 															<string key="NSClassName">NSView</string>
 														</object>
@@ -109,6 +111,7 @@
 															</object>
 															<string key="NSFrame">{{20, 20}, {167, 153}}</string>
 															<reference key="NSSuperview" ref="172926322"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="764380673"/>
 															<string key="NSReuseIdentifierKey">_NS:9</string>
 															<string key="NSClassName">NSView</string>
@@ -116,6 +119,7 @@
 													</object>
 													<string key="NSFrameSize">{548, 193}</string>
 													<reference key="NSSuperview" ref="593053015"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="841800253"/>
 													<string key="NSClassName">NSView</string>
 													<string key="NSExtension">NSResponder</string>
@@ -135,6 +139,7 @@
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{24, 0}, {24, 21}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="561831487"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="177179376">
@@ -165,6 +170,7 @@
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{48, 0}, {24, 21}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="172926322"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="616726537">
@@ -191,6 +197,7 @@
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrameSize">{24, 21}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="863506524"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="335044325">
@@ -215,6 +222,7 @@
 															</object>
 															<string key="NSFrame">{{475, 0}, {72, 21}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="468382865"/>
 															<string key="NSClassName">NSView</string>
 															<string key="NSExtension">NSResponder</string>
@@ -224,6 +232,7 @@
 															<int key="NSvFlags">266</int>
 															<string key="NSFrame">{{1, 0}, {472, 21}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="833349516"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="60864428">
@@ -254,6 +263,7 @@
 													</object>
 													<string key="NSFrame">{{0, 194}, {548, 21}}</string>
 													<reference key="NSSuperview" ref="593053015"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="767373584"/>
 													<string key="NSClassName">DIGSMatchingBackgroundView</string>
 													<string key="NSExtension">NSView</string>
@@ -261,6 +271,7 @@
 											</object>
 											<string key="NSFrameSize">{548, 213}</string>
 											<reference key="NSSuperview" ref="325794021"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="1063794748"/>
 											<string key="NSClassName">DIGSMarginView</string>
 											<string key="NSExtension">NSView</string>
@@ -273,23 +284,30 @@
 											</object>
 											<string key="NSFrame">{{0, 222}, {548, 99}}</string>
 											<reference key="NSSuperview" ref="325794021"/>
-											<reference key="NSNextKeyView" ref="593053015"/>
+											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="192904312"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSClassName">NSView</string>
 										</object>
 									</object>
 									<string key="NSFrame">{{0, 183}, {548, 321}}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="593053015"/>
 								</object>
 							</object>
 							<string key="NSFrame">{{20, 44}, {548, 504}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="866576386"/>
 						</object>
 						<object class="NSTextField" id="192904312">
 							<reference key="NSNextResponder" ref="455086034"/>
 							<int key="NSvFlags">290</int>
 							<string key="NSFrame">{{7, 5}, {503, 14}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="224150886">
 								<int key="NSCellFlags">67108864</int>
@@ -319,7 +337,9 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{602, 568}</string>
-					<reference key="NSNextKeyView" ref="866576386"/>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
+					<reference key="NSNextKeyView" ref="1011512076"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{350, 372}</string>
@@ -521,6 +541,14 @@
 						<reference key="destination" ref="468382865"/>
 					</object>
 					<int key="connectionID">1538</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">docCommentField</string>
+						<reference key="source" ref="310502495"/>
+						<reference key="destination" ref="192904312"/>
+					</object>
+					<int key="connectionID">1539</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -734,11 +762,13 @@
 						<int key="objectID">1517</int>
 						<reference key="object" ref="841800253"/>
 						<reference key="parent" ref="172926322"/>
+						<string key="objectName">SubtopicList</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1518</int>
 						<reference key="object" ref="764380673"/>
 						<reference key="parent" ref="172926322"/>
+						<string key="objectName">DocList</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1122</int>
@@ -921,11 +951,321 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1538</int>
+			<int key="maxID">1539</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">AKBrowserWindowController</string>
+					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addBrowserColumn:</string>
+							<string>addTopicToFavorites:</string>
+							<string>copyDocTextURL:</string>
+							<string>doBackMenuAction:</string>
+							<string>doForwardMenuAction:</string>
+							<string>findNext:</string>
+							<string>findPrevious:</string>
+							<string>jumpToDocLocatorRepresentedBy:</string>
+							<string>jumpToFrameworkFormalProtocols:</string>
+							<string>jumpToFrameworkFunctions:</string>
+							<string>jumpToFrameworkGlobals:</string>
+							<string>jumpToFrameworkInformalProtocols:</string>
+							<string>jumpToSuperclass:</string>
+							<string>navigateBack:</string>
+							<string>navigateForward:</string>
+							<string>openDocURLInBrowser:</string>
+							<string>rememberWindowLayout:</string>
+							<string>removeBrowserColumn:</string>
+							<string>revealDocFileInFinder:</string>
+							<string>showBrowser:</string>
+							<string>toggleBrowserVisible:</string>
+							<string>toggleQuicklistDrawer:</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addBrowserColumn:</string>
+							<string>addTopicToFavorites:</string>
+							<string>copyDocTextURL:</string>
+							<string>doBackMenuAction:</string>
+							<string>doForwardMenuAction:</string>
+							<string>findNext:</string>
+							<string>findPrevious:</string>
+							<string>jumpToDocLocatorRepresentedBy:</string>
+							<string>jumpToFrameworkFormalProtocols:</string>
+							<string>jumpToFrameworkFunctions:</string>
+							<string>jumpToFrameworkGlobals:</string>
+							<string>jumpToFrameworkInformalProtocols:</string>
+							<string>jumpToSuperclass:</string>
+							<string>navigateBack:</string>
+							<string>navigateForward:</string>
+							<string>openDocURLInBrowser:</string>
+							<string>rememberWindowLayout:</string>
+							<string>removeBrowserColumn:</string>
+							<string>revealDocFileInFinder:</string>
+							<string>showBrowser:</string>
+							<string>toggleBrowserVisible:</string>
+							<string>toggleQuicklistDrawer:</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">addBrowserColumn:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">addTopicToFavorites:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">copyDocTextURL:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doBackMenuAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doForwardMenuAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">findNext:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">findPrevious:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">jumpToDocLocatorRepresentedBy:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">jumpToFrameworkFormalProtocols:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">jumpToFrameworkFunctions:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">jumpToFrameworkGlobals:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">jumpToFrameworkInformalProtocols:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">jumpToSuperclass:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">navigateBack:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">navigateForward:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">openDocURLInBrowser:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">rememberWindowLayout:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">removeBrowserColumn:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">revealDocFileInFinder:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showBrowser:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggleBrowserVisible:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggleQuicklistDrawer:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>backButton</string>
+							<string>backMenu</string>
+							<string>docCommentField</string>
+							<string>docListView</string>
+							<string>docView</string>
+							<string>forwardButton</string>
+							<string>forwardMenu</string>
+							<string>innerSplitView</string>
+							<string>middleView</string>
+							<string>quicklistDrawer</string>
+							<string>subtopicListView</string>
+							<string>superclassButton</string>
+							<string>superclassesMenu</string>
+							<string>topLevelSplitView</string>
+							<string>topicBrowserView</string>
+							<string>topicDescriptionField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
+							<string>NSMenu</string>
+							<string>NSTextField</string>
+							<string>NSView</string>
+							<string>NSView</string>
+							<string>NSButton</string>
+							<string>NSMenu</string>
+							<string>NSSplitView</string>
+							<string>NSView</string>
+							<string>NSDrawer</string>
+							<string>NSView</string>
+							<string>NSButton</string>
+							<string>NSMenu</string>
+							<string>NSSplitView</string>
+							<string>NSView</string>
+							<string>NSTextField</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>backButton</string>
+							<string>backMenu</string>
+							<string>docCommentField</string>
+							<string>docListView</string>
+							<string>docView</string>
+							<string>forwardButton</string>
+							<string>forwardMenu</string>
+							<string>innerSplitView</string>
+							<string>middleView</string>
+							<string>quicklistDrawer</string>
+							<string>subtopicListView</string>
+							<string>superclassButton</string>
+							<string>superclassesMenu</string>
+							<string>topLevelSplitView</string>
+							<string>topicBrowserView</string>
+							<string>topicDescriptionField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">backButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">backMenu</string>
+								<string key="candidateClassName">NSMenu</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">docCommentField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">docListView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">docView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">forwardButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">forwardMenu</string>
+								<string key="candidateClassName">NSMenu</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">innerSplitView</string>
+								<string key="candidateClassName">NSSplitView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">middleView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">quicklistDrawer</string>
+								<string key="candidateClassName">NSDrawer</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">subtopicListView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">superclassButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">superclassesMenu</string>
+								<string key="candidateClassName">NSMenu</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topLevelSplitView</string>
+								<string key="candidateClassName">NSSplitView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topicBrowserView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topicDescriptionField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AKBrowserWindowController.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">DIGSMarginView</string>
 					<string key="superclassName">NSView</string>

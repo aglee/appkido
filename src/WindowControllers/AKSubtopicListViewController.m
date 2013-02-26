@@ -56,6 +56,19 @@
 }
 
 #pragma mark -
+#pragma mark Getters and setters
+
+- (AKSubtopic *)selectedSubtopic
+{
+//    return [[_subtopicsTable selectedCell] representedObject];
+    NSInteger subtopicIndex = [_subtopicsTable selectedRow];
+
+    return ((subtopicIndex >= 0)
+            ? [_subtopics objectAtIndex:subtopicIndex]
+            : nil);
+}
+
+#pragma mark -
 #pragma mark Navigation
 
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
