@@ -63,7 +63,7 @@
         if (isMainClassReference)
         {
             [classNode setNodeDocumentation:_rootSectionOfCurrentFile];
-            [classNode setOwningFrameworkName:[self targetFrameworkName]];
+            [classNode setNameOfOwningFramework:[self targetFrameworkName]];
         }
 
         [classNode associateDocumentation:_rootSectionOfCurrentFile
@@ -86,7 +86,7 @@
                        isDocumentedInHTMLFile:[self currentPath]];
 
         [protocolNode setNodeDocumentation:_rootSectionOfCurrentFile];
-        [protocolNode setOwningFrameworkName:[self targetFrameworkName]];
+        [protocolNode setNameOfOwningFramework:[self targetFrameworkName]];
 
         behaviorNode = protocolNode;
     }

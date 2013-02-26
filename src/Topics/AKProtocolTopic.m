@@ -101,7 +101,7 @@
                               : @"%@ protocol <%@>");
 
     return [NSString stringWithFormat:stringFormat,
-            [_protocolNode owningFrameworkName], [_protocolNode nodeName]];
+            [_protocolNode nameOfOwningFramework], [_protocolNode nodeName]];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -111,7 +111,7 @@
                                 : AKProtocolsTopicName);
 
     return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
-            AKTopicBrowserPathSeparator, [_protocolNode owningFrameworkName],
+            AKTopicBrowserPathSeparator, [_protocolNode nameOfOwningFramework],
             AKTopicBrowserPathSeparator, whichProtocols,
             AKTopicBrowserPathSeparator, [_protocolNode nodeName]];
 }

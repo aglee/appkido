@@ -26,8 +26,8 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [[self memberNode] owningFrameworkName];
-    NSString *behaviorFrameworkName = [[self behaviorNode] owningFrameworkName];
+    NSString *methodFrameworkName = [[self memberNode] nameOfOwningFramework];
+    NSString *behaviorFrameworkName = [[self behaviorNode] nameOfOwningFramework];
     BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
     AKBehaviorNode *ownerOfMethod = [[self memberNode] owningBehavior];
 

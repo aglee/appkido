@@ -13,7 +13,7 @@
 
 @synthesize nodeName = _nodeName;
 @synthesize owningDatabase = _owningDatabase;
-@synthesize owningFrameworkName = _owningFrameworkName;
+@synthesize nameOfOwningFramework = _nameOfOwningFramework;
 @synthesize nodeDocumentation = _nodeDocumentation;
 @synthesize isDeprecated = _isDeprecated;
 
@@ -40,7 +40,7 @@
     {
         _nodeName = [nodeName copy];
         _owningDatabase = database;
-        _owningFrameworkName = [frameworkName copy];
+        _nameOfOwningFramework = [frameworkName copy];
         _nodeDocumentation = nil;
         _isDeprecated = NO;
     }
@@ -57,7 +57,7 @@
 - (void)dealloc
 {
     [_nodeName release];
-    [_owningFrameworkName release];
+    [_nameOfOwningFramework release];
     [_nodeDocumentation release];
 
     [super dealloc];

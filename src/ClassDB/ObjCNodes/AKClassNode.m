@@ -274,9 +274,9 @@
 #pragma mark -
 #pragma mark AKDatabaseNode methods
 
-- (void)setOwningFrameworkName:(NSString *)frameworkName
+- (void)setNameOfOwningFramework:(NSString *)frameworkName
 {
-    [super setOwningFrameworkName:frameworkName];
+    [super setNameOfOwningFramework:frameworkName];
 
     // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
     if (frameworkName)

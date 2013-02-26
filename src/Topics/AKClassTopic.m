@@ -102,7 +102,7 @@
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ class %@",
-            [_classNode owningFrameworkName], [_classNode nodeName]];
+            [_classNode nameOfOwningFramework], [_classNode nodeName]];
 }
 
 - (NSString *)pathInTopicBrowser

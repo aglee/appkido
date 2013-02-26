@@ -262,7 +262,7 @@
     [_classNodesByName setObject:classNode forKey:className];
 
     // Add the class to our lookup by framework name.
-    NSString *frameworkName = [classNode owningFrameworkName];
+    NSString *frameworkName = [classNode nameOfOwningFramework];
     NSMutableArray *classNodes = [_classListsByFramework objectForKey:frameworkName];
 
     if (classNodes == nil)
@@ -334,7 +334,7 @@
     [_protocolNodesByName setObject:protocolNode forKey:protocolName];
 
     // Add the class to our lookup by framework name.
-    NSString *frameworkName = [protocolNode owningFrameworkName];
+    NSString *frameworkName = [protocolNode nameOfOwningFramework];
     NSMutableArray *protocolNodes = [_protocolListsByFramework objectForKey:frameworkName];
 
     if (protocolNodes == nil)
@@ -369,7 +369,7 @@
 
 - (void)addFunctionsGroup:(AKGroupNode *)groupNode
 {
-    NSString *frameworkName = [groupNode owningFrameworkName];
+    NSString *frameworkName = [groupNode nameOfOwningFramework];
 
     // See if we have any functions groups in the framework yet.
     NSMutableArray *groupList = nil;
@@ -449,7 +449,7 @@
 
 - (void)addGlobalsGroup:(AKGroupNode *)groupNode
 {
-    NSString *frameworkName = [groupNode owningFrameworkName];
+    NSString *frameworkName = [groupNode nameOfOwningFramework];
 
     // See if we have any globals groups in the framework yet.
     NSMutableArray *groupList = nil;

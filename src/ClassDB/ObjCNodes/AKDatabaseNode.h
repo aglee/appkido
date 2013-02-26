@@ -32,7 +32,7 @@
 @private
     NSString *_nodeName;
     AKDatabase *_owningDatabase;
-    NSString *_owningFrameworkName;
+    NSString *_nameOfOwningFramework;
     AKFileSection *_nodeDocumentation;
     BOOL _isDeprecated;
 }
@@ -43,7 +43,7 @@
 @property (nonatomic, unsafe_unretained) AKDatabase *owningDatabase;
 
 /*! Most nodes belong to exactly one framework. The exception is AKClassNode. */
-@property (nonatomic, copy) NSString *owningFrameworkName;
+@property (nonatomic, copy) NSString *nameOfOwningFramework;
 
 /*! Documentation for the API construct the node represents. Possibly nil. */
 @property (nonatomic, retain) AKFileSection *nodeDocumentation;

@@ -228,7 +228,7 @@ static BOOL isPunctuation(char c)
 
         // Make sure the framework which the class's .h file lives in is
         // recognized as the node's main framework.
-        [classNode setOwningFrameworkName:[self targetFrameworkName]];
+        [classNode setNameOfOwningFramework:[self targetFrameworkName]];
     }
 }
 
