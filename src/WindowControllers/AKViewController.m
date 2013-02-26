@@ -1,13 +1,13 @@
 /*
- * AK_ViewController.m
+ * AKViewController.m
  *
  * Created by Andy Lee on Tue Jul 30 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AK_ViewController.h"
+#import "AKViewController.h"
 
-@implementation AK_ViewController
+@implementation AKViewController
 
 - (void)dealloc
 {
@@ -19,13 +19,13 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AK_WindowController *)owningWindowController
+- (AKBrowserWindowController *)browserWindowController
 {
-    return (AK_WindowController *)[[[self view] window] delegate];
+    return (AKBrowserWindowController *)[[[self view] window] delegate];
 }
 
 #pragma mark -
-#pragma mark AK_UIController methods
+#pragma mark AKUIController methods
 
 - (void)applyUserPreferences
 {

@@ -5,7 +5,7 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AK_ViewController.h"
+#import "AKViewController.h"
 
 @class AKTableView;
 @class AKSubtopic;
@@ -26,7 +26,7 @@
  *              by an AKSubtopic corresponding to the selected item in
  *              the window's subtopic list.
  */
-@interface AK_DocListViewController : AK_ViewController
+@interface AK_DocListViewController : AKViewController
 {
 @private
     // The subtopic whose list of docs we should display.

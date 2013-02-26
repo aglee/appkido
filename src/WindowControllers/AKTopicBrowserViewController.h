@@ -1,11 +1,11 @@
 /*
- * AK_TopicBrowserViewController.h
+ * AKTopicBrowserViewController.h
  *
  * Created by Andy Lee on Tue Jul 30 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AK_ViewController.h"
+#import "AKViewController.h"
 
 @class AKBrowser;
 @class AKDocLocator;
@@ -14,7 +14,7 @@
  * Manages the NSBrowser used to navigate the top-level "topics" in an AppKiDo
  * browser window.
  */
-@interface AK_TopicBrowserViewController : AK_ViewController
+@interface AKTopicBrowserViewController : AKViewController
 {
 @private
     // Values to display in all the columns of the browser.  Each element

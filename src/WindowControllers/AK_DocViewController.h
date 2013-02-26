@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Andy Lee. All rights reserved.
 //
 
-#import "AK_ViewController.h"
+#import "AKViewController.h"
 
-@interface AK_DocViewController : AK_ViewController
+@interface AK_DocViewController : AKViewController
 
 /*!
  * Tries to give first responder status to the doc view. Returns that view if

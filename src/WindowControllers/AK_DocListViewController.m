@@ -109,7 +109,7 @@
                          : [[_subtopicToDisplay docAtIndex:selectedRow] docName]);
 
     // Tell the main window to select the doc at the selected index.
-    [[self owningWindowController] jumpToDocName:docName];
+    [[self browserWindowController] jumpToDocName:docName];
 }
 
 #pragma mark -
@@ -160,9 +160,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (isLinkClicked)
     {
         NSEvent *currentEvent = [NSApp currentEvent];
-        AK_WindowController *wc = (([currentEvent modifierFlags] & NSCommandKeyMask)
+        AKBrowserWindowController *wc = (([currentEvent modifierFlags] & NSCommandKeyMask)
                                   ? [[NSApp delegate] controllerForNewWindow]
-                                  : [self owningWindowController]);
+                                  : [self browserWindowController]);
 
         // Use a delayed perform to avoid mucking with the WebView's
         // display while it's in the middle of processing a UI event.
@@ -186,7 +186,7 @@ contextMenuItemsForElement:(NSDictionary *)element
     NSMutableArray *newMenuItems = [NSMutableArray array];
     
     // Don't have a contextual menu if there is nothing in the doc view.
-    if ([[self owningWindowController] currentDoc] == nil)
+    if ([[self browserWindowController] currentDoc] == nil)
     {
         return newMenuItems;
     }

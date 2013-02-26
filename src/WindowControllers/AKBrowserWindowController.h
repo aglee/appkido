@@ -1,12 +1,12 @@
 /*
- * AK_WindowController.h
+ * AKBrowserWindowController.h
  *
  * Created by Andy Lee on Wed Jul 03 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
 #import <Cocoa/Cocoa.h>
-#import "AK_UIController.h"
+#import "AKUIController.h"
 
 @class AKDatabase;
 @class AKDoc;
@@ -16,8 +16,8 @@
 @class AK_QuicklistViewController;
 @class AKSavedWindowState;
 @class AKTopic;
-@class AK_SubtopicListViewController;
-@class AK_TopicBrowserViewController;
+@class AKSubtopicListViewController;
+@class AKTopicBrowserViewController;
 @class AKWindowLayout;
 
 // Naming convention:
@@ -35,7 +35,7 @@
  * chain. The vc's are such that this shouldnt' cause a conflict between action
  * messages with the same name.
  */
-@interface AK_WindowController : NSWindowController <AK_UIController, NSToolbarDelegate>
+@interface AKBrowserWindowController : NSWindowController <AKUIController, NSToolbarDelegate>
 {
 @private
     // The source of all data the window displays.
@@ -54,8 +54,8 @@
     CGFloat _browserFractionWhenVisible;
     
     // View controllers that manage different portions of the window.
-    AK_TopicBrowserViewController *_topicBrowserController;
-    AK_SubtopicListViewController *_subtopicListController;
+    AKTopicBrowserViewController *_topicBrowserController;
+    AKSubtopicListViewController *_subtopicListController;
     AK_DocListViewController *_docListController;
     AK_DocViewController *_docViewController;
     AK_QuicklistViewController *_quicklistController;

@@ -5,9 +5,9 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKWindowController.h"
+#import "AKBrowserWindowController.h"
 
-@implementation AKWindowController (Toolbar)
+@implementation AKBrowserWindowController (Toolbar)
 
 #pragma mark -
 #pragma mark Private constants -- toolbar identifiers

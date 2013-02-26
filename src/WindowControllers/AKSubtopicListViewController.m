@@ -1,11 +1,11 @@
 /*
- * AK_SubtopicListViewController.m
+ * AKSubtopicListViewController.m
  *
  * Created by Andy Lee on Tue Jul 30 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AK_SubtopicListViewController.h"
+#import "AKSubtopicListViewController.h"
 
 #import "AKWindowController.h"
 #import "AKTableView.h"
@@ -14,14 +14,17 @@
 #import "AKDocListController.h"
 #import "AKDocLocator.h"
 
-@implementation AK_SubtopicListViewController
+@implementation AKSubtopicListViewController
+
+@synthesize subtopicsTable = _subtopicsTable;
 
 #pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark Init/dealloc/awake
 
-- (id)init
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    if ((self = [super init]))
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
     {
         _subtopics = [[NSMutableArray alloc] init];
     }
@@ -34,6 +37,22 @@
     [_subtopics release];
 
     [super dealloc];
+}
+
+- (void)awakeFromNib
+{
+    // Tweak the subtopics table.
+    NSBrowserCell *browserCell = [[[NSBrowserCell alloc] initTextCell:@""] autorelease];
+    [browserCell setLeaf:NO];
+    [browserCell setLoaded:YES];
+    [[[_subtopicsTable tableColumns] objectAtIndex:0] setDataCell:browserCell];
+
+    // Populate the subtopics table.
+    [_subtopicsTable reloadData];
+    [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+
+    // Tell subordinate controllers to awake.
+//    [_docListController doAwakeFromNib];
 }
 
 #pragma mark -
@@ -69,7 +88,7 @@
     if ([_subtopics count] == 0)
     {
         // The subtopics table and doc list table will both be empty.
-        [_docListController setSubtopic:nil];
+//        [_docListController setSubtopic:nil];
 
         // Modify whereTo.
         [whereTo setSubtopicName:nil];
@@ -93,14 +112,14 @@
 
         AKSubtopic *subtopic = [_subtopics objectAtIndex:subtopicIndex];
 
-        [_docListController setSubtopic:subtopic];
+//        [_docListController setSubtopic:subtopic];
 
         // Modify whereTo.
         [whereTo setSubtopicName:[subtopic subtopicName]];
     }
 
     // Tell my subordinate controllers to navigate.
-    [_docListController navigateFrom:whereFrom to:whereTo];
+//    [_docListController navigateFrom:whereFrom to:whereTo];
 }
 
 - (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex
@@ -109,8 +128,8 @@
     {
         NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
 
-        [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
-        [_docListController focusOnDocListTable];
+        [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
+//        [_docListController focusOnDocListTable];
     }
 }
 
@@ -125,38 +144,23 @@
                                  : [[_subtopics objectAtIndex:selectedRow] subtopicName]);
 
     // Tell the main window to select the subtopic at the selected index.
-    [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
+    [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
 }
 
 #pragma mark -
 #pragma mark AKSubcontroller methods
 
-- (void)doAwakeFromNib
-{
-    // Tweak the subtopics table.
-    NSBrowserCell *browserCell = [[[NSBrowserCell alloc] initTextCell:@""] autorelease];
-    [browserCell setLeaf:NO];
-    [browserCell setLoaded:YES];
-    [[[_subtopicsTable tableColumns] objectAtIndex:0] setDataCell:browserCell];
-
-    // Populate the subtopics table.
-    [_subtopicsTable reloadData];
-    [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-
-    // Tell subordinate controllers to awake.
-    [_docListController doAwakeFromNib];
-}
-
 - (void)applyUserPreferences
 {
     [_subtopicsTable applyListFontPrefs];
 
-    [_docListController applyUserPreferences];
+//    [_docListController applyUserPreferences];
 }
 
 - (BOOL)validateItem:(id)anItem
 {
-    return [_docListController validateItem:anItem];
+//    return [_docListController validateItem:anItem];
+    return NO;
 }
 
 #pragma mark -

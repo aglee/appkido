@@ -31,7 +31,7 @@
 #import "AKTopic.h"
 #import "AKViewUtils.h"
 #import "AKWindowController.h"
-#import "AK_WindowController.h"
+#import "AKBrowserWindowController.h"
 #import "AKWindowLayout.h"
 
 // [agl] working on parse performance
@@ -748,7 +748,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_openInitialWindows
 {
-    AK_WindowController *wc = [[[AK_WindowController alloc] initWithDatabase:_appDatabase] retain];
+    AKBrowserWindowController *wc = [[[AKBrowserWindowController alloc] initWithDatabase:_appDatabase] retain];
     [wc showWindow:nil];
 
 //    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];

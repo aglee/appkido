@@ -1,5 +1,5 @@
 //
-//  AK_UIController.h
+//  AKUIController.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 2/26/13.
@@ -14,7 +14,7 @@
 /*!
  * Declares methods for performing common UI-related operations.
  */
-@protocol AK_UIController <NSObject>
+@protocol AKUIController <NSObject>
 
 @required
 

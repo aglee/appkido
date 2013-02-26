@@ -1,11 +1,11 @@
 /*
- * AK_TopicBrowserViewController.m
+ * AKTopicBrowserViewController.m
  *
  * Created by Andy Lee on Tue Jul 30 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AK_TopicBrowserViewController.h"
+#import "AKTopicBrowserViewController.h"
 
 #import "DIGSLog.h"
 
@@ -24,7 +24,7 @@
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 
-@implementation AK_TopicBrowserViewController
+@implementation AKTopicBrowserViewController
 
 @synthesize topicBrowser = _topicBrowser;
 
@@ -132,11 +132,11 @@
 
 - (IBAction)doBrowserAction:(id)sender
 {
-    [[self owningWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
+    [[self browserWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
 }
 
 #pragma mark -
-#pragma mark AK_UIController methods
+#pragma mark AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -297,7 +297,7 @@
 - (void)_setUpTopicsForZeroethBrowserColumn
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *db = [[self owningWindowController] database];
+    AKDatabase *db = [[self browserWindowController] database];
 
     // Set up the ":: classes ::" section of this browser column.  We want
     // the browser column to list all classes that don't have superclasses.

@@ -1,11 +1,11 @@
 /*
- * AK_WindowController.m
+ * AKBrowserWindowController.m
  *
  * Created by Andy Lee on Wed Jul 03 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AK_WindowController.h"
+#import "AKBrowserWindowController.h"
 
 #import "DIGSLog.h"
 
@@ -30,12 +30,12 @@
 #import "AKProtocolTopic.h"
 #import "AK_QuicklistViewController.h"
 #import "AKSavedWindowState.h"
-#import "AK_SubtopicListViewController.h"
-#import "AK_TopicBrowserViewController.h"
+#import "AKSubtopicListViewController.h"
+#import "AKTopicBrowserViewController.h"
 #import "AKViewUtils.h"
 #import "AKWindowLayout.h"
 
-@implementation AK_WindowController
+@implementation AKBrowserWindowController
 
 @synthesize topLevelSplitView = _topLevelSplitView;
 @synthesize topicBrowserView = _topicBrowserView;
@@ -222,6 +222,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic subtopicName:subtopicName docName:docName];
 
     [_topicBrowserController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
+    [_subtopicListController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
     [self _addHistoryItem:newHistoryItem];
 }
 
@@ -593,7 +594,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 #pragma mark -
-#pragma mark AK_UIController methods
+#pragma mark AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -820,15 +821,15 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)_setUpViewControllers
 {
     // Topic browser.
-    _topicBrowserController = [[AK_TopicBrowserViewController alloc] initWithNibName:@"TopicBrowserView"
+    _topicBrowserController = [[AKTopicBrowserViewController alloc] initWithNibName:@"TopicBrowserView"
                                                                               bundle:nil];
     [self _plugVC:_topicBrowserController atView:_topicBrowserView];
 
-//    // Subtopics list.
-//    _subtopicListController = [[AK_SubtopicListViewController alloc] initWithNibName:@"SubtopicListView"
-//                                                                              bundle:nil];
-//    [self _plugVC:_subtopicListController atView:_subtopicListView];
-//
+    // Subtopics list.
+    _subtopicListController = [[AKSubtopicListViewController alloc] initWithNibName:@"SubtopicListView"
+                                                                              bundle:nil];
+    [self _plugVC:_subtopicListController atView:_subtopicListView];
+
 //    // Doc list.
 //    _docListController = [[AK_DocListViewController alloc] initWithNibName:@"DocListView"
 //                                                                    bundle:nil];
@@ -845,7 +846,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[_topicBrowserController topicBrowser] loadColumnZero];
 }
 
-- (void)_plugVC:(AK_ViewController *)vc atView:(NSView *)placeholderView
+- (void)_plugVC:(AKViewController *)vc atView:(NSView *)placeholderView
 {
     [[vc view] setAutoresizingMask:[placeholderView autoresizingMask]];
     [[placeholderView superview] replaceSubview:placeholderView with:[vc view]];

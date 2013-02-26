@@ -318,7 +318,7 @@ enum
 
 
 #pragma mark -
-#pragma mark AK_UIController methods
+#pragma mark AKUIController methods
 
 - (void)doAwakeFromNib
 {
