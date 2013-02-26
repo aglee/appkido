@@ -9,6 +9,7 @@
 
 @class AKFileSection;
 
+// [agl] mention how the actual data is lazily loaded
 /*!
  * @class       AKFileSection
  * @abstract    A named range of bytes within a file.

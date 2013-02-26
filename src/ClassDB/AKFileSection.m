@@ -11,35 +11,23 @@
 
 #import "DIGSLog.h"
 
+#import "AKFileSectionCache.h"
 #import "AKTextUtils.h"
-#import "AKFileSection.h"
 
 #pragma mark -
 #pragma mark Static variables
 
-// Keys are file paths, values are NSData instances containing file
-// contents.
-//
-// Note: we assume files are read-only so we don't have to worry about
-// a stale cache.
-//[agl] ??? static NSMutableDictionary *s_fileCache = nil;
-
-// Keys are file paths, values are NSValues whose intValues are the
-// number of times the file is referenced by an AKFileSection's
-// _fileContents instance.
-//[agl] ??? static NSMutableDictionary *s_fileCacheCounts = nil;
+static AKFileSectionCache *s_fileSectionCache = nil;
 
 @implementation AKFileSection
 
-// [agl] ???
-//#pragma mark -
-//#pragma mark Class initializer
-//
-//+ (void)initialize
-//{
-//    s_fileCache = [[NSMutableDictionary alloc] init];
-//    s_fileCacheCounts = [[NSMutableDictionary alloc] init];
-//}
+#pragma mark -
+#pragma mark Class initializer
+
++ (void)initialize
+{
+    s_fileSectionCache = [[AKFileSectionCache alloc] init];
+}
 
 #pragma mark -
 #pragma mark Factory methods
@@ -94,9 +82,7 @@
 
 - (void)dealloc
 {
-    // Note that _releaseFileContents references _filePath, so we need to call
-    // it *before* releasing _filePath, which might get dealloc'ed.
-//[agl] ???    [self _releaseFileContents];
+    [s_fileSectionCache unlikeFileAtPath:_filePath];
 
     [_filePath release];
     [_fileContents release];
@@ -118,26 +104,7 @@
 {
     if ((_fileContents == nil) && (_filePath != nil))
     {
-//        // See if the file is already in the cache.
-//        _fileContents = [s_fileCache objectForKey:_filePath];
-//
-//        if (_fileContents != nil)
-//        {
-//            // The file is already in the cache, so increment the cache
-//            // count.
-//            int cacheCount = [[s_fileCacheCounts objectForKey:_filePath] intValue];
-//
-//            [s_fileCacheCounts setObject:@(cacheCount + 1)
-//                                  forKey:_filePath];
-//        }
-//        else
-//        {
-//            // The file wasn't in the cache, so add it with a cache
-//            // count of 1.
-            _fileContents = [[NSData alloc] initWithContentsOfFile:_filePath];
-//            [s_fileCache setObject:_fileContents forKey:_filePath];
-//            [s_fileCacheCounts setObject:@1 forKey:_filePath];
-//        }
+        _fileContents = [[s_fileSectionCache likeFileAtPath:_filePath] retain];
     }
 
     return _fileContents;
@@ -338,32 +305,5 @@
     return [NSString stringWithFormat:@"<%@: sectionName=%@, filePath=%@>",
             [self className], _sectionName, [self filePath]];
 }
-
-#pragma mark -
-#pragma mark Private methods
-
-// Called by dealloc. Releases the _fileContents ivar and decrements the corresponding cache count.
-//[agl] ??? This logic doesn't make any sense.
-//- (void)_releaseFileContents
-//{
-//    // Decrement the cache count.
-//    int cacheCount = [[s_fileCacheCounts objectForKey:_filePath] intValue];
-//
-//    if (cacheCount == 1)
-//    {
-//        // This was the last reference -- remove the file from the cache.
-//        [s_fileCache removeObjectForKey:_filePath];
-//    }
-//    else
-//    {
-//        // Decrement the cache count.
-//        [s_fileCacheCounts setObject:@(cacheCount - 1)
-//                              forKey:_filePath];
-//    }
-//
-//    // Now we can release the ivar.
-//    [_fileContents release];
-//    _fileContents = nil;
-//}
 
 @end

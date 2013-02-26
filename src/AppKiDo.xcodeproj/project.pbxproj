@@ -222,6 +222,10 @@
 		731657940FE48AE70097F3A1 /* AKDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 731657920FE48AE70097F3A1 /* AKDevTools.m */; };
 		731657BE0FE48DEC0097F3A1 /* AKDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 731657910FE48AE70097F3A1 /* AKDevTools.h */; };
 		731657BF0FE48DEC0097F3A1 /* AKDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 731657920FE48AE70097F3A1 /* AKDevTools.m */; };
+		7320C13616DBAB3600797F95 /* AKFileSectionCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C13416DBAB2800797F95 /* AKFileSectionCache.h */; };
+		7320C13716DBAB3600797F95 /* AKFileSectionCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C13416DBAB2800797F95 /* AKFileSectionCache.h */; };
+		7320C13816DBAB3600797F95 /* AKFileSectionCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C13516DBAB2F00797F95 /* AKFileSectionCache.m */; };
+		7320C13916DBAB3600797F95 /* AKFileSectionCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C13516DBAB2F00797F95 /* AKFileSectionCache.m */; };
 		733DF5EB14E17700007E6313 /* AKSQLTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 733DF5E914E17700007E6313 /* AKSQLTemplate.h */; };
 		733DF5EC14E17700007E6313 /* AKSQLTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 733DF5EA14E17700007E6313 /* AKSQLTemplate.m */; };
 		733DF5ED14E17700007E6313 /* AKSQLTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 733DF5E914E17700007E6313 /* AKSQLTemplate.h */; };
@@ -677,6 +681,8 @@
 		73197A850606E025002E4E83 /* AKHeaderFileDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderFileDoc.m; sourceTree = "<group>"; };
 		73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKInheritanceDoc.h; sourceTree = "<group>"; };
 		73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKInheritanceDoc.m; sourceTree = "<group>"; };
+		7320C13416DBAB2800797F95 /* AKFileSectionCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFileSectionCache.h; path = ClassDB/AKFileSectionCache.h; sourceTree = SOURCE_ROOT; };
+		7320C13516DBAB2F00797F95 /* AKFileSectionCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFileSectionCache.m; path = ClassDB/AKFileSectionCache.m; sourceTree = SOURCE_ROOT; };
 		7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewUtils.h; sourceTree = "<group>"; };
 		7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewUtils.m; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };
@@ -1086,6 +1092,8 @@
 				730030DF0498501500A80007 /* AKSubcontroller.m */,
 				73793575068B3D75008B63F4 /* AKFileSection.h */,
 				73793576068B3D75008B63F4 /* AKFileSection.m */,
+				7320C13416DBAB2800797F95 /* AKFileSectionCache.h */,
+				7320C13516DBAB2F00797F95 /* AKFileSectionCache.m */,
 				73D409E104A391D600A80003 /* AKPrefUtils.h */,
 				73D409E204A391D600A80003 /* AKPrefUtils.m */,
 				73D239CA0D4ABBA000EF7503 /* AKDevToolsUtils.h */,
@@ -1781,6 +1789,7 @@
 				734B75D516D062060027514D /* AKSplashWindowController.h in Headers */,
 				734B75DD16D06CA20027514D /* AKLoadDatabaseOperation.h in Headers */,
 				734B75E316D077E30027514D /* AKDatabaseDelegate.h in Headers */,
+				7320C13616DBAB3600797F95 /* AKFileSectionCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1914,6 +1923,7 @@
 				734B75D616D062060027514D /* AKSplashWindowController.h in Headers */,
 				734B75DE16D06CA20027514D /* AKLoadDatabaseOperation.h in Headers */,
 				734B75E416D077E30027514D /* AKDatabaseDelegate.h in Headers */,
+				7320C13716DBAB3600797F95 /* AKFileSectionCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2206,6 +2216,7 @@
 				735D9F7916CC5DAC00B72158 /* ALSimpleTask.m in Sources */,
 				734B75D716D062060027514D /* AKSplashWindowController.m in Sources */,
 				734B75DF16D06CA20027514D /* AKLoadDatabaseOperation.m in Sources */,
+				7320C13816DBAB3600797F95 /* AKFileSectionCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2338,6 +2349,7 @@
 				735D9F7A16CC5DAC00B72158 /* ALSimpleTask.m in Sources */,
 				734B75D816D062060027514D /* AKSplashWindowController.m in Sources */,
 				734B75E016D06CA20027514D /* AKLoadDatabaseOperation.m in Sources */,
+				7320C13916DBAB3600797F95 /* AKFileSectionCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
