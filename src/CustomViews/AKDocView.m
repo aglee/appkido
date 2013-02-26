@@ -304,7 +304,9 @@
         [_originalPreviousKeyView setNextKeyView:_webView];
         [_webView setNextKeyView:_originalNextKeyView];
         if (wasKey)
+        {
             [[self window] makeFirstResponder:_webView];
+        }
     }
 
     // Apply the user's magnification preference.
@@ -317,21 +319,19 @@
     if (htmlData)
     {
         NSMutableData *zData = [NSMutableData dataWithData:htmlData];
+        
         [zData setLength:([zData length] + 1)];
         htmlString = [NSString stringWithUTF8String:[zData bytes]];
     }
 
     if (htmlFilePath)
     {
-        [[_webView mainFrame]
-            loadHTMLString:htmlString
-            baseURL:[NSURL fileURLWithPath:htmlFilePath]];
+        [[_webView mainFrame] loadHTMLString:htmlString
+                                     baseURL:[NSURL fileURLWithPath:htmlFilePath]];
     }
     else
     {
-        [[_webView mainFrame]
-            loadHTMLString:htmlString
-            baseURL:nil];
+        [[_webView mainFrame] loadHTMLString:htmlString baseURL:nil];
     }
 }
 

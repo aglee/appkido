@@ -13,8 +13,6 @@
 
 /*!
  * Base class for controller objects subordinate to AKWindowController.
- * @discussion  This base class holds a reference to the owning
- *              AKWindowController.
  */
 @interface AKWindowSubcontroller : AKSubcontroller
 {
