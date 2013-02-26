@@ -29,12 +29,6 @@
 @property (nonatomic, assign) IBOutlet AKBrowser *topicBrowser;
 
 #pragma mark -
-#pragma mark Navigation
-
-/*! May modify whereTo. */
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
-
-#pragma mark -
 #pragma mark Action methods
 
 - (IBAction)addBrowserColumn:(id)sender;

@@ -39,9 +39,6 @@
 #pragma mark -
 #pragma mark Navigation
 
-/*! May modify whereTo. */
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
-
 /*! Makes the doc list table first responder. */
 - (void)focusOnDocListTable;
 

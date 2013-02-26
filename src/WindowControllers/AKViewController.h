@@ -9,6 +9,7 @@
 #import "AKUIController.h"
 
 @class AKBrowserWindowController;
+@class AKDocLocator;
 
 /*!
  * Base class for view controllers used by AKBrowserWindowController.
@@ -19,5 +20,11 @@
 #pragma mark Getters and setters
 
 - (AKBrowserWindowController *)browserWindowController;
+
+#pragma mark -
+#pragma mark Navigation
+
+/*! May modify whereTo. */
+- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
 
 @end

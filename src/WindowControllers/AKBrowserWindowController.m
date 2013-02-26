@@ -28,7 +28,7 @@
 #import "AKOldLinkResolver.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolTopic.h"
-#import "AK_QuicklistViewController.h"
+#import "AKQuicklistViewController.h"
 #import "AKSavedWindowState.h"
 #import "AKSubtopicListViewController.h"
 #import "AKTopicBrowserViewController.h"
@@ -229,6 +229,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_docListController setSubtopic:[_subtopicListController selectedSubtopic]];
     [_docListController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
 
+    [_docViewController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
+
+    [_topicDescriptionField setStringValue:[topic stringToDisplayInDescriptionField]];
     [_docCommentField setStringValue:[_docListController docComment]];
 
     [self _addHistoryItem:newHistoryItem];
@@ -915,14 +918,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                                                                    bundle:nil];
     [self _plugVC:_docListController atView:_docListView];
 
-//    // Doc view.
-//    _docViewController = [[AKDocViewController alloc] initWithNibName:@"DocView"
-//                                                               bundle:nil];
-//    [self _plugVC:_docViewController atView:_docView];
+    // Doc view.
+    _docViewController = [[AKDocViewController alloc] initWithNibName:@"DocView"
+                                                               bundle:nil];
+    [self _plugVC:_docViewController atView:_docView];
 
-
-
-
+    // Initial display.
     [[_topicBrowserController topicBrowser] loadColumnZero];
 }
 

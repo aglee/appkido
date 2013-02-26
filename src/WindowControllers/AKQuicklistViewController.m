@@ -1,11 +1,11 @@
 /*
- * AK_QuicklistViewController.m
+ * AKQuicklistViewController.m
  *
  * Created by Andy Lee on Tue Jul 30 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AK_QuicklistViewController.h"
+#import "AKQuicklistViewController.h"
 
 #import "DIGSFindBuffer.h"
 
@@ -57,12 +57,12 @@ enum
     _AKSearchResultsQuicklistMode = 10,
 };
 
-@interface AK_QuicklistViewController ()
+@interface AKQuicklistViewController ()
 @property (nonatomic, retain) NSArray *currentTableValues;
 @property (nonatomic, retain) AKSearchQuery *searchQuery;
 @end
 
-@implementation AK_QuicklistViewController
+@implementation AKQuicklistViewController
 
 @synthesize currentTableValues = _currentTableValues;
 @synthesize searchQuery = _searchQuery;

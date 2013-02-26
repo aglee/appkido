@@ -45,6 +45,28 @@
 #pragma mark -
 #pragma mark Navigation
 
+- (void)focusOnDocListTable
+{
+    (void)[[_docListTable window] makeFirstResponder:_docListTable];
+}
+
+#pragma mark -
+#pragma mark Action methods
+
+- (IBAction)doDocListTableAction:(id)sender
+{
+    NSInteger selectedRow = [_docListTable selectedRow];
+    NSString *docName = ((selectedRow < 0)
+                         ? nil
+                         : [[_subtopicToDisplay docAtIndex:selectedRow] docName]);
+
+    // Tell the main window to select the doc at the selected index.
+    [[self browserWindowController] jumpToDocName:docName];
+}
+
+#pragma mark -
+#pragma mark AKViewController methods
+
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
 {
     // Handle cases where there's nothing to do.
@@ -92,25 +114,6 @@
         AKDoc *docToDisplay = [_subtopicToDisplay docAtIndex:docIndex];
         [whereTo setDocName:[docToDisplay docName]];
     }
-}
-
-- (void)focusOnDocListTable
-{
-    (void)[[_docListTable window] makeFirstResponder:_docListTable];
-}
-
-#pragma mark -
-#pragma mark Action methods
-
-- (IBAction)doDocListTableAction:(id)sender
-{
-    NSInteger selectedRow = [_docListTable selectedRow];
-    NSString *docName = ((selectedRow < 0)
-                         ? nil
-                         : [[_subtopicToDisplay docAtIndex:selectedRow] docName]);
-
-    // Tell the main window to select the doc at the selected index.
-    [[self browserWindowController] jumpToDocName:docName];
 }
 
 #pragma mark -

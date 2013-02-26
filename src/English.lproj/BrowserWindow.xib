@@ -46,7 +46,7 @@
 			<object class="NSWindowTemplate" id="516961095">
 				<int key="NSWindowStyleMask">4111</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{240, 245}, {602, 568}}</string>
+				<string key="NSWindowRect">{{240, 245}, {550, 616}}</string>
 				<int key="NSWTFlags">813170688</int>
 				<string key="NSWindowTitle">AppKiDo</string>
 				<string key="NSWindowClass">DIGSWindow</string>
@@ -62,13 +62,13 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSSplitView" id="1011512076">
 							<reference key="NSNextResponder" ref="455086034"/>
-							<int key="NSvFlags">256</int>
+							<int key="NSvFlags">274</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSCustomView" id="866576386">
 									<reference key="NSNextResponder" ref="1011512076"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrameSize">{548, 174}</string>
+									<string key="NSFrameSize">{550, 155}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="325794021"/>
@@ -92,11 +92,11 @@
 														<bool key="EncodedWithXMLCoder">YES</bool>
 														<object class="NSCustomView" id="764380673">
 															<reference key="NSNextResponder" ref="172926322"/>
-															<int key="NSvFlags">268</int>
+															<int key="NSvFlags">274</int>
 															<object class="NSMutableArray" key="NSSubviews">
 																<bool key="EncodedWithXMLCoder">YES</bool>
 															</object>
-															<string key="NSFrame">{{212, 20}, {316, 153}}</string>
+															<string key="NSFrame">{{200, 0}, {350, 217}}</string>
 															<reference key="NSSuperview" ref="172926322"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="294746084"/>
@@ -105,11 +105,11 @@
 														</object>
 														<object class="NSCustomView" id="841800253">
 															<reference key="NSNextResponder" ref="172926322"/>
-															<int key="NSvFlags">268</int>
+															<int key="NSvFlags">276</int>
 															<object class="NSMutableArray" key="NSSubviews">
 																<bool key="EncodedWithXMLCoder">YES</bool>
 															</object>
-															<string key="NSFrame">{{20, 20}, {167, 153}}</string>
+															<string key="NSFrameSize">{200, 217}</string>
 															<reference key="NSSuperview" ref="172926322"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="764380673"/>
@@ -117,7 +117,7 @@
 															<string key="NSClassName">NSView</string>
 														</object>
 													</object>
-													<string key="NSFrameSize">{548, 193}</string>
+													<string key="NSFrameSize">{550, 217}</string>
 													<reference key="NSSuperview" ref="593053015"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="841800253"/>
@@ -220,7 +220,7 @@
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																</object>
 															</object>
-															<string key="NSFrame">{{475, 0}, {72, 21}}</string>
+															<string key="NSFrame">{{477, 0}, {72, 21}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="468382865"/>
@@ -230,7 +230,7 @@
 														<object class="NSTextField" id="767373584">
 															<reference key="NSNextResponder" ref="1063794748"/>
 															<int key="NSvFlags">266</int>
-															<string key="NSFrame">{{1, 0}, {472, 21}}</string>
+															<string key="NSFrame">{{1, 0}, {474, 21}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="833349516"/>
@@ -261,7 +261,7 @@
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 														</object>
 													</object>
-													<string key="NSFrame">{{0, 194}, {548, 21}}</string>
+													<string key="NSFrame">{{0, 218}, {550, 21}}</string>
 													<reference key="NSSuperview" ref="593053015"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="767373584"/>
@@ -269,7 +269,7 @@
 													<string key="NSExtension">NSView</string>
 												</object>
 											</object>
-											<string key="NSFrameSize">{548, 213}</string>
+											<string key="NSFrameSize">{550, 237}</string>
 											<reference key="NSSuperview" ref="325794021"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="1063794748"/>
@@ -282,7 +282,7 @@
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 											</object>
-											<string key="NSFrame">{{0, 222}, {548, 99}}</string>
+											<string key="NSFrame">{{0, 238}, {550, 195}}</string>
 											<reference key="NSSuperview" ref="325794021"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="192904312"/>
@@ -290,24 +290,25 @@
 											<string key="NSClassName">NSView</string>
 										</object>
 									</object>
-									<string key="NSFrame">{{0, 183}, {548, 321}}</string>
+									<string key="NSFrame">{{0, 156}, {550, 433}}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="593053015"/>
+									<int key="NSDividerStyle">2</int>
 								</object>
 							</object>
-							<string key="NSFrame">{{20, 44}, {548, 504}}</string>
+							<string key="NSFrame">{{0, 27}, {550, 589}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="866576386"/>
+							<int key="NSDividerStyle">2</int>
 						</object>
 						<object class="NSTextField" id="192904312">
 							<reference key="NSNextResponder" ref="455086034"/>
 							<int key="NSvFlags">290</int>
-							<string key="NSFrame">{{7, 5}, {503, 14}}</string>
+							<string key="NSFrame">{{7, 5}, {451, 14}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="224150886">
 								<int key="NSCellFlags">67108864</int>
@@ -336,7 +337,7 @@
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						</object>
 					</object>
-					<string key="NSFrameSize">{602, 568}</string>
+					<string key="NSFrameSize">{550, 616}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1011512076"/>

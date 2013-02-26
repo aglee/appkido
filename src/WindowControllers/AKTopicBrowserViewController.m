@@ -58,7 +58,32 @@
 }
 
 #pragma mark -
-#pragma mark Navigation
+#pragma mark Action methods
+
+- (IBAction)addBrowserColumn:(id)sender
+{
+    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
+
+    [_topicBrowser setMaxVisibleColumns:(numColumns + 1)];
+}
+
+- (IBAction)removeBrowserColumn:(id)sender
+{
+    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
+
+    if (numColumns > 2)
+    {
+        [_topicBrowser setMaxVisibleColumns:(numColumns - 1)];
+    }
+}
+
+- (IBAction)doBrowserAction:(id)sender
+{
+    [[self browserWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
+}
+
+#pragma mark -
+#pragma mark AKViewController methods
 
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
 {
@@ -67,13 +92,13 @@
     {
         return;
     }
-    
+
     if (whereTo == nil)
     {
         DIGSLogInfo(@"can't navigate to a nil locator");
         return;
     }
-    
+
     if ([whereTo topicToDisplay] == nil)
     {
         DIGSLogInfo(@"can't navigate to a nil topic");
@@ -108,31 +133,6 @@
         [_topicBrowser scrollColumnToVisible:[_topicBrowser lastColumn]];
         [[_topicBrowser window] enableFlushWindow];
     }
-}
-
-#pragma mark -
-#pragma mark Action methods
-
-- (IBAction)addBrowserColumn:(id)sender
-{
-    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
-
-    [_topicBrowser setMaxVisibleColumns:(numColumns + 1)];
-}
-
-- (IBAction)removeBrowserColumn:(id)sender
-{
-    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
-
-    if (numColumns > 2)
-    {
-        [_topicBrowser setMaxVisibleColumns:(numColumns - 1)];
-    }
-}
-
-- (IBAction)doBrowserAction:(id)sender
-{
-    [[self browserWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
 }
 
 #pragma mark -

@@ -38,9 +38,6 @@
 #pragma mark -
 #pragma mark Navigation
 
-/*! May modify whereTo. */
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
-
 /*!
  * @method      jumpToSubtopicWithIndex:
  * @discussion  Navigates to the subtopic at the specified index within

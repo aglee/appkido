@@ -13,7 +13,7 @@
 @class AKDocListViewController;
 @class AKDocLocator;
 @class AKDocViewController;
-@class AK_QuicklistViewController;
+@class AKQuicklistViewController;
 @class AKSavedWindowState;
 @class AKTopic;
 @class AKSubtopicListViewController;
@@ -58,7 +58,7 @@
     AKSubtopicListViewController *_subtopicListController;
     AKDocListViewController *_docListController;
     AKDocViewController *_docViewController;
-    AK_QuicklistViewController *_quicklistController;
+    AKQuicklistViewController *_quicklistController;
 
     // Drawer where we put the Quicklist view.
 

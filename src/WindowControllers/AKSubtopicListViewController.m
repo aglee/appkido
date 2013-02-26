@@ -71,6 +71,34 @@
 #pragma mark -
 #pragma mark Navigation
 
+- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex
+{
+    if (subtopicIndex != [_subtopicsTable selectedRow])
+    {
+        NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
+
+        [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
+//        [_docListController focusOnDocListTable];
+    }
+}
+
+#pragma mark -
+#pragma mark Action methods
+
+- (IBAction)doSubtopicTableAction:(id)sender
+{
+    NSInteger selectedRow = [_subtopicsTable selectedRow];
+    NSString *newSubtopicName = ((selectedRow < 0)
+                                 ? nil
+                                 : [[_subtopics objectAtIndex:selectedRow] subtopicName]);
+
+    // Tell the main window to select the subtopic at the selected index.
+    [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
+}
+
+#pragma mark -
+#pragma mark Navigation
+
 - (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
 {
     // Is the topic changing?  (The "!=" test handles nil cases.)
@@ -135,33 +163,8 @@
 //    [_docListController navigateFrom:whereFrom to:whereTo];
 }
 
-- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex
-{
-    if (subtopicIndex != [_subtopicsTable selectedRow])
-    {
-        NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
-
-        [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
-//        [_docListController focusOnDocListTable];
-    }
-}
-
 #pragma mark -
-#pragma mark Action methods
-
-- (IBAction)doSubtopicTableAction:(id)sender
-{
-    NSInteger selectedRow = [_subtopicsTable selectedRow];
-    NSString *newSubtopicName = ((selectedRow < 0)
-                                 ? nil
-                                 : [[_subtopics objectAtIndex:selectedRow] subtopicName]);
-
-    // Tell the main window to select the subtopic at the selected index.
-    [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
-}
-
-#pragma mark -
-#pragma mark AKSubcontroller methods
+#pragma mark AKUIController methods
 
 - (void)applyUserPreferences
 {

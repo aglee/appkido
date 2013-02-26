@@ -25,6 +25,13 @@
 }
 
 #pragma mark -
+#pragma mark Navigation
+
+- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
+{
+}
+
+#pragma mark -
 #pragma mark AKUIController methods
 
 - (void)applyUserPreferences

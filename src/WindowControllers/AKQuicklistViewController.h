@@ -1,5 +1,5 @@
 /*
- * AK_QuicklistViewController.h
+ * AKQuicklistViewController.h
  *
  * Created by Andy Lee on Tue Jul 30 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -17,7 +17,7 @@
 /*!
  * Controller for a browser window's quicklist drawer.
  */
-@interface AK_QuicklistViewController : AKWindowSubcontroller <DIGSFindBufferDelegate>
+@interface AKQuicklistViewController : AKWindowSubcontroller <DIGSFindBufferDelegate>
 {
 @private
     // Contains the values currently displayed in _quicklistTable.  Elements
