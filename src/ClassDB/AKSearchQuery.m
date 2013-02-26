@@ -25,10 +25,29 @@
 #import "AKGlobalsTopic.h"
 #import "AKSubtopic.h"
 
-// [agl] working on performance
-#define MEASURE_SEARCH_SPEED 0
+@interface AKSearchQuery ()
+@property (nonatomic, retain) NSArray *searchResults;
+@end
 
 @implementation AKSearchQuery
+
+@dynamic searchString;
+@dynamic rangeForEntireSearchString;
+@dynamic includesClassesAndProtocols;
+@dynamic includesMembers;
+@dynamic includesFunctions;
+@dynamic includesGlobals;
+@dynamic ignoresCase;
+@dynamic searchComparison;
+@synthesize searchResults = _searchResults;
+
+#pragma mark -
+#pragma mark Factory methods
+
++ (id)withDatabase:(AKDatabase *)db
+{
+    return [[[self alloc] initWithDatabase:db] autorelease];
+}
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -84,13 +103,13 @@
         return;
     }
 
-    // Update the _searchString ivar.
+    // Set the ivar.
     [_searchString autorelease];
     _searchString = [s copy];
 
     // Update other ivars.
     _rangeForEntireSearchString = NSMakeRange(0, [s length]);
-    [self _clearSearchResults];
+    [self setSearchResults:nil];
 }
 
 - (BOOL)includesClassesAndProtocols
@@ -103,7 +122,7 @@
     if (_includesClassesAndProtocols != flag)
     {
         _includesClassesAndProtocols = flag;
-        [self _clearSearchResults];
+        [self setSearchResults:nil];
     }
 }
 
@@ -117,7 +136,7 @@
     if (_includesMembers != flag)
     {
         _includesMembers = flag;
-        [self _clearSearchResults];
+        [self setSearchResults:nil];
     }
 }
 
@@ -131,7 +150,7 @@
     if (_includesFunctions != flag)
     {
         _includesFunctions = flag;
-        [self _clearSearchResults];
+        [self setSearchResults:nil];
     }
 }
 
@@ -145,16 +164,8 @@
     if (_includesGlobals != flag)
     {
         _includesGlobals = flag;
-        [self _clearSearchResults];
+        [self setSearchResults:nil];
     }
-}
-
-- (void)setIncludesEverything
-{
-    [self setIncludesClassesAndProtocols:YES];
-    [self setIncludesMembers:YES];
-    [self setIncludesFunctions:YES];
-    [self setIncludesGlobals:YES];
 }
 
 - (BOOL)ignoresCase
@@ -167,7 +178,7 @@
     if (_ignoresCase != flag)
     {
         _ignoresCase = flag;
-        [self _clearSearchResults];
+        [self setSearchResults:nil];
     }
 }
 
@@ -181,29 +192,29 @@
     if (_searchComparison != searchComparison)
     {
         _searchComparison = searchComparison;
-        [self _clearSearchResults];
+        [self setSearchResults:nil];
     }
 }
 
 #pragma mark -
 #pragma mark Searching
 
+- (void)includeEverythingInSearch
+{
+    [self setIncludesClassesAndProtocols:YES];
+    [self setIncludesMembers:YES];
+    [self setIncludesFunctions:YES];
+    [self setIncludesGlobals:YES];
+}
+
 - (NSArray *)queryResults
 {
     if (_searchResults == nil)
     {
+        [self setSearchResults:[NSMutableArray array]];
 
-// [agl] working on performance
-#if MEASURE_SEARCH_SPEED
-[self _timeSearchStart];
-#endif //MEASURE_SEARCH_SPEED
-
-        _searchResults = [[NSMutableArray alloc] init];
-
-        if ((_searchString == nil) || ([_searchString length] == 0))
+        if ([_searchString length] == 0)
         {
-            // Note that it's safe to return _searchResults here, because
-            // it's retained.
             return _searchResults;
         }
 
@@ -216,73 +227,18 @@
         if (_includesFunctions) [self _searchFunctionNames];
         if (_includesGlobals) [self _searchNamesOfGlobals];
 
-// [agl] working on performance
-#if MEASURE_SEARCH_SPEED
-[self _timeSearchCheckpoint:@"about to sort..."];
-#endif //MEASURE_SEARCH_SPEED
-
         // Sort the results.
         [AKDocLocator sortArrayOfDocLocators:_searchResults];
-
-// [agl] working on performance
-#if MEASURE_SEARCH_SPEED
-[self _timeSearchEnd];
-#endif //MEASURE_SEARCH_SPEED
     }
 
     return _searchResults;
 }
 
 #pragma mark -
-#pragma mark Instrumentation
-
-// [agl] working on performance
-#if MEASURE_SEARCH_SPEED
-static int g_NSStringComparisons = 0;
-static NSTimeInterval g_startTime = 0.0;
-static NSTimeInterval g_checkpointTime = 0.0;
-
-- (void)_timeSearchStart
-{
-    g_NSStringComparisons = 0;
-    g_startTime = [NSDate timeIntervalSinceReferenceDate];
-    g_checkpointTime = g_startTime;
-    NSLog(@"---------------------------------");
-    NSLog(@"START: searching for [%@]...", _searchString);
-}
-
-- (void)_timeSearchCheckpoint:(NSString *)description
-{
-    NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
-    NSLog(@"...CHECKPOINT: %@", description);
-    NSLog(@"               compared %d strings", g_NSStringComparisons);
-    NSLog(@"               %.3f seconds since last checkpoint", now - g_checkpointTime);
-    g_checkpointTime = now;
-}
-
-- (void)_timeSearchEnd
-{
-    NSLog(@"...DONE: got %d results, took %.3f seconds total",
-          [_searchResults count],
-          [NSDate timeIntervalSinceReferenceDate] - g_startTime);
-}
-#endif //MEASURE_SEARCH_SPEED
-
-#pragma mark -
 #pragma mark Private methods
-
-- (void)_clearSearchResults
-{
-    _searchResults = nil;
-}
 
 - (BOOL)_matchesString:(NSString *)s
 {
-// [agl] working on performance
-#if MEASURE_SEARCH_SPEED
-    g_NSStringComparisons++;
-#endif //MEASURE_SEARCH_SPEED
-
     switch (_searchComparison)
     {
         case AKSearchForSubstring:

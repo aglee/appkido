@@ -85,7 +85,7 @@
     AKSearchQuery *searchQuery = [[[AKSearchQuery alloc] initWithDatabase:_database] autorelease];
     
     [searchQuery setSearchString:tokenName];
-    [searchQuery setIncludesEverything];
+    [searchQuery includeEverythingInSearch];
     [searchQuery setIgnoresCase:YES];
     [searchQuery setSearchComparison:AKSearchForExactMatch];
 

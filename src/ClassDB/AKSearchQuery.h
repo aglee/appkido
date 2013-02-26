@@ -51,6 +51,20 @@ typedef enum {
     NSMutableArray *_searchResults;
 }
 
+@property (nonatomic, copy) NSString *searchString;
+@property (nonatomic, assign) NSRange rangeForEntireSearchString;
+@property (nonatomic, assign) BOOL includesClassesAndProtocols;
+@property (nonatomic, assign) BOOL includesMembers;
+@property (nonatomic, assign) BOOL includesFunctions;
+@property (nonatomic, assign) BOOL includesGlobals;
+@property (nonatomic, assign) BOOL ignoresCase;
+@property (nonatomic, assign) AKSearchComparison searchComparison;
+
+#pragma mark -
+#pragma mark Factory methods
+
++ (id)withDatabase:(AKDatabase *)db;
+
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -58,34 +72,10 @@ typedef enum {
 - (id)initWithDatabase:(AKDatabase *)db;
 
 #pragma mark -
-#pragma mark Getters and setters
-
-- (NSString *)searchString;
-- (void)setSearchString:(NSString *)s;
-
-- (BOOL)includesClassesAndProtocols;
-- (void)setIncludesClassesAndProtocols:(BOOL)flag;
-
-- (BOOL)includesMembers;
-- (void)setIncludesMembers:(BOOL)flag;
-
-- (BOOL)includesFunctions;
-- (void)setIncludesFunctions:(BOOL)flag;
-
-- (BOOL)includesGlobals;
-- (void)setIncludesGlobals:(BOOL)flag;
+#pragma mark Searching
 
 /*! Sends all the -setIncludesXXX: messages with YES as the flag. */
-- (void)setIncludesEverything;
-
-- (BOOL)ignoresCase;
-- (void)setIgnoresCase:(BOOL)flag;
-
-- (AKSearchComparison)searchComparison;
-- (void)setSearchComparison:(AKSearchComparison)searchComparison;
-
-#pragma mark -
-#pragma mark Searching
+- (void)includeEverythingInSearch;
 
 /*! Returns a sorted array of AKDocLocators. */
 - (NSArray *)queryResults;

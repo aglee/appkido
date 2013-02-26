@@ -57,7 +57,15 @@ enum
     _AKSearchResultsQuicklistMode = 10,
 };
 
+@interface AKQuicklistController ()
+@property (nonatomic, retain) NSArray *currentTableValues;
+@property (nonatomic, retain) AKSearchQuery *searchQuery;
+@end
+
 @implementation AKQuicklistController
+
+@synthesize currentTableValues = _currentTableValues;
+@synthesize searchQuery = _searchQuery;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -296,7 +304,10 @@ enum
 {
     // Set our _searchQuery ivar.  We do it here instead of in -init
     // because we need to be sure [[self windowController] database] has been set.
-    _searchQuery = [[AKSearchQuery alloc] initWithDatabase:[[self owningWindowController] database]];
+    AKDatabase *db = [[self owningWindowController] database];
+    AKSearchQuery *searchQuery = [AKSearchQuery withDatabase:db];
+    
+    [self setSearchQuery:searchQuery];
 
     // Set up _quicklistTable to do drag and drop.
     [_quicklistTable registerForDraggedTypes:[NSArray arrayWithObject:_AKQuicklistPasteboardType]];
@@ -348,7 +359,7 @@ enum
         AKAppController *appController = [NSApp delegate];
         NSArray *favoritesList = [appController favoritesList];
 
-        if (![favoritesList isEqual:_currentTableValues])
+        if (![favoritesList isEqual:_currentTableValues])  // [agl] review
         {
             [self _reloadQuicklistTable];
         }
@@ -579,7 +590,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     // Make the transition to the newly computed table values, using the
     // standard setter pattern.
-    _currentTableValues = tableValues;
+    [self setCurrentTableValues:tableValues];
 
     // Reload the table with the new values.
     [_quicklistTable deselectAll:nil];
