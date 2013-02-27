@@ -170,8 +170,6 @@
 
 - (IBAction)rememberWindowLayout:(id)sender;
 
-- (IBAction)removeBrowserColumn:(id)sender;
-
 - (IBAction)toggleBrowserVisible:(id)sender;
 
 - (IBAction)showBrowser:(id)sender;

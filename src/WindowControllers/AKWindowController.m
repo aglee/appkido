@@ -298,16 +298,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [AKPrefUtils setDictionaryValue:prefDictionary forPref:AKLayoutForNewWindowsPrefName];
 }
 
-//- (IBAction)addBrowserColumn:(id)sender
-//{
-//    [_topicBrowserController addBrowserColumn:nil];
-//}
-
-- (IBAction)removeBrowserColumn:(id)sender
-{
-    [_topicBrowserController removeBrowserColumn:nil];
-}
-
 - (IBAction)toggleBrowserVisible:(id)sender
 {
     NSRect browserFrame = [_topicBrowserContainerView frame];
@@ -361,7 +351,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
-        [_quicklistDrawer openOnEdge:NSMinXEdge];
+        [self openQuicklistDrawer];
     }
     else
     {
