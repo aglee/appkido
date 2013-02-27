@@ -79,7 +79,7 @@
 
 - (IBAction)doBrowserAction:(id)sender
 {
-    [[self browserWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
+    [[self owningWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
 }
 
 #pragma mark -
@@ -297,7 +297,7 @@
 - (void)_setUpTopicsForZeroethBrowserColumn
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *db = [[self browserWindowController] database];
+    AKDatabase *db = [[self owningWindowController] database];
 
     // Set up the ":: classes ::" section of this browser column.  We want
     // the browser column to list all classes that don't have superclasses.

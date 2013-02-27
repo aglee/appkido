@@ -77,7 +77,7 @@
     {
         NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
 
-        [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
+        [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
 //        [_docListController focusOnDocListTable];
     }
 }
@@ -93,7 +93,7 @@
                                  : [[_subtopics objectAtIndex:selectedRow] subtopicName]);
 
     // Tell the main window to select the subtopic at the selected index.
-    [[self browserWindowController] jumpToSubtopicWithName:newSubtopicName];
+    [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
 }
 
 #pragma mark -

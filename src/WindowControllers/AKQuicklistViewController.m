@@ -124,7 +124,7 @@ enum
 {
     // Set our _searchQuery ivar.  We do it here instead of in -init
     // because we need to be sure [[self windowController] database] has been set.
-    AKDatabase *db = [[self browserWindowController] database];
+    AKDatabase *db = [[self owningWindowController] database];
     AKSearchQuery *searchQuery = [AKSearchQuery withDatabase:db];
     
     [self setSearchQuery:searchQuery];
@@ -215,7 +215,7 @@ enum
         [_removeFavoriteButton setEnabled:(_currentQuicklistMode == _AKFavoritesQuicklistMode)];
 
         // Tell the main window to navigate to the selected doc.
-        [[self browserWindowController] jumpToDocLocator:quicklistItem];
+        [[self owningWindowController] jumpToDocLocator:quicklistItem];
     }
 }
 
@@ -237,13 +237,13 @@ enum
 
 - (IBAction)selectSearchField:(id)sender
 {
-    [[self browserWindowController] openQuicklistDrawer];
+    [[self owningWindowController] openQuicklistDrawer];
     [_searchField selectText:nil];
 }
 
 - (IBAction)doSearch:(id)sender
 {
-    [[self browserWindowController] openQuicklistDrawer];
+    [[self owningWindowController] openQuicklistDrawer];
 
     NSString *searchString = [[_searchField stringValue] ak_trimWhitespace];
 
@@ -317,7 +317,7 @@ enum
 
 - (IBAction)selectPreviousSearchResult:(id)sender
 {
-    [[self browserWindowController] openQuicklistDrawer];
+    [[self owningWindowController] openQuicklistDrawer];
 
     if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
     {
@@ -330,7 +330,7 @@ enum
 
 - (IBAction)selectNextSearchResult:(id)sender
 {
-    [[self browserWindowController] openQuicklistDrawer];
+    [[self owningWindowController] openQuicklistDrawer];
 
     if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
     {
@@ -669,7 +669,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSString *nameOfRootViewClass;
 
-        if ([[[self browserWindowController] database] classWithName:@"UIView"] != nil)
+        if ([[[self owningWindowController] database] classWithName:@"UIView"] != nil)
         {
             nameOfRootViewClass = @"UIView";
         }
@@ -708,7 +708,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[[self browserWindowController] database] allClasses])
+        for (AKClassNode *classNode in [[[self owningWindowController] database] allClasses])
         {
             BOOL classHasDelegate = NO;
 
@@ -757,7 +757,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
             // If not, see if there's a protocol named thisClassDelegate.
             NSString *possibleDelegateProtocolName = [[classNode nodeName] stringByAppendingString:@"Delegate"];
-            if ([[[self browserWindowController] database] protocolWithName:possibleDelegateProtocolName])
+            if ([[[self owningWindowController] database] protocolWithName:possibleDelegateProtocolName])
             {
                 classHasDelegate = YES;
             }
@@ -784,7 +784,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[[self browserWindowController] database] allClasses])
+        for (AKClassNode *classNode in [[[self owningWindowController] database] allClasses])
         {
             BOOL classHasDataSource = NO;
 
@@ -817,7 +817,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
             // If not, see if there's a protocol named thisClassDataSource.
             NSString *possibleDataSourceProtocolName = [[classNode nodeName] stringByAppendingString:@"DataSource"];
-            if ([[[self browserWindowController] database] protocolWithName:possibleDataSourceProtocolName])
+            if ([[[self owningWindowController] database] protocolWithName:possibleDataSourceProtocolName])
             {
                 classHasDataSource = YES;
             }
@@ -844,7 +844,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableArray *protocolNodes = [NSMutableArray array];
 
-        for (AKProtocolNode *protocolNode in [[[self browserWindowController] database] allProtocols])
+        for (AKProtocolNode *protocolNode in [[[self owningWindowController] database] allProtocols])
         {
             if ([[protocolNode nodeName] ak_contains:@"DataSource"])
             {
@@ -860,7 +860,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-    NSArray *classNodes = [[[self browserWindowController] database] classesForFrameworkNamed:fwName];
+    NSArray *classNodes = [[[self owningWindowController] database] classesForFrameworkNamed:fwName];
 
     return [self _sortedDocLocatorsForClasses:classNodes];
 }
@@ -911,7 +911,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     for (NSString *name in classNames)
     {
-        AKClassNode *classNode = [[[self browserWindowController] database] classWithName:name];
+        AKClassNode *classNode = [[[self owningWindowController] database] classWithName:name];
 
         [nodeSet unionSet:[classNode descendantClasses]];
     }

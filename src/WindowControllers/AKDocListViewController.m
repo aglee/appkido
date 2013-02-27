@@ -75,7 +75,7 @@
                          : [[_subtopicToDisplay docAtIndex:selectedRow] docName]);
 
     // Tell the main window to select the doc at the selected index.
-    [[self browserWindowController] jumpToDocName:docName];
+    [[self owningWindowController] jumpToDocName:docName];
 }
 
 #pragma mark -

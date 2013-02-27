@@ -26,7 +26,7 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKWindowController *)browserWindowController
+- (AKWindowController *)owningWindowController
 {
     return _owningWindowController;
 }
