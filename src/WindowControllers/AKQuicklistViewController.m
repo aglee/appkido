@@ -601,7 +601,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
         default:
         {
-            tableValues = [NSArray array];
+            tableValues = @[];
             break;
         }
     }
@@ -624,18 +624,16 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_collectionClasses)
     {
-        NSArray *arr = (@[
-                        @"NSString",
-                        @"NSAttributedString",
-                        @"NSData",
-                        @"NSValue",
-                        @"NSArray",
-                        @"NSDictionary",
-                        @"NSSet",
-                        @"NSDate",
-                        ]);
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
-
+        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:(@[
+                                                                          @"NSString",
+                                                                          @"NSAttributedString",
+                                                                          @"NSData",
+                                                                          @"NSValue",
+                                                                          @"NSArray",
+                                                                          @"NSDictionary",
+                                                                          @"NSSet",
+                                                                          @"NSDate",
+                                                                          ])];
         s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
@@ -648,8 +646,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_windowClasses)
     {
-        NSArray *arr = [NSArray arrayWithObjects:@"NSWindow", nil];
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
+        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
 
         s_windowClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
@@ -674,8 +671,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             nameOfRootViewClass = @"NSView";
         }
 
-        NSArray *arr = [NSArray arrayWithObjects:nameOfRootViewClass, nil];
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
+        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
 
         s_viewClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
@@ -689,8 +685,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_cellClasses)
     {
-        NSArray *arr = [NSArray arrayWithObjects:@"NSCell", nil];
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:arr];
+        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
 
         s_cellClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }

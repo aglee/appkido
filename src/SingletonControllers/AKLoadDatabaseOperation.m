@@ -40,7 +40,7 @@
             // Special debug mode so launch is quicker.
             // defaults write com.digitalspokes.appkido AKFoundationOnly YES  # or NO
             // defaults write com.appkido.appkidoforiphone AKFoundationOnly YES  # or NO
-            [_appDatabase loadTokensForFrameworksWithNames:[NSArray arrayWithObject:@"Foundation"]];
+            [_appDatabase loadTokensForFrameworksWithNames:@[@"Foundation"]];
         }
         else
         {

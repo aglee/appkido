@@ -40,7 +40,7 @@
     }
     else
     {
-        return [NSArray array];
+        return @[];
     }
 }
 

@@ -218,7 +218,7 @@
     [defaultPrefsDictionary setObject:@50
                                forKey:AKMaxHistoryPrefName];
     
-    [defaultPrefsDictionary setObject:[NSArray array]
+    [defaultPrefsDictionary setObject:@[]
                                forKey:AKFavoritesPrefName];
 
 // Don't register a default for the selected-frameworks pref.  We'll set it

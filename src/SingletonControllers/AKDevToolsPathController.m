@@ -218,10 +218,10 @@
         [self performSelector:@selector(_showBadPathAlert:)
                    withObject:errorMessage
                    afterDelay:(NSTimeInterval)0.0
-                      inModes:[NSArray arrayWithObjects:
+                      inModes:(@[
                                NSDefaultRunLoopMode,
                                NSModalPanelRunLoopMode,
-                               nil]];
+                               ])];
     }
 }
 
@@ -248,10 +248,10 @@
     [self performSelector:@selector(promptForXcodeLocation:)
                withObject:nil
                afterDelay:(NSTimeInterval)0.0
-                  inModes:[NSArray arrayWithObjects:
+                  inModes:(@[
                            NSDefaultRunLoopMode,
                            NSModalPanelRunLoopMode,
-                           nil]];
+                           ])];
 }
 
 @end

@@ -87,7 +87,7 @@
 {
     if (![self behaviorNode])
     {
-        return [NSArray array];
+        return @[];
     }
 
     // Get a list of all behaviors that declare methods we want to list.
