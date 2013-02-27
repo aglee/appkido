@@ -31,9 +31,9 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithDefaultNib
+- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-    self = [super initWithNibName:@"TopicBrowserView" bundle:nil];
+    self = [super initWithNibName:@"TopicBrowserView" windowController:windowController];
     if (self)
     {
         _topicListsForBrowserColumns = [[NSMutableArray alloc] init];

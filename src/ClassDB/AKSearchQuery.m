@@ -378,7 +378,6 @@
                 {
                     AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName
                                                                     inDatabase:_database];
-
                     [_searchResults addObject:[AKDocLocator withTopic:topic
                                                          subtopicName:[groupNode nodeName]
                                                               docName:[subnode nodeName]]];

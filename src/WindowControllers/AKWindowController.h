@@ -234,4 +234,12 @@
 
 - (IBAction)openDocURLInBrowser:(id)sender;
 
+#pragma mark Action methods -- search
+
+/*!
+ * Opens the drawer if necessary, then forwards the message to the quicklist
+ * controller.
+ */
+- (IBAction)selectSearchField:(id)sender;
+
 @end

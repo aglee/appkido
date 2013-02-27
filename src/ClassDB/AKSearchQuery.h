@@ -46,8 +46,8 @@ typedef enum {
     BOOL _ignoresCase;
     AKSearchComparison _searchComparison;
 
-    // Cached search results.  The cache is cleared whenever the search
-    // string or a search flag changes.
+    // Cached search results. Is set to nil whenever the search string or a
+    // search flag changes. nil means the search needs to be (re)performed.
     NSMutableArray *_searchResults;
 }
 

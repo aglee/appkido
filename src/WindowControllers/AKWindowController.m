@@ -603,6 +603,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 #pragma mark -
+#pragma mark Action methods -- search (forwarded to the quicklist controller)
+
+- (IBAction)selectSearchField:(id)sender
+{
+    NSInteger state = [_quicklistDrawer state];
+
+    if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
+    {
+        [self toggleQuicklistDrawer:nil];
+    }
+
+    [_quicklistController selectSearchField:sender];
+}
+
+#pragma mark -
 #pragma mark AKUIController methods
 
 - (void)applyUserPreferences
@@ -909,28 +924,48 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)_setUpViewControllers
 {
     // Topic browser.
-    _topicBrowserController = [[AKTopicBrowserViewController alloc] initWithDefaultNib];
-    [self _plugVC:_topicBrowserController intoContainerView:_topicBrowserContainerView];
-
+    _topicBrowserController = [[self _vcWithClass:[AKTopicBrowserViewController class]
+                                          nibName:@"TopicBrowserView"
+                                    containerView:_topicBrowserContainerView] retain];
     // Subtopics list.
-    _subtopicListController = [[AKSubtopicListViewController alloc] initWithDefaultNib];
-    [self _plugVC:_subtopicListController intoContainerView:_subtopicListContainerView];
-
+    _subtopicListController = [[self _vcWithClass:[AKSubtopicListViewController class]
+                                          nibName:@"SubtopicListView"
+                                    containerView:_subtopicListContainerView] retain];
     // Doc list.
-    _docListController = [[AKDocListViewController alloc] initWithDefaultNib];
-    [self _plugVC:_docListController intoContainerView:_docListContainerView];
-
+    _docListController = [[self _vcWithClass:[AKDocListViewController class]
+                                     nibName:@"DocListView"
+                               containerView:_docListContainerView] retain];
     // Doc view.
-    _docContainerViewController = [[AKDocViewController alloc] initWithDefaultNib];
-    [self _plugVC:_docContainerViewController intoContainerView:_docContainerView];
-
+    _docContainerViewController = [[self _vcWithClass:[AKDocViewController class]
+                                              nibName:@"DocView"
+                                        containerView:_docContainerView] retain];
     // Quicklist view.
-    _quicklistController = [[AKQuicklistViewController alloc] initWithDatabase:_database];
-    [self _plugVC:_quicklistController intoContainerView:nil];
-    [_quicklistDrawer setContentView:[_quicklistController view]];
-
+    _quicklistController = [[self _vcWithClass:[AKQuicklistViewController class]
+                                       nibName:@"QuicklistView"
+                                 containerView:[_quicklistDrawer contentView]] retain];
     // Initial display.
     [[_topicBrowserController topicBrowser] loadColumnZero];
+}
+
+- (id)_vcWithClass:(Class)vcClass
+           nibName:(NSString *)nibName
+     containerView:(NSView *)containerView
+{
+    id vc = [[[vcClass alloc] initWithNibName:nibName windowController:self] autorelease];
+    
+    // Stuff the view controller's view into the container view.
+    [[vc view] setFrame:[containerView bounds]];
+    [[vc view] setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+
+    [containerView addSubview:[vc view]];
+
+    // Patch the view controller into the responder chain after self.
+    // [agl] do I need to unpatch on dealloc?
+    NSResponder *nextResponder = [self nextResponder];
+    [self setNextResponder:vc];
+    [vc setNextResponder:nextResponder];
+
+    return vc;
 }
 
 - (void)_plugVC:(AKViewController *)vc intoContainerView:(NSView *)containerView

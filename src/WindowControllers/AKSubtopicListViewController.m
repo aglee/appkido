@@ -21,9 +21,9 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithDefaultNib
+- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-    self = [super initWithNibName:@"SubtopicListView" bundle:nil];
+    self = [super initWithNibName:@"SubtopicListView" windowController:windowController];
     if (self)
     {
         _subtopics = [[NSMutableArray alloc] init];

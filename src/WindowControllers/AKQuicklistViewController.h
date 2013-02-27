@@ -8,7 +8,6 @@
 #import "AKViewController.h"
 #import "DIGSFindBufferDelegate.h"
 
-@class AKDatabase;
 @class AKDocLocator;
 @class AKMultiRadioView;
 @class AKSearchQuery;
@@ -21,8 +20,6 @@
 @interface AKQuicklistViewController : AKViewController <DIGSFindBufferDelegate>
 {
 @private
-    AKDatabase *_database;
-    
     // Contains the values currently displayed in _quicklistTable.  Elements
     // are AKDocLocators.
     NSArray *_currentTableValues;
@@ -66,12 +63,6 @@
 @property (nonatomic, assign) IBOutlet NSMenuItem *searchOptionsDividerItem;
 @property (nonatomic, assign) IBOutlet AKTableView *quicklistTable;
 @property (nonatomic, assign) IBOutlet NSButton *removeFavoriteButton;
-
-#pragma mark -
-#pragma mark Init/dealloc/awake
-
-/*! Use this instead of initWithDefaultNib. */
-- (id)initWithDatabase:(AKDatabase *)database;
 
 #pragma mark -
 #pragma mark Navigation

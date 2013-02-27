@@ -28,9 +28,9 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithDefaultNib
+- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-    self = [super initWithNibName:@"DocListView" bundle:nil];
+    self = [super initWithNibName:@"DocListView" windowController:windowController];
     if (self)
     {
     }

@@ -12,9 +12,15 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithDefaultNib
+- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-    return [self init];
+    self = [super initWithNibName:nibName bundle:nil];
+    if (self)
+    {
+        _owningWindowController = windowController;
+    }
+
+    return self;
 }
 
 #pragma mark -
@@ -22,7 +28,7 @@
 
 - (AKWindowController *)browserWindowController
 {
-    return (AKWindowController *)[[[self view] window] delegate];
+    return _owningWindowController;
 }
 
 #pragma mark -
@@ -37,7 +43,6 @@
 
 - (void)applyUserPreferences
 {
-    // Do nothing.
 }
 
 - (BOOL)validateItem:(id)anItem

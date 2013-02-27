@@ -8,18 +8,22 @@
 #import <Cocoa/Cocoa.h>
 #import "AKUIController.h"
 
-@class AKWindowController;
 @class AKDocLocator;
+@class AKWindowController;
 
 /*!
  * Base class for view controllers used by AKBrowserWindowController.
  */
 @interface AKViewController : NSViewController <AKUIController>
+{
+@private
+    AKWindowController *_owningWindowController;  // weak reference
+}
 
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithDefaultNib;
+- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController;
 
 #pragma mark -
 #pragma mark Getters and setters

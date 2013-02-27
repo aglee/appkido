@@ -32,9 +32,9 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithDefaultNib
+- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-    self = [super initWithNibName:@"DocView" bundle:nil];
+    self = [super initWithNibName:@"DocView" windowController:windowController];
     if (self)
     {
         _headerFontName = @"Monaco";
