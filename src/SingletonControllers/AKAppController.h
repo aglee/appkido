@@ -6,6 +6,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "AKUIController.h"
 
 @class AKAboutWindowController;
 @class AKDatabase;
@@ -26,7 +27,7 @@
  *              previous launch.  On quit, saves the states of all open
  *              windows.
  */
-@interface AKAppController : NSObject
+@interface AKAppController : NSObject <AKUIController>
 {
 @private
     AKDatabase *_appDatabase;
@@ -81,16 +82,6 @@
 - (AKWindowController *)controllerForNewWindow;
 
 #pragma mark -
-#pragma mark Preferences
-
-/*!
- * @method      applyUserPreferences
- * @discussion  Tells my subordinate controller objects to apply the
- *              user's preference settings to the things they control.
- */
-- (void)applyUserPreferences;
-
-#pragma mark -
 #pragma mark External search requests
 
 - (void)searchForString:(NSString *)searchString;
@@ -111,18 +102,6 @@
 - (void)removeFavoriteAtIndex:(NSInteger)favoritesIndex;
 
 - (void)moveFavoriteFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
-
-#pragma mark -
-#pragma mark UI item validation
-
-/*!
- * @method      validateItem:
- * @discussion  Returns true if the specified UI item should be enabled.
- *              Contains shared logic for validating both menu items and
- *              toolbar items.
- * @param       anItem  Either an NSMenuItem or an NSToolbarItem
- */
-- (BOOL)validateItem:(id)anItem;
 
 #pragma mark -
 #pragma mark Action methods

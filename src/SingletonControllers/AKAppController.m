@@ -253,25 +253,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 }
 
 #pragma mark -
-#pragma mark Preferences
-
-- (void)applyUserPreferences
-{
-    // Apply the newly saved preferences to all open windows.
-    for (AKWindowController *wc in _windowControllers)
-    {
-        if (![wc isKindOfClass:[AKWindowController class]])
-        {
-            DIGSLogError(@"_windowControllers contains a non-AKWindowController");
-        }
-        else
-        {
-            [wc applyUserPreferences];
-        }
-    }
-}
-
-#pragma mark -
 #pragma mark External search requests
 
 - (void)searchForString:(NSString *)searchString
@@ -501,7 +482,23 @@ static NSTimeInterval g_checkpointTime = 0.0;
 }
 
 #pragma mark -
-#pragma mark UI item validation
+#pragma mark AKUIController methods
+
+- (void)applyUserPreferences
+{
+    // Apply the newly saved preferences to all open windows.
+    for (AKWindowController *wc in _windowControllers)
+    {
+        if (![wc isKindOfClass:[AKWindowController class]])
+        {
+            DIGSLogError(@"_windowControllers contains a non-AKWindowController");
+        }
+        else
+        {
+            [wc applyUserPreferences];
+        }
+    }
+}
 
 - (BOOL)validateItem:(id)anItem
 {
@@ -537,6 +534,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         return NO;
     }
+}
+
+- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
+{
+}
+
+- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout
+{
 }
 
 #pragma mark -
