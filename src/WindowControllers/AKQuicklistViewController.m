@@ -578,16 +578,8 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_collectionClasses)
     {
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:(@[
-                                                                          @"NSString",
-                                                                          @"NSAttributedString",
-                                                                          @"NSData",
-                                                                          @"NSValue",
-                                                                          @"NSArray",
-                                                                          @"NSDictionary",
-                                                                          @"NSSet",
-                                                                          @"NSDate",
-                                                                          ])];
+        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:
+                               @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate"]];
         s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
@@ -825,7 +817,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         {
             AKTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
-            [quicklistItems addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+            [quicklistItems addObject:[AKDocLocator withTopic:topic
+                                                 subtopicName:nil
+                                                      docName:nil]];
         }
     }
 
@@ -845,7 +839,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         {
             AKTopic *topic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
-            [quicklistItems addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+            [quicklistItems addObject:[AKDocLocator withTopic:topic
+                                                 subtopicName:nil
+                                                      docName:nil]];
         }
     }
 
@@ -906,9 +902,11 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     // Jump to the search result at the new position.
     [_quicklistTable deselectAll:nil];
     [_quicklistTable scrollRowToVisible:_indexWithinSearchResults];
-    [_quicklistTable selectRowIndexes:[NSIndexSet indexSetWithIndex:_indexWithinSearchResults] byExtendingSelection:NO];
+    [_quicklistTable selectRowIndexes:[NSIndexSet indexSetWithIndex:_indexWithinSearchResults]
+                 byExtendingSelection:NO];
 
-    // Give the quicklist table focus and tell the owning window to navigate to the selected search result.
+    // Give the quicklist table focus and tell the owning window to navigate to
+    // the selected search result.
     (void)[[_quicklistTable window] makeFirstResponder:_quicklistTable];
     [[_quicklistTable window] makeKeyAndOrderFront:nil];
     [self doQuicklistTableAction:nil];

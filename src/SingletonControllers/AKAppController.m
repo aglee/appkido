@@ -758,37 +758,34 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_openInitialWindows
 {
-    AKWindowController *wc = [[[AKWindowController alloc] initWithDatabase:_appDatabase] retain];
-    [wc showWindow:nil];
-    [wc openQuicklistDrawer];
+    // If there's no saved window state, open a single new window.
+    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
 
-//    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
-//
-//    if ([savedWindows count] == 0)
-//    {
-//        (void)[self controllerForNewWindow];
-//    }
-//    else
-//    {
-//        NSInteger numWindows = [savedWindows count];
-//        NSInteger i;
-//
-//        for (i = numWindows - 1; i >= 0; i--)
-//        {
-//            NSDictionary *prefDict = [savedWindows objectAtIndex:i];
-//            AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
-//            AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
-//            AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
-//
-//            [wc selectDocWithDocLocator:[savedWindowState savedDocLocator]];
-//            [wc showWindow:nil];
-//
-//            if ([[savedWindowState savedWindowLayout] quicklistDrawerIsOpen])
-//            {
-//                [wc openQuicklistDrawer];
-//            }
-//        }
-//    }
+    if ([savedWindows count] == 0)
+    {
+        (void)[self controllerForNewWindow];
+        return;
+    }
+
+    // Restore windows from saved window state.
+    NSInteger numWindows = [savedWindows count];
+    NSInteger i;
+
+    for (i = numWindows - 1; i >= 0; i--)
+    {
+        NSDictionary *prefDict = [savedWindows objectAtIndex:i];
+        AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
+        AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
+        AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
+
+        [wc selectDocWithDocLocator:[savedWindowState savedDocLocator]];
+        [wc showWindow:nil];
+
+        if ([[savedWindowState savedWindowLayout] quicklistDrawerIsOpen])
+        {
+            [wc openQuicklistDrawer];
+        }
+    }
 }
 
 // Add the Debug menu if the user is "Andy Lee" with login name "alee".
@@ -796,29 +793,32 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     DIGSLogDebug_EnteringMethod();
     
-    if ([NSUserName() isEqualToString:@"alee"] && [NSFullUserName() isEqualToString:@"Andy Lee"])
+    if (![NSUserName() isEqualToString:@"alee"]
+        || ![NSFullUserName() isEqualToString:@"Andy Lee"])
     {
-        // Create the "Debug" top-level menu item.
-        NSMenu *mainMenu = [NSApp mainMenu];
-        NSMenuItem *debugMenuItem = [mainMenu addItemWithTitle:@"Debug"
-                                                        action:@selector(_testParser:)
-                                                 keyEquivalent:@""];
-        [debugMenuItem setEnabled:YES];
-
-        // Create the submenu that will be under the "Debug" top-level menu item.
-        NSMenu *debugSubmenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
-
-        [debugSubmenu setAutoenablesItems:YES];
-        [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
-                                action:@selector(_testParser:)
-                         keyEquivalent:@""];
-        [debugSubmenu addItemWithTitle:@"Print Key View Loop"
-                                action:@selector(_printKeyViewLoop:)
-                         keyEquivalent:@""];
-
-        // Attach the submenu to the "Debug" top-level menu item.
-        [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
+        return;
     }
+
+    // Create the "Debug" top-level menu item.
+    NSMenu *mainMenu = [NSApp mainMenu];
+    NSMenuItem *debugMenuItem = [mainMenu addItemWithTitle:@"Debug"
+                                                    action:@selector(_testParser:)
+                                             keyEquivalent:@""];
+    [debugMenuItem setEnabled:YES];
+
+    // Create the submenu that will be under the "Debug" top-level menu item.
+    NSMenu *debugSubmenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
+
+    [debugSubmenu setAutoenablesItems:YES];
+    [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
+                            action:@selector(_testParser:)
+                     keyEquivalent:@""];
+    [debugSubmenu addItemWithTitle:@"Print Key View Loop"
+                            action:@selector(_printKeyViewLoop:)
+                     keyEquivalent:@""];
+
+    // Attach the submenu to the "Debug" top-level menu item.
+    [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
 }
 
 #pragma mark -
