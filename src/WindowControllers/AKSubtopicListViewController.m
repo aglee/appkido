@@ -96,6 +96,11 @@
     [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
 }
 
+- (IBAction)jumpToSubtopicWithIndexFromTag:(id)sender
+{
+    [self jumpToSubtopicWithIndex:[sender tag]];
+}
+
 #pragma mark -
 #pragma mark Navigation
 
@@ -175,7 +180,13 @@
 
 - (BOOL)validateItem:(id)anItem
 {
-//    return [_docListController validateItem:anItem];
+    SEL itemAction = [anItem action];
+
+    if (itemAction == @selector(jumpToSubtopicWithIndexFromTag:))
+    {
+        return YES;
+    }
+    
     return NO;
 }
 

@@ -308,11 +308,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_topicBrowserController removeBrowserColumn:nil];
 }
 
-- (IBAction)jumpToSubtopicWithIndexFromTag:(id)sender
-{
-    [_topicBrowserController jumpToSubtopicWithIndex:[sender tag]];
-}
-
 - (IBAction)toggleBrowserVisible:(id)sender
 {
     NSRect browserFrame = [_topicBrowserContainerView frame];
@@ -597,10 +592,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
              || (itemAction == @selector(jumpToAncestorClass:)))
     {
         return ([[self _currentTopic] parentClassOfTopic] != nil);
-    }
-    else if (itemAction == @selector(jumpToSubtopicWithIndexFromTag:))
-    {
-        return YES;
     }
     else if ((itemAction == @selector(jumpToFrameworkFormalProtocols:))
              || (itemAction == @selector(jumpToFrameworkInformalProtocols:))
