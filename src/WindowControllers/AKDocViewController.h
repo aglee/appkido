@@ -8,7 +8,6 @@
 
 #import "AKViewController.h"
 
-@class AKDocLocator;
 @class WebView;
 
 @interface AKDocViewController : AKViewController
@@ -31,16 +30,17 @@
 @property (nonatomic, assign) IBOutlet NSTextView *textView;
 
 #pragma mark -
-#pragma mark UI behavior
-
-- (void)applyPrefs;
+#pragma mark Navigation
 
 - (NSView *)grabFocus;
 
-/*!
- * Tries to give first responder status to the doc view. Returns that view if
- * successful.
- */
-//- (NSView *)focusOnDocView;
+#pragma mark -
+#pragma mark Action methods
+
+- (IBAction)revealDocFileInFinder:(id)sender;
+
+- (IBAction)copyDocTextURL:(id)sender;
+
+- (IBAction)openDocURLInBrowser:(id)sender;
 
 @end

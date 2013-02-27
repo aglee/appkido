@@ -10,26 +10,24 @@
 #import "DIGSLog.h"
 #import "DIGSFindBuffer.h"
 
-#import "AKFrameworkConstants.h"
-#import "AKHTMLConstants.h"
-
-#import "AKPrefUtils.h"
-#import "AKSortUtils.h"
-#import "AKTextUtils.h"
-
 #import "AKAppController.h"
 #import "AKClassNode.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
 #import "AKFileSection.h"
+#import "AKFrameworkConstants.h"
+#import "AKHTMLConstants.h"
 #import "AKMethodNode.h"
 #import "AKMultiRadioView.h"
+#import "AKPrefUtils.h"
 #import "AKPropertyNode.h"
 #import "AKProtocolNode.h"
 #import "AKProtocolTopic.h"
 #import "AKSearchQuery.h"
+#import "AKSortUtils.h"
 #import "AKTableView.h"
+#import "AKTextUtils.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 
@@ -59,14 +57,12 @@ enum
 };
 
 @interface AKQuicklistViewController ()
-@property (nonatomic, retain) NSArray *currentTableValues;
-@property (nonatomic, retain) AKSearchQuery *searchQuery;
+@property (nonatomic, retain) NSArray *docLocators;
 @end
 
 @implementation AKQuicklistViewController
 
-@synthesize currentTableValues = _currentTableValues;
-@synthesize searchQuery = _searchQuery;
+@synthesize docLocators = _docLocators;
 
 @synthesize quicklistModeRadio = _quicklistModeRadio;
 @synthesize frameworkPopup = _frameworkPopup;
@@ -89,12 +85,11 @@ enum
     self = [super initWithNibName:@"QuicklistView" windowController:windowController];
     if (self)
     {
-        _currentTableValues = [[NSArray alloc] init];
-        _currentQuicklistMode = -1;
+        _docLocators = [[NSArray alloc] init];
+        _selectedQuicklistMode = -1;
 
-        // Initialize search variables.
         _indexWithinSearchResults = -1;
-        _searchQuery = nil;  // Wait for -doAwakeFromNib to set this.
+        _searchQuery = [[AKSearchQuery alloc] initWithDatabase:[windowController database]];
         _pastSearchStrings = [[NSMutableArray alloc] init];
 
         [[DIGSFindBuffer sharedInstance] addDelegate:self];
@@ -113,7 +108,7 @@ enum
 {
     [[DIGSFindBuffer sharedInstance] removeDelegate:self];
 
-    [_currentTableValues release];
+    [_docLocators release];
     [_searchQuery release];
     [_pastSearchStrings release];
     
@@ -122,13 +117,6 @@ enum
 
 - (void)awakeFromNib
 {
-    // Set our _searchQuery ivar.  We do it here instead of in -init
-    // because we need to be sure [[self windowController] database] has been set.
-    AKDatabase *db = [[self owningWindowController] database];
-    AKSearchQuery *searchQuery = [AKSearchQuery withDatabase:db];
-    
-    [self setSearchQuery:searchQuery];
-
     // Set up _quicklistTable to do drag and drop.
     [_quicklistTable registerForDraggedTypes:@[_AKQuicklistPasteboardType]];
 
@@ -138,7 +126,7 @@ enum
     // We don't want that.
     [_frameworkPopup setAutoenablesItems:NO];
 
-    for (NSString *fwName in [db sortedFrameworkNames])
+    for (NSString *fwName in [[[self owningWindowController] database] sortedFrameworkNames])
     {
         [_frameworkPopup addItemWithTitle:fwName];
     }
@@ -192,11 +180,13 @@ enum
 - (IBAction)doQuicklistTableAction:(id)sender
 {
     NSInteger selectedRow = [_quicklistTable selectedRow];
-    AKDocLocator *quicklistItem = (selectedRow < 0) ? nil : [_currentTableValues objectAtIndex:selectedRow];
+    AKDocLocator *selectedDocLocator = ((selectedRow < 0)
+                                        ? nil
+                                        : [_docLocators objectAtIndex:selectedRow]);
 
     // If we are in search mode, remember the selected object's position in
     // the search results list, so we can do Find Previous and Find Next.
-    if (_currentQuicklistMode == _AKSearchResultsQuicklistMode)
+    if (_selectedQuicklistMode == _AKSearchResultsQuicklistMode)
     {
         if (selectedRow >= 0)
         {
@@ -205,23 +195,23 @@ enum
     }
 
     // Handle the cases where there's nothing to do.
-    if (quicklistItem == nil)
+    if (selectedDocLocator == nil)
     {
         [_removeFavoriteButton setEnabled:NO];
     }
     else
     {
         // Update the Favorites-list management buttons.
-        [_removeFavoriteButton setEnabled:(_currentQuicklistMode == _AKFavoritesQuicklistMode)];
+        [_removeFavoriteButton setEnabled:(_selectedQuicklistMode == _AKFavoritesQuicklistMode)];
 
         // Tell the main window to navigate to the selected doc.
-        [[self owningWindowController] jumpToDocLocator:quicklistItem];
+        [[self owningWindowController] selectDocWithDocLocator:selectedDocLocator];
     }
 }
 
 - (IBAction)doFrameworkChoiceAction:(id)sender
 {
-    [self _selectQuicklistMode:-1];  // force reload
+    [self _selectQuicklistMode:-1];  // Forces table to reload.
     [self _selectQuicklistMode:_AKAllClassesInFrameworkQuicklistMode];
 }
 
@@ -243,20 +233,22 @@ enum
 
 - (IBAction)doSearch:(id)sender
 {
-    [[self owningWindowController] openQuicklistDrawer];
-
-    NSString *searchString = [[_searchField stringValue] ak_trimWhitespace];
-
     // Do nothing if no search string was specified.
+    NSString *searchString = [[_searchField stringValue] ak_trimWhitespace];
     if ((searchString == nil) || [searchString isEqualToString:@""])
     {
+        [_searchField setStringValue:@""];
         return;
     }
 
-    // Update the list of past search strings with the current string.
+    // Make sure the quicklist drawer is open so the user can see the results.
+    [[self owningWindowController] openQuicklistDrawer];
+
+    // Put the search string at the top of the list of past search strings.
     [_pastSearchStrings removeObject:searchString];
     [_pastSearchStrings insertObject:searchString atIndex:0];
 
+    // Prune the list of past search strings as necessary to keep within limits.
     NSInteger maxSearchStrings = [AKPrefUtils intValueForPref:AKMaxSearchStringsPrefName];
 
     while ((int)[_pastSearchStrings count] > maxSearchStrings)
@@ -264,19 +256,16 @@ enum
         [_pastSearchStrings removeObjectAtIndex:([_pastSearchStrings count] - 1)];
     }
 
-    [self _updateSearchOptionsPopup];
+    [self _updatePastStringsInSearchOptionsPopup];
 
     // Update the system find-pasteboard.
     [[DIGSFindBuffer sharedInstance] setFindString:searchString];
 
-    // Update the search query.
+    // Update the search query to use the (possibly new) search string.
     [self _updateSearchQuery];
 
-    // This will clear the quicklist table and thus force it to reload
-    // When we select Search Results mode.
-    [self _selectQuicklistMode:-1];
-
     // Change the quicklist mode to search mode.
+    [self _selectQuicklistMode:-1];  // Forces table to reload.
     [self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
 
     // If no search results were found, reselect the search field so the
@@ -290,7 +279,7 @@ enum
     }
     else
     {
-        [self _jumpToSearchResultWithPrefix:searchString];
+        [self _selectSearchResultWithPrefix:searchString];
     }
 }
 
@@ -301,44 +290,24 @@ enum
     NSInteger selectedIndex = [_searchOptionsPopup indexOfSelectedItem];
     NSMenuItem *selectedItem = [sender selectedItem];
 
+    // Was the selected menu item before or after the special menu divider?
     if (selectedIndex < indexOfDivider)
     {
+        // Items before the divider indicate search flags. They are toggled.
         NSInteger oldState = [selectedItem state];
 
         [selectedItem setState:((oldState == NSOnState) ? NSOffState : NSOnState)];
     }
     else
     {
+        // Items after the divider are previous search strings. Selecting one
+        // puts it in the search field.
         [_searchField setStringValue:[selectedItem title]];
     }
 
+    // Whatever we did changed the search parameters in some way, so re-perform
+    // the search.
     [self doSearch:sender];
-}
-
-- (IBAction)selectPreviousSearchResult:(id)sender
-{
-    [[self owningWindowController] openQuicklistDrawer];
-
-    if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
-    {
-        [self doSearch:nil];
-        return;
-    }
-
-    [self _jumpToSearchResultAtIndex:(_indexWithinSearchResults - 1)];
-}
-
-- (IBAction)selectNextSearchResult:(id)sender
-{
-    [[self owningWindowController] openQuicklistDrawer];
-
-    if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
-    {
-        [self doSearch:nil];
-        return;
-    }
-
-    [self _jumpToSearchResultAtIndex:(_indexWithinSearchResults + 1)];
 }
 
 #pragma mark -
@@ -346,12 +315,11 @@ enum
 
 - (void)applyUserPreferences
 {
-    if (_AKFavoritesQuicklistMode == _currentQuicklistMode)
+    if (_AKFavoritesQuicklistMode == _selectedQuicklistMode)
     {
-        AKAppController *appController = [NSApp delegate];
-        NSArray *favoritesList = [appController favoritesList];
+        NSArray *favoritesList = [(AKAppController *)[NSApp delegate] favoritesList];
 
-        if (![favoritesList isEqual:_currentTableValues])  // [agl] review
+        if (![favoritesList isEqual:_docLocators])  // [agl] review
         {
             [self _reloadQuicklistTable];
         }
@@ -369,12 +337,6 @@ enum
         || (itemAction == @selector(selectSearchField:)))
     {
         return YES;
-    }
-    else if ((itemAction == @selector(selectPreviousSearchResult:))
-             || (itemAction == @selector(selectNextSearchResult:)))
-    {
-        return (([[_searchQuery queryResults] count] > 0)
-                || ([[_searchQuery searchString] length] > 0));
     }
 
     return NO;
@@ -400,7 +362,7 @@ enum
 - (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout
 {
     // Remember the quicklist mode.
-    [windowLayout setQuicklistMode:_currentQuicklistMode];
+    [windowLayout setQuicklistMode:_selectedQuicklistMode];
 
     // Remember the selection in the frameworks popup.
     [windowLayout setFrameworkPopupSelection:[[_frameworkPopup selectedItem] title]];
@@ -427,16 +389,14 @@ enum
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return [_currentTableValues count];
+    return [_docLocators count];
 }
 
 - (id)tableView:(NSTableView *)aTableView
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
             row:(NSInteger)rowIndex
 {
-    AKDocLocator *quicklistItem = [_currentTableValues objectAtIndex:rowIndex];
-
-    return [quicklistItem stringToDisplayInLists];
+    return [[_docLocators objectAtIndex:rowIndex] stringToDisplayInLists];
 }
 
 #pragma mark -
@@ -447,7 +407,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
               row:(int)row
     dropOperation:(NSTableViewDropOperation)operation
 {
-    if (_currentQuicklistMode != _AKFavoritesQuicklistMode)
+    if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
     {
         return NO;
     }
@@ -472,10 +432,8 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         return NO;
     }
 
-    AKAppController *appController = [NSApp delegate];
-
-    [appController moveFavoriteFromIndex:draggedRowIndex toIndex:row];
-
+    [(AKAppController *)[NSApp delegate] moveFavoriteFromIndex:draggedRowIndex
+                                                       toIndex:row];
     return YES;
 }
 
@@ -484,7 +442,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
                  proposedRow:(int)row
        proposedDropOperation:(NSTableViewDropOperation)operation
 {
-    if (_currentQuicklistMode != _AKFavoritesQuicklistMode)
+    if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
     {
         return NSDragOperationNone;
     }
@@ -496,7 +454,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         writeRows:(NSArray*)rows
      toPasteboard:(NSPasteboard*)pboard
 {
-    if (_currentQuicklistMode != _AKFavoritesQuicklistMode)
+    if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
     {
         return NO;
     }
@@ -512,9 +470,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (void)_selectQuicklistMode:(NSInteger)mode
 {
-    BOOL modeIsChanging = (mode != _currentQuicklistMode);
+    BOOL modeIsChanging = (mode != _selectedQuicklistMode);
 
-    _currentQuicklistMode = mode;
+    _selectedQuicklistMode = mode;
 
     // Select the corresponding radio button.
     [_quicklistModeRadio selectCellWithTag:mode];
@@ -531,12 +489,11 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
     NSArray *tableValues = nil;
 
-    switch (_currentQuicklistMode)
+    switch (_selectedQuicklistMode)
     {
         case _AKFavoritesQuicklistMode:
         {
-            AKAppController *appController = [NSApp delegate];
-            NSArray *favoritesList = [appController favoritesList];
+            NSArray *favoritesList = [(AKAppController *)[NSApp delegate] favoritesList];
 
             tableValues = [NSArray arrayWithArray:favoritesList];
             break;
@@ -572,13 +529,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             break;
         }
 
-// Getting rid of "Delegate protocols" in Quicklist.
-//        case _AKDelegateProtocolsQuicklistMode:
-//        {
-//            tableValues = [self _delegateProtocols];
-//            break;
-//        }
-
         case _AKClassesWithDataSourcesQuicklistMode:
         {
             tableValues = [self _classesWithDataSources];
@@ -613,11 +563,8 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         }
     }
 
-    // Make the transition to the newly computed table values, using the
-    // standard setter pattern.
-    [self setCurrentTableValues:tableValues];
-
     // Reload the table with the new values.
+    [self setDocLocators:tableValues];
     [_quicklistTable deselectAll:nil];
     [_quicklistTable reloadData];
 
@@ -933,7 +880,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return [AKSortUtils arrayBySortingSet:resultSet];
 }
 
-- (void)_jumpToSearchResultAtIndex:(NSInteger)resultIndex
+- (void)_selectSearchResultAtIndex:(NSInteger)resultIndex
 {
     // Change the quicklist mode to search mode.
     [self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
@@ -967,7 +914,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     [self doQuicklistTableAction:nil];
 }
 
-- (void)_jumpToSearchResultWithPrefix:(NSString *)searchString
+- (void)_selectSearchResultWithPrefix:(NSString *)searchString
 {
 	NSString *lowercaseSearchString = [searchString lowercaseString];
     NSInteger searchResultIndex = 0;
@@ -986,10 +933,10 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         }
     }
 
-    [self _jumpToSearchResultAtIndex:searchResultIndex];
+    [self _selectSearchResultAtIndex:searchResultIndex];
 }
 
-- (void)_updateSearchOptionsPopup
+- (void)_updatePastStringsInSearchOptionsPopup
 {
     NSMenu *searchMenu = [_searchOptionsPopup menu];
     NSInteger indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];

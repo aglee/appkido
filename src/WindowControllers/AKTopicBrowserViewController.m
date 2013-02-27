@@ -79,13 +79,13 @@
 
 - (IBAction)doBrowserAction:(id)sender
 {
-    [[self owningWindowController] jumpToTopic:[[_topicBrowser selectedCell] representedObject]];
+    [[self owningWindowController] selectTopic:[[_topicBrowser selectedCell] representedObject]];
 }
 
 #pragma mark -
 #pragma mark AKViewController methods
 
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
+- (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
     // Handle cases where there's nothing to do.
     if ([whereFrom isEqual:whereTo])

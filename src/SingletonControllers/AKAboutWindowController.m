@@ -67,7 +67,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         // Use a delayed perform to avoid mucking with the WebView's
         // display while it's in the middle of processing a UI event.
-        // Note that the return value of -jumpToLinkURL: will be lost.
         [[NSWorkspace sharedWorkspace] performSelector:@selector(openURL:)
                                             withObject:[request URL]
                                             afterDelay:0];

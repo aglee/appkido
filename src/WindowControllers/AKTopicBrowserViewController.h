@@ -8,7 +8,6 @@
 #import "AKViewController.h"
 
 @class AKBrowser;
-@class AKDocLocator;
 
 /*!
  * Manages the NSBrowser used to navigate the top-level "topics" in an AppKiDo

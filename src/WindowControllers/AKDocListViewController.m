@@ -23,6 +23,7 @@
 
 @implementation AKDocListViewController
 
+@synthesize subtopic = _subtopic;
 @synthesize docListTable = _docListTable;
 
 #pragma mark -
@@ -38,21 +39,22 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_subtopic release];
+
+    [super dealloc];
+}
+
 #pragma mark -
 #pragma mark Getters and setters
-
-- (void)setSubtopic:(AKSubtopic *)subtopic
-{
-    [_subtopicToDisplay autorelease];
-    _subtopicToDisplay = [subtopic retain];
-}
 
 - (NSString *)docComment
 {
     NSInteger docIndex = [_docListTable selectedRow];
     
     return ((docIndex >= 0)
-            ? [[_subtopicToDisplay docAtIndex:docIndex] commentString]
+            ? [[_subtopic docAtIndex:docIndex] commentString]
             : @"");
 }
 
@@ -72,16 +74,16 @@
     NSInteger selectedRow = [_docListTable selectedRow];
     NSString *docName = ((selectedRow < 0)
                          ? nil
-                         : [[_subtopicToDisplay docAtIndex:selectedRow] docName]);
+                         : [[_subtopic docAtIndex:selectedRow] docName]);
 
     // Tell the main window to select the doc at the selected index.
-    [[self owningWindowController] jumpToDocName:docName];
+    [[self owningWindowController] selectDocWithName:docName];
 }
 
 #pragma mark -
 #pragma mark AKViewController methods
 
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
+- (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
     // Handle cases where there's nothing to do.
     if ([whereFrom isEqual:whereTo])
@@ -96,8 +98,10 @@
 
     // Reload the doc list table.
     [_docListTable reloadData];
+    
     NSInteger docIndex = -1;
-    if ([_subtopicToDisplay numberOfDocs] == 0)
+    
+    if ([_subtopic numberOfDocs] == 0)
     {
         // Modify whereTo.
         [whereTo setDocName:nil];
@@ -113,7 +117,7 @@
         }
         else
         {
-            docIndex = [_subtopicToDisplay indexOfDocWithName:docName];
+            docIndex = [_subtopic indexOfDocWithName:docName];
             if (docIndex < 0)
             {
                 docIndex = 0;
@@ -122,10 +126,11 @@
 
         // Select the doc at that index.
         [_docListTable scrollRowToVisible:docIndex];
-        [_docListTable selectRowIndexes:[NSIndexSet indexSetWithIndex:docIndex] byExtendingSelection:NO];
+        [_docListTable selectRowIndexes:[NSIndexSet indexSetWithIndex:docIndex]
+                   byExtendingSelection:NO];
 
         // Modify whereTo.
-        AKDoc *docToDisplay = [_subtopicToDisplay docAtIndex:docIndex];
+        AKDoc *docToDisplay = [_subtopic docAtIndex:docIndex];
         [whereTo setDocName:[docToDisplay docName]];
     }
 }
@@ -148,14 +153,14 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return [_subtopicToDisplay numberOfDocs];
+    return [_subtopic numberOfDocs];
 }
 
 - (id)tableView:(NSTableView *)aTableView
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
             row:(NSInteger)rowIndex
 {
-    return [[_subtopicToDisplay docAtIndex:rowIndex] stringToDisplayInDocList];
+    return [[_subtopic docAtIndex:rowIndex] stringToDisplayInDocList];
 }
 
 @end

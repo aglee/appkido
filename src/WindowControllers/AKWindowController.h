@@ -20,20 +20,14 @@
 @class AKTopicBrowserViewController;
 @class AKWindowLayout;
 
-// Naming convention:
-// "jumpTo" methods are all here; "jumpTo" means "navigate to and add to
-// history"; "navigate" means "navigate the various subcontrollers to";
-// navigation always starts here at the window controller and propagates
-// to subcontrollers
-
 /*!
  * Manages an AppKiDo browser window. Coordinates view controllers for the views
  * in the window. Manages the window's navigation history.
  *
  * Patches the view controllers after self in the responder chain so they can
  * pick up action messages even when not in the first responder's responder
- * chain. The vc's are such that this shouldnt' cause a conflict between action
- * messages with the same name.
+ * chain. The action methods of the view controllers are such that this
+ * shouldn't cause a conflict between action messages with the same name.
  */
 @interface AKWindowController : NSWindowController <AKUIController, NSToolbarDelegate>
 {
@@ -48,7 +42,7 @@
     // The index within _windowHistory of our current navigation state.
     NSInteger _windowHistoryIndex;
 
-    // Remembered for when we hide/show the browser.  We remember it as a
+    // Remembered for when we hide/show the browser. We remember it as a
     // fraction instead of an absolute height because the user can toggle
     // the browser off, resize the window, and toggle the browser back on.
     CGFloat _browserFractionWhenVisible;
@@ -57,7 +51,7 @@
     AKTopicBrowserViewController *_topicBrowserController;
     AKSubtopicListViewController *_subtopicListController;
     AKDocListViewController *_docListController;
-    AKDocViewController *_docContainerViewController;
+    AKDocViewController *_docViewController;
     AKQuicklistViewController *_quicklistController;
 
     // IBOutlets.
@@ -117,8 +111,6 @@
 
 - (AKDatabase *)database;
 
-- (AKDocLocator *)currentHistoryItem;
-
 /*!
  * Returns the currently displayed doc. If there is no current doc, looks for a
  * General/Overview doc on the assumption that the current topic is probably a class.
@@ -140,30 +132,30 @@
 #pragma mark -
 #pragma mark Navigation
 
-- (void)jumpToTopic:(AKTopic *)obj;
+/*! Selects the topic in the topic browser. Updates the rest of the window. */
+- (void)selectTopic:(AKTopic *)obj;
 
-- (void)jumpToSubtopicWithName:(NSString *)subtopicName;
+/*! Tries to select the specified subtopic within the selected topic. */
+- (void)selectSubtopicWithName:(NSString *)subtopicName;
 
-- (void)jumpToDocName:(NSString *)docName;
+/*! Tries to select the specified doc within the selected subtopic. */
+- (void)selectDocWithName:(NSString *)docName;
 
-- (void)jumpToDocLocator:(AKDocLocator *)docLocator;
-
-/*! All the other "jumpTo" methods come through here. */
-- (void)jumpToTopic:(AKTopic *)obj
-       subtopicName:(NSString *)subtopicName
-            docName:(NSString *)docName;
+- (void)selectDocWithDocLocator:(AKDocLocator *)docLocator;
 
 /*!
  * Returns YES if we are able to jump to the URL, either within the app if
  * possible or, if necessary, in the user's browser.
  */
-- (BOOL)jumpToLinkURL:(NSURL *)linkURL;
+- (BOOL)followLinkURL:(NSURL *)linkURL;
 
 - (void)openQuicklistDrawer;
 
 - (void)searchForString:(NSString *)aString;
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
+
+- (NSView *)focusOnDocView;
 
 #pragma mark -
 #pragma mark Action methods -- window layout
@@ -179,29 +171,38 @@
 #pragma mark -
 #pragma mark Action methods -- navigation
 
-- (IBAction)navigateBack:(id)sender;
+- (IBAction)goBackInHistory:(id)sender;
 
-- (IBAction)navigateForward:(id)sender;
+- (IBAction)goForwardInHistory:(id)sender;
 
-- (IBAction)doBackMenuAction:(id)sender;
+/*! Expects sender to be an NSMenuItem in the Back popup menu. */
+- (IBAction)goToHistoryItemInBackMenu:(id)sender;
 
-- (IBAction)doForwardMenuAction:(id)sender;
+/*! Expects sender to be an NSMenuItem in the Forward popup menu. */
+- (IBAction)goToHistoryItemInForwardMenu:(id)sender;
 
-- (IBAction)jumpToSuperclass:(id)sender;
+- (IBAction)selectSuperclass:(id)sender;
 
-- (IBAction)jumpToFrameworkFormalProtocols:(id)sender;
+/*! Expects sender to be an NSMenuItem in the Superclasses popup menu. */
+- (IBAction)selectAncestorClass:(id)sender;
 
-- (IBAction)jumpToFrameworkInformalProtocols:(id)sender;
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectFormalProtocolsTopic:(id)sender;
 
-- (IBAction)jumpToFrameworkFunctions:(id)sender;
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectInformalProtocolsTopic:(id)sender;
 
-- (IBAction)jumpToFrameworkGlobals:(id)sender;
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectFunctionsTopic:(id)sender;
+
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectGlobalsTopic:(id)sender;
 
 /*!
  * Used by items in the Favorites menu. Does nothing unless sender is an
- * NSMenuItem.
+ * NSMenuItem whose representedObject is an AKDocLocator.
  */
-- (IBAction)jumpToDocLocatorRepresentedBy:(id)sender;
+- (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender;
 
 /*! Adds the currently selected topic to the Favorites quicklist. */
 - (IBAction)addTopicToFavorites:(id)sender;
@@ -209,11 +210,5 @@
 - (IBAction)findNext:(id)sender;
 
 - (IBAction)findPrevious:(id)sender;
-
-- (IBAction)revealDocFileInFinder:(id)sender;
-
-- (IBAction)copyDocTextURL:(id)sender;
-
-- (IBAction)openDocURLInBrowser:(id)sender;
 
 @end

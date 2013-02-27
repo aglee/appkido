@@ -21,18 +21,17 @@
 {
 @private
     // The subtopic whose list of docs we should display.
-    AKSubtopic *_subtopicToDisplay;
+    AKSubtopic *_subtopic;
 
     // IBOutlets.
     AKTableView *_docListTable;
 }
 
+@property (nonatomic, retain) AKSubtopic *subtopic;
 @property (nonatomic, assign) IBOutlet AKTableView *docListTable;
 
 #pragma mark -
 #pragma mark Getters and setters
-
-- (void)setSubtopic:(AKSubtopic *)subtopic;
 
 - (NSString *)docComment;
 
@@ -47,12 +46,5 @@
 
 /*! Called when the user select an item in the doc list table. */
 - (IBAction)doDocListTableAction:(id)sender;
-
-
-
-
-- (void)focusOnDocListTable;
-
-
 
 @end

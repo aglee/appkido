@@ -20,20 +20,17 @@
     AKWindowController *_owningWindowController;  // weak reference
 }
 
+@property (nonatomic, readonly, unsafe_unretained) AKWindowController *owningWindowController;
+
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
 - (id)initWithNibName:nibName windowController:(AKWindowController *)windowController;
 
 #pragma mark -
-#pragma mark Getters and setters
-
-- (AKWindowController *)owningWindowController;
-
-#pragma mark -
 #pragma mark Navigation
 
 /*! May modify whereTo. */
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo;
+- (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo;
 
 @end

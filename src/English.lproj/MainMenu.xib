@@ -1211,78 +1211,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="1047364580"/>
-					</object>
-					<int key="connectionID">749</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="120438631"/>
-					</object>
-					<int key="connectionID">750</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="825111479"/>
-					</object>
-					<int key="connectionID">751</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="214148853"/>
-					</object>
-					<int key="connectionID">752</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="191807605"/>
-					</object>
-					<int key="connectionID">753</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="69884170"/>
-					</object>
-					<int key="connectionID">754</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="936389425"/>
-					</object>
-					<int key="connectionID">755</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="602361178"/>
-					</object>
-					<int key="connectionID">756</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="197407448"/>
-					</object>
-					<int key="connectionID">757</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">addTopicToFavorites:</string>
 						<reference key="source" ref="354112457"/>
 						<reference key="destination" ref="1043364634"/>
@@ -1355,19 +1283,91 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
 						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="529650987"/>
+						<reference key="destination" ref="1047364580"/>
 					</object>
-					<int key="connectionID">1136</int>
+					<int key="connectionID">1286</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSubtopicWithIndexFromTag:</string>
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="529650987"/>
+					</object>
+					<int key="connectionID">1288</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
 						<reference key="source" ref="354112457"/>
 						<reference key="destination" ref="51687139"/>
 					</object>
-					<int key="connectionID">1137</int>
+					<int key="connectionID">1289</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="120438631"/>
+					</object>
+					<int key="connectionID">1290</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="825111479"/>
+					</object>
+					<int key="connectionID">1291</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="214148853"/>
+					</object>
+					<int key="connectionID">1292</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="191807605"/>
+					</object>
+					<int key="connectionID">1293</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="69884170"/>
+					</object>
+					<int key="connectionID">1294</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="936389425"/>
+					</object>
+					<int key="connectionID">1295</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="602361178"/>
+					</object>
+					<int key="connectionID">1296</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSubtopicWithIndexFromTag:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="197407448"/>
+					</object>
+					<int key="connectionID">1297</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2506,7 +2506,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1285</int>
+			<int key="maxID">1297</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2618,83 +2618,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AKBrowser.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">AKDocListController</string>
-					<string key="superclassName">AKWindowSubcontroller</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">doDocListTableAction:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">doDocListTableAction:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">doDocListTableAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_docCommentField</string>
-							<string>_docListTable</string>
-							<string>_docView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSTextField</string>
-							<string>AKTableView</string>
-							<string>AKDocView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_docCommentField</string>
-							<string>_docListTable</string>
-							<string>_docView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_docCommentField</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_docListTable</string>
-								<string key="candidateClassName">AKTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_docView</string>
-								<string key="candidateClassName">AKDocView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AKDocListController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">AKDocView</string>
-					<string key="superclassName">NSView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">_docListController</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">_docListController</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">_docListController</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AKDocView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2817,8 +2740,8 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">AKQuicklistController</string>
-					<string key="superclassName">AKWindowSubcontroller</string>
+					<string key="className">AKQuicklistViewController</string>
+					<string key="superclassName">AKViewController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -2829,14 +2752,10 @@
 							<string>doSearch:</string>
 							<string>doSearchOptionsPopupAction:</string>
 							<string>removeFavorite:</string>
-							<string>selectNextSearchResult:</string>
-							<string>selectPreviousSearchResult:</string>
 							<string>selectSearchField:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2856,8 +2775,6 @@
 							<string>doSearch:</string>
 							<string>doSearchOptionsPopupAction:</string>
 							<string>removeFavorite:</string>
-							<string>selectNextSearchResult:</string>
-							<string>selectPreviousSearchResult:</string>
 							<string>selectSearchField:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -2887,14 +2804,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">selectNextSearchResult:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectPreviousSearchResult:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">selectSearchField:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -2904,18 +2813,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_frameworkPopup</string>
-							<string>_ignoreCaseItem</string>
-							<string>_includeClassesItem</string>
-							<string>_includeFunctionsItem</string>
-							<string>_includeGlobalsItem</string>
-							<string>_includeMethodsItem</string>
-							<string>_quicklistModeRadio</string>
-							<string>_quicklistTable</string>
-							<string>_removeFavoriteButton</string>
-							<string>_searchField</string>
-							<string>_searchOptionsDividerItem</string>
-							<string>_searchOptionsPopup</string>
+							<string>frameworkPopup</string>
+							<string>ignoreCaseItem</string>
+							<string>includeClassesItem</string>
+							<string>includeFunctionsItem</string>
+							<string>includeGlobalsItem</string>
+							<string>includeMethodsItem</string>
+							<string>quicklistModeRadio</string>
+							<string>quicklistTable</string>
+							<string>removeFavoriteButton</string>
+							<string>searchField</string>
+							<string>searchOptionsDividerItem</string>
+							<string>searchOptionsPopup</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2937,133 +2846,125 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_frameworkPopup</string>
-							<string>_ignoreCaseItem</string>
-							<string>_includeClassesItem</string>
-							<string>_includeFunctionsItem</string>
-							<string>_includeGlobalsItem</string>
-							<string>_includeMethodsItem</string>
-							<string>_quicklistModeRadio</string>
-							<string>_quicklistTable</string>
-							<string>_removeFavoriteButton</string>
-							<string>_searchField</string>
-							<string>_searchOptionsDividerItem</string>
-							<string>_searchOptionsPopup</string>
+							<string>frameworkPopup</string>
+							<string>ignoreCaseItem</string>
+							<string>includeClassesItem</string>
+							<string>includeFunctionsItem</string>
+							<string>includeGlobalsItem</string>
+							<string>includeMethodsItem</string>
+							<string>quicklistModeRadio</string>
+							<string>quicklistTable</string>
+							<string>removeFavoriteButton</string>
+							<string>searchField</string>
+							<string>searchOptionsDividerItem</string>
+							<string>searchOptionsPopup</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_frameworkPopup</string>
+								<string key="name">frameworkPopup</string>
 								<string key="candidateClassName">NSPopUpButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_ignoreCaseItem</string>
+								<string key="name">ignoreCaseItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_includeClassesItem</string>
+								<string key="name">includeClassesItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_includeFunctionsItem</string>
+								<string key="name">includeFunctionsItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_includeGlobalsItem</string>
+								<string key="name">includeGlobalsItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_includeMethodsItem</string>
+								<string key="name">includeMethodsItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_quicklistModeRadio</string>
+								<string key="name">quicklistModeRadio</string>
 								<string key="candidateClassName">AKMultiRadioView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_quicklistTable</string>
+								<string key="name">quicklistTable</string>
 								<string key="candidateClassName">AKTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_removeFavoriteButton</string>
+								<string key="name">removeFavoriteButton</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_searchField</string>
+								<string key="name">searchField</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_searchOptionsDividerItem</string>
+								<string key="name">searchOptionsDividerItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_searchOptionsPopup</string>
+								<string key="name">searchOptionsPopup</string>
 								<string key="candidateClassName">NSPopUpButton</string>
 							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AKQuicklistController.h</string>
+						<string key="minorKey">./Classes/AKQuicklistViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">AKSubcontroller</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AKSubcontroller.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">AKSubtopicListController</string>
-					<string key="superclassName">AKWindowSubcontroller</string>
+					<string key="className">AKSubtopicListViewController</string>
+					<string key="superclassName">AKViewController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">doSubtopicTableAction:</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>doSubtopicTableAction:</string>
+							<string>selectSubtopicWithIndexFromTag:</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">doSubtopicTableAction:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">doSubtopicTableAction:</string>
-							<string key="candidateClassName">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>doSubtopicTableAction:</string>
+							<string>selectSubtopicWithIndexFromTag:</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">doSubtopicTableAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectSubtopicWithIndexFromTag:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_docListController</string>
-							<string>_subtopicsTable</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>AKDocListController</string>
-							<string>AKTableView</string>
-						</object>
+						<string key="NS.key.0">subtopicsTable</string>
+						<string key="NS.object.0">AKTableView</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_docListController</string>
-							<string>_subtopicsTable</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_docListController</string>
-								<string key="candidateClassName">AKDocListController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_subtopicsTable</string>
-								<string key="candidateClassName">AKTableView</string>
-							</object>
+						<string key="NS.key.0">subtopicsTable</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">subtopicsTable</string>
+							<string key="candidateClassName">AKTableView</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AKSubtopicListController.h</string>
+						<string key="minorKey">./Classes/AKSubtopicListViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3075,8 +2976,8 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">AKTopicBrowserController</string>
-					<string key="superclassName">AKWindowSubcontroller</string>
+					<string key="className">AKTopicBrowserViewController</string>
+					<string key="superclassName">AKViewController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -3117,57 +3018,36 @@
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_subtopicListController</string>
-							<string>_topicBrowser</string>
-							<string>_topicDescriptionField</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>AKSubtopicListController</string>
-							<string>AKBrowser</string>
-							<string>NSTextField</string>
-						</object>
+						<string key="NS.key.0">topicBrowser</string>
+						<string key="NS.object.0">AKBrowser</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_subtopicListController</string>
-							<string>_topicBrowser</string>
-							<string>_topicDescriptionField</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_subtopicListController</string>
-								<string key="candidateClassName">AKSubtopicListController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_topicBrowser</string>
-								<string key="candidateClassName">AKBrowser</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_topicDescriptionField</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
+						<string key="NS.key.0">topicBrowser</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">topicBrowser</string>
+							<string key="candidateClassName">AKBrowser</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AKTopicBrowserController.h</string>
+						<string key="minorKey">./Classes/AKTopicBrowserViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">AKViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AKViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">AKWindowController</string>
-					<string key="superclassName">NSObject</string>
+					<string key="superclassName">NSWindowController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addBrowserColumn:</string>
 							<string>addTopicToFavorites:</string>
 							<string>copyDocTextURL:</string>
 							<string>doBackMenuAction:</string>
@@ -3184,22 +3064,13 @@
 							<string>navigateForward:</string>
 							<string>openDocURLInBrowser:</string>
 							<string>rememberWindowLayout:</string>
-							<string>removeBrowserColumn:</string>
 							<string>revealDocFileInFinder:</string>
-							<string>selectNextSearchResult:</string>
-							<string>selectPreviousSearchResult:</string>
-							<string>selectSearchField:</string>
 							<string>showBrowser:</string>
 							<string>toggleBrowserVisible:</string>
 							<string>toggleQuicklistDrawer:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -3226,7 +3097,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addBrowserColumn:</string>
 							<string>addTopicToFavorites:</string>
 							<string>copyDocTextURL:</string>
 							<string>doBackMenuAction:</string>
@@ -3243,21 +3113,13 @@
 							<string>navigateForward:</string>
 							<string>openDocURLInBrowser:</string>
 							<string>rememberWindowLayout:</string>
-							<string>removeBrowserColumn:</string>
 							<string>revealDocFileInFinder:</string>
-							<string>selectNextSearchResult:</string>
-							<string>selectPreviousSearchResult:</string>
-							<string>selectSearchField:</string>
 							<string>showBrowser:</string>
 							<string>toggleBrowserVisible:</string>
 							<string>toggleQuicklistDrawer:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">addBrowserColumn:</string>
-								<string key="candidateClassName">id</string>
-							</object>
 							<object class="IBActionInfo">
 								<string key="name">addTopicToFavorites:</string>
 								<string key="candidateClassName">id</string>
@@ -3323,23 +3185,7 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">removeBrowserColumn:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">revealDocFileInFinder:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectNextSearchResult:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectPreviousSearchResult:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectSearchField:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -3360,154 +3206,135 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_backButton</string>
-							<string>_backMenu</string>
-							<string>_docListController</string>
-							<string>_docTextMenu</string>
-							<string>_docView</string>
-							<string>_forwardButton</string>
-							<string>_forwardMenu</string>
-							<string>_innerSplitView</string>
-							<string>_middleView</string>
-							<string>_quicklistController</string>
-							<string>_quicklistDrawer</string>
-							<string>_superclassButton</string>
-							<string>_superclassesMenu</string>
-							<string>_topLevelSplitView</string>
-							<string>_topicBrowser</string>
-							<string>_topicBrowserController</string>
+							<string>backButton</string>
+							<string>backMenu</string>
+							<string>docCommentField</string>
+							<string>docContainerView</string>
+							<string>docListContainerView</string>
+							<string>forwardButton</string>
+							<string>forwardMenu</string>
+							<string>innerSplitView</string>
+							<string>middleView</string>
+							<string>quicklistDrawer</string>
+							<string>subtopicListContainerView</string>
+							<string>superclassButton</string>
+							<string>superclassesMenu</string>
+							<string>topLevelSplitView</string>
+							<string>topicBrowserContainerView</string>
+							<string>topicDescriptionField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSButton</string>
 							<string>NSMenu</string>
-							<string>AKDocListController</string>
-							<string>NSMenu</string>
-							<string>AKDocView</string>
+							<string>NSTextField</string>
+							<string>NSView</string>
+							<string>NSView</string>
 							<string>NSButton</string>
 							<string>NSMenu</string>
 							<string>NSSplitView</string>
 							<string>NSView</string>
-							<string>AKQuicklistController</string>
 							<string>NSDrawer</string>
+							<string>NSView</string>
 							<string>NSButton</string>
 							<string>NSMenu</string>
 							<string>NSSplitView</string>
-							<string>NSBrowser</string>
-							<string>AKTopicBrowserController</string>
+							<string>NSView</string>
+							<string>NSTextField</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_backButton</string>
-							<string>_backMenu</string>
-							<string>_docListController</string>
-							<string>_docTextMenu</string>
-							<string>_docView</string>
-							<string>_forwardButton</string>
-							<string>_forwardMenu</string>
-							<string>_innerSplitView</string>
-							<string>_middleView</string>
-							<string>_quicklistController</string>
-							<string>_quicklistDrawer</string>
-							<string>_superclassButton</string>
-							<string>_superclassesMenu</string>
-							<string>_topLevelSplitView</string>
-							<string>_topicBrowser</string>
-							<string>_topicBrowserController</string>
+							<string>backButton</string>
+							<string>backMenu</string>
+							<string>docCommentField</string>
+							<string>docContainerView</string>
+							<string>docListContainerView</string>
+							<string>forwardButton</string>
+							<string>forwardMenu</string>
+							<string>innerSplitView</string>
+							<string>middleView</string>
+							<string>quicklistDrawer</string>
+							<string>subtopicListContainerView</string>
+							<string>superclassButton</string>
+							<string>superclassesMenu</string>
+							<string>topLevelSplitView</string>
+							<string>topicBrowserContainerView</string>
+							<string>topicDescriptionField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_backButton</string>
+								<string key="name">backButton</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_backMenu</string>
+								<string key="name">backMenu</string>
 								<string key="candidateClassName">NSMenu</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_docListController</string>
-								<string key="candidateClassName">AKDocListController</string>
+								<string key="name">docCommentField</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_docTextMenu</string>
-								<string key="candidateClassName">NSMenu</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_docView</string>
-								<string key="candidateClassName">AKDocView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_forwardButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_forwardMenu</string>
-								<string key="candidateClassName">NSMenu</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_innerSplitView</string>
-								<string key="candidateClassName">NSSplitView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_middleView</string>
+								<string key="name">docContainerView</string>
 								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_quicklistController</string>
-								<string key="candidateClassName">AKQuicklistController</string>
+								<string key="name">docListContainerView</string>
+								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_quicklistDrawer</string>
-								<string key="candidateClassName">NSDrawer</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_superclassButton</string>
+								<string key="name">forwardButton</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_superclassesMenu</string>
+								<string key="name">forwardMenu</string>
 								<string key="candidateClassName">NSMenu</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_topLevelSplitView</string>
+								<string key="name">innerSplitView</string>
 								<string key="candidateClassName">NSSplitView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_topicBrowser</string>
-								<string key="candidateClassName">NSBrowser</string>
+								<string key="name">middleView</string>
+								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_topicBrowserController</string>
-								<string key="candidateClassName">AKTopicBrowserController</string>
+								<string key="name">quicklistDrawer</string>
+								<string key="candidateClassName">NSDrawer</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">subtopicListContainerView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">superclassButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">superclassesMenu</string>
+								<string key="candidateClassName">NSMenu</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topLevelSplitView</string>
+								<string key="candidateClassName">NSSplitView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topicBrowserContainerView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topicDescriptionField</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AKWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">AKWindowSubcontroller</string>
-					<string key="superclassName">AKSubcontroller</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">_windowController</string>
-						<string key="NS.object.0">AKWindowController</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">_windowController</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">_windowController</string>
-							<string key="candidateClassName">AKWindowController</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AKWindowSubcontroller.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3701,73 +3528,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSDocument</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>printDocument:</string>
-							<string>revertDocumentToSaved:</string>
-							<string>runPageLayout:</string>
-							<string>saveDocument:</string>
-							<string>saveDocumentAs:</string>
-							<string>saveDocumentTo:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>printDocument:</string>
-							<string>revertDocumentToSaved:</string>
-							<string>runPageLayout:</string>
-							<string>saveDocument:</string>
-							<string>saveDocumentAs:</string>
-							<string>saveDocumentTo:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">printDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">revertDocumentToSaved:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">runPageLayout:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">saveDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">saveDocumentAs:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">saveDocumentTo:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSDocument.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

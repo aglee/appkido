@@ -10,12 +10,15 @@
 
 #import <WebKit/WebKit.h>
 
+#import "DIGSLog.h"
+
 #import "AKDoc.h"
 #import "AKDocLocator.h"
 #import "AKFileSection.h"
 #import "AKPrefUtils.h"
 #import "AKTextUtils.h"
 #import "AKTextView.h"
+#import "AKWindowController.h"
 
 @interface AKDocViewController ()
 @property (nonatomic, retain) AKDocLocator *docLocator;
@@ -24,7 +27,6 @@
 @implementation AKDocViewController
 
 @synthesize docLocator = _docLocator;
-
 @synthesize tabView = _tabView;
 @synthesize webView = _webView;
 @synthesize textView = _textView;
@@ -55,16 +57,91 @@
 
 - (void)awakeFromNib
 {
-    [self applyPrefs];
+    [self applyUserPreferences];
 }
 
 #pragma mark -
-#pragma mark Getters and setters
+#pragma mark Navigation
+
+- (NSView *)grabFocus
+{
+    NSView *viewSelectedInTabView = [[_tabView selectedTabViewItem] view];
+
+    if ([_webView isDescendantOf:viewSelectedInTabView])
+    {
+        // [agl] Should maybe call makeFirstResponder: for correctness? Happens
+        // to work because the one place this is called also makes this FR.
+        return _webView;
+    }
+    else if ([_textView isDescendantOf:viewSelectedInTabView])
+    {
+        if ([[_textView window] makeFirstResponder:_textView])
+        {
+            return _textView;
+        }
+        else
+        {
+            return nil;
+        }
+    }
+    else
+    {
+        DIGSLogWarning(@"View [%@] selected in tab view contains neither"
+                       @" the web view (%p) nor the text view (%p).",
+                       viewSelectedInTabView, _webView, _textView);
+        return nil;
+    }
+}
 
 #pragma mark -
-#pragma mark UI behavior
+#pragma mark Action methods
 
-- (void)applyPrefs
+- (IBAction)revealDocFileInFinder:(id)sender
+{
+    NSString *docPath = [[self owningWindowController] currentDocPath];
+
+    if (docPath == nil)
+    {
+        return;
+    }
+
+    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] selectFile:docPath
+                     inFileViewerRootedAtPath:containingDirPath];
+}
+
+- (IBAction)copyDocTextURL:(id)sender
+{
+    NSURL *docURL = [[self owningWindowController] currentDocURL];
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+
+    [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
+    [pasteboard setString:[docURL absoluteString] forType:NSStringPboardType];
+}
+
+- (IBAction)openDocURLInBrowser:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[[self owningWindowController] currentDocURL]];
+}
+
+#pragma mark -
+#pragma mark AKViewController methods
+
+- (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
+{
+    if ([whereTo isEqual:_docLocator])
+    {
+        return;
+    }
+
+    [self setDocLocator:whereTo];
+    [self _updateDocDisplay];
+}
+
+#pragma mark -
+#pragma mark AKUIController methods
+
+- (void)applyUserPreferences
 {
     if (![[_docLocator docToDisplay] isPlainText])
     {
@@ -105,42 +182,131 @@
     }
 }
 
-- (NSView *)grabFocus
+- (BOOL)validateItem:(id)anItem
 {
-    NSView *currentSubview = [[_tabView selectedTabViewItem] view];
+    SEL itemAction = [anItem action];
 
-    if (currentSubview == _webView)
+    if ((itemAction == @selector(copyDocTextURL:))
+        || (itemAction == @selector(openDocURLInBrowser:))
+        || (itemAction == @selector(revealDocFileInFinder:)))
     {
-        return _webView;  // [agl] ??? No call to makeFirstResponder:?
+        return ([[self owningWindowController] currentDoc] != nil);
     }
-    else
-    {
-        NSTextView *textView = [(NSScrollView *)currentSubview documentView];
 
-        if ([[textView window] makeFirstResponder:textView])
-        {
-            return textView;
-        }
-        else
-        {
-            return nil;
-        }
-    }
+    return NO;
 }
 
-#pragma mark -
-#pragma mark AKViewController methods
-
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
-{
-    if ([whereTo isEqual:_docLocator])
-    {
-        return;
-    }
-
-    [self setDocLocator:whereTo];
-    [self _updateDocDisplay];
-}
+//#pragma mark -
+//#pragma mark WebPolicyDelegate methods
+//
+//- (void)webView:(WebView *)sender
+//decidePolicyForNavigationAction:(NSDictionary *)actionInformation
+//        request:(NSURLRequest *)request
+//          frame:(WebFrame *)frame
+//decisionListener:(id <WebPolicyDecisionListener>)listener
+//{
+//    NSNumber *navType = [actionInformation objectForKey:WebActionNavigationTypeKey];
+//    BOOL isLinkClicked = ((navType != nil)
+//                          && ([navType intValue] == WebNavigationTypeLinkClicked));
+//
+//    if (isLinkClicked)
+//    {
+//        NSEvent *currentEvent = [NSApp currentEvent];
+//        AKBrowserWindowController *wc = (([currentEvent modifierFlags] & NSCommandKeyMask)
+//                                         ? [[NSApp delegate] controllerForNewWindow]
+//                                         : [self browserWindowController]);
+//
+//        // Use a delayed perform to avoid mucking with the WebView's
+//        // display while it's in the middle of processing a UI event.
+//        // Note that the return value of -followLinkURL: will be lost.
+//        [wc performSelector:@selector(followLinkURL:) withObject:[request URL] afterDelay:0];
+//    }
+//    else
+//    {
+//        [listener use];
+//    }
+//}
+//
+//#pragma mark -
+//#pragma mark WebUIDelegate methods
+//
+//- (NSArray *)webView:(WebView *)sender
+//contextMenuItemsForElement:(NSDictionary *)element
+//    defaultMenuItems:(NSArray *)defaultMenuItems
+//{
+//    NSURL *linkURL = [element objectForKey:WebElementLinkURLKey];
+//    NSMutableArray *newMenuItems = [NSMutableArray array];
+//
+//    // Don't have a contextual menu if there is nothing in the doc view.
+//    if ([[self browserWindowController] currentDoc] == nil)
+//    {
+//        return newMenuItems;
+//    }
+//
+//    // Loop through the proposed menu items in defaultMenuItems, and only
+//    // allow certain ones of them to appear in the contextual menu, because
+//    // the others don't make sense for us.
+//    //
+//    // Note that we may come across some tags for which there aren't
+//    // WebMenuItemXXX constants declared in the version of WebKit
+//    // I'm using.  For example, the "Reload" menu item has tag 12,
+//    // which is WebMenuItemTagReload in newer versions of WebKit.
+//    // That's okay -- as of this writing, none of those are things
+//    // we want in the menu.
+//    for (NSMenuItem *menuItem in defaultMenuItems)
+//    {
+//        NSInteger tag = [menuItem tag];
+//
+//        if (tag == WebMenuItemTagOpenLinkInNewWindow)
+//        {
+//            // Change this menu item so instead of opening the link
+//            // in a new *web* browser window, it opens a new *AppKiDo*
+//            // browser window.
+//            [menuItem setAction:@selector(openLinkInNewWindow:)];
+//            [menuItem setTarget:nil];  // will go to first responder
+//            [menuItem setRepresentedObject:linkURL];
+//
+//            [newMenuItems addObject:menuItem];
+//        }
+//        else if ((tag == WebMenuItemTagCopyLinkToClipboard)
+//                 || (tag == WebMenuItemTagDownloadImageToDisk)
+//                 || (tag == WebMenuItemTagCopyImageToClipboard)
+//                 || (tag == WebMenuItemTagCopyImageToClipboard)
+//                 || (tag == WebMenuItemTagCopy))
+//        {
+//            [newMenuItems addObject:menuItem];
+//        }
+//    }
+//
+//    // Add an item to the menu that allows the user to copy the URL
+//    // of the file being looked at to the clipboard.  The URL could
+//    // then be pasted into an email message if the user is answering
+//    // somebody's question on one of the dev lists, for example.  The
+//    // URL could also be helpful for debugging.
+//    NSMenuItem *copyURLItem = [[[NSMenuItem alloc] initWithTitle:@"Copy Page URL"
+//                                                          action:@selector(copyDocTextURL:)
+//                                                   keyEquivalent:@""] autorelease];
+//    [copyURLItem setTarget:nil];  // will go to first responder
+//    [newMenuItems addObject:copyURLItem];
+//
+//    // Add an item to the menu that allows the user to open the
+//    // currently displayed file in the default web browser.
+//    NSMenuItem *openURLInBrowserItem = [[[NSMenuItem alloc] initWithTitle:@"Open Page in Browser"
+//                                                                   action:@selector(openDocURLInBrowser:)
+//                                                            keyEquivalent:@""] autorelease];
+//    [openURLInBrowserItem setTarget:nil];  // will go to first responder
+//    [newMenuItems addObject:openURLInBrowserItem];
+//
+//    // Add an item to the menu that allows the user to reveal the
+//    // currently displayed file in the Finder.
+//    NSMenuItem *revealInFinderItem = [[[NSMenuItem alloc]initWithTitle:@"Reveal In Finder"
+//                                                                action:@selector(revealDocFileInFinder:)
+//                                                         keyEquivalent:@""] autorelease];
+//    [revealInFinderItem setTarget:nil];  // will go to first responder
+//    [newMenuItems addObject:revealInFinderItem];
+//    
+//    return newMenuItems;
+//}
 
 #pragma mark -
 #pragma mark Private methods
@@ -279,125 +445,5 @@
         [[_webView mainFrame] loadHTMLString:htmlString baseURL:nil];
     }
 }
-
-//- (NSView *)focusOnDocView
-//{
-//    return [_docContainerView grabFocus];
-//}
-
-
-
-//#pragma mark -
-//#pragma mark WebPolicyDelegate methods
-//
-//- (void)webView:(WebView *)sender
-//decidePolicyForNavigationAction:(NSDictionary *)actionInformation
-//        request:(NSURLRequest *)request
-//          frame:(WebFrame *)frame
-//decisionListener:(id <WebPolicyDecisionListener>)listener
-//{
-//    NSNumber *navType = [actionInformation objectForKey:WebActionNavigationTypeKey];
-//    BOOL isLinkClicked = ((navType != nil)
-//                          && ([navType intValue] == WebNavigationTypeLinkClicked));
-//
-//    if (isLinkClicked)
-//    {
-//        NSEvent *currentEvent = [NSApp currentEvent];
-//        AKBrowserWindowController *wc = (([currentEvent modifierFlags] & NSCommandKeyMask)
-//                                         ? [[NSApp delegate] controllerForNewWindow]
-//                                         : [self browserWindowController]);
-//
-//        // Use a delayed perform to avoid mucking with the WebView's
-//        // display while it's in the middle of processing a UI event.
-//        // Note that the return value of -jumpToLinkURL: will be lost.
-//        [wc performSelector:@selector(jumpToLinkURL:) withObject:[request URL] afterDelay:0];
-//    }
-//    else
-//    {
-//        [listener use];
-//    }
-//}
-//
-//#pragma mark -
-//#pragma mark WebUIDelegate methods
-//
-//- (NSArray *)webView:(WebView *)sender
-//contextMenuItemsForElement:(NSDictionary *)element
-//    defaultMenuItems:(NSArray *)defaultMenuItems
-//{
-//    NSURL *linkURL = [element objectForKey:WebElementLinkURLKey];
-//    NSMutableArray *newMenuItems = [NSMutableArray array];
-//
-//    // Don't have a contextual menu if there is nothing in the doc view.
-//    if ([[self browserWindowController] currentDoc] == nil)
-//    {
-//        return newMenuItems;
-//    }
-//
-//    // Loop through the proposed menu items in defaultMenuItems, and only
-//    // allow certain ones of them to appear in the contextual menu, because
-//    // the others don't make sense for us.
-//    //
-//    // Note that we may come across some tags for which there aren't
-//    // WebMenuItemXXX constants declared in the version of WebKit
-//    // I'm using.  For example, the "Reload" menu item has tag 12,
-//    // which is WebMenuItemTagReload in newer versions of WebKit.
-//    // That's okay -- as of this writing, none of those are things
-//    // we want in the menu.
-//    for (NSMenuItem *menuItem in defaultMenuItems)
-//    {
-//        NSInteger tag = [menuItem tag];
-//
-//        if (tag == WebMenuItemTagOpenLinkInNewWindow)
-//        {
-//            // Change this menu item so instead of opening the link
-//            // in a new *web* browser window, it opens a new *AppKiDo*
-//            // browser window.
-//            [menuItem setAction:@selector(openLinkInNewWindow:)];
-//            [menuItem setTarget:nil];  // will go to first responder
-//            [menuItem setRepresentedObject:linkURL];
-//
-//            [newMenuItems addObject:menuItem];
-//        }
-//        else if ((tag == WebMenuItemTagCopyLinkToClipboard)
-//                 || (tag == WebMenuItemTagDownloadImageToDisk)
-//                 || (tag == WebMenuItemTagCopyImageToClipboard)
-//                 || (tag == WebMenuItemTagCopyImageToClipboard)
-//                 || (tag == WebMenuItemTagCopy))
-//        {
-//            [newMenuItems addObject:menuItem];
-//        }
-//    }
-//
-//    // Add an item to the menu that allows the user to copy the URL
-//    // of the file being looked at to the clipboard.  The URL could
-//    // then be pasted into an email message if the user is answering
-//    // somebody's question on one of the dev lists, for example.  The
-//    // URL could also be helpful for debugging.
-//    NSMenuItem *copyURLItem = [[[NSMenuItem alloc] initWithTitle:@"Copy Page URL"
-//                                                          action:@selector(copyDocTextURL:)
-//                                                   keyEquivalent:@""] autorelease];
-//    [copyURLItem setTarget:nil];  // will go to first responder
-//    [newMenuItems addObject:copyURLItem];
-//
-//    // Add an item to the menu that allows the user to open the
-//    // currently displayed file in the default web browser.
-//    NSMenuItem *openURLInBrowserItem = [[[NSMenuItem alloc] initWithTitle:@"Open Page in Browser"
-//                                                                   action:@selector(openDocURLInBrowser:)
-//                                                            keyEquivalent:@""] autorelease];
-//    [openURLInBrowserItem setTarget:nil];  // will go to first responder
-//    [newMenuItems addObject:openURLInBrowserItem];
-//
-//    // Add an item to the menu that allows the user to reveal the
-//    // currently displayed file in the Finder.
-//    NSMenuItem *revealInFinderItem = [[[NSMenuItem alloc]initWithTitle:@"Reveal In Finder"
-//                                                                action:@selector(revealDocFileInFinder:)
-//                                                         keyEquivalent:@""] autorelease];
-//    [revealInFinderItem setTarget:nil];  // will go to first responder
-//    [newMenuItems addObject:revealInFinderItem];
-//    
-//    return newMenuItems;
-//}
-//
 
 @end

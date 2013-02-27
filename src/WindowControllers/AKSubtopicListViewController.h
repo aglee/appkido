@@ -9,8 +9,6 @@
 
 @class AKSubtopic;
 @class AKTableView;
-@class AKDocListViewController;
-@class AKDocLocator;
 
 /*!
  * Manages the "subtopic list", which lists the subtopics of the window's
@@ -36,22 +34,10 @@
 - (AKSubtopic *)selectedSubtopic;
 
 #pragma mark -
-#pragma mark Navigation
-
-/*!
- * @method      jumpToSubtopicWithIndex:
- * @discussion  Navigates to the subtopic at the specified index within
- *   the subtopics table.  Tries to preserve the already-selected doc
- *   name, if the new subtopic has it in its doc list.
- *
- *   This method is mainly to simplify implementation of the various
- *   menu items that navigate to Class Method, Instance Methods, etc.
- */
-- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex;
-
-#pragma mark -
 #pragma mark Action methods
 
 - (IBAction)doSubtopicTableAction:(id)sender;
+
+- (IBAction)selectSubtopicWithIndexFromTag:(id)sender;
 
 @end

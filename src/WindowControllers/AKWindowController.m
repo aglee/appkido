@@ -96,7 +96,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_topicBrowserController release];
     [_subtopicListController release];
     [_docListController release];
-    [_docContainerViewController release];
+    [_docViewController release];
     [_quicklistController release];
 
     [_quicklistDrawer release];
@@ -112,16 +112,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return _database;
 }
 
-- (AKDocLocator *)currentHistoryItem
-{
-    return ((_windowHistoryIndex < 0)
-            ? nil
-            : [_windowHistory objectAtIndex:_windowHistoryIndex]);
-}
-
 - (AKDoc *)currentDoc
 {
-    AKDocLocator *docLocator = [self currentHistoryItem];
+    AKDocLocator *docLocator = [self _currentDocLocator];
     AKDoc *currentDoc = [docLocator docToDisplay];
     
     if (currentDoc == nil)    //  try General/Overview instead
@@ -137,14 +130,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (NSString *)currentDocPath
 {
-    AKDocLocator *docLocator = [self currentHistoryItem];
+    AKDocLocator *docLocator = [self _currentDocLocator];
     AKDoc *currentDoc = [docLocator docToDisplay];
     
     if (currentDoc == nil)
     {
         docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay]
                                 subtopicName:@"General"
-                                     docName: @"Overview"];
+                                     docName:@"Overview"];
         currentDoc = [docLocator docToDisplay];
     }
     
@@ -166,88 +159,69 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark Navigation
 
-- (void)jumpToTopic:(AKTopic *)obj
+- (void)selectTopic:(AKTopic *)obj
 {
-    AKDocLocator *currentItem = [self currentHistoryItem];
+    AKDocLocator *selectedDocLocator = [self _currentDocLocator];
 
-    [self jumpToTopic:obj subtopicName:[currentItem subtopicName] docName:[currentItem docName]];
+    [self _selectTopic:obj
+          subtopicName:[selectedDocLocator subtopicName]
+               docName:[selectedDocLocator docName]];
 }
 
-- (void)jumpToSubtopicWithName:(NSString *)subtopicName
+- (void)selectSubtopicWithName:(NSString *)subtopicName
 {
-    AKDocLocator *currentItem = [self currentHistoryItem];
+    AKDocLocator *selectedDocLocator = [self _currentDocLocator];
 
-    [self jumpToTopic:[currentItem topicToDisplay] subtopicName:subtopicName docName:[currentItem docName]];
+    [self _selectTopic:[selectedDocLocator topicToDisplay]
+          subtopicName:subtopicName
+               docName:[selectedDocLocator docName]];
 }
 
-- (void)jumpToDocName:(NSString *)docName
+- (void)selectDocWithName:(NSString *)docName
 {
-    AKDocLocator *currentItem = [self currentHistoryItem];
+    AKDocLocator *selectedDocLocator = [self _currentDocLocator];
 
-    [self jumpToTopic:[currentItem topicToDisplay] subtopicName:[currentItem subtopicName] docName:docName];
+    [self _selectTopic:[selectedDocLocator topicToDisplay]
+          subtopicName:[selectedDocLocator subtopicName]
+               docName:docName];
 }
 
-- (void)jumpToDocLocator:(AKDocLocator *)docLocator
+- (void)selectDocWithDocLocator:(AKDocLocator *)docLocator
 {
-    [self jumpToTopic:[docLocator topicToDisplay] subtopicName:[docLocator subtopicName] docName:[docLocator docName]];
+    [self _selectTopic:[docLocator topicToDisplay]
+          subtopicName:[docLocator subtopicName]
+               docName:[docLocator docName]];
 }
 
-// all the other "jumpTo" methods must come through here
-- (void)jumpToTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
-{
-    if (topic == nil)
-    {
-        DIGSLogInfo(@"can't navigate to a nil topic");
-        return;
-    }
-
-    [self _rememberCurrentTextSelection];
-
-    AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic subtopicName:subtopicName docName:docName];
-
-    [_topicBrowserController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
-    [_subtopicListController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
-
-    [_docListController setSubtopic:[_subtopicListController selectedSubtopic]];
-    [_docListController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
-
-    [_docContainerViewController navigateFrom:[self currentHistoryItem] to:newHistoryItem];
-
-    [_topicDescriptionField setStringValue:[topic stringToDisplayInDescriptionField]];
-    [_docCommentField setStringValue:[_docListController docComment]];
-
-    [self _addHistoryItem:newHistoryItem];
-}
-
-- (BOOL)jumpToLinkURL:(NSURL *)linkURL
+- (BOOL)followLinkURL:(NSURL *)linkURL
 {
     // Interpret the link URL as relative to the current doc URL.
-    NSString *currentDocFilePath = [[[[self currentHistoryItem] docToDisplay] fileSection] filePath];
+    NSString *currentDocFilePath = [[[[self _currentDocLocator] docToDisplay] fileSection] filePath];
     NSURL *currentDocFileURL = [NSURL fileURLWithPath:currentDocFilePath];
     NSURL *destinationURL = [NSURL URLWithString:[linkURL relativeString] relativeToURL:currentDocFileURL];
 
     // If we have a file: URL, try to derive a doc locator from it.
-    AKDocLocator *docLocator = nil;
+    AKDocLocator *destinationDocLocator = nil;
     if (![destinationURL isFileURL])
     {
         AKLinkResolver *linkResolver = [AKLinkResolver linkResolverWithDatabase:_database];
-        docLocator = [linkResolver docLocatorForURL:destinationURL];
+        destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
 
-        if (docLocator == nil)
+        if (destinationDocLocator == nil)
         {
             DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
             linkResolver = [AKOldLinkResolver linkResolverWithDatabase:_database];
-            docLocator = [linkResolver docLocatorForURL:destinationURL];
+            destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
         }
     }
 
-    // If we managed to derive a doc locator, jump to it. Otherwise, try opening
-    // the file in the user's browser.
-    if (docLocator)
+    // If we derived a doc locator, go to it. Otherwise, try opening the file in
+    // the user's browser.
+    if (destinationDocLocator)
     {
-        [self jumpToDocLocator:docLocator];
+        [self selectDocWithDocLocator:destinationDocLocator];
         [_docListController focusOnDocListTable];
-        [[_topLevelSplitView window] makeKeyAndOrderFront:nil];
+        [self showWindow:nil];
         return YES;
     }
     else if ([[NSWorkspace sharedWorkspace] openURL:destinationURL])
@@ -283,7 +257,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self putWindowLayoutInto:windowLayout];
 
     [savedWindowState setSavedWindowLayout:windowLayout];
-    [savedWindowState setSavedDocLocator:[self currentHistoryItem]];
+    [savedWindowState setSavedDocLocator:[self _currentDocLocator]];
+}
+
+- (NSView *)focusOnDocView
+{
+    return [_docViewController grabFocus];
 }
 
 #pragma mark -
@@ -311,29 +290,24 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         [_topLevelSplitView ak_setHeight:0.0 ofSubview:_topicBrowserContainerView];
     }
 
-// [agl] KLUDGE -- for some reason the scroll view does not retile
-// automatically, so I force it here; the reason I traverse all subviews
-// is because the internal view hierarchy of WebView is not exposed
-    NSMutableArray *allSubviews = [NSMutableArray arrayWithArray:[_docContainerView subviews]];
-    unsigned subviewIndex = 0;
+    // [agl] KLUDGE -- for some reason the scroll view does not retile
+    // automatically, so I force it here; the reason I traverse all subviews
+    // is because the internal view hierarchy of WebView is not exposed
+    //
+    // [agl] This is a very old kludge. It's possible it isn't needed any more.
+    [self _recursivelyTileScrollViews:_docContainerView];
+}
 
-    while (subviewIndex < [allSubviews count])
+- (void)_recursivelyTileScrollViews:(NSView *)view
+{
+    if ([view isKindOfClass:[NSScrollView class]])
     {
-        NSView *view = [allSubviews objectAtIndex:subviewIndex];
-
-        [allSubviews addObjectsFromArray:[view subviews]];
-
-        subviewIndex++;
+        [(NSScrollView *)view tile];
     }
 
-    for (subviewIndex = 0; subviewIndex < [allSubviews count]; subviewIndex++)
+    for (NSView *subview in [view subviews])
     {
-        NSView *view = [allSubviews objectAtIndex:subviewIndex];
-
-        if ([view isKindOfClass:[NSScrollView class]])
-        {
-            [(NSScrollView *)view tile];
-        }
+        [self _recursivelyTileScrollViews:subview];
     }
 }
 
@@ -362,52 +336,45 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark Action methods -- navigation
 
-- (IBAction)navigateBack:(id)sender
+- (IBAction)goBackInHistory:(id)sender
 {
     if (_windowHistoryIndex > 0)
     {
-        [self _navigateToHistoryIndex:(_windowHistoryIndex - 1)];
+        [self _goToHistoryItemAtIndex:(_windowHistoryIndex - 1)];
     }
 }
 
-- (IBAction)navigateForward:(id)sender
+- (IBAction)goForwardInHistory:(id)sender
 {
     if (_windowHistoryIndex < ((int)[_windowHistory count] - 1))
     {
-        [self _navigateToHistoryIndex:(_windowHistoryIndex + 1)];
+        [self _goToHistoryItemAtIndex:(_windowHistoryIndex + 1)];
     }
 }
 
-- (IBAction)doBackMenuAction:(id)sender
+- (IBAction)goToHistoryItemInBackMenu:(id)sender
 {
-    // Figure out how far back in history to navigate.
     NSInteger offset = [_backMenu indexOfItem:(NSMenuItem *)sender] + 1;
-
-    // Do the navigation.
-    [self _navigateToHistoryIndex:(_windowHistoryIndex - offset)];
+    [self _goToHistoryItemAtIndex:(_windowHistoryIndex - offset)];
 }
 
-- (IBAction)doForwardMenuAction:(id)sender
+- (IBAction)goToHistoryItemInForwardMenu:(id)sender
 {
-    // Figure out how far forward in history to navigate.
     NSInteger offset = [_forwardMenu indexOfItem:(NSMenuItem *)sender] + 1;
-
-    // Do the navigation.
-    [self _navigateToHistoryIndex:(_windowHistoryIndex + offset)];
+    [self _goToHistoryItemAtIndex:(_windowHistoryIndex + offset)];
 }
 
-- (IBAction)jumpToSuperclass:(id)sender
+- (IBAction)selectSuperclass:(id)sender
 {
     AKClassNode *superclassNode = [[self _currentTopic] parentClassOfTopic];
 
     if (superclassNode)
     {
-        [self jumpToTopic:[AKClassTopic topicWithClassNode:superclassNode]];
+        [self selectTopic:[AKClassTopic topicWithClassNode:superclassNode]];
     }
 }
 
-// We expect sender to be an NSMenuItem.
-- (IBAction)jumpToAncestorClass:(id)sender
+- (IBAction)selectAncestorClass:(id)sender
 {
     AKClassNode * classNode = [[self _currentTopic] parentClassOfTopic];
     NSInteger numberOfSuperlevels;
@@ -428,59 +395,60 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Do the jump.
-    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
+    [self selectTopic:[AKClassTopic topicWithClassNode:classNode]];
 }
 
-- (IBAction)jumpToFrameworkFormalProtocols:(id)sender
+- (IBAction)selectFormalProtocolsTopic:(id)sender
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *fwName = [[sender menu] title];
+        NSString *frameworkName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFormalProtocolsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
-
+        [self selectTopic:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName
+                                                               inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
 
-- (IBAction)jumpToFrameworkInformalProtocols:(id)sender
+- (IBAction)selectInformalProtocolsTopic:(id)sender
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *fwName = [[sender menu] title];
+        NSString *frameworkName = [[sender menu] title];
 
-        [self jumpToTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
+        [self selectTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
 
-- (IBAction)jumpToFrameworkFunctions:(id)sender
+- (IBAction)selectFunctionsTopic:(id)sender
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *fwName = [[sender menu] title];
+        NSString *frameworkName = [[sender menu] title];
 
-        [self jumpToTopic:[AKFunctionsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
+        [self selectTopic:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
 
-- (IBAction)jumpToFrameworkGlobals:(id)sender
+- (IBAction)selectGlobalsTopic:(id)sender
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *fwName = [[sender menu] title];
+        NSString *frameworkName = [[sender menu] title];
 
-        [self jumpToTopic:[AKGlobalsTopic topicWithFrameworkNamed:fwName inDatabase:_database]];
+        [self selectTopic:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
 
-- (IBAction)jumpToDocLocatorRepresentedBy:(id)sender
+- (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender
 {
-    if ([sender isKindOfClass:[NSMenuItem class]])
+    if ([sender isKindOfClass:[NSMenuItem class]]
+        && [[sender representedObject] isKindOfClass:[AKDocLocator class]])
     {
-        [self jumpToDocLocator:[sender representedObject]];
+        [self selectDocWithDocLocator:[sender representedObject]];
     }
 }
 
@@ -500,52 +468,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[AKFindPanelController sharedInstance] findPrevious:nil];
 }
 
-- (IBAction)revealDocFileInFinder:(id)sender
-{
-    NSString *docPath = [self currentDocPath];
-    
-    if (docPath == nil)
-    {
-        return;
-    }
-
-    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
-    [[NSWorkspace sharedWorkspace] selectFile:docPath
-                     inFileViewerRootedAtPath:containingDirPath];
-    
-//    // Construct and execute an AppleScript command that asks the Finder
-//    // to reveal the file.
-//    NSString *appleScriptCommand =
-//        [NSString
-//            stringWithFormat:
-//                @"tell application \"Finder\"\n"
-//                @"    reveal posix file \"%@\"\n"
-//                @"    activate\n"
-//                @"end tell",
-//                docPath];
-//    NSAppleScript *appleScript = [[NSAppleScript alloc] initWithSource:appleScriptCommand];
-//    NSDictionary *errorInfo = nil;
-//    NSAppleEventDescriptor *appleEventDescriptor = [appleScript executeAndReturnError:&errorInfo];
-//
-//    if (appleEventDescriptor == nil)
-//    {
-//        DIGSLogError(@"Error executing AppleScript: %@", errorInfo);
-//    }
-}
-
-- (IBAction)copyDocTextURL:(id)sender
-{
-    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-
-    [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
-    [pasteboard setString:[[self currentDocURL] absoluteString] forType:NSStringPboardType];
-}
-
-- (IBAction)openDocURLInBrowser:(id)sender
-{
-    [[NSWorkspace sharedWorkspace] openURL:[self currentDocURL]];
-}
-
 #pragma mark -
 #pragma mark AKUIController methods
 
@@ -559,35 +481,29 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     SEL itemAction = [anItem action];
 
-    if ((itemAction == @selector(copyDocTextURL:))
-        || (itemAction == @selector(openDocURLInBrowser:))
-        || (itemAction == @selector(revealDocFileInFinder:)))
-    {
-        return ([self currentDoc] != nil);
-    }
-    else if (itemAction == @selector(navigateBack:))
+    if (itemAction == @selector(goBackInHistory:))
     {
         return (_windowHistoryIndex > 0);
     }
-    else if (itemAction == @selector(navigateForward:))
+    else if (itemAction == @selector(goForwardInHistory:))
     {
         return (_windowHistoryIndex < ((int)[_windowHistory count] - 1));
     }
-    else if ((itemAction == @selector(doBackMenuAction:))
-             || (itemAction == @selector(doForwardMenuAction:)))
+    else if ((itemAction == @selector(goToHistoryItemInBackMenu:))
+             || (itemAction == @selector(goToHistoryItemInForwardMenu:)))
     {
         return YES;
     }
-    else if ((itemAction == @selector(jumpToSuperclass:))
-             || (itemAction == @selector(jumpToAncestorClass:)))
+    else if ((itemAction == @selector(selectSuperclass:))
+             || (itemAction == @selector(selectAncestorClass:)))
     {
         return ([[self _currentTopic] parentClassOfTopic] != nil);
     }
-    else if ((itemAction == @selector(jumpToFrameworkFormalProtocols:))
-             || (itemAction == @selector(jumpToFrameworkInformalProtocols:))
-             || (itemAction == @selector(jumpToFrameworkFunctions:))
-             || (itemAction == @selector(jumpToFrameworkGlobals:))
-             || (itemAction == @selector(jumpToDocLocatorRepresentedBy:))
+    else if ((itemAction == @selector(selectFormalProtocolsTopic:))
+             || (itemAction == @selector(selectInformalProtocolsTopic:))
+             || (itemAction == @selector(selectFunctionsTopic:))
+             || (itemAction == @selector(selectGlobalsTopic:))
+             || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
              || (itemAction == @selector(rememberWindowLayout:)))
     {
         return YES;
@@ -696,7 +612,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     
     [_subtopicListController takeWindowLayoutFrom:windowLayout];
     [_docListController takeWindowLayoutFrom:windowLayout];
-    [_docContainerViewController takeWindowLayoutFrom:windowLayout];
+    [_docViewController takeWindowLayoutFrom:windowLayout];
 
     // Restore the state of the Quicklist drawer.
     NSSize drawerContentSize = [_quicklistDrawer contentSize];
@@ -764,7 +680,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_windowHistory removeAllObjects];
 
     AKClassNode *classNode = [_database classWithName:@"NSObject"];
-    [self jumpToTopic:[AKClassTopic topicWithClassNode:classNode]];
+    [self selectTopic:[AKClassTopic topicWithClassNode:classNode]];
 }
 
 #pragma mark -
@@ -782,9 +698,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     BOOL isValid = [self validateItem:theItem];
 
-    if (isValid && ([theItem action] == @selector(jumpToSuperclass:)))
+    if (isValid && ([theItem action] == @selector(selectSuperclass:)))
     {
-        [theItem setToolTip:[self _tooltipForJumpToSuperclass]];
+        [theItem setToolTip:[self _tooltipForSelectSuperclass]];
     }
 
     return isValid;
@@ -830,6 +746,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark Private methods
 
+- (AKDocLocator *)_currentDocLocator
+{
+    return ((_windowHistoryIndex < 0)
+            ? nil
+            : [_windowHistory objectAtIndex:_windowHistoryIndex]);
+}
+
 - (void)_initToolbar
 {
     NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:_AKToolbarID];
@@ -861,7 +784,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                                      nibName:@"DocListView"
                                containerView:_docListContainerView] retain];
     // Doc view.
-    _docContainerViewController = [[self _vcWithClass:[AKDocViewController class]
+    _docViewController = [[self _vcWithClass:[AKDocViewController class]
                                               nibName:@"DocView"
                                         containerView:_docContainerView] retain];
     // Quicklist view.
@@ -911,7 +834,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [vc setNextResponder:nextResponder];
 }
 
-- (NSString *)_tooltipForJumpToSuperclass
+- (NSString *)_tooltipForSelectSuperclass
 {
     return [NSString stringWithFormat:@"Go to superclass (%@)"
             @"\n(Control-click or right-click for menu)",
@@ -974,7 +897,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         NSString *menuItemName = [historyItem stringToDisplayInLists];
 
         [_forwardMenu addItemWithTitle:menuItemName
-                                action:@selector(doForwardMenuAction:)
+                                action:@selector(goToHistoryItemInForwardMenu:)
                          keyEquivalent:@""];
     }
 }
@@ -987,7 +910,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_superclassButton setEnabled:(parentClass != nil)];
     if ([_superclassButton isEnabled])
     {
-        [_superclassButton setToolTip:[self _tooltipForJumpToSuperclass]];
+        [_superclassButton setToolTip:[self _tooltipForSelectSuperclass]];
     }
 
     // Empty the Superclass button's contextual menu.
@@ -1001,15 +924,43 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     while (ancestorNode != nil)
     {
         [_superclassesMenu addItemWithTitle:[ancestorNode nodeName]
-                                     action:@selector(jumpToAncestorClass:)
+                                     action:@selector(selectAncestorClass:)
                               keyEquivalent:@""];
 
         ancestorNode = [ancestorNode parentClass];
     }
 }
 
+- (void)_selectTopic:(AKTopic *)topic
+        subtopicName:(NSString *)subtopicName
+             docName:(NSString *)docName
+{
+    if (topic == nil)
+    {
+        DIGSLogInfo(@"can't navigate to a nil topic");
+        return;
+    }
+
+    [self _rememberCurrentTextSelection];
+
+    AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic subtopicName:subtopicName docName:docName];
+
+    [_topicBrowserController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
+    [_subtopicListController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
+
+    [_docListController setSubtopic:[_subtopicListController selectedSubtopic]];
+    [_docListController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
+
+    [_docViewController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
+
+    [_topicDescriptionField setStringValue:[topic stringToDisplayInDescriptionField]];
+    [_docCommentField setStringValue:[_docListController docComment]];
+
+    [self _addHistoryItem:newHistoryItem];
+}
+
 // All the history navigation methods come through here.
-- (void)_navigateToHistoryIndex:(NSInteger)historyIndex
+- (void)_goToHistoryItemAtIndex:(NSInteger)historyIndex
 {
     if ((historyIndex < 0) || (historyIndex >= (NSInteger)[_windowHistory count]))
     {
@@ -1020,7 +971,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKDocLocator *historyItem = [_windowHistory objectAtIndex:historyIndex];
 
     [self _rememberCurrentTextSelection];
-    [_topicBrowserController navigateFrom:nil to:historyItem];
+    [_topicBrowserController goFromDocLocator:nil toDocLocator:historyItem];
 
     // Update our marker index into the history array.
     _windowHistoryIndex = historyIndex;
@@ -1035,7 +986,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_addHistoryItem:(AKDocLocator *)newHistoryItem
 {
-    AKDocLocator *currentHistoryItem = [self currentHistoryItem];
+    AKDocLocator *currentHistoryItem = [self _currentDocLocator];
     NSInteger maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
     if ([currentHistoryItem isEqual:newHistoryItem])
@@ -1079,7 +1030,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (AKTopic *)_currentTopic
 {
-    return [[self currentHistoryItem] topicToDisplay];
+    return [[self _currentDocLocator] topicToDisplay];
 }
 
 - (CGFloat)_computeBrowserFraction

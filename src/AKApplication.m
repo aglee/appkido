@@ -84,7 +84,7 @@
         }
         else if ((ch == 25) && ([anEvent modifierFlags] & NSShiftKeyMask))
         {
-            if ([self _handleBacktab])
+            if ([self _handleBacktab])  // [agl] shouldn't I override insertBacktab:? (and similarly elsewhere)
                 return;
         }
     }

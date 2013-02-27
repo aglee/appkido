@@ -64,7 +64,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
 
         // Set item behavior.
         [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(navigateBack:)];
+        [toolbarItem setAction:@selector(goBackInHistory:)];
     }
     else if ([itemIdentifier isEqualToString:_AKForwardToolID])
     {
@@ -77,7 +77,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
 
         // Set item behavior.
         [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(navigateForward:)];
+        [toolbarItem setAction:@selector(goForwardInHistory:)];
     }
     else if ([itemIdentifier isEqualToString:_AKSuperclassToolID])
     {
@@ -90,7 +90,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
 
         // Set item behavior.
         [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(jumpToSuperclass:)];
+        [toolbarItem setAction:@selector(selectSuperclass:)];
     }
     else if ([itemIdentifier isEqualToString:_AKAddColumnToolID])
     {

@@ -20,13 +20,12 @@
 @interface AKQuicklistViewController : AKViewController <DIGSFindBufferDelegate>
 {
 @private
-    // Contains the values currently displayed in _quicklistTable.  Elements
-    // are AKDocLocators.
-    NSArray *_currentTableValues;
+    // AKDocLocator objects listed in _quicklistTable.
+    NSArray *_docLocators;
 
     // Criterion used to populate _quicklistTable, as selected from
     // _quicklistModeMatrix.
-    NSInteger _currentQuicklistMode;
+    NSInteger _selectedQuicklistMode;
 
     // For managing searches and search results.
     NSInteger _indexWithinSearchResults;
@@ -85,9 +84,5 @@
 - (IBAction)doSearch:(id)sender;
 
 - (IBAction)doSearchOptionsPopupAction:(id)sender;
-
-- (IBAction)selectPreviousSearchResult:(id)sender;
-
-- (IBAction)selectNextSearchResult:(id)sender;
 
 @end

@@ -9,6 +9,8 @@
 
 @implementation AKViewController
 
+@synthesize owningWindowController = _owningWindowController;
+
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
@@ -34,7 +36,7 @@
 #pragma mark -
 #pragma mark Navigation
 
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
+- (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
 }
 

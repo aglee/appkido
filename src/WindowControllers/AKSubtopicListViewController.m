@@ -7,12 +7,11 @@
 
 #import "AKSubtopicListViewController.h"
 
-#import "AKWindowController.h"
+#import "AKDocLocator.h"
+#import "AKSubtopic.h"
 #import "AKTableView.h"
 #import "AKTopic.h"
-#import "AKSubtopic.h"
-#import "AKDocListViewController.h"
-#import "AKDocLocator.h"
+#import "AKWindowController.h"
 
 @implementation AKSubtopicListViewController
 
@@ -41,7 +40,7 @@
 
 - (void)awakeFromNib
 {
-    // Tweak the subtopics table.
+    // Use a custom cell for the subtopics table.
     NSBrowserCell *browserCell = [[[NSBrowserCell alloc] initTextCell:@""] autorelease];
     [browserCell setLeaf:NO];
     [browserCell setLoaded:YES];
@@ -50,9 +49,6 @@
     // Populate the subtopics table.
     [_subtopicsTable reloadData];
     [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-
-    // Tell subordinate controllers to awake.
-//    [_docListController doAwakeFromNib];
 }
 
 #pragma mark -
@@ -60,26 +56,11 @@
 
 - (AKSubtopic *)selectedSubtopic
 {
-//    return [[_subtopicsTable selectedCell] representedObject];
     NSInteger subtopicIndex = [_subtopicsTable selectedRow];
 
     return ((subtopicIndex >= 0)
             ? [_subtopics objectAtIndex:subtopicIndex]
             : nil);
-}
-
-#pragma mark -
-#pragma mark Navigation
-
-- (void)jumpToSubtopicWithIndex:(NSInteger)subtopicIndex
-{
-    if (subtopicIndex != [_subtopicsTable selectedRow])
-    {
-        NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
-
-        [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
-//        [_docListController focusOnDocListTable];
-    }
 }
 
 #pragma mark -
@@ -93,25 +74,24 @@
                                  : [[_subtopics objectAtIndex:selectedRow] subtopicName]);
 
     // Tell the main window to select the subtopic at the selected index.
-    [[self owningWindowController] jumpToSubtopicWithName:newSubtopicName];
+    [[self owningWindowController] selectSubtopicWithName:newSubtopicName];
 }
 
-- (IBAction)jumpToSubtopicWithIndexFromTag:(id)sender
+- (IBAction)selectSubtopicWithIndexFromTag:(id)sender
 {
-    [self jumpToSubtopicWithIndex:[sender tag]];
+    [self _selectSubtopicWithIndex:[sender tag]];
 }
 
 #pragma mark -
 #pragma mark Navigation
 
-- (void)navigateFrom:(AKDocLocator *)whereFrom to:(AKDocLocator *)whereTo
+- (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
     // Is the topic changing?  (The "!=" test handles nil cases.)
     AKTopic *currentTopic = [whereFrom topicToDisplay];
     AKTopic *newTopic = [whereTo topicToDisplay];
     BOOL topicIsChanging = ((currentTopic != newTopic)
                             && ![currentTopic isEqual:newTopic]);
-
     if (topicIsChanging)
     {
         // Update the arrays of table values and reload the subtopics table.
@@ -133,15 +113,12 @@
     NSString *newSubtopicName = [whereTo subtopicName];
     if ([_subtopics count] == 0)
     {
-        // The subtopics table and doc list table will both be empty.
-//        [_docListController setSubtopic:nil];
-
         // Modify whereTo.
         [whereTo setSubtopicName:nil];
     }
     else
     {
-        // Figure out what subtopic index to select.  Try to select the
+        // Figure out what subtopic index to select. If possible, select the
         // subtopic whose name matches the current one.
         NSInteger subtopicIndex = ((newSubtopicName == nil)
                                    ? [newTopic indexOfSubtopicWithName:currentSubtopicName]
@@ -156,16 +133,11 @@
         [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:subtopicIndex]
                      byExtendingSelection:NO];
 
+        // Modify whereTo.
         AKSubtopic *subtopic = [_subtopics objectAtIndex:subtopicIndex];
 
-//        [_docListController setSubtopic:subtopic];
-
-        // Modify whereTo.
         [whereTo setSubtopicName:[subtopic subtopicName]];
     }
-
-    // Tell my subordinate controllers to navigate.
-//    [_docListController navigateFrom:whereFrom to:whereTo];
 }
 
 #pragma mark -
@@ -174,15 +146,13 @@
 - (void)applyUserPreferences
 {
     [_subtopicsTable applyListFontPrefs];
-
-//    [_docListController applyUserPreferences];
 }
 
 - (BOOL)validateItem:(id)anItem
 {
     SEL itemAction = [anItem action];
 
-    if (itemAction == @selector(jumpToSubtopicWithIndexFromTag:))
+    if (itemAction == @selector(selectSubtopicWithIndexFromTag:))
     {
         return YES;
     }
@@ -218,6 +188,19 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         AKSubtopic *subtopic = [_subtopics objectAtIndex:rowIndex];
 
         [aCell setLeaf:([subtopic numberOfDocs] == 0)];
+    }
+}
+
+#pragma mark -
+#pragma mark Private methods
+
+- (void)_selectSubtopicWithIndex:(NSInteger)subtopicIndex
+{
+    if (subtopicIndex != [_subtopicsTable selectedRow])
+    {
+        NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
+
+        [[self owningWindowController] selectSubtopicWithName:newSubtopicName];
     }
 }
 

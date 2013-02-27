@@ -413,7 +413,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         NSURL *linkURL = (NSURL *)[sender representedObject];
         AKWindowController *wc = [self controllerForNewWindow];
 
-        (void)[wc jumpToLinkURL:linkURL];
+        (void)[wc followLinkURL:linkURL];
     }
 }
 
@@ -712,7 +712,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([formalProtocolNodes count] > 0)
         {
             NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKProtocolsTopicName
-                                                              action:@selector(jumpToFrameworkFormalProtocols:)
+                                                              action:@selector(selectFormalProtocolsTopic:)
                                                        keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
@@ -721,7 +721,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([informalProtocolNodes count] > 0)
         {
             NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKInformalProtocolsTopicName
-                                                              action:@selector(jumpToFrameworkInformalProtocols:)
+                                                              action:@selector(selectInformalProtocolsTopic:)
                                                        keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
@@ -730,7 +730,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([functionsGroupNodes count] > 0)
         {
             NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKFunctionsTopicName
-                                                              action:@selector(jumpToFrameworkFunctions:)
+                                                              action:@selector(selectFunctionsTopic:)
                                                        keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
@@ -739,7 +739,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         if ([globalsGroupNodes count] > 0)
         {
             NSMenuItem *subitem = [[[NSMenuItem alloc] initWithTitle:AKGlobalsTopicName
-                                                              action:@selector(jumpToFrameworkGlobals:)
+                                                              action:@selector(selectGlobalsTopic:)
                                                        keyEquivalent:@""] autorelease];
 
             [fwTopicSubmenu addItem:subitem];
@@ -780,7 +780,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 //            AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
 //            AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
 //
-//            [wc jumpToDocLocator:[savedWindowState savedDocLocator]];
+//            [wc selectDocWithDocLocator:[savedWindowState savedDocLocator]];
 //            [wc showWindow:nil];
 //
 //            if ([[savedWindowState savedWindowLayout] quicklistDrawerIsOpen])
@@ -1025,7 +1025,7 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     {
         AKDocLocator *favItem = [_favoritesList objectAtIndex:i];
         NSMenuItem *menuItem = [[[NSMenuItem alloc] initWithTitle:[favItem stringToDisplayInLists]
-                                                           action:@selector(jumpToDocLocatorRepresentedBy:)
+                                                           action:@selector(selectDocWithDocLocatorRepresentedBy:)
                                                     keyEquivalent:@""] autorelease];
 
         if (i < 9)
