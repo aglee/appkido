@@ -60,8 +60,6 @@
     AKDocViewController *_docContainerViewController;
     AKQuicklistViewController *_quicklistController;
 
-    // Drawer where we put the Quicklist view.
-
     // IBOutlets.
     NSSplitView *_topLevelSplitView;
     NSSplitView *_innerSplitView;
@@ -142,15 +140,6 @@
 #pragma mark -
 #pragma mark Navigation
 
-/*!
- * @method      openWindowWithQuicklistDrawer:
- * @discussion  Called to display the window just after it has been
- *   initialized.  The first time we display the window is special, because
- *   if we have to open the Search drawer, we have to do so after the window
- *   is displayed.
- */
-- (void)openWindowWithQuicklistDrawer:(BOOL)drawerIsOpen;
-
 - (void)jumpToTopic:(AKTopic *)obj;
 
 - (void)jumpToSubtopicWithName:(NSString *)subtopicName;
@@ -170,7 +159,7 @@
  */
 - (BOOL)jumpToLinkURL:(NSURL *)linkURL;
 
-- (void)bringToFront;
+- (void)openQuicklistDrawer;
 
 - (void)searchForString:(NSString *)aString;
 
@@ -180,8 +169,6 @@
 #pragma mark Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender;
-
-//- (IBAction)addBrowserColumn:(id)sender;
 
 - (IBAction)removeBrowserColumn:(id)sender;
 
@@ -213,11 +200,8 @@
 - (IBAction)jumpToFrameworkGlobals:(id)sender;
 
 /*!
- * @method      jumpToDocLocatorRepresentedBy:
- * @discussion  Used by items in the Favorites menu.
- * @param       sender  Should either respond to -representedObject by
- *              returning an AKDocLocator, or respond to -selectedCell
- *              with a cell whose -representedObject is an AKDocLocator.
+ * Used by items in the Favorites menu. Does nothing unless sender is an
+ * NSMenuItem.
  */
 - (IBAction)jumpToDocLocatorRepresentedBy:(id)sender;
 
@@ -233,13 +217,5 @@
 - (IBAction)copyDocTextURL:(id)sender;
 
 - (IBAction)openDocURLInBrowser:(id)sender;
-
-#pragma mark Action methods -- search
-
-/*!
- * Opens the drawer if necessary, then forwards the message to the quicklist
- * controller.
- */
-- (IBAction)selectSearchField:(id)sender;
 
 @end

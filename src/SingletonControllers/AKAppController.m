@@ -28,6 +28,7 @@
 #import "AKServicesProvider.h"
 #import "AKSplashWindowController.h"
 #import "AKTestDocParserWindowController.h"
+#import "AKTextUtils.h"
 #import "AKTopic.h"
 #import "AKViewUtils.h"
 #import "AKWindowController.h"
@@ -224,7 +225,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Create the window, using remembered prefs for its layout if any.
     NSDictionary *prefDict = [AKPrefUtils dictionaryValueForPref:AKLayoutForNewWindowsPrefName];
     AKWindowLayout *windowLayout = [AKWindowLayout fromPrefDictionary:prefDict];
-    AKWindowController *windowController = [self _windowControllerForNewWindowWithLayout:windowLayout];
+    AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
 
     // Stagger the window relative to the frontmost window, if there is one.
     NSWindow *existingWindow = [self _frontmostBrowserWindow];
@@ -232,18 +233,23 @@ static NSTimeInterval g_checkpointTime = 0.0;
     if (existingWindow)
     {
         NSRect existingFrame = [existingWindow frame];
-        NSRect newFrame = [[windowController window] frame];
+        NSRect newFrame = [[wc window] frame];
 
         newFrame = NSOffsetRect(newFrame,
                                 NSMinX(existingFrame) - NSMinX(newFrame) + 20,
                                 NSMaxY(existingFrame) - NSMaxY(newFrame) - 20);
-        [[windowController window] setFrame:newFrame display:NO];
+        [[wc window] setFrame:newFrame display:NO];
     }
 
     // Display the window.
-    [windowController openWindowWithQuicklistDrawer:(windowLayout ? [windowLayout quicklistDrawerIsOpen] : YES)];
+    [wc showWindow:nil];
 
-    return windowController;
+    if ([windowLayout quicklistDrawerIsOpen])
+    {
+        [wc openQuicklistDrawer];
+    }
+
+    return wc;
 }
 
 #pragma mark -
@@ -270,7 +276,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)searchForString:(NSString *)searchString
 {
-    if ([searchString length] == 0)
+    if ([[searchString ak_trimWhitespace] length] == 0)
     {
         return;
     }
@@ -749,6 +755,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     AKWindowController *wc = [[[AKWindowController alloc] initWithDatabase:_appDatabase] retain];
     [wc showWindow:nil];
+    [wc openQuicklistDrawer];
 
 //    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
 //
@@ -769,7 +776,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
 //            AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
 //
 //            [wc jumpToDocLocator:[savedWindowState savedDocLocator]];
-//            [wc openWindowWithQuicklistDrawer:[[savedWindowState savedWindowLayout] quicklistDrawerIsOpen]];
+//            [wc showWindow:nil];
+//
+//            if ([[savedWindowState savedWindowLayout] quicklistDrawerIsOpen])
+//            {
+//                [wc openQuicklistDrawer];
+//            }
 //        }
 //    }
 }

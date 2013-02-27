@@ -114,7 +114,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (AKDocLocator *)currentHistoryItem
 {
-    return (_windowHistoryIndex < 0) ? nil : [_windowHistory objectAtIndex:_windowHistoryIndex];
+    return ((_windowHistoryIndex < 0)
+            ? nil
+            : [_windowHistory objectAtIndex:_windowHistoryIndex]);
 }
 
 - (AKDoc *)currentDoc
@@ -163,24 +165,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 #pragma mark -
 #pragma mark Navigation
-
-- (void)openWindowWithQuicklistDrawer:(BOOL)drawerIsOpen
-{
-    // Display the window and set the drawer state, in that order.  Can't
-    // set drawer state on an undisplayed window.
-    [[self window] makeKeyAndOrderFront:nil];
-
-    if (drawerIsOpen)
-    {
-        [_quicklistDrawer openOnEdge:NSMinXEdge];
-    }
-
-    // KLUDGE: The shadow seems to get screwed up by the drawer stuff, so force it
-    // to get redrawn.  Note that -invalidateShadow does not exist in
-    // 10.1, so use -setHasShadow: instead.
-    [[self window] setHasShadow:NO];
-    [[self window] setHasShadow:YES];
-}
 
 - (void)jumpToTopic:(AKTopic *)obj
 {
@@ -278,18 +262,17 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-- (void)bringToFront
+- (void)openQuicklistDrawer
 {
-    [[self window] makeKeyAndOrderFront:nil];
+    if (([_quicklistDrawer state] != NSDrawerOpenState)
+        && ([_quicklistDrawer state] != NSDrawerOpeningState))
+    {
+        [_quicklistDrawer openOnEdge:NSMinXEdge];
+    }
 }
 
 - (void)searchForString:(NSString *)aString
 {
-    NSInteger state = [_quicklistDrawer state];
-    if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
-    {
-        [self toggleQuicklistDrawer:nil];
-    }
     [_quicklistController searchForString:aString];
 }
 
@@ -576,45 +559,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (IBAction)openDocURLInBrowser:(id)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[self currentDocURL]];
-}
-
-- (IBAction)selectPreviousSearchResult:(id)sender
-{
-    NSInteger state = [_quicklistDrawer state];
-
-    if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
-    {
-        [self toggleQuicklistDrawer:nil];
-    }
-
-    [_quicklistController selectPreviousSearchResult:sender];
-}
-
-- (IBAction)selectNextSearchResult:(id)sender
-{
-    NSInteger state = [_quicklistDrawer state];
-
-    if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
-    {
-        [self toggleQuicklistDrawer:nil];
-    }
-
-    [_quicklistController selectNextSearchResult:sender];
-}
-
-#pragma mark -
-#pragma mark Action methods -- search (forwarded to the quicklist controller)
-
-- (IBAction)selectSearchField:(id)sender
-{
-    NSInteger state = [_quicklistDrawer state];
-
-    if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
-    {
-        [self toggleQuicklistDrawer:nil];
-    }
-
-    [_quicklistController selectSearchField:sender];
 }
 
 #pragma mark -

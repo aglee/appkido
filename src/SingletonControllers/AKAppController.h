@@ -136,30 +136,24 @@
 - (IBAction)openNewWindow:(id)sender;
 
 /*!
- * Scrolls the currently first-responding text view, if there is one, to show
- * the text that is selected in the view.
+ * If a text view is first responder, scrolls it to show the selected text, if
+ * any.
  */
 - (IBAction)scrollToTextSelection:(id)sender;
 
-/*! Lets the user export the contents of the framework database as XML. */
+/*! Prompts for a file name and exports the contents of the database as XML. */
 - (IBAction)exportDatabase:(id)sender;
 
 #pragma mark -
 #pragma mark Action methods for debugging only
 
 /*!
- * @method      _testParser:
- * @discussion  For debugging purposes only -- not exposed to general
- *              users.  Opens a window in which you can select a file and
- *              see the results of attempting to parse the file.
+ * For debugging purposes only. Opens a window in which you can select a file
+ * and see how the file gets parsed.
  */
 - (IBAction)_testParser:(id)sender;
 
-/*!
- * @method      _printKeyViewLoop:
- * @discussion  For debugging purposes only -- not exposed to general
- *              users.  Prints the current key view loop to the log.
- */
+/*! For debugging purposes only. Logs the current key view loop to the log. */
 - (IBAction)_printKeyViewLoop:(id)sender;
 
 @end

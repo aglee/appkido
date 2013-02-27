@@ -90,19 +90,4 @@
 
 - (IBAction)selectNextSearchResult:(id)sender;
 
-
-
-
-#pragma mark -
-#pragma mark Action methods -- search (forwarded to the quicklist controller)
-
-- (IBAction)selectSearchField:(id)sender;
-
-- (IBAction)selectPreviousSearchResult:(id)sender;
-
-- (IBAction)selectNextSearchResult:(id)sender;
-
-
-
-
 @end

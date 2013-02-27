@@ -237,11 +237,14 @@ enum
 
 - (IBAction)selectSearchField:(id)sender
 {
+    [[self browserWindowController] openQuicklistDrawer];
     [_searchField selectText:nil];
 }
 
 - (IBAction)doSearch:(id)sender
 {
+    [[self browserWindowController] openQuicklistDrawer];
+
     NSString *searchString = [[_searchField stringValue] ak_trimWhitespace];
 
     // Do nothing if no search string was specified.
@@ -314,6 +317,8 @@ enum
 
 - (IBAction)selectPreviousSearchResult:(id)sender
 {
+    [[self browserWindowController] openQuicklistDrawer];
+
     if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
     {
         [self doSearch:nil];
@@ -325,6 +330,8 @@ enum
 
 - (IBAction)selectNextSearchResult:(id)sender
 {
+    [[self browserWindowController] openQuicklistDrawer];
+
     if (![[_searchField stringValue] isEqualToString:[_searchQuery searchString]])
     {
         [self doSearch:nil];
