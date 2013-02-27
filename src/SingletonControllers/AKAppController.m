@@ -244,7 +244,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Display the window.
     [wc showWindow:nil];
 
-    if ([windowLayout quicklistDrawerIsOpen])
+    if ((windowLayout == nil) || [windowLayout quicklistDrawerIsOpen])
     {
         [wc openQuicklistDrawer];
     }
