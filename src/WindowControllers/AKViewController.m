@@ -9,19 +9,20 @@
 
 @implementation AKViewController
 
-- (void)dealloc
+#pragma mark -
+#pragma mark Init/dealloc/awake
+
+- (id)initWithDefaultNib
 {
-    NSLog(@"*** %s -- <%@: %p>", __PRETTY_FUNCTION__, [self class], self);
-    
-    [super dealloc];
+    return [self init];
 }
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKBrowserWindowController *)browserWindowController
+- (AKWindowController *)browserWindowController
 {
-    return (AKBrowserWindowController *)[[[self view] window] delegate];
+    return (AKWindowController *)[[[self view] window] delegate];
 }
 
 #pragma mark -

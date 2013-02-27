@@ -7,6 +7,7 @@
 
 #import "AKQuicklistViewController.h"
 
+#import "DIGSLog.h"
 #import "DIGSFindBuffer.h"
 
 #import "AKFrameworkConstants.h"
@@ -67,13 +68,29 @@ enum
 @synthesize currentTableValues = _currentTableValues;
 @synthesize searchQuery = _searchQuery;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+@synthesize quicklistModeRadio = _quicklistModeRadio;
+@synthesize frameworkPopup = _frameworkPopup;
+@synthesize searchField = _searchField;
+@synthesize searchOptionsPopup = _searchOptionsPopup;
+@synthesize includeClassesItem = _includeClassesItem;
+@synthesize includeMethodsItem = _includeMethodsItem;
+@synthesize includeFunctionsItem = _includeFunctionsItem;
+@synthesize includeGlobalsItem = _includeGlobalsItem;
+@synthesize ignoreCaseItem = _ignoreCaseItem;
+@synthesize searchOptionsDividerItem = _searchOptionsDividerItem;
+@synthesize quicklistTable = _quicklistTable;
+@synthesize removeFavoriteButton = _removeFavoriteButton;
 
-- (id)init
+#pragma mark -
+#pragma mark Init/dealloc/awake
+
+- (id)initWithDatabase:(AKDatabase *)database
 {
-    if ((self = [super init]))
+    self = [self initWithNibName:@"QuicklistView" bundle:nil];
+    if (self)
     {
+        _database = [database retain];
+        
         _currentTableValues = [[NSArray alloc] init];
         _currentQuicklistMode = -1;
 
@@ -88,9 +105,17 @@ enum
     return self;
 }
 
+- (id)initWithDefaultNib
+{
+    DIGSLogError_NondesignatedInitializer();
+    return nil;
+}
+
 - (void)dealloc
 {
     [[DIGSFindBuffer sharedInstance] removeDelegate:self];
+
+    [_database release];
 
     [_currentTableValues release];
     [_searchQuery release];
@@ -99,40 +124,55 @@ enum
     [super dealloc];
 }
 
-#pragma mark -
-#pragma mark Window layout
-
-- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
+- (void)awakeFromNib
 {
-    // Restore the selection in the frameworks popup.
-    [_frameworkPopup selectItemWithTitle:[windowLayout frameworkPopupSelection]];
+    // Set our _searchQuery ivar.  We do it here instead of in -init
+    // because we need to be sure [[self windowController] database] has been set.
+    AKSearchQuery *searchQuery = [AKSearchQuery withDatabase:_database];
+    
+    [self setSearchQuery:searchQuery];
 
-    // Restore the settings in the search options popup.
-    [_includeClassesItem setState:([windowLayout searchIncludesClasses] ? NSOnState : NSOffState)];
-    [_includeMethodsItem setState:([windowLayout searchIncludesMembers] ? NSOnState : NSOffState)];
-    [_includeFunctionsItem setState:([windowLayout searchIncludesFunctions] ? NSOnState : NSOffState)];
-    [_includeGlobalsItem setState:([windowLayout searchIncludesGlobals] ? NSOnState : NSOffState)];
-    [_ignoreCaseItem setState:([windowLayout searchIgnoresCase] ? NSOnState : NSOffState)];
+    // Set up _quicklistTable to do drag and drop.
+    [_quicklistTable registerForDraggedTypes:@[_AKQuicklistPasteboardType]];
 
-    // Restore the quicklist mode -- after the other ducks have been
-    // lined up, so the quicklist table will reload properly.
-    [self _selectQuicklistMode:[windowLayout quicklistMode]];
-}
+    // Set up the popup menu of frameworks for the "Classes in framework:"
+    // quicklist item.
+    // Note that the IB default for popup buttons is to autoenable items.
+    // We don't want that.
+    [_frameworkPopup setAutoenablesItems:NO];
 
-- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout
-{
-    // Remember the quicklist mode.
-    [windowLayout setQuicklistMode:_currentQuicklistMode];
+    for (NSString *fwName in [_database sortedFrameworkNames])
+    {
+        [_frameworkPopup addItemWithTitle:fwName];
+    }
 
-    // Remember the selection in the frameworks popup.
-    [windowLayout setFrameworkPopupSelection:[[_frameworkPopup selectedItem] title]];
+    // Initialize the search field to match the system find-pasteboard.
+    [_searchField setStringValue:[[DIGSFindBuffer sharedInstance] findString]];
 
-    // Remember the settings in the search options popup.
-    [windowLayout setSearchIncludesClasses:([_includeClassesItem state] == NSOnState)];
-    [windowLayout setSearchIncludesMembers:([_includeMethodsItem state] == NSOnState)];
-    [windowLayout setSearchIncludesFunctions:([_includeFunctionsItem state] == NSOnState)];
-    [windowLayout setSearchIncludesGlobals:([_includeGlobalsItem state] == NSOnState)];
-    [windowLayout setSearchIgnoresCase:([_ignoreCaseItem state] == NSOnState)];
+    // Match the search options popup to the user's preferences.
+    [_includeClassesItem setState:([AKPrefUtils boolValueForPref:AKIncludeClassesAndProtocolsPrefKey]
+                                   ? NSOnState
+                                   : NSOffState)];
+    [_includeMethodsItem setState:([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey]
+                                   ? NSOnState
+                                   : NSOffState)];
+    [_includeFunctionsItem setState:([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey]
+                                     ? NSOnState
+                                     : NSOffState)];
+    [_includeGlobalsItem setState:([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey]
+                                   ? NSOnState
+                                   : NSOffState)];
+    [_ignoreCaseItem setState:([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey]
+                               ? NSOnState
+                               : NSOffState)];
+
+    // We want everything in the search options popup to be enabled.
+    [_searchOptionsPopup setAutoenablesItems:NO];
+
+    // Make extra sure _quicklistTable is properly populated.  (In the
+    // case where the user has not set a window-layout pref, it's
+    // possible I overlook this step.)
+    [self _selectQuicklistMode:[_quicklistModeRadio selectedTag]];
 }
 
 #pragma mark -
@@ -178,7 +218,7 @@ enum
         [_removeFavoriteButton setEnabled:(_currentQuicklistMode == _AKFavoritesQuicklistMode)];
 
         // Tell the main window to navigate to the selected doc.
-        [[self owningWindowController] jumpToDocLocator:quicklistItem];
+        [[self browserWindowController] jumpToDocLocator:quicklistItem];
     }
 }
 
@@ -320,58 +360,6 @@ enum
 #pragma mark -
 #pragma mark AKUIController methods
 
-- (void)doAwakeFromNib
-{
-    // Set our _searchQuery ivar.  We do it here instead of in -init
-    // because we need to be sure [[self windowController] database] has been set.
-    AKDatabase *db = [[self owningWindowController] database];
-    AKSearchQuery *searchQuery = [AKSearchQuery withDatabase:db];
-    
-    [self setSearchQuery:searchQuery];
-
-    // Set up _quicklistTable to do drag and drop.
-    [_quicklistTable registerForDraggedTypes:[NSArray arrayWithObject:_AKQuicklistPasteboardType]];
-
-    // Set up the popup menu of frameworks for the "Classes in framework:"
-    // quicklist item.
-    // Note that the IB default for popup buttons is to autoenable items.
-    // We don't want that.
-    [_frameworkPopup setAutoenablesItems:NO];
-
-    for (NSString *fwName in [[[self owningWindowController] database] sortedFrameworkNames])
-    {
-        [_frameworkPopup addItemWithTitle:fwName];
-    }
-
-    // Initialize the search field to match the system find-pasteboard.
-    [_searchField setStringValue:[[DIGSFindBuffer sharedInstance] findString]];
-
-    // Match the search options popup to the user's preferences.
-    [_includeClassesItem setState:([AKPrefUtils boolValueForPref:AKIncludeClassesAndProtocolsPrefKey]
-                                   ? NSOnState
-                                   : NSOffState)];
-    [_includeMethodsItem setState:([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey]
-                                   ? NSOnState
-                                   : NSOffState)];
-    [_includeFunctionsItem setState:([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey]
-                                     ? NSOnState
-                                     : NSOffState)];
-    [_includeGlobalsItem setState:([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey]
-                                   ? NSOnState
-                                   : NSOffState)];
-    [_ignoreCaseItem setState:([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey]
-                               ? NSOnState
-                               : NSOffState)];
-
-    // We want everything in the search options popup to be enabled.
-    [_searchOptionsPopup setAutoenablesItems:NO];
-
-    // Make extra sure _quicklistTable is properly populated.  (In the
-    // case where the user has not set a window-layout pref, it's
-    // possible I overlook this step.)
-    [self _selectQuicklistMode:[_quicklistModeRadio selectedTag]];
-}
-
 - (void)applyUserPreferences
 {
     if (_AKFavoritesQuicklistMode == _currentQuicklistMode)
@@ -406,6 +394,39 @@ enum
     }
 
     return NO;
+}
+
+- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
+{
+    // Restore the selection in the frameworks popup.
+    [_frameworkPopup selectItemWithTitle:[windowLayout frameworkPopupSelection]];
+
+    // Restore the settings in the search options popup.
+    [_includeClassesItem setState:([windowLayout searchIncludesClasses] ? NSOnState : NSOffState)];
+    [_includeMethodsItem setState:([windowLayout searchIncludesMembers] ? NSOnState : NSOffState)];
+    [_includeFunctionsItem setState:([windowLayout searchIncludesFunctions] ? NSOnState : NSOffState)];
+    [_includeGlobalsItem setState:([windowLayout searchIncludesGlobals] ? NSOnState : NSOffState)];
+    [_ignoreCaseItem setState:([windowLayout searchIgnoresCase] ? NSOnState : NSOffState)];
+
+    // Restore the quicklist mode -- after the other ducks have been
+    // lined up, so the quicklist table will reload properly.
+    [self _selectQuicklistMode:[windowLayout quicklistMode]];
+}
+
+- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout
+{
+    // Remember the quicklist mode.
+    [windowLayout setQuicklistMode:_currentQuicklistMode];
+
+    // Remember the selection in the frameworks popup.
+    [windowLayout setFrameworkPopupSelection:[[_frameworkPopup selectedItem] title]];
+
+    // Remember the settings in the search options popup.
+    [windowLayout setSearchIncludesClasses:([_includeClassesItem state] == NSOnState)];
+    [windowLayout setSearchIncludesMembers:([_includeMethodsItem state] == NSOnState)];
+    [windowLayout setSearchIncludesFunctions:([_includeFunctionsItem state] == NSOnState)];
+    [windowLayout setSearchIncludesGlobals:([_includeGlobalsItem state] == NSOnState)];
+    [windowLayout setSearchIgnoresCase:([_ignoreCaseItem state] == NSOnState)];
 }
 
 #pragma mark -
@@ -667,7 +688,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSString *nameOfRootViewClass;
 
-        if ([[[self owningWindowController] database] classWithName:@"UIView"] != nil)
+        if ([_database classWithName:@"UIView"] != nil)
         {
             nameOfRootViewClass = @"UIView";
         }
@@ -708,7 +729,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[[self owningWindowController] database] allClasses])
+        for (AKClassNode *classNode in [_database allClasses])
         {
             BOOL classHasDelegate = NO;
 
@@ -757,7 +778,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
             // If not, see if there's a protocol named thisClassDelegate.
             NSString *possibleDelegateProtocolName = [[classNode nodeName] stringByAppendingString:@"Delegate"];
-            if ([[[self owningWindowController] database] protocolWithName:possibleDelegateProtocolName])
+            if ([_database protocolWithName:possibleDelegateProtocolName])
             {
                 classHasDelegate = YES;
             }
@@ -784,7 +805,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[[self owningWindowController] database] allClasses])
+        for (AKClassNode *classNode in [_database allClasses])
         {
             BOOL classHasDataSource = NO;
 
@@ -817,7 +838,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
             // If not, see if there's a protocol named thisClassDataSource.
             NSString *possibleDataSourceProtocolName = [[classNode nodeName] stringByAppendingString:@"DataSource"];
-            if ([[[self owningWindowController] database] protocolWithName:possibleDataSourceProtocolName])
+            if ([_database protocolWithName:possibleDataSourceProtocolName])
             {
                 classHasDataSource = YES;
             }
@@ -844,7 +865,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableArray *protocolNodes = [NSMutableArray array];
 
-        for (AKProtocolNode *protocolNode in [[[self owningWindowController] database] allProtocols])
+        for (AKProtocolNode *protocolNode in [_database allProtocols])
         {
             if ([[protocolNode nodeName] ak_contains:@"DataSource"])
             {
@@ -860,7 +881,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-    NSArray *classNodes = [[[self owningWindowController] database] classesForFrameworkNamed:fwName];
+    NSArray *classNodes = [_database classesForFrameworkNamed:fwName];
 
     return [self _sortedDocLocatorsForClasses:classNodes];
 }
@@ -908,11 +929,10 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 - (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames
 {
     NSMutableSet *nodeSet = [NSMutableSet setWithCapacity:100];
-    AKDatabase *db = [[self owningWindowController] database];
 
     for (NSString *name in classNames)
     {
-        AKClassNode *classNode = [db classWithName:name];
+        AKClassNode *classNode = [_database classWithName:name];
 
         [nodeSet unionSet:[classNode descendantClasses]];
     }

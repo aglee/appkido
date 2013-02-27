@@ -5,9 +5,10 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKWindowSubcontroller.h"
+#import "AKViewController.h"
 #import "DIGSFindBufferDelegate.h"
 
+@class AKDatabase;
 @class AKDocLocator;
 @class AKMultiRadioView;
 @class AKSearchQuery;
@@ -17,9 +18,11 @@
 /*!
  * Controller for a browser window's quicklist drawer.
  */
-@interface AKQuicklistViewController : AKWindowSubcontroller <DIGSFindBufferDelegate>
+@interface AKQuicklistViewController : AKViewController <DIGSFindBufferDelegate>
 {
 @private
+    AKDatabase *_database;
+    
     // Contains the values currently displayed in _quicklistTable.  Elements
     // are AKDocLocators.
     NSArray *_currentTableValues;
@@ -33,30 +36,42 @@
     AKSearchQuery *_searchQuery;
     NSMutableArray *_pastSearchStrings;
 
-    // UI outlets -- the "Quicklist" panel.
-    IBOutlet AKMultiRadioView *_quicklistModeRadio;
+    // IBOutlets.
+    AKMultiRadioView *_quicklistModeRadio;
 
-    IBOutlet NSPopUpButton *_frameworkPopup;
+    NSPopUpButton *_frameworkPopup;
 
-    IBOutlet NSTextField *_searchField;
-    IBOutlet NSPopUpButton *_searchOptionsPopup;
-    IBOutlet NSMenuItem *_includeClassesItem;
-    IBOutlet NSMenuItem *_includeMethodsItem;
-    IBOutlet NSMenuItem *_includeFunctionsItem;
-    IBOutlet NSMenuItem *_includeGlobalsItem;
-    IBOutlet NSMenuItem *_ignoreCaseItem;
-    IBOutlet NSMenuItem *_searchOptionsDividerItem;
+    NSTextField *_searchField;
+    NSPopUpButton *_searchOptionsPopup;
+    NSMenuItem *_includeClassesItem;
+    NSMenuItem *_includeMethodsItem;
+    NSMenuItem *_includeFunctionsItem;
+    NSMenuItem *_includeGlobalsItem;
+    NSMenuItem *_ignoreCaseItem;
+    NSMenuItem *_searchOptionsDividerItem;
 
-    IBOutlet AKTableView *_quicklistTable;
-    IBOutlet NSButton *_removeFavoriteButton;
+    AKTableView *_quicklistTable;
+    NSButton *_removeFavoriteButton;
 }
 
+@property (nonatomic, assign) IBOutlet AKMultiRadioView *quicklistModeRadio;
+@property (nonatomic, assign) IBOutlet NSPopUpButton *frameworkPopup;
+@property (nonatomic, assign) IBOutlet NSTextField *searchField;
+@property (nonatomic, assign) IBOutlet NSPopUpButton *searchOptionsPopup;
+@property (nonatomic, assign) IBOutlet NSMenuItem *includeClassesItem;
+@property (nonatomic, assign) IBOutlet NSMenuItem *includeMethodsItem;
+@property (nonatomic, assign) IBOutlet NSMenuItem *includeFunctionsItem;
+@property (nonatomic, assign) IBOutlet NSMenuItem *includeGlobalsItem;
+@property (nonatomic, assign) IBOutlet NSMenuItem *ignoreCaseItem;
+@property (nonatomic, assign) IBOutlet NSMenuItem *searchOptionsDividerItem;
+@property (nonatomic, assign) IBOutlet AKTableView *quicklistTable;
+@property (nonatomic, assign) IBOutlet NSButton *removeFavoriteButton;
+
 #pragma mark -
-#pragma mark Window layout
+#pragma mark Init/dealloc/awake
 
-- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout;
-
-- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout;
+/*! Use this instead of initWithDefaultNib. */
+- (id)initWithDatabase:(AKDatabase *)database;
 
 #pragma mark -
 #pragma mark Navigation

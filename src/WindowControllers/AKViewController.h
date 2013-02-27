@@ -8,7 +8,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AKUIController.h"
 
-@class AKBrowserWindowController;
+@class AKWindowController;
 @class AKDocLocator;
 
 /*!
@@ -17,9 +17,14 @@
 @interface AKViewController : NSViewController <AKUIController>
 
 #pragma mark -
+#pragma mark Init/dealloc/awake
+
+- (id)initWithDefaultNib;
+
+#pragma mark -
 #pragma mark Getters and setters
 
-- (AKBrowserWindowController *)browserWindowController;
+- (AKWindowController *)browserWindowController;
 
 #pragma mark -
 #pragma mark Navigation

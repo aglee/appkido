@@ -8,21 +8,35 @@
 #import "AKDocListViewController.h"
 
 #import <WebKit/WebKit.h>
+
 #import "DIGSLog.h"
-#import "AKFileSection.h"
-#import "AKDatabase.h"
-#import "AKWindowController.h"
+
 #import "AKAppController.h"
-#import "AKTableView.h"
+#import "AKDatabase.h"
 #import "AKDoc.h"
-#import "AKTopic.h"
-#import "AKSubtopic.h"
 #import "AKDocLocator.h"
-#import "AKDocView.h"
+#import "AKFileSection.h"
+#import "AKSubtopic.h"
+#import "AKTableView.h"
+#import "AKTopic.h"
+#import "AKWindowController.h"
 
 @implementation AKDocListViewController
 
 @synthesize docListTable = _docListTable;
+
+#pragma mark -
+#pragma mark Init/dealloc/awake
+
+- (id)initWithDefaultNib
+{
+    self = [super initWithNibName:@"DocListView" bundle:nil];
+    if (self)
+    {
+    }
+
+    return self;
+}
 
 #pragma mark -
 #pragma mark Getters and setters

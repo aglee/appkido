@@ -11,18 +11,12 @@
 		65B1095809D7B6C300A8A637 /* AKTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A90498501500A80007 /* AKTableView.h */; };
 		65B1095909D7B6C300A8A637 /* AKSortable.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030DD0498501500A80007 /* AKSortable.h */; };
 		65B1095A09D7B6C300A8A637 /* AKSubcontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030DE0498501500A80007 /* AKSubcontroller.h */; };
-		65B1095B09D7B6C300A8A637 /* AKTopicBrowserController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031010498501500A80007 /* AKTopicBrowserController.h */; };
-		65B1095C09D7B6C300A8A637 /* AKDocListController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031030498501500A80007 /* AKDocListController.h */; };
-		65B1095D09D7B6C300A8A637 /* AKSubtopicListController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031060498501500A80007 /* AKSubtopicListController.h */; };
-		65B1095E09D7B6C300A8A637 /* AKWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7300310A0498501500A80007 /* AKWindowController.h */; };
-		65B1095F09D7B6C300A8A637 /* AKWindowSubcontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 7300310D0498501500A80007 /* AKWindowSubcontroller.h */; };
 		65B1096009D7B6C300A8A637 /* AKWindowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 73AE0907049B71D800A80007 /* AKWindowLayout.h */; };
 		65B1096109D7B6C300A8A637 /* AKSavedWindowState.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C96E23049CA60200A87B79 /* AKSavedWindowState.h */; };
 		65B1096209D7B6C300A8A637 /* AKPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E104A391D600A80003 /* AKPrefUtils.h */; };
 		65B1096309D7B6C300A8A637 /* AKSortUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E704A3A04F00A80003 /* AKSortUtils.h */; };
 		65B1096409D7B6C300A8A637 /* AKTextUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409EE04A3A1EB00A80003 /* AKTextUtils.h */; };
 		65B1096509D7B6C300A8A637 /* AKColoredBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B722C104B5FF1900A80003 /* AKColoredBox.h */; };
-		65B1096609D7B6C300A8A637 /* AKQuicklistController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7306485D04CC7D760013934B /* AKQuicklistController.h */; };
 		65B1096709D7B6C300A8A637 /* AKViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */; };
 		65B1096809D7B6C300A8A637 /* AKClassMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */; };
 		65B1096909D7B6C300A8A637 /* AKDelegateMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25C04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.h */; };
@@ -69,7 +63,6 @@
 		65B1099209D7B6C300A8A637 /* AKFunctionsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CD36C6066AAB6200011DE5 /* AKFunctionsSubtopic.h */; };
 		65B1099309D7B6C300A8A637 /* AKFindPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74137066BFAEF00A76FEE /* AKFindPanelController.h */; };
 		65B1099409D7B6C300A8A637 /* AKPrefPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */; };
-		65B1099509D7B6C300A8A637 /* AKDocView.h in Headers */ = {isa = PBXBuildFile; fileRef = 739D82000682A1FE00C03E01 /* AKDocView.h */; };
 		65B1099609D7B6C300A8A637 /* AKDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73EE9E3D06856D120008CBEC /* AKDatabase.h */; };
 		65B1099709D7B6C300A8A637 /* AKParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BACC00068573870016B38E /* AKParser.h */; };
 		65B1099809D7B6C300A8A637 /* AKDatabaseNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 730FCBD00685758B0083160A /* AKDatabaseNode.h */; };
@@ -123,19 +116,13 @@
 		65B109DC09D7B6C300A8A637 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
 		65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
 		65B109DE09D7B6C300A8A637 /* AKSubcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030DF0498501500A80007 /* AKSubcontroller.m */; };
-		65B109DF09D7B6C300A8A637 /* AKTopicBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031020498501500A80007 /* AKTopicBrowserController.m */; };
-		65B109E009D7B6C300A8A637 /* AKDocListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031040498501500A80007 /* AKDocListController.m */; };
-		65B109E109D7B6C300A8A637 /* AKSubtopicListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031070498501500A80007 /* AKSubtopicListController.m */; };
-		65B109E209D7B6C300A8A637 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310B0498501500A80007 /* AKWindowController.m */; };
 		65B109E309D7B6C300A8A637 /* AKWindowController_Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310C0498501500A80007 /* AKWindowController_Toolbar.m */; };
-		65B109E409D7B6C300A8A637 /* AKWindowSubcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310E0498501500A80007 /* AKWindowSubcontroller.m */; };
 		65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AE0908049B71D800A80007 /* AKWindowLayout.m */; };
 		65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C96E24049CA60200A87B79 /* AKSavedWindowState.m */; };
 		65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E204A391D600A80003 /* AKPrefUtils.m */; };
 		65B109E809D7B6C300A8A637 /* AKSortUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E804A3A04F00A80003 /* AKSortUtils.m */; };
 		65B109E909D7B6C300A8A637 /* AKTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409EF04A3A1EB00A80003 /* AKTextUtils.m */; };
 		65B109EA09D7B6C300A8A637 /* AKColoredBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B722C204B5FF1900A80003 /* AKColoredBox.m */; };
-		65B109EB09D7B6C300A8A637 /* AKQuicklistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306485E04CC7D760013934B /* AKQuicklistController.m */; };
 		65B109EC09D7B6C300A8A637 /* AKViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */; };
 		65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25B04EDC6AE00A80003 /* AKClassMethodsSubtopic.m */; };
 		65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */; };
@@ -182,7 +169,6 @@
 		65B10A1709D7B6C300A8A637 /* AKFunctionsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD36C7066AAB6200011DE5 /* AKFunctionsSubtopic.m */; };
 		65B10A1809D7B6C300A8A637 /* AKFindPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C74138066BFAEF00A76FEE /* AKFindPanelController.m */; };
 		65B10A1909D7B6C300A8A637 /* AKPrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */; };
-		65B10A1A09D7B6C300A8A637 /* AKDocView.m in Sources */ = {isa = PBXBuildFile; fileRef = 739D82010682A1FE00C03E01 /* AKDocView.m */; };
 		65B10A1B09D7B6C300A8A637 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE9E3E06856D120008CBEC /* AKDatabase.m */; };
 		65B10A1D09D7B6C300A8A637 /* AKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BACC01068573870016B38E /* AKParser.m */; };
 		65B10A1E09D7B6C300A8A637 /* AKDatabaseNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 730FCBD10685758B0083160A /* AKDatabaseNode.m */; };
@@ -246,10 +232,10 @@
 		7320C18216DCF9FC00797F95 /* AKViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C17516DCF9E300797F95 /* AKViewController.h */; };
 		7320C18316DCF9FC00797F95 /* AKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17616DCF9E500797F95 /* AKViewController.m */; };
 		7320C18416DCF9FC00797F95 /* AKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17616DCF9E500797F95 /* AKViewController.m */; };
-		7320C18516DCF9FC00797F95 /* AKBrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C17716DCF9ED00797F95 /* AKBrowserWindowController.h */; };
-		7320C18616DCF9FD00797F95 /* AKBrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C17716DCF9ED00797F95 /* AKBrowserWindowController.h */; };
-		7320C18716DCF9FD00797F95 /* AKBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17816DCF9F900797F95 /* AKBrowserWindowController.m */; };
-		7320C18816DCF9FD00797F95 /* AKBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17816DCF9F900797F95 /* AKBrowserWindowController.m */; };
+		7320C18516DCF9FC00797F95 /* AKWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C17716DCF9ED00797F95 /* AKWindowController.h */; };
+		7320C18616DCF9FD00797F95 /* AKWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C17716DCF9ED00797F95 /* AKWindowController.h */; };
+		7320C18716DCF9FD00797F95 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17816DCF9F900797F95 /* AKWindowController.m */; };
+		7320C18816DCF9FD00797F95 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17816DCF9F900797F95 /* AKWindowController.m */; };
 		733DF5EB14E17700007E6313 /* AKSQLTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 733DF5E914E17700007E6313 /* AKSQLTemplate.h */; };
 		733DF5EC14E17700007E6313 /* AKSQLTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 733DF5EA14E17700007E6313 /* AKSQLTemplate.m */; };
 		733DF5ED14E17700007E6313 /* AKSQLTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 733DF5E914E17700007E6313 /* AKSQLTemplate.h */; };
@@ -312,18 +298,12 @@
 		7399B2B60E632A5C001AE672 /* AKTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A90498501500A80007 /* AKTableView.h */; };
 		7399B2B70E632A5C001AE672 /* AKSortable.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030DD0498501500A80007 /* AKSortable.h */; };
 		7399B2B80E632A5C001AE672 /* AKSubcontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030DE0498501500A80007 /* AKSubcontroller.h */; };
-		7399B2B90E632A5C001AE672 /* AKTopicBrowserController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031010498501500A80007 /* AKTopicBrowserController.h */; };
-		7399B2BA0E632A5C001AE672 /* AKDocListController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031030498501500A80007 /* AKDocListController.h */; };
-		7399B2BB0E632A5C001AE672 /* AKSubtopicListController.h in Headers */ = {isa = PBXBuildFile; fileRef = 730031060498501500A80007 /* AKSubtopicListController.h */; };
-		7399B2BC0E632A5C001AE672 /* AKWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7300310A0498501500A80007 /* AKWindowController.h */; };
-		7399B2BD0E632A5C001AE672 /* AKWindowSubcontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 7300310D0498501500A80007 /* AKWindowSubcontroller.h */; };
 		7399B2BE0E632A5C001AE672 /* AKWindowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 73AE0907049B71D800A80007 /* AKWindowLayout.h */; };
 		7399B2BF0E632A5C001AE672 /* AKSavedWindowState.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C96E23049CA60200A87B79 /* AKSavedWindowState.h */; };
 		7399B2C00E632A5C001AE672 /* AKPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E104A391D600A80003 /* AKPrefUtils.h */; };
 		7399B2C10E632A5C001AE672 /* AKSortUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E704A3A04F00A80003 /* AKSortUtils.h */; };
 		7399B2C20E632A5C001AE672 /* AKTextUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409EE04A3A1EB00A80003 /* AKTextUtils.h */; };
 		7399B2C30E632A5C001AE672 /* AKColoredBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B722C104B5FF1900A80003 /* AKColoredBox.h */; };
-		7399B2C40E632A5C001AE672 /* AKQuicklistController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7306485D04CC7D760013934B /* AKQuicklistController.h */; };
 		7399B2C50E632A5C001AE672 /* AKViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */; };
 		7399B2C60E632A5C001AE672 /* AKClassMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */; };
 		7399B2C70E632A5C001AE672 /* AKDelegateMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25C04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.h */; };
@@ -370,7 +350,6 @@
 		7399B2F00E632A5C001AE672 /* AKFunctionsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CD36C6066AAB6200011DE5 /* AKFunctionsSubtopic.h */; };
 		7399B2F10E632A5C001AE672 /* AKFindPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74137066BFAEF00A76FEE /* AKFindPanelController.h */; };
 		7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */; };
-		7399B2F30E632A5C001AE672 /* AKDocView.h in Headers */ = {isa = PBXBuildFile; fileRef = 739D82000682A1FE00C03E01 /* AKDocView.h */; };
 		7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73EE9E3D06856D120008CBEC /* AKDatabase.h */; };
 		7399B2F50E632A5C001AE672 /* AKParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BACC00068573870016B38E /* AKParser.h */; };
 		7399B2F60E632A5C001AE672 /* AKDatabaseNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 730FCBD00685758B0083160A /* AKDatabaseNode.h */; };
@@ -445,19 +424,13 @@
 		7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
 		7399B3490E632A5C001AE672 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
 		7399B34A0E632A5C001AE672 /* AKSubcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030DF0498501500A80007 /* AKSubcontroller.m */; };
-		7399B34B0E632A5C001AE672 /* AKTopicBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031020498501500A80007 /* AKTopicBrowserController.m */; };
-		7399B34C0E632A5C001AE672 /* AKDocListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031040498501500A80007 /* AKDocListController.m */; };
-		7399B34D0E632A5C001AE672 /* AKSubtopicListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730031070498501500A80007 /* AKSubtopicListController.m */; };
-		7399B34E0E632A5C001AE672 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310B0498501500A80007 /* AKWindowController.m */; };
 		7399B34F0E632A5C001AE672 /* AKWindowController_Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310C0498501500A80007 /* AKWindowController_Toolbar.m */; };
-		7399B3500E632A5C001AE672 /* AKWindowSubcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310E0498501500A80007 /* AKWindowSubcontroller.m */; };
 		7399B3510E632A5C001AE672 /* AKWindowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AE0908049B71D800A80007 /* AKWindowLayout.m */; };
 		7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C96E24049CA60200A87B79 /* AKSavedWindowState.m */; };
 		7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E204A391D600A80003 /* AKPrefUtils.m */; };
 		7399B3540E632A5C001AE672 /* AKSortUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E804A3A04F00A80003 /* AKSortUtils.m */; };
 		7399B3550E632A5C001AE672 /* AKTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409EF04A3A1EB00A80003 /* AKTextUtils.m */; };
 		7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B722C204B5FF1900A80003 /* AKColoredBox.m */; };
-		7399B3570E632A5C001AE672 /* AKQuicklistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306485E04CC7D760013934B /* AKQuicklistController.m */; };
 		7399B3580E632A5C001AE672 /* AKViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */; };
 		7399B3590E632A5C001AE672 /* AKClassMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25B04EDC6AE00A80003 /* AKClassMethodsSubtopic.m */; };
 		7399B35A0E632A5C001AE672 /* AKDelegateMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */; };
@@ -504,7 +477,6 @@
 		7399B3830E632A5C001AE672 /* AKFunctionsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD36C7066AAB6200011DE5 /* AKFunctionsSubtopic.m */; };
 		7399B3840E632A5C001AE672 /* AKFindPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C74138066BFAEF00A76FEE /* AKFindPanelController.m */; };
 		7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */; };
-		7399B3860E632A5C001AE672 /* AKDocView.m in Sources */ = {isa = PBXBuildFile; fileRef = 739D82010682A1FE00C03E01 /* AKDocView.m */; };
 		7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE9E3E06856D120008CBEC /* AKDatabase.m */; };
 		7399B3880E632A5C001AE672 /* AKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BACC01068573870016B38E /* AKParser.m */; };
 		7399B3890E632A5C001AE672 /* AKDatabaseNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 730FCBD10685758B0083160A /* AKDatabaseNode.m */; };
@@ -558,8 +530,8 @@
 		7399B40F0E638BDE001AE672 /* app-icon-iphone.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */; };
 		739E1C800E4F453900119B06 /* AKDevToolsPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */; };
 		739E1C810E4F453900119B06 /* AKDevToolsPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */; };
-		73A0230E16DD192900240111 /* BrowserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0230C16DD192900240111 /* BrowserWindow.xib */; };
-		73A0230F16DD192900240111 /* BrowserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0230C16DD192900240111 /* BrowserWindow.xib */; };
+		73A0230E16DD192900240111 /* AKWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0230C16DD192900240111 /* AKWindow.xib */; };
+		73A0230F16DD192900240111 /* AKWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0230C16DD192900240111 /* AKWindow.xib */; };
 		73A0231216DD1CDB00240111 /* AKDocListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231016DD1CDB00240111 /* AKDocListViewController.h */; };
 		73A0231316DD1CDB00240111 /* AKDocListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231016DD1CDB00240111 /* AKDocListViewController.h */; };
 		73A0231416DD1CDB00240111 /* AKDocListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0231116DD1CDB00240111 /* AKDocListViewController.m */; };
@@ -587,7 +559,6 @@
 		73C735A80F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */; };
 		73C735A90F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
 		73C735AA0F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */; };
-		73C891DE14E10B7600A54FF6 /* AppKiDo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D614E10B7600A54FF6 /* AppKiDo.xib */; };
 		73C891DF14E10B7600A54FF6 /* DevToolsPath.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D814E10B7600A54FF6 /* DevToolsPath.xib */; };
 		73C891E014E10B7600A54FF6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DA14E10B7600A54FF6 /* MainMenu.xib */; };
 		73C891E114E10B7600A54FF6 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DC14E10B7600A54FF6 /* Prefs.xib */; };
@@ -595,7 +566,6 @@
 		73C983F50FE47F6800C4BEBA /* AKMacDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */; };
 		73C983FE0FE4815E00C4BEBA /* AKMacDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C983F20FE47F6800C4BEBA /* AKMacDevTools.h */; };
 		73C983FF0FE4815E00C4BEBA /* AKMacDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */; };
-		73D07C0914E11D2700383E06 /* AppKiDo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D614E10B7600A54FF6 /* AppKiDo.xib */; };
 		73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D814E10B7600A54FF6 /* DevToolsPath.xib */; };
 		73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DA14E10B7600A54FF6 /* MainMenu.xib */; };
 		73D07C0C14E11D3800383E06 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DC14E10B7600A54FF6 /* Prefs.xib */; };
@@ -670,22 +640,10 @@
 		730030DD0498501500A80007 /* AKSortable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSortable.h; sourceTree = "<group>"; };
 		730030DE0498501500A80007 /* AKSubcontroller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSubcontroller.h; sourceTree = "<group>"; };
 		730030DF0498501500A80007 /* AKSubcontroller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKSubcontroller.m; sourceTree = "<group>"; };
-		730031010498501500A80007 /* AKTopicBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKTopicBrowserController.h; sourceTree = "<group>"; };
-		730031020498501500A80007 /* AKTopicBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKTopicBrowserController.m; sourceTree = "<group>"; };
-		730031030498501500A80007 /* AKDocListController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDocListController.h; sourceTree = "<group>"; };
-		730031040498501500A80007 /* AKDocListController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDocListController.m; sourceTree = "<group>"; };
-		730031060498501500A80007 /* AKSubtopicListController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSubtopicListController.h; sourceTree = "<group>"; };
-		730031070498501500A80007 /* AKSubtopicListController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKSubtopicListController.m; sourceTree = "<group>"; };
-		7300310A0498501500A80007 /* AKWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKWindowController.h; sourceTree = "<group>"; };
-		7300310B0498501500A80007 /* AKWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKWindowController.m; sourceTree = "<group>"; };
 		7300310C0498501500A80007 /* AKWindowController_Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKWindowController_Toolbar.m; sourceTree = "<group>"; };
-		7300310D0498501500A80007 /* AKWindowSubcontroller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKWindowSubcontroller.h; sourceTree = "<group>"; };
-		7300310E0498501500A80007 /* AKWindowSubcontroller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKWindowSubcontroller.m; sourceTree = "<group>"; };
 		73026980082FD33700D5198D /* AKTestDocParserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTestDocParserWindowController.h; sourceTree = "<group>"; };
 		73026981082FD33700D5198D /* AKTestDocParserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTestDocParserWindowController.m; sourceTree = "<group>"; };
 		7302DF980767B65200F9FEC0 /* about-the-code.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "about-the-code.markdown"; sourceTree = "<group>"; };
-		7306485D04CC7D760013934B /* AKQuicklistController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKQuicklistController.h; sourceTree = "<group>"; };
-		7306485E04CC7D760013934B /* AKQuicklistController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKQuicklistController.m; sourceTree = "<group>"; };
 		730A35920688A09B00699C6D /* AKBehaviorOverviewSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKBehaviorOverviewSubtopic.h; sourceTree = "<group>"; };
 		730A35930688A09B00699C6D /* AKBehaviorOverviewSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorOverviewSubtopic.m; sourceTree = "<group>"; };
 		730A36520688A49900699C6D /* AKRealMethodsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKRealMethodsSubtopic.h; sourceTree = "<group>"; };
@@ -736,8 +694,8 @@
 		7320C17416DCF9DF00797F95 /* AKTopicBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTopicBrowserViewController.m; sourceTree = "<group>"; };
 		7320C17516DCF9E300797F95 /* AKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewController.h; sourceTree = "<group>"; };
 		7320C17616DCF9E500797F95 /* AKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewController.m; sourceTree = "<group>"; };
-		7320C17716DCF9ED00797F95 /* AKBrowserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBrowserWindowController.h; sourceTree = "<group>"; };
-		7320C17816DCF9F900797F95 /* AKBrowserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKBrowserWindowController.m; sourceTree = "<group>"; };
+		7320C17716DCF9ED00797F95 /* AKWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowController.h; sourceTree = "<group>"; };
+		7320C17816DCF9F900797F95 /* AKWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowController.m; sourceTree = "<group>"; };
 		7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewUtils.h; sourceTree = "<group>"; };
 		7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewUtils.m; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };
@@ -852,11 +810,9 @@
 		7399B3C10E632A5C001AE672 /* AppKiDo-for-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppKiDo-for-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7399B3C30E632A5C001AE672 /* Info-iPhone.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iPhone.plist"; sourceTree = "<group>"; };
 		7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "app-icon-iphone.icns"; path = "images/app-icon-iphone.icns"; sourceTree = "<group>"; };
-		739D82000682A1FE00C03E01 /* AKDocView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKDocView.h; path = CustomViews/AKDocView.h; sourceTree = "<group>"; };
-		739D82010682A1FE00C03E01 /* AKDocView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKDocView.m; path = CustomViews/AKDocView.m; sourceTree = "<group>"; };
 		739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsPanelController.h; sourceTree = "<group>"; };
 		739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsPanelController.m; sourceTree = "<group>"; };
-		73A0230D16DD192900240111 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/BrowserWindow.xib; sourceTree = "<group>"; };
+		73A0230D16DD192900240111 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AKWindow.xib; sourceTree = "<group>"; };
 		73A0231016DD1CDB00240111 /* AKDocListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocListViewController.h; sourceTree = "<group>"; };
 		73A0231116DD1CDB00240111 /* AKDocListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocListViewController.m; sourceTree = "<group>"; };
 		73A0231616DD1D6200240111 /* AKDocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocViewController.h; sourceTree = "<group>"; };
@@ -913,7 +869,6 @@
 		73C74138066BFAEF00A76FEE /* AKFindPanelController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKFindPanelController.m; sourceTree = "<group>"; };
 		73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKPrefPanelController.h; sourceTree = "<group>"; };
 		73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKPrefPanelController.m; sourceTree = "<group>"; };
-		73C891D714E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AppKiDo.xib; sourceTree = "<group>"; };
 		73C891D914E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DevToolsPath.xib; sourceTree = "<group>"; };
 		73C891DB14E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		73C891DD14E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Prefs.xib; sourceTree = "<group>"; };
@@ -1040,14 +995,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7312A76916DD295300052FEA /* NEW nibs */,
-				73C891D614E10B7600A54FF6 /* AppKiDo.xib */,
-				738D41B315B07A1C008950F6 /* AboutWindow.xib */,
-				73C891D814E10B7600A54FF6 /* DevToolsPath.xib */,
-				73C891DA14E10B7600A54FF6 /* MainMenu.xib */,
-				73C891DC14E10B7600A54FF6 /* Prefs.xib */,
-				734B75D416D062060027514D /* SplashWindow.xib */,
-				73D59E8F15B46A7E00A1BEAF /* TestDocParser.xib */,
+				730A0FBB16DDB9940004C76C /* singleton nibs */,
+				7312A76916DD295300052FEA /* per-window nibs */,
+				730A0FBC16DDB9A40004C76C /* utility nibs */,
 				73B9158706133DBF00066E17 /* Credits.html */,
 				73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */,
 				733ACAF20498483100A80007 /* app-icon.icns */,
@@ -1174,27 +1124,6 @@
 			path = GlobalClasses;
 			sourceTree = SOURCE_ROOT;
 		};
-		730031000498501500A80007 /* per-window controllers */ = {
-			isa = PBXGroup;
-			children = (
-				7300310A0498501500A80007 /* AKWindowController.h */,
-				7300310B0498501500A80007 /* AKWindowController.m */,
-				7300310C0498501500A80007 /* AKWindowController_Toolbar.m */,
-				7300310D0498501500A80007 /* AKWindowSubcontroller.h */,
-				7300310E0498501500A80007 /* AKWindowSubcontroller.m */,
-				7306485D04CC7D760013934B /* AKQuicklistController.h */,
-				7306485E04CC7D760013934B /* AKQuicklistController.m */,
-				730031010498501500A80007 /* AKTopicBrowserController.h */,
-				730031020498501500A80007 /* AKTopicBrowserController.m */,
-				730031060498501500A80007 /* AKSubtopicListController.h */,
-				730031070498501500A80007 /* AKSubtopicListController.m */,
-				730031030498501500A80007 /* AKDocListController.h */,
-				730031040498501500A80007 /* AKDocListController.m */,
-			);
-			name = "per-window controllers";
-			path = WindowControllers;
-			sourceTree = SOURCE_ROOT;
-		};
 		7309924616D7411500212D93 /* parsing header files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1202,6 +1131,26 @@
 				732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */,
 			);
 			name = "parsing header files";
+			sourceTree = "<group>";
+		};
+		730A0FBB16DDB9940004C76C /* singleton nibs */ = {
+			isa = PBXGroup;
+			children = (
+				738D41B315B07A1C008950F6 /* AboutWindow.xib */,
+				73C891DA14E10B7600A54FF6 /* MainMenu.xib */,
+				73C891DC14E10B7600A54FF6 /* Prefs.xib */,
+				734B75D416D062060027514D /* SplashWindow.xib */,
+			);
+			name = "singleton nibs";
+			sourceTree = "<group>";
+		};
+		730A0FBC16DDB9A40004C76C /* utility nibs */ = {
+			isa = PBXGroup;
+			children = (
+				73C891D814E10B7600A54FF6 /* DevToolsPath.xib */,
+				73D59E8F15B46A7E00A1BEAF /* TestDocParser.xib */,
+			);
+			name = "utility nibs";
 			sourceTree = "<group>";
 		};
 		730A36370688A42300699C6D /* real methods */ = {
@@ -1251,17 +1200,17 @@
 			name = "member docs";
 			sourceTree = "<group>";
 		};
-		7312A76916DD295300052FEA /* NEW nibs */ = {
+		7312A76916DD295300052FEA /* per-window nibs */ = {
 			isa = PBXGroup;
 			children = (
-				73A0230C16DD192900240111 /* BrowserWindow.xib */,
+				73A0230C16DD192900240111 /* AKWindow.xib */,
 				7312A75E16DD293D00052FEA /* TopicBrowserView.xib */,
 				7312A75C16DD293D00052FEA /* SubtopicListView.xib */,
 				7312A75816DD293D00052FEA /* DocListView.xib */,
 				7312A75A16DD293D00052FEA /* DocView.xib */,
 				73A0232A16DD259800240111 /* QuicklistView.xib */,
 			);
-			name = "NEW nibs";
+			name = "per-window nibs";
 			sourceTree = "<group>";
 		};
 		7314BA8F060C20730075C786 /* doc locators */ = {
@@ -1361,8 +1310,6 @@
 				730030AA0498501500A80007 /* AKTableView.m */,
 				73B722C104B5FF1900A80003 /* AKColoredBox.h */,
 				73B722C204B5FF1900A80003 /* AKColoredBox.m */,
-				739D82000682A1FE00C03E01 /* AKDocView.h */,
-				739D82010682A1FE00C03E01 /* AKDocView.m */,
 				7359EABF0BADAAD900574728 /* AKTextView.h */,
 				7359EAC00BADAAD900574728 /* AKTextView.m */,
 				73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */,
@@ -1376,8 +1323,7 @@
 			isa = PBXGroup;
 			children = (
 				732BD5D405ED8FBE0055715D /* singleton controllers */,
-				73A0230A16DD18C300240111 /* NEW controllers */,
-				730031000498501500A80007 /* per-window controllers */,
+				73A0230A16DD18C300240111 /* per-window controllers */,
 				734701A804ED644C00A80003 /* saveable window states */,
 			);
 			name = "------- C O N T R O L L E R S -------";
@@ -1545,12 +1491,13 @@
 			path = ClassDB;
 			sourceTree = "<group>";
 		};
-		73A0230A16DD18C300240111 /* NEW controllers */ = {
+		73A0230A16DD18C300240111 /* per-window controllers */ = {
 			isa = PBXGroup;
 			children = (
 				73A0231C16DD1EE400240111 /* AKUIController.h */,
-				7320C17716DCF9ED00797F95 /* AKBrowserWindowController.h */,
-				7320C17816DCF9F900797F95 /* AKBrowserWindowController.m */,
+				7320C17716DCF9ED00797F95 /* AKWindowController.h */,
+				7320C17816DCF9F900797F95 /* AKWindowController.m */,
+				7300310C0498501500A80007 /* AKWindowController_Toolbar.m */,
 				7320C17516DCF9E300797F95 /* AKViewController.h */,
 				7320C17616DCF9E500797F95 /* AKViewController.m */,
 				7320C17316DCF9DA00797F95 /* AKTopicBrowserViewController.h */,
@@ -1564,7 +1511,7 @@
 				73A0231F16DD214C00240111 /* AKQuicklistViewController.h */,
 				73A0232016DD214C00240111 /* AKQuicklistViewController.m */,
 			);
-			name = "NEW controllers";
+			name = "per-window controllers";
 			path = WindowControllers;
 			sourceTree = "<group>";
 		};
@@ -1770,18 +1717,12 @@
 				65B1095809D7B6C300A8A637 /* AKTableView.h in Headers */,
 				65B1095909D7B6C300A8A637 /* AKSortable.h in Headers */,
 				65B1095A09D7B6C300A8A637 /* AKSubcontroller.h in Headers */,
-				65B1095B09D7B6C300A8A637 /* AKTopicBrowserController.h in Headers */,
-				65B1095C09D7B6C300A8A637 /* AKDocListController.h in Headers */,
-				65B1095D09D7B6C300A8A637 /* AKSubtopicListController.h in Headers */,
-				65B1095E09D7B6C300A8A637 /* AKWindowController.h in Headers */,
-				65B1095F09D7B6C300A8A637 /* AKWindowSubcontroller.h in Headers */,
 				65B1096009D7B6C300A8A637 /* AKWindowLayout.h in Headers */,
 				65B1096109D7B6C300A8A637 /* AKSavedWindowState.h in Headers */,
 				65B1096209D7B6C300A8A637 /* AKPrefUtils.h in Headers */,
 				65B1096309D7B6C300A8A637 /* AKSortUtils.h in Headers */,
 				65B1096409D7B6C300A8A637 /* AKTextUtils.h in Headers */,
 				65B1096509D7B6C300A8A637 /* AKColoredBox.h in Headers */,
-				65B1096609D7B6C300A8A637 /* AKQuicklistController.h in Headers */,
 				65B1096709D7B6C300A8A637 /* AKViewUtils.h in Headers */,
 				65B1096809D7B6C300A8A637 /* AKClassMethodsSubtopic.h in Headers */,
 				65B1096909D7B6C300A8A637 /* AKDelegateMethodsSubtopic.h in Headers */,
@@ -1828,7 +1769,6 @@
 				65B1099209D7B6C300A8A637 /* AKFunctionsSubtopic.h in Headers */,
 				65B1099309D7B6C300A8A637 /* AKFindPanelController.h in Headers */,
 				65B1099409D7B6C300A8A637 /* AKPrefPanelController.h in Headers */,
-				65B1099509D7B6C300A8A637 /* AKDocView.h in Headers */,
 				65B1099609D7B6C300A8A637 /* AKDatabase.h in Headers */,
 				65B1099709D7B6C300A8A637 /* AKParser.h in Headers */,
 				65B1099809D7B6C300A8A637 /* AKDatabaseNode.h in Headers */,
@@ -1896,7 +1836,7 @@
 				7320C17916DCF9FC00797F95 /* AKSubtopicListViewController.h in Headers */,
 				7320C17D16DCF9FC00797F95 /* AKTopicBrowserViewController.h in Headers */,
 				7320C18116DCF9FC00797F95 /* AKViewController.h in Headers */,
-				7320C18516DCF9FC00797F95 /* AKBrowserWindowController.h in Headers */,
+				7320C18516DCF9FC00797F95 /* AKWindowController.h in Headers */,
 				73A0231216DD1CDB00240111 /* AKDocListViewController.h in Headers */,
 				73A0231816DD1D6300240111 /* AKDocViewController.h in Headers */,
 				73A0231D16DD1EE400240111 /* AKUIController.h in Headers */,
@@ -1912,18 +1852,12 @@
 				7399B2B60E632A5C001AE672 /* AKTableView.h in Headers */,
 				7399B2B70E632A5C001AE672 /* AKSortable.h in Headers */,
 				7399B2B80E632A5C001AE672 /* AKSubcontroller.h in Headers */,
-				7399B2B90E632A5C001AE672 /* AKTopicBrowserController.h in Headers */,
-				7399B2BA0E632A5C001AE672 /* AKDocListController.h in Headers */,
-				7399B2BB0E632A5C001AE672 /* AKSubtopicListController.h in Headers */,
-				7399B2BC0E632A5C001AE672 /* AKWindowController.h in Headers */,
-				7399B2BD0E632A5C001AE672 /* AKWindowSubcontroller.h in Headers */,
 				7399B2BE0E632A5C001AE672 /* AKWindowLayout.h in Headers */,
 				7399B2BF0E632A5C001AE672 /* AKSavedWindowState.h in Headers */,
 				7399B2C00E632A5C001AE672 /* AKPrefUtils.h in Headers */,
 				7399B2C10E632A5C001AE672 /* AKSortUtils.h in Headers */,
 				7399B2C20E632A5C001AE672 /* AKTextUtils.h in Headers */,
 				7399B2C30E632A5C001AE672 /* AKColoredBox.h in Headers */,
-				7399B2C40E632A5C001AE672 /* AKQuicklistController.h in Headers */,
 				7399B2C50E632A5C001AE672 /* AKViewUtils.h in Headers */,
 				7399B2C60E632A5C001AE672 /* AKClassMethodsSubtopic.h in Headers */,
 				7399B2C70E632A5C001AE672 /* AKDelegateMethodsSubtopic.h in Headers */,
@@ -1970,7 +1904,6 @@
 				7399B2F00E632A5C001AE672 /* AKFunctionsSubtopic.h in Headers */,
 				7399B2F10E632A5C001AE672 /* AKFindPanelController.h in Headers */,
 				7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */,
-				7399B2F30E632A5C001AE672 /* AKDocView.h in Headers */,
 				7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */,
 				7399B2F50E632A5C001AE672 /* AKParser.h in Headers */,
 				7399B2F60E632A5C001AE672 /* AKDatabaseNode.h in Headers */,
@@ -2038,7 +1971,7 @@
 				7320C17A16DCF9FC00797F95 /* AKSubtopicListViewController.h in Headers */,
 				7320C17E16DCF9FC00797F95 /* AKTopicBrowserViewController.h in Headers */,
 				7320C18216DCF9FC00797F95 /* AKViewController.h in Headers */,
-				7320C18616DCF9FD00797F95 /* AKBrowserWindowController.h in Headers */,
+				7320C18616DCF9FD00797F95 /* AKWindowController.h in Headers */,
 				73A0231316DD1CDB00240111 /* AKDocListViewController.h in Headers */,
 				73A0231916DD1D6300240111 /* AKDocViewController.h in Headers */,
 				73A0231E16DD1EE400240111 /* AKUIController.h in Headers */,
@@ -2145,7 +2078,6 @@
 				65B109D909D7B6C300A8A637 /* about-the-code.markdown in Resources */,
 				73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */,
 				7399B3FB0E638B54001AE672 /* app-icon-iphone.icns in Resources */,
-				73C891DE14E10B7600A54FF6 /* AppKiDo.xib in Resources */,
 				73C891DF14E10B7600A54FF6 /* DevToolsPath.xib in Resources */,
 				73C891E014E10B7600A54FF6 /* MainMenu.xib in Resources */,
 				73C891E114E10B7600A54FF6 /* Prefs.xib in Resources */,
@@ -2157,7 +2089,7 @@
 				738D41B515B07A1C008950F6 /* AboutWindow.xib in Resources */,
 				73D59E9115B46A7E00A1BEAF /* TestDocParser.xib in Resources */,
 				734B75D916D062060027514D /* SplashWindow.xib in Resources */,
-				73A0230E16DD192900240111 /* BrowserWindow.xib in Resources */,
+				73A0230E16DD192900240111 /* AKWindow.xib in Resources */,
 				73A0232C16DD259800240111 /* QuicklistView.xib in Resources */,
 				7312A76016DD293D00052FEA /* DocListView.xib in Resources */,
 				7312A76216DD293D00052FEA /* DocView.xib in Resources */,
@@ -2194,7 +2126,6 @@
 				7399B33F0E632A5C001AE672 /* Credits.html in Resources */,
 				7399B3410E632A5C001AE672 /* about-the-code.markdown in Resources */,
 				7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */,
-				73D07C0914E11D2700383E06 /* AppKiDo.xib in Resources */,
 				73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */,
 				73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */,
 				73D07C0C14E11D3800383E06 /* Prefs.xib in Resources */,
@@ -2206,7 +2137,7 @@
 				738D41B615B07A1C008950F6 /* AboutWindow.xib in Resources */,
 				73D59E9215B46A7E00A1BEAF /* TestDocParser.xib in Resources */,
 				734B75DA16D062060027514D /* SplashWindow.xib in Resources */,
-				73A0230F16DD192900240111 /* BrowserWindow.xib in Resources */,
+				73A0230F16DD192900240111 /* AKWindow.xib in Resources */,
 				73A0232D16DD259800240111 /* QuicklistView.xib in Resources */,
 				7312A76116DD293D00052FEA /* DocListView.xib in Resources */,
 				7312A76316DD293D00052FEA /* DocView.xib in Resources */,
@@ -2226,19 +2157,13 @@
 				65B109DC09D7B6C300A8A637 /* AKBrowser.m in Sources */,
 				65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */,
 				65B109DE09D7B6C300A8A637 /* AKSubcontroller.m in Sources */,
-				65B109DF09D7B6C300A8A637 /* AKTopicBrowserController.m in Sources */,
-				65B109E009D7B6C300A8A637 /* AKDocListController.m in Sources */,
-				65B109E109D7B6C300A8A637 /* AKSubtopicListController.m in Sources */,
-				65B109E209D7B6C300A8A637 /* AKWindowController.m in Sources */,
 				65B109E309D7B6C300A8A637 /* AKWindowController_Toolbar.m in Sources */,
-				65B109E409D7B6C300A8A637 /* AKWindowSubcontroller.m in Sources */,
 				65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */,
 				65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */,
 				65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */,
 				65B109E809D7B6C300A8A637 /* AKSortUtils.m in Sources */,
 				65B109E909D7B6C300A8A637 /* AKTextUtils.m in Sources */,
 				65B109EA09D7B6C300A8A637 /* AKColoredBox.m in Sources */,
-				65B109EB09D7B6C300A8A637 /* AKQuicklistController.m in Sources */,
 				65B109EC09D7B6C300A8A637 /* AKViewUtils.m in Sources */,
 				65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */,
 				65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */,
@@ -2285,7 +2210,6 @@
 				65B10A1709D7B6C300A8A637 /* AKFunctionsSubtopic.m in Sources */,
 				65B10A1809D7B6C300A8A637 /* AKFindPanelController.m in Sources */,
 				65B10A1909D7B6C300A8A637 /* AKPrefPanelController.m in Sources */,
-				65B10A1A09D7B6C300A8A637 /* AKDocView.m in Sources */,
 				65B10A1B09D7B6C300A8A637 /* AKDatabase.m in Sources */,
 				65B10A1D09D7B6C300A8A637 /* AKParser.m in Sources */,
 				65B10A1E09D7B6C300A8A637 /* AKDatabaseNode.m in Sources */,
@@ -2351,7 +2275,7 @@
 				7320C17B16DCF9FC00797F95 /* AKSubtopicListViewController.m in Sources */,
 				7320C17F16DCF9FC00797F95 /* AKTopicBrowserViewController.m in Sources */,
 				7320C18316DCF9FC00797F95 /* AKViewController.m in Sources */,
-				7320C18716DCF9FD00797F95 /* AKBrowserWindowController.m in Sources */,
+				7320C18716DCF9FD00797F95 /* AKWindowController.m in Sources */,
 				73A0231416DD1CDB00240111 /* AKDocListViewController.m in Sources */,
 				73A0231A16DD1D6300240111 /* AKDocViewController.m in Sources */,
 				73A0232316DD214C00240111 /* AKQuicklistViewController.m in Sources */,
@@ -2366,19 +2290,13 @@
 				7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */,
 				7399B3490E632A5C001AE672 /* AKTableView.m in Sources */,
 				7399B34A0E632A5C001AE672 /* AKSubcontroller.m in Sources */,
-				7399B34B0E632A5C001AE672 /* AKTopicBrowserController.m in Sources */,
-				7399B34C0E632A5C001AE672 /* AKDocListController.m in Sources */,
-				7399B34D0E632A5C001AE672 /* AKSubtopicListController.m in Sources */,
-				7399B34E0E632A5C001AE672 /* AKWindowController.m in Sources */,
 				7399B34F0E632A5C001AE672 /* AKWindowController_Toolbar.m in Sources */,
-				7399B3500E632A5C001AE672 /* AKWindowSubcontroller.m in Sources */,
 				7399B3510E632A5C001AE672 /* AKWindowLayout.m in Sources */,
 				7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */,
 				7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */,
 				7399B3540E632A5C001AE672 /* AKSortUtils.m in Sources */,
 				7399B3550E632A5C001AE672 /* AKTextUtils.m in Sources */,
 				7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */,
-				7399B3570E632A5C001AE672 /* AKQuicklistController.m in Sources */,
 				7399B3580E632A5C001AE672 /* AKViewUtils.m in Sources */,
 				7399B3590E632A5C001AE672 /* AKClassMethodsSubtopic.m in Sources */,
 				7399B35A0E632A5C001AE672 /* AKDelegateMethodsSubtopic.m in Sources */,
@@ -2425,7 +2343,6 @@
 				7399B3830E632A5C001AE672 /* AKFunctionsSubtopic.m in Sources */,
 				7399B3840E632A5C001AE672 /* AKFindPanelController.m in Sources */,
 				7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */,
-				7399B3860E632A5C001AE672 /* AKDocView.m in Sources */,
 				7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */,
 				7399B3880E632A5C001AE672 /* AKParser.m in Sources */,
 				7399B3890E632A5C001AE672 /* AKDatabaseNode.m in Sources */,
@@ -2491,7 +2408,7 @@
 				7320C17C16DCF9FC00797F95 /* AKSubtopicListViewController.m in Sources */,
 				7320C18016DCF9FC00797F95 /* AKTopicBrowserViewController.m in Sources */,
 				7320C18416DCF9FC00797F95 /* AKViewController.m in Sources */,
-				7320C18816DCF9FD00797F95 /* AKBrowserWindowController.m in Sources */,
+				7320C18816DCF9FD00797F95 /* AKWindowController.m in Sources */,
 				73A0231516DD1CDB00240111 /* AKDocListViewController.m in Sources */,
 				73A0231B16DD1D6300240111 /* AKDocViewController.m in Sources */,
 				73A0232416DD214C00240111 /* AKQuicklistViewController.m in Sources */,
@@ -2549,12 +2466,12 @@
 			name = AboutWindow.xib;
 			sourceTree = "<group>";
 		};
-		73A0230C16DD192900240111 /* BrowserWindow.xib */ = {
+		73A0230C16DD192900240111 /* AKWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				73A0230D16DD192900240111 /* English */,
 			);
-			name = BrowserWindow.xib;
+			name = AKWindow.xib;
 			sourceTree = "<group>";
 		};
 		73A0232A16DD259800240111 /* QuicklistView.xib */ = {
@@ -2571,14 +2488,6 @@
 				73B9158806133DBF00066E17 /* English */,
 			);
 			name = Credits.html;
-			sourceTree = "<group>";
-		};
-		73C891D614E10B7600A54FF6 /* AppKiDo.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				73C891D714E10B7600A54FF6 /* English */,
-			);
-			name = AppKiDo.xib;
 			sourceTree = "<group>";
 		};
 		73C891D814E10B7600A54FF6 /* DevToolsPath.xib */ = {

@@ -32,9 +32,9 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithDefaultNib
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"DocView" bundle:nil];
     if (self)
     {
         _headerFontName = @"Monaco";
@@ -282,7 +282,7 @@
 
 //- (NSView *)focusOnDocView
 //{
-//    return [_docView grabFocus];
+//    return [_docContainerView grabFocus];
 //}
 
 

@@ -1,49 +1,48 @@
 /*
- * AKWindowController.h
+ * AKBrowserWindowController.h
  *
  * Created by Andy Lee on Wed Jul 03 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
 #import <Cocoa/Cocoa.h>
+#import "AKUIController.h"
 
 @class AKDatabase;
-@class AKTopic;
 @class AKDoc;
+@class AKDocListViewController;
 @class AKDocLocator;
-@class AKTopicBrowserController;
-@class AKDocListController;
-@class AKQuicklistController;
-@class AKWindowLayout;
+@class AKDocViewController;
+@class AKQuicklistViewController;
 @class AKSavedWindowState;
-@class AKDocView;
+@class AKTopic;
+@class AKSubtopicListViewController;
+@class AKTopicBrowserViewController;
+@class AKWindowLayout;
 
-/*!
- * @class       AKWindowController
- * @abstract    Controller for AppKiDo browser windows.
- * @discussion  Each browser window has a AKWindowController as its
- *              delegate.  An AKWindowController coordinates subcontroller
- *              objects that manage various subviews.  It also manages its
- *              window's navigation history.
- *
- *              The information displayed in a browser window has a
- *              hierarchical structure.  At any given time, a "topic"
- *              (also called the "main topic") is selected in the window.
- *              This is the object selected in the topic browser.  Details
- *              about the topic are displayed in the "subtopics" list, the
- *              doc list, and the doc text view.
- */
+// Naming convention:
 // "jumpTo" methods are all here; "jumpTo" means "navigate to and add to
 // history"; "navigate" means "navigate the various subcontrollers to";
 // navigation always starts here at the window controller and propagates
 // to subcontrollers
-@interface AKWindowController : NSObject <NSToolbarDelegate>
+
+/*!
+ * Manages an AppKiDo browser window. Coordinates view controllers for the views
+ * in the window. Manages the window's navigation history.
+ *
+ * Patches the view controllers after self in the responder chain so they can
+ * pick up action messages even when not in the first responder's responder
+ * chain. The vc's are such that this shouldnt' cause a conflict between action
+ * messages with the same name.
+ */
+@interface AKWindowController : NSWindowController <AKUIController, NSToolbarDelegate>
 {
 @private
+    // The source of all data the window displays.
     AKDatabase *_database;
 
-    // The window's navigation history.  Elements are AKDocLocators.
-    // Elements are added to the end.
+    // The window's navigation history. Elements are AKDocLocators. The last
+    // element is the most recent.
     NSMutableArray *_windowHistory;
 
     // The index within _windowHistory of our current navigation state.
@@ -53,44 +52,64 @@
     // fraction instead of an absolute height because the user can toggle
     // the browser off, resize the window, and toggle the browser back on.
     CGFloat _browserFractionWhenVisible;
+    
+    // View controllers that manage different portions of the window.
+    AKTopicBrowserViewController *_topicBrowserController;
+    AKSubtopicListViewController *_subtopicListController;
+    AKDocListViewController *_docListController;
+    AKDocViewController *_docContainerViewController;
+    AKQuicklistViewController *_quicklistController;
 
-    // Outlets to subcontrollers that manage different portions of the
-    // window.
-    IBOutlet AKTopicBrowserController *_topicBrowserController;
-    IBOutlet AKDocListController *_docListController;
-    IBOutlet AKQuicklistController *_quicklistController;
+    // Drawer where we put the Quicklist view.
 
-    // UI outlets -- navigation buttons.
-    IBOutlet NSButton *_backButton;
-    IBOutlet NSButton *_forwardButton;
-    IBOutlet NSButton *_superclassButton;
+    // IBOutlets.
+    NSSplitView *_topLevelSplitView;
+    NSSplitView *_innerSplitView;
+    NSView *_middleView;
 
-    // UI outlets -- top-level view that fills the window.
-    IBOutlet NSSplitView *_topLevelSplitView;
+    NSView *_topicBrowserContainerView;
+    NSView *_subtopicListContainerView;
+    NSView *_docListContainerView;
+    NSView *_docContainerView;
+    
+    NSTextField *_topicDescriptionField;
+    NSTextField *_docCommentField;
 
-    // UI outlets -- the splitview containing the two bottom sections.
-    IBOutlet NSSplitView *_innerSplitView;
-    IBOutlet NSView *_middleView;
+    NSButton *_backButton;
+    NSButton *_forwardButton;
+    NSButton *_superclassButton;
 
-    // UI outlets -- the topic browser.
-    IBOutlet NSBrowser *_topicBrowser;
+    NSMenu *_backMenu;
+    NSMenu *_forwardMenu;
+    NSMenu *_superclassesMenu;
 
-    // UI outlets -- bottom pane, showing the doc text.
-    IBOutlet AKDocView *_docView;
-
-    // UI outlets -- contextual menus.
-    IBOutlet NSMenu *_docTextMenu;
-    IBOutlet NSMenu *_backMenu;
-    IBOutlet NSMenu *_forwardMenu;
-    IBOutlet NSMenu *_superclassesMenu;
-
-    // UI outlets -- the Quicklist drawer.  This is connected to
-    // _quicklistController.
-    IBOutlet NSDrawer *_quicklistDrawer;
+    NSDrawer *_quicklistDrawer;
 }
 
+@property (nonatomic, assign) IBOutlet NSSplitView *topLevelSplitView;
+@property (nonatomic, assign) IBOutlet NSSplitView *innerSplitView;
+@property (nonatomic, assign) IBOutlet NSView *middleView;
+
+@property (nonatomic, assign) IBOutlet NSView *topicBrowserContainerView;
+@property (nonatomic, assign) IBOutlet NSView *subtopicListContainerView;
+@property (nonatomic, assign) IBOutlet NSView *docListContainerView;
+@property (nonatomic, assign) IBOutlet NSView *docContainerView;
+
+@property (nonatomic, assign) IBOutlet NSTextField *topicDescriptionField;
+@property (nonatomic, assign) IBOutlet NSTextField *docCommentField;
+
+@property (nonatomic, assign) IBOutlet NSButton *backButton;
+@property (nonatomic, assign) IBOutlet NSButton *forwardButton;
+@property (nonatomic, assign) IBOutlet NSButton *superclassButton;
+
+@property (nonatomic, assign) IBOutlet NSMenu *backMenu;
+@property (nonatomic, assign) IBOutlet NSMenu *forwardMenu;
+@property (nonatomic, assign) IBOutlet NSMenu *superclassesMenu;
+
+@property (nonatomic, assign) IBOutlet NSDrawer *quicklistDrawer;
+
 #pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark Init/dealloc/awake
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database;
@@ -99,8 +118,6 @@
 #pragma mark Getters and setters
 
 - (AKDatabase *)database;
-
-- (NSWindow *)window;
 
 - (AKDocLocator *)currentHistoryItem;
 
@@ -121,12 +138,6 @@
 
 /*! Returns the URL for [self currentDocPath], or nil. */
 - (NSURL *)currentDocURL;
-
-#pragma mark -
-#pragma mark User preferences
-
-/*! Tells my subordinate controllers to apply the user preference settings. */
-- (void)applyUserPreferences;
 
 #pragma mark -
 #pragma mark Navigation
@@ -159,46 +170,18 @@
  */
 - (BOOL)jumpToLinkURL:(NSURL *)linkURL;
 
-/*!
- * Tries to give first responder status to the doc view. Returns that view if
- * successful.
- */
-- (NSView *)focusOnDocView;
-
-- (void)focusOnDocListTable;
-
 - (void)bringToFront;
 
 - (void)searchForString:(NSString *)aString;
 
-#pragma mark -
-#pragma mark Window layout
-
-- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout;
-
-- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout;
-
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
-
-#pragma mark -
-#pragma mark UI item validation
-
-/*!
- * @method      validateItem:
- * @discussion  Returns true if the specified UI item should be enabled.
- *              Contains shared logic for validating both menu items and
- *              toolbar items.
- * @param       anItem  Either an NSMenuItem or an NSToolbarItem
- */
-- (BOOL)validateItem:(id)anItem;
-
 
 #pragma mark -
 #pragma mark Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender;
 
-- (IBAction)addBrowserColumn:(id)sender;
+//- (IBAction)addBrowserColumn:(id)sender;
 
 - (IBAction)removeBrowserColumn:(id)sender;
 
@@ -207,7 +190,6 @@
 - (IBAction)showBrowser:(id)sender;
 
 - (IBAction)toggleQuicklistDrawer:(id)sender;
-
 
 #pragma mark -
 #pragma mark Action methods -- navigation
@@ -239,11 +221,7 @@
  */
 - (IBAction)jumpToDocLocatorRepresentedBy:(id)sender;
 
-/*!
- * @method      addTopicToFavorites:
- * @discussion  Action method that adds the currently selected topic
- *              to the Favorites quicklist.
- */
+/*! Adds the currently selected topic to the Favorites quicklist. */
 - (IBAction)addTopicToFavorites:(id)sender;
 
 - (IBAction)findNext:(id)sender;
@@ -255,14 +233,5 @@
 - (IBAction)copyDocTextURL:(id)sender;
 
 - (IBAction)openDocURLInBrowser:(id)sender;
-
-#pragma mark -
-#pragma mark Action methods -- search (forwarded to the quicklist controller)
-
-- (IBAction)selectSearchField:(id)sender;
-
-- (IBAction)selectPreviousSearchResult:(id)sender;
-
-- (IBAction)selectNextSearchResult:(id)sender;
 
 @end

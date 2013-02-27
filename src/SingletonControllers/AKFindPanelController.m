@@ -10,10 +10,12 @@
 #import "AKFindPanelController.h"
 
 #import <WebKit/WebKit.h>
+
 #import "DIGSFindBuffer.h"
-#import "AKTextUtils.h"
+
 #import "AKAppController.h"
 #import "AKTestDocParserWindowController.h"
+#import "AKTextUtils.h"
 #import "AKWindowController.h"
 
 @implementation AKFindPanelController

@@ -11,7 +11,7 @@
 #import "AKTableView.h"
 #import "AKTopic.h"
 #import "AKSubtopic.h"
-#import "AKDocListController.h"
+#import "AKDocListViewController.h"
 #import "AKDocLocator.h"
 
 @implementation AKSubtopicListViewController
@@ -21,9 +21,9 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithDefaultNib
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"SubtopicListView" bundle:nil];
     if (self)
     {
         _subtopics = [[NSMutableArray alloc] init];

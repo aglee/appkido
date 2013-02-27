@@ -19,7 +19,7 @@
 #import "AKPrefUtils.h"
 #import "AKProtocolNode.h"
 #import "AKSortUtils.h"
-#import "AKSubtopicListController.h"
+#import "AKSubtopicListViewController.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
@@ -31,9 +31,9 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithDefaultNib
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"TopicBrowserView" bundle:nil];
     if (self)
     {
         _topicListsForBrowserColumns = [[NSMutableArray alloc] init];
