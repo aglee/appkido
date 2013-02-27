@@ -43,6 +43,8 @@
 /*! Requires subview to be one of exactly two subviews of the splitview. */
 - (void)ak_setHeight:(CGFloat)newHeight ofSubview:(NSView *)subview;
 
+- (void)al_preserveTopHeightOfTwoSubviewsWithOldSize:(NSSize)oldSize;
+
 - (NSView *)ak_siblingOfSubview:(NSView *)subview;
 
 @end

@@ -853,6 +853,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark NSSplitView delegate methods
 
+- (void)splitView:(NSSplitView *)splitView resizeSubviewsWithOldSize:(NSSize)oldSize
+{
+    // We contain two split views, and we happen to want them both to resize the
+    // same way.
+    [splitView al_preserveTopHeightOfTwoSubviewsWithOldSize:oldSize];
+}
+
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
 {
     if ([aNotification object] == _topLevelSplitView)

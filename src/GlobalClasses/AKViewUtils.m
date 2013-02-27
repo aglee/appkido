@@ -122,6 +122,39 @@
     [self setNeedsDisplay:YES];
 }
 
+- (void)al_preserveTopHeightOfTwoSubviewsWithOldSize:(NSSize)oldSize
+{
+    if ([[self subviews] count] != 2)
+    {
+        DIGSLogError_ExitingMethodPrematurely(@"expected splitview to have exactly two subviews");
+        return;
+    }
+
+	NSView *subviewOne = [[self subviews] objectAtIndex:0];
+	NSView *subviewTwo = [[self subviews] objectAtIndex:1];
+
+	NSRect frameOne = [subviewOne frame];
+	NSRect frameTwo = [subviewTwo frame];
+
+	// All the subviews will have the split view's full width.
+	CGFloat newWidth = [self frame].size.width;
+
+	// Make sure new subview heights are integers, so they will add up to total height.
+	NSInteger totalHeight = [self frame].size.height;
+	NSInteger divider = [self dividerThickness];
+	NSInteger heightOne = frameOne.size.height;
+
+	// Calculate new frames.
+	frameOne.size.width = newWidth;
+	frameOne.size.height = heightOne;
+	[subviewOne setFrame:frameOne];
+
+	frameTwo.origin.y = heightOne + divider;
+	frameTwo.size.width = newWidth;
+	frameTwo.size.height = totalHeight - heightOne - divider;
+	[subviewTwo setFrame:frameTwo];
+}
+
 - (NSView *)ak_siblingOfSubview:(NSView *)subview
 {
     if (subview == nil)
