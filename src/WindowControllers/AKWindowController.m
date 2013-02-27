@@ -99,8 +99,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_docViewController release];
     [_quicklistController release];
 
-    [_quicklistDrawer release];
-
     [super dealloc];
 }
 
