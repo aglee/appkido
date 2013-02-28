@@ -200,7 +200,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // If we have a file: URL, try to derive a doc locator from it.
     AKDocLocator *destinationDocLocator = nil;
-    if (![destinationURL isFileURL])
+    if ([destinationURL isFileURL])
     {
         AKLinkResolver *linkResolver = [AKLinkResolver linkResolverWithDatabase:_database];
         destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
