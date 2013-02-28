@@ -599,7 +599,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Restore the visibility of the toolbar.
     [[[self window] toolbar] setVisible:[windowLayout toolbarIsVisible]];
 
-    // Apply the new browser fraction.  Note that -_computerBrowserHeight
+    // Apply the new browser fraction.  Note that -_computeBrowserHeight
     // uses the _browserFractionWhenVisible ivar, so we make sure to set
     // the ivar first.
     _browserFractionWhenVisible = [windowLayout browserFraction];
