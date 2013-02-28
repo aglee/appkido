@@ -51,19 +51,18 @@
 					<object class="NSButton" id="1056606296">
 						<reference key="NSNextResponder" ref="247580316"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, -2}, {24, 21}}</string>
+						<string key="NSFrame">{{-4, 3}, {24, 14}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="43629388">
 							<int key="NSCellFlags">603979776</int>
 							<int key="NSCellFlags2">134348800</int>
 							<string key="NSContents">×</string>
-							<object class="NSFont" key="NSSupport" id="26">
+							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">11</double>
-								<int key="NSfFlags">3100</int>
+								<double key="NSSize">14</double>
+								<int key="NSfFlags">16</int>
 							</object>
 							<reference key="NSControlView" ref="1056606296"/>
 							<int key="NSButtonFlags">-2044444672</int>
@@ -95,7 +94,7 @@
 										<string key="NSFrameSize">{206, 230}</string>
 										<reference key="NSSuperview" ref="619384235"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="410970050"/>
+										<reference key="NSNextKeyView" ref="792420753"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -114,7 +113,11 @@
 													<int key="NSCellFlags">75497536</int>
 													<int key="NSCellFlags2">2048</int>
 													<string key="NSContents"/>
-													<reference key="NSSupport" ref="26"/>
+													<object class="NSFont" key="NSSupport" id="26">
+														<string key="NSName">LucidaGrande</string>
+														<double key="NSSize">11</double>
+														<int key="NSfFlags">3100</int>
+													</object>
 													<object class="NSColor" key="NSBackgroundColor">
 														<int key="NSColorSpace">3</int>
 														<bytes key="NSWhite">MC4zMzMzMzI5OQA</bytes>
@@ -224,7 +227,7 @@
 						<string key="NSFrame">{{0, 18}, {223, 232}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="792420753"/>
+						<reference key="NSNextKeyView" ref="619384235"/>
 						<int key="NSsFlags">133138</int>
 						<reference key="NSVScroller" ref="410970050"/>
 						<reference key="NSHScroller" ref="792420753"/>
@@ -886,7 +889,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									</object>
 								</array>
 							</object>
-							<int key="NSSelectedIndex">-1</int>
 							<bool key="NSPullDown">YES</bool>
 							<int key="NSPreferredEdge">3</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
@@ -1065,6 +1067,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="destination" ref="372520215"/>
 					</object>
 					<int key="connectionID">164</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">removeFavorite:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1056606296"/>
+					</object>
+					<int key="connectionID">167</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1521,7 +1531,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">166</int>
+			<int key="maxID">167</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1554,8 +1564,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="doSearch:">id</string>
 						<string key="doSearchOptionsPopupAction:">id</string>
 						<string key="removeFavorite:">id</string>
-						<string key="selectNextSearchResult:">id</string>
-						<string key="selectPreviousSearchResult:">id</string>
 						<string key="selectSearchField:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1581,14 +1589,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						</object>
 						<object class="IBActionInfo" key="removeFavorite:">
 							<string key="name">removeFavorite:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="selectNextSearchResult:">
-							<string key="name">selectNextSearchResult:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="selectPreviousSearchResult:">
-							<string key="name">selectPreviousSearchResult:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="selectSearchField:">
