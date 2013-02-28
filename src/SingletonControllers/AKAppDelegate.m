@@ -41,7 +41,6 @@
 #pragma mark Forwarding of applescript commands
 
 // Thanks to Dominik Wagner for AppleScript support!
-
 @interface NSApplication (NSAppScriptingAdditions)
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
 @end
@@ -58,6 +57,8 @@
 #pragma mark -
 
 @implementation AKAppDelegate
+
+@synthesize firstGoMenuDivider = _firstGoMenuDivider;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
