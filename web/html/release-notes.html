@@ -51,13 +51,20 @@
 <ul>
 <li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (see NSString -- "AppKit Additions" wasn't showing up).</li>
 <li>Option
+<li>Split view resizing behavior and use of thin splitters.</li>
+<li>The standard Option-Command-H shortcut is now assigned to "Hide Others".</li>
+<li>Small buttons changed look.</li>
+
+
 <li>Code changes (of interest only if you're working on the code):
 	<ul>
-	<li>Now uses ARC, hence requires 10.7. Fixed resulting warnings about the use of performSelector, either by using blocks or by using #pragma to temporarily disable the warning.</li>
+	<li>Used ARC but went back to non-ARC, so still supports 32-bit.</li>
 	<li>Replaced NSEnumeration with fast enumeration everywhere. Probably doesn't make a noticeable difference, but it makes the code seem less ancient.</li>
 	<li>Replaced deprecated method calls with their recommended replacements.</li>
-	<li>Got rid of the AKFramework class. A simple string containing the framework name is used to indicate belonging to a framework.</li>
-	<li>The standard Option-Command-H shortcut is now assigned to "Hide Others".</li>
+	<li>Got rid of the AKFramework class. A simple string containing the framework name is used to indicate membership in a framework.</li>
+	<li>Real NSViewControllers and NSWindowControllers, with separate nibs for the various panes.</li>
+	<li>NSTabView for the doc view.</li>
+	<li>Updated coding conventions (...).</li>
 	</ul>
 </li>
 </ul>
