@@ -414,7 +414,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *frameworkName = [[sender menu] title];
 
-        [self selectTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
+        [self selectTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName
+                                                                 inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -425,7 +426,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *frameworkName = [[sender menu] title];
 
-        [self selectTopic:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
+        [self selectTopic:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName
+                                                         inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -436,7 +438,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         NSString *frameworkName = [[sender menu] title];
 
-        [self selectTopic:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName inDatabase:_database]];
+        [self selectTopic:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName
+                                                       inDatabase:_database]];
         [self showBrowser:nil];
     }
 }
@@ -452,8 +455,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)addTopicToFavorites:(id)sender
 {
-    [(AKAppDelegate *)[NSApp delegate]
-        addFavorite:[AKDocLocator withTopic:[self _currentTopic] subtopicName:nil docName:nil]];
+    AKDocLocator *docLocator = [AKDocLocator withTopic:[self _currentTopic]
+                                          subtopicName:nil
+                                               docName:nil];
+    [(AKAppDelegate *)[NSApp delegate] addFavorite:docLocator];
 }
 
 - (IBAction)findNext:(id)sender
@@ -472,6 +477,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)applyUserPreferences
 {
     [_topicBrowserController applyUserPreferences];
+    [_subtopicListController applyUserPreferences];
+    [_docListController applyUserPreferences];
+    [_docViewController applyUserPreferences];
     [_quicklistController applyUserPreferences];
 }
 
@@ -595,17 +603,22 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // uses the _browserFractionWhenVisible ivar, so we make sure to set
     // the ivar first.
     _browserFractionWhenVisible = [windowLayout browserFraction];
-    if (([_topicBrowserContainerView frame].size.height > 0.0) && [windowLayout browserIsVisible])
+    
+    if (([_topicBrowserContainerView frame].size.height > 0.0)
+        && [windowLayout browserIsVisible])
     {
-        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight] ofSubview:_topicBrowserContainerView];
+        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight]
+                               ofSubview:_topicBrowserContainerView];
     }
     else
     {
-        [_topLevelSplitView ak_setHeight:0.0 ofSubview:_topicBrowserContainerView];
+        [_topLevelSplitView ak_setHeight:0.0
+                               ofSubview:_topicBrowserContainerView];
     }
 
     // Restore the state of the inner split view.
-    [_innerSplitView ak_setHeight:[windowLayout middleViewHeight] ofSubview:_middleView];
+    [_innerSplitView ak_setHeight:[windowLayout middleViewHeight]
+                        ofSubview:_middleView];
     
     [_subtopicListController takeWindowLayoutFrom:windowLayout];
     [_docListController takeWindowLayoutFrom:windowLayout];
@@ -637,7 +650,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Remember the state of the inner split view.
     [windowLayout setMiddleViewHeight:([_middleView frame].size.height)];
 
-    // Remember the state of the browser.
+    // Remember the state of the topic browser.
     [windowLayout setBrowserIsVisible:([_topicBrowserContainerView frame].size.height > 0)];
     [windowLayout setBrowserFraction:_browserFractionWhenVisible];
     [_topicBrowserController putWindowLayoutInto:windowLayout];
