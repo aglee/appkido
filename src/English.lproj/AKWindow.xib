@@ -53,7 +53,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{350, 350}</string>
 				<object class="NSView" key="NSWindowView" id="455086034">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSSplitView" id="1011512076">
@@ -65,6 +65,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrameSize">{550, 155}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="325794021"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NSView</string>
@@ -87,6 +88,7 @@
 															<array class="NSMutableArray" key="NSSubviews"/>
 															<string key="NSFrame">{{200, 0}, {350, 193}}</string>
 															<reference key="NSSuperview" ref="172926322"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="294746084"/>
 															<string key="NSReuseIdentifierKey">_NS:9</string>
 															<string key="NSClassName">NSView</string>
@@ -97,6 +99,7 @@
 															<array class="NSMutableArray" key="NSSubviews"/>
 															<string key="NSFrameSize">{200, 193}</string>
 															<reference key="NSSuperview" ref="172926322"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="764380673"/>
 															<string key="NSReuseIdentifierKey">_NS:9</string>
 															<string key="NSClassName">NSView</string>
@@ -104,6 +107,7 @@
 													</array>
 													<string key="NSFrameSize">{550, 193}</string>
 													<reference key="NSSuperview" ref="593053015"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="841800253"/>
 													<string key="NSClassName">NSView</string>
 													<string key="NSExtension">NSResponder</string>
@@ -119,22 +123,23 @@
 																<object class="NSButton" id="561831487">
 																	<reference key="NSNextResponder" ref="833349516"/>
 																	<int key="NSvFlags">256</int>
-																	<string key="NSFrame">{{58, 2}, {24, 18}}</string>
+																	<string key="NSFrame">{{58, 0}, {24, 24}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="172926322"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="616726537">
 																		<int key="NSCellFlags">603979776</int>
 																		<int key="NSCellFlags2">134217728</int>
-																		<string key="NSContents">&gt;</string>
-																		<object class="NSFont" key="NSSupport" id="524541906">
-																			<string key="NSName">Menlo-Regular</string>
+																		<string key="NSContents">▶</string>
+																		<object class="NSFont" key="NSSupport" id="25">
+																			<string key="NSName">LucidaGrande-Bold</string>
 																			<double key="NSSize">10</double>
 																			<int key="NSfFlags">16</int>
 																		</object>
 																		<reference key="NSControlView" ref="561831487"/>
-																		<int key="NSButtonFlags">-2038153216</int>
-																		<int key="NSButtonFlags2">134</int>
+																		<int key="NSButtonFlags">-2041823232</int>
+																		<int key="NSButtonFlags2">6</int>
 																		<string key="NSAlternateContents"/>
 																		<string key="NSKeyEquivalent"/>
 																		<int key="NSPeriodicDelay">400</int>
@@ -145,17 +150,18 @@
 																<object class="NSButton" id="863506524">
 																	<reference key="NSNextResponder" ref="833349516"/>
 																	<int key="NSvFlags">256</int>
-																	<string key="NSFrame">{{32, 2}, {24, 18}}</string>
+																	<string key="NSFrame">{{32, 0}, {24, 24}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="561831487"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="177179376">
 																		<int key="NSCellFlags">603979776</int>
 																		<int key="NSCellFlags2">134217728</int>
-																		<string key="NSContents">&lt;</string>
-																		<reference key="NSSupport" ref="524541906"/>
+																		<string key="NSContents">◀</string>
+																		<reference key="NSSupport" ref="25"/>
 																		<reference key="NSControlView" ref="863506524"/>
-																		<int key="NSButtonFlags">-2038153216</int>
+																		<int key="NSButtonFlags">-2046541824</int>
 																		<int key="NSButtonFlags2">6</int>
 																		<string key="NSAlternateContents"/>
 																		<string key="NSKeyEquivalent"/>
@@ -167,17 +173,18 @@
 																<object class="NSButton" id="468382865">
 																	<reference key="NSNextResponder" ref="833349516"/>
 																	<int key="NSvFlags">256</int>
-																	<string key="NSFrame">{{6, 2}, {24, 18}}</string>
+																	<string key="NSFrame">{{6, 0}, {24, 24}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="863506524"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="335044325">
 																		<int key="NSCellFlags">603979776</int>
 																		<int key="NSCellFlags2">134217728</int>
-																		<string key="NSContents">^</string>
-																		<reference key="NSSupport" ref="524541906"/>
+																		<string key="NSContents">▲</string>
+																		<reference key="NSSupport" ref="25"/>
 																		<reference key="NSControlView" ref="468382865"/>
-																		<int key="NSButtonFlags">-2038153216</int>
+																		<int key="NSButtonFlags">-2046541824</int>
 																		<int key="NSButtonFlags2">6</int>
 																		<string key="NSAlternateContents"/>
 																		<string key="NSKeyEquivalent"/>
@@ -187,8 +194,9 @@
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																</object>
 															</array>
-															<string key="NSFrame">{{461, 1}, {88, 22}}</string>
+															<string key="NSFrame">{{461, -1}, {88, 24}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="468382865"/>
 															<string key="NSClassName">NSView</string>
 															<string key="NSExtension">NSResponder</string>
@@ -196,8 +204,9 @@
 														<object class="NSTextField" id="767373584">
 															<reference key="NSNextResponder" ref="1063794748"/>
 															<int key="NSvFlags">266</int>
-															<string key="NSFrame">{{1, 1}, {450, 21}}</string>
+															<string key="NSFrame">{{3, 0}, {450, 21}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="833349516"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="60864428">
@@ -228,6 +237,7 @@
 													</array>
 													<string key="NSFrame">{{0, 193}, {550, 24}}</string>
 													<reference key="NSSuperview" ref="593053015"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="767373584"/>
 													<string key="NSClassName">DIGSMatchingBackgroundView</string>
 													<string key="NSExtension">NSView</string>
@@ -235,6 +245,7 @@
 											</array>
 											<string key="NSFrameSize">{550, 215}</string>
 											<reference key="NSSuperview" ref="325794021"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="1063794748"/>
 											<string key="NSClassName">DIGSMarginView</string>
 											<string key="NSExtension">NSView</string>
@@ -245,6 +256,7 @@
 											<array class="NSMutableArray" key="NSSubviews"/>
 											<string key="NSFrame">{{0, 216}, {550, 217}}</string>
 											<reference key="NSSuperview" ref="325794021"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="192904312"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSClassName">NSView</string>
@@ -252,20 +264,23 @@
 									</array>
 									<string key="NSFrame">{{0, 156}, {550, 433}}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="593053015"/>
 									<int key="NSDividerStyle">2</int>
 								</object>
 							</array>
 							<string key="NSFrame">{{0, 27}, {550, 589}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="866576386"/>
 							<int key="NSDividerStyle">2</int>
 						</object>
 						<object class="NSTextField" id="192904312">
 							<reference key="NSNextResponder" ref="455086034"/>
 							<int key="NSvFlags">290</int>
-							<string key="NSFrame">{{7, 5}, {451, 14}}</string>
+							<string key="NSFrame">{{7, 7}, {451, 14}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="224150886">
 								<int key="NSCellFlags">67108864</int>
@@ -295,6 +310,8 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{550, 616}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1011512076"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -829,8 +846,11 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 				<string key="1125.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1490.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1491.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1492.CustomClassName">AKButtonCell</string>
 				<string key="1492.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1493.CustomClassName">AKButtonCell</string>
 				<string key="1493.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1494.CustomClassName">AKButtonCell</string>
 				<string key="1494.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1507.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1515.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -847,32 +867,37 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1587</int>
+			<int key="maxID">1595</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">AKButtonCell</string>
+					<string key="superclassName">NSButtonCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AKButtonCell.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">AKWindowController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addTopicToFavorites:">id</string>
-						<string key="copyDocTextURL:">id</string>
-						<string key="doBackMenuAction:">id</string>
-						<string key="doForwardMenuAction:">id</string>
 						<string key="findNext:">id</string>
 						<string key="findPrevious:">id</string>
-						<string key="jumpToDocLocatorRepresentedBy:">id</string>
-						<string key="jumpToFrameworkFormalProtocols:">id</string>
-						<string key="jumpToFrameworkFunctions:">id</string>
-						<string key="jumpToFrameworkGlobals:">id</string>
-						<string key="jumpToFrameworkInformalProtocols:">id</string>
-						<string key="jumpToSuperclass:">id</string>
-						<string key="navigateBack:">id</string>
-						<string key="navigateForward:">id</string>
-						<string key="openDocURLInBrowser:">id</string>
+						<string key="goBackInHistory:">id</string>
+						<string key="goForwardInHistory:">id</string>
+						<string key="goToHistoryItemInBackMenu:">id</string>
+						<string key="goToHistoryItemInForwardMenu:">id</string>
 						<string key="rememberWindowLayout:">id</string>
-						<string key="removeBrowserColumn:">id</string>
-						<string key="revealDocFileInFinder:">id</string>
+						<string key="selectAncestorClass:">id</string>
+						<string key="selectDocWithDocLocatorRepresentedBy:">id</string>
+						<string key="selectFormalProtocolsTopic:">id</string>
+						<string key="selectFunctionsTopic:">id</string>
+						<string key="selectGlobalsTopic:">id</string>
+						<string key="selectInformalProtocolsTopic:">id</string>
+						<string key="selectSuperclass:">id</string>
 						<string key="showBrowser:">id</string>
 						<string key="toggleBrowserVisible:">id</string>
 						<string key="toggleQuicklistDrawer:">id</string>
@@ -880,18 +905,6 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="addTopicToFavorites:">
 							<string key="name">addTopicToFavorites:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="copyDocTextURL:">
-							<string key="name">copyDocTextURL:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="doBackMenuAction:">
-							<string key="name">doBackMenuAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="doForwardMenuAction:">
-							<string key="name">doForwardMenuAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="findNext:">
@@ -902,52 +915,52 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 							<string key="name">findPrevious:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="jumpToDocLocatorRepresentedBy:">
-							<string key="name">jumpToDocLocatorRepresentedBy:</string>
+						<object class="IBActionInfo" key="goBackInHistory:">
+							<string key="name">goBackInHistory:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="jumpToFrameworkFormalProtocols:">
-							<string key="name">jumpToFrameworkFormalProtocols:</string>
+						<object class="IBActionInfo" key="goForwardInHistory:">
+							<string key="name">goForwardInHistory:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="jumpToFrameworkFunctions:">
-							<string key="name">jumpToFrameworkFunctions:</string>
+						<object class="IBActionInfo" key="goToHistoryItemInBackMenu:">
+							<string key="name">goToHistoryItemInBackMenu:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="jumpToFrameworkGlobals:">
-							<string key="name">jumpToFrameworkGlobals:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="jumpToFrameworkInformalProtocols:">
-							<string key="name">jumpToFrameworkInformalProtocols:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="jumpToSuperclass:">
-							<string key="name">jumpToSuperclass:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="navigateBack:">
-							<string key="name">navigateBack:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="navigateForward:">
-							<string key="name">navigateForward:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="openDocURLInBrowser:">
-							<string key="name">openDocURLInBrowser:</string>
+						<object class="IBActionInfo" key="goToHistoryItemInForwardMenu:">
+							<string key="name">goToHistoryItemInForwardMenu:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="rememberWindowLayout:">
 							<string key="name">rememberWindowLayout:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="removeBrowserColumn:">
-							<string key="name">removeBrowserColumn:</string>
+						<object class="IBActionInfo" key="selectAncestorClass:">
+							<string key="name">selectAncestorClass:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="revealDocFileInFinder:">
-							<string key="name">revealDocFileInFinder:</string>
+						<object class="IBActionInfo" key="selectDocWithDocLocatorRepresentedBy:">
+							<string key="name">selectDocWithDocLocatorRepresentedBy:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectFormalProtocolsTopic:">
+							<string key="name">selectFormalProtocolsTopic:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectFunctionsTopic:">
+							<string key="name">selectFunctionsTopic:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectGlobalsTopic:">
+							<string key="name">selectGlobalsTopic:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectInformalProtocolsTopic:">
+							<string key="name">selectInformalProtocolsTopic:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectSuperclass:">
+							<string key="name">selectSuperclass:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showBrowser:">

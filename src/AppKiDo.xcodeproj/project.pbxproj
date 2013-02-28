@@ -196,6 +196,10 @@
 		65B10A4209D7B6C300A8A637 /* AKMultiRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */; };
 		65B10A4409D7B6C300A8A637 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		65B10A4509D7B6C300A8A637 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734168FA0841F59C0027E6BD /* WebKit.framework */; };
+		7304030716DF8DAB005E04A1 /* AKButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7304030516DF8DAB005E04A1 /* AKButtonCell.h */; };
+		7304030816DF8DAB005E04A1 /* AKButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7304030516DF8DAB005E04A1 /* AKButtonCell.h */; };
+		7304030916DF8DAB005E04A1 /* AKButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7304030616DF8DAB005E04A1 /* AKButtonCell.m */; };
+		7304030A16DF8DAB005E04A1 /* AKButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7304030616DF8DAB005E04A1 /* AKButtonCell.m */; };
 		730F68BF15C1478300E0B7B0 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BA15C1478300E0B7B0 /* FMDatabasePool.h */; };
 		730F68C015C1478300E0B7B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */; };
 		730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */; };
@@ -644,6 +648,8 @@
 		73026980082FD33700D5198D /* AKTestDocParserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTestDocParserWindowController.h; sourceTree = "<group>"; };
 		73026981082FD33700D5198D /* AKTestDocParserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTestDocParserWindowController.m; sourceTree = "<group>"; };
 		7302DF980767B65200F9FEC0 /* about-the-code.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "about-the-code.markdown"; sourceTree = "<group>"; };
+		7304030516DF8DAB005E04A1 /* AKButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKButtonCell.h; path = CustomViews/AKButtonCell.h; sourceTree = "<group>"; };
+		7304030616DF8DAB005E04A1 /* AKButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKButtonCell.m; path = CustomViews/AKButtonCell.m; sourceTree = "<group>"; };
 		730A35920688A09B00699C6D /* AKBehaviorOverviewSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKBehaviorOverviewSubtopic.h; sourceTree = "<group>"; };
 		730A35930688A09B00699C6D /* AKBehaviorOverviewSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorOverviewSubtopic.m; sourceTree = "<group>"; };
 		730A36520688A49900699C6D /* AKRealMethodsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKRealMethodsSubtopic.h; sourceTree = "<group>"; };
@@ -1306,6 +1312,8 @@
 			children = (
 				730030A70498501500A80007 /* AKBrowser.h */,
 				730030A80498501500A80007 /* AKBrowser.m */,
+				7304030516DF8DAB005E04A1 /* AKButtonCell.h */,
+				7304030616DF8DAB005E04A1 /* AKButtonCell.m */,
 				730030A90498501500A80007 /* AKTableView.h */,
 				730030AA0498501500A80007 /* AKTableView.m */,
 				73B722C104B5FF1900A80003 /* AKColoredBox.h */,
@@ -1841,6 +1849,7 @@
 				73A0231816DD1D6300240111 /* AKDocViewController.h in Headers */,
 				73A0231D16DD1EE400240111 /* AKUIController.h in Headers */,
 				73A0232116DD214C00240111 /* AKQuicklistViewController.h in Headers */,
+				7304030716DF8DAB005E04A1 /* AKButtonCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1976,6 +1985,7 @@
 				73A0231916DD1D6300240111 /* AKDocViewController.h in Headers */,
 				73A0231E16DD1EE400240111 /* AKUIController.h in Headers */,
 				73A0232216DD214C00240111 /* AKQuicklistViewController.h in Headers */,
+				7304030816DF8DAB005E04A1 /* AKButtonCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2279,6 +2289,7 @@
 				73A0231416DD1CDB00240111 /* AKDocListViewController.m in Sources */,
 				73A0231A16DD1D6300240111 /* AKDocViewController.m in Sources */,
 				73A0232316DD214C00240111 /* AKQuicklistViewController.m in Sources */,
+				7304030916DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2412,6 +2423,7 @@
 				73A0231516DD1CDB00240111 /* AKDocListViewController.m in Sources */,
 				73A0231B16DD1D6300240111 /* AKDocViewController.m in Sources */,
 				73A0232416DD214C00240111 /* AKQuicklistViewController.m in Sources */,
+				7304030A16DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
