@@ -54,7 +54,7 @@
     else
     {
         // The file wasn't in the cache. Add it with a "like" count of 1.
-        fileContents = [[NSData alloc] initWithContentsOfFile:filePath];
+        fileContents = [[[NSData alloc] initWithContentsOfFile:filePath] autorelease];
 
         if (fileContents)
         {
