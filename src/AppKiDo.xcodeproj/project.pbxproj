@@ -200,6 +200,8 @@
 		7304030816DF8DAB005E04A1 /* AKButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7304030516DF8DAB005E04A1 /* AKButtonCell.h */; };
 		7304030916DF8DAB005E04A1 /* AKButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7304030616DF8DAB005E04A1 /* AKButtonCell.m */; };
 		7304030A16DF8DAB005E04A1 /* AKButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7304030616DF8DAB005E04A1 /* AKButtonCell.m */; };
+		7304030C16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7304030B16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h */; };
+		7304030D16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7304030B16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h */; };
 		730F68BF15C1478300E0B7B0 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BA15C1478300E0B7B0 /* FMDatabasePool.h */; };
 		730F68C015C1478300E0B7B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F68BB15C1478300E0B7B0 /* FMDatabasePool.m */; };
 		730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 730F68BC15C1478300E0B7B0 /* FMDatabaseQueue.h */; };
@@ -650,6 +652,7 @@
 		7302DF980767B65200F9FEC0 /* about-the-code.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "about-the-code.markdown"; sourceTree = "<group>"; };
 		7304030516DF8DAB005E04A1 /* AKButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKButtonCell.h; path = CustomViews/AKButtonCell.h; sourceTree = "<group>"; };
 		7304030616DF8DAB005E04A1 /* AKButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKButtonCell.m; path = CustomViews/AKButtonCell.m; sourceTree = "<group>"; };
+		7304030B16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKMultiRadioViewDelegate.h; path = CustomViews/AKMultiRadioViewDelegate.h; sourceTree = "<group>"; };
 		730A35920688A09B00699C6D /* AKBehaviorOverviewSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKBehaviorOverviewSubtopic.h; sourceTree = "<group>"; };
 		730A35930688A09B00699C6D /* AKBehaviorOverviewSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorOverviewSubtopic.m; sourceTree = "<group>"; };
 		730A36520688A49900699C6D /* AKRealMethodsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKRealMethodsSubtopic.h; sourceTree = "<group>"; };
@@ -1314,14 +1317,15 @@
 				730030A80498501500A80007 /* AKBrowser.m */,
 				7304030516DF8DAB005E04A1 /* AKButtonCell.h */,
 				7304030616DF8DAB005E04A1 /* AKButtonCell.m */,
-				730030A90498501500A80007 /* AKTableView.h */,
-				730030AA0498501500A80007 /* AKTableView.m */,
 				73B722C104B5FF1900A80003 /* AKColoredBox.h */,
 				73B722C204B5FF1900A80003 /* AKColoredBox.m */,
-				7359EABF0BADAAD900574728 /* AKTextView.h */,
-				7359EAC00BADAAD900574728 /* AKTextView.m */,
 				73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */,
 				73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */,
+				7304030B16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h */,
+				730030A90498501500A80007 /* AKTableView.h */,
+				730030AA0498501500A80007 /* AKTableView.m */,
+				7359EABF0BADAAD900574728 /* AKTextView.h */,
+				7359EAC00BADAAD900574728 /* AKTextView.m */,
 			);
 			name = "------------ V I E W S ------------";
 			sourceTree = "<group>";
@@ -1850,6 +1854,7 @@
 				73A0231D16DD1EE400240111 /* AKUIController.h in Headers */,
 				73A0232116DD214C00240111 /* AKQuicklistViewController.h in Headers */,
 				7304030716DF8DAB005E04A1 /* AKButtonCell.h in Headers */,
+				7304030C16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1986,6 +1991,7 @@
 				73A0231E16DD1EE400240111 /* AKUIController.h in Headers */,
 				73A0232216DD214C00240111 /* AKQuicklistViewController.h in Headers */,
 				7304030816DF8DAB005E04A1 /* AKButtonCell.h in Headers */,
+				7304030D16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

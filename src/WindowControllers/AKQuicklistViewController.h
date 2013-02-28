@@ -7,6 +7,7 @@
 
 #import "AKViewController.h"
 #import "DIGSFindBufferDelegate.h"
+#import "AKMultiRadioViewDelegate.h"
 
 @class AKDocLocator;
 @class AKMultiRadioView;
@@ -17,7 +18,7 @@
 /*!
  * Controller for a browser window's quicklist drawer.
  */
-@interface AKQuicklistViewController : AKViewController <DIGSFindBufferDelegate>
+@interface AKQuicklistViewController : AKViewController <DIGSFindBufferDelegate, AKMultiRadioViewDelegate>
 {
 @private
     // AKDocLocator objects listed in _quicklistTable.
@@ -70,8 +71,6 @@
 
 #pragma mark -
 #pragma mark Action methods
-
-- (IBAction)doQuicklistModeMatrixAction:(id)sender;
 
 - (IBAction)doQuicklistTableAction:(id)sender;
 
