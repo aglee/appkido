@@ -681,6 +681,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Get the initial value for the height of the browser.
     _browserFractionWhenVisible = [self _computeBrowserFraction];
 
+    // Make the navigation popups use small fonts.
+    NSFont *smallMenuFont = [NSFont menuFontOfSize:11];
+    
+    [_superclassesMenu setFont:smallMenuFont];
+    [_backMenu setFont:smallMenuFont];
+    [_forwardMenu setFont:smallMenuFont];
+
     // Initialize my view controllers.
     [self _setUpViewControllers];
 
@@ -689,7 +696,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // themselves before we go resizing things or swapping subviews around.
     [self applyUserPreferences];
 
-    // Select NSObject.
+    // Select NSObject in the topic browser.
     _windowHistoryIndex = -1;
     [_windowHistory removeAllObjects];
 
