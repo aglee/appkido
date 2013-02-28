@@ -58,6 +58,10 @@
 
 - (void)awakeFromNib
 {
+    WebPreferences *webPrefs = [WebPreferences standardPreferences];
+    [webPrefs setAutosaves:NO];
+    [_webView setPreferences:webPrefs];
+
     [self applyUserPreferences];
 }
 
