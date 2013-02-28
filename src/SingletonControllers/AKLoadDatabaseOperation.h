@@ -20,7 +20,7 @@
  * practice, there won't be any previous delegate because this class is used
  * exactly once during app startup. Just saying in case this changes.
  *
- * Also as part of our unholy relationship with AKAppController, we count on the
+ * Also as part of our unholy relationship with AKAppDelegate, we count on the
  * fact that nobody else is going to try to touch appDatabase concurrently with
  * us doing our thing.
  */

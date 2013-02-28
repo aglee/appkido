@@ -10,7 +10,7 @@
 #import "DIGSLog.h"
 #import "DIGSFindBuffer.h"
 
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKClassNode.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
@@ -221,7 +221,7 @@ enum
 
     if (row >= 0)
     {
-        [(AKAppController *)[NSApp delegate] removeFavoriteAtIndex:row];
+        [(AKAppDelegate *)[NSApp delegate] removeFavoriteAtIndex:row];
     }
 }
 
@@ -317,7 +317,7 @@ enum
 {
     if (_AKFavoritesQuicklistMode == _selectedQuicklistMode)
     {
-        NSArray *favoritesList = [(AKAppController *)[NSApp delegate] favoritesList];
+        NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
 
         if (![favoritesList isEqual:_docLocators])  // [agl] review
         {
@@ -432,7 +432,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         return NO;
     }
 
-    [(AKAppController *)[NSApp delegate] moveFavoriteFromIndex:draggedRowIndex
+    [(AKAppDelegate *)[NSApp delegate] moveFavoriteFromIndex:draggedRowIndex
                                                        toIndex:row];
     return YES;
 }
@@ -493,7 +493,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         case _AKFavoritesQuicklistMode:
         {
-            NSArray *favoritesList = [(AKAppController *)[NSApp delegate] favoritesList];
+            NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
 
             tableValues = [NSArray arrayWithArray:favoritesList];
             break;

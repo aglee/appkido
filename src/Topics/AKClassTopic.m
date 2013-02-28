@@ -13,7 +13,7 @@
 #import "AKDatabase.h"
 #import "AKClassNode.h"
 
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKClassOverviewSubtopic.h"
 #import "AKPropertiesSubtopic.h"
 #import "AKClassMethodsSubtopic.h"

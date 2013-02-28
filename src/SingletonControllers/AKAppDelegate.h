@@ -1,5 +1,5 @@
 /*
- * AKAppController.h
+ * AKAppDelegate.h
  *
  * Created by Andy Lee on Thu Jun 27 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -16,7 +16,7 @@
 @class AKWindowController;
 
 /*!
- * @class       AKAppController
+ * @class       AKAppDelegate
  * @abstract    Application-level controller object.
  * @discussion  AppKiDo's application delegate.  Has subordinate controllers:
  *              one for the Prefs panel, one for the Quicklist panel, and one
@@ -27,7 +27,7 @@
  *              previous launch.  On quit, saves the states of all open
  *              windows.
  */
-@interface AKAppController : NSObject <AKUIController>
+@interface AKAppDelegate : NSObject <AKUIController>
 {
 @private
     AKDatabase *_appDatabase;

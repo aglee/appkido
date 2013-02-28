@@ -8,7 +8,7 @@
 
 #import "AKServicesProvider.h"
 
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKMethodNameExtractor.h"
 #import "AKWindowController.h"
 
@@ -39,7 +39,7 @@
     }
     
     // Perform the requested search.
-    [(AKAppController *)[NSApp delegate] searchForString:searchString];
+    [(AKAppDelegate *)[NSApp delegate] searchForString:searchString];
 }
 
 #pragma mark -

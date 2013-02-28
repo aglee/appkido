@@ -11,7 +11,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKDatabase.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"

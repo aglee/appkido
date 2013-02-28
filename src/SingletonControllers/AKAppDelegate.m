@@ -1,11 +1,11 @@
 /*
- * AKAppController.m
+ * AKAppDelegate.m
  *
  * Created by Andy Lee on Thu Jun 27 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 
 #import <CoreFoundation/CoreFoundation.h>
 
@@ -50,14 +50,14 @@
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    return [(AKAppController *)[NSApp delegate] handleSearchScriptCommand:aCommand];
+    return [(AKAppDelegate *)[NSApp delegate] handleSearchScriptCommand:aCommand];
 }
 
 @end
 
 #pragma mark -
 
-@implementation AKAppController
+@implementation AKAppDelegate
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

@@ -10,7 +10,7 @@
 #import "AKFrameworkConstants.h"
 #import "AKPrefUtils.h"
 #import "AKDatabase.h"
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKDevToolsPathController.h"
 
 @implementation AKPrefPanelController
@@ -63,14 +63,14 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 - (IBAction)applyAppearancePrefs:(id)sender
 {
     [self _updatePrefsFromAppearanceTab];
-    [(AKAppController *)[NSApp delegate] applyUserPreferences];
+    [(AKAppDelegate *)[NSApp delegate] applyUserPreferences];
 }
 
 - (IBAction)useDefaultAppearancePrefs:(id)sender
 {
     [AKPrefUtils resetAppearancePrefsToDefaults];
     [self _updateAppearanceTabFromPrefs];
-    [(AKAppController *)[NSApp delegate] applyUserPreferences];
+    [(AKAppDelegate *)[NSApp delegate] applyUserPreferences];
 }
 
 - (IBAction)doFrameworksListAction:(id)sender

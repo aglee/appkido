@@ -9,7 +9,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKClassNode.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
@@ -452,7 +452,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)addTopicToFavorites:(id)sender
 {
-    [(AKAppController *)[NSApp delegate]
+    [(AKAppDelegate *)[NSApp delegate]
         addFavorite:[AKDocLocator withTopic:[self _currentTopic] subtopicName:nil docName:nil]];
 }
 
@@ -520,8 +520,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         }
 
         // Enable the item if the selected topic isn't already a favorite.
-        AKAppController *appController = [NSApp delegate];
-        NSArray *favoritesList = [appController favoritesList];
+        NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
         AKDocLocator *proposedFavorite = [AKDocLocator withTopic:currentTopic subtopicName:nil docName:nil];
 
         if ([favoritesList containsObject:proposedFavorite])

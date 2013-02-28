@@ -17,7 +17,7 @@
 #import "AKProtocolNode.h"
 #import "AKTextUtils.h"
 
-#import "AKAppController.h"  // [agl] KLUDGE doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
+#import "AKAppDelegate.h"  // [agl] KLUDGE doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
 
 @interface AKClassNode ()
 @property (nonatomic, weak) AKClassNode *parentClass;

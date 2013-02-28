@@ -11,7 +11,7 @@
 #import "AKFrameworkConstants.h"
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKInformalProtocolsTopic.h"
 #import "AKFunctionsTopic.h"

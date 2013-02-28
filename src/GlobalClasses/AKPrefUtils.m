@@ -222,7 +222,7 @@
                                forKey:AKFavoritesPrefName];
 
 // Don't register a default for the selected-frameworks pref.  We'll set it
-// in -[AKAppController awakeFromNib] if it hasn't been set.  We do it there
+// in -[AKAppDelegate awakeFromNib] if it hasn't been set.  We do it there
 // because we may have to query the AKDatabase for the frameworks to use.
 //    [defaultPrefsDictionary
 //        setObject:AKNamesOfEssentialFrameworks

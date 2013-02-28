@@ -8,7 +8,7 @@
 
 #import "AKLoadDatabaseOperation.h"
 
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKDatabase.h"
 #import "AKPrefUtils.h"
 
@@ -70,7 +70,7 @@
 // Gets called on the main thread as the last thing this operation does.
 - (void)_finishOnMainThread
 {
-    [(AKAppController *)[NSApp delegate] finishApplicationStartup];
+    [(AKAppDelegate *)[NSApp delegate] finishApplicationStartup];
 }
 
 - (void)_tellDelegateWillLoadTokensForFramework:(NSString *)frameworkName
