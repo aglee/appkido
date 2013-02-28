@@ -1,5 +1,4 @@
 * Add progress indicator during search, and a count when done.
-* disable doc view contextual menu items when there is no doc
 * smart search for properties (setFoo)
 * Use the stylesheet that comes with the docset.
 * Give option to use custom stylesheet.
@@ -10,10 +9,6 @@
 * Offer all fonts, not just hand-picked.
 * Have tab loop include controls in window and drawer in one big loop.
 * Can an alternative to the drawer work in a similar way?
-* Use tabless NSTabView for doc view.
-* Bugs in auto-select after search
-	* try searching for "scrollPoint".  Or "view".
-	* search NSBrowserDelegate, is it not auto-selected because begins with "<"?
 
 ----
 
@@ -21,7 +16,6 @@
 * figure out why command-line build different from in Xcode
 * Get rid of Dev Tools concept and just present available SDKs.
 * Instead of a separate subtopic for "ALL Instance Methods" etc., put an "ALL" button in the "Instance Methods" subtopic cell.
-* Top and middle panes should keep fixed height during autoresizing.
 * web site
 	* add tips and tricks page
 	* add faq: why does this site keep changing look?
@@ -32,7 +26,7 @@
 
 * Store database on disk so it doesn't have to be reparsed on every launch.
 	* Treat anchors as primary way of linking.
-* Put a splitter between the subtopic list and doc list -- or maybe recalculate subtopic list width depending on font.
+* Put a splitter between the subtopic list and doc list.
 	* Remember the relative split position as part of the remembered window layout
 
 * service for putting multi-line method into clipboard
