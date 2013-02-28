@@ -18,8 +18,8 @@
     [style setAlignment:NSCenterTextAlignment];
 
     NSColor *textColor = ([self isEnabled]
-                          ? [NSColor blackColor] /*[NSColor blueColor]*/
-                          : [NSColor colorWithCalibratedWhite:0.6 alpha:1.0] /*[NSColor yellowColor]*/);
+                          ? [NSColor colorWithCalibratedWhite:0.2 alpha:1.0]
+                          : [NSColor colorWithCalibratedWhite:0.6 alpha:1.0]);
     NSDictionary *attr = (@{
                           NSFontAttributeName: [self font],
                           NSForegroundColorAttributeName: textColor,
@@ -28,6 +28,7 @@
 
     title = [[[NSAttributedString alloc] initWithString:[title string]
                                              attributes:attr] autorelease];
+    
     return [super drawTitle:title withFrame:frame inView:controlView];
 }
 
