@@ -32,12 +32,18 @@
 @private
     AKDatabase *_appDatabase;
 
+    // Displayed while the database is loading.
     AKSplashWindowController *_splashWindowController;
+
+    // For loading the database asynchronously.
     NSOperationQueue *_operationQueue;
 
-    BOOL _finishedInitializing;  // Becomes true when -awakeFromNib finishes.
-    AKPrefPanelController *_prefPanelController;  // Lazily instantiated.
-    AKAboutWindowController *_aboutWindowController;  // Lazily instantiated.
+    // Becomes true when -awakeFromNib finishes.
+    BOOL _finishedInitializing;
+
+    // Single-instance windows, lazily instantiated.
+    AKPrefPanelController *_prefPanelController;
+    AKAboutWindowController *_aboutWindowController;
 
     // Elements are AKWindowControllers.
     NSMutableArray *_windowControllers;

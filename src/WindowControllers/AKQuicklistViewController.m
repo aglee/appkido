@@ -433,7 +433,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     }
 
     [(AKAppDelegate *)[NSApp delegate] moveFavoriteFromIndex:draggedRowIndex
-                                                       toIndex:row];
+                                                     toIndex:row];
     return YES;
 }
 
