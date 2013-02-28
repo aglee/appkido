@@ -172,11 +172,6 @@ enum
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)doQuicklistModeMatrixAction:(id)sender
-{
-    [self _selectQuicklistMode:[sender selectedTag]];
-}
-
 - (IBAction)doQuicklistTableAction:(id)sender
 {
     NSInteger selectedRow = [_quicklistTable selectedRow];
@@ -382,6 +377,14 @@ enum
 {
     [_searchField setStringValue:[findBuffer findString]];
     [_searchField selectText:nil];
+}
+
+#pragma mark -
+#pragma mark AKMultiRadioViewDelegate methods
+
+- (void)multiRadioViewDidMakeSelection:(AKMultiRadioView *)mrv
+{
+    [self _selectQuicklistMode:[mrv selectedTag]];
 }
 
 #pragma mark -
