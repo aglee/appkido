@@ -865,6 +865,35 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self _refreshSuperclassButton];
 }
 
+- (void)_refreshSuperclassButton
+{
+    AKClassNode *parentClass = [[self _currentTopic] parentClassOfTopic];
+
+    // Enable or disable the Superclass button as appropriate.
+    [_superclassButton setEnabled:(parentClass != nil)];
+    if ([_superclassButton isEnabled])
+    {
+        [_superclassButton setToolTip:[self _tooltipForSelectSuperclass]];
+    }
+
+    // Empty the Superclass button's contextual menu.
+    while ([_superclassesMenu numberOfItems] > 0)
+    {
+        [_superclassesMenu removeItemAtIndex:0];
+    }
+
+    // Reconstruct the Superclass button's contextual menu.
+    AKClassNode *ancestorNode = parentClass;
+    while (ancestorNode != nil)
+    {
+        [_superclassesMenu addItemWithTitle:[ancestorNode nodeName]
+                                     action:@selector(selectAncestorClass:)
+                              keyEquivalent:@""];
+
+        ancestorNode = [ancestorNode parentClass];
+    }
+}
+
 - (void)_refreshBackButton
 {
     NSInteger i;
@@ -916,35 +945,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         [_forwardMenu addItemWithTitle:menuItemName
                                 action:@selector(goToHistoryItemInForwardMenu:)
                          keyEquivalent:@""];
-    }
-}
-
-- (void)_refreshSuperclassButton
-{
-    AKClassNode *parentClass = [[self _currentTopic] parentClassOfTopic];
-
-    // Enable or disable the Superclass button as appropriate.
-    [_superclassButton setEnabled:(parentClass != nil)];
-    if ([_superclassButton isEnabled])
-    {
-        [_superclassButton setToolTip:[self _tooltipForSelectSuperclass]];
-    }
-
-    // Empty the Superclass button's contextual menu.
-    while ([_superclassesMenu numberOfItems] > 0)
-    {
-        [_superclassesMenu removeItemAtIndex:0];
-    }
-
-    // Reconstruct the Superclass button's contextual menu.
-    AKClassNode *ancestorNode = parentClass;
-    while (ancestorNode != nil)
-    {
-        [_superclassesMenu addItemWithTitle:[ancestorNode nodeName]
-                                     action:@selector(selectAncestorClass:)
-                              keyEquivalent:@""];
-
-        ancestorNode = [ancestorNode parentClass];
     }
 }
 
