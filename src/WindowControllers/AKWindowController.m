@@ -920,7 +920,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         if (menuItemName)
         {
             [_backMenu addItemWithTitle:menuItemName
-                                 action:@selector(doBackMenuAction:)
+                                 action:@selector(goToHistoryItemInBackMenu:)
                           keyEquivalent:@""];
         }
     }
