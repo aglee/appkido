@@ -123,6 +123,9 @@
 
 - (IBAction)openNewWindow:(id)sender;
 
+/*! Expects sender to be an NSMenuItem with an NSURL as representedObject. */
+- (IBAction)openLinkInNewWindow:(id)sender;
+
 /*!
  * If a text view is first responder, scrolls it to show the selected text, if
  * any.

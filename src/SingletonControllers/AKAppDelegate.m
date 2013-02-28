@@ -405,8 +405,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     (void)[self controllerForNewWindow];
 }
 
-// This is only called from the doc view's contextual menu, so it's
-// not declared in the .h.
 - (IBAction)openLinkInNewWindow:(id)sender
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
