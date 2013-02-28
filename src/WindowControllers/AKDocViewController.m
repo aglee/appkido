@@ -74,9 +74,14 @@
 
     if ([_webView isDescendantOf:viewSelectedInTabView])
     {
-        // [agl] Should maybe call makeFirstResponder: for correctness? Happens
-        // to work because the one place this is called also makes this FR.
-        return _webView;
+        if ([[_webView window] makeFirstResponder:_webView])
+        {
+            return _webView;
+        }
+        else
+        {
+            return nil;
+        }
     }
     else if ([_textView isDescendantOf:viewSelectedInTabView])
     {
@@ -434,10 +439,6 @@ contextMenuItemsForElement:(NSDictionary *)element
     NSString *htmlString = @"";
     if (htmlData)
     {
-//        NSMutableData *zData = [NSMutableData dataWithData:htmlData];
-//        
-//        [zData setLength:([zData length] + 1)];
-//        htmlString = [NSString stringWithUTF8String:[zData bytes]];
         htmlString = [[[NSString alloc] initWithData:htmlData
                                             encoding:NSUTF8StringEncoding] autorelease];
     }
