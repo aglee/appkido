@@ -163,7 +163,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [self _selectTopic:obj
           subtopicName:[selectedDocLocator subtopicName]
-               docName:[selectedDocLocator docName]];
+               docName:[selectedDocLocator docName]
+          addToHistory:YES];
 }
 
 - (void)selectSubtopicWithName:(NSString *)subtopicName
@@ -172,7 +173,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [self _selectTopic:[selectedDocLocator topicToDisplay]
           subtopicName:subtopicName
-               docName:[selectedDocLocator docName]];
+               docName:[selectedDocLocator docName]
+          addToHistory:YES];
 }
 
 - (void)selectDocWithName:(NSString *)docName
@@ -181,14 +183,16 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [self _selectTopic:[selectedDocLocator topicToDisplay]
           subtopicName:[selectedDocLocator subtopicName]
-               docName:docName];
+               docName:docName
+          addToHistory:YES];
 }
 
 - (void)selectDocWithDocLocator:(AKDocLocator *)docLocator
 {
     [self _selectTopic:[docLocator topicToDisplay]
           subtopicName:[docLocator subtopicName]
-               docName:[docLocator docName]];
+               docName:[docLocator docName]
+          addToHistory:YES];
 }
 
 - (BOOL)followLinkURL:(NSURL *)linkURL
@@ -951,6 +955,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)_selectTopic:(AKTopic *)topic
         subtopicName:(NSString *)subtopicName
              docName:(NSString *)docName
+        addToHistory:(BOOL)shouldAddToHistory
 {
     if (topic == nil)
     {
@@ -960,7 +965,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [self _rememberCurrentTextSelection];
 
-    AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic subtopicName:subtopicName docName:docName];
+    AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic
+                                              subtopicName:subtopicName
+                                                   docName:docName];
 
     [_topicBrowserController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
     [_subtopicListController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
@@ -973,7 +980,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_topicDescriptionField setStringValue:[topic stringToDisplayInDescriptionField]];
     [_docCommentField setStringValue:[_docListController docComment]];
 
-    [self _addHistoryItem:newHistoryItem];
+    if (shouldAddToHistory)
+    {
+        [self _addHistoryItem:newHistoryItem];
+    }
 }
 
 // All the history navigation methods come through here.
@@ -987,8 +997,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Navigate to the specified history item.
     AKDocLocator *historyItem = [_windowHistory objectAtIndex:historyIndex];
 
-    [self _rememberCurrentTextSelection];
-    [_topicBrowserController goFromDocLocator:nil toDocLocator:historyItem];
+    [self _selectTopic:[historyItem topicToDisplay]
+          subtopicName:[historyItem subtopicName]
+               docName:[historyItem docName]
+          addToHistory:NO];
 
     // Update our marker index into the history array.
     _windowHistoryIndex = historyIndex;
