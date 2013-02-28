@@ -54,6 +54,7 @@
 						<string key="NSFrame">{{-4, 3}, {24, 14}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="43629388">
 							<int key="NSCellFlags">603979776</int>
@@ -94,7 +95,7 @@
 										<string key="NSFrameSize">{206, 230}</string>
 										<reference key="NSSuperview" ref="619384235"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="792420753"/>
+										<reference key="NSNextKeyView" ref="410970050"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -227,7 +228,7 @@
 						<string key="NSFrame">{{0, 18}, {223, 232}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="619384235"/>
+						<reference key="NSNextKeyView" ref="792420753"/>
 						<int key="NSsFlags">133138</int>
 						<reference key="NSVScroller" ref="410970050"/>
 						<reference key="NSHScroller" ref="792420753"/>
@@ -1491,6 +1492,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<boolean value="YES" key="2.IBNSViewMetadataLastInspectedTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="21.CustomClassName">AKButtonCell</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="22.IBShouldRemoveOnLegacySave"/>
@@ -1535,6 +1537,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">AKButtonCell</string>
+					<string key="superclassName">NSButtonCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AKButtonCell.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">AKMultiRadioView</string>
 					<string key="superclassName">NSView</string>
