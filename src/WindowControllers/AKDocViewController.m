@@ -300,9 +300,9 @@ contextMenuItemsForElement:(NSDictionary *)element
 
     // Add an item to the menu that allows the user to reveal the
     // currently displayed file in the Finder.
-    NSMenuItem *revealInFinderItem = [[[NSMenuItem alloc]initWithTitle:@"Reveal In Finder"
-                                                                action:@selector(revealDocFileInFinder:)
-                                                         keyEquivalent:@""] autorelease];
+    NSMenuItem *revealInFinderItem = [[[NSMenuItem alloc] initWithTitle:@"Reveal In Finder"
+                                                                 action:@selector(revealDocFileInFinder:)
+                                                          keyEquivalent:@""] autorelease];
     [revealInFinderItem setTarget:nil];  // will go to first responder
     [newMenuItems addObject:revealInFinderItem];
     
