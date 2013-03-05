@@ -130,6 +130,7 @@
         }
 
         // Select the subtopic at that index.
+        [_subtopicsTable scrollRowToVisible:subtopicIndex];
         [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:subtopicIndex]
                      byExtendingSelection:NO];
 
