@@ -278,13 +278,13 @@
 						<object class="NSTextField" id="192904312">
 							<reference key="NSNextResponder" ref="455086034"/>
 							<int key="NSvFlags">290</int>
-							<string key="NSFrame">{{7, 7}, {451, 14}}</string>
+							<string key="NSFrame">{{7, 7}, {526, 14}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
 							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="224150886">
-								<int key="NSCellFlags">67108864</int>
-								<int key="NSCellFlags2">4194304</int>
+								<int key="NSCellFlags">67108928</int>
+								<int key="NSCellFlags2">4196416</int>
 								<string key="NSContents">...</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
@@ -887,13 +887,18 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addTopicToFavorites:">id</string>
+						<string key="copyDocFilePath:">id</string>
+						<string key="copyDocFileURL:">id</string>
 						<string key="findNext:">id</string>
 						<string key="findPrevious:">id</string>
 						<string key="goBackInHistory:">id</string>
 						<string key="goForwardInHistory:">id</string>
 						<string key="goToHistoryItemInBackMenu:">id</string>
 						<string key="goToHistoryItemInForwardMenu:">id</string>
+						<string key="openDocFileInBrowser:">id</string>
+						<string key="openParseDebugWindow:">id</string>
 						<string key="rememberWindowLayout:">id</string>
+						<string key="revealDocFileInFinder:">id</string>
 						<string key="selectAncestorClass:">id</string>
 						<string key="selectDocWithDocLocatorRepresentedBy:">id</string>
 						<string key="selectFormalProtocolsTopic:">id</string>
@@ -908,6 +913,14 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="addTopicToFavorites:">
 							<string key="name">addTopicToFavorites:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="copyDocFilePath:">
+							<string key="name">copyDocFilePath:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="copyDocFileURL:">
+							<string key="name">copyDocFileURL:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="findNext:">
@@ -934,8 +947,20 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 							<string key="name">goToHistoryItemInForwardMenu:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="openDocFileInBrowser:">
+							<string key="name">openDocFileInBrowser:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openParseDebugWindow:">
+							<string key="name">openParseDebugWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="rememberWindowLayout:">
 							<string key="name">rememberWindowLayout:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="revealDocFileInFinder:">
+							<string key="name">revealDocFileInFinder:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="selectAncestorClass:">
