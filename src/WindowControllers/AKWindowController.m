@@ -30,6 +30,7 @@
 #import "AKQuicklistViewController.h"
 #import "AKSavedWindowState.h"
 #import "AKSubtopicListViewController.h"
+#import "AKTestDocParserWindowController.h"
 #import "AKTopicBrowserViewController.h"
 #import "AKViewUtils.h"
 #import "AKWindowLayout.h"
@@ -110,48 +111,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return _database;
 }
 
-- (AKDoc *)currentDoc
+- (AKDocLocator *)currentDocLocator
 {
-    AKDocLocator *docLocator = [self _currentDocLocator];
-    AKDoc *currentDoc = [docLocator docToDisplay];
-    
-    if (currentDoc == nil)    //  try General/Overview instead
-    {
-        docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay]
-                                subtopicName:@"General"
-                                     docName: @"Overview"];
-        currentDoc = [docLocator docToDisplay];
-    }
-    
-    return currentDoc;
-}
-
-- (NSString *)currentDocPath
-{
-    AKDocLocator *docLocator = [self _currentDocLocator];
-    AKDoc *currentDoc = [docLocator docToDisplay];
-    
-    if (currentDoc == nil)
-    {
-        docLocator = [AKDocLocator withTopic:[docLocator topicToDisplay]
-                                subtopicName:@"General"
-                                     docName:@"Overview"];
-        currentDoc = [docLocator docToDisplay];
-    }
-    
-    return [[currentDoc fileSection] filePath];
-}
-
-- (NSURL *)currentDocURL
-{
-    NSString *docPath = [self currentDocPath];
-    
-    if (docPath == nil)
-    {
-        return nil;
-    }
-    
-    return [[[NSURL fileURLWithPath:docPath] absoluteURL] standardizedURL];
+    return ((_windowHistoryIndex < 0)
+            ? nil
+            : [_windowHistory objectAtIndex:_windowHistoryIndex]);
 }
 
 #pragma mark -
@@ -159,7 +123,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)selectTopic:(AKTopic *)obj
 {
-    AKDocLocator *selectedDocLocator = [self _currentDocLocator];
+    AKDocLocator *selectedDocLocator = [self currentDocLocator];
 
     [self _selectTopic:obj
           subtopicName:[selectedDocLocator subtopicName]
@@ -169,7 +133,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)selectSubtopicWithName:(NSString *)subtopicName
 {
-    AKDocLocator *selectedDocLocator = [self _currentDocLocator];
+    AKDocLocator *selectedDocLocator = [self currentDocLocator];
 
     [self _selectTopic:[selectedDocLocator topicToDisplay]
           subtopicName:subtopicName
@@ -179,7 +143,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)selectDocWithName:(NSString *)docName
 {
-    AKDocLocator *selectedDocLocator = [self _currentDocLocator];
+    AKDocLocator *selectedDocLocator = [self currentDocLocator];
 
     [self _selectTopic:[selectedDocLocator topicToDisplay]
           subtopicName:[selectedDocLocator subtopicName]
@@ -198,7 +162,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (BOOL)followLinkURL:(NSURL *)linkURL
 {
     // Interpret the link URL as relative to the current doc URL.
-    NSString *currentDocFilePath = [[[[self _currentDocLocator] docToDisplay] fileSection] filePath];
+    NSString *currentDocFilePath = [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
     NSURL *currentDocFileURL = [NSURL fileURLWithPath:currentDocFilePath];
     NSURL *destinationURL = [NSURL URLWithString:[linkURL relativeString] relativeToURL:currentDocFileURL];
 
@@ -259,7 +223,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self putWindowLayoutInto:windowLayout];
 
     [savedWindowState setSavedWindowLayout:windowLayout];
-    [savedWindowState setSavedDocLocator:[self _currentDocLocator]];
+    [savedWindowState setSavedDocLocator:[self currentDocLocator]];
 }
 
 - (NSView *)focusOnDocView
@@ -476,6 +440,56 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 #pragma mark -
+#pragma mark Action methods - Accessing the doc file
+
+- (IBAction)revealDocFileInFinder:(id)sender
+{
+    NSString *docPath = [self currentDocPath];
+
+    if (docPath == nil)
+    {
+        return;
+    }
+
+    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] selectFile:docPath
+                     inFileViewerRootedAtPath:containingDirPath];
+}
+
+- (IBAction)copyDocTextURL:(id)sender
+{
+    NSURL *docURL = [self currentDocURL];
+
+    if (docURL)
+    {
+        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+
+        [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
+        [pasteboard setString:[docURL absoluteString] forType:NSStringPboardType];
+    }
+}
+
+- (IBAction)openDocURLInBrowser:(id)sender
+{
+    NSURL *docURL = [self currentDocURL];
+
+    if (docURL)
+    {
+        [[NSWorkspace sharedWorkspace] openURL:docURL];
+    }
+}
+
+- (IBAction)openParseDebugWindow:(id)sender
+{
+    NSString *docPath = [self currentDocPath];
+
+    if (docPath)
+    {
+        [[AKTestDocParserWindowController openNewParserWindow] parseFileAtPath:docPath];
+    }
+}
+
+#pragma mark -
 #pragma mark AKUIController methods
 
 - (void)applyUserPreferences
@@ -580,7 +594,26 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         return YES;
     }
+    else if ((itemAction == @selector(copyDocTextURL:))
+             || (itemAction == @selector(openDocURLInBrowser:))
+             || (itemAction == @selector(revealDocFileInFinder:))
+             || (itemAction == @selector(openParseDebugWindow:)))
+    {
+        return ([self currentDocLocator] != nil);
+    }
     else if ([_topicBrowserController validateItem:anItem])
+    {
+        return YES;
+    }
+    else if ([_subtopicListController validateItem:anItem])
+    {
+        return YES;
+    }
+    else if ([_docListController validateItem:anItem])
+    {
+        return YES;
+    }
+    else if ([_docViewController validateItem:anItem])
     {
         return YES;
     }
@@ -773,13 +806,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 #pragma mark -
 #pragma mark Private methods
-
-- (AKDocLocator *)_currentDocLocator
-{
-    return ((_windowHistoryIndex < 0)
-            ? nil
-            : [_windowHistory objectAtIndex:_windowHistoryIndex]);
-}
 
 - (void)_initToolbar
 {
@@ -976,13 +1002,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                                               subtopicName:subtopicName
                                                    docName:docName];
 
-    [_topicBrowserController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
-    [_subtopicListController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
+    [_topicBrowserController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
+    [_subtopicListController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 
     [_docListController setSubtopic:[_subtopicListController selectedSubtopic]];
-    [_docListController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
+    [_docListController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 
-    [_docViewController goFromDocLocator:[self _currentDocLocator] toDocLocator:newHistoryItem];
+    [_docViewController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 
     [_topicDescriptionField setStringValue:[topic stringToDisplayInDescriptionField]];
     [_docCommentField setStringValue:[_docListController docComment]];
@@ -1022,7 +1048,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_addHistoryItem:(AKDocLocator *)newHistoryItem
 {
-    AKDocLocator *currentHistoryItem = [self _currentDocLocator];
+    AKDocLocator *currentHistoryItem = [self currentDocLocator];
     NSInteger maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
     if ([currentHistoryItem isEqual:newHistoryItem])
@@ -1064,9 +1090,26 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[self window] setTitle:[newHistoryItem stringToDisplayInLists]];
 }
 
+- (NSString *)currentDocPath
+{
+    return [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
+}
+
+- (NSURL *)currentDocURL
+{
+    NSString *docPath = [self currentDocPath];
+
+    if (docPath == nil)
+    {
+        return nil;
+    }
+
+    return [[[NSURL fileURLWithPath:docPath] absoluteURL] standardizedURL];
+}
+
 - (AKTopic *)_currentTopic
 {
-    return [[self _currentDocLocator] topicToDisplay];
+    return [[self currentDocLocator] topicToDisplay];
 }
 
 - (CGFloat)_computeBrowserFraction

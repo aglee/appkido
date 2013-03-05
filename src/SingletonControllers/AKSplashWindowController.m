@@ -36,8 +36,6 @@
     [_splashVersionField setStringValue:[[AKAppVersion appVersion] displayString]];
     [[self window] center];
     [[self window] makeKeyAndOrderFront:nil];
-
-    // Populate the database(s) by parsing files for each of the selected frameworks in the user's prefs.
     [_splashMessageField setStringValue:@"Parsing files for framework:"];
     [_splashMessageField display];
 }

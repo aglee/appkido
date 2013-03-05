@@ -135,16 +135,4 @@
 /*! Prompts for a file name and exports the contents of the database as XML. */
 - (IBAction)exportDatabase:(id)sender;
 
-#pragma mark -
-#pragma mark Action methods for debugging only
-
-/*!
- * For debugging purposes only. Opens a window in which you can select a file
- * and see how the file gets parsed.
- */
-- (IBAction)_testParser:(id)sender;
-
-/*! For debugging purposes only. Logs the current key view loop to the log. */
-- (IBAction)_printKeyViewLoop:(id)sender;
-
 @end

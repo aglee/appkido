@@ -34,13 +34,4 @@
 
 - (NSView *)grabFocus;
 
-#pragma mark -
-#pragma mark Action methods
-
-- (IBAction)revealDocFileInFinder:(id)sender;
-
-- (IBAction)copyDocTextURL:(id)sender;
-
-- (IBAction)openDocURLInBrowser:(id)sender;
-
 @end

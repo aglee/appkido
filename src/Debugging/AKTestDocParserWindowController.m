@@ -10,8 +10,13 @@
 #import "AKDocParser.h"
 #import "AKFileSection.h"
 
+@interface AKTestDocParserWindowController ()
+@property (nonatomic, retain) AKFileSection *rootSection;
+@end
+
 @implementation AKTestDocParserWindowController
 
+@synthesize rootSection = _rootSection;
 @synthesize filePathField = _filePathField;
 @synthesize tabView = _tabView;
 @synthesize parseResultTextView = _parseResultTextView;
@@ -19,35 +24,73 @@
 @synthesize fileSectionTextView = _fileSectionTextView;
 @synthesize fileSectionInfoField = _fileSectionInfoField;
 
-+ (NSMutableArray *)_testDocParserWindowControllers
+static NSMutableArray *_testDocParserWindowControllers = nil;
+
+#pragma mark -
+#pragma mark Class initialization
+
++ (void)initialize
 {
-    static NSMutableArray *_testDocParserWindowControllers = nil;
-    
-    if (_testDocParserWindowControllers == nil)
-    {
-        _testDocParserWindowControllers = [[NSMutableArray alloc] init];
-    }
-    
-    return _testDocParserWindowControllers;
+    _testDocParserWindowControllers = [[NSMutableArray alloc] init];
 }
 
-+ (void)openNewParserWindow
-{
-    AKTestDocParserWindowController *wc = [[[self alloc] initWithWindowNibName:@"TestDocParser"] autorelease];
+#pragma mark -
+#pragma mark Factory methods
 
-    [[wc window] makeKeyAndOrderFront:nil];
++ (id)openNewParserWindow
+{
+    AKTestDocParserWindowController *wc;
+    wc = [[[self alloc] initWithWindowNibName:@"TestDocParser"] autorelease];
+
+    [wc showWindow:nil];
+
+    return wc;
 }
+
+#pragma mark -
+#pragma mark Init/dealloc/awake
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
     self = [super initWithWindowNibName:windowNibName];
     if (self)
     {
-        [[AKTestDocParserWindowController _testDocParserWindowControllers] addObject:self];
+        [_testDocParserWindowControllers addObject:self];
     }
     
     return self;
 }
+
+- (void)dealloc
+{
+    NSLog(@"*** %s -- <%@: %p>", __PRETTY_FUNCTION__, [self class], self);
+
+    [_rootSection release];
+
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Parsing
+
+- (void)parseFileAtPath:(NSString *)filePath
+{
+    [_filePathField setStringValue:filePath];
+
+    AKDocParser *dp = [[[AKDocParser alloc] initWithDatabase:nil frameworkName:nil] autorelease];
+
+    [dp processFile:filePath];
+
+    [self setRootSection:[dp rootSectionOfCurrentFile]];
+
+    NSString *textOutline = [_rootSection descriptionAsOutline];
+
+    [_parseResultTextView setString:(textOutline ?: @"<error>")];
+    [_parseResultBrowser loadColumnZero];
+}
+
+#pragma mark -
+#pragma mark Find Panel support
 
 - (NSView *)viewToSearch
 {
@@ -85,15 +128,14 @@
 
                    if (selectedFilePath)
                    {
-                       [_filePathField setStringValue:selectedFilePath];
-                       [self _parseFileAtPath:selectedFilePath];
+                       [self parseFileAtPath:selectedFilePath];
                    }
                }];
 }
 
 - (IBAction)takeFileToParseFrom:(id)sender
 {
-    [self _parseFileAtPath:[sender stringValue]];
+    [self parseFileAtPath:[sender stringValue]];
 }
 
 - (IBAction)doBrowserAction:(id)sender
@@ -128,14 +170,14 @@
 {
     if ([notification object] == [self window])
     {
-        [[[self class] _testDocParserWindowControllers] removeObject:self];
+        [_testDocParserWindowControllers removeObject:self];
     }
 }
 
 #pragma mark -
 #pragma mark NSBrowserDelegate methods
 
-// Note we are using "item-based" API.
+// Note we are using the "item-based" API for NSBrowser.
 // <https://developer.apple.com/library/mac/#samplecode/SimpleCocoaBrowser/Listings/AppController_m.html#//apple_ref/doc/uid/DTS40008872-AppController_m-DontLinkElementID_4>
 
 - (id)rootItemForBrowser:(NSBrowser *)browser
@@ -161,23 +203,6 @@
 - (id)browser:(NSBrowser *)browser objectValueForItem:(id)item
 {
     return [(AKFileSection *)item sectionName];
-}
-
-#pragma mark -
-#pragma mark Private methods
-
-- (void)_parseFileAtPath:(NSString *)filePath
-{
-    AKDocParser *dp = [[[AKDocParser alloc] initWithDatabase:nil frameworkName:nil] autorelease];
-    
-    [dp processFile:filePath];
-    
-    _rootSection = [dp rootSectionOfCurrentFile];
-    
-    NSString *textOutline = [_rootSection descriptionAsOutline];
-    
-    [_parseResultTextView setString:(textOutline ? textOutline : @"<error>")];
-    [_parseResultBrowser loadColumnZero];
 }
 
 @end

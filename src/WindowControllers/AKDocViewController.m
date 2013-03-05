@@ -13,6 +13,7 @@
 #import "DIGSLog.h"
 
 #import "AKAppDelegate.h"
+#import "AKDebugging.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"
 #import "AKFileSection.h"
@@ -104,37 +105,6 @@
 }
 
 #pragma mark -
-#pragma mark Action methods
-
-- (IBAction)revealDocFileInFinder:(id)sender
-{
-    NSString *docPath = [[self owningWindowController] currentDocPath];
-
-    if (docPath == nil)
-    {
-        return;
-    }
-
-    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
-    [[NSWorkspace sharedWorkspace] selectFile:docPath
-                     inFileViewerRootedAtPath:containingDirPath];
-}
-
-- (IBAction)copyDocTextURL:(id)sender
-{
-    NSURL *docURL = [[self owningWindowController] currentDocURL];
-    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-
-    [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
-    [pasteboard setString:[docURL absoluteString] forType:NSStringPboardType];
-}
-
-- (IBAction)openDocURLInBrowser:(id)sender
-{
-    [[NSWorkspace sharedWorkspace] openURL:[[self owningWindowController] currentDocURL]];
-}
-
-#pragma mark -
 #pragma mark AKViewController methods
 
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
@@ -194,15 +164,6 @@
 
 - (BOOL)validateItem:(id)anItem
 {
-    SEL itemAction = [anItem action];
-
-    if ((itemAction == @selector(copyDocTextURL:))
-        || (itemAction == @selector(openDocURLInBrowser:))
-        || (itemAction == @selector(revealDocFileInFinder:)))
-    {
-        return ([[self owningWindowController] currentDoc] != nil);
-    }
-
     return NO;
 }
 
@@ -248,7 +209,7 @@ contextMenuItemsForElement:(NSDictionary *)element
     NSMutableArray *newMenuItems = [NSMutableArray array];
 
     // Don't have a contextual menu if there is nothing in the doc view.
-    if ([[self owningWindowController] currentDoc] == nil)
+    if ([[self owningWindowController] currentDocLocator] == nil)
     {
         return newMenuItems;
     }
@@ -288,33 +249,22 @@ contextMenuItemsForElement:(NSDictionary *)element
         }
     }
 
-    // Add an item to the menu that allows the user to copy the URL
-    // of the file being looked at to the clipboard.  The URL could
-    // then be pasted into an email message if the user is answering
-    // somebody's question on one of the dev lists, for example.  The
-    // URL could also be helpful for debugging.
-    NSMenuItem *copyURLItem = [[[NSMenuItem alloc] initWithTitle:@"Copy Page URL"
-                                                          action:@selector(copyDocTextURL:)
-                                                   keyEquivalent:@""] autorelease];
-    [copyURLItem setTarget:nil];  // will go to first responder
-    [newMenuItems addObject:copyURLItem];
+    [self _addMenuItemWithTitle:@"Copy Page URL"
+                         action:@selector(copyDocTextURL:)
+                        toArray:newMenuItems];
+    [self _addMenuItemWithTitle:@"Open Page in Browser"
+                         action:@selector(openDocURLInBrowser:)
+                        toArray:newMenuItems];
+    [self _addMenuItemWithTitle:@"Reveal In Finder"
+                         action:@selector(revealDocFileInFinder:)
+                        toArray:newMenuItems];
+    if ([AKDebugging userCanDebug])
+    {
+        [self _addMenuItemWithTitle:@"Open Parse Window (Debug)"
+                             action:@selector(openParseDebugWindow:)
+                            toArray:newMenuItems];
+    }
 
-    // Add an item to the menu that allows the user to open the
-    // currently displayed file in the default web browser.
-    NSMenuItem *openURLInBrowserItem = [[[NSMenuItem alloc] initWithTitle:@"Open Page in Browser"
-                                                                   action:@selector(openDocURLInBrowser:)
-                                                            keyEquivalent:@""] autorelease];
-    [openURLInBrowserItem setTarget:nil];  // will go to first responder
-    [newMenuItems addObject:openURLInBrowserItem];
-
-    // Add an item to the menu that allows the user to reveal the
-    // currently displayed file in the Finder.
-    NSMenuItem *revealInFinderItem = [[[NSMenuItem alloc] initWithTitle:@"Reveal In Finder"
-                                                                 action:@selector(revealDocFileInFinder:)
-                                                          keyEquivalent:@""] autorelease];
-    [revealInFinderItem setTarget:nil];  // will go to first responder
-    [newMenuItems addObject:revealInFinderItem];
-    
     return newMenuItems;
 }
 
@@ -452,6 +402,18 @@ contextMenuItemsForElement:(NSDictionary *)element
     {
         [[_webView mainFrame] loadHTMLString:htmlString baseURL:nil];
     }
+}
+
+// Used for setting up our contextual menu.
+- (void)_addMenuItemWithTitle:(NSString *)menuItemTitle
+                       action:(SEL)menuItemAction
+                      toArray:(NSMutableArray *)menuItems
+{
+    // Leave the target nil so actions will go to first responder.
+    NSMenuItem *menuItem = [[[NSMenuItem alloc] initWithTitle:menuItemTitle
+                                                       action:menuItemAction
+                                                keyEquivalent:@""] autorelease];
+    [menuItems addObject:menuItem];
 }
 
 @end

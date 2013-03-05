@@ -17,6 +17,7 @@
 #import "AKClassNode.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
+#import "AKDebugging.h"
 #import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
 #import "AKDocSetIndex.h"
@@ -188,7 +189,15 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self _openInitialWindows];
 
     // Add the Debug menu if certain conditions are met.
-    [self _maybeAddDebugMenu];
+    AKDebugging *debugging = [AKDebugging sharedInstance];
+
+    [debugging setNextResponder:[NSApp nextResponder]];
+    [NSApp setNextResponder:debugging];
+
+    if ([AKDebugging userCanDebug])
+    {
+        [debugging addDebugMenu];
+    }
     
     // Set the provider of system services.
     [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
@@ -453,34 +462,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 }
 
 #pragma mark -
-#pragma mark Action methods for debugging only
-
-- (IBAction)_testParser:(id)sender
-{
-    [AKTestDocParserWindowController openNewParserWindow];
-}
-
-- (IBAction)_printKeyViewLoop:(id)sender
-{
-    id firstResponder = [[NSApp keyWindow] firstResponder];
-
-    if (firstResponder == nil)
-    {
-        NSLog(@"there's no first responder");
-    }
-    else
-    {
-        NSLog(@"key window's first responder is %@ at %p", [firstResponder className], firstResponder);
-
-        if ([firstResponder isKindOfClass:[NSView class]])
-        {
-            [firstResponder ak_printKeyViewLoop];
-            [firstResponder ak_printReverseKeyViewLoop];
-        }
-    }
-}
-
-#pragma mark -
 #pragma mark AKUIController methods
 
 - (void)applyUserPreferences
@@ -516,11 +497,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         return YES;
     }
-    else if ((itemAction == @selector(_testParser:))
-             || (itemAction == @selector(_printKeyViewLoop:)))
-    {
-        return YES;
-    }
     else if (itemAction == @selector(scrollToTextSelection:))
     {
         NSTextView *tv = [self selectedTextView];
@@ -529,10 +505,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
         return ([tv selectedRange].length > 0);
     }
-    else
+    else if ((itemAction == @selector(testParser:))
+             || (itemAction == @selector(printKeyViewLoop:)))
     {
-        return NO;
+        NSLog(@"*** %s -- <%@: %p> -- SEL %@", __PRETTY_FUNCTION__, [self class], self, NSStringFromSelector(itemAction));
+        return YES;
     }
+
+    return NO;
 }
 
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
@@ -785,39 +765,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [wc openQuicklistDrawer];
         }
     }
-}
-
-// Add the Debug menu if the user is "Andy Lee" with login name "alee".
-- (void)_maybeAddDebugMenu
-{
-    DIGSLogDebug_EnteringMethod();
-    
-    if (![NSUserName() isEqualToString:@"alee"]
-        || ![NSFullUserName() isEqualToString:@"Andy Lee"])
-    {
-        return;
-    }
-
-    // Create the "Debug" top-level menu item.
-    NSMenu *mainMenu = [NSApp mainMenu];
-    NSMenuItem *debugMenuItem = [mainMenu addItemWithTitle:@"Debug"
-                                                    action:@selector(_testParser:)
-                                             keyEquivalent:@""];
-    [debugMenuItem setEnabled:YES];
-
-    // Create the submenu that will be under the "Debug" top-level menu item.
-    NSMenu *debugSubmenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
-
-    [debugSubmenu setAutoenablesItems:YES];
-    [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
-                            action:@selector(_testParser:)
-                     keyEquivalent:@""];
-    [debugSubmenu addItemWithTitle:@"Print Key View Loop"
-                            action:@selector(_printKeyViewLoop:)
-                     keyEquivalent:@""];
-
-    // Attach the submenu to the "Debug" top-level menu item.
-    [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
 }
 
 #pragma mark -
