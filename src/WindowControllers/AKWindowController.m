@@ -444,7 +444,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)copyDocFileURL:(id)sender
 {
-    NSURL *docURL = [self currentDocURL];
+    NSURL *docURL = [self _currentDocURL];
 
     if (docURL)
     {
@@ -455,9 +455,22 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
+- (IBAction)copyDocFilePath:(id)sender
+{
+    NSString *docPath = [self _currentDocPath];
+
+    if (docPath)
+    {
+        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+
+        [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
+        [pasteboard setString:docPath forType:NSStringPboardType];
+    }
+}
+
 - (IBAction)openDocFileInBrowser:(id)sender
 {
-    NSURL *docURL = [self currentDocURL];
+    NSURL *docURL = [self _currentDocURL];
 
     if (docURL)
     {
@@ -467,7 +480,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)revealDocFileInFinder:(id)sender
 {
-    NSString *docPath = [self currentDocPath];
+    NSString *docPath = [self _currentDocPath];
 
     if (docPath == nil)
     {
@@ -481,7 +494,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)openParseDebugWindow:(id)sender
 {
-    NSString *docPath = [self currentDocPath];
+    NSString *docPath = [self _currentDocPath];
 
     if (docPath)
     {
@@ -595,6 +608,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         return YES;
     }
     else if ((itemAction == @selector(copyDocFileURL:))
+             || (itemAction == @selector(copyDocFilePath:))
              || (itemAction == @selector(openDocFileInBrowser:))
              || (itemAction == @selector(revealDocFileInFinder:))
              || (itemAction == @selector(openParseDebugWindow:)))
@@ -1090,14 +1104,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[self window] setTitle:[newHistoryItem stringToDisplayInLists]];
 }
 
-- (NSString *)currentDocPath
+- (NSString *)_currentDocPath
 {
     return [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
 }
 
-- (NSURL *)currentDocURL
+- (NSURL *)_currentDocURL
 {
-    NSString *docPath = [self currentDocPath];
+    NSString *docPath = [self _currentDocPath];
 
     if (docPath == nil)
     {

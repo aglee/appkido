@@ -200,6 +200,8 @@
 
 - (IBAction)copyDocFileURL:(id)sender;
 
+- (IBAction)copyDocFilePath:(id)sender;
+
 - (IBAction)openDocFileInBrowser:(id)sender;
 
 - (IBAction)revealDocFileInFinder:(id)sender;

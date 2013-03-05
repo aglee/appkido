@@ -234,6 +234,7 @@ contextMenuItemsForElement:(NSDictionary *)element
         else if ((tag == WebMenuItemTagDownloadImageToDisk)
                  || (tag == WebMenuItemTagCopyImageToClipboard)
                  || (tag == WebMenuItemTagSearchInSpotlight)
+                 || (tag == WebMenuItemTagCopy)
                  || (tag == WebMenuItemTagSearchWeb)
                  || (tag == WebMenuItemTagLookUpInDictionary))
         {
@@ -254,6 +255,9 @@ contextMenuItemsForElement:(NSDictionary *)element
     // Add menu items specific to AppKiDo.
     [self _addMenuItemWithTitle:@"Copy Page URL"
                          action:@selector(copyDocFileURL:)
+                        toArray:newMenuItems];
+    [self _addMenuItemWithTitle:@"Copy File Path"
+                         action:@selector(copyDocFilePath:)
                         toArray:newMenuItems];
     [self _addMenuItemWithTitle:@"Open Page in Browser"
                          action:@selector(openDocFileInBrowser:)
@@ -279,6 +283,22 @@ contextMenuItemsForElement:(NSDictionary *)element
 
     return newMenuItems;
 }
+
+#pragma mark -
+#pragma mark NSTextView delegate methods
+
+//- (NSMenu *)textView:(NSTextView *)view
+//                menu:(NSMenu *)menu
+//            forEvent:(NSEvent *)event
+//             atIndex:(NSUInteger)charIndex
+//{
+//    for (NSMenuItem *menuItem in [menu itemArray])
+//    {
+//        NSLog(@"*** menu %@ %d", [menuItem title], [menuItem tag]);
+//    }
+//
+//    return menu;
+//}
 
 #pragma mark -
 #pragma mark Private methods
