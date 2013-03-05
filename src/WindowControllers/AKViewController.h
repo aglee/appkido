@@ -12,7 +12,7 @@
 @class AKWindowController;
 
 /*!
- * Base class for view controllers used by AKBrowserWindowController.
+ * Base class for view controllers used by AKWindowController.
  */
 @interface AKViewController : NSViewController <AKUIController>
 {
