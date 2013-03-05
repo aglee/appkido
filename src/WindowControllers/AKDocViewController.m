@@ -214,16 +214,8 @@ contextMenuItemsForElement:(NSDictionary *)element
         return newMenuItems;
     }
 
-    // Loop through the proposed menu items in defaultMenuItems, and only
-    // allow certain ones of them to appear in the contextual menu, because
-    // the others don't make sense for us.
-    //
-    // Note that we may come across some tags for which there aren't
-    // WebMenuItemXXX constants declared in the version of WebKit
-    // I'm using.  For example, the "Reload" menu item has tag 12,
-    // which is WebMenuItemTagReload in newer versions of WebKit.
-    // That's okay -- as of this writing, none of those are things
-    // we want in the menu.
+    // Cherry-pick from the contextual menu items that Cocoa proposes by default.
+    NSMenuItem *speechMenuItem = nil;
     for (NSMenuItem *menuItem in defaultMenuItems)
     {
         NSInteger tag = [menuItem tag];
@@ -239,16 +231,27 @@ contextMenuItemsForElement:(NSDictionary *)element
 
             [newMenuItems addObject:menuItem];
         }
-        else if ((tag == WebMenuItemTagCopyLinkToClipboard)
-                 || (tag == WebMenuItemTagDownloadImageToDisk)
+        else if ((tag == WebMenuItemTagDownloadImageToDisk)
                  || (tag == WebMenuItemTagCopyImageToClipboard)
-                 || (tag == WebMenuItemTagCopyImageToClipboard)
-                 || (tag == WebMenuItemTagCopy))
+                 || (tag == WebMenuItemTagSearchInSpotlight)
+                 || (tag == WebMenuItemTagSearchWeb)
+                 || (tag == WebMenuItemTagLookUpInDictionary))
         {
             [newMenuItems addObject:menuItem];
         }
+        else if (tag == 2015)  // [agl] The "Speech" item. There's no constant for this. Figured it out empirically.
+        {
+            speechMenuItem = menuItem;
+        }
     }
 
+    // Separate system-provided menu items from application-specific ones.
+    if ([newMenuItems count] > 0)
+    {
+        [newMenuItems addObject:[NSMenuItem separatorItem]];
+    }
+
+    // Add menu items specific to AppKiDo.
     [self _addMenuItemWithTitle:@"Copy Page URL"
                          action:@selector(copyDocFileURL:)
                         toArray:newMenuItems];
@@ -263,6 +266,15 @@ contextMenuItemsForElement:(NSDictionary *)element
         [self _addMenuItemWithTitle:@"Open Parse Window (Debug)"
                              action:@selector(openParseDebugWindow:)
                             toArray:newMenuItems];
+    }
+
+    // Manually add the "Speech" item *after* our custom items. Note: AppKit
+    // will add the "Services" menu if appropriate. That menu is not one of the
+    // proposed ones in defaultMenuItems.
+    if (speechMenuItem)
+    {
+        [newMenuItems addObject:[NSMenuItem separatorItem]];
+        [newMenuItems addObject:speechMenuItem];
     }
 
     return newMenuItems;
