@@ -8,14 +8,18 @@
 #import <Cocoa/Cocoa.h>
 
 /*!
- * @class       AKWindowLayout
- * @abstract    Specifies visual attributes of a browser window.
- * @discussion  Specifies the window's size and position, the layout of
- *              its subviews, and flags such as the selected quicklist
- *              mode and the Search flag settings.
+ * Specifies visual attributes of a browser window. These includes the window's
+ * size and position, the layout of its subviews, the selected quicklist mode,
+ * and the selected Search settings (such as whether to include classes in
+ * search results).
+ *
+ * This is used in two places: to remember layouts of open windows so they can
+ * be restored on relaunch, and to remember the user's preferred layout so it
+ * can be applied to new windows.
  */
 @interface AKWindowLayout : NSObject
 {
+@private
     // General window attributes.
     NSRect _windowFrame;
     BOOL _toolbarIsVisible;
@@ -39,6 +43,22 @@
     BOOL _searchIncludesGlobals;
     BOOL _searchIgnoresCase;
 }
+
+@property (nonatomic, assign) NSRect windowFrame;
+@property (nonatomic, assign) BOOL toolbarIsVisible;
+@property (nonatomic, assign) BOOL browserIsVisible;
+@property (nonatomic, assign) CGFloat browserFraction;
+@property (nonatomic, assign) NSInteger numberOfBrowserColumns;
+@property (nonatomic, assign) CGFloat middleViewHeight;
+@property (nonatomic, assign) BOOL quicklistDrawerIsOpen;
+@property (nonatomic, assign) CGFloat quicklistDrawerWidth;
+@property (nonatomic, assign) NSInteger quicklistMode;
+@property (nonatomic, copy) NSString *frameworkPopupSelection;
+@property (nonatomic, assign) BOOL searchIncludesClasses;
+@property (nonatomic, assign) BOOL searchIncludesMembers;
+@property (nonatomic, assign) BOOL searchIncludesFunctions;
+@property (nonatomic, assign) BOOL searchIncludesGlobals;
+@property (nonatomic, assign) BOOL searchIgnoresCase;
 
 #pragma mark -
 #pragma mark Preferences

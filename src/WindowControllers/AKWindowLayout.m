@@ -8,9 +8,24 @@
 #import "AKWindowLayout.h"
 
 #import "AKFrameworkConstants.h"
-#import "AKPrefUtils.h"
 
 @implementation AKWindowLayout
+
+@synthesize windowFrame = _windowFrame;
+@synthesize toolbarIsVisible = _toolbarIsVisible;
+@synthesize browserIsVisible = _browserIsVisible;
+@synthesize browserFraction = _browserFraction;
+@synthesize numberOfBrowserColumns = _numberOfBrowserColumns;
+@synthesize middleViewHeight = _middleViewHeight;
+@synthesize quicklistDrawerIsOpen = _quicklistDrawerIsOpen;
+@synthesize quicklistDrawerWidth = _quicklistDrawerWidth;
+@synthesize quicklistMode = _quicklistMode;
+@synthesize frameworkPopupSelection = _frameworkPopupSelection;
+@synthesize searchIncludesClasses = _searchIncludesClasses;
+@synthesize searchIncludesMembers = _searchIncludesMembers;
+@synthesize searchIncludesFunctions = _searchIncludesFunctions;
+@synthesize searchIncludesGlobals = _searchIncludesGlobals;
+@synthesize searchIgnoresCase = _searchIgnoresCase;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -103,160 +118,6 @@
     [prefDict setObject:@(_searchIgnoresCase) forKey:AKIgnoreCasePrefKey];
 
     return prefDict;
-}
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (NSRect)windowFrame
-{
-    return _windowFrame;
-}
-
-- (void)setWindowFrame:(NSRect)frame
-{
-    _windowFrame = frame;
-}
-
-- (BOOL)toolbarIsVisible
-{
-    return _toolbarIsVisible;
-}
-
-- (void)setToolbarIsVisible:(BOOL)flag
-{
-    _toolbarIsVisible = flag;
-}
-
-- (BOOL)browserIsVisible
-{
-    return _browserIsVisible;
-}
-
-- (void)setBrowserIsVisible:(BOOL)flag
-{
-    _browserIsVisible = flag;
-}
-
-- (CGFloat)browserFraction
-{
-    return _browserFraction;
-}
-
-- (void)setBrowserFraction:(CGFloat)height
-{
-    _browserFraction = height;
-}
-
-- (NSInteger)numberOfBrowserColumns
-{
-    return _numberOfBrowserColumns;
-}
-
-- (void)setNumberOfBrowserColumns:(NSInteger)numColumns
-{
-    _numberOfBrowserColumns = numColumns;
-}
-
-- (CGFloat)middleViewHeight
-{
-    return _middleViewHeight;
-}
-
-- (void)setMiddleViewHeight:(CGFloat)height
-{
-    _middleViewHeight = height;
-}
-
-- (BOOL)quicklistDrawerIsOpen
-{
-    return _quicklistDrawerIsOpen;
-}
-
-- (void)setQuicklistDrawerIsOpen:(BOOL)flag
-{
-    _quicklistDrawerIsOpen = flag;
-}
-
-- (CGFloat)quicklistDrawerWidth
-{
-    return _quicklistDrawerWidth;
-}
-
-- (void)setQuicklistDrawerWidth:(CGFloat)width
-{
-    _quicklistDrawerWidth = width;
-}
-
-- (NSInteger)quicklistMode
-{
-    return _quicklistMode;
-}
-
-- (void)setQuicklistMode:(NSInteger)mode
-{
-    _quicklistMode = mode;
-}
-
-- (NSString *)frameworkPopupSelection
-{
-    return _frameworkPopupSelection;
-}
-
-- (void)setFrameworkPopupSelection:(NSString *)frameworkName
-{
-    [_frameworkPopupSelection autorelease];
-    _frameworkPopupSelection = [frameworkName copy];
-}
-
-- (BOOL)searchIncludesClasses
-{
-    return _searchIncludesClasses;
-}
-
-- (void)setSearchIncludesClasses:(BOOL)flag
-{
-    _searchIncludesClasses = flag;
-}
-
-- (BOOL)searchIncludesMembers
-{
-    return _searchIncludesMembers;
-}
-
-- (void)setSearchIncludesMembers:(BOOL)flag
-{
-    _searchIncludesMembers = flag;
-}
-
-- (BOOL)searchIncludesFunctions
-{
-    return _searchIncludesFunctions;
-}
-
-- (void)setSearchIncludesFunctions:(BOOL)flag
-{
-    _searchIncludesFunctions = flag;
-}
-
-- (BOOL)searchIncludesGlobals
-{
-    return _searchIncludesGlobals;
-}
-
-- (void)setSearchIncludesGlobals:(BOOL)flag
-{
-    _searchIncludesGlobals = flag;
-}
-
-- (BOOL)searchIgnoresCase
-{
-    return _searchIgnoresCase;
-}
-
-- (void)setSearchIgnoresCase:(BOOL)flag
-{
-    _searchIgnoresCase = flag;
 }
 
 @end

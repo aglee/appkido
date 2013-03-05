@@ -11,11 +11,9 @@
 @class AKDocLocator;
 
 /*!
- * @class       AKSavedWindowState
- * @abstract    Used to remember a browser window's display state between
- *              launches of the app.
- * @discussion  Remembers two things: the window's visual layout info, and
- *              what doc it was displaying.
+ * Used to remember a browser window's display state between launches of the
+ * app. Remembers two things: the window's physical layout, and what doc it was
+ * displaying.
  */
 @interface AKSavedWindowState : NSObject
 {
@@ -23,6 +21,9 @@
     AKWindowLayout *_savedWindowLayout;
     AKDocLocator *_savedDocLocator;
 }
+
+@property (nonatomic, strong) AKWindowLayout *savedWindowLayout;
+@property (nonatomic, strong) AKDocLocator *savedDocLocator;
 
 #pragma mark -
 #pragma mark Preferences

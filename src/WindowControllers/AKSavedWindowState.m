@@ -14,6 +14,9 @@
 
 @implementation AKSavedWindowState
 
+@synthesize savedWindowLayout = _savedWindowLayout;
+@synthesize savedDocLocator = _savedDocLocator;
+
 #pragma mark - Init/awake/dealloc
 
 - (void)dealloc
@@ -59,31 +62,6 @@
     [prefDict setObject:[_savedDocLocator asPrefDictionary] forKey:AKSelectedDocPrefKey];
 
     return prefDict;
-}
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (AKWindowLayout *)savedWindowLayout
-{
-    return _savedWindowLayout;
-}
-
-- (void)setSavedWindowLayout:(AKWindowLayout *)windowLayout
-{
-    [_savedWindowLayout autorelease];
-    _savedWindowLayout = [windowLayout retain];
-}
-
-- (AKDocLocator *)savedDocLocator
-{
-    return _savedDocLocator;
-}
-
-- (void)setSavedDocLocator:(AKDocLocator *)docLocator
-{
-    [_savedDocLocator autorelease];
-    _savedDocLocator = [docLocator retain];
 }
 
 @end
