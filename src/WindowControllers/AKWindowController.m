@@ -442,21 +442,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark Action methods - Accessing the doc file
 
-- (IBAction)revealDocFileInFinder:(id)sender
-{
-    NSString *docPath = [self currentDocPath];
-
-    if (docPath == nil)
-    {
-        return;
-    }
-
-    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
-    [[NSWorkspace sharedWorkspace] selectFile:docPath
-                     inFileViewerRootedAtPath:containingDirPath];
-}
-
-- (IBAction)copyDocTextURL:(id)sender
+- (IBAction)copyDocFileURL:(id)sender
 {
     NSURL *docURL = [self currentDocURL];
 
@@ -469,7 +455,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-- (IBAction)openDocURLInBrowser:(id)sender
+- (IBAction)openDocFileInBrowser:(id)sender
 {
     NSURL *docURL = [self currentDocURL];
 
@@ -477,6 +463,20 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         [[NSWorkspace sharedWorkspace] openURL:docURL];
     }
+}
+
+- (IBAction)revealDocFileInFinder:(id)sender
+{
+    NSString *docPath = [self currentDocPath];
+
+    if (docPath == nil)
+    {
+        return;
+    }
+
+    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] selectFile:docPath
+                     inFileViewerRootedAtPath:containingDirPath];
 }
 
 - (IBAction)openParseDebugWindow:(id)sender
@@ -594,8 +594,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         return YES;
     }
-    else if ((itemAction == @selector(copyDocTextURL:))
-             || (itemAction == @selector(openDocURLInBrowser:))
+    else if ((itemAction == @selector(copyDocFileURL:))
+             || (itemAction == @selector(openDocFileInBrowser:))
              || (itemAction == @selector(revealDocFileInFinder:))
              || (itemAction == @selector(openParseDebugWindow:)))
     {

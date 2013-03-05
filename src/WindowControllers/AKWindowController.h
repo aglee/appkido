@@ -198,11 +198,11 @@
 #pragma mark -
 #pragma mark Action methods - Accessing the doc file
 
+- (IBAction)copyDocFileURL:(id)sender;
+
+- (IBAction)openDocFileInBrowser:(id)sender;
+
 - (IBAction)revealDocFileInFinder:(id)sender;
-
-- (IBAction)copyDocTextURL:(id)sender;
-
-- (IBAction)openDocURLInBrowser:(id)sender;
 
 - (IBAction)openParseDebugWindow:(id)sender;
 

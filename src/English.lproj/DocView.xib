@@ -133,12 +133,9 @@
 				<string key="NSName"/>
 			</object>
 			<object class="NSTabView" id="893653921">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">18</int>
 				<string key="NSFrameSize">{379, 314}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="485058862"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<array class="NSMutableArray" key="NSTabViewItems">
 					<object class="NSTabViewItem" id="899967087">
@@ -169,7 +166,6 @@
 									</set>
 									<string key="NSFrameSize">{379, 314}</string>
 									<reference key="NSSuperview" ref="485058862"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="FrameName"/>
@@ -192,7 +188,6 @@
 							</array>
 							<string key="NSFrameSize">{379, 314}</string>
 							<reference key="NSSuperview" ref="893653921"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="801924203"/>
 							<string key="NSReuseIdentifierKey">_NS:11</string>
 						</object>
@@ -248,7 +243,7 @@
 														<int key="NSTCFlags">1</int>
 													</object>
 													<object class="NSTextViewSharedData" key="NSSharedData">
-														<int key="NSFlags">10529</int>
+														<int key="NSFlags">33564961</int>
 														<int key="NSTextCheckingTypes">0</int>
 														<nil key="NSMarkedAttributes"/>
 														<object class="NSColor" key="NSBackgroundColor" id="400151701">

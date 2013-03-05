@@ -250,10 +250,10 @@ contextMenuItemsForElement:(NSDictionary *)element
     }
 
     [self _addMenuItemWithTitle:@"Copy Page URL"
-                         action:@selector(copyDocTextURL:)
+                         action:@selector(copyDocFileURL:)
                         toArray:newMenuItems];
     [self _addMenuItemWithTitle:@"Open Page in Browser"
-                         action:@selector(openDocURLInBrowser:)
+                         action:@selector(openDocFileInBrowser:)
                         toArray:newMenuItems];
     [self _addMenuItemWithTitle:@"Reveal In Finder"
                          action:@selector(revealDocFileInFinder:)
