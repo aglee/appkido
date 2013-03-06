@@ -17,8 +17,6 @@
 #import "AKProtocolNode.h"
 #import "AKTextUtils.h"
 
-#import "AKAppDelegate.h"  // [agl] KLUDGE doesn't belong in model class, but it's here to support the _addExtraDelegateMethodsTo: kludge.
-
 @interface AKClassNode ()
 @property (nonatomic, weak) AKClassNode *parentClass;
 @end
@@ -299,12 +297,12 @@
     }
 }
 
-// [agl] KLUDGE Look for method names of the form setFooDelegate:.
-// [agl] KLUDGE Look for a protocol named ThisClassDelegate.
+// Look for a protocol named ThisClassDelegate.
+// Look for instance method names of the form setFooDelegate:.
 - (void)_addExtraDelegateMethodsTo:(NSMutableArray *)methodsList
 {
     // Look for a protocol named ThisClassDelegate.
-    AKDatabase *db = [[NSApp delegate] appDatabase];
+    AKDatabase *db = [self owningDatabase];
     NSString *possibleDelegateProtocolName = [[self nodeName] stringByAppendingString:@"Delegate"];
     AKProtocolNode *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
     
@@ -314,6 +312,7 @@
     }
 
     // Look for instance method names of the form setFooDelegate:.
+    // [agl] To be really thorough, check for fooDelegate properties.
     for (AKMethodNode *methodNode in [self instanceMethodNodes])
     {
         NSString *methodName = [methodNode nodeName];
