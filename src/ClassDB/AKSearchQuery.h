@@ -16,20 +16,12 @@ typedef enum {
 @class AKDatabase;
 
 /*!
- * @class       AKSearchQuery
- * @abstract    Performs searches on an AKDatabase.
- * @discussion  An AKSearchQuery searches the nodes in an AKDatabase,
- *              subject to a set of search parameters.  Search results are
- *              returned as a sorted array of AKDatabaseNodes.
+ * Searches the nodes in an AKDatabase, subject to a set of search parameters.
+ * Caches search results. Clears the cache whenever a search parameter changes.
  *
- *              An AKSearchQuery caches its search results.  All of the
- *              -setXXX: methods clear the cache if they change a search
- *              parameter.  If there is no change, the cache is left alone.
- *
- *              An AKSearchQuery does not detect changes to the database,
- *              so the cached search results could be incorrect if the
- *              database contents have changed since the last time the
- *              search was performed.
+ * Does not detect changes to the database, which means the cached search
+ * results could be incorrect if the database contents have changed since the
+ * last time a search was performed.
  */
 @interface AKSearchQuery : NSObject
 {
@@ -52,18 +44,21 @@ typedef enum {
 }
 
 @property (nonatomic, copy) NSString *searchString;
+
 @property (nonatomic, assign) NSRange rangeForEntireSearchString;
 @property (nonatomic, assign) BOOL includesClassesAndProtocols;
+
+/*!
+ * If true, searches properties, methods (including delegate methods), and
+ * notifications. If the search string has the form "setXYZ", searches for a
+ * property whose name begins with "XYZ".
+ */
 @property (nonatomic, assign) BOOL includesMembers;
+
 @property (nonatomic, assign) BOOL includesFunctions;
 @property (nonatomic, assign) BOOL includesGlobals;
 @property (nonatomic, assign) BOOL ignoresCase;
 @property (nonatomic, assign) AKSearchComparison searchComparison;
-
-#pragma mark -
-#pragma mark Factory methods
-
-+ (id)withDatabase:(AKDatabase *)db;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

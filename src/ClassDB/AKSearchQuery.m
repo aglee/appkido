@@ -42,14 +42,6 @@
 @synthesize searchResults = _searchResults;
 
 #pragma mark -
-#pragma mark Factory methods
-
-+ (id)withDatabase:(AKDatabase *)db
-{
-    return [[[self alloc] initWithDatabase:db] autorelease];
-}
-
-#pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithDatabase:(AKDatabase *)db
@@ -315,29 +307,15 @@
     {
         AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
 
-        // Search the class's properties.
-        [self _searchNodes:[classNode documentedProperties]
-               forSubtopic:AKPropertiesSubtopicName
-           ofBehaviorTopic:topic];
+        // Search members common to all behaviors.
+        [self _searchMembersUnderBehaviorTopic:topic];
 
-        // Search the class's class methods.
-        [self _searchNodes:[classNode documentedClassMethods]
-               forSubtopic:AKClassMethodsSubtopicName
-           ofBehaviorTopic:topic];
-
-        // Search the class's instance methods.
-        [self _searchNodes:[classNode documentedInstanceMethods]
-               forSubtopic:AKInstanceMethodsSubtopicName
-           ofBehaviorTopic:topic];
-
-        // Search the class's delegate methods.
+        // Search members specific to classes.
         [self _searchNodes:[classNode documentedDelegateMethods]
-               forSubtopic:AKDelegateMethodsSubtopicName
+             underSubtopic:AKDelegateMethodsSubtopicName
            ofBehaviorTopic:topic];
-
-        // Search the class's notifications.
         [self _searchNodes:[classNode documentedNotifications]
-               forSubtopic:AKNotificationsSubtopicName
+             underSubtopic:AKNotificationsSubtopicName
            ofBehaviorTopic:topic];
     }
 }
@@ -348,21 +326,44 @@
     {
         AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
 
-        // Search the protocol's properties.
-        [self _searchNodes:[protocolNode documentedProperties]
-               forSubtopic:AKPropertiesSubtopicName
-           ofBehaviorTopic:topic];
-
-        // Search the protocol's class methods.
-        [self _searchNodes:[protocolNode documentedClassMethods]
-               forSubtopic:AKClassMethodsSubtopicName
-           ofBehaviorTopic:topic];
-
-        // Search the protocol's instance methods.
-        [self _searchNodes:[protocolNode documentedInstanceMethods]
-               forSubtopic:AKInstanceMethodsSubtopicName
-           ofBehaviorTopic:topic];
+        [self _searchMembersUnderBehaviorTopic:topic];
     }
+}
+
+- (void)_searchMembersUnderBehaviorTopic:(AKBehaviorTopic *)behaviorTopic
+{
+    AKBehaviorNode *behaviorNode = (AKBehaviorNode *)[behaviorTopic topicNode];
+
+    // Search the behavior's properties.
+    [self _searchNodes:[behaviorNode documentedProperties]
+         underSubtopic:AKPropertiesSubtopicName
+       ofBehaviorTopic:behaviorTopic];
+
+    // If the search string has the form "setXYZ", search the class's
+    // properties for "XYZ".
+    if ([[_searchString lowercaseString] hasPrefix:@"set"]
+        && [_searchString length] > 3)
+    {
+        // Kludge to temporarily set _searchString to "XYZ".
+        NSString *savedSearchString = [[_searchString retain] autorelease];
+        _searchString = [_searchString substringFromIndex:3];
+        {{
+            [self _searchNodes:[behaviorNode documentedProperties]
+                 underSubtopic:AKPropertiesSubtopicName
+               ofBehaviorTopic:behaviorTopic];
+        }}
+        _searchString = savedSearchString;
+    }
+
+    // Search the behavior's class methods.
+    [self _searchNodes:[behaviorNode documentedClassMethods]
+         underSubtopic:AKClassMethodsSubtopicName
+       ofBehaviorTopic:behaviorTopic];
+
+    // Search the behavior's instance methods.
+    [self _searchNodes:[behaviorNode documentedInstanceMethods]
+         underSubtopic:AKInstanceMethodsSubtopicName
+       ofBehaviorTopic:behaviorTopic];
 }
 
 // Search the functions in each of the function groups for each framework.
@@ -431,7 +432,7 @@
 }
 
 - (void)_searchNodes:(NSArray *)nodeArray
-         forSubtopic:(NSString *)subtopicName
+         underSubtopic:(NSString *)subtopicName
      ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
     for (AKDatabaseNode *node in nodeArray)

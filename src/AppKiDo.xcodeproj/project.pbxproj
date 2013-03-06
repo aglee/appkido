@@ -1333,7 +1333,7 @@
 				735E298116E0508200E9FBC1 /* Debugging */,
 				732BD5D405ED8FBE0055715D /* singleton controllers */,
 				73A0230A16DD18C300240111 /* per-window controllers */,
-				734701A804ED644C00A80003 /* saveable window states */,
+				734701A804ED644C00A80003 /* saveable window states (models) */,
 			);
 			name = "------- C O N T R O L L E R S -------";
 			sourceTree = "<group>";
@@ -1363,7 +1363,7 @@
 			path = sql;
 			sourceTree = "<group>";
 		};
-		734701A804ED644C00A80003 /* saveable window states */ = {
+		734701A804ED644C00A80003 /* saveable window states (models) */ = {
 			isa = PBXGroup;
 			children = (
 				73AE0907049B71D800A80007 /* AKWindowLayout.h */,
@@ -1371,7 +1371,7 @@
 				73C96E23049CA60200A87B79 /* AKSavedWindowState.h */,
 				73C96E24049CA60200A87B79 /* AKSavedWindowState.m */,
 			);
-			name = "saveable window states";
+			name = "saveable window states (models)";
 			path = WindowControllers;
 			sourceTree = "<group>";
 		};
