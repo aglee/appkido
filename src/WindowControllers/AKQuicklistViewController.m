@@ -927,7 +927,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         AKDocLocator *docLocator = [searchResults objectAtIndex:i];
 
-        if ([[[docLocator stringToDisplayInLists] lowercaseString] hasPrefix:lowercaseSearchString])
+        if ([[[docLocator sortName] lowercaseString] hasPrefix:lowercaseSearchString])
         {
             searchResultIndex = i;
             break;
