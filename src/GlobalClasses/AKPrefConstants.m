@@ -56,6 +56,7 @@ NSString *AKDocNamePrefKey  = @"DocName";
 NSString *AKWindowFramePrefKey             = @"WindowFrame";
 NSString *AKToolbarIsVisiblePrefKey        = @"ToolbarIsVisible";
 NSString *AKMiddleViewHeightPrefKey        = @"MiddleViewHeight";
+NSString *AKSubtopicListWidthPrefKey       = @"SubtopicListWidth";
 NSString *AKBrowserIsVisiblePrefKey        = @"BrowserIsVisible";
 NSString *AKBrowserFractionPrefKey         = @"BrowserFraction";
 NSString *AKNumberOfBrowserColumnsPrefKey  = @"NumBrowserColumns";

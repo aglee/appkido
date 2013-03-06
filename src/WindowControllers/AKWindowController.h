@@ -56,8 +56,9 @@
 
     // IBOutlets.
     NSSplitView *_topLevelSplitView;
-    NSSplitView *_innerSplitView;
+    NSSplitView *_bottomTwoThirdsSplitView;
     NSView *_middleView;
+    NSSplitView *_middleThirdSplitView;
 
     NSView *_topicBrowserContainerView;
     NSView *_subtopicListContainerView;
@@ -78,26 +79,38 @@
     NSDrawer *_quicklistDrawer;
 }
 
+/*! Top pane contains the topic browser, bottom pane contains bottomTwoThirdsSplitView. */
 @property (nonatomic, assign) IBOutlet NSSplitView *topLevelSplitView;
-@property (nonatomic, assign) IBOutlet NSSplitView *innerSplitView;
+
+/*! Top pane contains the "middle third", bottom pane contains the doc view. */
+@property (nonatomic, assign) IBOutlet NSSplitView *bottomTwoThirdsSplitView;
+
+/*! Contains topicDescriptionField and middleThirdSplitView. */
 @property (nonatomic, assign) IBOutlet NSView *middleView;
 
+/*! The "middle third" contains the subtopic list and doc list, side by side. */
+@property (nonatomic, assign) IBOutlet NSSplitView *middleThirdSplitView;
+
+// These container views will have views stuffed inside them. Those views will
+// be loaded by various view controllers.
 @property (nonatomic, assign) IBOutlet NSView *topicBrowserContainerView;
 @property (nonatomic, assign) IBOutlet NSView *subtopicListContainerView;
 @property (nonatomic, assign) IBOutlet NSView *docListContainerView;
 @property (nonatomic, assign) IBOutlet NSView *docContainerView;
 
+// These things are in the "middle third".
 @property (nonatomic, assign) IBOutlet NSTextField *topicDescriptionField;
-@property (nonatomic, assign) IBOutlet NSTextField *docCommentField;
-
 @property (nonatomic, assign) IBOutlet NSButton *backButton;
 @property (nonatomic, assign) IBOutlet NSButton *forwardButton;
 @property (nonatomic, assign) IBOutlet NSButton *superclassButton;
-
 @property (nonatomic, assign) IBOutlet NSMenu *backMenu;
 @property (nonatomic, assign) IBOutlet NSMenu *forwardMenu;
 @property (nonatomic, assign) IBOutlet NSMenu *superclassesMenu;
 
+/*! At the bottom of the window. May display info about the selected doc. */
+@property (nonatomic, assign) IBOutlet NSTextField *docCommentField;
+
+/*! On the left side of the window. */
 @property (nonatomic, assign) IBOutlet NSDrawer *quicklistDrawer;
 
 #pragma mark -

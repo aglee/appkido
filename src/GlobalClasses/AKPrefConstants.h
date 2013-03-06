@@ -94,6 +94,7 @@ extern NSString *AKDocNamePrefKey;   // string
 extern NSString *AKWindowFramePrefKey;                 // string <-> rect
 extern NSString *AKToolbarIsVisiblePrefKey;            // boolean
 extern NSString *AKMiddleViewHeightPrefKey;            // float
+extern NSString *AKSubtopicListWidthPrefKey;           // float
 extern NSString *AKBrowserIsVisiblePrefKey;            // boolean
 extern NSString *AKBrowserFractionPrefKey;             // float
 extern NSString *AKNumberOfBrowserColumnsPrefKey;      // int

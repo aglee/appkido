@@ -13,6 +13,9 @@
 @interface NSView (AppKiDo)
 
 /*! Wrapper around -setFrame:. */
+- (void)ak_setFrameWidth:(CGFloat)newWidth;
+
+/*! Wrapper around -setFrame:. */
 - (void)ak_setFrameHeight:(CGFloat)newHeight;
 
 /*!
@@ -40,11 +43,10 @@
 
 @interface NSSplitView (AppKiDo)
 
-/*! Requires subview to be one of exactly two subviews of the splitview. */
-- (void)ak_setHeight:(CGFloat)newHeight ofSubview:(NSView *)subview;
+- (void)ak_setWidth:(NSInteger)fixedWidth ofSubviewAtIndex:(NSInteger)subviewIndex;
+- (void)ak_preserveWidthOfSubviewAtIndex:(NSInteger)subviewIndex;
 
-- (void)al_preserveTopHeightOfTwoSubviewsWithOldSize:(NSSize)oldSize;
-
-- (NSView *)ak_siblingOfSubview:(NSView *)subview;
+- (void)ak_setHeight:(NSInteger)fixedHeight ofSubviewAtIndex:(NSInteger)subviewIndex;
+- (void)ak_preserveHeightOfSubviewAtIndex:(NSInteger)subviewIndex;
 
 @end

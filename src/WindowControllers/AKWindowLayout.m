@@ -17,6 +17,7 @@
 @synthesize browserFraction = _browserFraction;
 @synthesize numberOfBrowserColumns = _numberOfBrowserColumns;
 @synthesize middleViewHeight = _middleViewHeight;
+@synthesize subtopicListWidth = _subtopicListWidth;
 @synthesize quicklistDrawerIsOpen = _quicklistDrawerIsOpen;
 @synthesize quicklistDrawerWidth = _quicklistDrawerWidth;
 @synthesize quicklistMode = _quicklistMode;
@@ -70,6 +71,7 @@
     [windowLayout setWindowFrame:NSRectFromString([prefDict objectForKey:AKWindowFramePrefKey])];
     [windowLayout setToolbarIsVisible:[[prefDict objectForKey:AKToolbarIsVisiblePrefKey] boolValue]];
     [windowLayout setMiddleViewHeight:[[prefDict objectForKey:AKMiddleViewHeightPrefKey] floatValue]];
+    [windowLayout setSubtopicListWidth:[[prefDict objectForKey:AKSubtopicListWidthPrefKey] floatValue]];
     [windowLayout setBrowserIsVisible:[[prefDict objectForKey:AKBrowserIsVisiblePrefKey] boolValue]];
     [windowLayout setBrowserFraction:[[prefDict objectForKey:AKBrowserFractionPrefKey] floatValue]];
     [windowLayout setNumberOfBrowserColumns:[[prefDict objectForKey:AKNumberOfBrowserColumnsPrefKey] intValue]];
@@ -99,6 +101,7 @@
     [prefDict setObject:NSStringFromRect(_windowFrame) forKey:AKWindowFramePrefKey];
     [prefDict setObject:@(_toolbarIsVisible) forKey:AKToolbarIsVisiblePrefKey];
     [prefDict setObject:@(_middleViewHeight) forKey:AKMiddleViewHeightPrefKey];
+    [prefDict setObject:@(_subtopicListWidth) forKey:AKSubtopicListWidthPrefKey];
     [prefDict setObject:@(_browserIsVisible) forKey:AKBrowserIsVisiblePrefKey];
     [prefDict setObject:@(_browserFraction) forKey:AKBrowserFractionPrefKey];
     [prefDict setObject:@(_numberOfBrowserColumns) forKey:AKNumberOfBrowserColumnsPrefKey];

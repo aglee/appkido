@@ -38,25 +38,25 @@
 @implementation AKWindowController
 
 @synthesize topLevelSplitView = _topLevelSplitView;
-@synthesize innerSplitView = _innerSplitView;
+@synthesize bottomTwoThirdsSplitView = _bottomTwoThirdsSplitView;
 @synthesize middleView = _middleView;
+@synthesize middleThirdSplitView = _middleThirdSplitView;
 
 @synthesize topicBrowserContainerView = _topicBrowserContainerView;
 @synthesize subtopicListContainerView = _subtopicListContainerView;
 @synthesize docListContainerView = _docListContainerView;
 @synthesize docContainerView = _docContainerView;
 
-@synthesize docCommentField = _docCommentField;
-
+@synthesize topicDescriptionField = _topicDescriptionField;
 @synthesize backButton = _backButton;
 @synthesize forwardButton = _forwardButton;
 @synthesize superclassButton = _superclassButton;
-
 @synthesize backMenu = _backMenu;
 @synthesize forwardMenu = _forwardMenu;
 @synthesize superclassesMenu = _superclassesMenu;
 
-@synthesize topicDescriptionField = _topicDescriptionField;
+@synthesize docCommentField = _docCommentField;
+
 @synthesize quicklistDrawer = _quicklistDrawer;
 
 #pragma mark -
@@ -245,16 +245,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)toggleBrowserVisible:(id)sender
 {
-    NSRect browserFrame = [_topicBrowserContainerView frame];
+    CGFloat newBrowserHeight = (([_topicBrowserContainerView frame].size.height == 0.0)
+                                ? [self _computeBrowserHeight]
+                                : 0.0);
 
-    if (browserFrame.size.height == 0.0)
-    {
-        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight] ofSubview:_topicBrowserContainerView];
-    }
-    else
-    {
-        [_topLevelSplitView ak_setHeight:0.0 ofSubview:_topicBrowserContainerView];
-    }
+    [_topLevelSplitView ak_setHeight:newBrowserHeight ofSubviewAtIndex:0];
 
     // [agl] KLUDGE -- for some reason the scroll view does not retile
     // automatically, so I force it here; the reason I traverse all subviews
@@ -658,19 +653,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     if (([_topicBrowserContainerView frame].size.height > 0.0)
         && [windowLayout browserIsVisible])
     {
-        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight]
-                               ofSubview:_topicBrowserContainerView];
+        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight] ofSubviewAtIndex:0];
     }
     else
     {
-        [_topLevelSplitView ak_setHeight:0.0
-                               ofSubview:_topicBrowserContainerView];
+        [_topLevelSplitView ak_setHeight:0.0 ofSubviewAtIndex:0];
     }
 
-    // Restore the state of the inner split view.
-    [_innerSplitView ak_setHeight:[windowLayout middleViewHeight]
-                        ofSubview:_middleView];
-    
+    // Restore the state of the bottom two thirds.
+    [_bottomTwoThirdsSplitView ak_setHeight:[windowLayout middleViewHeight] ofSubviewAtIndex:0];
+
+    if ([windowLayout subtopicListWidth])
+    {
+        [_middleThirdSplitView ak_setWidth:[windowLayout subtopicListWidth] ofSubviewAtIndex:0];
+    }
+
     [_subtopicListController takeWindowLayoutFrom:windowLayout];
     [_docListController takeWindowLayoutFrom:windowLayout];
     [_docViewController takeWindowLayoutFrom:windowLayout];
@@ -700,6 +697,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Remember the state of the inner split view.
     [windowLayout setMiddleViewHeight:([_middleView frame].size.height)];
+    [windowLayout setSubtopicListWidth:([_subtopicListContainerView frame].size.width)];
 
     // Remember the state of the topic browser.
     [windowLayout setBrowserIsVisible:([_topicBrowserContainerView frame].size.height > 0)];
@@ -779,9 +777,18 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)splitView:(NSSplitView *)splitView resizeSubviewsWithOldSize:(NSSize)oldSize
 {
-    // We contain two split views, and we happen to want them both to resize the
-    // same way.
-    [splitView al_preserveTopHeightOfTwoSubviewsWithOldSize:oldSize];
+    if (splitView == _topLevelSplitView)
+    {
+        [splitView ak_preserveHeightOfSubviewAtIndex:0];
+    }
+    else if (splitView == _bottomTwoThirdsSplitView)
+    {
+        [splitView ak_preserveHeightOfSubviewAtIndex:0];
+    }
+    else if (splitView == _middleThirdSplitView)
+    {
+        [splitView ak_preserveWidthOfSubviewAtIndex:0];
+    }
 }
 
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification

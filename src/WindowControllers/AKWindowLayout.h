@@ -31,6 +31,7 @@
 
     // Attributes of the middle section.
     CGFloat _middleViewHeight;
+    CGFloat _subtopicListWidth;  // This is an attribute being added in March 2013.
 
     // Attributes of the quicklist drawer.
     BOOL _quicklistDrawerIsOpen;
@@ -50,6 +51,7 @@
 @property (nonatomic, assign) CGFloat browserFraction;
 @property (nonatomic, assign) NSInteger numberOfBrowserColumns;
 @property (nonatomic, assign) CGFloat middleViewHeight;
+@property (nonatomic, assign) CGFloat subtopicListWidth;
 @property (nonatomic, assign) BOOL quicklistDrawerIsOpen;
 @property (nonatomic, assign) CGFloat quicklistDrawerWidth;
 @property (nonatomic, assign) NSInteger quicklistMode;
