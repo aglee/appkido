@@ -53,7 +53,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{350, 350}</string>
 				<object class="NSView" key="NSWindowView" id="455086034">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSSplitView" id="1011512076">
@@ -65,6 +65,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrameSize">{550, 155}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="325794021"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NSView</string>
@@ -91,6 +92,7 @@
 																	<array class="NSMutableArray" key="NSSubviews"/>
 																	<string key="NSFrameSize">{200, 193}</string>
 																	<reference key="NSSuperview" ref="282184235"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="764380673"/>
 																	<string key="NSReuseIdentifierKey">_NS:9</string>
 																	<string key="NSClassName">NSView</string>
@@ -101,6 +103,7 @@
 																	<array class="NSMutableArray" key="NSSubviews"/>
 																	<string key="NSFrame">{{201, 0}, {349, 193}}</string>
 																	<reference key="NSSuperview" ref="282184235"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="294746084"/>
 																	<string key="NSReuseIdentifierKey">_NS:9</string>
 																	<string key="NSClassName">NSView</string>
@@ -108,6 +111,7 @@
 															</array>
 															<string key="NSFrameSize">{550, 193}</string>
 															<reference key="NSSuperview" ref="172926322"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="841800253"/>
 															<bool key="NSIsVertical">YES</bool>
 															<int key="NSDividerStyle">2</int>
@@ -115,6 +119,7 @@
 													</array>
 													<string key="NSFrameSize">{550, 193}</string>
 													<reference key="NSSuperview" ref="593053015"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="282184235"/>
 													<string key="NSClassName">NSView</string>
 													<string key="NSExtension">NSResponder</string>
@@ -132,6 +137,7 @@
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{58, 0}, {24, 24}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="172926322"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="616726537">
@@ -158,6 +164,7 @@
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{32, 0}, {24, 24}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="561831487"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="177179376">
@@ -180,6 +187,7 @@
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{6, 0}, {24, 24}}</string>
 																	<reference key="NSSuperview" ref="833349516"/>
+																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="863506524"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSButtonCell" key="NSCell" id="335044325">
@@ -200,6 +208,7 @@
 															</array>
 															<string key="NSFrame">{{461, -1}, {88, 24}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="468382865"/>
 															<string key="NSClassName">NSView</string>
 															<string key="NSExtension">NSResponder</string>
@@ -209,6 +218,7 @@
 															<int key="NSvFlags">266</int>
 															<string key="NSFrame">{{3, 0}, {450, 21}}</string>
 															<reference key="NSSuperview" ref="1063794748"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="833349516"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="60864428">
@@ -239,6 +249,7 @@
 													</array>
 													<string key="NSFrame">{{0, 193}, {550, 24}}</string>
 													<reference key="NSSuperview" ref="593053015"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="767373584"/>
 													<string key="NSClassName">DIGSMatchingBackgroundView</string>
 													<string key="NSExtension">NSView</string>
@@ -246,6 +257,7 @@
 											</array>
 											<string key="NSFrameSize">{550, 215}</string>
 											<reference key="NSSuperview" ref="325794021"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="1063794748"/>
 											<string key="NSClassName">DIGSMarginView</string>
 											<string key="NSExtension">NSView</string>
@@ -256,6 +268,7 @@
 											<array class="NSMutableArray" key="NSSubviews"/>
 											<string key="NSFrame">{{0, 216}, {550, 217}}</string>
 											<reference key="NSSuperview" ref="325794021"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="192904312"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSClassName">NSView</string>
@@ -263,12 +276,14 @@
 									</array>
 									<string key="NSFrame">{{0, 156}, {550, 433}}</string>
 									<reference key="NSSuperview" ref="1011512076"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="593053015"/>
 									<int key="NSDividerStyle">2</int>
 								</object>
 							</array>
 							<string key="NSFrame">{{0, 27}, {550, 589}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="866576386"/>
 							<int key="NSDividerStyle">2</int>
 						</object>
@@ -277,6 +292,8 @@
 							<int key="NSvFlags">290</int>
 							<string key="NSFrame">{{7, 7}, {526, 14}}</string>
 							<reference key="NSSuperview" ref="455086034"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="224150886">
 								<int key="NSCellFlags">67108928</int>
@@ -306,6 +323,8 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{550, 616}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1011512076"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -315,7 +334,7 @@
 			</object>
 			<object class="NSDrawer" id="975841129">
 				<nil key="NSNextResponder"/>
-				<string key="NSContentSize">{175, 578}</string>
+				<string key="NSContentSize">{240, 578}</string>
 				<string key="NSMinContentSize">{160, 360}</string>
 				<string key="NSMaxContentSize">{600, 9999}</string>
 				<int key="NSPreferredEdge">0</int>
@@ -1026,12 +1045,12 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="backButton">NSButton</string>
 						<string key="backMenu">NSMenu</string>
+						<string key="bottomTwoThirdsSplitView">NSSplitView</string>
 						<string key="docCommentField">NSTextField</string>
 						<string key="docContainerView">NSView</string>
 						<string key="docListContainerView">NSView</string>
 						<string key="forwardButton">NSButton</string>
 						<string key="forwardMenu">NSMenu</string>
-						<string key="innerSplitView">NSSplitView</string>
 						<string key="middleThirdSplitView">NSSplitView</string>
 						<string key="middleView">NSView</string>
 						<string key="quicklistDrawer">NSDrawer</string>
@@ -1050,6 +1069,10 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 						<object class="IBToOneOutletInfo" key="backMenu">
 							<string key="name">backMenu</string>
 							<string key="candidateClassName">NSMenu</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="bottomTwoThirdsSplitView">
+							<string key="name">bottomTwoThirdsSplitView</string>
+							<string key="candidateClassName">NSSplitView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="docCommentField">
 							<string key="name">docCommentField</string>
@@ -1070,10 +1093,6 @@ cmlnaHQtY2xpY2sgZm9yIG1lbnUpA</string>
 						<object class="IBToOneOutletInfo" key="forwardMenu">
 							<string key="name">forwardMenu</string>
 							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="innerSplitView">
-							<string key="name">innerSplitView</string>
-							<string key="candidateClassName">NSSplitView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="middleThirdSplitView">
 							<string key="name">middleThirdSplitView</string>
