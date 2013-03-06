@@ -669,6 +669,19 @@
     }
     
     NSString *sdkVersion = [AKPrefUtils sdkVersionPref];  // If nil, the latest SDK available will be used.
+
+    if (sdkVersion == nil)
+    {
+        sdkVersion = [[devTools sdkVersionsThatAreCoveredByDocSets] lastObject];
+    }
+
+    if (sdkVersion == nil)
+    {
+        NSString *msg = [NSString stringWithFormat:@"No docset was found for any installed SDK."];
+        [errorStrings addObject:msg];
+        return nil;
+    }
+
     NSString *docSetSDKVersion = [devTools docSetSDKVersionThatCoversSDKVersion:sdkVersion];
     NSString *docSetPath = [devTools docSetPathForSDKVersion:docSetSDKVersion];
 
