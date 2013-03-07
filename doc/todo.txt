@@ -1,5 +1,4 @@
 * Add progress indicator during search, and a count when done.
-* smart search for properties (setFoo)
 * Use the stylesheet that comes with the docset.
 * Give option to use custom stylesheet.
 * "Find a random item"
@@ -26,8 +25,6 @@
 
 * Store database on disk so it doesn't have to be reparsed on every launch.
 	* Treat anchors as primary way of linking.
-* Put a splitter between the subtopic list and doc list.
-	* Remember the relative split position as part of the remembered window layout
 
 * service for putting multi-line method into clipboard
 	* Submit radar about splitting method calls into multiple lines
