@@ -63,8 +63,6 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 
 - (void)dealloc
 {
-    NSLog(@"*** %s -- <%@: %p>", __PRETTY_FUNCTION__, [self class], self);
-
     [_rootSection release];
 
     [super dealloc];

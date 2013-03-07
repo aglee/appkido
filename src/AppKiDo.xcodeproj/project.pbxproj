@@ -403,7 +403,6 @@
 		7399B31F0E632A5C001AE672 /* AKNotificationNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F480E397760002AFB76 /* AKNotificationNode.h */; };
 		7399B3200E632A5C001AE672 /* AKPropertiesSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 734879D10E3AB45000A3B12F /* AKPropertiesSubtopic.h */; };
 		7399B3210E632A5C001AE672 /* AKPropertyDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 734879FA0E3AB59800A3B12F /* AKPropertyDoc.h */; };
-		7399B3220E632A5C001AE672 /* AKOldLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */; };
 		7399B3250E632A5C001AE672 /* AKDevToolsPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */; };
 		7399B3260E632A5C001AE672 /* AKNodeDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7399AFBA0E621E27001AE672 /* AKNodeDoc.h */; };
 		7399B3290E632A5C001AE672 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -528,7 +527,6 @@
 		7399B3B10E632A5C001AE672 /* AKNotificationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F490E397760002AFB76 /* AKNotificationNode.m */; };
 		7399B3B20E632A5C001AE672 /* AKPropertiesSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */; };
 		7399B3B30E632A5C001AE672 /* AKPropertyDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 734879FB0E3AB59800A3B12F /* AKPropertyDoc.m */; };
-		7399B3B40E632A5C001AE672 /* AKOldLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */; };
 		7399B3B70E632A5C001AE672 /* AKDevToolsPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */; };
 		7399B3B80E632A5C001AE672 /* AKNodeDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399AFBB0E621E27001AE672 /* AKNodeDoc.m */; };
 		7399B3BA0E632A5C001AE672 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -556,8 +554,6 @@
 		73A0232416DD214C00240111 /* AKQuicklistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0232016DD214C00240111 /* AKQuicklistViewController.m */; };
 		73A0232C16DD259800240111 /* QuicklistView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0232A16DD259800240111 /* QuicklistView.xib */; };
 		73A0232D16DD259800240111 /* QuicklistView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0232A16DD259800240111 /* QuicklistView.xib */; };
-		73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */; };
-		73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */; };
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
 		73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
@@ -857,8 +853,6 @@
 		73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKSubtopic.m; sourceTree = "<group>"; };
 		73AE0907049B71D800A80007 /* AKWindowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowLayout.h; sourceTree = "<group>"; };
 		73AE0908049B71D800A80007 /* AKWindowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowLayout.m; sourceTree = "<group>"; };
-		73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKOldLinkResolver.h; sourceTree = "<group>"; };
-		73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKOldLinkResolver.m; sourceTree = "<group>"; };
 		73B313A90617441B006C9BA7 /* AKGroupNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGroupNode.h; sourceTree = "<group>"; };
 		73B313AA0617441B006C9BA7 /* AKGroupNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGroupNode.m; sourceTree = "<group>"; };
 		73B315450617A3F3006C9BA7 /* AKGroupNodeSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGroupNodeSubtopic.h; sourceTree = "<group>"; };
@@ -1465,8 +1459,6 @@
 			children = (
 				7370170405FBA7B300C74AA7 /* AKLinkResolver.h */,
 				7370170505FBA7B300C74AA7 /* AKLinkResolver.m */,
-				73B3017B0E3F1CD100AEF0C0 /* AKOldLinkResolver.h */,
-				73B3017C0E3F1CD100AEF0C0 /* AKOldLinkResolver.m */,
 			);
 			name = links;
 			path = WindowControllers;
@@ -1836,7 +1828,6 @@
 				73E86F4A0E397760002AFB76 /* AKNotificationNode.h in Headers */,
 				734879D30E3AB45000A3B12F /* AKPropertiesSubtopic.h in Headers */,
 				734879FC0E3AB59800A3B12F /* AKPropertyDoc.h in Headers */,
-				73B3017D0E3F1CD100AEF0C0 /* AKOldLinkResolver.h in Headers */,
 				739E1C800E4F453900119B06 /* AKDevToolsPanelController.h in Headers */,
 				7399AFBC0E621E27001AE672 /* AKNodeDoc.h in Headers */,
 				73C735A70F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */,
@@ -1974,7 +1965,6 @@
 				7399B31F0E632A5C001AE672 /* AKNotificationNode.h in Headers */,
 				7399B3200E632A5C001AE672 /* AKPropertiesSubtopic.h in Headers */,
 				7399B3210E632A5C001AE672 /* AKPropertyDoc.h in Headers */,
-				7399B3220E632A5C001AE672 /* AKOldLinkResolver.h in Headers */,
 				7399B3250E632A5C001AE672 /* AKDevToolsPanelController.h in Headers */,
 				7399B3260E632A5C001AE672 /* AKNodeDoc.h in Headers */,
 				73C735A90F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */,
@@ -2282,7 +2272,6 @@
 				73E86F4B0E397760002AFB76 /* AKNotificationNode.m in Sources */,
 				734879D40E3AB45000A3B12F /* AKPropertiesSubtopic.m in Sources */,
 				734879FD0E3AB59800A3B12F /* AKPropertyDoc.m in Sources */,
-				73B3017E0E3F1CD100AEF0C0 /* AKOldLinkResolver.m in Sources */,
 				739E1C810E4F453900119B06 /* AKDevToolsPanelController.m in Sources */,
 				7399AFBD0E621E27001AE672 /* AKNodeDoc.m in Sources */,
 				73C735A80F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */,
@@ -2416,7 +2405,6 @@
 				7399B3B10E632A5C001AE672 /* AKNotificationNode.m in Sources */,
 				7399B3B20E632A5C001AE672 /* AKPropertiesSubtopic.m in Sources */,
 				7399B3B30E632A5C001AE672 /* AKPropertyDoc.m in Sources */,
-				7399B3B40E632A5C001AE672 /* AKOldLinkResolver.m in Sources */,
 				7399B3B70E632A5C001AE672 /* AKDevToolsPanelController.m in Sources */,
 				7399B3B80E632A5C001AE672 /* AKNodeDoc.m in Sources */,
 				73C735AA0F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */,

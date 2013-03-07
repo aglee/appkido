@@ -12,56 +12,26 @@
 @class AKClassNode;
 @class AKDatabaseNode;
 @class AKDocSetIndex;
-@class AKFileSection;
-@class AKFramework;
 @class AKFunctionNode;
 @class AKGlobalsNode;
 @class AKGroupNode;
 @class AKProtocolNode;
 
-// [agl] TODO -- Should explain distinction between a node and a token.  A
-// node can map to multiple tokens.  For example a globals node for an enum
-// maps to all the items in the enum, and a group node contains multiple
-// subnodes.
-
-
-// [agl] TODO -- The class comment has to be rewritten.  It's up to
-// subclasses to *populate* the ivars in the abstract class via the
-// -populateDatabase method, which needs to be called after instantiating
-// the database and before trying to use it.  Also, there should be no more default
-// database.  Also, mention the delegate.  Also, this is now a class cluster.
-
 /*!
- * @class       AKDatabase
- * @abstract    In-memory database of API constructs and their
- *              documentation.
- * @discussion  An AKDatabase contains information about the APIs for OS X
- *              frameworks such as Foundation and AppKit.  This information
- *              consists of (1) the names and logical relationships between
- *              API constructs (for example, "the Foundation class NSString
- *              is a subclass of NSObject"); (2) HTML documentation for the
- *              API; and (3) bookkeeping information that supports
- *              navigation of the documentation.
+ * Contains information about a Cocoa-style Objective-C API: the names of API
+ * constructs, the logical relationships between them, and where each one is
+ * documented. An example of a fact in this database is "The Foundation
+ * class NSString is a subclass of NSObject, and is documented in file XYZ."
  *
- *              Each framework in an AKDatabase is represented by a concrete
- *              instance of AKFramework.  Different frameworks have
- *              different ways of organizing their APIs and the associated
- *              documentation.  These differences are managed by subclasses
- *              of AKFramework.
+ * All this information is represented as a graph of AKDatabaseNode objects.
+ * Every query to this database returns a collection of database nodes.
  *
- *              Within a framework, individual API constructs are
- *              represented by objects called "nodes."  Nodes are instances
- *              of AKDatabaseNode and its descendant classes such as
- *              AKClassNode and AKMethodNode.  Nodes in one framework
- *              frequently refer to nodes in another framework -- for
- *              example, when an AppKit class inherits from a Foundation
- *              class.  The database can be thought of as a wrapper around
- *              a graph of database nodes that are grouped by framework.
+ * Before querying a database, you need to populate it by calling
+ * loadTokensForFrameworksWithNames:. You can set a delegate which will be
+ * messaged at various points while the database is being populated.
  *
- *              In theory you are free to create multiple instances of
- *              AKDatabase.  AppKiDo only uses the global shared instance,
- *              which is referred to throughout the AppKiDo documentation as
- *              "the database."
+ * An AKDatabase lives entirely in memory. There is currently no option to use a
+ * persistent store.
  */
 @interface AKDatabase : NSObject
 {
@@ -72,7 +42,6 @@
     // Frameworks.
     // Note: there are constants in AKFrameworkConstants.h for the names of some
     // frameworks that need to be treated specially.
-    NSMutableDictionary *_frameworksByName;  // @{FRAMEWORK_NAME: AKFramework}
     NSMutableArray *_frameworkNames;
     NSMutableArray *_namesOfAvailableFrameworks;
 
@@ -93,20 +62,8 @@
     NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
 
     // Hyperlink support.
-    NSMutableDictionary *_frameworkNamesByHTMLPath;  // @{PATH_TO_HTML_FILE: FRAMEWORK_NAME}
     NSMutableDictionary *_classNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassNode}
     NSMutableDictionary *_protocolNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolNode}
-
-    // See AKDocParser for an explanation of root sections.
-    NSMutableDictionary *_rootSectionsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKFileSection}
-
-    // Keys are anchor strings.  Each value is a dictionary whose keys are
-    // paths to HTML files and whose values are NSNumbers containing the
-    // byte offset of that anchor within that file.
-    //
-    // See the comment for -offsetOfAnchorString:inHTMLFile: to see what
-    // is meant by "anchor strings."
-    NSMutableDictionary *_offsetsOfAnchorStringsInHTMLFiles;
 }
 
 @property (nonatomic, unsafe_unretained) id <AKDatabaseDelegate> delegate;
@@ -199,9 +156,6 @@
 
 - (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
 
-- (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
-                                      inFrameworkNamed:(NSString *)frameworkName;
-
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
@@ -214,43 +168,13 @@
 
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
 
-- (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
-                                  inFrameworkNamed:(NSString *)frameworkName;
-
 #pragma mark -
 #pragma mark Getters and setters -- hyperlink support
-
-- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath;
-
-- (void)rememberFrameworkName:(NSString *)frameworkName forHTMLFile:(NSString *)htmlFilePath;
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
 
 - (AKProtocolNode *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberThatProtocol:(AKProtocolNode *)protocolNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
-
-- (AKFileSection *)rootSectionForHTMLFile:(NSString *)filePath;
-- (void)rememberRootSection:(AKFileSection *)rootSection forHTMLFile:(NSString *)filePath;
-
-// [agl] Awkward having these here. Rethink design. Separate concerns between
-// the node graph and the documentation repository.
-/*!
- * @method      offsetOfAnchorString:inHTMLFile:
- * @discussion  When the user clicks a hyperlink, we are given the name of
- *              an HTML file and an "anchor string" that indicates where
- *              in that file we should link to.
- *
- *              In HTML terms, the anchor string is the value of the "name"
- *              attribute in a tag of the form <a name="xxx">.
- *
- *              This method returns the byte offset of the given anchor
- *              string within the given file, or -1 if it is not present.
- */
-- (NSInteger)offsetOfAnchorString:(NSString *)anchorString
-                       inHTMLFile:(NSString *)filePath;
-- (void)rememberOffset:(NSInteger)anchorOffset
-        ofAnchorString:(NSString *)anchorString
-            inHTMLFile:(NSString *)filePath;
 
 @end

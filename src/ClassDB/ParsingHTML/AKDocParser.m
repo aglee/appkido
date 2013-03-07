@@ -226,12 +226,6 @@
         // Apply the parse results to the database.
         if (_rootSectionOfCurrentFile != nil)
         {
-            [[self targetDatabase] rememberFrameworkName:[self targetFrameworkName]
-                                       forHTMLFile:[self currentPath]];
-
-            [[self targetDatabase] rememberRootSection:_rootSectionOfCurrentFile
-                                     forHTMLFile:[self currentPath]];
-            
             [self applyParseResults];
         }
     }
@@ -482,45 +476,12 @@
         return;
     }
 
-    // Scan tokens up to and including the closing ">".  On the way,
-    // look for the "name" attribute.
+    // Scan tokens up to and including the closing ">".
     while (([self parseToken]))
     {
         if (strcmp(_token, ">") == 0)
         {
             break;
-        }
-        else if (strcmp(_token, "name") == 0) // [agl] case-sensitive
-        {
-            // Skip the "=" sign.
-            (void)[self parseToken];
-            if (strcmp(_token, "=") != 0)
-            {
-                // The token "name" must be in this tag in some way
-                // other than being an attribute.
-                continue;
-            }
-
-            // Skip the opening quote.
-            // [agl] add an assert making sure it's a quote
-            (void)[self parseToken];
-
-            // The sequence of characters from here to the closing quote
-            // is the anchor string.
-            const char *anchorStart = _current;
-
-            while ((_current < _dataEnd) && (_current[0] != '\"'))
-            {
-                _current++;
-            }
-
-            NSString *anchorString = [[NSString alloc] initWithBytes:anchorStart
-                                                              length:(_current - anchorStart)
-                                                            encoding:NSUTF8StringEncoding];
-
-            [[self targetDatabase] rememberOffset:(anchorStart - _dataStart)
-                             ofAnchorString:anchorString
-                                 inHTMLFile:[self currentPath]];
         }
     }
 }

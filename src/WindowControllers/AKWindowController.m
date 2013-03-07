@@ -24,7 +24,6 @@
 #import "AKGlobalsTopic.h"
 #import "AKInformalProtocolsTopic.h"
 #import "AKLinkResolver.h"
-#import "AKOldLinkResolver.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolTopic.h"
 #import "AKQuicklistViewController.h"
@@ -168,17 +167,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // If we have a file: URL, try to derive a doc locator from it.
     AKDocLocator *destinationDocLocator = nil;
+    
     if ([destinationURL isFileURL])
     {
         AKLinkResolver *linkResolver = [AKLinkResolver linkResolverWithDatabase:_database];
         destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
-
-        if (destinationDocLocator == nil)
-        {
-            DIGSLogDebug(@"resorting to AKOldLinkResolver for %@", linkURL);
-            linkResolver = [AKOldLinkResolver linkResolverWithDatabase:_database];
-            destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
-        }
     }
 
     // If we derived a doc locator, go to it. Otherwise, try opening the file in

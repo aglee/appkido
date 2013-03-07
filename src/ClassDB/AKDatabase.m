@@ -105,7 +105,6 @@
     {
         _docSetIndex = [docSetIndex retain];
 
-        _frameworksByName = [[NSMutableDictionary alloc] init];
         _frameworkNames = [[NSMutableArray alloc] init];
         _namesOfAvailableFrameworks = [[docSetIndex selectableFrameworkNames] copy];
 
@@ -123,10 +122,6 @@
 
         _classNodesByHTMLPath = [[NSMutableDictionary alloc] init];
         _protocolNodesByHTMLPath = [[NSMutableDictionary alloc] init];
-        _rootSectionsByHTMLPath = [[NSMutableDictionary alloc] init];
-        _offsetsOfAnchorStringsInHTMLFiles = [[NSMutableDictionary alloc] initWithCapacity:30000];
-
-        _frameworkNamesByHTMLPath = [[NSMutableDictionary alloc] init];
     }
 
     return self;
@@ -141,22 +136,24 @@
 - (void)dealloc
 {
     [_docSetIndex release];
-    [_frameworksByName release];
+
     [_frameworkNames release];
     [_namesOfAvailableFrameworks release];
+
     [_classNodesByName release];
     [_classListsByFramework release];
+
     [_protocolNodesByName release];
     [_protocolListsByFramework release];
+
     [_functionsGroupListsByFramework release];
     [_functionsGroupsByFrameworkAndGroup release];
+
     [_globalsGroupListsByFramework release];
     [_globalsGroupsByFrameworkAndGroup release];
-    [_frameworkNamesByHTMLPath release];
+    
     [_classNodesByHTMLPath release];
     [_protocolNodesByHTMLPath release];
-    [_rootSectionsByHTMLPath release];
-    [_offsetsOfAnchorStringsInHTMLFiles release];
 
     [super dealloc];
 }
@@ -405,29 +402,6 @@
     [self _seeIfFrameworkIsNew:frameworkName];
 }
 
-- (AKGroupNode *)functionsGroupContainingFunctionNamed:(NSString *)functionName
-                                      inFrameworkNamed:(NSString *)frameworkName
-{
-    // Get the functions groups for the given framework.
-    NSMutableArray *groupList = [_functionsGroupListsByFramework objectForKey:frameworkName];
-    if (groupList == nil)
-    {
-        return nil;
-    }
-
-    // Check each functions group to see if it contains the given function.
-    for (AKGroupNode *groupNode in groupList)
-    {
-        if ([groupNode subnodeWithName:functionName] != nil)
-        {
-            return groupNode;
-        }
-    }
-
-    // If we got this far, we couldn't find the function.
-    return nil;
-}
-
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
@@ -485,42 +459,8 @@
     [self _seeIfFrameworkIsNew:frameworkName];
 }
 
-- (AKGroupNode *)globalsGroupContainingGlobalNamed:(NSString *)nameOfGlobal
-                                  inFrameworkNamed:(NSString *)frameworkName
-{
-    // Get the globals groups for the given framework.
-    NSMutableArray *groupList = [_globalsGroupListsByFramework objectForKey:frameworkName];
-    if (groupList == nil)
-    {
-        return nil;
-    }
-
-    // Check each globals group to see if it contains the given global.
-    for (AKGroupNode *groupNode in groupList)
-    {
-        if ([groupNode subnodeWithName:nameOfGlobal] != nil)
-        {
-            return groupNode;
-        }
-    }
-
-    // If we got this far, we couldn't find the global.
-    return nil;
-}
-
 #pragma mark -
 #pragma mark Getters and setters -- hyperlink support
-
-- (NSString *)frameworkForHTMLFile:(NSString *)htmlFilePath
-{
-    return [_frameworkNamesByHTMLPath objectForKey:htmlFilePath];
-}
-
-- (void)rememberFrameworkName:(NSString *)frameworkName
-                  forHTMLFile:(NSString *)htmlFilePath
-{
-    [_frameworkNamesByHTMLPath setObject:frameworkName forKey:htmlFilePath];
-}
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
@@ -542,55 +482,6 @@
       isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
     [_protocolNodesByHTMLPath setObject:protocolNode forKey:htmlFilePath];
-}
-
-- (AKFileSection *)rootSectionForHTMLFile:(NSString *)filePath
-{
-    return [_rootSectionsByHTMLPath objectForKey:filePath];
-}
-
-- (void)rememberRootSection:(AKFileSection *)rootSection
-                forHTMLFile:(NSString *)filePath
-{
-    [_rootSectionsByHTMLPath setObject:rootSection forKey:filePath];
-}
-
-- (NSInteger)offsetOfAnchorString:(NSString *)anchorString
-                       inHTMLFile:(NSString *)filePath
-{
-    NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
-
-    if (offsetsByFilePath == nil)
-    {
-        return -1;
-    }
-
-    NSNumber *offsetValue = [offsetsByFilePath objectForKey:filePath];
-
-    if (offsetValue == nil)
-    {
-        return -1;
-    }
-
-    return [offsetValue intValue];
-}
-
-- (void)rememberOffset:(NSInteger)anchorOffset
-        ofAnchorString:(NSString *)anchorString
-            inHTMLFile:(NSString *)filePath
-{
-    NSMutableDictionary *offsetsByFilePath = [_offsetsOfAnchorStringsInHTMLFiles objectForKey:anchorString];
-
-    if (offsetsByFilePath == nil)
-    {
-        offsetsByFilePath = [NSMutableDictionary dictionary];
-
-        [_offsetsOfAnchorStringsInHTMLFiles setObject:offsetsByFilePath forKey:anchorString];
-    }
-
-    NSNumber *offsetValue = @(anchorOffset);
-
-    [offsetsByFilePath setObject:offsetValue forKey:filePath];
 }
 
 #pragma mark -
