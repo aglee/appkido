@@ -6,6 +6,7 @@
  */
 
 #import "AKSortable.h"
+#import "AKPrefDictionary.h"
 #import "AKPrefUtils.h"
 
 @class AKSubtopic;
@@ -38,7 +39,7 @@
  *
  *              AKTopic is an abstract class.
  */
-@interface AKTopic : NSObject <AKSortable>
+@interface AKTopic : NSObject <AKPrefDictionary, AKSortable>
 
 #pragma mark -
 #pragma mark AKXyzTopicName
@@ -50,24 +51,6 @@ extern NSString *AKProtocolsTopicName;
 extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKGlobalsTopicName;
-
-#pragma mark -
-#pragma mark Preferences
-
-/*!
- * @method      fromPrefDictionary:
- * @discussion  Returns an instance that has been initialized with the
- *              contents of prefDict.
- */
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict;
-
-/*!
- * @method      asPrefDictionary
- * @discussion  Returns a dictionary suitable for use by NSUserDefaults.
- *              Uses the same dictionary structure as +fromPrefDictionary.
- */
-// [agl] note className should always be in the dict
-- (NSDictionary *)asPrefDictionary;
 
 #pragma mark -
 #pragma mark Getters and setters

@@ -6,6 +6,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "AKPrefDictionary.h"
 
 /*!
  * @class       DIGSTextSelection
@@ -44,13 +45,6 @@
     // view, such as what font it was poised to use for typing.
     NSDictionary *_typingAttributes;
 }
-
-#pragma mark -
-#pragma mark Preferences
-
-+ (DIGSTextSelection *)fromPrefDictionary:(NSDictionary *)prefDict;
-
-- (NSDictionary *)asPrefDictionary;
 
 #pragma mark -
 #pragma mark Getters and setters

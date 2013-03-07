@@ -49,47 +49,6 @@
 }
 
 #pragma mark -
-#pragma mark Preferences
-
-+ (id)fromPrefDictionary:(NSDictionary *)prefDict
-{
-    if (prefDict == nil)
-    {
-        return nil;
-    }
-
-    id topicPref = [prefDict objectForKey:AKTopicPrefKey];
-    NSString *subtopicName = [prefDict objectForKey:AKSubtopicPrefKey];
-    NSString *docName = [prefDict objectForKey:AKDocNamePrefKey];
-
-    AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
-
-    return [self withTopic:topic subtopicName:subtopicName docName:docName];
-}
-
-- (NSDictionary *)asPrefDictionary
-{
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
-
-    if (_topic)
-    {
-        [prefDict setObject:[_topic asPrefDictionary] forKey:AKTopicPrefKey];
-    }
-
-    if (_subtopicName)
-    {
-        [prefDict setObject:_subtopicName forKey:AKSubtopicPrefKey];
-    }
-
-    if (_docName)
-    {
-        [prefDict setObject:_docName forKey:AKDocNamePrefKey];
-    }
-
-    return prefDict;
-}
-
-#pragma mark -
 #pragma mark Getters and setters
 
 - (AKTopic *)topicToDisplay
@@ -287,6 +246,47 @@ compareDocLocators(id locOne, id locTwo, void *context)
 + (void)sortArrayOfDocLocators:(NSMutableArray *)array
 {
     [array sortUsingFunction:&compareDocLocators context:NULL];
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
+{
+    if (prefDict == nil)
+    {
+        return nil;
+    }
+
+    id topicPref = [prefDict objectForKey:AKTopicPrefKey];
+    NSString *subtopicName = [prefDict objectForKey:AKSubtopicPrefKey];
+    NSString *docName = [prefDict objectForKey:AKDocNamePrefKey];
+
+    AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
+
+    return [self withTopic:topic subtopicName:subtopicName docName:docName];
+}
+
+- (NSDictionary *)asPrefDictionary
+{
+    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
+
+    if (_topic)
+    {
+        [prefDict setObject:[_topic asPrefDictionary] forKey:AKTopicPrefKey];
+    }
+
+    if (_subtopicName)
+    {
+        [prefDict setObject:_subtopicName forKey:AKSubtopicPrefKey];
+    }
+
+    if (_docName)
+    {
+        [prefDict setObject:_docName forKey:AKDocNamePrefKey];
+    }
+
+    return prefDict;
 }
 
 #pragma mark -

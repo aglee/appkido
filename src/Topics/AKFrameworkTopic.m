@@ -58,49 +58,6 @@
 #pragma mark -
 #pragma mark AKTopic methods
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
-{
-    if (prefDict == nil)
-    {
-        return nil;
-    }
-
-    // Get the framework name.
-    NSString *fwName = [prefDict objectForKey:AKFrameworkNamePrefKey];
-
-    if ([fwName isEqualToString:@"ApplicationKit"])
-    {
-        // In older versions of AppKiDo, "AppKit" was saved as "ApplicationKit" in prefs.
-        fwName = AKAppKitFrameworkName;
-    }
-
-    if (fwName == nil)
-    {
-        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
-        return nil;
-    }
-
-    AKDatabase *db = [[NSApp delegate] appDatabase];
-    if (![db hasFrameworkWithName:fwName])
-    {
-        DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);
-        return nil;
-    }
-
-    // If we got this far, we have what we need to create an instance.
-    return [self topicWithFrameworkNamed:fwName inDatabase:db];
-}
-
-- (NSDictionary *)asPrefDictionary
-{
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
-
-    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
-    [prefDict setObject:_topicFrameworkName forKey:AKFrameworkNamePrefKey];
-
-    return prefDict;
-}
-
 - (NSString *)stringToDisplayInTopicBrowser
 {
     return _topicFrameworkName;
@@ -141,6 +98,52 @@
     }
 
     return columnValues;
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
+{
+    if (prefDict == nil)
+    {
+        return nil;
+    }
+
+    // Get the framework name.
+    NSString *fwName = [prefDict objectForKey:AKFrameworkNamePrefKey];
+
+    if ([fwName isEqualToString:@"ApplicationKit"])
+    {
+        // In older versions of AppKiDo, "AppKit" was saved as "ApplicationKit" in prefs.
+        fwName = AKAppKitFrameworkName;
+    }
+
+    if (fwName == nil)
+    {
+        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
+        return nil;
+    }
+
+    AKDatabase *db = [[NSApp delegate] appDatabase];
+    if (![db hasFrameworkWithName:fwName])
+    {
+        DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);
+        return nil;
+    }
+
+    // If we got this far, we have what we need to create an instance.
+    return [self topicWithFrameworkNamed:fwName inDatabase:db];
+}
+
+- (NSDictionary *)asPrefDictionary
+{
+    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
+
+    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
+    [prefDict setObject:_topicFrameworkName forKey:AKFrameworkNamePrefKey];
+
+    return prefDict;
 }
 
 @end

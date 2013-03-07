@@ -6,6 +6,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "AKPrefDictionary.h"
 
 /*!
  * Specifies visual attributes of a browser window. These includes the window's
@@ -17,7 +18,7 @@
  * be restored on relaunch, and to remember the user's preferred layout so it
  * can be applied to new windows.
  */
-@interface AKWindowLayout : NSObject
+@interface AKWindowLayout : NSObject <AKPrefDictionary>
 {
 @private
     // General window attributes.
@@ -61,13 +62,6 @@
 @property (nonatomic, assign) BOOL searchIncludesFunctions;
 @property (nonatomic, assign) BOOL searchIncludesGlobals;
 @property (nonatomic, assign) BOOL searchIgnoresCase;
-
-#pragma mark -
-#pragma mark Preferences
-
-+ (AKWindowLayout *)fromPrefDictionary:(NSDictionary *)prefDictionary;
-
-- (NSDictionary *)asPrefDictionary;
 
 #pragma mark -
 #pragma mark Getters and setters

@@ -28,9 +28,9 @@
 }
 
 #pragma mark -
-#pragma mark Preferences
+#pragma mark AKPrefDictionary methods
 
-+ (AKSavedWindowState *)fromPrefDictionary:(NSDictionary *)prefDict
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {

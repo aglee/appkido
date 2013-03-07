@@ -6,6 +6,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "AKPrefDictionary.h"
 
 @class AKWindowLayout;
 @class AKDocLocator;
@@ -15,7 +16,7 @@
  * app. Remembers two things: the window's physical layout, and what doc it was
  * displaying.
  */
-@interface AKSavedWindowState : NSObject
+@interface AKSavedWindowState : NSObject <AKPrefDictionary>
 {
 @private
     AKWindowLayout *_savedWindowLayout;
@@ -24,13 +25,6 @@
 
 @property (nonatomic, strong) AKWindowLayout *savedWindowLayout;
 @property (nonatomic, strong) AKDocLocator *savedDocLocator;
-
-#pragma mark -
-#pragma mark Preferences
-
-+ (AKSavedWindowState *)fromPrefDictionary:(NSDictionary *)prefDict;
-
-- (NSDictionary *)asPrefDictionary;
 
 #pragma mark -
 #pragma mark Getters and setters

@@ -9,17 +9,16 @@
 
 #import "DIGSLog.h"
 
-#import "AKSortUtils.h"
-#import "AKDatabase.h"
-#import "AKClassNode.h"
-
 #import "AKAppDelegate.h"
-#import "AKClassOverviewSubtopic.h"
-#import "AKPropertiesSubtopic.h"
 #import "AKClassMethodsSubtopic.h"
-#import "AKInstanceMethodsSubtopic.h"
+#import "AKClassOverviewSubtopic.h"
+#import "AKClassNode.h"
+#import "AKDatabase.h"
 #import "AKDelegateMethodsSubtopic.h"
+#import "AKInstanceMethodsSubtopic.h"
 #import "AKNotificationsSubtopic.h"
+#import "AKPropertiesSubtopic.h"
+#import "AKSortUtils.h"
 
 @implementation AKClassTopic
 
@@ -59,35 +58,6 @@
 
 #pragma mark -
 #pragma mark AKTopic methods
-
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
-{
-    if (prefDict == nil)
-    {
-        return nil;
-    }
-
-    NSString *className = [prefDict objectForKey:AKBehaviorNamePrefKey];
-
-    if (className == nil)
-    {
-        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
-        return nil;
-    }
-    else
-    {
-        AKDatabase *db = [[NSApp delegate] appDatabase];
-        AKClassNode *classNode = [db classWithName:className];
-
-        if (!classNode)
-        {
-            DIGSLogInfo(@"couldn't find a class in the database named %@", className);
-            return nil;
-        }
-
-        return [self topicWithClassNode:classNode];
-    }
-}
 
 - (AKClassNode *)parentClassOfTopic
 {
@@ -202,6 +172,38 @@
             notificationsSubtopic,
             allNotificationsSubtopic,
             ]);
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
+{
+    if (prefDict == nil)
+    {
+        return nil;
+    }
+
+    NSString *className = [prefDict objectForKey:AKBehaviorNamePrefKey];
+
+    if (className == nil)
+    {
+        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
+        return nil;
+    }
+    else
+    {
+        AKDatabase *db = [[NSApp delegate] appDatabase];
+        AKClassNode *classNode = [db classWithName:className];
+
+        if (!classNode)
+        {
+            DIGSLogInfo(@"couldn't find a class in the database named %@", className);
+            return nil;
+        }
+
+        return [self topicWithClassNode:classNode];
+    }
 }
 
 @end

@@ -25,58 +25,6 @@ NSString *AKFunctionsTopicName         = @"Functions";
 NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 #pragma mark -
-#pragma mark Preferences
-
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
-{
-    if (prefDict == nil)
-    {
-        return nil;
-    }
-
-    NSString *topicClassName = [prefDict objectForKey:AKTopicClassNamePrefKey];
-
-    if (topicClassName == nil)
-    {
-        DIGSLogWarning(@"missing name of topic class");
-        return nil;
-    }
-
-    Class topicClass = NSClassFromString(topicClassName);
-    if (topicClass == nil)
-    {
-        DIGSLogInfo(@"couldn't find a class called %@", topicClassName);
-        return nil;
-    }
-    else
-    {
-        Class cl = topicClass;
-
-        while ((cl = [cl superclass]) != nil)
-        {
-            if (cl == [AKTopic class])
-            {
-                break;
-            }
-        }
-
-        if (cl == nil)
-        {
-            DIGSLogWarning(@"%@ is not a proper descendant class of AKTopic", topicClassName);
-            return nil;
-        }
-    }
-
-    return (AKTopic *)[topicClass fromPrefDictionary:prefDict];
-}
-
-- (NSDictionary *)asPrefDictionary
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
-#pragma mark -
 #pragma mark Getters and setters
 
 - (AKClassNode *)parentClassOfTopic
@@ -178,6 +126,58 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return ((subtopicIndex < 0)
             ? nil
             : [self subtopicAtIndex:subtopicIndex]);
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
+{
+    if (prefDict == nil)
+    {
+        return nil;
+    }
+
+    NSString *topicClassName = [prefDict objectForKey:AKTopicClassNamePrefKey];
+
+    if (topicClassName == nil)
+    {
+        DIGSLogWarning(@"missing name of topic class");
+        return nil;
+    }
+
+    Class topicClass = NSClassFromString(topicClassName);
+    if (topicClass == nil)
+    {
+        DIGSLogInfo(@"couldn't find a class called %@", topicClassName);
+        return nil;
+    }
+    else
+    {
+        Class cl = topicClass;
+
+        while ((cl = [cl superclass]) != nil)
+        {
+            if (cl == [AKTopic class])
+            {
+                break;
+            }
+        }
+
+        if (cl == nil)
+        {
+            DIGSLogWarning(@"%@ is not a proper descendant class of AKTopic", topicClassName);
+            return nil;
+        }
+    }
+
+    return (AKTopic *)[topicClass fromPrefDictionary:prefDict];
+}
+
+- (NSDictionary *)asPrefDictionary
+{
+    DIGSLogError_MissingOverride();
+    return nil;
 }
 
 #pragma mark -

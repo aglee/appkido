@@ -60,35 +60,6 @@
 #pragma mark -
 #pragma mark AKTopic methods
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
-{
-    if (prefDict == nil)
-    {
-        return nil;
-    }
-
-    NSString *protocolName = [prefDict objectForKey:AKBehaviorNamePrefKey];
-
-    if (protocolName == nil)
-    {
-        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
-        return nil;
-    }
-    else
-    {
-        AKDatabase *db = [[NSApp delegate] appDatabase];
-        AKProtocolNode *protocolNode = [db protocolWithName:protocolName];
-
-        if (!protocolNode)
-        {
-            DIGSLogInfo(@"couldn't find a protocol in the database named %@", protocolName);
-            return nil;
-        }
-
-        return [self topicWithProtocolNode:protocolNode];
-    }
-}
-
 - (NSString *)stringToDisplayInTopicBrowser
 {
     return [NSString stringWithFormat:@"<%@>", [_protocolNode nodeName]];
@@ -182,6 +153,38 @@
             notificationsSubtopic,
             allNotificationsSubtopic,
             ]);
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
+{
+    if (prefDict == nil)
+    {
+        return nil;
+    }
+
+    NSString *protocolName = [prefDict objectForKey:AKBehaviorNamePrefKey];
+
+    if (protocolName == nil)
+    {
+        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
+        return nil;
+    }
+    else
+    {
+        AKDatabase *db = [[NSApp delegate] appDatabase];
+        AKProtocolNode *protocolNode = [db protocolWithName:protocolName];
+
+        if (!protocolNode)
+        {
+            DIGSLogInfo(@"couldn't find a protocol in the database named %@", protocolName);
+            return nil;
+        }
+
+        return [self topicWithProtocolNode:protocolNode];
+    }
 }
 
 @end

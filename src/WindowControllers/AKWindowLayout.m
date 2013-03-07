@@ -57,9 +57,9 @@
 }
 
 #pragma mark -
-#pragma mark Preferences
+#pragma mark AKPrefDictionary methods
 
-+ (AKWindowLayout *)fromPrefDictionary:(NSDictionary *)prefDict
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {

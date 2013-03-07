@@ -6,8 +6,9 @@
  */
 
 #import <Cocoa/Cocoa.h>
-
+#import "AKPrefDictionary.h"
 #import "AKSortable.h"
+
 
 @class AKDoc;
 @class AKTopic;
@@ -15,7 +16,7 @@
 /*!
  *  Represents window states the user can navigate to in a browser window.
  */
-@interface AKDocLocator : NSObject <AKSortable>
+@interface AKDocLocator : NSObject <AKPrefDictionary, AKSortable>
 {
 @private
     // The topic selected in the window's topic browser.
@@ -38,13 +39,6 @@
 + (id)withTopic:(AKTopic *)topic
    subtopicName:(NSString *)subtopicName
         docName:(NSString *)docName;
-
-#pragma mark -
-#pragma mark Preferences
-
-+ (id)fromPrefDictionary:(NSDictionary *)prefDict;
-
-- (NSDictionary *)asPrefDictionary;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

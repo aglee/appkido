@@ -45,7 +45,30 @@
 #pragma mark -
 #pragma mark AKTopic methods
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
+- (NSString *)stringToDisplayInTopicBrowser
+{
+    return _label;
+}
+
+- (NSString *)pathInTopicBrowser
+{
+    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, _label];
+}
+
+- (BOOL)browserCellShouldBeEnabled
+{
+    return NO;
+}
+
+- (BOOL)browserCellHasChildren
+{
+    return NO;
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {
@@ -73,26 +96,6 @@
     [prefDict setObject:_label forKey:AKLabelStringPrefKey];
 
     return prefDict;
-}
-
-- (NSString *)stringToDisplayInTopicBrowser
-{
-    return _label;
-}
-
-- (NSString *)pathInTopicBrowser
-{
-    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, _label];
-}
-
-- (BOOL)browserCellShouldBeEnabled
-{
-    return NO;
-}
-
-- (BOOL)browserCellHasChildren
-{
-    return NO;
 }
 
 #pragma mark -
