@@ -61,8 +61,10 @@
 {
     if ([_protocolNodeNames containsObject:[node nodeName]])
     {
-        DIGSLogWarning(@"trying to add protocol [%@] again to behavior [%@]",
-                       [node nodeName], [self nodeName]);
+        // I've seen this happen when a .h contains two declarations of a
+        // protocol in different #if branches. Example: NSURL.
+        DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
+                     [node nodeName], [self nodeName]);
     }
     else
     {
