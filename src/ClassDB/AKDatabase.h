@@ -169,7 +169,7 @@
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
 
 #pragma mark -
-#pragma mark Getters and setters -- hyperlink support
+#pragma mark Methods that help AKCocoaGlobalsDocParser
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
