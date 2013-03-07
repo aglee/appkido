@@ -7,17 +7,12 @@
 
 #import "DIGSFindBuffer.h"
 
-@interface DIGSFindBuffer ()
-@property (nonatomic, copy) NSString *realFindString;  // Setter is called by setFindString:.
-@end
-
 @implementation DIGSFindBuffer
 
 #pragma mark -
 #pragma mark Factory methods
 
 @dynamic findString;
-@synthesize realFindString = _findString;
 
 + (DIGSFindBuffer *)sharedInstance
 {
@@ -106,14 +101,15 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (void)_setFindString:(NSString *)string writeToPasteboard:(BOOL)flag
+- (void)_setFindString:(NSString *)newFindString writeToPasteboard:(BOOL)flag
 {
-    if ([string isEqualToString:_findString])
+    if ([newFindString isEqualToString:_findString])
     {
         return;
     }
 
-    [self setRealFindString:string];
+    [_findString autorelease];
+    _findString = [newFindString copy];
 
     if (flag)
     {
