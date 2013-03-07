@@ -16,6 +16,11 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 
 @implementation DIGSTextSelection
 
+@synthesize visibleRect = _visibleRect;
+@synthesize visibleCharsRange = _visibleCharsRange;
+@synthesize selectedCharsRange = _selectedCharsRange;
+@synthesize typingAttributes = _typingAttributes;
+
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -23,7 +28,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 {
     if ((self = [super init]))
     {
-        _visibleRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+        _visibleRect = NSZeroRect;
         _visibleCharsRange = NSMakeRange(0, 0);
         _selectedCharsRange = NSMakeRange(0, 0);
         _typingAttributes = nil;
@@ -40,49 +45,6 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 }
 
 #pragma mark -
-#pragma mark Getters and setters
-
-- (NSRect)visibleRect
-{
-    return _visibleRect;
-}
-
-- (void)setVisibleRect:(NSRect)aRect
-{
-    _visibleRect = aRect;
-}
-
-- (NSRange)visibleCharsRange
-{
-    return _visibleCharsRange;
-}
-
-- (void)setVisibleCharsRange:(NSRange)aRange
-{
-    _visibleCharsRange = aRange;
-}
-
-- (NSRange)selectedCharsRange
-{
-    return _selectedCharsRange;
-}
-
-- (void)setSelectedCharsRange:(NSRange)aRange
-{
-    _selectedCharsRange = aRange;
-}
-
-- (NSDictionary *)typingAttributes
-{
-    return _typingAttributes;
-}
-
-- (void)setTypingAttributes:(NSDictionary *)attrDict
-{
-    _typingAttributes = attrDict;
-}
-
-#pragma mark -
 #pragma mark Interacting with text views
 
 - (void)takeSelectionFromTextView:(NSTextView *)textView
@@ -92,8 +54,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
         return;
     }
 
-    // Remember the scroll position, both as a rect and as a
-    // character range.
+    // Remember the scroll position, both as a rect and as a character range.
     NSTextContainer *textContainer = [textView textContainer];
     NSLayoutManager *layoutManager = [textContainer layoutManager];
     NSRange glyphRange = [layoutManager glyphRangeForBoundingRect:_visibleRect
@@ -116,10 +77,10 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
         return;
     }
 
-    // Apply the remembered scroll position.  If the text view's
-    // dimensions are the same as when we took the snapshot, we can
-    // reset the scroll position with pixel-accuracy.  Otherwise, we
-    // settle for accuracy to within about a character.
+    // Apply the remembered scroll position.  If the text view's dimensions are
+    // the same as when we took the snapshot, we can reset the scroll position
+    // with pixel-accuracy.  Otherwise, we settle for accuracy to within about a
+    // character.
     if (NSEqualSizes(_visibleRect.size, [textView visibleRect].size))
     {
         [textView scrollRangeToVisible:_visibleCharsRange];
@@ -174,9 +135,12 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict setObject:NSStringFromRect(_visibleRect) forKey:_DIGS_VISIBLE_RECT_PREF_KEY];
-    [prefDict setObject:NSStringFromRange(_visibleCharsRange) forKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
-    [prefDict setObject:NSStringFromRange(_selectedCharsRange) forKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
+    [prefDict setObject:NSStringFromRect(_visibleRect)
+                 forKey:_DIGS_VISIBLE_RECT_PREF_KEY];
+    [prefDict setObject:NSStringFromRange(_visibleCharsRange)
+                 forKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
+    [prefDict setObject:NSStringFromRange(_selectedCharsRange)
+                 forKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
 
     return prefDict;
 }
