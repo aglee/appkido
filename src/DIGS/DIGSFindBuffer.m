@@ -148,9 +148,9 @@
 
 - (void)_handleAppDidActivateNotification:(NSNotification *)notif
 {
-    NSString *oldFindString = _findString;
+    NSString *oldFindString = [[_findString retain] autorelease];
 
-    [self _loadFindStringFromPasteboard];
+    [self _loadFindStringFromPasteboard];  // May release the old find string.
     if (![_findString isEqualToString:oldFindString])
     {
         [self _notifyDelegatesBufferDidChange];
