@@ -8,12 +8,14 @@
 #import "AKPrefUtils.h"
 
 #import "DIGSLog.h"
-#import "AKFrameworkConstants.h"
+
 #import "AKDevToolsUtils.h"
+#import "AKFrameworkConstants.h"
 
 @implementation AKPrefUtils
 
-#pragma mark - Class initialization
+#pragma mark -
+#pragma mark Class initialization
 
 + (void)initialize
 {
@@ -25,7 +27,8 @@
 //    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
-#pragma mark - AppKiDo preferences
+#pragma mark -
+#pragma mark AppKiDo preferences
 
 + (NSArray *)selectedFrameworkNamesPref
 {
@@ -97,7 +100,8 @@
     [self setBoolValue:flag forPref:AKSearchInNewWindowPrefName];
 }
 
-#pragma mark - Clearing groups of preferences
+#pragma mark -
+#pragma mark Clearing groups of preferences
 
 + (void)resetAllPrefsToDefaults
 {
@@ -154,7 +158,8 @@
     [userPrefs removeObjectForKey:AKIgnoreCasePrefKey];
 }
 
-#pragma mark - Private methods
+#pragma mark -
+#pragma mark Private methods
 
 // Register the default values for all user preferences, i.e., the
 // value to use for each preference unless the user specifies a

@@ -5,19 +5,18 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "DIGSPrefUtils.h"
+
 #import "AKPrefConstants.h"
 
 /*!
- * @class       AKPrefUtils
- * @discussion  Convenience methods for accessing AppKiDo user preferences
- *              in the defaults database.
+ * Convenience methods for accessing AppKiDo-specific user preferences in the
+ * defaults database.
  */
 @interface AKPrefUtils : DIGSPrefUtils
 
-#pragma mark - AppKiDo preferences
+#pragma mark -
+#pragma mark AppKiDo preferences
 
 /*! Which frameworks we should display docs for. */
 + (NSArray *)selectedFrameworkNamesPref;
@@ -38,36 +37,22 @@
 + (BOOL)shouldSearchInNewWindow;
 + (void)setShouldSearchInNewWindow:(BOOL)flag;
 
-#pragma mark - Clearing groups of preferences
+#pragma mark -
+#pragma mark Clearing groups of preferences
 
-/*!
- * @method      resetAllPrefsToDefaults
- * @discussion  Resets all user preferences to their default values.
- */
+/*! Resets all user preferences to their default values. */
 + (void)resetAllPrefsToDefaults;
 
-/*!
- * @method      resetAppearancePrefsToDefaults
- * @discussion  Resets only the Appearance prefs to their default values.
- */
+/*! Resets only the Appearance prefs to their default values. */
 + (void)resetAppearancePrefsToDefaults;
 
-/*!
- * @method      resetNavigationPrefsToDefaults
- * @discussion  Resets only the Navigation prefs to their default values.
- */
+/*! Resets only the Navigation prefs to their default values. */
 + (void)resetNavigationPrefsToDefaults;
 
-/*!
- * @method      resetFrameworksPrefsToDefaults
- * @discussion  Resets only the Frameworks prefs to their default values.
- */
+/*! Resets only the Frameworks prefs to their default values. */
 + (void)resetFrameworksPrefsToDefaults;
 
-/*!
- * @method      resetSearchPrefsToDefaults
- * @discussion  Resets only the Search prefs to their default values.
- */
+/*! Resets only the Search prefs to their default values. */
 + (void)resetSearchPrefsToDefaults;
 
 @end

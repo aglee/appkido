@@ -112,7 +112,7 @@
 @property (nonatomic, unsafe_unretained) id <AKDatabaseDelegate> delegate;
 
 #pragma mark -
-#pragma mark - Factory methods
+#pragma mark Factory methods
 
 /*! On failure, returns nil with the reasons added to errorStrings. */
 + (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings;

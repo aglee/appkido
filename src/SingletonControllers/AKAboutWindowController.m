@@ -13,7 +13,8 @@
 
 @implementation AKAboutWindowController
 
-#pragma mark - NSWindowController methods
+#pragma mark -
+#pragma mark NSWindowController methods
 
 - (void)windowDidLoad
 {

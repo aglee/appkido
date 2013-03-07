@@ -17,7 +17,8 @@
 @synthesize savedWindowLayout = _savedWindowLayout;
 @synthesize savedDocLocator = _savedDocLocator;
 
-#pragma mark - Init/awake/dealloc
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)dealloc
 {

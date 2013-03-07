@@ -37,7 +37,7 @@ NSString *AKSearchInNewWindowPrefName         = @"AKSearchInNewWindow";
 
 
 #pragma mark -
-#pragma mark AKXyzPrefKey - dictionary
+#pragma mark AKXyzPrefKey -- dictionary
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.

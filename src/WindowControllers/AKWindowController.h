@@ -209,7 +209,7 @@
 - (IBAction)findPrevious:(id)sender;
 
 #pragma mark -
-#pragma mark Action methods - Accessing the doc file
+#pragma mark Action methods -- Accessing the doc file
 
 - (IBAction)copyDocFileURL:(id)sender;
 

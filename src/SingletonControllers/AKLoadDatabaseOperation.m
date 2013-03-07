@@ -19,7 +19,8 @@
 @synthesize appDatabase = _appDatabase;
 @synthesize databaseDelegate = _databaseDelegate;
 
-#pragma mark - Init/awake/dealloc
+#pragma mark -
+#pragma mark Init/awake/dealloc
 
 - (void)dealloc
 {
@@ -29,7 +30,8 @@
     [super dealloc];
 }
 
-#pragma mark - NSOperation methods
+#pragma mark -
+#pragma mark NSOperation methods
 
 - (void)main
 {
