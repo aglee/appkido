@@ -547,7 +547,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         // Update the menu item title to reflect what's currently selected in the topic browser.
         if ([anItem isKindOfClass:[NSMenuItem class]])
         {
-            NSString *topicName = [currentTopic stringToDisplayInTopicBrowser];
+            NSString *topicName = [currentTopic stringToDisplayInLists];
             NSString *menuTitle = [NSString stringWithFormat:@"Add \"%@\" to Favorites", topicName];
 
             [anItem setTitle:menuTitle];
