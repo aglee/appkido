@@ -23,7 +23,7 @@
 
 - (NSInteger)numberOfSubtopics
 {
-    return [_topicDatabase numberOfFunctionsGroupsForFrameworkNamed:_topicFrameworkName];
+    return [[_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName] count];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex

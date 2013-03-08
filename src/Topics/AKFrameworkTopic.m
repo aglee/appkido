@@ -73,13 +73,13 @@
 {
     NSMutableArray *columnValues = [NSMutableArray array];
 
-    if ([_topicDatabase numberOfFunctionsGroupsForFrameworkNamed:_topicFrameworkName] > 0)
+    if ([[_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName] count] > 0)
     {
         [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:_topicFrameworkName
                                                                inDatabase:_topicDatabase]];
     }
 
-    if ([_topicDatabase numberOfGlobalsGroupsForFrameworkNamed:_topicFrameworkName] > 0)
+    if ([[_topicDatabase globalsGroupsForFrameworkNamed:_topicFrameworkName] count] > 0)
     {
         [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:_topicFrameworkName
                                                              inDatabase:_topicDatabase]];

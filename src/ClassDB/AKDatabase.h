@@ -147,25 +147,17 @@
 #pragma mark -
 #pragma mark Getters and setters -- functions
 
-- (NSInteger)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName;
-
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName;
-
 - (AKGroupNode *)functionsGroupNamed:(NSString *)groupName
                     inFrameworkNamed:(NSString *)frameworkName;
-
 - (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
 
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
-- (NSInteger)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName;
-
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName;
-
 - (AKGroupNode *)globalsGroupNamed:(NSString *)groupName
                   inFrameworkNamed:(NSString *)frameworkName;
-
 - (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
 
 #pragma mark -

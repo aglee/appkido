@@ -349,11 +349,6 @@
 #pragma mark -
 #pragma mark Getters and setters -- functions
 
-- (NSInteger)numberOfFunctionsGroupsForFrameworkNamed:(NSString *)frameworkName
-{
-    return [[_functionsGroupListsByFramework objectForKey:frameworkName] count];
-}
-
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
     return [_functionsGroupListsByFramework objectForKey:frameworkName];
@@ -404,11 +399,6 @@
 
 #pragma mark -
 #pragma mark Getters and setters -- globals
-
-- (NSInteger)numberOfGlobalsGroupsForFrameworkNamed:(NSString *)frameworkName
-{
-    return [[_globalsGroupListsByFramework objectForKey:frameworkName] count];
-}
 
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName
 {

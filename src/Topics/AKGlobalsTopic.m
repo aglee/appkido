@@ -25,7 +25,7 @@
 
 - (NSInteger)numberOfSubtopics
 {
-    return [_topicDatabase numberOfGlobalsGroupsForFrameworkNamed:_topicFrameworkName];
+    return [[_topicDatabase globalsGroupsForFrameworkNamed:_topicFrameworkName] count];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
