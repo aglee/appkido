@@ -12,11 +12,17 @@
 
 @interface NSView (AppKiDo)
 
+/*! Sets the nextKeyView of each view in the array. */
++ (void)ak_connectViewsIntoKeyViewLoop:(NSArray *)viewsToConnect;
+
 /*! Wrapper around -setFrame:. */
 - (void)ak_setFrameWidth:(CGFloat)newWidth;
 
 /*! Wrapper around -setFrame:. */
 - (void)ak_setFrameHeight:(CGFloat)newHeight;
+
+/*! Returns either self, an enclosing view, or nil. */
+- (id)ak_enclosingViewOfClass:(Class)viewClass;
 
 /*!
  * Uses NSLog to print the sequence of next key views starting at self and
@@ -25,7 +31,7 @@
 - (void)ak_printKeyViewLoop;
 
 /*!
- * Like ak_printKeyViewLoop, except traverses the loop using previewKeyView
+ * Like ak_printKeyViewLoop, except traverses the loop using previousKeyView
  * instead of nextKeyView.
  */
 - (void)ak_printReverseKeyViewLoop;

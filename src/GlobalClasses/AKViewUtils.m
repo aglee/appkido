@@ -14,6 +14,17 @@
 
 @implementation NSView (AppKiDo)
 
++ (void)ak_connectViewsIntoKeyViewLoop:(NSArray *)viewsToConnect
+{
+    NSView *previousView = [viewsToConnect lastObject];
+    
+    for (NSView *view in viewsToConnect)
+    {
+        [previousView setNextKeyView:view];
+        previousView = view;
+    }
+}
+
 - (void)ak_setFrameWidth:(CGFloat)newWidth
 {
     NSRect frame = [self frame];
@@ -28,6 +39,19 @@
 
     frame.size.height = newHeight;
     [self setFrame:frame];
+}
+
+- (id)ak_enclosingViewOfClass:(Class)viewClass
+{
+    for (NSView *view = self; view != nil; view = [view superview])
+    {
+        if ([view isKindOfClass:viewClass])
+        {
+            return view;
+        }
+    }
+
+    return nil;
 }
 
 - (void)ak_printKeyViewLoop
