@@ -32,6 +32,7 @@
 #pragma mark -
 #pragma mark Navigation
 
+/*! Returns either the web view or the text view. */
 - (NSView *)docView;
 
 @end

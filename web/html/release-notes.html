@@ -61,7 +61,8 @@
 <li>Search for setFoo searches for property foo.</li>
 <li>After a search, is now properly selecting the first search result with the search string as a prefix. (Example: search for "query" and -[NSURL query] should be selected.)</li>
 <li>Made the default drawer size wider.</li>
-
+<li>Slight correction to what is displayed in the "Add X to Favorites" menu item. It now matches what gets displayed in the Quicklist -- e.g., "AppKit Functions", not just "Functions".</li>
+<li>Fixed quirk: if you select in web view and do Use Selection for Find, it focuses the quicklist search field, thus removing focus from the web view, which causes Find Next to start from the beginning instead of from where you were.</li>
 
 <li>Code changes (of interest only if you're working on the code):
 	<ul>

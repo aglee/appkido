@@ -5,10 +5,10 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "DIGSWindow.h"
+#import "AKWindow.h"
 #import "DIGSLog.h"
 
-@implementation DIGSWindow
+@implementation AKWindow
 
 // For debugging leaking and over-releasing of NSWindows.
 - (void)dealloc

@@ -71,23 +71,7 @@
 
 - (NSView *)docView
 {
-    NSView *viewSelectedInTabView = [[_tabView selectedTabViewItem] view];
-
-    if ([_webView isDescendantOf:viewSelectedInTabView])
-    {
-        return _webView;
-    }
-    else if ([_textView isDescendantOf:viewSelectedInTabView])
-    {
-        return _textView;
-    }
-    else
-    {
-        DIGSLogWarning(@"View [%@] selected in tab view contains neither"
-                       @" the web view (%p) nor the text view (%p).",
-                       viewSelectedInTabView, _webView, _textView);
-        return nil;
-    }
+    return ([self _isShowingWebView] ? _webView : _textView);
 }
 
 #pragma mark -
@@ -271,23 +255,14 @@ contextMenuItemsForElement:(NSDictionary *)element
 }
 
 #pragma mark -
-#pragma mark NSTextView delegate methods
-
-//- (NSMenu *)textView:(NSTextView *)view
-//                menu:(NSMenu *)menu
-//            forEvent:(NSEvent *)event
-//             atIndex:(NSUInteger)charIndex
-//{
-//    for (NSMenuItem *menuItem in [menu itemArray])
-//    {
-//        NSLog(@"*** menu %@ %d", [menuItem title], [menuItem tag]);
-//    }
-//
-//    return menu;
-//}
-
-#pragma mark -
 #pragma mark Private methods
+
+- (BOOL)_isShowingWebView
+{
+    NSView *viewSelectedInTabView = [[_tabView selectedTabViewItem] view];
+
+    return [_webView isDescendantOf:viewSelectedInTabView];
+}
 
 - (void)_updateDocDisplay
 {

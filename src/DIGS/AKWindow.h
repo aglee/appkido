@@ -10,5 +10,5 @@
 /*!
  * A tweak suggested by Gerriet Denkmann. Overrides -setTitle: to handle nil.
  */
-@interface DIGSWindow : NSWindow
+@interface AKWindow : NSWindow
 @end

@@ -513,11 +513,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
         return ([tv selectedRange].length > 0);
     }
-    else if ((itemAction == @selector(testParser:))
-             || (itemAction == @selector(printKeyViewLoop:)))
-    {
-        return YES;
-    }
 
     return NO;
 }

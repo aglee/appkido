@@ -215,6 +215,11 @@
 
 - (IBAction)revealDocFileInFinder:(id)sender;
 
+#pragma mark -
+#pragma mark Action methods -- debug mode
+
 - (IBAction)openParseDebugWindow:(id)sender;
+
+- (IBAction)printViewsOfInterest:(id)sender;
 
 @end

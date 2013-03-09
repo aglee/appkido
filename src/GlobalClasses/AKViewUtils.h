@@ -25,18 +25,6 @@
 - (id)ak_enclosingViewOfClass:(Class)viewClass;
 
 /*!
- * Uses NSLog to print the sequence of next key views starting at self and
- * ending when we either hit nil or detect a loop.
- */
-- (void)ak_printKeyViewLoop;
-
-/*!
- * Like ak_printKeyViewLoop, except traverses the loop using previousKeyView
- * instead of nextKeyView.
- */
-- (void)ak_printReverseKeyViewLoop;
-
-/*!
  * Sets elasticity to NSScrollElasticityNone in both directions for all scroll
  * views in self's view hierarchy, including self.
  */

@@ -8,8 +8,10 @@
 
 #import "AKDebugging.h"
 
+#import "AKAppDelegate.h"
 #import "AKTestDocParserWindowController.h"
-#import "AKViewUtils.h"
+#import "AKWindowController.h"
+#import "NSObject+AppKiDo.h"
 
 @implementation AKDebugging
 
@@ -54,9 +56,18 @@
     [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
                             action:@selector(testParser:)
                      keyEquivalent:@""];
-    [debugSubmenu addItemWithTitle:@"Print Key View Loop"
-                            action:@selector(printKeyViewLoop:)
+    [debugSubmenu addItemWithTitle:@"Print First Responder"
+                            action:@selector(printFirstResponder:)
+                     keyEquivalent:@"r"];
+    [debugSubmenu addItemWithTitle:@"Print nextValidKeyView Loop"
+                            action:@selector(printValidKeyViewLoop:)
+                     keyEquivalent:@"l"];
+    [debugSubmenu addItemWithTitle:@"Print nextKeyView Loop"
+                            action:@selector(printEntireKeyViewLoop:)
                      keyEquivalent:@""];
+    [debugSubmenu addItemWithTitle:@"Print Views of Interest"
+                            action:@selector(printViewsOfInterest:)
+                     keyEquivalent:@"i"];
 
     // Attach the submenu to the "Debug" top-level menu item.
     [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
@@ -70,23 +81,56 @@
     [AKTestDocParserWindowController openNewParserWindow];
 }
 
-- (IBAction)printKeyViewLoop:(id)sender
+- (IBAction)printFirstResponder:(id)sender
 {
     id firstResponder = [[NSApp keyWindow] firstResponder];
 
     if (firstResponder == nil)
     {
-        NSLog(@"there's no first responder");
+        NSLog(@"the key window has no first responder");
     }
     else
     {
-        NSLog(@"key window's first responder is %@ at %p", [firstResponder className], firstResponder);
+        NSLog(@"key window's first responder is <%@: %p>", [firstResponder className], firstResponder);
+    }
+}
 
-        if ([firstResponder isKindOfClass:[NSView class]])
-        {
-            [firstResponder ak_printKeyViewLoop];
-            [firstResponder ak_printReverseKeyViewLoop];
-        }
+- (IBAction)printValidKeyViewLoop:(id)sender
+{
+    [self _printViewSequenceUsingSelector:@selector(nextValidKeyView)];
+}
+
+- (IBAction)printEntireKeyViewLoop:(id)sender
+{
+    [self _printViewSequenceUsingSelector:@selector(nextKeyView)];
+}
+
+- (IBAction)printViewsOfInterest:(id)sender
+{
+    AKWindowController *wc = [(AKAppDelegate *)[NSApp delegate] frontmostWindowController];
+
+    if (wc == nil)
+    {
+        NSLog(@"no AppKiDo window is open");
+    }
+    else
+    {
+        [wc printViewsOfInterest:sender];
+    }
+}
+
+#pragma mark -
+#pragma mark Private methods
+
+- (void)_printViewSequenceUsingSelector:(SEL)nextViewSelector
+{
+    [self printFirstResponder:nil];
+    
+    id firstResponder = [[NSApp keyWindow] firstResponder];
+
+    if ([firstResponder isKindOfClass:[NSView class]])
+    {
+        [firstResponder ak_printSequenceUsingSelector:nextViewSelector];
     }
 }
 

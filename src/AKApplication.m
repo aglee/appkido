@@ -6,91 +6,73 @@
  */
 
 #import "AKApplication.h"
-
 #import <WebKit/WebKit.h>
 
 @implementation AKApplication
 
-// If the first responder is a view with a WebView as an ancestor view, return
-// that WebView, otherwise nil.
-- (WebView *)_webViewEnclosingFirstResponder
-{
-    NSWindow *keyWind = [self keyWindow];
-    if (keyWind == nil)
-        return nil;
-
-    id view = [keyWind firstResponder];
-    if (![view isKindOfClass:[NSView class]])
-        return nil;
-
-    while (view != nil)
-    {
-        if ([view isKindOfClass:[WebView class]])
-            return view;
-        else
-            view = [view superview];
-    }
-
-    // If we got this far, there is no enclosing WebView.
-    return nil;
-}
-
-// Called when the user hits Tab.  Returns YES if this method handles the tab,
-// NO if we should forward the event to super.
-- (BOOL)_handleTab
-{
-    // If the tab wasn't entered from within a WebView, do nothing.
-    WebView *webView = [self _webViewEnclosingFirstResponder];
-    if (webView == nil)
-        return NO;
-
-    // Go to the nextKeyView of the WebView's superview.
-    NSView *nextKeyView = [[webView superview] nextKeyView];
-    if (nextKeyView != nil)
-    {
-        [[nextKeyView window] makeFirstResponder:nextKeyView];
-    }
-    return YES;
-}
-
-// Called when the user hits Shift-Tab.  Returns YES if this method handles
-// the backtab, NO if we should forward the event to super.
-- (BOOL)_handleBacktab
-{
-    // If the tab wasn't entered from within a WebView, do nothing.
-    WebView *webView = [self _webViewEnclosingFirstResponder];
-    if (webView == nil)
-        return NO;
-
-    // Go to the previousKeyView of the WebView's superview.
-    NSView *previousKeyView = [[webView superview] previousKeyView];
-    if (previousKeyView != nil)
-        [[previousKeyView window] makeFirstResponder:previousKeyView];
-    return YES;
-}
-
-- (void)sendEvent:(NSEvent *)anEvent
-{
-    if (([anEvent type] == NSKeyDown) && ([[anEvent characters] length] > 0))
-    {
-        unichar ch = [[anEvent characters] characterAtIndex:0];
-
-        // I figured out by testing that 25 is the character we get when the
-        // user hits Shift-Tab.
-        if (ch == '\t')
-        {
-            if ([self _handleTab])
-                return;
-        }
-        else if ((ch == 25) && ([anEvent modifierFlags] & NSShiftKeyMask))
-        {
-            if ([self _handleBacktab])  // [agl] shouldn't I override insertBacktab:? (and similarly elsewhere)
-                return;
-        }
-    }
-
-    // If we got this far, we want the default key-down behavior.
-    [super sendEvent:anEvent];
-}
+//// Called when the user hits Tab or Shift-Tab. Returns YES if we successfully
+//// handled the special case of a web view. WebView does weird things with
+//// next- and previousKeyView. For AppKiDo's purposes, we want to make it behave
+//// like a "normal" view.
+//- (BOOL)_handleTabWithForwardFlag:(BOOL)goingForward
+//{
+//    // If first responder isn't a view, do nothing.
+//    NSResponder *firstResponder = [[self keyWindow] firstResponder];
+//    if (![firstResponder isKindOfClass:[NSView class]])
+//    {
+//        return NO;
+//    }
+//
+//    // If we aren't tabbing out of an WebView, do nothing.
+//    WebView *webView = [(NSView *)firstResponder ak_enclosingViewOfClass:[WebView class]];
+//    if (webView == nil)
+//    {
+//        return NO;
+//    }
+//
+//    // Try to go to the next or previous key view of the web view.
+//    NSView *viewToGoTo = (goingForward
+//                          ? [webView nextValidKeyView]
+//                          : [webView previousValidKeyView]);
+//    if (viewToGoTo != nil)
+//    {
+//        if (![[viewToGoTo window] makeFirstResponder:viewToGoTo])
+//        {
+//            return NO;
+//        }
+//    }
+//
+//    // If we got this far, we successfully tabbed out of an WebView.
+//    return YES;
+//}
+//
+//- (void)sendEvent:(NSEvent *)anEvent
+//{
+//    // See if this is one of the special cases we want to handle.
+//    if (([anEvent type] == NSKeyDown) && ([[anEvent characters] length] > 0))
+//    {
+//        unichar ch = [[anEvent characters] characterAtIndex:0];
+//
+//        // I figured out by testing that 25 is the character we get when the
+//        // user hits Shift-Tab.
+//        if (ch == '\t')
+//        {
+//            if ([self _handleTabWithForwardFlag:YES])
+//            {
+//                return;
+//            }
+//        }
+//        else if ((ch == 25) && ([anEvent modifierFlags] & NSShiftKeyMask))
+//        {
+//            if ([self _handleTabWithForwardFlag:NO])
+//            {
+//                return;
+//            }
+//        }
+//    }
+//
+//    // If we got this far, we want the event handled in the default way.
+//    [super sendEvent:anEvent];
+//}
 
 @end

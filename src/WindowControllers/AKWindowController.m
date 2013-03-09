@@ -10,6 +10,7 @@
 #import "DIGSLog.h"
 
 #import "AKAppDelegate.h"
+#import "AKBrowser.h"
 #import "AKClassNode.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
@@ -28,10 +29,13 @@
 #import "AKQuicklistViewController.h"
 #import "AKSavedWindowState.h"
 #import "AKSubtopicListViewController.h"
+#import "AKTableView.h"
 #import "AKTestDocParserWindowController.h"
 #import "AKTopicBrowserViewController.h"
 #import "AKViewUtils.h"
 #import "AKWindowLayout.h"
+
+#import "NSObject+AppKiDo.h"
 
 @implementation AKWindowController
 
@@ -469,6 +473,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                      inFileViewerRootedAtPath:containingDirPath];
 }
 
+#pragma mark -
+#pragma mark Action methods -- debug mode
+
 - (IBAction)openParseDebugWindow:(id)sender
 {
     NSString *docPath = [self _currentDocPath];
@@ -477,6 +484,17 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         [[AKTestDocParserWindowController openNewParserWindow] parseFileAtPath:docPath];
     }
+}
+
+- (IBAction)printViewsOfInterest:(id)sender
+{
+    NSLog(@"topic browser -- %@", [[_topicBrowserController topicBrowser] ak_bareDescription]);
+    NSLog(@"subtopic list -- %@", [[_subtopicListController subtopicsTable] ak_bareDescription]);
+    NSLog(@"     doc list -- %@", [[_docListController docListTable] ak_bareDescription]);
+    NSLog(@"     web view -- %@", [[_docViewController webView] ak_bareDescription]);
+    NSLog(@"    text view -- %@", [[_docViewController textView] ak_bareDescription]);
+    NSLog(@" search field -- %@", [[_quicklistController searchField] ak_bareDescription]);
+    NSLog(@"    quicklist -- %@", [[_quicklistController quicklistTable] ak_bareDescription]);
 }
 
 #pragma mark -
@@ -715,8 +733,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_backMenu setFont:smallMenuFont];
     [_forwardMenu setFont:smallMenuFont];
 
-    // Initialize my view controllers.
+    // Initialize my view controllers and populate my container views with
+    // actual views.
     [self _setUpViewControllers];
+    [[self window] recalculateKeyViewLoop];
+    NSLog(@"drawer view %@ -- window %@", [_quicklistDrawer contentView], [[_quicklistDrawer contentView] window]);
+    [[[_quicklistDrawer contentView] window] recalculateKeyViewLoop];
+    [[_quicklistController quicklistTable] ak_printSequenceUsingSelector:@selector(nextValidKeyView)];
 
     // Apply display preferences *after* all awake-from-nibs have been
     // done, because DIGSMarginViews have to have fully initialized
@@ -828,28 +851,29 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_setUpViewControllers
 {
-    // Topic browser.
+    // Populate our various container views.
     _topicBrowserController = [[self _vcWithClass:[AKTopicBrowserViewController class]
                                           nibName:@"TopicBrowserView"
                                     containerView:_topicBrowserContainerView] retain];
-    // Subtopics list.
     _subtopicListController = [[self _vcWithClass:[AKSubtopicListViewController class]
                                           nibName:@"SubtopicListView"
                                     containerView:_subtopicListContainerView] retain];
-    // Doc list.
     _docListController = [[self _vcWithClass:[AKDocListViewController class]
                                      nibName:@"DocListView"
                                containerView:_docListContainerView] retain];
-    // Doc view.
     _docViewController = [[self _vcWithClass:[AKDocViewController class]
                                               nibName:@"DocView"
                                         containerView:_docContainerView] retain];
-    // Quicklist view.
     _quicklistController = [[self _vcWithClass:[AKQuicklistViewController class]
                                        nibName:@"QuicklistView"
                                  containerView:[_quicklistDrawer contentView]] retain];
-    // Initial display.
-    [[_topicBrowserController topicBrowser] loadColumnZero];
+
+    // Load the window with initial data.
+    AKBrowser *topicBrowser = [_topicBrowserController topicBrowser];
+    
+    [topicBrowser loadColumnZero];
+    [[self window] setInitialFirstResponder:topicBrowser];
+    (void)[[self window] makeFirstResponder:topicBrowser];
 }
 
 - (id)_vcWithClass:(Class)vcClass

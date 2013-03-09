@@ -28,7 +28,14 @@
 /*! Opens a window in which you can select a doc file and see it parsed. */
 - (IBAction)testParser:(id)sender;
 
-/*! Logs the current key view loop to the console. */
-- (IBAction)printKeyViewLoop:(id)sender;
+- (IBAction)printFirstResponder:(id)sender;
+
+/*! Logs the current key view loop to the console, using nextValidKeyView. */
+- (IBAction)printValidKeyViewLoop:(id)sender;
+
+/*! Logs the current key view loop to the console, using nextKeyView. */
+- (IBAction)printEntireKeyViewLoop:(id)sender;
+
+- (IBAction)printViewsOfInterest:(id)sender;
 
 @end
