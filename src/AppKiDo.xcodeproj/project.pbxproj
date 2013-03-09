@@ -114,7 +114,7 @@
 		65B109DB09D7B6C300A8A637 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		65B109DC09D7B6C300A8A637 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
 		65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
-		65B109E309D7B6C300A8A637 /* AKWindowController_Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310C0498501500A80007 /* AKWindowController_Toolbar.m */; };
+		65B109E309D7B6C300A8A637 /* AKWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310C0498501500A80007 /* AKWindowController+Toolbar.m */; };
 		65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AE0908049B71D800A80007 /* AKWindowLayout.m */; };
 		65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C96E24049CA60200A87B79 /* AKSavedWindowState.m */; };
 		65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E204A391D600A80003 /* AKPrefUtils.m */; };
@@ -433,7 +433,7 @@
 		7399B3470E632A5C001AE672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
 		7399B3490E632A5C001AE672 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
-		7399B34F0E632A5C001AE672 /* AKWindowController_Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310C0498501500A80007 /* AKWindowController_Toolbar.m */; };
+		7399B34F0E632A5C001AE672 /* AKWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7300310C0498501500A80007 /* AKWindowController+Toolbar.m */; };
 		7399B3510E632A5C001AE672 /* AKWindowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AE0908049B71D800A80007 /* AKWindowLayout.m */; };
 		7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C96E24049CA60200A87B79 /* AKSavedWindowState.m */; };
 		7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E204A391D600A80003 /* AKPrefUtils.m */; };
@@ -644,7 +644,7 @@
 		730030A90498501500A80007 /* AKTableView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKTableView.h; path = CustomViews/AKTableView.h; sourceTree = "<group>"; };
 		730030AA0498501500A80007 /* AKTableView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKTableView.m; path = CustomViews/AKTableView.m; sourceTree = "<group>"; };
 		730030DD0498501500A80007 /* AKSortable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSortable.h; sourceTree = "<group>"; };
-		7300310C0498501500A80007 /* AKWindowController_Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKWindowController_Toolbar.m; sourceTree = "<group>"; };
+		7300310C0498501500A80007 /* AKWindowController+Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "AKWindowController+Toolbar.m"; sourceTree = "<group>"; };
 		73026980082FD33700D5198D /* AKTestDocParserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTestDocParserWindowController.h; sourceTree = "<group>"; };
 		73026981082FD33700D5198D /* AKTestDocParserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTestDocParserWindowController.m; sourceTree = "<group>"; };
 		7302DF980767B65200F9FEC0 /* about-the-code.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "about-the-code.markdown"; sourceTree = "<group>"; };
@@ -1517,7 +1517,7 @@
 				73A0231C16DD1EE400240111 /* AKUIController.h */,
 				7320C17716DCF9ED00797F95 /* AKWindowController.h */,
 				7320C17816DCF9F900797F95 /* AKWindowController.m */,
-				7300310C0498501500A80007 /* AKWindowController_Toolbar.m */,
+				7300310C0498501500A80007 /* AKWindowController+Toolbar.m */,
 				7320C17516DCF9E300797F95 /* AKViewController.h */,
 				7320C17616DCF9E500797F95 /* AKViewController.m */,
 				7320C17316DCF9DA00797F95 /* AKTopicBrowserViewController.h */,
@@ -2182,7 +2182,7 @@
 				65B109DB09D7B6C300A8A637 /* main.m in Sources */,
 				65B109DC09D7B6C300A8A637 /* AKBrowser.m in Sources */,
 				65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */,
-				65B109E309D7B6C300A8A637 /* AKWindowController_Toolbar.m in Sources */,
+				65B109E309D7B6C300A8A637 /* AKWindowController+Toolbar.m in Sources */,
 				65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */,
 				65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */,
 				65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */,
@@ -2315,7 +2315,7 @@
 				7399B3470E632A5C001AE672 /* main.m in Sources */,
 				7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */,
 				7399B3490E632A5C001AE672 /* AKTableView.m in Sources */,
-				7399B34F0E632A5C001AE672 /* AKWindowController_Toolbar.m in Sources */,
+				7399B34F0E632A5C001AE672 /* AKWindowController+Toolbar.m in Sources */,
 				7399B3510E632A5C001AE672 /* AKWindowLayout.m in Sources */,
 				7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */,
 				7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */,
