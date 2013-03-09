@@ -229,6 +229,7 @@
     {
         [textView setSelectedRange:range];
         [textView scrollRangeToVisible:range];
+        (void)[[textView window] makeFirstResponder:textView];
         return YES;
     }
 }
