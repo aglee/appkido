@@ -11,6 +11,7 @@
 @class AKAboutWindowController;
 @class AKDatabase;
 @class AKDocLocator;
+@class AKFindPanelController;
 @class AKPrefPanelController;
 @class AKSplashWindowController;
 @class AKWindowController;
@@ -44,6 +45,7 @@
     // Single-instance windows, lazily instantiated.
     AKPrefPanelController *_prefPanelController;
     AKAboutWindowController *_aboutWindowController;
+    AKFindPanelController *_findPanelController;
 
     // Elements are AKWindowControllers.
     NSMutableArray *_windowControllers;

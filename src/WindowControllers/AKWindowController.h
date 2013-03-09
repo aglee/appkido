@@ -152,7 +152,7 @@
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
 
-- (NSView *)focusOnDocView;
+- (NSView *)docView;
 
 #pragma mark -
 #pragma mark Action methods -- window layout
@@ -203,10 +203,6 @@
 
 /*! Adds the currently selected topic to the Favorites quicklist. */
 - (IBAction)addTopicToFavorites:(id)sender;
-
-- (IBAction)findNext:(id)sender;
-
-- (IBAction)findPrevious:(id)sender;
 
 #pragma mark -
 #pragma mark Action methods -- Accessing the doc file

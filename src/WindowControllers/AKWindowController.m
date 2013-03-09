@@ -18,7 +18,6 @@
 #import "AKDocLocator.h"
 #import "AKDocViewController.h"
 #import "AKFileSection.h"
-#import "AKFindPanelController.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKFunctionsTopic.h"
 #import "AKGlobalsTopic.h"
@@ -219,9 +218,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [savedWindowState setSavedDocLocator:[self currentDocLocator]];
 }
 
-- (NSView *)focusOnDocView
+- (NSView *)docView
 {
-    return [_docViewController grabFocus];
+    return [_docViewController docView];
 }
 
 #pragma mark -
@@ -415,16 +414,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                                           subtopicName:nil
                                                docName:nil];
     [(AKAppDelegate *)[NSApp delegate] addFavorite:docLocator];
-}
-
-- (IBAction)findNext:(id)sender
-{
-    [[AKFindPanelController sharedInstance] findNext:nil];
-}
-
-- (IBAction)findPrevious:(id)sender
-{
-    [[AKFindPanelController sharedInstance] findPrevious:nil];
 }
 
 #pragma mark -

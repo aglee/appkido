@@ -69,31 +69,17 @@
 #pragma mark -
 #pragma mark Navigation
 
-- (NSView *)grabFocus
+- (NSView *)docView
 {
     NSView *viewSelectedInTabView = [[_tabView selectedTabViewItem] view];
 
     if ([_webView isDescendantOf:viewSelectedInTabView])
     {
-        if ([[_webView window] makeFirstResponder:_webView])
-        {
-            return _webView;
-        }
-        else
-        {
-            return nil;
-        }
+        return _webView;
     }
     else if ([_textView isDescendantOf:viewSelectedInTabView])
     {
-        if ([[_textView window] makeFirstResponder:_textView])
-        {
-            return _textView;
-        }
-        else
-        {
-            return nil;
-        }
+        return _textView;
     }
     else
     {

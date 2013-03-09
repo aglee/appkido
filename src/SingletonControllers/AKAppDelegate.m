@@ -21,6 +21,7 @@
 #import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
 #import "AKDocSetIndex.h"
+#import "AKFindPanelController.h"
 #import "AKLoadDatabaseOperation.h"
 #import "AKPrefPanelController.h"
 #import "AKPrefUtils.h"
@@ -113,6 +114,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_operationQueue release];
     [_prefPanelController release];
     [_aboutWindowController release];
+    [_findPanelController release];
     [_windowControllers release];
     [_favoritesList release];
 
@@ -181,6 +183,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
                                                  name:NSWindowWillCloseNotification
                                                object:nil];
 
+    // Put the find panel controller in the responder chain.
+    _findPanelController = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPanel"];
+    (void)[_findPanelController window];  // Force the nib to be loaded.
+    [_findPanelController setNextResponder:[NSApp nextResponder]];
+    [NSApp setNextResponder:_findPanelController];
+    
     // Force the DIGSFindBuffer to initialize.
     // [agl] ??? Why not in DIGSFindBuffer's +initialize?
     (void)[DIGSFindBuffer sharedInstance];
@@ -508,7 +516,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     else if ((itemAction == @selector(testParser:))
              || (itemAction == @selector(printKeyViewLoop:)))
     {
-        NSLog(@"*** %s -- <%@: %p> -- SEL %@", __PRETTY_FUNCTION__, [self class], self, NSStringFromSelector(itemAction));
         return YES;
     }
 

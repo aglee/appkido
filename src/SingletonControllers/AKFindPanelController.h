@@ -12,37 +12,36 @@
 #import "DIGSFindBufferDelegate.h"
 
 /*!
- * Controller for the application-wide Find panel.
+ * Controller for the application-wide Find panel. Uses DIGSFindBuffer.
  */
-@interface AKFindPanelController : NSObject <DIGSFindBufferDelegate>
+@interface AKFindPanelController : NSWindowController <DIGSFindBufferDelegate>
 {
 @private
     // Did we find anything the last time we tried?  Used to decide what
     // to display in _statusTextField.
     BOOL _lastFindWasSuccessful;
 
-    // UI outlets.
-    IBOutlet NSTextField *_findTextField;
-    IBOutlet NSButton *_findNextButton;
-    IBOutlet NSTextField *_statusTextField;
+    // IBOutlets.
+    NSTextField *_findTextField;
+    NSButton *_findNextButton;
+    NSTextField *_statusTextField;
 }
 
-#pragma mark -
-#pragma mark Factory methods
-
-+ (AKFindPanelController *)sharedInstance;
+@property (nonatomic, assign) IBOutlet NSTextField *findTextField;
+@property (nonatomic, assign) IBOutlet NSButton *findNextButton;
+@property (nonatomic, assign) IBOutlet NSTextField *statusTextField;
 
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)findNext:(id)sender;
+- (IBAction)showFindPanel:(id)sender;
 
-- (IBAction)findPrevious:(id)sender;
+- (IBAction)findNextFindString:(id)sender;
 
-- (IBAction)findNextAndOrderFindPanelOut:(id)sender;
+- (IBAction)findNextFindStringAndOrderOut:(id)sender;
 
-- (IBAction)orderFrontFindPanel:(id)sender;
+- (IBAction)findPreviousFindString:(id)sender;
 
-- (IBAction)takeFindStringFromSelection:(id)sender;
+- (IBAction)useSelectionAsFindString:(id)sender;
 
 @end

@@ -32,6 +32,6 @@
 #pragma mark -
 #pragma mark Navigation
 
-- (NSView *)grabFocus;
+- (NSView *)docView;
 
 @end

@@ -242,6 +242,8 @@
 		7320C18816DCF9FD00797F95 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17816DCF9F900797F95 /* AKWindowController.m */; };
 		7332E8D616E8141300A3764B /* AKPrefDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7332E8D516E8141300A3764B /* AKPrefDictionary.h */; };
 		7332E8D716E8141300A3764B /* AKPrefDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7332E8D516E8141300A3764B /* AKPrefDictionary.h */; };
+		7332E8DE16E8EFAE00A3764B /* FindPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7332E8DC16E8EFAE00A3764B /* FindPanel.xib */; };
+		7332E8DF16E8EFAE00A3764B /* FindPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7332E8DC16E8EFAE00A3764B /* FindPanel.xib */; };
 		733DF5EB14E17700007E6313 /* AKSQLTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 733DF5E914E17700007E6313 /* AKSQLTemplate.h */; };
 		733DF5EC14E17700007E6313 /* AKSQLTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 733DF5EA14E17700007E6313 /* AKSQLTemplate.m */; };
 		733DF5ED14E17700007E6313 /* AKSQLTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 733DF5E914E17700007E6313 /* AKSQLTemplate.h */; };
@@ -722,6 +724,7 @@
 		7330D5B6083667540007FBD0 /* AKChildTopicOfFrameworkTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKChildTopicOfFrameworkTopic.h; sourceTree = "<group>"; };
 		7330D5B7083667540007FBD0 /* AKChildTopicOfFrameworkTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKChildTopicOfFrameworkTopic.m; sourceTree = "<group>"; };
 		7332E8D516E8141300A3764B /* AKPrefDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefDictionary.h; sourceTree = "<group>"; };
+		7332E8DD16E8EFAE00A3764B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindPanel.xib; sourceTree = "<group>"; };
 		733ACAF20498483100A80007 /* app-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "app-icon.icns"; path = "images/app-icon.icns"; sourceTree = SOURCE_ROOT; };
 		733DF5E914E17700007E6313 /* AKSQLTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSQLTemplate.h; sourceTree = "<group>"; };
 		733DF5EA14E17700007E6313 /* AKSQLTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSQLTemplate.m; sourceTree = "<group>"; };
@@ -1141,6 +1144,7 @@
 			children = (
 				738D41B315B07A1C008950F6 /* AboutWindow.xib */,
 				73C891DA14E10B7600A54FF6 /* MainMenu.xib */,
+				7332E8DC16E8EFAE00A3764B /* FindPanel.xib */,
 				73C891DC14E10B7600A54FF6 /* Prefs.xib */,
 				734B75D416D062060027514D /* SplashWindow.xib */,
 			);
@@ -2115,6 +2119,7 @@
 				7312A76216DD293D00052FEA /* DocView.xib in Resources */,
 				7312A76416DD293D00052FEA /* SubtopicListView.xib in Resources */,
 				7312A76616DD293D00052FEA /* TopicBrowserView.xib in Resources */,
+				7332E8DE16E8EFAE00A3764B /* FindPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2163,6 +2168,7 @@
 				7312A76316DD293D00052FEA /* DocView.xib in Resources */,
 				7312A76516DD293D00052FEA /* SubtopicListView.xib in Resources */,
 				7312A76716DD293D00052FEA /* TopicBrowserView.xib in Resources */,
+				7332E8DF16E8EFAE00A3764B /* FindPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2476,6 +2482,14 @@
 				7312A75F16DD293D00052FEA /* English */,
 			);
 			name = TopicBrowserView.xib;
+			sourceTree = "<group>";
+		};
+		7332E8DC16E8EFAE00A3764B /* FindPanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7332E8DD16E8EFAE00A3764B /* English */,
+			);
+			name = FindPanel.xib;
 			sourceTree = "<group>";
 		};
 		738D41B315B07A1C008950F6 /* AboutWindow.xib */ = {
