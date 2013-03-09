@@ -376,7 +376,6 @@ enum
 - (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer
 {
     [_searchField setStringValue:[findBuffer findString]];
-    [_searchField selectText:nil];
 }
 
 #pragma mark -
