@@ -30,11 +30,11 @@
 #import "AKServicesProvider.h"
 #import "AKSplashWindowController.h"
 #import "AKTestDocParserWindowController.h"
-#import "AKTextUtils.h"
 #import "AKTopic.h"
-#import "AKViewUtils.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
+
+#import "NSString+AppKiDo.h"
 
 // [agl] working on parse performance
 #define MEASURE_PARSE_SPEED 1

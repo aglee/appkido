@@ -27,9 +27,10 @@
 #import "AKSearchQuery.h"
 #import "AKSortUtils.h"
 #import "AKTableView.h"
-#import "AKTextUtils.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
+
+#import "NSString+AppKiDo.h"
 
 #pragma mark -
 #pragma mark Private constants

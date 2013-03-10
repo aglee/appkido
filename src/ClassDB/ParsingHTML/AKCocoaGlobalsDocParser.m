@@ -9,12 +9,11 @@
 
 #import "DIGSLog.h"
 
-#import "AKTextUtils.h"
+#import "AKBehaviorNode.h"
 #import "AKDatabase.h"
 #import "AKFileSection.h"
-#import "AKBehaviorNode.h"
-#import "AKGroupNode.h"
 #import "AKGlobalsNode.h"
+#import "AKGroupNode.h"
 
 @implementation AKCocoaGlobalsDocParser
 

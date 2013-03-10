@@ -12,8 +12,6 @@
 #import "AKFrameworkConstants.h"
 #import "AKHTMLConstants.h"
 
-#import "AKTextUtils.h"
-
 #import "AKDatabase.h"
 #import "AKFileSection.h"
 #import "AKClassNode.h"

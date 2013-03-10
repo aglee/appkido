@@ -8,7 +8,7 @@
 
 #import "AKIPhoneDevTools.h"
 
-#import "AKTextUtils.h"
+#import "NSString+AppKiDo.h"
 
 @implementation AKIPhoneDevTools
 

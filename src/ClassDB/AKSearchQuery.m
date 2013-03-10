@@ -9,21 +9,22 @@
 
 #import "DIGSLog.h"
 
-#import "AKSortUtils.h"
-#import "AKTextUtils.h"
-#import "AKDatabase.h"
 #import "AKClassNode.h"
-#import "AKProtocolNode.h"
-#import "AKMethodNode.h"
-#import "AKGlobalsNode.h"
-#import "AKGroupNode.h"
-#import "AKFileSection.h"
-#import "AKDocLocator.h"
 #import "AKClassTopic.h"
-#import "AKProtocolTopic.h"
+#import "AKDatabase.h"
+#import "AKDocLocator.h"
+#import "AKFileSection.h"
 #import "AKFunctionsTopic.h"
+#import "AKGlobalsNode.h"
 #import "AKGlobalsTopic.h"
+#import "AKGroupNode.h"
+#import "AKMethodNode.h"
+#import "AKProtocolNode.h"
+#import "AKProtocolTopic.h"
+#import "AKSortUtils.h"
 #import "AKSubtopic.h"
+
+#import "NSString+AppKiDo.h"
 
 @interface AKSearchQuery ()
 @property (nonatomic, retain) NSArray *searchResults;

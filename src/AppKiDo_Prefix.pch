@@ -17,7 +17,6 @@
     #import "DIGSMarginView.h"
     #import "DIGSMatchingBackgroundView.h"
     #import "DIGSTextView.h"
-    #import "AKWindow.h"
 
     #import "AKFrameworkConstants.h"
     #import "AKHTMLConstants.h"
@@ -25,8 +24,6 @@
     #import "AKFileUtils.h"
     #import "AKSortable.h"
     #import "AKSortUtils.h"
-    #import "AKTextUtils.h"
-    #import "AKViewUtils.h"
     #import "AKFileSection.h"
     #import "AKPrefUtils.h"
 #endif

@@ -12,7 +12,6 @@
 #import "DIGSLog.h"
 
 #import "AKFileSectionCache.h"
-#import "AKTextUtils.h"
 
 #pragma mark -
 #pragma mark Static variables

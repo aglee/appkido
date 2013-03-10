@@ -15,7 +15,8 @@
 #import "AKMethodNode.h"
 #import "AKNotificationNode.h"
 #import "AKProtocolNode.h"
-#import "AKTextUtils.h"
+
+#import "NSString+AppKiDo.h"
 
 @interface AKClassNode ()
 @property (nonatomic, weak) AKClassNode *parentClass;

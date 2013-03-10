@@ -17,7 +17,8 @@
 #import "AKNotificationNode.h"
 #import "AKPropertyNode.h"
 #import "AKProtocolNode.h"
-#import "AKTextUtils.h"
+
+#import "NSString+AppKiDo.h"
 
 @implementation AKCocoaBehaviorDocParser
 

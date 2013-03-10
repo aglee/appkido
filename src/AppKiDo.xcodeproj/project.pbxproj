@@ -14,9 +14,9 @@
 		65B1096109D7B6C300A8A637 /* AKSavedWindowState.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C96E23049CA60200A87B79 /* AKSavedWindowState.h */; };
 		65B1096209D7B6C300A8A637 /* AKPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E104A391D600A80003 /* AKPrefUtils.h */; };
 		65B1096309D7B6C300A8A637 /* AKSortUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E704A3A04F00A80003 /* AKSortUtils.h */; };
-		65B1096409D7B6C300A8A637 /* AKTextUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409EE04A3A1EB00A80003 /* AKTextUtils.h */; };
+		65B1096409D7B6C300A8A637 /* NSString+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409EE04A3A1EB00A80003 /* NSString+AppKiDo.h */; };
 		65B1096509D7B6C300A8A637 /* AKColoredBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B722C104B5FF1900A80003 /* AKColoredBox.h */; };
-		65B1096709D7B6C300A8A637 /* AKViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */; };
+		65B1096709D7B6C300A8A637 /* NSView+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */; };
 		65B1096809D7B6C300A8A637 /* AKClassMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */; };
 		65B1096909D7B6C300A8A637 /* AKDelegateMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25C04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.h */; };
 		65B1096A09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26004EDC6AE00A80003 /* AKInstanceMethodsSubtopic.h */; };
@@ -119,9 +119,9 @@
 		65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C96E24049CA60200A87B79 /* AKSavedWindowState.m */; };
 		65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E204A391D600A80003 /* AKPrefUtils.m */; };
 		65B109E809D7B6C300A8A637 /* AKSortUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E804A3A04F00A80003 /* AKSortUtils.m */; };
-		65B109E909D7B6C300A8A637 /* AKTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409EF04A3A1EB00A80003 /* AKTextUtils.m */; };
+		65B109E909D7B6C300A8A637 /* NSString+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409EF04A3A1EB00A80003 /* NSString+AppKiDo.m */; };
 		65B109EA09D7B6C300A8A637 /* AKColoredBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B722C204B5FF1900A80003 /* AKColoredBox.m */; };
-		65B109EC09D7B6C300A8A637 /* AKViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */; };
+		65B109EC09D7B6C300A8A637 /* NSView+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323B6E804DDD45B00CCE8CB /* NSView+AppKiDo.m */; };
 		65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25B04EDC6AE00A80003 /* AKClassMethodsSubtopic.m */; };
 		65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */; };
 		65B109EF09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26104EDC6AE00A80003 /* AKInstanceMethodsSubtopic.m */; };
@@ -313,9 +313,9 @@
 		7399B2BF0E632A5C001AE672 /* AKSavedWindowState.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C96E23049CA60200A87B79 /* AKSavedWindowState.h */; };
 		7399B2C00E632A5C001AE672 /* AKPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E104A391D600A80003 /* AKPrefUtils.h */; };
 		7399B2C10E632A5C001AE672 /* AKSortUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409E704A3A04F00A80003 /* AKSortUtils.h */; };
-		7399B2C20E632A5C001AE672 /* AKTextUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409EE04A3A1EB00A80003 /* AKTextUtils.h */; };
+		7399B2C20E632A5C001AE672 /* NSString+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D409EE04A3A1EB00A80003 /* NSString+AppKiDo.h */; };
 		7399B2C30E632A5C001AE672 /* AKColoredBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B722C104B5FF1900A80003 /* AKColoredBox.h */; };
-		7399B2C50E632A5C001AE672 /* AKViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */; };
+		7399B2C50E632A5C001AE672 /* NSView+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */; };
 		7399B2C60E632A5C001AE672 /* AKClassMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25A04EDC6AE00A80003 /* AKClassMethodsSubtopic.h */; };
 		7399B2C70E632A5C001AE672 /* AKDelegateMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB25C04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.h */; };
 		7399B2C80E632A5C001AE672 /* AKInstanceMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26004EDC6AE00A80003 /* AKInstanceMethodsSubtopic.h */; };
@@ -438,9 +438,9 @@
 		7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C96E24049CA60200A87B79 /* AKSavedWindowState.m */; };
 		7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E204A391D600A80003 /* AKPrefUtils.m */; };
 		7399B3540E632A5C001AE672 /* AKSortUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409E804A3A04F00A80003 /* AKSortUtils.m */; };
-		7399B3550E632A5C001AE672 /* AKTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409EF04A3A1EB00A80003 /* AKTextUtils.m */; };
+		7399B3550E632A5C001AE672 /* NSString+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D409EF04A3A1EB00A80003 /* NSString+AppKiDo.m */; };
 		7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B722C204B5FF1900A80003 /* AKColoredBox.m */; };
-		7399B3580E632A5C001AE672 /* AKViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */; };
+		7399B3580E632A5C001AE672 /* NSView+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323B6E804DDD45B00CCE8CB /* NSView+AppKiDo.m */; };
 		7399B3590E632A5C001AE672 /* AKClassMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25B04EDC6AE00A80003 /* AKClassMethodsSubtopic.m */; };
 		7399B35A0E632A5C001AE672 /* AKDelegateMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */; };
 		7399B35B0E632A5C001AE672 /* AKInstanceMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26104EDC6AE00A80003 /* AKInstanceMethodsSubtopic.m */; };
@@ -610,6 +610,14 @@
 		73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */; };
 		73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */; };
 		73F8F99616ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */; };
+		73F8F99B16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */; };
+		73F8F99C16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */; };
+		73F8F99D16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */; };
+		73F8F99E16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */; };
+		73F8F9A116ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */; };
+		73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */; };
+		73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */; };
+		73F8F9A416ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */; };
 		F28A5B2B13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
 		F28A5B2C13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
 		F28A5B2D13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */; };
@@ -707,8 +715,8 @@
 		7320C17616DCF9E500797F95 /* AKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewController.m; sourceTree = "<group>"; };
 		7320C17716DCF9ED00797F95 /* AKWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowController.h; sourceTree = "<group>"; };
 		7320C17816DCF9F900797F95 /* AKWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowController.m; sourceTree = "<group>"; };
-		7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewUtils.h; sourceTree = "<group>"; };
-		7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewUtils.m; sourceTree = "<group>"; };
+		7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+AppKiDo.h"; sourceTree = "<group>"; };
+		7323B6E804DDD45B00CCE8CB /* NSView+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+AppKiDo.m"; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };
 		7323C9C208313881002E8D7D /* AKFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFileUtils.m; sourceTree = "<group>"; };
 		732BD55205ED8DC50055715D /* AKCategoryNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKCategoryNode.h; sourceTree = "<group>"; };
@@ -913,8 +921,8 @@
 		73D409E204A391D600A80003 /* AKPrefUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPrefUtils.m; sourceTree = "<group>"; };
 		73D409E704A3A04F00A80003 /* AKSortUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSortUtils.h; sourceTree = "<group>"; };
 		73D409E804A3A04F00A80003 /* AKSortUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSortUtils.m; sourceTree = "<group>"; };
-		73D409EE04A3A1EB00A80003 /* AKTextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTextUtils.h; sourceTree = "<group>"; };
-		73D409EF04A3A1EB00A80003 /* AKTextUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTextUtils.m; sourceTree = "<group>"; };
+		73D409EE04A3A1EB00A80003 /* NSString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AppKiDo.h"; sourceTree = "<group>"; };
+		73D409EF04A3A1EB00A80003 /* NSString+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AppKiDo.m"; sourceTree = "<group>"; };
 		73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMethodNameExtractor.h; sourceTree = "<group>"; };
 		73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMethodNameExtractor.m; sourceTree = "<group>"; };
 		73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKServicesProvider.h; sourceTree = "<group>"; };
@@ -931,6 +939,10 @@
 		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; };
 		73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AppKiDo.h"; sourceTree = "<group>"; };
 		73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AppKiDo.m"; sourceTree = "<group>"; };
+		73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSplitView+AppKiDo.h"; sourceTree = "<group>"; };
+		73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSplitVIew+AppKiDo.m"; sourceTree = "<group>"; };
+		73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+AppKiDo.h"; sourceTree = "<group>"; };
+		73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+AppKiDo.m"; sourceTree = "<group>"; };
 		F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMXMLWriter.m; sourceTree = "<group>"; };
 		F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMXMLWriter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1132,10 +1144,6 @@
 				73D409E804A3A04F00A80003 /* AKSortUtils.m */,
 				733DF5E914E17700007E6313 /* AKSQLTemplate.h */,
 				733DF5EA14E17700007E6313 /* AKSQLTemplate.m */,
-				73D409EE04A3A1EB00A80003 /* AKTextUtils.h */,
-				73D409EF04A3A1EB00A80003 /* AKTextUtils.m */,
-				7323B6E704DDD45B00CCE8CB /* AKViewUtils.h */,
-				7323B6E804DDD45B00CCE8CB /* AKViewUtils.m */,
 			);
 			name = "AppKiDo support classes";
 			path = GlobalClasses;
@@ -1727,8 +1735,16 @@
 		73F8F99816ECEA21001650D7 /* AppKiDo Cocoa categories */ = {
 			isa = PBXGroup;
 			children = (
+				73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */,
+				73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */,
 				73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */,
 				73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */,
+				73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */,
+				73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */,
+				73D409EE04A3A1EB00A80003 /* NSString+AppKiDo.h */,
+				73D409EF04A3A1EB00A80003 /* NSString+AppKiDo.m */,
+				7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */,
+				7323B6E804DDD45B00CCE8CB /* NSView+AppKiDo.m */,
 			);
 			name = "AppKiDo Cocoa categories";
 			path = GlobalClasses;
@@ -1748,9 +1764,9 @@
 				65B1096109D7B6C300A8A637 /* AKSavedWindowState.h in Headers */,
 				65B1096209D7B6C300A8A637 /* AKPrefUtils.h in Headers */,
 				65B1096309D7B6C300A8A637 /* AKSortUtils.h in Headers */,
-				65B1096409D7B6C300A8A637 /* AKTextUtils.h in Headers */,
+				65B1096409D7B6C300A8A637 /* NSString+AppKiDo.h in Headers */,
 				65B1096509D7B6C300A8A637 /* AKColoredBox.h in Headers */,
-				65B1096709D7B6C300A8A637 /* AKViewUtils.h in Headers */,
+				65B1096709D7B6C300A8A637 /* NSView+AppKiDo.h in Headers */,
 				65B1096809D7B6C300A8A637 /* AKClassMethodsSubtopic.h in Headers */,
 				65B1096909D7B6C300A8A637 /* AKDelegateMethodsSubtopic.h in Headers */,
 				65B1096A09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.h in Headers */,
@@ -1872,6 +1888,8 @@
 				735E298416E050E600E9FBC1 /* AKDebugging.h in Headers */,
 				7332E8D616E8141300A3764B /* AKPrefDictionary.h in Headers */,
 				73F8F99316ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
+				73F8F99B16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */,
+				73F8F9A116ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1886,9 +1904,9 @@
 				7399B2BF0E632A5C001AE672 /* AKSavedWindowState.h in Headers */,
 				7399B2C00E632A5C001AE672 /* AKPrefUtils.h in Headers */,
 				7399B2C10E632A5C001AE672 /* AKSortUtils.h in Headers */,
-				7399B2C20E632A5C001AE672 /* AKTextUtils.h in Headers */,
+				7399B2C20E632A5C001AE672 /* NSString+AppKiDo.h in Headers */,
 				7399B2C30E632A5C001AE672 /* AKColoredBox.h in Headers */,
-				7399B2C50E632A5C001AE672 /* AKViewUtils.h in Headers */,
+				7399B2C50E632A5C001AE672 /* NSView+AppKiDo.h in Headers */,
 				7399B2C60E632A5C001AE672 /* AKClassMethodsSubtopic.h in Headers */,
 				7399B2C70E632A5C001AE672 /* AKDelegateMethodsSubtopic.h in Headers */,
 				7399B2C80E632A5C001AE672 /* AKInstanceMethodsSubtopic.h in Headers */,
@@ -2010,6 +2028,8 @@
 				735E298516E050E600E9FBC1 /* AKDebugging.h in Headers */,
 				7332E8D716E8141300A3764B /* AKPrefDictionary.h in Headers */,
 				73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
+				73F8F99C16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */,
+				73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2197,9 +2217,9 @@
 				65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */,
 				65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */,
 				65B109E809D7B6C300A8A637 /* AKSortUtils.m in Sources */,
-				65B109E909D7B6C300A8A637 /* AKTextUtils.m in Sources */,
+				65B109E909D7B6C300A8A637 /* NSString+AppKiDo.m in Sources */,
 				65B109EA09D7B6C300A8A637 /* AKColoredBox.m in Sources */,
-				65B109EC09D7B6C300A8A637 /* AKViewUtils.m in Sources */,
+				65B109EC09D7B6C300A8A637 /* NSView+AppKiDo.m in Sources */,
 				65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */,
 				65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */,
 				65B109EF09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.m in Sources */,
@@ -2316,6 +2336,8 @@
 				7304030916DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 				735E298616E050E600E9FBC1 /* AKDebugging.m in Sources */,
 				73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
+				73F8F99D16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */,
+				73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2331,9 +2353,9 @@
 				7399B3520E632A5C001AE672 /* AKSavedWindowState.m in Sources */,
 				7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */,
 				7399B3540E632A5C001AE672 /* AKSortUtils.m in Sources */,
-				7399B3550E632A5C001AE672 /* AKTextUtils.m in Sources */,
+				7399B3550E632A5C001AE672 /* NSString+AppKiDo.m in Sources */,
 				7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */,
-				7399B3580E632A5C001AE672 /* AKViewUtils.m in Sources */,
+				7399B3580E632A5C001AE672 /* NSView+AppKiDo.m in Sources */,
 				7399B3590E632A5C001AE672 /* AKClassMethodsSubtopic.m in Sources */,
 				7399B35A0E632A5C001AE672 /* AKDelegateMethodsSubtopic.m in Sources */,
 				7399B35B0E632A5C001AE672 /* AKInstanceMethodsSubtopic.m in Sources */,
@@ -2450,6 +2472,8 @@
 				7304030A16DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 				735E298716E050E600E9FBC1 /* AKDebugging.m in Sources */,
 				73F8F99616ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
+				73F8F99E16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */,
+				73F8F9A416ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

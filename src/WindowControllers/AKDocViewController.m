@@ -18,7 +18,6 @@
 #import "AKDocLocator.h"
 #import "AKFileSection.h"
 #import "AKPrefUtils.h"
-#import "AKTextUtils.h"
 #import "AKTextView.h"
 #import "AKWindowController.h"
 

@@ -32,10 +32,10 @@
 #import "AKTableView.h"
 #import "AKTestDocParserWindowController.h"
 #import "AKTopicBrowserViewController.h"
-#import "AKViewUtils.h"
 #import "AKWindowLayout.h"
 
 #import "NSObject+AppKiDo.h"
+#import "NSSplitView+AppKiDo.h"
 
 @implementation AKWindowController
 

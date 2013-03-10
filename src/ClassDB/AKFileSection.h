@@ -9,20 +9,14 @@
 
 @class AKFileSection;
 
-// [agl] mention how the actual data is lazily loaded
 /*!
- * @class       AKFileSection
- * @abstract    A named range of bytes within a file.
- * @discussion  An AKFileSection, or "file section," is used to assign a
- *              name to a range of bytes within a file.  A file section can
- *              be associated with other file sections called child
- *              sections.
+ * A named range of bytes within a file. A file section can have nested file
+ * sections called child sections.
  *
- *              In AppKiDo, file sections are used to partition an HTML
- *              file into a hierarchy of smaller chunks of documentation.
- *              For example, an HTML file that documents a class is
- *              partitioned into sections for class methods, instance
- *              methods, delegate methods, etc.
+ * In AppKiDo, file sections are used to partition an HTML file into a hierarchy
+ * of smaller chunks of documentation. For example, an HTML file that documents
+ * a class is partitioned into sections for class methods, instance methods,
+ * delegate methods, etc.
  */
 @interface AKFileSection : NSObject
 {
@@ -59,6 +53,7 @@
 
 - (NSString *)filePath;
 
+/*! Lazily loaded from disk. */
 - (NSData *)fileContents;
 
 - (NSString *)sectionName;

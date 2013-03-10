@@ -9,7 +9,7 @@
 #import "AKAboutWindowController.h"
 #import <WebKit/WebKit.h>
 #import "AKAppVersion.h"
-#import "AKViewUtils.h"
+#import "NSView+AppKiDo.h"
 
 @implementation AKAboutWindowController
 

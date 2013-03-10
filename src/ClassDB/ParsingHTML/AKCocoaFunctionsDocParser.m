@@ -13,7 +13,6 @@
 #import "AKFileSection.h"
 #import "AKFunctionNode.h"
 #import "AKGroupNode.h"
-#import "AKTextUtils.h"
 
 @implementation AKCocoaFunctionsDocParser
 

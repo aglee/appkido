@@ -15,8 +15,9 @@
 
 #import "AKAppDelegate.h"
 #import "AKTestDocParserWindowController.h"
-#import "AKTextUtils.h"
 #import "AKWindowController.h"
+
+#import "NSString+AppKiDo.h"
 
 @implementation AKFindPanelController
 

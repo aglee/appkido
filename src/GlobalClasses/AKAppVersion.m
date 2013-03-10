@@ -7,7 +7,6 @@
 //
 
 #import "AKAppVersion.h"
-#import "AKTextUtils.h"
 
 NSString *AKHomePageURL = @"http://appkido.com/";
 

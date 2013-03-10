@@ -11,6 +11,7 @@
 #import "AKAppDelegate.h"
 #import "AKTestDocParserWindowController.h"
 #import "AKWindowController.h"
+
 #import "NSObject+AppKiDo.h"
 
 @implementation AKDebugging

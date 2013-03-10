@@ -1,27 +1,11 @@
 /*
- * AKTextUtils.m
+ * NSString+AppKiDo.m
  *
  * Created by Andy Lee on Fri Jun 20 2003.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKTextUtils.h"
-
-// This import picks up AppKit extensions to Foundation string classes.
-#import <AppKit/AppKit.h>
-
-#pragma mark -
-#pragma mark C string utilities
-
-extern char *ak_copystr(const char *s)
-{
-    char *copy = (char *)malloc(strlen(s) + 1);
-    strcpy(copy, s);
-    return copy;
-}
-
-#pragma mark -
-#pragma mark NSString extensions
+#import "NSString+AppKiDo.h"
 
 @implementation NSString (AppKiDo)
 
@@ -113,6 +97,8 @@ extern char *ak_copystr(const char *s)
     return range;
 }        
 
+// [agl] Should simplify the implementation to call stringByTrimmingCharactersInSet:.
+// Didn't do so before because that method was not available in 10.1.x.
 - (NSString *)ak_trimWhitespace
 {
     NSCharacterSet *whitespaceChars = [NSCharacterSet whitespaceAndNewlineCharacterSet];
@@ -194,67 +180,3 @@ extern char *ak_copystr(const char *s)
 }
 
 @end
-
-
-/* --- these methods aren't being used at the moment ---
-
-
-#pragma mark -
-#pragma mark NSMutableAttributedString extensions
-
-@implementation NSMutableAttributedString (AppKiDo)
-
-// Thanks to Mike Morton for code this method is based on.
-- (void)ak_magnifyUsingMultiplier:(float)multiplier
-{
-    NSRange selectedRange;
-    unsigned int charIndex;
-
-    selectedRange = NSMakeRange(0, [self length]);
-    charIndex = 0;
-    do
-    {
-        NSDictionary *attributes;
-        NSRange foundRange;
-        NSFont *foundFont;
-        NSMutableDictionary *newAttributes;
-
-        attributes =
-            [self attributesAtIndex:charIndex
-                longestEffectiveRange:&foundRange
-                inRange:selectedRange];
-        foundFont = [attributes objectForKey:NSFontAttributeName];
-
-        if (foundFont != nil) // [agl] FIXME-PURISM: can this equal nil?
-        {
-            float newSize;
-
-            // Get the current size and calculate the new size.
-            newSize = [foundFont pointSize] * multiplier;
-
-            //  Get a font of that size, and stick it in
-            foundFont =
-                [[NSFontManager sharedFontManager]
-                    convertFont:foundFont toSize:newSize];
-            newAttributes = [[attributes mutableCopy] autorelease];
-            [newAttributes setObject:foundFont forKey:NSFontAttributeName];
-            [self setAttributes:newAttributes range:foundRange];
-        }
-
-        charIndex = NSMaxRange (foundRange);
-    } while (charIndex < NSMaxRange(selectedRange));
-
-    // [agl] FIXME-PURISM: needed?  Maybe Mike knows?
-    [self fixFontAttributeInRange:selectedRange];
-}
-
-- (void)ak_magnifyUsingPercentMultiplier:(int)percent
-{
-    float multiplier = ((float)percent) / 100.0;
-
-    [self ak_magnifyUsingMultiplier:multiplier];
-}
-
-@end
-
---- */

@@ -8,7 +8,8 @@
 #import "AKOverviewDoc.h"
 
 #import "AKFrameworkConstants.h"
-#import "AKTextUtils.h"
+
+#import "NSString+AppKiDo.h"
 
 @implementation AKOverviewDoc
 
