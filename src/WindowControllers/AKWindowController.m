@@ -737,9 +737,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // actual views.
     [self _setUpViewControllers];
     [[self window] recalculateKeyViewLoop];
-    NSLog(@"drawer view %@ -- window %@", [_quicklistDrawer contentView], [[_quicklistDrawer contentView] window]);
-    [[[_quicklistDrawer contentView] window] recalculateKeyViewLoop];
-    [[_quicklistController quicklistTable] ak_printSequenceUsingSelector:@selector(nextValidKeyView)];
 
     // Apply display preferences *after* all awake-from-nibs have been
     // done, because DIGSMarginViews have to have fully initialized
