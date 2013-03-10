@@ -943,30 +943,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">navigateForward:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="340310265"/>
-					</object>
-					<int key="connectionID">492</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">jumpToSuperclass:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="994188599"/>
-					</object>
-					<int key="connectionID">493</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">navigateBack:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="190597621"/>
-					</object>
-					<int key="connectionID">494</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">addTopicToFavorites:</string>
 						<reference key="source" ref="354112457"/>
 						<reference key="destination" ref="1043364634"/>
@@ -1124,6 +1100,30 @@
 						<reference key="destination" ref="1065348008"/>
 					</object>
 					<int key="connectionID">1327</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">goBackInHistory:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="190597621"/>
+					</object>
+					<int key="connectionID">1328</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">goForwardInHistory:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="340310265"/>
+					</object>
+					<int key="connectionID">1329</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSuperclass:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="994188599"/>
+					</object>
+					<int key="connectionID">1330</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1926,7 +1926,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1327</int>
+			<int key="maxID">1330</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2474,6 +2474,7 @@
 							<string>goToHistoryItemInForwardMenu:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
+							<string>printViewsOfInterest:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
 							<string>selectAncestorClass:</string>
@@ -2510,6 +2511,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -2525,6 +2527,7 @@
 							<string>goToHistoryItemInForwardMenu:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
+							<string>printViewsOfInterest:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
 							<string>selectAncestorClass:</string>
@@ -2574,6 +2577,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">openParseDebugWindow:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">printViewsOfInterest:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2959,64 +2966,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSPageController</string>
-					<string key="superclassName">NSViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>navigateBack:</string>
-							<string>navigateForward:</string>
-							<string>takeSelectedIndexFrom:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>navigateBack:</string>
-							<string>navigateForward:</string>
-							<string>takeSelectedIndexFrom:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">navigateBack:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">navigateForward:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">takeSelectedIndexFrom:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSPageController.h</string>
 					</object>
 				</object>
 			</object>
