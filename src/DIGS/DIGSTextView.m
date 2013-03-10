@@ -7,8 +7,6 @@
 
 #import "DIGSTextView.h"
 
-#import "DIGSLog.h"
-
 @implementation DIGSTextView
 
 #pragma mark -
@@ -66,6 +64,7 @@
 #pragma mark -
 #pragma mark Private methods
 
+// Called by the init methods.
 - (void)_initLinkCursor
 {
     if (_linkCursor == nil)
@@ -86,6 +85,7 @@
     }
 }
 
+// This logic was copied from <http://cocoa.mamasam.com/COCOADEV/2001/12/2/20937.php>.
 - (void)_setCursorRectsForLinks
 {
      NSTextStorage *attrString = [self textStorage];
@@ -101,9 +101,8 @@
                                            inRange:NSMakeRange(loc, end - loc)];
          if (attributeValue != nil)
          {
-             NSRect linkRect = [[self layoutManager]
-                                boundingRectForGlyphRange:linkRange
-                                inTextContainer:[self textContainer]];
+             NSRect linkRect = [[self layoutManager] boundingRectForGlyphRange:linkRange
+                                                               inTextContainer:[self textContainer]];
             [self addCursorRect:linkRect cursor:_linkCursor];
             loc = NSMaxRange(linkRange);
          }
