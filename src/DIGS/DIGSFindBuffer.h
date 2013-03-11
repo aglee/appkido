@@ -8,8 +8,6 @@
 #import <Cocoa/Cocoa.h>
 #import "DIGSFindBufferDelegate.h"
 
-// [agl] Logic is flawed when you add/remove the same delegate object multiply.
-
 /*!
  * Singleton class that holds the string your application should use for text
  * searches.
@@ -25,6 +23,11 @@
  * delegates are messaged. As in the usual single-delegate pattern, delegates
  * are weak references and must be unregistered before being deallocated to
  * avoid dangling pointers.
+ *
+ * The delegate list is implemented as an NSCountedSet (a bag). Each call to
+ * addDelegate: should be balanced with a call to removeDelegate:. Delegate
+ * messages are only sent once to a given delegate object, no matter how many
+ * times that object was added to the delegate list.
  */
 @interface DIGSFindBuffer : NSObject
 {
@@ -33,8 +36,7 @@
     NSString *_findString;
 
     // NSValues containing unretained pointers to the delegates.
-    // [agl] Could maybe implement this as a bag to allow nested calls to add/removeDelegate.
-    NSMutableArray *_delegatePointerValues;
+    NSCountedSet *_delegatePointerValues;
 }
 
 /*!
@@ -51,7 +53,10 @@
 #pragma mark -
 #pragma mark Delegates
 
-/*! Does nothing if the object is already among our delegates. */
+/*!
+ * The same object can be added as a delegate multiple times. Each call to
+ * addDelegate: should be balanced with a call to removeDelegate:.
+ */
 - (void)addDelegate:(id <DIGSFindBufferDelegate>)delegate;
 
 - (void)removeDelegate:(id <DIGSFindBufferDelegate>)delegate;

@@ -34,7 +34,7 @@
     if ((self = [super init]))
     {
         _findString = @"";
-        _delegatePointerValues = [[NSMutableArray alloc] init];
+        _delegatePointerValues = [[NSCountedSet alloc] init];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(_handleAppDidActivateNotification:)
@@ -78,24 +78,16 @@
 
 - (void)addDelegate:(id <DIGSFindBufferDelegate>)delegate;
 {
-    NSValue *pointerHolder = [NSValue valueWithNonretainedObject:delegate];
-    NSUInteger delegateIndex = [_delegatePointerValues indexOfObject:pointerHolder];
+    NSValue *pointerValue = [NSValue valueWithNonretainedObject:delegate];
 
-    if (delegateIndex == NSNotFound)
-    {
-        [_delegatePointerValues addObject:pointerHolder];
-    }
+    [_delegatePointerValues addObject:pointerValue];
 }
 
 - (void)removeDelegate:(id <DIGSFindBufferDelegate>)delegate;
 {
-    NSValue *pointerHolder = [NSValue valueWithNonretainedObject:delegate];
-    NSUInteger delegateIndex = [_delegatePointerValues indexOfObject:pointerHolder];
+    NSValue *pointerValue = [NSValue valueWithNonretainedObject:delegate];
 
-    if (delegateIndex != NSNotFound)
-    {
-        [_delegatePointerValues removeObjectAtIndex:delegateIndex];
-    }
+    [_delegatePointerValues removeObject:pointerValue];
 }
 
 #pragma mark -
@@ -155,9 +147,9 @@
 
 - (void)_notifyDelegatesBufferDidChange
 {
-    for (NSValue *pointerHolder in _delegatePointerValues)
+    for (NSValue *pointerValue in [_delegatePointerValues objectEnumerator])
     {
-        id <DIGSFindBufferDelegate> delegate = [pointerHolder nonretainedObjectValue];
+        id <DIGSFindBufferDelegate> delegate = [pointerValue nonretainedObjectValue];
 
         [delegate findBufferDidChange:self];
     }
