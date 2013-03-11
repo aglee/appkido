@@ -107,7 +107,7 @@
 
     for (i = 0; i < numDocs; i++)
     {
-        AKDoc *doc = [docList objectAtIndex:i];
+        AKDoc *doc = [[[docList objectAtIndex:i] retain] autorelease];  // Avoid premature dealloc.
         NSString *docName = [doc docName];
 
         if ([docName isEqualToString:descriptionSectionName]
