@@ -140,12 +140,19 @@
 
 - (void)applyUserPreferences
 {
-    NSString *path = [_topicBrowser path];
+    // You'd think since NSBrowser is an NSControl, you could send it setFont:
+    // directly, but no.
+    NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
+    NSInteger fontSize = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
+    NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+
+    [[_topicBrowser cellPrototype] setFont:font];
+
+    // Make the browser redraw to reflect its new display attributes.
+    NSString *savedPath = [_topicBrowser path];
 
     [_topicBrowser loadColumnZero];
-    [_topicBrowser setPath:path];
-    [_topicBrowser setNeedsDisplay:YES];
-
+    [_topicBrowser setPath:savedPath];
 }
 
 - (BOOL)validateItem:(id)anItem
@@ -200,16 +207,7 @@
 
 - (void)browser:(NSBrowser *)sender createRowsForColumn:(NSInteger)column inMatrix:(NSMatrix *)matrix
 {
-    // Put an upper bound on the font size, because NSBrowser seems to be
-    // stubborn about changing its row height.
-    NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    NSInteger fontSizePref = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
-    NSInteger fontSize = (fontSizePref > 16) ? 16 : fontSizePref;
-    NSFont *font = [NSFont fontWithName:fontName size:fontSize];
-    NSInteger numRows = [self _numberOfRowsInColumn:column];
-
-    [matrix setFont:font];
-    [matrix renewRows:numRows columns:1];
+    [matrix renewRows:[self _numberOfRowsInColumn:column] columns:1];
 }
 
 - (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(int)row column:(int)column
@@ -281,12 +279,10 @@
     }
     else
     {
-        AKTopic *prevTopic =
-            [[_topicBrowser selectedCellInColumn:(columnNumber - 1)]
-                representedObject];
+        AKTopic *prevTopic = [[_topicBrowser selectedCellInColumn:(columnNumber - 1)] representedObject];
         NSArray *columnValues = [prevTopic childTopics];
 
-        if (columnValues && ([columnValues count] > 0))
+        if ([columnValues count] > 0)
         {
             [_topicListsForBrowserColumns addObject:columnValues];
         }
