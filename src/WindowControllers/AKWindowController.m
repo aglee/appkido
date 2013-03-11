@@ -786,20 +786,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark NSSplitView delegate methods
 
-- (void)splitView:(NSSplitView *)splitView resizeSubviewsWithOldSize:(NSSize)oldSize
+- (BOOL)splitView:(NSSplitView *)splitView shouldAdjustSizeOfSubview:(NSView *)subview
 {
-    if (splitView == _topLevelSplitView)
-    {
-        [splitView ak_preserveHeightOfSubviewAtIndex:0];
-    }
-    else if (splitView == _bottomTwoThirdsSplitView)
-    {
-        [splitView ak_preserveHeightOfSubviewAtIndex:0];
-    }
-    else if (splitView == _middleThirdSplitView)
-    {
-        [splitView ak_preserveWidthOfSubviewAtIndex:0];
-    }
+    // As it happens, we want the first subview of all our split views to stay
+    // fixed-sized.
+    return (subview != [[splitView subviews] objectAtIndex:0]);
 }
 
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
