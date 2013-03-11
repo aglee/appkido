@@ -10,40 +10,26 @@
 
 ----
 
-## Smaller UX stuff
+## Smaller bugs/UX stuff
 
-uh-oh -- got a random crash right after launch -- possibly after closing a window; stack trace just said sendEvent:
-
-mysterious exception when hit key like "s" with doc list selected; nothing gets printed and it seems to have no ill effect, but it triggers my exception breakpoint; maybe bug in type-to-select (or deliberately swallowed exception)?
-	* Also: I thought type-to-select worked? broken
-
-showWindow: and makeKeyAndOrderFront: both called recalculateKeyViewLoop despite my auto-recalc setting; the docs say the auto-recalc setting is for when views are added
-
-back/forward not enabled in menu
-
-add crashreporter
-
-search for "toolbar", the *second* matching result is selected
-
-* Add submenu under "General" and a hotkey for Header File
-* Get rid of the 1, 2, numbering in subtopics (I suspect no one uses them, plus easy to eyeball, plus what if user remaps menu shortcuts?). Make the subtopics list narrower accordingly.
-
-* Open in Browser should go to the symbol, not to top of page.
 * Have tab loop include controls in window and drawer in one big loop.
+	* Make sure to capture those articles I found with key view loop advice.
+* option to view classes-in-framework hierarchically
+* Also: I thought type-to-select worked? broken
+* radical idea: implement our own focus ring
 * "Find a random item" feature
 * Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
-
-* would be nice to see header file containing functions / globals
-* maybe header file in contextual menu for all docs
-
-* prefs > frameworks space bar doesn't work to toggle selection
-* show which OS version deprecated symbols were deprecated in
-* Remember scroll position in history.
-* Use the stylesheet that comes with the docset.
-* Give option to use custom stylesheet.
+* search for "toolbar", the *second* matching result is selected
+* Add menu under "General" and a hotkey for Header File
+* Get rid of the 1, 2, numbering in subtopics (I suspect no one uses them, plus easy to eyeball, plus what if user remaps menu shortcuts?). Make the subtopics list narrower accordingly.
+* Get new icons.
 
 * Move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
+* allow for "wip" to be in the version string
+	* also use real build numbers
+* maybe header file in contextual menu for all docs
 * Still getting double drawing -- just saw it in the doc list after a search for QCComposition.
+* tooltip on the Remove Favorite button
 
 ----
 
@@ -57,7 +43,7 @@ search for "toolbar", the *second* matching result is selected
 
 ## Code hygiene
 
-* use a bag (NSCountedSet) for FindBuffer delegates -- see comment
+* refactor parsers -- decouple from notion of a file
 * use "item-based" NSBrowser delegate methods
 * normal NS...Controller for remaining cases
 	* AKPrefPanelController
@@ -68,9 +54,6 @@ search for "toolbar", the *second* matching result is selected
 * newer singleton pattern
 * use unsafe_unretained instead of assign for objects
 * take varargs in DIGSLogError_ExitingMethodPrematurely
-akd "classWithName:" seems dangerous method name
-* look for leaks using heapshot -- try opening/closing windows
-* check for removeObject: memory errors
 * rename digitalspokes plist to com.appkido.etc
 * [AKDocParser parseToken] treats bytes with high bit set as whitespace; works for now, but may someday have to properly handle charsets and encodings.
 * addImplementedProtocol:(AKProtocolNode *)node -- arg should be protocolNode
@@ -80,10 +63,20 @@ akd "classWithName:" seems dangerous method name
 
 ## Maybe later
 
-* tooltip on the Remove Favorite button
-* easily delete multiple Favorites? or all?
 * crashes when service sometimes
-* one hyphen or two in pragma mark
+* got a random crash right after launch -- possibly after closing a window; stack trace just said sendEvent:
+* mysterious exception when hit key like "s" with doc list selected; nothing gets printed and it seems to have no ill effect, but it triggers my exception breakpoint; maybe bug in type-to-select (or deliberately swallowed exception)?
+* showWindow: and makeKeyAndOrderFront: both called recalculateKeyViewLoop despite my auto-recalc setting; the docs say the auto-recalc setting is for when views are added
+* add crashreporter
+* Open in Browser should go to the symbol, not to top of page.
+* would be nice to see header file containing functions / globals
+
+* prefs > frameworks space bar doesn't work to toggle selection
+* show which OS version deprecated symbols were deprecated in
+* Remember scroll position in history.
+* Use the stylesheet that comes with the docset.
+* Give option to use custom stylesheet.
+* easily delete multiple Favorites? or all?
 * ocd about "Subclasses must override" language. Also "for internal use".
 * service from akd itself sometimes makes new window
 * open test parser for a .h file
@@ -93,11 +86,12 @@ akd "classWithName:" seems dangerous method name
 	* multi-select in doc list and Copy method prototypes
 * are those parsing kludges still needed?
 * Add progress indicator during search.
-* using AKSearchQuery to follow links could be expensive; use things like "c_ref" to limit the scope
+* using AKSearchQuery to follow links could be expensive; use "c_ref" etc. to perform targeted lookups
+* localize
 
 ----
 
-"canny unvalley" -- no font panel makes app look like a port or a Java app
+* "canny unvalley" -- having no font panel makes app look like a port or a Java app
 
 ----
 
@@ -109,9 +103,9 @@ akd "classWithName:" seems dangerous method name
 ----
 
 * syntax highlighting for header files
-* figure out why command-line build different from in Xcode
-* Get rid of Dev Tools concept and just present available SDKs.
-* Instead of a separate subtopic for "ALL Instance Methods" etc., put an "ALL" button in the "Instance Methods" subtopic cell.
+* figure out command-line build
+* Get rid of Dev Tools concept and just present available SDKs?
+* Instead of a separate subtopic for "ALL Instance Methods" etc., put an "ALL" button in the "Instance Methods" subtopic cell?
 * web site
 	* add tips and tricks page
 	* fix HTML validation errors
@@ -140,10 +134,6 @@ akd "classWithName:" seems dangerous method name
 * Reconcile use of platform names as parameters with use of APPKIDO_FOR_IPHONE macro -- do I need to do both?
 * Why do some searches take so long?  "cursor" is slow, yet "o" is fast even though it returns a superset of results.
 	* Possible clue: I think it's the "<<" characters that get drawn in the search results.
-* Fuzzy table contents -- double drawing?
-	* Seems to have been fixed when I stopped using ak_stripHTML on the strings we display in the doc list
-	* Oops, that didn't really fix the bug, yet for some reason it seems better
-
 * "Inheritance" section now contains other stuff like links to code samples.  Parse and organize better.
 * Try removing _kludgeXXX calls one by one.  See if parse results are the same.  Remember to test with Xcode 3.x.
 * Add a Bindings subtopic?  (See "Cocoa Bindings Reference".  There's a list of classes that have bindings -- mostly view classes, but not all - and what those bindings are.)
