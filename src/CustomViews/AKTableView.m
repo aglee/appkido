@@ -8,22 +8,17 @@
 #import "AKTableView.h"
 
 #import "AKPrefUtils.h"
-#import <tgmath.h>
 
 @implementation AKTableView
-
 
 #pragma mark -
 #pragma mark Preferences
 
 - (void)applyListFontPrefs
 {
-    NSString *fontName =
-        [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    NSInteger fontSize =
-        [AKPrefUtils intValueForPref:AKListFontSizePrefName];
+    NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
+    NSInteger fontSize = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];
-    //int newRowHeight = round([font defaultLineHeightForFont] + 1.0);
     NSLayoutManager * lm = [[[NSLayoutManager alloc] init] autorelease];
  	NSInteger newRowHeight = round([lm defaultLineHeightForFont:font] + 1.0); 
 
@@ -31,7 +26,6 @@
     [self setRowHeight:newRowHeight];
     [self setNeedsDisplay:YES];
 }
-
 
 #pragma mark -
 #pragma mark NSResponder methods
@@ -71,7 +65,9 @@
 - (void)moveLeft:(id)sender
 {
     if ([[self previousKeyView] isKindOfClass:[AKTableView class]])
+    {
         [[self window] makeFirstResponder:[self previousKeyView]];
+    }
 }
 
 // Allow the user to use left and right arrow keys to move between the subtopic
@@ -79,9 +75,10 @@
 - (void)moveRight:(id)sender
 {
     if ([[self nextKeyView] isKindOfClass:[AKTableView class]])
+    {
         [[self window] makeFirstResponder:[self nextKeyView]];
+    }
 }
-
 
 #pragma mark -
 #pragma mark NSView methods
