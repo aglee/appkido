@@ -66,8 +66,8 @@
     [debugSubmenu addItemWithTitle:@"Print nextKeyView Loop"
                             action:@selector(printEntireKeyViewLoop:)
                      keyEquivalent:@""];
-    [debugSubmenu addItemWithTitle:@"Print Views of Interest"
-                            action:@selector(printViewsOfInterest:)
+    [debugSubmenu addItemWithTitle:@"Print Window Info"
+                            action:@selector(printFunWindowFacts:)
                      keyEquivalent:@"i"];
 
     // Attach the submenu to the "Debug" top-level menu item.
@@ -106,7 +106,7 @@
     [self _printViewSequenceUsingSelector:@selector(nextKeyView)];
 }
 
-- (IBAction)printViewsOfInterest:(id)sender
+- (IBAction)printFunWindowFacts:(id)sender
 {
     AKWindowController *wc = [(AKAppDelegate *)[NSApp delegate] frontmostWindowController];
 
@@ -116,7 +116,7 @@
     }
     else
     {
-        [wc printViewsOfInterest:sender];
+        [wc printFunFacts:sender];
     }
 }
 

@@ -36,6 +36,6 @@
 /*! Logs the current key view loop to the console, using nextKeyView. */
 - (IBAction)printEntireKeyViewLoop:(id)sender;
 
-- (IBAction)printViewsOfInterest:(id)sender;
+- (IBAction)printFunWindowFacts:(id)sender;
 
 @end

@@ -205,7 +205,7 @@
 - (IBAction)addTopicToFavorites:(id)sender;
 
 #pragma mark -
-#pragma mark Action methods -- Accessing the doc file
+#pragma mark Action methods -- accessing the doc file
 
 - (IBAction)copyDocFileURL:(id)sender;
 
@@ -216,10 +216,10 @@
 - (IBAction)revealDocFileInFinder:(id)sender;
 
 #pragma mark -
-#pragma mark Action methods -- debug mode
+#pragma mark Action methods -- debugging
 
 - (IBAction)openParseDebugWindow:(id)sender;
 
-- (IBAction)printViewsOfInterest:(id)sender;
+- (IBAction)printFunFacts:(id)sender;
 
 @end
