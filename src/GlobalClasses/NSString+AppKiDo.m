@@ -97,72 +97,29 @@
     return range;
 }        
 
-// [agl] Should simplify the implementation to call stringByTrimmingCharactersInSet:.
-// Didn't do so before because that method was not available in 10.1.x.
 - (NSString *)ak_trimWhitespace
 {
-    NSCharacterSet *whitespaceChars = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    NSInteger originalLength = [self length];
-    NSInteger startIndex = 0;
-    NSInteger endIndex = startIndex + originalLength - 1;
-
-    while (startIndex < originalLength)
-    {
-        unichar c = [self characterAtIndex:startIndex];
-
-        if ([whitespaceChars characterIsMember:c])
-        {
-            startIndex++;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    while (endIndex > startIndex)
-    {
-        unichar c = [self characterAtIndex:endIndex];
-
-        if ([whitespaceChars characterIsMember:c])
-        {
-            endIndex--;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    NSInteger newLength = endIndex - startIndex + 1;
-
-    if (newLength == originalLength)
-    {
-        return self;
-    }
-    else if (endIndex < startIndex)
-    {
-        return @"";
-    }
-    else
-    {
-        NSRange range = NSMakeRange(startIndex, newLength);
-
-        return [self substringWithRange:range];
-    }
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 - (NSString *)ak_stripHTML
 {
-    // The HTML fragment won't have the UTF8 specifier that's at the top of
-    // the HTML file, so use an options dictionary to force UTF8.
-    NSData *stringData = [self dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *stringOptions = @{ NSCharacterEncodingDocumentOption: @(NSUTF8StringEncoding) };
-    NSAttributedString *richTextString = [[[NSAttributedString alloc] initWithHTML:stringData
-                                                                           options:stringOptions
-                                                                documentAttributes:NULL] autorelease];
+    if ([self length] == 0)
+    {
+        return @"";
+    }
 
-    return [richTextString string];
+    NSString *xmlString = [NSString stringWithFormat:@"<foo>%@</foo>", self];
+    NSError *xmlError = nil;
+    NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:xmlString
+                                                              options:0
+                                                                error:&xmlError] autorelease];
+    if (xmlDoc == nil)
+    {
+        DIGSLogError(@"Error str%@", xmlError);
+    }
+    
+    return [[xmlDoc rootElement] stringValue];
 }
 
 - (NSString *)ak_firstWord
