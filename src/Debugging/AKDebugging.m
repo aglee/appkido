@@ -10,6 +10,7 @@
 
 #import "AKAppDelegate.h"
 #import "AKTestDocParserWindowController.h"
+#import "AKWindow.h"
 #import "AKWindowController.h"
 
 #import "NSObject+AppKiDo.h"
@@ -54,21 +55,24 @@
 
     [debugSubmenu setAutoenablesItems:NO];
 
-    [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
-                            action:@selector(testParser:)
-                     keyEquivalent:@""];
     [debugSubmenu addItemWithTitle:@"Print First Responder"
                             action:@selector(printFirstResponder:)
                      keyEquivalent:@"r"];
+    [debugSubmenu addItemWithTitle:@"Print Tab Chain"
+                            action:@selector(printTabChain:)
+                     keyEquivalent:@"l"];
     [debugSubmenu addItemWithTitle:@"Print nextValidKeyView Loop"
                             action:@selector(printValidKeyViewLoop:)
-                     keyEquivalent:@"l"];
+                     keyEquivalent:@"L"];
     [debugSubmenu addItemWithTitle:@"Print nextKeyView Loop"
                             action:@selector(printEntireKeyViewLoop:)
                      keyEquivalent:@""];
     [debugSubmenu addItemWithTitle:@"Print Window Info"
                             action:@selector(printFunWindowFacts:)
                      keyEquivalent:@"i"];
+    [debugSubmenu addItemWithTitle:@"Open Parser Testing Window"
+                            action:@selector(testParser:)
+                     keyEquivalent:@""];
 
     // Attach the submenu to the "Debug" top-level menu item.
     [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
@@ -88,11 +92,23 @@
 
     if (firstResponder == nil)
     {
-        NSLog(@"the key window has no first responder\n\n");
+        NSLog(@"The key window has no first responder.\n\n");
     }
     else
     {
-        NSLog(@"key window's first responder is <%@: %p>\n\n", [firstResponder className], firstResponder);
+        NSLog(@"The key window's first responder is <%@: %p>.\n\n", [firstResponder className], firstResponder);
+    }
+}
+
+- (IBAction)printTabChain:(id)sender
+{
+    if (![[NSApp keyWindow] isKindOfClass:[AKWindow class]])
+    {
+        NSLog(@"The key window is not an AKWindow.\n\n");
+    }
+    else
+    {
+        [(AKWindow *)[NSApp keyWindow] debug_printTabChains];
     }
 }
 
@@ -112,7 +128,7 @@
 
     if (wc == nil)
     {
-        NSLog(@"no AppKiDo window is open");
+        NSLog(@"No AppKiDo window is open.");
     }
     else
     {
