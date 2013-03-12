@@ -488,22 +488,22 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)printFunFacts:(id)sender
 {
-    NSLog(@"---- FUN FACTS about %@ ----", self);
-    NSLog(@"TopicBrowserController -- %@", [_topicBrowserController ak_bareDescription]);
-    NSLog(@"SubtopicListController -- %@", [_subtopicListController ak_bareDescription]);
-    NSLog(@"     DocListController -- %@", [_docListController ak_bareDescription]);
-    NSLog(@"     DocViewController -- %@", [_docViewController ak_bareDescription]);
-    NSLog(@"   QuicklistController -- %@", [_quicklistController ak_bareDescription]);
+    NSLog(@"FUN FACTS about %@", self);
+    NSLog(@"  TopicBrowserController -- %@", [_topicBrowserController ak_bareDescription]);
+    NSLog(@"  SubtopicListController -- %@", [_subtopicListController ak_bareDescription]);
+    NSLog(@"       DocListController -- %@", [_docListController ak_bareDescription]);
+    NSLog(@"       DocViewController -- %@", [_docViewController ak_bareDescription]);
+    NSLog(@"     QuicklistController -- %@", [_quicklistController ak_bareDescription]);
     NSLog(@"----");
-    NSLog(@"       window -- %@", [[self window] ak_bareDescription]);
-    NSLog(@"topic browser -- %@", [[_topicBrowserController topicBrowser] ak_bareDescription]);
-    NSLog(@"subtopic list -- %@", [[_subtopicListController subtopicsTable] ak_bareDescription]);
-    NSLog(@"     doc list -- %@", [[_docListController docListTable] ak_bareDescription]);
-    NSLog(@"     web view -- %@", [[_docViewController webView] ak_bareDescription]);
-    NSLog(@"    text view -- %@", [[_docViewController textView] ak_bareDescription]);
-    NSLog(@" search field -- %@", [[_quicklistController searchField] ak_bareDescription]);
-    NSLog(@"    quicklist -- %@", [[_quicklistController quicklistTable] ak_bareDescription]);
-    NSLog(@"---- END FUN FACTS about %@ ----\n\n", self);
+    NSLog(@"         window -- %@", [[self window] ak_bareDescription]);
+    NSLog(@"  topic browser -- %@", [[_topicBrowserController topicBrowser] ak_bareDescription]);
+    NSLog(@"  subtopic list -- %@", [[_subtopicListController subtopicsTable] ak_bareDescription]);
+    NSLog(@"       doc list -- %@", [[_docListController docListTable] ak_bareDescription]);
+    NSLog(@"       web view -- %@", [[_docViewController webView] ak_bareDescription]);
+    NSLog(@"      text view -- %@", [[_docViewController textView] ak_bareDescription]);
+    NSLog(@"   search field -- %@", [[_quicklistController searchField] ak_bareDescription]);
+    NSLog(@"      quicklist -- %@", [[_quicklistController quicklistTable] ak_bareDescription]);
+    NSLog(@"END FUN FACTS about %@\n\n", self);
 }
 
 #pragma mark -

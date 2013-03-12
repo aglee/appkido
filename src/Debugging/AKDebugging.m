@@ -88,11 +88,11 @@
 
     if (firstResponder == nil)
     {
-        NSLog(@"the key window has no first responder");
+        NSLog(@"the key window has no first responder\n\n");
     }
     else
     {
-        NSLog(@"key window's first responder is <%@: %p>", [firstResponder className], firstResponder);
+        NSLog(@"key window's first responder is <%@: %p>\n\n", [firstResponder className], firstResponder);
     }
 }
 
