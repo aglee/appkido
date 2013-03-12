@@ -6,6 +6,7 @@
  */
 
 #import "DIGSTextView.h"
+#import "DIGSLog.h"
 
 @implementation DIGSTextView
 
