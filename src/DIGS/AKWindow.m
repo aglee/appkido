@@ -67,12 +67,14 @@
     if (ch == '\t')
     {
         [(AKWindowController *)[self delegate] recalculateTabChains];
+        [self recalculateKeyViewLoop];
 
         return [self tabToNext];
     }
     else if ((ch == 25) && ([anEvent modifierFlags] & NSShiftKeyMask))
     {
         [(AKWindowController *)[self delegate] recalculateTabChains];
+        [self recalculateKeyViewLoop];
 
         return [self tabToPrevious];
     }
@@ -231,7 +233,7 @@
         {
             if (looping)
             {
-                viewIndex = 0;
+                viewIndex -= lengthOfChain;
             }
             else
             {
@@ -274,7 +276,7 @@
         {
             if (looping)
             {
-                viewIndex = lengthOfChain - 1;
+                viewIndex += lengthOfChain;
             }
             else
             {
