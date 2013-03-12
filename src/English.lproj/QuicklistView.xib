@@ -54,6 +54,7 @@
 						<string key="NSFrame">{{-4, 3}, {24, 14}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="43629388">
 							<int key="NSCellFlags">603979776</int>
@@ -95,7 +96,7 @@
 											<object class="NSTableView" id="815501540">
 												<reference key="NSNextResponder" ref="619384235"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrameSize">{162, 187}</string>
+												<string key="NSFrameSize">{177, 187}</string>
 												<reference key="NSSuperview" ref="619384235"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="410970050"/>
@@ -110,7 +111,7 @@
 												<array class="NSMutableArray" key="NSTableColumns">
 													<object class="NSTableColumn" id="621750845">
 														<string key="NSIdentifier">lookup</string>
-														<double key="NSWidth">159</double>
+														<double key="NSWidth">174</double>
 														<double key="NSMinWidth">8</double>
 														<double key="NSMaxWidth">1000</double>
 														<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -186,7 +187,7 @@
 												<int key="NSTableViewGroupRowStyle">1</int>
 											</object>
 										</array>
-										<string key="NSFrame">{{1, 1}, {162, 187}}</string>
+										<string key="NSFrame">{{1, 1}, {177, 187}}</string>
 										<reference key="NSSuperview" ref="280234294"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="815501540"/>
@@ -205,10 +206,10 @@
 									<object class="NSScroller" id="410970050">
 										<reference key="NSNextResponder" ref="280234294"/>
 										<int key="NSvFlags">256</int>
-										<string key="NSFrame">{{163, 1}, {15, 187}}</string>
+										<string key="NSFrame">{{162, 1}, {16, 187}}</string>
 										<reference key="NSSuperview" ref="280234294"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="221612593"/>
+										<reference key="NSNextKeyView" ref="1056606296"/>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<reference key="NSTarget" ref="280234294"/>
 										<string key="NSAction">_doScroller:</string>
@@ -255,7 +256,7 @@
 						<string key="NSFrame">{{193, 256}, {24, 23}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1056606296"/>
+						<reference key="NSNextKeyView" ref="143745395"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="763437190">
 							<int key="NSCellFlags">71303168</int>
@@ -422,7 +423,7 @@
 						<string key="NSFrame">{{0, 260}, {68, 18}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="143745395"/>
+						<reference key="NSNextKeyView" ref="221612593"/>
 						<bool key="NSEnabled">YES</bool>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<int key="NSNumRows">1</int>
@@ -886,7 +887,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="NSTextField" id="228522188">
 						<reference key="NSNextResponder" ref="247580316"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{-2, 448}, {227, 17}}</string>
+						<string key="NSFrame">{{-2, 448}, {221, 17}}</string>
 						<reference key="NSSuperview" ref="247580316"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="417665955"/>
@@ -1530,7 +1531,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBToolTipAttribute" key="NS.object.0">
 						<string key="name">ToolTip</string>
 						<reference key="object" ref="1056606296"/>
-						<string key="toolTip">Remove item (Favorite Topics only)</string>
+						<string key="toolTip">Remove selected Favorite (enabled only when the Favorites quicklist is selected)</string>
 					</object>
 				</object>
 				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
