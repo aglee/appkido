@@ -34,48 +34,61 @@
 			</object>
 			<object class="NSCustomView" id="775816682">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">268</int>
+				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSBrowser" id="633501576">
+					<object class="NSCustomView" id="993002531">
 						<reference key="NSNextResponder" ref="775816682"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{428, 239}</string>
+						<array class="NSMutableArray" key="NSSubviews">
+							<object class="NSBrowser" id="633501576">
+								<reference key="NSNextResponder" ref="993002531"/>
+								<int key="NSvFlags">274</int>
+								<string key="NSFrame">{{20, 20}, {348, 159}}</string>
+								<reference key="NSSuperview" ref="993002531"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
+								<bool key="NSEnabled">YES</bool>
+								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								<bool key="NSControlAllowsExpansionToolTips">YES</bool>
+								<object class="NSBrowserCell" key="NSCellPrototype">
+									<int key="NSCellFlags">67108928</int>
+									<int key="NSCellFlags2">1024</int>
+									<object class="NSMutableString" key="NSContents">
+										<characters key="NS.bytes">BrowserItem</characters>
+									</object>
+									<object class="NSFont" key="NSSupport">
+										<string key="NSName">LucidaGrande</string>
+										<double key="NSSize">12</double>
+										<int key="NSfFlags">16</int>
+									</object>
+								</object>
+								<object class="NSMutableString" key="NSPathSeparator">
+									<characters key="NS.bytes">/</characters>
+								</object>
+								<string key="NSFirstColumnTitle">Browser</string>
+								<int key="NSMinColumnWidth">1</int>
+								<int key="NSNumberOfVisibleColumns">3</int>
+								<int key="NSMaxNumberOfVisibleColumns">3</int>
+								<int key="NSColumnResizingType">1</int>
+								<bool key="NSAllowsTypeSelect">YES</bool>
+								<int key="NSBrFlags">1209090048</int>
+								<double key="NSBrowserRowHeight">17</double>
+							</object>
+						</array>
+						<string key="NSFrame">{{20, 20}, {388, 199}}</string>
 						<reference key="NSSuperview" ref="775816682"/>
 						<reference key="NSWindow"/>
-						<bool key="NSEnabled">YES</bool>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-						<bool key="NSControlAllowsExpansionToolTips">YES</bool>
-						<object class="NSBrowserCell" key="NSCellPrototype">
-							<int key="NSCellFlags">67108928</int>
-							<int key="NSCellFlags2">1024</int>
-							<object class="NSMutableString" key="NSContents">
-								<characters key="NS.bytes">BrowserItem</characters>
-							</object>
-							<object class="NSFont" key="NSSupport">
-								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">12</double>
-								<int key="NSfFlags">16</int>
-							</object>
-						</object>
-						<object class="NSMutableString" key="NSPathSeparator">
-							<characters key="NS.bytes">/</characters>
-						</object>
-						<string key="NSFirstColumnTitle">Browser</string>
-						<int key="NSMinColumnWidth">1</int>
-						<int key="NSNumberOfVisibleColumns">3</int>
-						<int key="NSMaxNumberOfVisibleColumns">3</int>
-						<int key="NSColumnResizingType">1</int>
-						<bool key="NSAllowsTypeSelect">YES</bool>
-						<int key="NSBrFlags">1209090048</int>
-						<double key="NSBrowserRowHeight">17</double>
+						<reference key="NSNextKeyView" ref="633501576"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSClassName">AKBorderHidingView</string>
 					</object>
 				</array>
 				<string key="NSFrameSize">{428, 239}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="633501576"/>
+				<reference key="NSNextKeyView" ref="993002531"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<string key="NSClassName">NSView</string>
+				<string key="NSClassName">AKFocusView</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -89,20 +102,20 @@
 					<int key="connectionID">1508</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">topicBrowser</string>
-						<reference key="source" ref="310502495"/>
-						<reference key="destination" ref="633501576"/>
-					</object>
-					<int key="connectionID">1510</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">doBrowserAction:</string>
 						<reference key="source" ref="310502495"/>
 						<reference key="destination" ref="633501576"/>
 					</object>
 					<int key="connectionID">1511</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">topicBrowser</string>
+						<reference key="source" ref="310502495"/>
+						<reference key="destination" ref="633501576"/>
+					</object>
+					<int key="connectionID">1510</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -143,14 +156,22 @@
 						<int key="objectID">1507</int>
 						<reference key="object" ref="775816682"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="633501576"/>
+							<reference ref="993002531"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
+						<int key="objectID">1514</int>
+						<reference key="object" ref="993002531"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="633501576"/>
+						</array>
+						<reference key="parent" ref="775816682"/>
+					</object>
+					<object class="IBObjectRecord">
 						<int key="objectID">1111</int>
 						<reference key="object" ref="633501576"/>
-						<reference key="parent" ref="775816682"/>
+						<reference key="parent" ref="993002531"/>
 					</object>
 				</array>
 			</object>
@@ -161,21 +182,38 @@
 				<string key="1111.CustomClassName">AKBrowser</string>
 				<string key="1111.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1507.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1514.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1511</int>
+			<int key="maxID">1514</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">AKBorderHidingView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AKBorderHidingView.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">AKBrowser</string>
 					<string key="superclassName">NSBrowser</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AKBrowser.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">AKFocusView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AKFocusView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

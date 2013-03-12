@@ -618,6 +618,14 @@
 		73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */; };
 		73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */; };
 		73F8F9A416ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */; };
+		73F8F9B316EE99A3001650D7 /* AKFocusView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F9B116EE99A3001650D7 /* AKFocusView.h */; };
+		73F8F9B416EE99A3001650D7 /* AKFocusView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F9B116EE99A3001650D7 /* AKFocusView.h */; };
+		73F8F9B516EE99A3001650D7 /* AKFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9B216EE99A3001650D7 /* AKFocusView.m */; };
+		73F8F9B616EE99A3001650D7 /* AKFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9B216EE99A3001650D7 /* AKFocusView.m */; };
+		73F8F9BF16EED364001650D7 /* AKBorderHidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F9BD16EED364001650D7 /* AKBorderHidingView.h */; };
+		73F8F9C016EED364001650D7 /* AKBorderHidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F9BD16EED364001650D7 /* AKBorderHidingView.h */; };
+		73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */; };
+		73F8F9C216EED364001650D7 /* AKBorderHidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */; };
 		F28A5B2B13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
 		F28A5B2C13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
 		F28A5B2D13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */; };
@@ -943,6 +951,10 @@
 		73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSplitVIew+AppKiDo.m"; sourceTree = "<group>"; };
 		73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+AppKiDo.h"; sourceTree = "<group>"; };
 		73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+AppKiDo.m"; sourceTree = "<group>"; };
+		73F8F9B116EE99A3001650D7 /* AKFocusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFocusView.h; path = CustomViews/AKFocusView.h; sourceTree = "<group>"; };
+		73F8F9B216EE99A3001650D7 /* AKFocusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFocusView.m; path = CustomViews/AKFocusView.m; sourceTree = "<group>"; };
+		73F8F9BD16EED364001650D7 /* AKBorderHidingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKBorderHidingView.h; path = CustomViews/AKBorderHidingView.h; sourceTree = "<group>"; };
+		73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKBorderHidingView.m; path = CustomViews/AKBorderHidingView.m; sourceTree = "<group>"; };
 		F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMXMLWriter.m; sourceTree = "<group>"; };
 		F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMXMLWriter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1317,12 +1329,16 @@
 		732BD60005ED90A10055715D /* -- VIEW CLASSES -- */ = {
 			isa = PBXGroup;
 			children = (
+				73F8F9BD16EED364001650D7 /* AKBorderHidingView.h */,
+				73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */,
 				730030A70498501500A80007 /* AKBrowser.h */,
 				730030A80498501500A80007 /* AKBrowser.m */,
 				7304030516DF8DAB005E04A1 /* AKButtonCell.h */,
 				7304030616DF8DAB005E04A1 /* AKButtonCell.m */,
 				73B722C104B5FF1900A80003 /* AKColoredBox.h */,
 				73B722C204B5FF1900A80003 /* AKColoredBox.m */,
+				73F8F9B116EE99A3001650D7 /* AKFocusView.h */,
+				73F8F9B216EE99A3001650D7 /* AKFocusView.m */,
 				73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */,
 				73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */,
 				7304030B16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h */,
@@ -1890,6 +1906,8 @@
 				73F8F99316ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
 				73F8F99B16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */,
 				73F8F9A116ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
+				73F8F9B316EE99A3001650D7 /* AKFocusView.h in Headers */,
+				73F8F9BF16EED364001650D7 /* AKBorderHidingView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2030,6 +2048,8 @@
 				73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
 				73F8F99C16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */,
 				73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
+				73F8F9B416EE99A3001650D7 /* AKFocusView.h in Headers */,
+				73F8F9C016EED364001650D7 /* AKBorderHidingView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2338,6 +2358,8 @@
 				73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
 				73F8F99D16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */,
 				73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
+				73F8F9B516EE99A3001650D7 /* AKFocusView.m in Sources */,
+				73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2474,6 +2496,8 @@
 				73F8F99616ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
 				73F8F99E16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */,
 				73F8F9A416ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
+				73F8F9B616EE99A3001650D7 /* AKFocusView.m in Sources */,
+				73F8F9C216EED364001650D7 /* AKBorderHidingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
