@@ -66,6 +66,9 @@ enum
 @synthesize docLocators = _docLocators;
 
 @synthesize quicklistModeRadio = _quicklistModeRadio;
+@synthesize quicklistRadio1 = _quicklistRadio1;
+@synthesize quicklistRadio2 = _quicklistRadio2;
+@synthesize quicklistRadio3 = _quicklistRadio3;
 @synthesize frameworkPopup = _frameworkPopup;
 @synthesize searchField = _searchField;
 @synthesize searchOptionsPopup = _searchOptionsPopup;

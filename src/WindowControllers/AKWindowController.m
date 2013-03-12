@@ -32,6 +32,7 @@
 #import "AKTableView.h"
 #import "AKTestDocParserWindowController.h"
 #import "AKTopicBrowserViewController.h"
+#import "AKWindow.h"
 #import "AKWindowLayout.h"
 
 #import "NSObject+AppKiDo.h"
@@ -225,6 +226,53 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (NSView *)docView
 {
     return [_docViewController docView];
+}
+
+- (void)recalculateTabChains
+{
+    AKWindow *w = (AKWindow *)[self window];
+    NSMutableArray *tabChain = [NSMutableArray array];
+
+    [tabChain addObject:[_topicBrowserController topicBrowser]];
+
+    if ([NSApp isFullKeyboardAccessEnabled])
+    {
+        [tabChain addObject:_superclassButton];
+        [tabChain addObject:_backButton];
+        [tabChain addObject:_forwardButton];
+    }
+
+    [tabChain addObject:[_subtopicListController subtopicsTable]];
+    [tabChain addObject:[_docListController docListTable]];
+    [tabChain addObject:[_docViewController docView]];
+
+    if ([_quicklistDrawer state] == NSDrawerOpenState)
+    {
+        if ([NSApp isFullKeyboardAccessEnabled])
+        {
+            [tabChain addObject:[_quicklistController quicklistRadio1]];
+            [tabChain addObject:[_quicklistController quicklistRadio2]];
+            [tabChain addObject:[_quicklistController frameworkPopup]];
+            [tabChain addObject:[_quicklistController quicklistRadio3]];
+        }
+
+        [tabChain addObject:[_quicklistController searchField]];
+
+        if ([NSApp isFullKeyboardAccessEnabled])
+        {
+            [tabChain addObject:[_quicklistController searchOptionsPopup]];
+        }
+
+        [tabChain addObject:[_quicklistController quicklistTable]];
+
+        if ([NSApp isFullKeyboardAccessEnabled])
+        {
+            [tabChain addObject:[_quicklistController removeFavoriteButton]];
+        }
+    }
+
+    [w removeAllTabChains];
+    [w addLoopingTabChain:tabChain];
 }
 
 #pragma mark -
@@ -746,6 +794,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // actual views.
     [self _setUpViewControllers];
     [[self window] recalculateKeyViewLoop];
+    [[[_quicklistDrawer contentView] window] recalculateKeyViewLoop];
+    [self recalculateTabChains];
 
     // Apply display preferences *after* all awake-from-nibs have been
     // done, because DIGSMarginViews have to have fully initialized
@@ -758,7 +808,24 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     AKClassNode *classNode = [_database classWithName:@"NSObject"];
     [self selectTopic:[AKClassTopic topicWithClassNode:classNode]];
+
+    // Start with the topic browser selected.
+    [[self window] makeFirstResponder:[_topicBrowserController topicBrowser]];
 }
+
+#pragma mark -
+#pragma mark NSDrawer delegate methods
+
+- (void)drawerDidOpen:(NSNotification *)notification
+{
+    [self recalculateTabChains];
+}
+
+- (void)drawerDidClose:(NSNotification *)notification
+{
+    [self recalculateTabChains];
+}
+
 
 #pragma mark -
 #pragma mark NSMenuValidation protocol methods

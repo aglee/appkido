@@ -35,6 +35,9 @@
 
     // IBOutlets.
     AKMultiRadioView *_quicklistModeRadio;
+    NSMatrix *_quicklistRadio1;
+    NSMatrix *_quicklistRadio2;
+    NSMatrix *_quicklistRadio3;
 
     NSPopUpButton *_frameworkPopup;
 
@@ -52,6 +55,9 @@
 }
 
 @property (nonatomic, assign) IBOutlet AKMultiRadioView *quicklistModeRadio;
+@property (nonatomic, assign) IBOutlet NSMatrix *quicklistRadio1;
+@property (nonatomic, assign) IBOutlet NSMatrix *quicklistRadio2;
+@property (nonatomic, assign) IBOutlet NSMatrix *quicklistRadio3;
 @property (nonatomic, assign) IBOutlet NSPopUpButton *frameworkPopup;
 @property (nonatomic, assign) IBOutlet NSTextField *searchField;
 @property (nonatomic, assign) IBOutlet NSPopUpButton *searchOptionsPopup;
