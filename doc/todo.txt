@@ -12,8 +12,10 @@
 
 ## Smaller bugs/UX stuff
 
-* Have tab loop include controls in window and drawer in one big loop.
-	* Make sure to capture those articles I found with key view loop advice.
+* when toggle browser, the top pixel gets chopped off.
+* Have tab loop include toolbar buttons when full keyboard access is on.
+* Make sure to capture those articles I found with key view loop advice.
+* animate browser toggling
 * option to view classes-in-framework hierarchically
 * Also: I thought type-to-select worked? broken
 * radical idea: implement our own focus ring
@@ -43,13 +45,17 @@
 
 ## Code hygiene
 
+* split AKWindowController into categories
+* #pragma mark ... protocol methods"
+* use debug_ prefix on print methods
+* can get rid of NSSplitView category? might need it for animating
+* be consistent about "Init/dealloc/awake"
 * refactor parsers -- decouple from notion of a file
-* use "item-based" NSBrowser delegate methods
+* use "item-based" NSBrowser delegate methods [NO -- explain why]
 * normal NS...Controller for remaining cases
 	* AKPrefPanelController
 	* AKDevToolsPanelController
 	* AKDevToolsPathController
-	* AKFindPanelController
 * proper CFBundleShortVersionString
 * newer singleton pattern
 * use unsafe_unretained instead of assign for objects
