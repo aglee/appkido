@@ -12,13 +12,14 @@
 
 ## Smaller bugs/UX stuff
 
+* launch app in background, activate it, the focus ring is gray instead of blue
+	* or: app is in background, invoke the Service
+
 * when toggle browser, the top pixel gets chopped off.
-* Have tab loop include toolbar buttons when full keyboard access is on.
-* Make sure to capture those articles I found with key view loop advice.
 * animate browser toggling
+
 * option to view classes-in-framework hierarchically
 * Also: I thought type-to-select worked? broken
-* radical idea: implement our own focus ring
 * "Find a random item" feature
 * Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
 * search for "toolbar", the *second* matching result is selected
@@ -31,7 +32,14 @@
 	* also use real build numbers
 * maybe header file in contextual menu for all docs
 * Still getting double drawing -- just saw it in the doc list after a search for QCComposition.
-* tooltip on the Remove Favorite button
+* wording of the tooltip on the Remove Favorite button
+
+----
+
+## Notes
+
+* Articles I found with key view loop advice: <http://www.cocoabuilder.com/archive/cocoa/177975-guidelines-for-the-key-view-loop.html> (should ping Justin Bur <http://www.linkedin.com/pub/justin-bur/0/473/32> <http://jbb.poslfit.com/Pages/cv-en.html> <justin@cam.org> <http://www.druide.com/> <http://www.cocoabuilder.com/archive/cocoa/89019-executing-nextkeyview-from-nsdrawer-to-nswindow.html> <http://lapcatsoftware.com/blog/2008/02/20/nsscrollview-in-a-key-view-loop-or-fembot-in-a-wet-t-shirt/>
+<http://osdir.com/ml/cocoa-dev/2009-08/msg00488.html>
 
 ----
 
@@ -70,7 +78,6 @@
 ## Maybe later
 
 * crashes when service sometimes
-* got a random crash right after launch -- possibly after closing a window; stack trace just said sendEvent:
 * mysterious exception when hit key like "s" with doc list selected; nothing gets printed and it seems to have no ill effect, but it triggers my exception breakpoint; maybe bug in type-to-select (or deliberately swallowed exception)?
 * showWindow: and makeKeyAndOrderFront: both called recalculateKeyViewLoop despite my auto-recalc setting; the docs say the auto-recalc setting is for when views are added
 * add crashreporter
