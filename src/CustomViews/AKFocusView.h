@@ -31,18 +31,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*!
- * Sets the inner view's frame and autoresizing mask, superseding whatever those
- * were set to in the nib. Disables the inner view's focus ring (if any), since
- * we will be taking responsibility for drawing the focus indicator.
- *
- * One advantage of setting the frame programmatically is that you don't have to
- * be precise when laying out the inner view in IB. In the nib you can have a
- * generous margin around the inner view, making it easier to select and
- * manipulate.
- */
-- (void)awakeFromNib;
-
 #pragma mark -
 #pragma mark NSView methods
 

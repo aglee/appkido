@@ -24,25 +24,6 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     [super dealloc];
 }
 
-- (void)awakeFromNib
-{
-    // Assume we have exactly one subview.
-    NSView *innerView = [[self subviews] lastObject];
-
-    // Inset the inner view slightly within our bounds. This means I don't have
-    // to be precise about positioning the inner view in IB, because I know it
-    // will be adjusted here.
-    [innerView setFrame:NSInsetRect([self bounds], AKFocusBorderThickness, AKFocusBorderThickness)];
-    [innerView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-
-    // Suppress any focus ring that would normally be drawn by the inner view.
-    [innerView setFocusRingType:NSFocusRingTypeNone];
-    if ([innerView isKindOfClass:[NSScrollView class]])
-    {
-        [[(NSScrollView *)innerView documentView] setFocusRingType:NSFocusRingTypeNone];
-    }
-}
-
 #pragma mark -
 #pragma mark Focus ring
 
@@ -81,6 +62,27 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 #pragma mark -
 #pragma mark NSView methods
+
+- (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize
+{
+    // Assume we have exactly one subview.
+    NSView *innerView = [[self subviews] lastObject];
+
+    // Inset the inner view slightly within our bounds. This means I don't have
+    // to be precise about positioning the inner view in IB, because I know it
+    // will be adjusted here.
+    [innerView setFrame:NSInsetRect([self bounds], AKFocusBorderThickness, AKFocusBorderThickness)];
+    [innerView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+
+    // Suppress any focus ring that would normally be drawn by the inner view.
+    // [agl] Could someday make this conditional; we don't use the built-in
+    // focus ring stuff, but a subclass might want to.
+    [innerView setFocusRingType:NSFocusRingTypeNone];
+    if ([innerView isKindOfClass:[NSScrollView class]])
+    {
+        [[(NSScrollView *)innerView documentView] setFocusRingType:NSFocusRingTypeNone];
+    }
+}
 
 - (void)viewDidMoveToWindow
 {
