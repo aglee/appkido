@@ -36,7 +36,7 @@
 #import "AKWindowLayout.h"
 
 #import "NSObject+AppKiDo.h"
-#import "NSSplitView+AppKiDo.h"
+#import "NSView+AppKiDo.h"
 
 @implementation AKWindowController
 
@@ -384,14 +384,52 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                                 ? [self _computeBrowserHeight]
                                 : 0.0);
 
-    [_topLevelSplitView ak_setHeight:newBrowserHeight ofSubviewAtIndex:0];
+    [self _setTopSubviewHeight:newBrowserHeight
+           forTwoPaneSplitView:_topLevelSplitView
+                       animate:NO];
 
     // [agl] KLUDGE -- for some reason the scroll view does not retile
     // automatically, so I force it here; the reason I traverse all subviews
     // is because the internal view hierarchy of WebView is not exposed
     //
     // [agl] This is a very old kludge. It's possible it isn't needed any more.
-    [self _recursivelyTileScrollViews:_docContainerView];
+//    [self _recursivelyTileScrollViews:_docContainerView];
+}
+
+// Assumes the split view has two subviews, one above the other.
+- (void)_setTopSubviewHeight:(CGFloat)newHeight
+         forTwoPaneSplitView:(NSSplitView *)splitView
+                     animate:(BOOL)shouldAnimate
+{
+    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
+    NSRect frameOne = [viewOne frame];
+    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
+    NSRect frameTwo = [viewTwo frame];
+
+    frameOne.size.height = newHeight;
+    frameTwo.size.height = ([splitView bounds].size.height
+                               - [splitView dividerThickness]
+                               - newHeight);
+    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
+    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
+}
+
+// Assumes the split view has two subviews, side by side.
+- (void)_setLeftSubviewWidth:(CGFloat)newWidth
+         forTwoPaneSplitView:(NSSplitView *)splitView
+                     animate:(BOOL)shouldAnimate
+{
+    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
+    NSRect frameOne = [viewOne frame];
+    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
+    NSRect frameTwo = [viewTwo frame];
+
+    frameOne.size.width = newWidth;
+    frameTwo.size.width = ([splitView bounds].size.width
+                            - [splitView dividerThickness]
+                            - newWidth);
+    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
+    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
 }
 
 - (void)_recursivelyTileScrollViews:(NSView *)view
@@ -801,19 +839,27 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     if (([_topicBrowserContainerView frame].size.height > 0.0)
         && [windowLayout browserIsVisible])
     {
-        [_topLevelSplitView ak_setHeight:[self _computeBrowserHeight] ofSubviewAtIndex:0];
+        [self _setTopSubviewHeight:[self _computeBrowserHeight]
+               forTwoPaneSplitView:_topLevelSplitView
+                           animate:NO];
     }
     else
     {
-        [_topLevelSplitView ak_setHeight:0.0 ofSubviewAtIndex:0];
+        [self _setTopSubviewHeight:0
+               forTwoPaneSplitView:_topLevelSplitView
+                           animate:NO];
     }
 
     // Restore the state of the bottom two thirds.
-    [_bottomTwoThirdsSplitView ak_setHeight:[windowLayout middleViewHeight] ofSubviewAtIndex:0];
+    [self _setTopSubviewHeight:[windowLayout middleViewHeight]
+           forTwoPaneSplitView:_bottomTwoThirdsSplitView
+                       animate:NO];
 
     if ([windowLayout subtopicListWidth])
     {
-        [_middleThirdSplitView ak_setWidth:[windowLayout subtopicListWidth] ofSubviewAtIndex:0];
+        [self _setLeftSubviewWidth:[windowLayout subtopicListWidth]
+               forTwoPaneSplitView:_middleThirdSplitView
+                           animate:NO];
     }
 
     [_subtopicListController takeWindowLayoutFrom:windowLayout];

@@ -606,10 +606,6 @@
 		73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */; };
 		73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */; };
 		73F8F99616ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */; };
-		73F8F99B16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */; };
-		73F8F99C16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */; };
-		73F8F99D16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */; };
-		73F8F99E16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */; };
 		73F8F9A116ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */; };
 		73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */; };
 		73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */; };
@@ -941,8 +937,6 @@
 		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; };
 		73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AppKiDo.h"; sourceTree = "<group>"; };
 		73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AppKiDo.m"; sourceTree = "<group>"; };
-		73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSplitView+AppKiDo.h"; sourceTree = "<group>"; };
-		73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSplitVIew+AppKiDo.m"; sourceTree = "<group>"; };
 		73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+AppKiDo.h"; sourceTree = "<group>"; };
 		73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+AppKiDo.m"; sourceTree = "<group>"; };
 		73F8F9B116EE99A3001650D7 /* AKFocusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFocusView.h; path = CustomViews/AKFocusView.h; sourceTree = "<group>"; };
@@ -1747,8 +1741,6 @@
 				73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */,
 				73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */,
 				73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */,
-				73F8F99916ED195E001650D7 /* NSSplitView+AppKiDo.h */,
-				73F8F99A16ED195E001650D7 /* NSSplitVIew+AppKiDo.m */,
 				73D409EE04A3A1EB00A80003 /* NSString+AppKiDo.h */,
 				73D409EF04A3A1EB00A80003 /* NSString+AppKiDo.m */,
 				7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */,
@@ -1895,7 +1887,6 @@
 				735E298416E050E600E9FBC1 /* AKDebugging.h in Headers */,
 				7332E8D616E8141300A3764B /* AKPrefDictionary.h in Headers */,
 				73F8F99316ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
-				73F8F99B16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */,
 				73F8F9A116ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 				73F8F9B316EE99A3001650D7 /* AKFocusView.h in Headers */,
 				73F8F9BF16EED364001650D7 /* AKBorderHidingView.h in Headers */,
@@ -2036,7 +2027,6 @@
 				735E298516E050E600E9FBC1 /* AKDebugging.h in Headers */,
 				7332E8D716E8141300A3764B /* AKPrefDictionary.h in Headers */,
 				73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
-				73F8F99C16ED195E001650D7 /* NSSplitView+AppKiDo.h in Headers */,
 				73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 				73F8F9B416EE99A3001650D7 /* AKFocusView.h in Headers */,
 				73F8F9C016EED364001650D7 /* AKBorderHidingView.h in Headers */,
@@ -2345,7 +2335,6 @@
 				7304030916DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 				735E298616E050E600E9FBC1 /* AKDebugging.m in Sources */,
 				73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
-				73F8F99D16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */,
 				73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 				73F8F9B516EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */,
@@ -2482,7 +2471,6 @@
 				7304030A16DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 				735E298716E050E600E9FBC1 /* AKDebugging.m in Sources */,
 				73F8F99616ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
-				73F8F99E16ED195E001650D7 /* NSSplitVIew+AppKiDo.m in Sources */,
 				73F8F9A416ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 				73F8F9B616EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C216EED364001650D7 /* AKBorderHidingView.m in Sources */,

@@ -27,4 +27,7 @@
  */
 - (void)ak_removeAllElasticity;
 
+/*! Returns either self or [self animator]. */
+- (NSView *)maybeAnimate:(BOOL)shouldAnimate;
+
 @end
