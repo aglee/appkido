@@ -155,20 +155,6 @@
 }
 
 #pragma mark -
-#pragma mark NSWindow methods
-
-// As suggested by Gerriet Denkmann.  Protects against nil being passed.
-- (void)setTitle:(NSString *)aString
-{
-	if (aString == nil)
-	{
-		aString = @"*** nil ***";
-	}
-
-	[super setTitle:aString];
-}
-
-#pragma mark -
 #pragma mark Debugging
 
 - (void)debug_printTabChains
@@ -192,8 +178,22 @@
             NSLog(@"    %@", [v ak_bareDescription]);
         }
     }
-    
+
     NSLog(@"END TAB CHAINS for %@\n\n", [self ak_bareDescription]);
+}
+
+#pragma mark -
+#pragma mark NSWindow methods
+
+// As suggested by Gerriet Denkmann.  Protects against nil being passed.
+- (void)setTitle:(NSString *)aString
+{
+	if (aString == nil)
+	{
+		aString = @"*** nil ***";
+	}
+
+	[super setTitle:aString];
 }
 
 #pragma mark -
