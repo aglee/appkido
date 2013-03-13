@@ -16,10 +16,32 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
+- (id)initWithFrame:(NSRect)frameRect
+{
+    self = [super initWithFrame:frameRect];
+    if (self)
+    {
+        [self _startObservingKeyWindowChanges];
+    }
+
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        [self _startObservingKeyWindowChanges];
+    }
+
+    return self;
+}
+
 - (void)dealloc
 {
-    [self _stopObservingChangesThatAffectFocus];
-    _owningWindow = nil;
+    [self _stopObservingKeyWindowChanges];
+    [self _stopObservingFirstResponderChanges];
 
     [super dealloc];
 }
@@ -86,57 +108,18 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     }
 }
 
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
+{
+    [self _stopObservingFirstResponderChanges];
+    
+    [super viewWillMoveToWindow:newWindow];
+}
+
 - (void)viewDidMoveToWindow
 {
-    // We want to know when our owning window changes first responder or changes
-    // key window status, so we can redraw our focus indicator if necessary.
-    [self _stopObservingChangesThatAffectFocus];
-    _owningWindow = [self window];
-    [self _startObservingChangesThatAffectFocus];
-}
-
-- (void)_startObservingChangesThatAffectFocus
-{
-    // Has the window's first responder changed?
-    [_owningWindow addObserver:self
-                    forKeyPath:@"firstResponder"
-                       options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
-                       context:NULL];
-
-    // Has the app's key window changed?
-    if (_owningWindow)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_handleNotificationAffectingFocus:)
-                                                     name:NSWindowDidBecomeKeyNotification
-                                                   object:_owningWindow];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_handleNotificationAffectingFocus:)
-                                                     name:NSWindowDidResignKeyNotification
-                                                   object:_owningWindow];
-    }
-}
-
-- (void)_stopObservingChangesThatAffectFocus
-{
-    // Has the window's first responder changed?
-    [_owningWindow removeObserver:self forKeyPath:@"firstResponder"];
-
-    // Has the app's key window changed?
-    if (_owningWindow)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:NSWindowDidBecomeKeyNotification
-                                                      object:_owningWindow];
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:NSWindowDidResignKeyNotification
-                                                      object:_owningWindow];
-    }
-}
-
-- (void)_handleNotificationAffectingFocus:(NSNotification *)notif
-{
-    [self invalidateFocusIndicator];
+    [super viewDidMoveToWindow];
+    
+    [self _startObservingFirstResponderChanges];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -173,6 +156,73 @@ static const CGFloat AKFocusBorderThickness = 2.0;
             [self invalidateFocusIndicator];
         }
     }
+}
+
+#pragma mark -
+#pragma mark Private methods
+
+- (void)_startObservingKeyWindowChanges
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_handleKeyWindowChangedNotification:)
+                                                 name:NSWindowDidBecomeKeyNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_handleKeyWindowChangedNotification:)
+                                                 name:NSWindowDidResignKeyNotification
+                                               object:nil];
+}
+
+- (void)_stopObservingKeyWindowChanges
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSWindowDidBecomeKeyNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSWindowDidResignKeyNotification
+                                                  object:nil];
+}
+
+- (void)_startObservingFirstResponderChanges
+{
+    [[self window] addObserver:self
+                    forKeyPath:@"firstResponder"
+                       options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
+                       context:NULL];
+}
+
+- (void)_stopObservingFirstResponderChanges
+{
+    [[self window] removeObserver:self forKeyPath:@"firstResponder"];
+}
+
+// We get this notification when *any* window becomes or resigns key window.
+// We don't do anything unless we are in either the given window or one of the
+// given window's drawers.
+- (void)_handleKeyWindowChangedNotification:(NSNotification *)notif
+{
+    if ([self _belongsToWindow:[notif object]])
+    {
+        [self invalidateFocusIndicator];
+    }
+}
+
+- (BOOL)_belongsToWindow:(NSWindow *)window
+{
+    if (window == [self window])
+    {
+        return YES;
+    }
+
+    for (NSDrawer *drawer in [window drawers])
+    {
+        if ([self isDescendantOf:[drawer contentView]])
+        {
+            return YES;
+        }
+    }
+
+    return NO;
 }
 
 @end
