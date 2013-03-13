@@ -44,8 +44,8 @@
 			<object class="NSWindowTemplate" id="516961095">
 				<int key="NSWindowStyleMask">4111</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{367, 185}, {550, 616}}</string>
-				<int key="NSWTFlags">813170688</int>
+				<string key="NSWindowRect">{{374, 223}, {550, 616}}</string>
+				<int key="NSWTFlags">807927808</int>
 				<string key="NSWindowTitle">AppKiDo</string>
 				<string key="NSWindowClass">AKWindow</string>
 				<object class="NSMutableString" key="NSViewClass">
@@ -920,6 +920,8 @@ dC1jbGljayBmb3IgbWVudSk</string>
 					</object>
 				</object>
 				<string key="1106.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="NO" key="1107.IBNSWindowAutoPositionCentersHorizontal"/>
+				<boolean value="NO" key="1107.IBNSWindowAutoPositionCentersVertical"/>
 				<string key="1107.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1107.IBWindowTemplateEditedContentRect">{{404, 248}, {548, 603}}</string>
 				<string key="1108.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
