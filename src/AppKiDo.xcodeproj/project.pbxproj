@@ -783,8 +783,8 @@
 		7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorNode.m; sourceTree = "<group>"; };
 		7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKBehaviorTopic.h; path = Topics/AKBehaviorTopic.h; sourceTree = SOURCE_ROOT; };
 		7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKBehaviorTopic.m; path = Topics/AKBehaviorTopic.m; sourceTree = SOURCE_ROOT; };
-		7359EB2B0BADB68100574728 /* AKApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKApplication.h; sourceTree = "<group>"; };
-		7359EB2C0BADB68100574728 /* AKApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKApplication.m; sourceTree = "<group>"; };
+		7359EB2B0BADB68100574728 /* AKApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKApplication.h; path = ../AKApplication.h; sourceTree = "<group>"; };
+		7359EB2C0BADB68100574728 /* AKApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKApplication.m; path = ../AKApplication.m; sourceTree = "<group>"; };
 		735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSimpleTask.h; sourceTree = "<group>"; };
 		735D9F7616CC5DAC00B72158 /* ALSimpleTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSimpleTask.m; sourceTree = "<group>"; };
 		735E298216E050E600E9FBC1 /* AKDebugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDebugging.h; path = ../Debugging/AKDebugging.h; sourceTree = "<group>"; };
@@ -1011,8 +1011,6 @@
 				73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */,
 				7302DF980767B65200F9FEC0 /* about-the-code.markdown */,
 				733DF63F14E18FAB007E6313 /* DocSetIndexTables.txt */,
-				7359EB2B0BADB68100574728 /* AKApplication.h */,
-				7359EB2C0BADB68100574728 /* AKApplication.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				73DA45FD0966583A00BFD67E /* AppKiDo_Prefix.pch */,
 				732BD61605ED913B0055715D /* -- SUPPORT CLASSES -- */,
@@ -1285,6 +1283,8 @@
 		732BD5D405ED8FBE0055715D /* singleton controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7359EB2B0BADB68100574728 /* AKApplication.h */,
+				7359EB2C0BADB68100574728 /* AKApplication.m */,
 				732BD5D505ED8FBE0055715D /* AKAppDelegate.h */,
 				732BD5D605ED8FBE0055715D /* AKAppDelegate.m */,
 				734B75DB16D06CA20027514D /* AKLoadDatabaseOperation.h */,
