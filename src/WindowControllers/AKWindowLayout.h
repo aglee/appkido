@@ -17,6 +17,9 @@
  * This is used in two places: to remember layouts of open windows so they can
  * be restored on relaunch, and to remember the user's preferred layout so it
  * can be applied to new windows.
+ *
+ * browserFraction is for backward compatibility. The real thing to use is
+ * browserHeight.
  */
 @interface AKWindowLayout : NSObject <AKPrefDictionary>
 {
@@ -28,6 +31,7 @@
     // Attributes of the browser section.
     BOOL _browserIsVisible;
     CGFloat _browserFraction;
+    CGFloat _browserHeight;
     NSInteger _numberOfBrowserColumns;
 
     // Attributes of the middle section.
@@ -50,6 +54,7 @@
 @property (nonatomic, assign) BOOL toolbarIsVisible;
 @property (nonatomic, assign) BOOL browserIsVisible;
 @property (nonatomic, assign) CGFloat browserFraction;
+@property (nonatomic, assign) CGFloat browserHeight;
 @property (nonatomic, assign) NSInteger numberOfBrowserColumns;
 @property (nonatomic, assign) CGFloat middleViewHeight;
 @property (nonatomic, assign) CGFloat subtopicListWidth;

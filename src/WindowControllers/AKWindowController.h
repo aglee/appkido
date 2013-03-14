@@ -42,10 +42,9 @@
     // The index within _windowHistory of our current navigation state.
     NSInteger _windowHistoryIndex;
 
-    // Remembered for when we hide/show the browser. We remember it as a
-    // fraction instead of an absolute height because the user can toggle
-    // the browser off, resize the window, and toggle the browser back on.
-    CGFloat _browserFractionWhenVisible;
+    // The height of the topic browser when it's not collapsed. Used when the
+    // browser's visibility is toggled.
+    CGFloat _browserHeightWhenVisible;
     
     // View controllers that manage different portions of the window.
     AKTopicBrowserViewController *_topicBrowserController;
@@ -162,8 +161,6 @@
 - (IBAction)rememberWindowLayout:(id)sender;
 
 - (IBAction)toggleBrowserVisible:(id)sender;
-
-- (IBAction)showBrowser:(id)sender;
 
 - (IBAction)toggleQuicklistDrawer:(id)sender;
 

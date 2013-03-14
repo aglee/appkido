@@ -15,6 +15,7 @@
 @synthesize toolbarIsVisible = _toolbarIsVisible;
 @synthesize browserIsVisible = _browserIsVisible;
 @synthesize browserFraction = _browserFraction;
+@synthesize browserHeight = _browserHeight;
 @synthesize numberOfBrowserColumns = _numberOfBrowserColumns;
 @synthesize middleViewHeight = _middleViewHeight;
 @synthesize subtopicListWidth = _subtopicListWidth;
@@ -74,6 +75,7 @@
     [windowLayout setSubtopicListWidth:[[prefDict objectForKey:AKSubtopicListWidthPrefKey] floatValue]];
     [windowLayout setBrowserIsVisible:[[prefDict objectForKey:AKBrowserIsVisiblePrefKey] boolValue]];
     [windowLayout setBrowserFraction:[[prefDict objectForKey:AKBrowserFractionPrefKey] floatValue]];
+    [windowLayout setBrowserHeight:[[prefDict objectForKey:AKBrowserHeightPrefKey] floatValue]];
     [windowLayout setNumberOfBrowserColumns:[[prefDict objectForKey:AKNumberOfBrowserColumnsPrefKey] intValue]];
     [windowLayout setQuicklistDrawerIsOpen:[[prefDict objectForKey:AKQuicklistDrawerIsOpenPrefKey] boolValue]];
     [windowLayout setQuicklistDrawerWidth:[[prefDict objectForKey:AKQuicklistDrawerWidthPrefKey] floatValue]];
@@ -104,6 +106,7 @@
     [prefDict setObject:@(_subtopicListWidth) forKey:AKSubtopicListWidthPrefKey];
     [prefDict setObject:@(_browserIsVisible) forKey:AKBrowserIsVisiblePrefKey];
     [prefDict setObject:@(_browserFraction) forKey:AKBrowserFractionPrefKey];
+    [prefDict setObject:@(_browserHeight) forKey:AKBrowserHeightPrefKey];
     [prefDict setObject:@(_numberOfBrowserColumns) forKey:AKNumberOfBrowserColumnsPrefKey];
     [prefDict setObject:@(_quicklistDrawerIsOpen) forKey:AKQuicklistDrawerIsOpenPrefKey];
     [prefDict setObject:@(_quicklistDrawerWidth) forKey:AKQuicklistDrawerWidthPrefKey];

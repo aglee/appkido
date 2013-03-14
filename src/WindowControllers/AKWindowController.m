@@ -260,112 +260,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [w addLoopingTabChain:tabChain];
 }
 
-
-//NSView
-//	NSToolbarItemViewer
-//	NSControl
-//		_NSToolbarItemViewerLabelView
-//		NSButton
-//			NSToolbarButton
-//
-//
-//BEGIN nextKeyView sequence:
-//  <NSToolbarButton: 0xd175990>
-//  <NSToolbarItemViewer: 0x3967a90>
-//  <_NSToolbarItemViewerLabelView: 0x3967c20>
-//  <NSToolbarButton: 0xd1763f0>
-//  <NSToolbarItemViewer: 0x39681a0>
-//  <_NSToolbarItemViewerLabelView: 0x3968350>
-//  <NSToolbarButton: 0x39659d0>
-//  <NSToolbarItemViewer: 0x3968770>
-//  <_NSToolbarItemViewerLabelView: 0x3968920>
-//  <NSToolbarButton: 0x3965e00>
-//  <NSToolbarView: 0x236c720>
-//  <NSToolbarItemViewer: 0x3966210>
-//  <_NSToolbarItemViewerLabelView: 0x3966510>
-//  <NSToolbarButton: 0x237d870>
-//  <NSToolbarItemViewer: 0x39673e0>
-//  <_NSToolbarItemViewerLabelView: 0x39676b0>
-//  <NSToolbarButton: 0xd175990>
-//END nextKeyView sequence -- sequence contains a loop
-//
-//
-//NSThemeFrame
-//	<_NSThemeCloseWidget: 0xd1746c0>,
-//	<_NSThemeWidget: 0xd172dc0>,
-//	<_NSThemeWidget: 0xd1762a0>,
-//
-//	contentView <NSView: 0xd1b0d70>,
-//
-//	(<NSToolbarView: 0x236c720>: AKToolbarID)
-//		<_NSToolbarViewClipView: 0x232cab0>
-//			<NSToolbarItemViewer: 0x3966210 'AKQuicklistToolID'>,
-//				<_NSToolbarItemViewerLabelView: 0x3966510>,
-//				<NSToolbarButton: 0x237d870>
-//			<NSToolbarItemViewer: 0x39673e0 'AKBrowserToolID'>,
-//			<NSToolbarItemViewer: 0x3967a90 'AKBackToolID'>,
-//			<NSToolbarItemViewer: 0x39681a0 'AKForwardToolID'>,
-//			<NSToolbarItemViewer: 0x3968770 'AKSuperclassToolID'>
-
-
-- (void)_addToolbarItemsToTabChain:(NSMutableArray *)tabChain
-{
-    NSView *themeFrame = [[[self window] contentView] superview];
-    NSView *toolbarView = [[self _subviewsOf:themeFrame
-                               withClassName:@"NSToolbarView"] lastObject];
-    NSView *toolbarClipView = [[toolbarView subviews] lastObject];
-
-    for (NSView *toolbarItemViewer in [toolbarClipView subviews])
-    {
-        NSButton *toolbarButton = [[self _subviewsOf:toolbarItemViewer
-                                       withClassName:@"NSToolbarButton"] lastObject];
-        if ([toolbarButton isEnabled])
-        {
-            [tabChain addObject:toolbarButton];
-        }
-    }
-}
-
-- (NSArray *)_subviewsOf:(NSView *)view withClassName:(NSString *)viewClassName
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    for (NSView *subview in [view subviews])
-    {
-        if ([[subview className] isEqualToString:viewClassName])
-        {
-            [result addObject:subview];
-        }
-    }
-
-    return result;
-}
-
-- (void)_addDrawerControlsToTabChain:(NSMutableArray *)tabChain
-{
-    if ([NSApp isFullKeyboardAccessEnabled])
-    {
-        [tabChain addObject:[_quicklistController quicklistRadio1]];
-        [tabChain addObject:[_quicklistController quicklistRadio2]];
-        [tabChain addObject:[_quicklistController frameworkPopup]];
-        [tabChain addObject:[_quicklistController quicklistRadio3]];
-    }
-
-    [tabChain addObject:[_quicklistController searchField]];
-
-    if ([NSApp isFullKeyboardAccessEnabled])
-    {
-        [tabChain addObject:[_quicklistController searchOptionsPopup]];
-    }
-
-    [tabChain addObject:[_quicklistController quicklistTable]];
-
-    if ([NSApp isFullKeyboardAccessEnabled])
-    {
-        [tabChain addObject:[_quicklistController removeFavoriteButton]];
-    }
-}
-
 #pragma mark -
 #pragma mark Action methods -- window layout
 
@@ -380,76 +274,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)toggleBrowserVisible:(id)sender
 {
-    CGFloat newBrowserHeight = (([_topicBrowserContainerView frame].size.height == 0.0)
-                                ? [self _computeBrowserHeight]
-                                : 0.0);
-
-    [self _setTopSubviewHeight:newBrowserHeight
-           forTwoPaneSplitView:_topLevelSplitView
-                       animate:NO];
-
-    // [agl] KLUDGE -- for some reason the scroll view does not retile
-    // automatically, so I force it here; the reason I traverse all subviews
-    // is because the internal view hierarchy of WebView is not exposed
-    //
-    // [agl] This is a very old kludge. It's possible it isn't needed any more.
-//    [self _recursivelyTileScrollViews:_docContainerView];
-}
-
-// Assumes the split view has two subviews, one above the other.
-- (void)_setTopSubviewHeight:(CGFloat)newHeight
-         forTwoPaneSplitView:(NSSplitView *)splitView
-                     animate:(BOOL)shouldAnimate
-{
-    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
-    NSRect frameOne = [viewOne frame];
-    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
-    NSRect frameTwo = [viewTwo frame];
-
-    frameOne.size.height = newHeight;
-    frameTwo.size.height = ([splitView bounds].size.height
-                               - [splitView dividerThickness]
-                               - newHeight);
-    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
-    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
-}
-
-// Assumes the split view has two subviews, side by side.
-- (void)_setLeftSubviewWidth:(CGFloat)newWidth
-         forTwoPaneSplitView:(NSSplitView *)splitView
-                     animate:(BOOL)shouldAnimate
-{
-    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
-    NSRect frameOne = [viewOne frame];
-    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
-    NSRect frameTwo = [viewTwo frame];
-
-    frameOne.size.width = newWidth;
-    frameTwo.size.width = ([splitView bounds].size.width
-                            - [splitView dividerThickness]
-                            - newWidth);
-    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
-    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
-}
-
-- (void)_recursivelyTileScrollViews:(NSView *)view
-{
-    if ([view isKindOfClass:[NSScrollView class]])
+    if ([self _topicBrowserIsVisible])
     {
-        [(NSScrollView *)view tile];
+        // Collapse the topic browser.
+        _browserHeightWhenVisible = [_topicBrowserContainerView frame].size.height;
+
+        [self _setTopSubviewHeight:0
+               forTwoPaneSplitView:_topLevelSplitView
+                           animate:NO];
     }
-
-    for (NSView *subview in [view subviews])
+    else
     {
-        [self _recursivelyTileScrollViews:subview];
-    }
-}
-
-- (IBAction)showBrowser:(id)sender
-{
-    if ([_topicBrowserContainerView frame].size.height == 0.0)
-    {
-        [self toggleBrowserVisible:nil];
+        // Expand the topic browser.
+        [self _setTopSubviewHeight:_browserHeightWhenVisible
+               forTwoPaneSplitView:_topLevelSplitView
+                           animate:NO];
     }
 }
 
@@ -540,7 +379,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         [self selectTopic:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName
                                                                inDatabase:_database]];
-        [self showBrowser:nil];
+        [self _showBrowser];
     }
 }
 
@@ -552,7 +391,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         [self selectTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName
                                                                  inDatabase:_database]];
-        [self showBrowser:nil];
+        [self _showBrowser];
     }
 }
 
@@ -564,7 +403,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         [self selectTopic:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName
                                                          inDatabase:_database]];
-        [self showBrowser:nil];
+        [self _showBrowser];
     }
 }
 
@@ -576,7 +415,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         [self selectTopic:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName
                                                        inDatabase:_database]];
-        [self showBrowser:nil];
+        [self _showBrowser];
     }
 }
 
@@ -773,10 +612,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
     else if (itemAction == @selector(toggleBrowserVisible:))
     {
-        if ([anItem isKindOfClass:[NSMenuItem class]])  // [agl] what if it's a toolbar item?
+        if ([anItem isKindOfClass:[NSMenuItem class]])
         {
-            if (([_topicBrowserContainerView frame].size.height == 0.0)
-                && (_browserFractionWhenVisible > 0.0))
+            if (![self _topicBrowserIsVisible]
+                && (_browserHeightWhenVisible > 0.0))
             {
                 [anItem setTitle:@"Show Browser"];
             }
@@ -831,15 +670,20 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Restore the visibility of the toolbar.
     [[[self window] toolbar] setVisible:[windowLayout toolbarIsVisible]];
 
-    // Apply the new browser fraction.  Note that -_computeBrowserHeight
-    // uses the _browserFractionWhenVisible ivar, so we make sure to set
-    // the ivar first.
-    _browserFractionWhenVisible = [windowLayout browserFraction];
-    
-    if (([_topicBrowserContainerView frame].size.height > 0.0)
+    // Figure out the browser height indicated by windowLayout. If an explicit
+    // height is given, use that. Otherwise, use the fraction to calculate it.
+    CGFloat browserFraction = [windowLayout browserFraction];
+    CGFloat browserHeight = ([windowLayout browserHeight] > 0
+                             ? [windowLayout browserHeight]
+                             : [self _heightByTakingFraction:browserFraction
+                                                 ofSplitView:_topLevelSplitView]);
+    _browserHeightWhenVisible = browserHeight;
+
+    // Apply the indicated height to the topic browser.
+    if ([self _topicBrowserIsVisible]
         && [windowLayout browserIsVisible])
     {
-        [self _setTopSubviewHeight:[self _computeBrowserHeight]
+        [self _setTopSubviewHeight:_browserHeightWhenVisible
                forTwoPaneSplitView:_topLevelSplitView
                            animate:NO];
     }
@@ -894,8 +738,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [windowLayout setSubtopicListWidth:([_subtopicListContainerView frame].size.width)];
 
     // Remember the state of the topic browser.
-    [windowLayout setBrowserIsVisible:([_topicBrowserContainerView frame].size.height > 0)];
-    [windowLayout setBrowserFraction:_browserFractionWhenVisible];
+    [windowLayout setBrowserIsVisible:[self _topicBrowserIsVisible]];
+    [windowLayout setBrowserFraction:[self _fractionByComparingHeight:_browserHeightWhenVisible
+                                                  toHeightOfSplitView:_topLevelSplitView]];
+    [windowLayout setBrowserHeight:_browserHeightWhenVisible];
     [_topicBrowserController putWindowLayoutInto:windowLayout];
 
     // Remember the state of the Quicklist drawer.
@@ -916,9 +762,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     // Set up the toolbar.
     [self _initToolbar];
-
-    // Get the initial value for the height of the browser.
-    _browserFractionWhenVisible = [self _computeBrowserFraction];
 
     // Make the navigation popups use small fonts.
     NSFont *smallMenuFont = [NSFont menuFontOfSize:11];
@@ -995,19 +838,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // As it happens, we want the first subview of all our split views to stay
     // fixed-sized.
     return (subview != [[splitView subviews] objectAtIndex:0]);
-}
-
-- (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
-{
-    if ([aNotification object] == _topLevelSplitView)
-    {
-        CGFloat browserHeight = [_topicBrowserContainerView frame].size.height;
-
-        if (browserHeight != 0.0)
-        {
-            _browserFractionWhenVisible = [self _computeBrowserFraction];
-        }
-    }
 }
 
 #pragma mark -
@@ -1098,28 +928,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return vc;
 }
 
-- (void)_plugVC:(AKViewController *)vc intoContainerView:(NSView *)containerView
-{
-    // Stuff the view controller's view into the container view.
-    if (containerView)
-    {
-        [[vc view] setFrame:[containerView bounds]];
-        [[vc view] setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-
-        [containerView addSubview:[vc view]];
-    }
-
-    // Patch the vc into the responder chain.
-    // [agl] do I need to unpatch on dealloc?
-    NSResponder *nextResponder = [self nextResponder];
-    [self setNextResponder:vc];
-    [vc setNextResponder:nextResponder];
-}
-
 - (NSString *)_tooltipForSelectSuperclass
 {
-    return [NSString stringWithFormat:@"Go to superclass (%@)"
-            @"\n(Control-click or right-click for menu)",
+    return [NSString stringWithFormat:(@"Go to superclass (%@)"
+                                       @"\n(Control-click or right-click for menu)"),
             [[[self _currentTopic] parentClassOfTopic] nodeName]];
 }
 
@@ -1223,8 +1035,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         DIGSLogInfo(@"can't navigate to a nil topic");
         return;
     }
-
-    [self _rememberCurrentTextSelection];
 
     AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic
                                               subtopicName:subtopicName
@@ -1340,32 +1150,175 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return [[self currentDocLocator] topicToDisplay];
 }
 
-- (CGFloat)_computeBrowserFraction
+- (void)_showBrowser
 {
-    CGFloat browserHeight = [_topicBrowserContainerView frame].size.height;
-
-    if (browserHeight == 0.0)
+    if (![self _topicBrowserIsVisible])
     {
-        return 0.0;
-    }
-    else
-    {
-        CGFloat splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
-
-        return browserHeight / splitViewHeight;
+        [self toggleBrowserVisible:nil];
     }
 }
 
-- (CGFloat)_computeBrowserHeight
+- (BOOL)_topicBrowserIsVisible
 {
-    CGFloat splitViewHeight = [_topLevelSplitView frame].size.height - [_topLevelSplitView dividerThickness];
-
-    return _browserFractionWhenVisible * splitViewHeight;
+    return ([_topicBrowserContainerView frame].size.height > 0);
 }
 
-- (void)_rememberCurrentTextSelection
+// Assumes the split view has two subviews, one above the other.
+- (void)_setTopSubviewHeight:(CGFloat)newHeight
+         forTwoPaneSplitView:(NSSplitView *)splitView
+                     animate:(BOOL)shouldAnimate
 {
-// [agl] fill this in -- put text selection in history dictionary
+    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
+    NSRect frameOne = [viewOne frame];
+    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
+    NSRect frameTwo = [viewTwo frame];
+
+    frameOne.size.height = newHeight;
+    frameTwo.size.height = ([splitView bounds].size.height
+                            - [splitView dividerThickness]
+                            - newHeight);
+    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
+    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
+}
+
+// Assumes the split view has two subviews, side by side.
+- (void)_setLeftSubviewWidth:(CGFloat)newWidth
+         forTwoPaneSplitView:(NSSplitView *)splitView
+                     animate:(BOOL)shouldAnimate
+{
+    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
+    NSRect frameOne = [viewOne frame];
+    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
+    NSRect frameTwo = [viewTwo frame];
+
+    frameOne.size.width = newWidth;
+    frameTwo.size.width = ([splitView bounds].size.width
+                           - [splitView dividerThickness]
+                           - newWidth);
+    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
+    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
+}
+
+- (CGFloat)_fractionByComparingHeight:(CGFloat)height toHeightOfSplitView:(NSSplitView *)splitView
+{
+    NSInteger numberOfDividers = [[splitView subviews] count] - 1;
+    CGFloat totalHeightOfSubviews = ([splitView frame].size.height
+                                     - numberOfDividers*[splitView dividerThickness]);
+    return height / totalHeightOfSubviews;
+}
+
+- (CGFloat)_heightByTakingFraction:(CGFloat)fraction ofSplitView:(NSSplitView *)splitView
+{
+    NSInteger numberOfDividers = [[splitView subviews] count] - 1;
+    CGFloat totalHeightOfSubviews = ([splitView frame].size.height
+                                     - numberOfDividers*[splitView dividerThickness]);
+    return fraction * totalHeightOfSubviews;
+}
+
+
+//NSView
+//	NSToolbarItemViewer
+//	NSControl
+//		_NSToolbarItemViewerLabelView
+//		NSButton
+//			NSToolbarButton
+//
+//
+//BEGIN nextKeyView sequence:
+//  <NSToolbarButton: 0xd175990>
+//  <NSToolbarItemViewer: 0x3967a90>
+//  <_NSToolbarItemViewerLabelView: 0x3967c20>
+//  <NSToolbarButton: 0xd1763f0>
+//  <NSToolbarItemViewer: 0x39681a0>
+//  <_NSToolbarItemViewerLabelView: 0x3968350>
+//  <NSToolbarButton: 0x39659d0>
+//  <NSToolbarItemViewer: 0x3968770>
+//  <_NSToolbarItemViewerLabelView: 0x3968920>
+//  <NSToolbarButton: 0x3965e00>
+//  <NSToolbarView: 0x236c720>
+//  <NSToolbarItemViewer: 0x3966210>
+//  <_NSToolbarItemViewerLabelView: 0x3966510>
+//  <NSToolbarButton: 0x237d870>
+//  <NSToolbarItemViewer: 0x39673e0>
+//  <_NSToolbarItemViewerLabelView: 0x39676b0>
+//  <NSToolbarButton: 0xd175990>
+//END nextKeyView sequence -- sequence contains a loop
+//
+//
+//NSThemeFrame
+//	<_NSThemeCloseWidget: 0xd1746c0>,
+//	<_NSThemeWidget: 0xd172dc0>,
+//	<_NSThemeWidget: 0xd1762a0>,
+//
+//	contentView <NSView: 0xd1b0d70>,
+//
+//	(<NSToolbarView: 0x236c720>: AKToolbarID)
+//		<_NSToolbarViewClipView: 0x232cab0>
+//			<NSToolbarItemViewer: 0x3966210 'AKQuicklistToolID'>,
+//				<_NSToolbarItemViewerLabelView: 0x3966510>,
+//				<NSToolbarButton: 0x237d870>
+//			<NSToolbarItemViewer: 0x39673e0 'AKBrowserToolID'>,
+//			<NSToolbarItemViewer: 0x3967a90 'AKBackToolID'>,
+//			<NSToolbarItemViewer: 0x39681a0 'AKForwardToolID'>,
+//			<NSToolbarItemViewer: 0x3968770 'AKSuperclassToolID'>
+
+
+- (void)_addToolbarItemsToTabChain:(NSMutableArray *)tabChain
+{
+    NSView *themeFrame = [[[self window] contentView] superview];
+    NSView *toolbarView = [[self _subviewsOf:themeFrame
+                               withClassName:@"NSToolbarView"] lastObject];
+    NSView *toolbarClipView = [[toolbarView subviews] lastObject];
+
+    for (NSView *toolbarItemViewer in [toolbarClipView subviews])
+    {
+        NSButton *toolbarButton = [[self _subviewsOf:toolbarItemViewer
+                                       withClassName:@"NSToolbarButton"] lastObject];
+        if ([toolbarButton isEnabled])
+        {
+            [tabChain addObject:toolbarButton];
+        }
+    }
+}
+
+- (NSArray *)_subviewsOf:(NSView *)view withClassName:(NSString *)viewClassName
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    for (NSView *subview in [view subviews])
+    {
+        if ([[subview className] isEqualToString:viewClassName])
+        {
+            [result addObject:subview];
+        }
+    }
+
+    return result;
+}
+
+- (void)_addDrawerControlsToTabChain:(NSMutableArray *)tabChain
+{
+    if ([NSApp isFullKeyboardAccessEnabled])
+    {
+        [tabChain addObject:[_quicklistController quicklistRadio1]];
+        [tabChain addObject:[_quicklistController quicklistRadio2]];
+        [tabChain addObject:[_quicklistController frameworkPopup]];
+        [tabChain addObject:[_quicklistController quicklistRadio3]];
+    }
+
+    [tabChain addObject:[_quicklistController searchField]];
+
+    if ([NSApp isFullKeyboardAccessEnabled])
+    {
+        [tabChain addObject:[_quicklistController searchOptionsPopup]];
+    }
+
+    [tabChain addObject:[_quicklistController quicklistTable]];
+
+    if ([NSApp isFullKeyboardAccessEnabled])
+    {
+        [tabChain addObject:[_quicklistController removeFavoriteButton]];
+    }
 }
 
 @end
