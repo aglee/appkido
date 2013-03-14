@@ -233,6 +233,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKWindow *w = (AKWindow *)[self window];
     NSMutableArray *tabChain = [NSMutableArray array];
 
+    [[self window] recalculateKeyViewLoop];
+    [[[_quicklistDrawer contentView] window] recalculateKeyViewLoop];
+    
     if ([NSApp isFullKeyboardAccessEnabled] && [[w toolbar] isVisible])
     {
         [self _addToolbarItemsToTabChain:tabChain];
@@ -754,27 +757,28 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)windowDidLoad
 {
-    // Set up the toolbar.
-    [self _initToolbar];
+    // Load our view controllers and plug their views into the UI. Do this
+    // early, because a number of things we do next assume the view controllers
+    // have been loaded.
+    [self _setUpViewControllers];
 
-    // Make the navigation popups use small fonts.
+    // Add our toolbar. [agl] Is it worth doing this in the nib now that we can?
+    [self _setUpToolbar];
+
+    // Set up a "tab chain" (our home-rolled key-view-loop mechanism) connecting
+    // the views we just loaded.
+    [self recalculateTabChains];
+
+    // Apply display preferences specified in the defaults database.
+    [self applyUserPreferences];
+
+    // Make the navigation popups use small fonts. I determined empirically that
+    // 11 is the size Cocoa uses for small menus.
     NSFont *smallMenuFont = [NSFont menuFontOfSize:11];
-    
+
     [_superclassesMenu setFont:smallMenuFont];
     [_backMenu setFont:smallMenuFont];
     [_forwardMenu setFont:smallMenuFont];
-
-    // Initialize my view controllers and populate my container views with
-    // actual views.
-    [self _setUpViewControllers];
-    [[self window] recalculateKeyViewLoop];
-    [[[_quicklistDrawer contentView] window] recalculateKeyViewLoop];
-    [self recalculateTabChains];
-
-    // Apply display preferences *after* all awake-from-nibs have been
-    // done, because DIGSMarginViews have to have fully initialized
-    // themselves before we go resizing things or swapping subviews around.
-    [self applyUserPreferences];
 
     // Select NSObject in the topic browser.
     _windowHistoryIndex = -1;
@@ -783,7 +787,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKClassNode *classNode = [_database classWithName:@"NSObject"];
     [self selectTopic:[AKClassTopic topicWithClassNode:classNode]];
 
-    // Start with the topic browser selected.
+    // Start with the topic browser having focus.
     [[self window] makeFirstResponder:[_topicBrowserController topicBrowser]];
 }
 
@@ -800,17 +804,16 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self recalculateTabChains];
 }
 
-
 #pragma mark -
-#pragma mark NSMenuValidation protocol methods
+#pragma mark NSMenuValidation methods
 
-- (BOOL)validateMenuItem:(NSMenuItem *)aCell
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    return [self validateItem:aCell];
+    return [self validateItem:menuItem];
 }
 
 #pragma mark -
-#pragma mark NSToolbarItemValidation protocol methods
+#pragma mark NSToolbarItemValidation methods
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
@@ -858,22 +861,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark Private methods
 
-- (void)_initToolbar
-{
-    NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:_AKToolbarID];
-
-    // Set up toolbar properties. 
-    [toolbar setAllowsUserCustomization:YES];
-    [toolbar setAutosavesConfiguration:YES];
-    [toolbar setDisplayMode:NSToolbarDisplayModeIconAndLabel];
-
-    // We are the delegate.
-    [toolbar setDelegate:self];
-
-    // Attach the toolbar to the browser window.
-    [[self window] setToolbar:toolbar];
-}
-
 - (void)_setUpViewControllers
 {
     // Populate our various container views.
@@ -899,6 +886,22 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [topicBrowser loadColumnZero];
     [[self window] setInitialFirstResponder:topicBrowser];
     (void)[[self window] makeFirstResponder:topicBrowser];
+}
+
+- (void)_setUpToolbar
+{
+    NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:_AKToolbarID];
+
+    // Set up toolbar properties.
+    [toolbar setAllowsUserCustomization:YES];
+    [toolbar setAutosavesConfiguration:YES];
+    [toolbar setDisplayMode:NSToolbarDisplayModeIconAndLabel];
+
+    // We are the delegate.
+    [toolbar setDelegate:self];
+
+    // Attach the toolbar to the browser window.
+    [[self window] setToolbar:toolbar];
 }
 
 - (id)_vcWithClass:(Class)vcClass
