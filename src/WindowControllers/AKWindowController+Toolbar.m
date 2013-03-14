@@ -34,11 +34,11 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         // Set item appearance.
         [toolbarItem setLabel:@"Quicklist"];
         [toolbarItem setPaletteLabel:@"Quicklist"];
-        [toolbarItem setToolTip:@"Hide/show the Quicklist panel (Command-K)"];
+        [toolbarItem setToolTip:@"Hide/show the Quicklist panel"];
         [toolbarItem setImage:[NSImage imageNamed:@"quicklist-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];
+        [toolbarItem setTarget:self];  // [agl] Does this create a retain cycle?
         [toolbarItem setAction:@selector(toggleQuicklistDrawer:)];
     }
     else if ([itemIdentifier isEqualToString:_AKBrowserToolID])
@@ -46,7 +46,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         // Set item appearance.
         [toolbarItem setLabel:@"Browser"];
         [toolbarItem setPaletteLabel:@"Browser"];
-        [toolbarItem setToolTip:@"Hide/show the browser (Command-B)"];
+        [toolbarItem setToolTip:@"Hide/show the browser"];
         [toolbarItem setImage:[NSImage imageNamed:@"browser-tool"]];
 
         // Set item behavior.
@@ -58,8 +58,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         // Set item appearance.
         [toolbarItem setLabel:@"Back"];
         [toolbarItem setPaletteLabel:@"Back"];
-        [toolbarItem setToolTip:@"Go to previous item in navigation history "
-                                @"(Command-LeftArrow)"];
+        [toolbarItem setToolTip:@"Go to previous item in navigation history"];
         [toolbarItem setImage:[NSImage imageNamed:@"back-tool"]];
 
         // Set item behavior.
@@ -71,8 +70,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         // Set item appearance.
         [toolbarItem setLabel:@"Forward"];
         [toolbarItem setPaletteLabel:@"Forward"];
-        [toolbarItem setToolTip:@"Go to next item in navigation history "
-                                @"(Command-RightArrow)"];
+        [toolbarItem setToolTip:@"Go to next item in navigation history"];
         [toolbarItem setImage:[NSImage imageNamed:@"forward-tool"]];
 
         // Set item behavior.
@@ -84,8 +82,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         // Set item appearance.
         [toolbarItem setLabel:@"Superclass"];
         [toolbarItem setPaletteLabel:@"Superclass"];
-        [toolbarItem setToolTip:@"Go to superclass of selected class "
-                                @"(Command-UpArrow)"];
+        [toolbarItem setToolTip:@"Go to superclass of selected class"];
         [toolbarItem setImage:[NSImage imageNamed:@"superclass-tool"]];
 
         // Set item behavior.
@@ -97,7 +94,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         // Set item appearance.
         [toolbarItem setLabel:@"++Columns"];
         [toolbarItem setPaletteLabel:@"++Columns"];
-        [toolbarItem setToolTip:@"Add a column to the browser (Command-+)"];
+        [toolbarItem setToolTip:@"Add a column to the browser"];
         [toolbarItem setImage:[NSImage imageNamed:@"add-column-tool"]];
 
         // Set item behavior.
@@ -109,8 +106,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         // Set item appearance.
         [toolbarItem setLabel:@"--Columns"];
         [toolbarItem setPaletteLabel:@"--Columns"];
-        [toolbarItem setToolTip:@"Remove a column from the browser "
-                                @"(Command--)"];
+        [toolbarItem setToolTip:@"Remove a column from the browser"];
         [toolbarItem setImage:[NSImage imageNamed:@"remove-column-tool"]];
 
         // Set item behavior.
