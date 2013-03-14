@@ -1187,8 +1187,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     frameTwo.size.height = ([splitView bounds].size.height
                             - [splitView dividerThickness]
                             - newHeight);
-    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
-    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
+    if (shouldAnimate)
+    {
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setDuration:0.1];
+        {{
+            [[viewOne animator] setFrame:frameOne];
+            [[viewTwo animator] setFrame:frameTwo];
+        }}
+        [NSAnimationContext endGrouping];
+    }
+    else
+    {
+        [viewOne setFrame:frameOne];
+        [viewTwo setFrame:frameTwo];
+    }
 }
 
 // Assumes the split view has two subviews, side by side.
@@ -1205,8 +1218,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     frameTwo.size.width = ([splitView bounds].size.width
                            - [splitView dividerThickness]
                            - newWidth);
-    [[viewOne maybeAnimate:shouldAnimate] setFrame:frameOne];
-    [[viewTwo maybeAnimate:shouldAnimate] setFrame:frameTwo];
+    if (shouldAnimate)
+    {
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setDuration:0.1];
+        {{
+            [[viewOne animator] setFrame:frameOne];
+            [[viewTwo animator] setFrame:frameTwo];
+        }}
+        [NSAnimationContext endGrouping];
+    }
+    else
+    {
+        [viewOne setFrame:frameOne];
+        [viewTwo setFrame:frameTwo];
+    }
 }
 
 - (CGFloat)_fractionByComparingHeight:(CGFloat)height toHeightOfSplitView:(NSSplitView *)splitView

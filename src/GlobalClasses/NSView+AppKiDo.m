@@ -63,9 +63,4 @@
     }
 }
 
-- (NSView *)maybeAnimate:(BOOL)shouldAnimate
-{
-    return (shouldAnimate ? [self animator] : self);
-}
-
 @end
