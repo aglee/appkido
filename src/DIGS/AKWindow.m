@@ -243,7 +243,9 @@
 
         NSView *view = [chainOfViews objectAtIndex:viewIndex];
 
-        if ([view acceptsFirstResponder])
+        if ([view acceptsFirstResponder]
+            && [view frame].size.width > 0
+            && [view frame].size.height > 0)
         {
             // It's possible for [view window] not to be self -- view could be
             // in a drawer.
@@ -286,7 +288,9 @@
 
         NSView *view = [chainOfViews objectAtIndex:viewIndex];
 
-        if ([view acceptsFirstResponder])
+        if ([view acceptsFirstResponder]
+            && [view frame].size.width > 0
+            && [view frame].size.height > 0)
         {
             // It's possible for [view window] not to be self -- view could be
             // in a drawer.
