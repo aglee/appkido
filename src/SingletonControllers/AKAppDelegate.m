@@ -488,7 +488,18 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-- (BOOL)validateItem:(id)anItem
+- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
+{
+}
+
+- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout
+{
+}
+
+#pragma mark -
+#pragma mark NSUserInterfaceValidations methods
+
+- (BOOL)validateUserInterfaceItem:(id)anItem
 {
     SEL itemAction = [anItem action];
 
@@ -513,32 +524,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
         return ([tv selectedRange].length > 0);
     }
-
+    
     return NO;
-}
-
-- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
-{
-}
-
-- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout
-{
-}
-
-#pragma mark -
-#pragma mark NSMenuValidation protocol methods
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-    return [self validateItem:menuItem];
-}
-
-#pragma mark -
-#pragma mark NSToolbarItemValidation protocol methods
-
-- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
-{
-    return [self validateItem:theItem];
 }
 
 #pragma mark -

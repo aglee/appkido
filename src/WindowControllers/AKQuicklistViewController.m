@@ -328,20 +328,6 @@ enum
     [_quicklistTable applyListFontPrefs];
 }
 
-- (BOOL)validateItem:(id)anItem
-{
-    SEL itemAction = [anItem action];
-
-    if ((itemAction == @selector(doSearch:))
-        || (itemAction == @selector(doSearchOptionsPopupAction:))
-        || (itemAction == @selector(selectSearchField:)))
-    {
-        return YES;
-    }
-
-    return NO;
-}
-
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
 {
     // Restore the selection in the frameworks popup.
@@ -389,6 +375,23 @@ enum
 - (void)multiRadioViewDidMakeSelection:(AKMultiRadioView *)mrv
 {
     [self _selectQuicklistMode:[mrv selectedTag]];
+}
+
+#pragma mark -
+#pragma mark NSUserInterfaceValidations methods
+
+- (BOOL)validateUserInterfaceItem:(id)anItem
+{
+    SEL itemAction = [anItem action];
+
+    if ((itemAction == @selector(doSearch:))
+        || (itemAction == @selector(doSearchOptionsPopupAction:))
+        || (itemAction == @selector(selectSearchField:)))
+    {
+        return YES;
+    }
+
+    return NO;
 }
 
 #pragma mark -

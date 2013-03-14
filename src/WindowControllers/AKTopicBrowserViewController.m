@@ -157,25 +157,6 @@ static const NSInteger AKMinBrowserColumns = 2;
     [_topicBrowser setPath:savedPath];
 }
 
-- (BOOL)validateItem:(id)anItem
-{
-    SEL itemAction = [anItem action];
-
-    if (itemAction == @selector(addBrowserColumn:))
-    {
-        return ([[self view] frame].size.height > 0.0);
-    }
-    else if (itemAction == @selector(removeBrowserColumn:))
-    {
-        return (([[self view] frame].size.height > 0.0)
-                && ([_topicBrowser maxVisibleColumns] > AKMinBrowserColumns));
-    }
-    else
-    {
-        return NO;
-    }
-}
-
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
 {
     if (windowLayout == nil)
@@ -202,6 +183,28 @@ static const NSInteger AKMinBrowserColumns = 2;
     }
 
     [windowLayout setNumberOfBrowserColumns:[_topicBrowser maxVisibleColumns]];
+}
+
+#pragma mark -
+#pragma mark NSUserInterfaceValidations methods
+
+- (BOOL)validateUserInterfaceItem:(id)anItem
+{
+    SEL itemAction = [anItem action];
+
+    if (itemAction == @selector(addBrowserColumn:))
+    {
+        return ([[self view] frame].size.height > 0.0);
+    }
+    else if (itemAction == @selector(removeBrowserColumn:))
+    {
+        return (([[self view] frame].size.height > 0.0)
+                && ([_topicBrowser maxVisibleColumns] > AKMinBrowserColumns));
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 #pragma mark -

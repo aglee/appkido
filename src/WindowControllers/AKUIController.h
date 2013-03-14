@@ -21,12 +21,6 @@
 /*! Applies the user's preference settings to the look of the UI. */
 - (void)applyUserPreferences;
 
-/*!
- * Returns YES if the specified UI item should be enabled. Expects anItem to be
- * either an NSMenuItem or an NSToolbarItem.
- */
-- (BOOL)validateItem:(id)anItem;
-
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout;
 - (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout;
 

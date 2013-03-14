@@ -143,7 +143,10 @@
     [_docListTable applyListFontPrefs];
 }
 
-- (BOOL)validateItem:(id)anItem
+#pragma mark -
+#pragma mark NSUserInterfaceValidations methods
+
+- (BOOL)validateUserInterfaceItem:(id)anItem
 {
     return NO;
 }

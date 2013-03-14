@@ -130,11 +130,6 @@
     }
 }
 
-- (BOOL)validateItem:(id)anItem
-{
-    return NO;
-}
-
 #pragma mark -
 #pragma mark WebPolicyDelegate methods
 

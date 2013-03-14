@@ -547,113 +547,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_quicklistController applyUserPreferences];
 }
 
-- (BOOL)validateItem:(id)anItem
-{
-    SEL itemAction = [anItem action];
-
-    if (itemAction == @selector(goBackInHistory:))
-    {
-        return (_windowHistoryIndex > 0);
-    }
-    else if (itemAction == @selector(goForwardInHistory:))
-    {
-        return (_windowHistoryIndex < ((int)[_windowHistory count] - 1));
-    }
-    else if ((itemAction == @selector(goToHistoryItemInBackMenu:))
-             || (itemAction == @selector(goToHistoryItemInForwardMenu:)))
-    {
-        return YES;
-    }
-    else if ((itemAction == @selector(selectSuperclass:))
-             || (itemAction == @selector(selectAncestorClass:)))
-    {
-        return ([[self _currentTopic] parentClassOfTopic] != nil);
-    }
-    else if ((itemAction == @selector(selectFormalProtocolsTopic:))
-             || (itemAction == @selector(selectInformalProtocolsTopic:))
-             || (itemAction == @selector(selectFunctionsTopic:))
-             || (itemAction == @selector(selectGlobalsTopic:))
-             || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
-             || (itemAction == @selector(rememberWindowLayout:)))
-    {
-        return YES;
-    }
-    else if (itemAction == @selector(addTopicToFavorites:))
-    {
-        AKTopic *currentTopic = [self _currentTopic];
-
-        // Update the menu item title to reflect what's currently selected in the topic browser.
-        if ([anItem isKindOfClass:[NSMenuItem class]])
-        {
-            NSString *topicName = [currentTopic stringToDisplayInLists];
-            NSString *menuTitle = [NSString stringWithFormat:@"Add \"%@\" to Favorites", topicName];
-
-            [anItem setTitle:menuTitle];
-        }
-
-        // Enable the item if the selected topic isn't already a favorite.
-        NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
-        AKDocLocator *proposedFavorite = [AKDocLocator withTopic:currentTopic subtopicName:nil docName:nil];
-
-        if ([favoritesList containsObject:proposedFavorite])
-        {
-            return NO;
-        }
-        else
-        {
-            return YES;
-        }
-    }
-    else if (itemAction == @selector(toggleQuicklistDrawer:))
-    {
-        if ([anItem isKindOfClass:[NSMenuItem class]])
-        {
-            NSInteger state = [_quicklistDrawer state];
-
-            if ((state == NSDrawerClosedState)
-                || (state == NSDrawerClosingState))
-            {
-                [anItem setTitle:@"Show Quicklist"];
-            }
-            else
-            {
-                [anItem setTitle:@"Hide Quicklist"];
-            }
-        }
-
-        return YES;
-    }
-    else if (itemAction == @selector(toggleBrowserVisible:))
-    {
-        if ([anItem isKindOfClass:[NSMenuItem class]])
-        {
-            if (![self _topicBrowserIsVisible]
-                && (_browserHeightWhenVisible > 0.0))
-            {
-                [anItem setTitle:@"Show Browser"];
-            }
-            else
-            {
-                [anItem setTitle:@"Hide Browser"];
-            }
-        }
-
-        return YES;
-    }
-    else if ((itemAction == @selector(copyDocFileURL:))
-             || (itemAction == @selector(copyDocFilePath:))
-             || (itemAction == @selector(openDocFileInBrowser:))
-             || (itemAction == @selector(revealDocFileInFinder:))
-             || (itemAction == @selector(openParseDebugWindow:)))
-    {
-        return ([self currentDocLocator] != nil);
-    }
-    else
-    {
-        return NO;
-    }
-}
-
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
 {
     if (windowLayout == nil)
@@ -753,6 +646,126 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 #pragma mark -
+#pragma mark NSUserInterfaceValidations methods
+
+- (BOOL)validateUserInterfaceItem:(id)anItem
+{
+    SEL itemAction = [anItem action];
+
+    if (itemAction == @selector(goBackInHistory:))
+    {
+        return (_windowHistoryIndex > 0);
+    }
+    else if (itemAction == @selector(goForwardInHistory:))
+    {
+        return (_windowHistoryIndex < ((int)[_windowHistory count] - 1));
+    }
+    else if ((itemAction == @selector(goToHistoryItemInBackMenu:))
+             || (itemAction == @selector(goToHistoryItemInForwardMenu:)))
+    {
+        return YES;
+    }
+    else if (itemAction == @selector(selectSuperclass:))
+    {
+        BOOL isValid = ([[self _currentTopic] parentClassOfTopic] != nil);
+
+        if (isValid && [anItem isKindOfClass:[NSToolbarItem class]])
+        {
+            [anItem setToolTip:[self _tooltipForSelectSuperclass]];
+        }
+
+        return isValid;
+    }
+    else if (itemAction == @selector(selectAncestorClass:))
+    {
+        return ([[self _currentTopic] parentClassOfTopic] != nil);
+    }
+    else if ((itemAction == @selector(selectFormalProtocolsTopic:))
+             || (itemAction == @selector(selectInformalProtocolsTopic:))
+             || (itemAction == @selector(selectFunctionsTopic:))
+             || (itemAction == @selector(selectGlobalsTopic:))
+             || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
+             || (itemAction == @selector(rememberWindowLayout:)))
+    {
+        return YES;
+    }
+    else if (itemAction == @selector(addTopicToFavorites:))
+    {
+        AKTopic *currentTopic = [self _currentTopic];
+
+        // Update the menu item title to reflect what's currently selected in the topic browser.
+        if ([anItem isKindOfClass:[NSMenuItem class]])
+        {
+            NSString *topicName = [currentTopic stringToDisplayInLists];
+            NSString *menuTitle = [NSString stringWithFormat:@"Add \"%@\" to Favorites", topicName];
+
+            [anItem setTitle:menuTitle];
+        }
+
+        // Enable the item if the selected topic isn't already a favorite.
+        NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
+        AKDocLocator *proposedFavorite = [AKDocLocator withTopic:currentTopic subtopicName:nil docName:nil];
+
+        if ([favoritesList containsObject:proposedFavorite])
+        {
+            return NO;
+        }
+        else
+        {
+            return YES;
+        }
+    }
+    else if (itemAction == @selector(toggleQuicklistDrawer:))
+    {
+        if ([anItem isKindOfClass:[NSMenuItem class]])
+        {
+            NSInteger state = [_quicklistDrawer state];
+
+            if ((state == NSDrawerClosedState)
+                || (state == NSDrawerClosingState))
+            {
+                [anItem setTitle:@"Show Quicklist"];
+            }
+            else
+            {
+                [anItem setTitle:@"Hide Quicklist"];
+            }
+        }
+
+        return YES;
+    }
+    else if (itemAction == @selector(toggleBrowserVisible:))
+    {
+        if ([anItem isKindOfClass:[NSMenuItem class]])
+        {
+            if (![self _topicBrowserIsVisible]
+                && (_browserHeightWhenVisible > 0.0))
+            {
+                [anItem setTitle:@"Show Browser"];
+            }
+            else
+            {
+                [anItem setTitle:@"Hide Browser"];
+            }
+        }
+
+        return YES;
+    }
+    else if ((itemAction == @selector(copyDocFileURL:))
+             || (itemAction == @selector(copyDocFilePath:))
+             || (itemAction == @selector(openDocFileInBrowser:))
+             || (itemAction == @selector(revealDocFileInFinder:))
+             || (itemAction == @selector(openParseDebugWindow:)))
+    {
+        return ([self currentDocLocator] != nil);
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+#pragma mark -
 #pragma mark NSWindowController methods
 
 - (void)windowDidLoad
@@ -802,29 +815,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)drawerDidClose:(NSNotification *)notification
 {
     [self recalculateTabChains];
-}
-
-#pragma mark -
-#pragma mark NSMenuValidation methods
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-    return [self validateItem:menuItem];
-}
-
-#pragma mark -
-#pragma mark NSToolbarItemValidation methods
-
-- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
-{
-    BOOL isValid = [self validateItem:theItem];
-
-    if (isValid && ([theItem action] == @selector(selectSuperclass:)))
-    {
-        [theItem setToolTip:[self _tooltipForSelectSuperclass]];
-    }
-
-    return isValid;
 }
 
 #pragma mark -

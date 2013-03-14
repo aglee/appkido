@@ -47,11 +47,6 @@
 {
 }
 
-- (BOOL)validateItem:(id)anItem
-{
-    return NO;
-}
-
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
 {
 }
@@ -61,19 +56,11 @@
 }
 
 #pragma mark -
-#pragma mark NSMenuValidation methods
+#pragma mark NSUserInterfaceValidations methods
 
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+- (BOOL)validateUserInterfaceItem:(id)anItem
 {
-    return [self validateItem:menuItem];
-}
-
-#pragma mark -
-#pragma mark NSToolbarItemValidation methods
-
-- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
-{
-    return [self validateItem:theItem];
+    return NO;
 }
 
 @end
