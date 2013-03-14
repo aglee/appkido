@@ -8,6 +8,7 @@
 #import "AKApplication.h"
 #import <WebKit/WebKit.h>
 #import "AKWindow.h"
+#import "AKWindowController.h"
 
 @implementation AKApplication
 
@@ -16,9 +17,22 @@
     NSWindow *keyWindow = [self keyWindow];
 
     if ([keyWindow isKindOfClass:[AKWindow class]]
-        && [(AKWindow *)keyWindow maybeHandleTabChainEvent:anEvent])
+        && [AKWindow isTabChainEvent:anEvent forward:NULL])
     {
-        return;
+        if ([[keyWindow delegate] isKindOfClass:[AKWindowController class]])
+        {
+            // Recalculate the window's tab chain, in case something has
+            // happened recently that would affect the key view loop. For
+            // example, the user might have switched the Full Keyboard Access
+            // flag in System Preferences.
+            [keyWindow recalculateKeyViewLoop];
+            [(AKWindowController *)[keyWindow delegate] recalculateTabChains];
+        }
+        
+        if ([(AKWindow *)keyWindow handlePossibleTabChainEvent:anEvent])
+        {
+            return;
+        }
     }
 
     // If we got this far, handle the event in the default way.

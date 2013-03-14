@@ -108,7 +108,7 @@
     }
     else
     {
-        [(AKWindow *)[NSApp keyWindow] printTabChains];
+        [(AKWindow *)[NSApp keyWindow] printTabChain];
     }
 }
 

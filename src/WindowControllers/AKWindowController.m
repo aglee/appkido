@@ -259,8 +259,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         [self _addDrawerControlsToTabChain:tabChain];
     }
 
-    [w removeAllTabChains];
-    [w addLoopingTabChain:tabChain];
+    [w setTabChain:tabChain];
 }
 
 #pragma mark -
@@ -293,7 +292,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         if ([firstResponder isKindOfClass:[NSView class]]
             && [(NSView *)firstResponder isDescendantOf:_topicBrowserContainerView])
         {
-            [(AKWindow *)[self window] tabToNext];
+            [(AKWindow *)[self window] selectNextViewInTabChain];
         }
     }
     else

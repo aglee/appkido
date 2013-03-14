@@ -26,8 +26,7 @@
                                 defer:deferCreation];
     if (self)
     {
-        _loopingTabChains = [[NSMutableArray alloc] init];
-        _nonloopingTabChains = [[NSMutableArray alloc] init];
+        _tabChain = [[NSMutableArray alloc] init];
     }
 
     return self;
@@ -35,8 +34,7 @@
 
 - (void)dealloc
 {
-    [_loopingTabChains release];
-    [_nonloopingTabChains release];
+    [_tabChain release];
 
     [super dealloc];
 }
@@ -44,13 +42,7 @@
 #pragma mark -
 #pragma mark Key view loop, aka tab chain
 
-// I figured out by testing that 25 is the character we get when the
-// user hits Shift-Tab.
-//
-// Recalculates tab chains on every Tab or Shift-Tab, in case something has
-// happened recently that would affect the key view loop. For example, the user
-// might have switched the Full Keyboard Access flag in System Preferences.
-- (BOOL)maybeHandleTabChainEvent:(NSEvent *)anEvent
++ (BOOL)isTabChainEvent:(NSEvent *)anEvent forward:(BOOL *)forwardFlagPtr
 {
     if ([anEvent type] != NSKeyDown)
     {
@@ -61,122 +53,74 @@
     {
         return NO;
     }
-    
+
     unichar ch = [[anEvent characters] characterAtIndex:0];
 
     if (ch == '\t')
     {
-        [(AKWindowController *)[self delegate] recalculateTabChains];
-        [self recalculateKeyViewLoop];
+        if (forwardFlagPtr)
+        {
+            *forwardFlagPtr = YES;
+        }
 
-        return [self tabToNext];
+        return YES;
     }
-    else if ((ch == 25) && ([anEvent modifierFlags] & NSShiftKeyMask))
+    
+    // I figured out empirically that 25 is the character we get when the user
+    // hits Shift-Tab. Note: the test for modifier flags is not perfect; it
+    // returns true if other modifier keys are down in *addition* to Shift.
+    if ((ch == 25) && ([anEvent modifierFlags] & NSShiftKeyMask))
     {
-        [(AKWindowController *)[self delegate] recalculateTabChains];
-        [self recalculateKeyViewLoop];
+        if (forwardFlagPtr)
+        {
+            *forwardFlagPtr = NO;
+        }
 
-        return [self tabToPrevious];
+        return YES;
     }
 
     return NO;
 }
 
-- (void)addLoopingTabChain:(NSArray *)views
+- (BOOL)handlePossibleTabChainEvent:(NSEvent *)anEvent
 {
-    [_loopingTabChains addObject:[NSArray arrayWithArray:views]];
-}
-
-- (void)addNonloopingTabChain:(NSArray *)views
-{
-    [_nonloopingTabChains addObject:[NSArray arrayWithArray:views]];
-}
-
-- (void)removeAllTabChains
-{
-    [_loopingTabChains removeAllObjects];
-    [_nonloopingTabChains removeAllObjects];
-}
-
-- (BOOL)tabToNext
-{
-    NSView *currentKeyView = [self _currentKeyView];
-
-    if (currentKeyView == nil)
+    BOOL isGoingForward;
+    
+    if (![[self class] isTabChainEvent:anEvent forward:&isGoingForward])
     {
         return NO;
     }
-
-    for (NSArray *chainOfViews in _loopingTabChains)
-    {
-        if ([self _goFrom:currentKeyView toNextInChain:chainOfViews looping:YES])
-        {
-            return YES;
-        }
-    }
-
-    for (NSArray *chainOfViews in _nonloopingTabChains)
-    {
-        if ([self _goFrom:currentKeyView toNextInChain:chainOfViews looping:NO])
-        {
-            return YES;
-        }
-    }
-
-    return NO;
+    
+    return (isGoingForward
+            ? [self selectNextViewInTabChain]
+            : [self selectPreviousViewInTabChain]);
 }
 
-- (BOOL)tabToPrevious
+- (void)setTabChain:(NSArray *)views
 {
-    NSView *currentKeyView = [self _currentKeyView];
+    [_tabChain setArray:views];
+}
 
-    if (currentKeyView == nil)
-    {
-        return NO;
-    }
+- (BOOL)selectNextViewInTabChain
+{
+    return [self _tabOutOfCurrentKeyViewMaybeForward:YES];
+}
 
-    for (NSArray *chainOfViews in _loopingTabChains)
-    {
-        if ([self _goFrom:currentKeyView toPreviousInChain:chainOfViews looping:YES])
-        {
-            return YES;
-        }
-    }
-
-    for (NSArray *chainOfViews in _nonloopingTabChains)
-    {
-        if ([self _goFrom:currentKeyView toPreviousInChain:chainOfViews looping:NO])
-        {
-            return YES;
-        }
-    }
-
-    return NO;
+- (BOOL)selectPreviousViewInTabChain
+{
+    return [self _tabOutOfCurrentKeyViewMaybeForward:NO];
 }
 
 #pragma mark -
 #pragma mark Debugging
 
-- (void)printTabChains
+- (void)printTabChain
 {
-    NSLog(@"TAB CHAINS for %@", [self ak_bareDescription]);
+    NSLog(@"TAB CHAIN for %@", [self ak_bareDescription]);
 
-    for (NSArray *views in _loopingTabChains)
+    for (NSView *v in _tabChain)
     {
-        NSLog(@"- looping:");
-        for (NSView *v in views)
-        {
-            NSLog(@"    %@", [v ak_bareDescription]);
-        }
-    }
-
-    for (NSArray *views in _nonloopingTabChains)
-    {
-        NSLog(@"- nonlooping:");
-        for (NSView *v in views)
-        {
-            NSLog(@"    %@", [v ak_bareDescription]);
-        }
+        NSLog(@"  %@", [v ak_bareDescription]);
     }
 
     NSLog(@"END TAB CHAINS for %@\n\n", [self ak_bareDescription]);
@@ -185,7 +129,7 @@
 #pragma mark -
 #pragma mark NSWindow methods
 
-// As suggested by Gerriet Denkmann.  Protects against nil being passed.
+// As suggested by Gerriet Denkmann.  Protects against crashing due to nil.
 - (void)setTitle:(NSString *)aString
 {
 	if (aString == nil)
@@ -199,49 +143,25 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (NSView *)_currentKeyView
+- (BOOL)_tabOutOfCurrentKeyViewMaybeForward:(BOOL)isGoingForward
 {
-    if ([[self firstResponder] isKindOfClass:[NSView class]])
-    {
-        return (NSView *)[self firstResponder];
-    }
-    else
-    {
-        return nil;
-    }
-    
-}
+    // See if the tab chain contains the given view.
+    NSInteger currentIndex = [self _indexInTabChainOfViewContainingCurrentKeyView];
 
-- (BOOL)_goFrom:(NSView *)fromView toNextInChain:(NSArray *)chainOfViews looping:(BOOL)looping
-{
-    // See if the chain contains the given view.
-    NSInteger fromIndex = [self _indexOfViewContainingView:fromView inArray:chainOfViews];
-
-    if (fromIndex == -1)
+    if (currentIndex == -1)
     {
         return NO;
     }
     
     // Select the next view in the chain, if any, that accepts first responder.
-    NSInteger lengthOfChain = [chainOfViews count];
+    NSInteger lengthOfChain = [_tabChain count];
     
     for (NSInteger count = 1; count < lengthOfChain; count++)
     {
-        NSInteger viewIndex = fromIndex + count;
-
-        if (viewIndex >= lengthOfChain)
-        {
-            if (looping)
-            {
-                viewIndex -= lengthOfChain;
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        NSView *view = [chainOfViews objectAtIndex:viewIndex];
+        NSInteger viewIndex = (isGoingForward
+                               ? ((currentIndex + count) % lengthOfChain)
+                               : ((currentIndex - count + lengthOfChain) % lengthOfChain));
+        NSView *view = [_tabChain objectAtIndex:viewIndex];
 
         if ([view acceptsFirstResponder]
             && [view frame].size.width > 0
@@ -257,65 +177,25 @@
     return NO;
 }
 
-- (BOOL)_goFrom:(NSView *)fromView toPreviousInChain:(NSArray *)chainOfViews looping:(BOOL)looping
+- (NSInteger)_indexInTabChainOfViewContainingCurrentKeyView
 {
-    // See if the chain contains the given view.
-    NSInteger fromIndex = [self _indexOfViewContainingView:fromView inArray:chainOfViews];
+    NSView *currentKeyView = (NSView *)[self firstResponder];
 
-    if (fromIndex == -1)
+    if (![currentKeyView isKindOfClass:[NSView class]])
     {
-        return NO;
-    }
-
-    // Select the next view in the chain, if any, that accepts first responder.
-    NSInteger lengthOfChain = [chainOfViews count];
-
-    for (NSInteger count = 1; count < lengthOfChain; count++)
-    {
-        NSInteger viewIndex = fromIndex - count;
-
-        if (viewIndex < 0)
-        {
-            if (looping)
-            {
-                viewIndex += lengthOfChain;
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        NSView *view = [chainOfViews objectAtIndex:viewIndex];
-
-        if ([view acceptsFirstResponder]
-            && [view frame].size.width > 0
-            && [view frame].size.height > 0)
-        {
-            // It's possible for [view window] not to be self -- view could be
-            // in a drawer.
-            (void)[[view window] makeFirstResponder:view];
-            return YES;
-        }
+        return -1;
     }
     
-    return NO;
-}
+    NSInteger lengthOfChain = [_tabChain count];
 
-- (NSInteger)_indexOfViewContainingView:(NSView *)view
-                                inArray:(NSArray *)array
-{
-    NSInteger numViewsInChain = [array count];
-
-    for (NSInteger viewIndex = 0; viewIndex < numViewsInChain; viewIndex++)
+    for (NSInteger viewIndex = 0; viewIndex < lengthOfChain; viewIndex++)
     {
-        if ([view isDescendantOf:[array objectAtIndex:viewIndex]])
+        if ([currentKeyView isDescendantOf:[_tabChain objectAtIndex:viewIndex]])
         {
             return viewIndex;
         }
     }
 
-    NSLog(@"%@ is not in the tab chain", [view ak_bareDescription]);
     return -1;
 }
 

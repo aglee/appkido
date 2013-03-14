@@ -7,11 +7,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-// [agl] Fill in notes on how to use this class.
+// [agl] Fill in notes on how to the tab chain stuff works.
+// * specify array of views
+// * uses isDescendantOf:
+// * need to override NSApplication's sendEvent:
 
-// [agl] Have only tested looping chains, not nonlooping.
+// [agl] Automatically include toolbar items in the chain when Full Keyboard Access is on.
+// Right now I'm doing it manually in AKWindowController.
 
-// [agl] Include toolbar items in the chain when Full Keyboard Access is on.
+// [agl] Move the tab chain stuff into an NSObject class, so apps can use whatever window class they want.
 
 /*!
  * Implements a key view loop.
@@ -19,33 +23,30 @@
 @interface AKWindow : NSWindow
 {
 @private
-    NSMutableArray *_loopingTabChains;
-    NSMutableArray *_nonloopingTabChains;
+    NSMutableArray *_tabChain;  // Elements are NSView.
 }
 
 #pragma mark -
 #pragma mark Key view loop, aka tab chain
 
++ (BOOL)isTabChainEvent:(NSEvent *)anEvent forward:(BOOL *)forwardFlagPtr;
+
 /*!
- * If the event is Tab or Shift-Tab, returns [self tabToNext] or
- * [self tabToPrevious] accordingly. You can override [NSApplication sendEvent:]
- * to call this.
+ * You can override [NSApplication sendEvent:] to check for a Tab or Shift-Tab
+ * keyboard event (+isTabChainEvent:forward: is provided as a convenience for
+ * doing this), and if so to call this method.
  */
-- (BOOL)maybeHandleTabChainEvent:(NSEvent *)anEvent;
+- (BOOL)handlePossibleTabChainEvent:(NSEvent *)anEvent;
 
-- (void)addLoopingTabChain:(NSArray *)views;
+- (void)setTabChain:(NSArray *)views;
 
-- (void)addNonloopingTabChain:(NSArray *)views;
+- (BOOL)selectNextViewInTabChain;
 
-- (void)removeAllTabChains;
-
-- (BOOL)tabToNext;
-
-- (BOOL)tabToPrevious;
+- (BOOL)selectPreviousViewInTabChain;
 
 #pragma mark -
 #pragma mark Debugging
 
-- (void)printTabChains;
+- (void)printTabChain;
 
 @end
