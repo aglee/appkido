@@ -647,11 +647,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
     else
     {
-        return ([_topicBrowserController validateItem:anItem]
-                || [_subtopicListController validateItem:anItem]
-                || [_docListController validateItem:anItem]
-                || [_docViewController validateItem:anItem]
-                || [_quicklistController validateItem:anItem]);
+        return NO;
     }
 }
 

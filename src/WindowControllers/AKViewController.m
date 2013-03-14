@@ -60,4 +60,20 @@
 {
 }
 
+#pragma mark -
+#pragma mark NSMenuValidation methods
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    return [self validateItem:menuItem];
+}
+
+#pragma mark -
+#pragma mark NSToolbarItemValidation methods
+
+- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
+{
+    return [self validateItem:theItem];
+}
+
 @end
