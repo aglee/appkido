@@ -645,25 +645,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         return ([self currentDocLocator] != nil);
     }
-    else if ([_topicBrowserController validateItem:anItem])
-    {
-        return YES;
-    }
-    else if ([_subtopicListController validateItem:anItem])
-    {
-        return YES;
-    }
-    else if ([_docListController validateItem:anItem])
-    {
-        return YES;
-    }
-    else if ([_docViewController validateItem:anItem])
-    {
-        return YES;
-    }
     else
     {
-        return [_quicklistController validateItem:anItem];
+        return ([_topicBrowserController validateItem:anItem]
+                || [_subtopicListController validateItem:anItem]
+                || [_docListController validateItem:anItem]
+                || [_docViewController validateItem:anItem]
+                || [_quicklistController validateItem:anItem]);
     }
 }
 
