@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+// [agl] Maybe make the focus ring thickness and color settable properties.
+
+// [agl] If drawing performance becomes a problem (e.g., for a complex custom
+// view), there are various ways this class could be optimized.
+
 /*!
  * Draws a focus ring if any descendant view is first responder. Automatically
  * redraws as needed, as different views in the window accept and resign first
@@ -24,6 +29,14 @@
  *
  * Requires 10.6, because that's when NSWindow's firstResponder became
  * KVO-compliant.
+ *
+ * HOW TO USE
+ * ----------
+ * Suppose you have a view that you would like to have AKFocusView's custom
+ * focus ring. Embed that view, and *only* that view, in an instance of
+ * AKFocusView. Don't worry about margins or autoresizing masks; regardless of
+ * what you do in IB, AKFocusView hijacks those settings and automatically sizes
+ * the inner view so its edges are slightly inside the AKFocusView's edges.
  */
 @interface AKFocusView : NSView
 

@@ -24,7 +24,8 @@
             // Recalculate the window's tab chain, in case something has
             // happened recently that would affect the key view loop. For
             // example, the user might have switched the Full Keyboard Access
-            // flag in System Preferences.
+            // flag in System Preferences, or some of the views in the chain
+            // could be in a drawer that was recently opened or closed.
             [keyWindow recalculateKeyViewLoop];
             [(AKWindowController *)[keyWindow delegate] recalculateTabChains];
         }

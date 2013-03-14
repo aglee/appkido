@@ -22,6 +22,18 @@
  *
  * Cell tags must be unique across all submatrixes. It's up to you to make this
  * so.
+ *
+ * HOW TO USE
+ * ----------
+ * In the nib, create an AKMultiRadioView and drop one or more NSMatrix
+ * instances into it as subviews. Make the matrixes all of type radio and give
+ * their cells unique tags. Make the AKMultiRadioView the target of all the
+ * NSMatrix instances (not the cells, but the matrix controls), with
+ * doRadioAction: as the action.
+ * 
+ * Connect the AKMultiRadioView's delegate, either in IB or in code. In the
+ * delegate, implement multiRadioViewDidMakeSelection: to take some action based
+ * on the selectedTag of the sender.
  */
 @interface AKMultiRadioView : NSView
 {
