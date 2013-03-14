@@ -276,12 +276,22 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ([self _topicBrowserIsVisible])
     {
-        // Collapse the topic browser.
+        // Remember the height of the topic browser so we can restore it if its
+        // visibility gets toggled back.
         _browserHeightWhenVisible = [_topicBrowserContainerView frame].size.height;
 
+        // Collapse the topic browser.
         [self _setTopSubviewHeight:0
                forTwoPaneSplitView:_topLevelSplitView
                            animate:YES];
+
+        // If the browser had focus, select the next view in the tab chain.
+        id firstResponder = [[self window] firstResponder];
+        if ([firstResponder isKindOfClass:[NSView class]]
+            && [(NSView *)firstResponder isDescendantOf:_topicBrowserContainerView])
+        {
+            [(AKWindow *)[self window] tabToNext];
+        }
     }
     else
     {
