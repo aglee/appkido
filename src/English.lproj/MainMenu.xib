@@ -563,6 +563,15 @@
 									<reference key="NSOnImage" ref="843332767"/>
 									<reference key="NSMixedImage" ref="982793628"/>
 								</object>
+								<object class="NSMenuItem" id="526411155">
+									<reference key="NSMenu" ref="168891789"/>
+									<string key="NSTitle">Random</string>
+									<string key="NSKeyEquiv">R</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="843332767"/>
+									<reference key="NSMixedImage" ref="982793628"/>
+								</object>
 								<object class="NSMenuItem" id="750340191">
 									<reference key="NSMenu" ref="168891789"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -1127,6 +1136,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">goToRandomDoc:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="526411155"/>
+					</object>
+					<int key="connectionID">1333</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">openNewWindow:</string>
 						<reference key="source" ref="3473702"/>
 						<reference key="destination" ref="608213100"/>
@@ -1566,6 +1583,7 @@
 							<reference ref="936389425"/>
 							<reference ref="529650987"/>
 							<reference ref="51687139"/>
+							<reference ref="526411155"/>
 						</object>
 						<reference key="parent" ref="490362409"/>
 					</object>
@@ -1737,6 +1755,11 @@
 						<reference key="object" ref="934831343"/>
 						<reference key="parent" ref="478973686"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1331</int>
+						<reference key="object" ref="526411155"/>
+						<reference key="parent" ref="168891789"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1760,6 +1783,7 @@
 					<string>1310.IBPluginDependency</string>
 					<string>1312.IBPluginDependency</string>
 					<string>1313.IBPluginDependency</string>
+					<string>1331.IBPluginDependency</string>
 					<string>134.IBPluginDependency</string>
 					<string>136.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
@@ -1912,6 +1936,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -1926,7 +1951,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1330</int>
+			<int key="maxID">1333</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2237,6 +2262,9 @@
 							<string>includeGlobalsItem</string>
 							<string>includeMethodsItem</string>
 							<string>quicklistModeRadio</string>
+							<string>quicklistRadio1</string>
+							<string>quicklistRadio2</string>
+							<string>quicklistRadio3</string>
 							<string>quicklistTable</string>
 							<string>removeFavoriteButton</string>
 							<string>searchField</string>
@@ -2252,6 +2280,9 @@
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>AKMultiRadioView</string>
+							<string>NSMatrix</string>
+							<string>NSMatrix</string>
+							<string>NSMatrix</string>
 							<string>AKTableView</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
@@ -2270,6 +2301,9 @@
 							<string>includeGlobalsItem</string>
 							<string>includeMethodsItem</string>
 							<string>quicklistModeRadio</string>
+							<string>quicklistRadio1</string>
+							<string>quicklistRadio2</string>
+							<string>quicklistRadio3</string>
 							<string>quicklistTable</string>
 							<string>removeFavoriteButton</string>
 							<string>searchField</string>
@@ -2305,6 +2339,18 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">quicklistModeRadio</string>
 								<string key="candidateClassName">AKMultiRadioView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">quicklistRadio1</string>
+								<string key="candidateClassName">NSMatrix</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">quicklistRadio2</string>
+								<string key="candidateClassName">NSMatrix</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">quicklistRadio3</string>
+								<string key="candidateClassName">NSMatrix</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">quicklistTable</string>
@@ -2472,9 +2518,10 @@
 							<string>goForwardInHistory:</string>
 							<string>goToHistoryItemInBackMenu:</string>
 							<string>goToHistoryItemInForwardMenu:</string>
+							<string>goToRandomDoc:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
-							<string>printViewsOfInterest:</string>
+							<string>printFunFacts:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
 							<string>selectAncestorClass:</string>
@@ -2484,7 +2531,6 @@
 							<string>selectGlobalsTopic:</string>
 							<string>selectInformalProtocolsTopic:</string>
 							<string>selectSuperclass:</string>
-							<string>showBrowser:</string>
 							<string>toggleBrowserVisible:</string>
 							<string>toggleQuicklistDrawer:</string>
 						</object>
@@ -2525,9 +2571,10 @@
 							<string>goForwardInHistory:</string>
 							<string>goToHistoryItemInBackMenu:</string>
 							<string>goToHistoryItemInForwardMenu:</string>
+							<string>goToRandomDoc:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
-							<string>printViewsOfInterest:</string>
+							<string>printFunFacts:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
 							<string>selectAncestorClass:</string>
@@ -2537,7 +2584,6 @@
 							<string>selectGlobalsTopic:</string>
 							<string>selectInformalProtocolsTopic:</string>
 							<string>selectSuperclass:</string>
-							<string>showBrowser:</string>
 							<string>toggleBrowserVisible:</string>
 							<string>toggleQuicklistDrawer:</string>
 						</object>
@@ -2572,6 +2618,10 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">goToRandomDoc:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">openDocFileInBrowser:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -2580,7 +2630,7 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">printViewsOfInterest:</string>
+								<string key="name">printFunFacts:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2617,10 +2667,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">selectSuperclass:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showBrowser:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

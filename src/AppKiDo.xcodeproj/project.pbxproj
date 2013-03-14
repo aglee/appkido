@@ -552,6 +552,10 @@
 		73A0232416DD214C00240111 /* AKQuicklistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0232016DD214C00240111 /* AKQuicklistViewController.m */; };
 		73A0232C16DD259800240111 /* QuicklistView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0232A16DD259800240111 /* QuicklistView.xib */; };
 		73A0232D16DD259800240111 /* QuicklistView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73A0232A16DD259800240111 /* QuicklistView.xib */; };
+		73A4ACD516F25D81004E6A1C /* AKRandomSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACD316F25D81004E6A1C /* AKRandomSearch.h */; };
+		73A4ACD616F25D81004E6A1C /* AKRandomSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACD316F25D81004E6A1C /* AKRandomSearch.h */; };
+		73A4ACD716F25D81004E6A1C /* AKRandomSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A4ACD416F25D81004E6A1C /* AKRandomSearch.m */; };
+		73A4ACD816F25D81004E6A1C /* AKRandomSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A4ACD416F25D81004E6A1C /* AKRandomSearch.m */; };
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
 		73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
@@ -848,6 +852,8 @@
 		73A1B628061B6AF5002C95F1 /* AKFrameworkConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkConstants.m; sourceTree = "<group>"; };
 		73A1B675061B6CC8002C95F1 /* AKHTMLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHTMLConstants.h; sourceTree = "<group>"; };
 		73A1B676061B6CC8002C95F1 /* AKHTMLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHTMLConstants.m; sourceTree = "<group>"; };
+		73A4ACD316F25D81004E6A1C /* AKRandomSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKRandomSearch.h; path = ClassDB/AKRandomSearch.h; sourceTree = "<group>"; };
+		73A4ACD416F25D81004E6A1C /* AKRandomSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKRandomSearch.m; path = ClassDB/AKRandomSearch.m; sourceTree = "<group>"; };
 		73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73A9A7C215B6DA110060E578 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKMultiRadioView.h; path = CustomViews/AKMultiRadioView.h; sourceTree = "<group>"; };
@@ -1623,6 +1629,8 @@
 			children = (
 				7362064706169C7D0007F07A /* AKSearchQuery.h */,
 				7362064806169C7D0007F07A /* AKSearchQuery.m */,
+				73A4ACD316F25D81004E6A1C /* AKRandomSearch.h */,
+				73A4ACD416F25D81004E6A1C /* AKRandomSearch.m */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -1898,6 +1906,7 @@
 				73F8F9A116ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 				73F8F9B316EE99A3001650D7 /* AKFocusView.h in Headers */,
 				73F8F9BF16EED364001650D7 /* AKBorderHidingView.h in Headers */,
+				73A4ACD516F25D81004E6A1C /* AKRandomSearch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2038,6 +2047,7 @@
 				73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 				73F8F9B416EE99A3001650D7 /* AKFocusView.h in Headers */,
 				73F8F9C016EED364001650D7 /* AKBorderHidingView.h in Headers */,
+				73A4ACD616F25D81004E6A1C /* AKRandomSearch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2346,6 +2356,7 @@
 				73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 				73F8F9B516EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */,
+				73A4ACD716F25D81004E6A1C /* AKRandomSearch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2482,6 +2493,7 @@
 				73F8F9A416ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 				73F8F9B616EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C216EED364001650D7 /* AKBorderHidingView.m in Sources */,
+				73A4ACD816F25D81004E6A1C /* AKRandomSearch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

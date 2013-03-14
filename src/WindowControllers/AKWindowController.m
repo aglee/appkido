@@ -26,6 +26,7 @@
 #import "AKLinkResolver.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolTopic.h"
+#import "AKRandomSearch.h"
 #import "AKQuicklistViewController.h"
 #import "AKSavedWindowState.h"
 #import "AKSubtopicListViewController.h"
@@ -431,6 +432,26 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
+- (IBAction)goToRandomDoc:(id)sender
+{
+    AKRandomSearch *randomSearch = [[[AKRandomSearch alloc] initWithDatabase:_database] autorelease];
+    AKDocLocator *docLocator = [randomSearch randomDocLocator];
+
+    NSRunAlertPanel(@"Do you know this symbol?",
+                    @"%@\n\nClick OK to see the docs.",
+                    @"OK",
+                    nil,
+                    nil,
+                    [docLocator docName]);
+
+    [_quicklistController searchForString:[docLocator docName]];
+    
+//    [self _selectTopic:[docLocator topicToDisplay]
+//          subtopicName:[docLocator subtopicName]
+//               docName:[docLocator docName]
+//          addToHistory:YES];
+}
+
 - (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender
 {
     if ([sender isKindOfClass:[NSMenuItem class]]
@@ -684,7 +705,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
              || (itemAction == @selector(selectFunctionsTopic:))
              || (itemAction == @selector(selectGlobalsTopic:))
              || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
-             || (itemAction == @selector(rememberWindowLayout:)))
+             || (itemAction == @selector(rememberWindowLayout:))
+             || (itemAction == @selector(goToRandomDoc:)))
     {
         return YES;
     }
