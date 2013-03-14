@@ -8,6 +8,10 @@
 #import "AKTableView.h"
 
 #import "AKPrefUtils.h"
+#import "AKWindow.h"
+#import "AKWindowController.h"
+
+#import "NSView+AppKiDo.h"
 
 @implementation AKTableView
 
@@ -33,6 +37,39 @@
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
 {
     return YES;
+}
+
+#pragma mark -
+#pragma mark NSResponder methods
+
+// This is a total KLUDGE. Allows left and right arrow keys to move between the
+// subtopic list and the doc list.
+- (void)moveLeft:(id)sender
+{
+    if ([[[self window] delegate] isKindOfClass:[AKWindowController class]])
+    {
+        NSSplitView *splitView = [self ak_enclosingViewOfClass:[NSSplitView class]];
+
+        if ([self isDescendantOf:[[splitView subviews] objectAtIndex:1]])
+        {
+            [(AKWindow *)[self window] selectPreviousViewInTabChain];
+        }
+    }
+}
+
+// This is a total KLUDGE. Allows left and right arrow keys to move between the
+// subtopic list and the doc list.
+- (void)moveRight:(id)sender
+{
+    if ([[[self window] delegate] isKindOfClass:[AKWindowController class]])
+    {
+        NSSplitView *splitView = [self ak_enclosingViewOfClass:[NSSplitView class]];
+
+        if ([self isDescendantOf:[[splitView subviews] objectAtIndex:0]])
+        {
+            [(AKWindow *)[self window] selectNextViewInTabChain];
+        }
+    }
 }
 
 @end
