@@ -1526,18 +1526,7 @@
 				7320C17716DCF9ED00797F95 /* AKWindowController.h */,
 				7320C17816DCF9F900797F95 /* AKWindowController.m */,
 				7300310C0498501500A80007 /* AKWindowController+Toolbar.m */,
-				7320C17516DCF9E300797F95 /* AKViewController.h */,
-				7320C17616DCF9E500797F95 /* AKViewController.m */,
-				7320C17316DCF9DA00797F95 /* AKTopicBrowserViewController.h */,
-				7320C17416DCF9DF00797F95 /* AKTopicBrowserViewController.m */,
-				7320C17116DCF9D200797F95 /* AKSubtopicListViewController.h */,
-				7320C17216DCF9D500797F95 /* AKSubtopicListViewController.m */,
-				73A0231016DD1CDB00240111 /* AKDocListViewController.h */,
-				73A0231116DD1CDB00240111 /* AKDocListViewController.m */,
-				73A0231616DD1D6200240111 /* AKDocViewController.h */,
-				73A0231716DD1D6200240111 /* AKDocViewController.m */,
-				73A0231F16DD214C00240111 /* AKQuicklistViewController.h */,
-				73A0232016DD214C00240111 /* AKQuicklistViewController.m */,
+				73A4ACCD16F1EE20004E6A1C /* view controllers */,
 			);
 			name = "per-window controllers";
 			path = WindowControllers;
@@ -1555,6 +1544,25 @@
 			);
 			name = "AppKiDo constants";
 			path = GlobalClasses;
+			sourceTree = "<group>";
+		};
+		73A4ACCD16F1EE20004E6A1C /* view controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7320C17516DCF9E300797F95 /* AKViewController.h */,
+				7320C17616DCF9E500797F95 /* AKViewController.m */,
+				7320C17316DCF9DA00797F95 /* AKTopicBrowserViewController.h */,
+				7320C17416DCF9DF00797F95 /* AKTopicBrowserViewController.m */,
+				7320C17116DCF9D200797F95 /* AKSubtopicListViewController.h */,
+				7320C17216DCF9D500797F95 /* AKSubtopicListViewController.m */,
+				73A0231016DD1CDB00240111 /* AKDocListViewController.h */,
+				73A0231116DD1CDB00240111 /* AKDocListViewController.m */,
+				73A0231616DD1D6200240111 /* AKDocViewController.h */,
+				73A0231716DD1D6200240111 /* AKDocViewController.m */,
+				73A0231F16DD214C00240111 /* AKQuicklistViewController.h */,
+				73A0232016DD214C00240111 /* AKQuicklistViewController.m */,
+			);
+			name = "view controllers";
 			sourceTree = "<group>";
 		};
 		73ACB25904EDC6AE00A80003 /* subtopics */ = {
