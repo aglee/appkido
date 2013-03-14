@@ -281,14 +281,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
         [self _setTopSubviewHeight:0
                forTwoPaneSplitView:_topLevelSplitView
-                           animate:NO];
+                           animate:YES];
     }
     else
     {
         // Expand the topic browser.
         [self _setTopSubviewHeight:_browserHeightWhenVisible
                forTwoPaneSplitView:_topLevelSplitView
-                           animate:NO];
+                           animate:YES];
     }
 }
 
