@@ -157,7 +157,7 @@
 #pragma mark -
 #pragma mark Debugging
 
-- (void)debug_printTabChains
+- (void)printTabChains
 {
     NSLog(@"TAB CHAINS for %@", [self ak_bareDescription]);
 

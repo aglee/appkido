@@ -46,6 +46,6 @@
 #pragma mark -
 #pragma mark Debugging
 
-- (void)debug_printTabChains;
+- (void)printTabChains;
 
 @end
