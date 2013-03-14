@@ -528,9 +528,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #pragma mark -
 #pragma mark NSMenuValidation protocol methods
 
-- (BOOL)validateMenuItem:(NSMenuItem *)aCell
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    return [self validateItem:aCell];
+    return [self validateItem:menuItem];
 }
 
 #pragma mark -
