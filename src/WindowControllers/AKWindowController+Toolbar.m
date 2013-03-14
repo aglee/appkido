@@ -38,7 +38,6 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         [toolbarItem setImage:[NSImage imageNamed:@"quicklist-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];  // [agl] Does this create a retain cycle?
         [toolbarItem setAction:@selector(toggleQuicklistDrawer:)];
     }
     else if ([itemIdentifier isEqualToString:_AKBrowserToolID])
@@ -50,7 +49,6 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         [toolbarItem setImage:[NSImage imageNamed:@"browser-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(toggleBrowserVisible:)];
     }
     else if ([itemIdentifier isEqualToString:_AKBackToolID])
@@ -62,7 +60,6 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         [toolbarItem setImage:[NSImage imageNamed:@"back-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(goBackInHistory:)];
     }
     else if ([itemIdentifier isEqualToString:_AKForwardToolID])
@@ -74,7 +71,6 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         [toolbarItem setImage:[NSImage imageNamed:@"forward-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(goForwardInHistory:)];
     }
     else if ([itemIdentifier isEqualToString:_AKSuperclassToolID])
@@ -86,7 +82,6 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         [toolbarItem setImage:[NSImage imageNamed:@"superclass-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(selectSuperclass:)];
     }
     else if ([itemIdentifier isEqualToString:_AKAddColumnToolID])
@@ -98,7 +93,6 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         [toolbarItem setImage:[NSImage imageNamed:@"add-column-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(addBrowserColumn:)];
     }
     else if ([itemIdentifier isEqualToString:_AKRemoveColumnToolID])
@@ -110,7 +104,6 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
         [toolbarItem setImage:[NSImage imageNamed:@"remove-column-tool"]];
 
         // Set item behavior.
-        [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(removeBrowserColumn:)];
     }
     else
