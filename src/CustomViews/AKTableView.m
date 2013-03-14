@@ -42,6 +42,30 @@
 #pragma mark -
 #pragma mark NSResponder methods
 
+// NSTableView doesn't trigger actions when you navigate with the keyboard.
+// This override does.
+- (void)keyDown:(NSEvent *)theEvent
+{
+    NSString *eventChars = [theEvent characters];
+
+    if ([eventChars isEqualToString:@"\n"]
+        || [eventChars isEqualToString:@"\r"])
+    {
+        [[self target] performSelector:[self doubleAction] withObject:self];
+    }
+    else
+    {
+        NSInteger oldSelectedRow = [self selectedRow];
+
+        [super keyDown:theEvent];
+
+        if ([self selectedRow] != oldSelectedRow)
+        {
+            [[self target] performSelector:[self action] withObject:self];
+        }
+    }
+}
+
 // This is a total KLUDGE. Allows left and right arrow keys to move between the
 // subtopic list and the doc list.
 - (void)moveLeft:(id)sender
