@@ -28,6 +28,8 @@
 
 @synthesize topicBrowser = _topicBrowser;
 
+static const NSInteger AKMinBrowserColumns = 2;
+
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
@@ -71,7 +73,7 @@
 {
     NSInteger numColumns = [_topicBrowser maxVisibleColumns];
 
-    if (numColumns > 2)
+    if (numColumns > AKMinBrowserColumns)
     {
         [_topicBrowser setMaxVisibleColumns:(numColumns - 1)];
     }
@@ -166,7 +168,7 @@
     else if (itemAction == @selector(removeBrowserColumn:))
     {
         return (([[self view] frame].size.height > 0.0)
-                && ([_topicBrowser maxVisibleColumns] > 2));
+                && ([_topicBrowser maxVisibleColumns] > AKMinBrowserColumns));
     }
     else
     {
