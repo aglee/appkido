@@ -286,9 +286,6 @@ contextMenuItemsForElement:(NSDictionary *)element
     {
         [self _useWebViewToDisplayHTML:textData fromFile:htmlFilePath];
     }
-
-    // Swapping tabs could cause the window to need to recalculate its key view loop.
-    [[self owningWindowController] recalculateTabChains];
 }
 
 - (void)_useTextViewToDisplayPlainText:(NSData *)textData

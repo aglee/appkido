@@ -153,8 +153,6 @@
 
 - (NSView *)docView;
 
-- (void)recalculateTabChains;
-
 #pragma mark -
 #pragma mark Action methods -- window layout
 

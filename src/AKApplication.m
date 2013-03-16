@@ -7,6 +7,7 @@
 
 #import "AKApplication.h"
 #import <WebKit/WebKit.h>
+#import "AKTabChain.h"
 #import "AKWindow.h"
 #import "AKWindowController.h"
 
@@ -14,29 +15,11 @@
 
 - (void)sendEvent:(NSEvent *)anEvent
 {
-    NSWindow *keyWindow = [self keyWindow];
-
-    if ([keyWindow isKindOfClass:[AKWindow class]]
-        && [AKWindow isTabChainEvent:anEvent forward:NULL])
+    if ([AKTabChain handlePossibleTabChainEvent:anEvent])
     {
-        if ([[keyWindow delegate] isKindOfClass:[AKWindowController class]])
-        {
-            // Recalculate the window's tab chain, in case something has
-            // happened recently that would affect the key view loop. For
-            // example, the user might have switched the Full Keyboard Access
-            // flag in System Preferences, or some of the views in the chain
-            // could be in a drawer that was recently opened or closed.
-            [keyWindow recalculateKeyViewLoop];
-            [(AKWindowController *)[keyWindow delegate] recalculateTabChains];
-        }
-        
-        if ([(AKWindow *)keyWindow handlePossibleTabChainEvent:anEvent])
-        {
-            return;
-        }
+        return;
     }
-
-    // If we got this far, handle the event in the default way.
+    
     [super sendEvent:anEvent];
 }
 

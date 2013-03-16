@@ -8,7 +8,7 @@
 #import "AKTableView.h"
 
 #import "AKPrefUtils.h"
-#import "AKWindow.h"
+#import "AKTabChain.h"
 #import "AKWindowController.h"
 
 #import "NSView+AppKiDo.h"
@@ -76,7 +76,7 @@
 
         if ([self isDescendantOf:[[splitView subviews] objectAtIndex:1]])
         {
-            [(AKWindow *)[self window] selectPreviousViewInTabChain];
+            (void)[AKTabChain stepThroughTabChainInWindow:[self window] forward:NO];
         }
     }
 }
@@ -91,7 +91,7 @@
 
         if ([self isDescendantOf:[[splitView subviews] objectAtIndex:0]])
         {
-            [(AKWindow *)[self window] selectNextViewInTabChain];
+            (void)[AKTabChain stepThroughTabChainInWindow:[self window] forward:YES];
         }
     }
 }

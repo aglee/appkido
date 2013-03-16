@@ -9,6 +9,7 @@
 #import "AKDebugging.h"
 
 #import "AKAppDelegate.h"
+#import "AKTabChain.h"
 #import "AKTestDocParserWindowController.h"
 #import "AKWindow.h"
 #import "AKWindowController.h"
@@ -102,14 +103,7 @@
 
 - (IBAction)printTabChain:(id)sender
 {
-    if (![[NSApp keyWindow] isKindOfClass:[AKWindow class]])
-    {
-        NSLog(@"The key window is not an AKWindow.\n\n");
-    }
-    else
-    {
-        [(AKWindow *)[NSApp keyWindow] printTabChain];
-    }
+    [AKTabChain printTabChainForWindow:[NSApp keyWindow]];
 }
 
 - (IBAction)printValidKeyViewLoop:(id)sender

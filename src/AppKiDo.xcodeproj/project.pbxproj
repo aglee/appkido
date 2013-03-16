@@ -556,6 +556,12 @@
 		73A4ACD616F25D81004E6A1C /* AKRandomSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACD316F25D81004E6A1C /* AKRandomSearch.h */; };
 		73A4ACD716F25D81004E6A1C /* AKRandomSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A4ACD416F25D81004E6A1C /* AKRandomSearch.m */; };
 		73A4ACD816F25D81004E6A1C /* AKRandomSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A4ACD416F25D81004E6A1C /* AKRandomSearch.m */; };
+		73A4ACDB16F35815004E6A1C /* AKTabChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACD916F35814004E6A1C /* AKTabChain.h */; };
+		73A4ACDC16F35815004E6A1C /* AKTabChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACD916F35814004E6A1C /* AKTabChain.h */; };
+		73A4ACDD16F35815004E6A1C /* AKTabChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A4ACDA16F35815004E6A1C /* AKTabChain.m */; };
+		73A4ACDE16F35815004E6A1C /* AKTabChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A4ACDA16F35815004E6A1C /* AKTabChain.m */; };
+		73A4ACE016F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */; };
+		73A4ACE116F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */; };
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
 		73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
@@ -854,6 +860,9 @@
 		73A1B676061B6CC8002C95F1 /* AKHTMLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHTMLConstants.m; sourceTree = "<group>"; };
 		73A4ACD316F25D81004E6A1C /* AKRandomSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKRandomSearch.h; path = ClassDB/AKRandomSearch.h; sourceTree = "<group>"; };
 		73A4ACD416F25D81004E6A1C /* AKRandomSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKRandomSearch.m; path = ClassDB/AKRandomSearch.m; sourceTree = "<group>"; };
+		73A4ACD916F35814004E6A1C /* AKTabChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKTabChain.h; path = GlobalClasses/AKTabChain.h; sourceTree = "<group>"; };
+		73A4ACDA16F35815004E6A1C /* AKTabChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKTabChain.m; path = GlobalClasses/AKTabChain.m; sourceTree = "<group>"; };
+		73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKTabChainWindowDelegate.h; path = GlobalClasses/AKTabChainWindowDelegate.h; sourceTree = "<group>"; };
 		73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73A9A7C215B6DA110060E578 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKMultiRadioView.h; path = CustomViews/AKMultiRadioView.h; sourceTree = "<group>"; };
@@ -1340,6 +1349,9 @@
 				730030AA0498501500A80007 /* AKTableView.m */,
 				734B2D9E0810C882001D5F3A /* AKWindow.h */,
 				734B2D9F0810C882001D5F3A /* AKWindow.m */,
+				73A4ACD916F35814004E6A1C /* AKTabChain.h */,
+				73A4ACDA16F35815004E6A1C /* AKTabChain.m */,
+				73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */,
 			);
 			name = "-- VIEW CLASSES --";
 			sourceTree = "<group>";
@@ -1907,6 +1919,8 @@
 				73F8F9B316EE99A3001650D7 /* AKFocusView.h in Headers */,
 				73F8F9BF16EED364001650D7 /* AKBorderHidingView.h in Headers */,
 				73A4ACD516F25D81004E6A1C /* AKRandomSearch.h in Headers */,
+				73A4ACDB16F35815004E6A1C /* AKTabChain.h in Headers */,
+				73A4ACE016F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2048,6 +2062,8 @@
 				73F8F9B416EE99A3001650D7 /* AKFocusView.h in Headers */,
 				73F8F9C016EED364001650D7 /* AKBorderHidingView.h in Headers */,
 				73A4ACD616F25D81004E6A1C /* AKRandomSearch.h in Headers */,
+				73A4ACDC16F35815004E6A1C /* AKTabChain.h in Headers */,
+				73A4ACE116F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2357,6 +2373,7 @@
 				73F8F9B516EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */,
 				73A4ACD716F25D81004E6A1C /* AKRandomSearch.m in Sources */,
+				73A4ACDD16F35815004E6A1C /* AKTabChain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2494,6 +2511,7 @@
 				73F8F9B616EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C216EED364001650D7 /* AKBorderHidingView.m in Sources */,
 				73A4ACD816F25D81004E6A1C /* AKRandomSearch.m in Sources */,
+				73A4ACDE16F35815004E6A1C /* AKTabChain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
