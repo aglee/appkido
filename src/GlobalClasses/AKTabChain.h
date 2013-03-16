@@ -16,6 +16,10 @@
 
 // [agl] some way to auto-add buttons etc. when Full Keyboard Access instead of making delegate be aware and have outlets to every button?
 
+// [agl] auto-skip buttons etc. if Full Keyboard Access off, so delegate doesn't have to be aware?
+
+// [agl] argh, one thing I didn't think of: tabbing to select links -- setTabToLinks:
+
 @interface AKTabChain : NSObject
 
 #pragma mark -
@@ -26,8 +30,7 @@
 + (BOOL)stepThroughTabChainInWindow:(NSWindow *)keyWindow
                             forward:(BOOL)isGoingForward;
 
-#pragma mark -
-#pragma mark Debugging
++ (NSArray *)unmodifiedTabChainForWindow:(NSWindow *)window;
++ (NSArray *)modifiedTabChainForWindow:(NSWindow *)window;
 
-+ (void)printTabChainForWindow:(NSWindow *)window;
 @end

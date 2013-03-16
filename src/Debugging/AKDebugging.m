@@ -59,12 +59,15 @@
     [debugSubmenu addItemWithTitle:@"Print First Responder"
                             action:@selector(printFirstResponder:)
                      keyEquivalent:@"r"];
-    [debugSubmenu addItemWithTitle:@"Print Tab Chain"
-                            action:@selector(printTabChain:)
+    [debugSubmenu addItemWithTitle:@"Print Modified Tab Chain"
+                            action:@selector(printModifiedTabChain:)
                      keyEquivalent:@"l"];
+    [debugSubmenu addItemWithTitle:@"Print Unmodified Tab Chain"
+                            action:@selector(printUnmodifiedTabChain:)
+                     keyEquivalent:@"L"];
     [debugSubmenu addItemWithTitle:@"Print nextValidKeyView Loop"
                             action:@selector(printValidKeyViewLoop:)
-                     keyEquivalent:@"L"];
+                     keyEquivalent:@""];
     [debugSubmenu addItemWithTitle:@"Print nextKeyView Loop"
                             action:@selector(printEntireKeyViewLoop:)
                      keyEquivalent:@""];
@@ -101,9 +104,28 @@
     }
 }
 
-- (IBAction)printTabChain:(id)sender
+- (IBAction)printModifiedTabChain:(id)sender
 {
-    [AKTabChain printTabChainForWindow:[NSApp keyWindow]];
+    NSLog(@"MODIFIED TAB CHAIN for %@", [[NSApp keyWindow] ak_bareDescription]);
+
+    for (NSView *v in [AKTabChain modifiedTabChainForWindow:[NSApp keyWindow]])
+    {
+        NSLog(@"  %@", [v ak_bareDescription]);
+    }
+
+    NSLog(@"END MODIFIED TAB CHAIN for %@\n\n", [[NSApp keyWindow] ak_bareDescription]);
+}
+
+- (IBAction)printUnmodifiedTabChain:(id)sender
+{
+    NSLog(@"UNMODIFIED TAB CHAIN for %@", [[NSApp keyWindow] ak_bareDescription]);
+
+    for (NSView *v in [AKTabChain unmodifiedTabChainForWindow:[NSApp keyWindow]])
+    {
+        NSLog(@"  %@", [v ak_bareDescription]);
+    }
+
+    NSLog(@"END UNMODIFIED TAB CHAIN for %@\n\n", [[NSApp keyWindow] ak_bareDescription]);
 }
 
 - (IBAction)printValidKeyViewLoop:(id)sender

@@ -34,7 +34,7 @@
                             forward:(BOOL)isGoingForward
 {
     // See if the window delegate has a tab chain.
-    NSArray *tabChain = [self _tabChainForWindow:keyWindow];
+    NSArray *tabChain = [self modifiedTabChainForWindow:keyWindow];
 
     if (tabChain == nil)
     {
@@ -47,15 +47,6 @@
     if (currentIndex == -1)
     {
         return NO;
-    }
-
-    // Add toolbar buttons to the tab chain if Full Keyboard Access is on.
-    if ([NSApp isFullKeyboardAccessEnabled] && [[keyWindow toolbar] isVisible])
-    {
-        NSMutableArray *extendedTabChain = [NSMutableArray arrayWithArray:tabChain];
-
-        [self _addToolbarButtonsInWindow:keyWindow toTabChain:extendedTabChain];
-        tabChain = extendedTabChain;
     }
 
     // Try to select the next view in the chain in the given direction.
@@ -82,19 +73,35 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark Debugging
-
-+ (void)printTabChainForWindow:(NSWindow *)window
++ (NSArray *)unmodifiedTabChainForWindow:(NSWindow *)window
 {
-    NSLog(@"TAB CHAIN for %@", [window ak_bareDescription]);
-
-    for (NSView *v in [self _tabChainForWindow:window])
+    if (![[window delegate] respondsToSelector:@selector(tabChainViewsForWindow:)])
     {
-        NSLog(@"  %@", [v ak_bareDescription]);
+        return nil;
     }
 
-    NSLog(@"END TAB CHAIN for %@\n\n", [window ak_bareDescription]);
+    return [(id <AKTabChainWindowDelegate>)[window delegate] tabChainViewsForWindow:window];
+}
+
++ (NSArray *)modifiedTabChainForWindow:(NSWindow *)window
+{
+    NSArray *tabChain = [self unmodifiedTabChainForWindow:window];
+
+    if (tabChain == nil)
+    {
+        return nil;
+    }
+
+    // Add toolbar buttons to the tab chain if Full Keyboard Access is on.
+    if ([NSApp isFullKeyboardAccessEnabled] && [[window toolbar] isVisible])
+    {
+        NSMutableArray *extendedTabChain = [NSMutableArray arrayWithArray:tabChain];
+
+        [self _addToolbarButtonsInWindow:window toTabChain:extendedTabChain];
+        tabChain = extendedTabChain;
+    }
+
+    return tabChain;
 }
 
 #pragma mark -
@@ -138,16 +145,6 @@
     }
     
     return NO;
-}
-
-+ (NSArray *)_tabChainForWindow:(NSWindow *)window
-{
-    if (![[window delegate] respondsToSelector:@selector(tabChainViewsForWindow:)])
-    {
-        return nil;
-    }
-
-    return [(id <AKTabChainWindowDelegate>)[window delegate] tabChainViewsForWindow:window];
 }
 
 + (BOOL)_tryToSelectView:(NSView *)viewToSelect

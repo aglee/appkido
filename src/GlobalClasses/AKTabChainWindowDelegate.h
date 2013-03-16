@@ -25,6 +25,10 @@
 
 @optional
 
+/*!
+ * The delegate can return proposedKeyView, a key view to use instead of
+ * proposedKeyView, or nil to veto the selection altogether.
+ */
 - (NSView *)tabChainWindow:(NSWindow *)window
             willSelectView:(NSView *)proposedKeyView
                    forward:(BOOL)isGoingForward;
@@ -33,7 +37,7 @@
  * didSelect is NO if makeFirstResponder: failed (e.g. due to validation).
  *
  * keyView may not be the same as proposedKeyView or even in the tab chain at
- * all, in the case that it's a toolbar button.
+ * all. For example, it could be a toolbar button.
  */
 - (void)tabChainWindow:(NSWindow *)window
          didSelectView:(NSView *)keyView

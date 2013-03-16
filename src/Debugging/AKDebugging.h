@@ -30,7 +30,8 @@
 
 - (IBAction)printFirstResponder:(id)sender;
 
-- (IBAction)printTabChain:(id)sender;
+- (IBAction)printModifiedTabChain:(id)sender;
+- (IBAction)printUnmodifiedTabChain:(id)sender;
 
 /*! Logs the current key view loop to the console, using nextValidKeyView. */
 - (IBAction)printValidKeyViewLoop:(id)sender;
