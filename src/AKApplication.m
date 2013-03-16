@@ -6,10 +6,7 @@
  */
 
 #import "AKApplication.h"
-#import <WebKit/WebKit.h>
 #import "AKTabChain.h"
-#import "AKWindow.h"
-#import "AKWindowController.h"
 
 @implementation AKApplication
 
