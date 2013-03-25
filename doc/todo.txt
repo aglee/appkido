@@ -9,25 +9,33 @@
 	* Make it easy to do things like:
 		* Omit the page footer when showing a doc that is the very last thing on the page.
 		* Extract the method declaration line.
+		* Present link to send Apple feedback.
 
 ----
 
 ## Smaller bugs/UX stuff
 
-* Don't use private API to calculate tab chain (we currently use knowledge of toolbar view class names). Try to do it automatically.
-* allow for "wip" to be in the version string
+* I thought type-to-select worked? Not working in middle tables.
 * search for "toolbar", the *second* matching result is selected
+* Pop Quiz feature
+	* call it Pop Quiz
+	* use custom window instead of alert
+	* add exact match so search after Random works right
+* Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
+
+* allow for "wip" to be in the version string
+* "Window classes" and "Cell classes" don't make sense for iPhone.
+	* Maybe "Layer classes"?
+* Get new icons.
 * Add menu under "General" and a hotkey for Header File
 * Get rid of the 1, 2, numbering in subtopics (I suspect no one uses them, plus easy to eyeball, plus what if user remaps menu shortcuts?). Make the subtopics list narrower accordingly.
-* "Window classes" and "Cell classes" don't make sense for iPhone.
-* Get new icons.
-* option to view classes-in-framework hierarchically
-* I thought type-to-select worked? Not working in middle tables.
-* Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
+
+* reproduce recalc
+	* consider drawers
+	* consider popovers?
 * Move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
-* Still getting double drawing -- just saw it in the doc list after a search for QCComposition.
 * also use real build numbers
-* Do I need to speed up validation?
+* option to view classes-in-framework hierarchically
 
 ----
 
@@ -35,7 +43,6 @@
 
 * "Classes in AppKit" doesn't include NSString
 * ApplicationServices -> Types & Constants -> Constants -- "Color Modes" appears twice, as does "Color Constants".
-* cell classes are n/a for iPhone (UITableViewCell is actually a view)
 
 ----
 
@@ -43,8 +50,6 @@
 
 * split AKWindowController into categories? subclasses?
 * #pragma mark ... protocol methods"
-* use debug_ prefix on print methods
-* can get rid of NSSplitView category? might need it for animating
 * be consistent about "Init/dealloc/awake"
 * refactor parsers -- decouple from notion of a file
 * normal NS...Controller for remaining cases
@@ -63,6 +68,12 @@
 ----
 
 ## Maybe later
+
+* Still getting double drawing -- just saw it in the doc list after a search for QCComposition.
+* Do I need to speed up validation?
+* tab chain: doesn't handle the tab-to-links web pref
+* tab chain: Don't use private API to calculate tab chain (we currently use knowledge of toolbar view class names). Try to do it automatically.
+* tab chain: try to add buttons automatically when Full Keyboard
 
 * idea: show all classes that implement a formal protocol
 * idea: offer NSPathControl as an alternative to the topic browser?

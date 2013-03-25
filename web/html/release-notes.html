@@ -49,30 +49,38 @@
 
 <h2>Version WIP (Whenevuary 15, 2013)</h2>
 <ul>
-<li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (see NSString -- "AppKit Additions" wasn't showing up).</li>
-<li>Option
-<li>Split view resizing behavior and use of thin splitters.</li>
+<li>"Pop Quiz" feature. Just for grins. Hit Go > Pop Quiz (Option-Command-P) and you're presented with a random API symbol. You can quiz yourself on what the symbol is before proceeding to see the docs for it.</li>
+<li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (NSString > "AppKit Additions" wasn't showing up).</li>
+<li>More sensible split view resizing when you resize the window and when you collapse/expand the topic browser. Only the bottom section (the "doc view") resizes.</li>
+<li>Thin splitters in the split views. A little harder to hit with the mouse, but looks nicer.</li>
 <li>The standard Option-Command-H shortcut is now assigned to "Hide Others".</li>
-<li>Small buttons changed look.</li>
-<li>Small fonts for nav popups.</li>
-<li>Split view in middle section.</li>
-<li>When the subtopic list navigates, it now scrolls if necessary to reveal the newly selected subtopic. Example: do a search for "clip", and in the search results select CGContextClip.</li>
+<li>Changed the look of the small navigation buttons below the topic browser, and the button in the quicklist drawer for deleting the selected Favorite.</li>
+<li>The popup menus for the navigation buttons now use small fonts.</li>
+<li>The two views in the middle section -- the "subtopic list" and the "doc list" -- are now in a split view so you can adjust their relative sizes. The relative sizes are remembered when the window is restored on relaunch and when you use the "Remember This Window's Layout" feature.</li>
+<li>When the subtopic list navigates, it now scrolls if necessary to reveal the newly selected subtopic. Example: do a search for "clip", and in the search results select CGContextClip; the subtopics list autoscrolls to make "CGContextClip" visible.</li>
 <li>Added Copy and Copy File Path to contextual menu. Speech too.</li>
-<li>Search for setFoo searches for property foo.</li>
-<li>After a search, is now properly selecting the first search result with the search string as a prefix. (Example: search for "query" and -[NSURL query] should be selected.)</li>
+<li>Searching for "setFoo" searches for properties named "foo" as well as any symbol containing "setfoo" (inspired by this feature of Xcode and Dash).</li>
+<li>After a search, we now select the first search result with the search string as a prefix. (Example: search for "query" and -[NSURL query] should be selected.) This is an old feature that was broken for awhile.</li>
 <li>Made the default drawer size wider.</li>
 <li>Slight correction to what is displayed in the "Add X to Favorites" menu item. It now matches what gets displayed in the Quicklist -- e.g., "AppKit Functions", not just "Functions".</li>
-<li>Fixed quirk: if you select in web view and do Use Selection for Find, it focuses the quicklist search field, thus removing focus from the web view, which causes Find Next to start from the beginning instead of from where you were.</li>
-
-<li>Code changes (of interest only if you're working on the code):
+<li>Fixed quirk: if you select text in the web view and do "Use Selection for Find" (Command-E), we were momentarily focusing the quicklist search field, thus removing focus from the web view, which caused "Find Next" (Command-G) to start from the beginning of the web view instead of from where you were.</li>
+<li>Focus ring appearance. Solid blue border around the browser, around each list, and around the web/text view. (Other items such as buttons use the standard Cocoa focus ring.)</li>
+<li>Focus ring behavior. Tab/Shift-Tab cycles through views in the drawer as well as the main window, and it includes the topic browser as it makes the rounds.</li>
+<li>Code changes not affecting functionality. Of interest only if you've been looking at the code. I went through and changed a lot of things that didn't necessarily make the app work any better, but made me feel happier about the code because it doesn't feel so antiquated.
 	<ul>
-	<li>Used ARC but went back to non-ARC, so still supports 32-bit.</li>
-	<li>Replaced NSEnumeration with fast enumeration everywhere. Probably doesn't make a noticeable difference, but it makes the code seem less ancient.</li>
+	<li>Replaced NSEnumeration with fast enumeration everywhere. Doesn't make any difference to the user, but it makes the code seem less ancient.</li>
 	<li>Replaced deprecated method calls with their recommended replacements.</li>
-	<li>Got rid of the AKFramework class. A simple string containing the framework name is used to indicate membership in a framework.</li>
-	<li>Real NSViewControllers and NSWindowControllers, with separate nibs for the various panes.</li>
-	<li>NSTabView for the doc view.</li>
-	<li>Updated coding conventions (...).</li>
+	<li>Got rid of the AKFramework class. A string containing the framework name is used to indicate membership in a framework.</li>
+	<li>NSViewControllers and NSWindowControllers, with separate nibs for the various panes, instead of my old hand-rolled view and window controllers.</li>
+	<li>Tabless NSTabView for the doc view. One tab for the web view used to display docs, one for the text view used to display headers. This replaces the hand-coded view swapping I was doing (not sure why, since it looks like tabless tabviews have always been supported). Also replaces programmatically creating the WebView, which was left over from back when WebKit was not necessarily present on the user's machine.</li>
+	</ul>
+</li>
+<li>Updated coding conventions to be more like current mainstream.
+	<ul>
+	<li>Now using Xcode's built-in reformatting, so for example multi-line method names align on colons.</li>
+	<li>Replaced hand-coded accessors with properties (although still declaring ivars in the @interface to be 32-bit compatible).</li>
+	<li>Using the new @-literals (although not square-bracket collection indexing, because it's not supported in 10.6).</li>
+	<li>Changed style of class and method comments. No more explicit @description, @param, etc. sections. (Note: is not proper HeaderDoc syntax in some places.)</li>
 	</ul>
 </li>
 </ul>
