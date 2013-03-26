@@ -589,7 +589,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     if (!s_collectionClasses)
     {
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:
-                               @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate"]];
+                               @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable"]];
         s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
