@@ -24,6 +24,7 @@
 #import "AKGlobalsTopic.h"
 #import "AKInformalProtocolsTopic.h"
 #import "AKLinkResolver.h"
+#import "AKPopQuizWindowController.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolTopic.h"
 #import "AKRandomSearch.h"
@@ -401,22 +402,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)popQuiz:(id)sender
 {
-    AKRandomSearch *randomSearch = [[[AKRandomSearch alloc] initWithDatabase:_database] autorelease];
-    AKDocLocator *docLocator = [randomSearch randomDocLocator];
-
-    NSRunAlertPanel(@"Do you know this symbol?",
-                    @"%@\n\nClick OK to see the docs.",
-                    @"OK",
-                    nil,
-                    nil,
-                    [docLocator docName]);
+    AKDocLocator *docLocator = [AKPopQuizWindowController showPopQuiz];
 
     [_quicklistController searchForString:[docLocator docName]];
-    
-//    [self _selectTopic:[docLocator topicToDisplay]
-//          subtopicName:[docLocator subtopicName]
-//               docName:[docLocator docName]
-//          addToHistory:YES];
 }
 
 - (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender
