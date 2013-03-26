@@ -45,9 +45,9 @@ enum
 {
     _AKFavoritesQuicklistMode = 0,
     _AKCollectionClassesQuicklistMode = 1,
-    _AKWindowClassesQuicklistMode = 2,
+    _AKWindowOrViewControllerClassesQuicklistMode = 2,
     _AKViewClassesQuicklistMode = 3,
-    _AKCellClassesQuicklistMode = 4,
+    _AKCellOrLayerClassesQuicklistMode = 4,
     _AKClassesWithDelegatesQuicklistMode = 5,
 // Getting rid of "Delegate protocols" in Quicklist.
 //    _AKDelegateProtocolsQuicklistMode = 6,
@@ -121,6 +121,18 @@ enum
 
 - (void)awakeFromNib
 {
+#if APPKIDO_FOR_IPHONE
+    // iOS doesn't have window or cell classes, so we substitute view controller
+    // and layer classes when compiling AppKiDo-for-iPhone.
+    NSButtonCell *cell;
+
+    cell = [_quicklistRadio1 cellWithTag:_AKWindowOrViewControllerClassesQuicklistMode];
+    [cell setTitle:@"View controller classes"];
+
+    cell = [_quicklistRadio1 cellWithTag:_AKCellOrLayerClassesQuicklistMode];
+    [cell setTitle:@"Layer classes"];
+#endif
+
     // Set up _quicklistTable to do drag and drop.
     [_quicklistTable registerForDraggedTypes:@[_AKQuicklistPasteboardType]];
 
@@ -515,9 +527,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             break;
         }
 
-        case _AKWindowClassesQuicklistMode:
+        case _AKWindowOrViewControllerClassesQuicklistMode:
         {
-            tableValues = [self _windowClasses];
+            tableValues = [self _windowOrViewControllerClasses];
             break;
         }
 
@@ -527,9 +539,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             break;
         }
 
-        case _AKCellClassesQuicklistMode:
+        case _AKCellOrLayerClassesQuicklistMode:
         {
-            tableValues = [self _cellClasses];
+            tableValues = [self _cellOrLayerClasses];
             break;
         }
 
@@ -596,18 +608,22 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return s_collectionClasses;
 }
 
-- (NSArray *)_windowClasses
+- (NSArray *)_windowOrViewControllerClasses
 {
-    static NSArray *s_windowClasses = nil;
+    static NSArray *s_windowOrViewControllerClasses = nil;
 
-    if (!s_windowClasses)
+    if (!s_windowOrViewControllerClasses)
     {
+#if APPKIDO_FOR_IPHONE
+        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"UIViewController"]];
+#else
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
+#endif
 
-        s_windowClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_windowOrViewControllerClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
-    return s_windowClasses;
+    return s_windowOrViewControllerClasses;
 }
 
 - (NSArray *)_viewClasses
@@ -635,18 +651,22 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return s_viewClasses;
 }
 
-- (NSArray *)_cellClasses
+- (NSArray *)_cellOrLayerClasses
 {
-    static NSArray *s_cellClasses = nil;
+    static NSArray *s_cellOrLayerClasses = nil;
 
-    if (!s_cellClasses)
+    if (!s_cellOrLayerClasses)
     {
+#if APPKIDO_FOR_IPHONE
+        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"CALayer"]];
+#else
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
+#endif
 
-        s_cellClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_cellOrLayerClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
-    return s_cellClasses;
+    return s_cellOrLayerClasses;
 }
 
 - (NSArray *)_classesWithDelegates
