@@ -26,7 +26,7 @@
 {
     return ([self includesAncestors]
             ? [@"       " stringByAppendingString:[self subtopicName]]
-            : [@"3.  " stringByAppendingString:[self subtopicName]]);
+            : [self subtopicName]);
 }
 
 #pragma mark -

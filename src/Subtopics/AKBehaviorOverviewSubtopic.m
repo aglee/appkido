@@ -77,7 +77,7 @@
 
 - (NSString *)stringToDisplayInSubtopicList
 {
-    return [@"1.  " stringByAppendingString:[self subtopicName]];
+    return [self subtopicName];
 }
 
 - (void)populateDocList:(NSMutableArray *)docList
