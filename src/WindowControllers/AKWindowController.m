@@ -399,7 +399,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-- (IBAction)goToRandomDoc:(id)sender
+- (IBAction)popQuiz:(id)sender
 {
     AKRandomSearch *randomSearch = [[[AKRandomSearch alloc] initWithDatabase:_database] autorelease];
     AKDocLocator *docLocator = [randomSearch randomDocLocator];
@@ -701,7 +701,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
              || (itemAction == @selector(selectGlobalsTopic:))
              || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
              || (itemAction == @selector(rememberWindowLayout:))
-             || (itemAction == @selector(goToRandomDoc:)))
+             || (itemAction == @selector(popQuiz:)))
     {
         return YES;
     }

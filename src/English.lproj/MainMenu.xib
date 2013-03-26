@@ -565,9 +565,9 @@
 								</object>
 								<object class="NSMenuItem" id="526411155">
 									<reference key="NSMenu" ref="168891789"/>
-									<string key="NSTitle">Random</string>
-									<string key="NSKeyEquiv">R</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSTitle">Pop Quiz</string>
+									<string key="NSKeyEquiv">p</string>
+									<int key="NSKeyEquivModMask">1310720</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="843332767"/>
 									<reference key="NSMixedImage" ref="982793628"/>
@@ -1136,11 +1136,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">goToRandomDoc:</string>
+						<string key="label">popQuiz:</string>
 						<reference key="source" ref="354112457"/>
 						<reference key="destination" ref="526411155"/>
 					</object>
-					<int key="connectionID">1333</int>
+					<int key="connectionID">1334</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1951,7 +1951,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1333</int>
+			<int key="maxID">1334</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2518,9 +2518,9 @@
 							<string>goForwardInHistory:</string>
 							<string>goToHistoryItemInBackMenu:</string>
 							<string>goToHistoryItemInForwardMenu:</string>
-							<string>goToRandomDoc:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
+							<string>popQuiz:</string>
 							<string>printFunFacts:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
@@ -2571,9 +2571,9 @@
 							<string>goForwardInHistory:</string>
 							<string>goToHistoryItemInBackMenu:</string>
 							<string>goToHistoryItemInForwardMenu:</string>
-							<string>goToRandomDoc:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
+							<string>popQuiz:</string>
 							<string>printFunFacts:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
@@ -2618,15 +2618,15 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">goToRandomDoc:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">openDocFileInBrowser:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">openParseDebugWindow:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">popQuiz:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
