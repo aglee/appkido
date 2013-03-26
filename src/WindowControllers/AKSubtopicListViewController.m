@@ -7,7 +7,9 @@
 
 #import "AKSubtopicListViewController.h"
 
+#import "AKBehaviorTopic.h"
 #import "AKDocLocator.h"
+#import "AKHeaderFileDoc.h"
 #import "AKSubtopic.h"
 #import "AKTableView.h"
 #import "AKTopic.h"
@@ -77,9 +79,68 @@
     [[self owningWindowController] selectSubtopicWithName:newSubtopicName];
 }
 
-- (IBAction)selectSubtopicWithIndexFromTag:(id)sender
+- (IBAction)selectOverviewSubtopic:(id)sender
 {
-    [self _selectSubtopicWithIndex:[sender tag]];
+    [[self owningWindowController] selectSubtopicWithName:AKOverviewSubtopicName];
+}
+
+- (IBAction)selectHeaderFile:(id)sender
+{
+    AKDocLocator *oldDocLocator = [[self owningWindowController] currentDocLocator];
+    AKDocLocator *newDocLocator = [[[AKDocLocator alloc] initWithTopic:[oldDocLocator topicToDisplay]
+                                                          subtopicName:AKOverviewSubtopicName
+                                                               docName:AKHeaderFileDocName] autorelease];
+    [[self owningWindowController] selectDocWithDocLocator:newDocLocator];
+}
+
+- (IBAction)selectPropertiesSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKPropertiesSubtopicName];
+}
+
+- (IBAction)selectAllPropertiesSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKAllPropertiesSubtopicName];
+}
+
+- (IBAction)selectClassMethodsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKClassMethodsSubtopicName];
+}
+
+- (IBAction)selectAllClassMethodsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKAllClassMethodsSubtopicName];
+}
+
+- (IBAction)selectInstanceMethodsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKInstanceMethodsSubtopicName];
+}
+
+- (IBAction)selectAllInstanceMethodsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKAllInstanceMethodsSubtopicName];
+}
+
+- (IBAction)selectDelegateMethodsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKDelegateMethodsSubtopicName];
+}
+
+- (IBAction)selectAllDelegateMethodsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKAllDelegateMethodsSubtopicName];
+}
+
+- (IBAction)selectNotificationsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKNotificationsSubtopicName];
+}
+
+- (IBAction)selectAllNotificationsSubtopic:(id)sender
+{
+    [[self owningWindowController] selectSubtopicWithName:AKAllNotificationsSubtopicName];
 }
 
 #pragma mark -
@@ -156,11 +217,23 @@
 {
     SEL itemAction = [anItem action];
 
-    if (itemAction == @selector(selectSubtopicWithIndexFromTag:))
+    if ((itemAction == @selector(selectOverviewSubtopic:))
+        || (itemAction == @selector(selectHeaderFile:))
+        || (itemAction == @selector(selectPropertiesSubtopic:))
+        || (itemAction == @selector(selectAllPropertiesSubtopic:))
+        || (itemAction == @selector(selectClassMethodsSubtopic:))
+        || (itemAction == @selector(selectAllClassMethodsSubtopic:))
+        || (itemAction == @selector(selectInstanceMethodsSubtopic:))
+        || (itemAction == @selector(selectAllInstanceMethodsSubtopic:))
+        || (itemAction == @selector(selectDelegateMethodsSubtopic:))
+        || (itemAction == @selector(selectAllDelegateMethodsSubtopic:))
+        || (itemAction == @selector(selectNotificationsSubtopic:))
+        || (itemAction == @selector(selectAllNotificationsSubtopic:)))
     {
-        return YES;
+        AKTopic *currentTopic = [[[self owningWindowController] currentDocLocator] topicToDisplay];
+        return [currentTopic isKindOfClass:[AKBehaviorTopic class]];
     }
-    
+
     return NO;
 }
 
@@ -192,19 +265,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         AKSubtopic *subtopic = [_subtopics objectAtIndex:rowIndex];
 
         [aCell setLeaf:([subtopic numberOfDocs] == 0)];
-    }
-}
-
-#pragma mark -
-#pragma mark Private methods
-
-- (void)_selectSubtopicWithIndex:(NSInteger)subtopicIndex
-{
-    if (subtopicIndex != [_subtopicsTable selectedRow])
-    {
-        NSString *newSubtopicName = [[_subtopics objectAtIndex:subtopicIndex] subtopicName];
-
-        [[self owningWindowController] selectSubtopicWithName:newSubtopicName];
     }
 }
 

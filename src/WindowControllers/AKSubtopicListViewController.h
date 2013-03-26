@@ -38,6 +38,23 @@
 
 - (IBAction)doSubtopicTableAction:(id)sender;
 
-- (IBAction)selectSubtopicWithIndexFromTag:(id)sender;
+- (IBAction)selectOverviewSubtopic:(id)sender;
+
+- (IBAction)selectHeaderFile:(id)sender;
+
+- (IBAction)selectPropertiesSubtopic:(id)sender;
+- (IBAction)selectAllPropertiesSubtopic:(id)sender;
+
+- (IBAction)selectClassMethodsSubtopic:(id)sender;
+- (IBAction)selectAllClassMethodsSubtopic:(id)sender;
+
+- (IBAction)selectInstanceMethodsSubtopic:(id)sender;
+- (IBAction)selectAllInstanceMethodsSubtopic:(id)sender;
+
+- (IBAction)selectDelegateMethodsSubtopic:(id)sender;
+- (IBAction)selectAllDelegateMethodsSubtopic:(id)sender;
+
+- (IBAction)selectNotificationsSubtopic:(id)sender;
+- (IBAction)selectAllNotificationsSubtopic:(id)sender;
 
 @end

@@ -18,7 +18,7 @@
 - (NSString *)subtopicName
 {
     return ([self includesAncestors]
-            ? [@"ALL " stringByAppendingString:AKInstanceMethodsSubtopicName]
+            ? AKAllInstanceMethodsSubtopicName
             : AKInstanceMethodsSubtopicName);
 }
 

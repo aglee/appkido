@@ -603,6 +603,15 @@
 									<reference key="NSOnImage" ref="843332767"/>
 									<reference key="NSMixedImage" ref="982793628"/>
 								</object>
+								<object class="NSMenuItem" id="589765249">
+									<reference key="NSMenu" ref="168891789"/>
+									<string key="NSTitle">    Header File</string>
+									<string key="NSKeyEquiv">H</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="843332767"/>
+									<reference key="NSMixedImage" ref="982793628"/>
+								</object>
 								<object class="NSMenuItem" id="529650987">
 									<reference key="NSMenu" ref="168891789"/>
 									<string key="NSTitle">Properties</string>
@@ -984,94 +993,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="1047364580"/>
-					</object>
-					<int key="connectionID">1286</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="529650987"/>
-					</object>
-					<int key="connectionID">1288</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="51687139"/>
-					</object>
-					<int key="connectionID">1289</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="120438631"/>
-					</object>
-					<int key="connectionID">1290</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="825111479"/>
-					</object>
-					<int key="connectionID">1291</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="214148853"/>
-					</object>
-					<int key="connectionID">1292</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="191807605"/>
-					</object>
-					<int key="connectionID">1293</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="69884170"/>
-					</object>
-					<int key="connectionID">1294</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="936389425"/>
-					</object>
-					<int key="connectionID">1295</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="602361178"/>
-					</object>
-					<int key="connectionID">1296</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">selectSubtopicWithIndexFromTag:</string>
-						<reference key="source" ref="354112457"/>
-						<reference key="destination" ref="197407448"/>
-					</object>
-					<int key="connectionID">1297</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">selectSearchField:</string>
 						<reference key="source" ref="354112457"/>
 						<reference key="destination" ref="934831343"/>
@@ -1141,6 +1062,102 @@
 						<reference key="destination" ref="526411155"/>
 					</object>
 					<int key="connectionID">1334</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectOverviewSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="1047364580"/>
+					</object>
+					<int key="connectionID">1338</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectPropertiesSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="529650987"/>
+					</object>
+					<int key="connectionID">1339</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectAllPropertiesSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="51687139"/>
+					</object>
+					<int key="connectionID">1340</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectClassMethodsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="120438631"/>
+					</object>
+					<int key="connectionID">1341</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectAllClassMethodsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="825111479"/>
+					</object>
+					<int key="connectionID">1342</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectInstanceMethodsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="214148853"/>
+					</object>
+					<int key="connectionID">1343</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectAllInstanceMethodsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="191807605"/>
+					</object>
+					<int key="connectionID">1344</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectDelegateMethodsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="69884170"/>
+					</object>
+					<int key="connectionID">1345</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectAllDelegateMethodsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="936389425"/>
+					</object>
+					<int key="connectionID">1346</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectNotificationsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="602361178"/>
+					</object>
+					<int key="connectionID">1347</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectAllNotificationsSubtopic:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="197407448"/>
+					</object>
+					<int key="connectionID">1348</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectHeaderFile:</string>
+						<reference key="source" ref="354112457"/>
+						<reference key="destination" ref="589765249"/>
+					</object>
+					<int key="connectionID">1349</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1230,8 +1247,8 @@
 							<reference ref="738992755"/>
 							<reference ref="585459673"/>
 							<reference ref="212647107"/>
-							<reference ref="490362409"/>
 							<reference ref="404451715"/>
+							<reference ref="490362409"/>
 							<reference ref="91521800"/>
 						</object>
 						<reference key="parent" ref="0"/>
@@ -1584,6 +1601,7 @@
 							<reference ref="529650987"/>
 							<reference ref="51687139"/>
 							<reference ref="526411155"/>
+							<reference ref="589765249"/>
 						</object>
 						<reference key="parent" ref="490362409"/>
 					</object>
@@ -1615,11 +1633,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">503</int>
 						<reference key="object" ref="214148853"/>
-						<reference key="parent" ref="168891789"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">504</int>
-						<reference key="object" ref="1047364580"/>
 						<reference key="parent" ref="168891789"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1760,6 +1773,16 @@
 						<reference key="object" ref="526411155"/>
 						<reference key="parent" ref="168891789"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1335</int>
+						<reference key="object" ref="589765249"/>
+						<reference key="parent" ref="168891789"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">504</int>
+						<reference key="object" ref="1047364580"/>
+						<reference key="parent" ref="168891789"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1784,6 +1807,7 @@
 					<string>1312.IBPluginDependency</string>
 					<string>1313.IBPluginDependency</string>
 					<string>1331.IBPluginDependency</string>
+					<string>1335.IBPluginDependency</string>
 					<string>134.IBPluginDependency</string>
 					<string>136.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
@@ -1937,6 +1961,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -1951,7 +1976,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1334</int>
+			<int key="maxID">1349</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2387,10 +2412,32 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>doSubtopicTableAction:</string>
-							<string>selectSubtopicWithIndexFromTag:</string>
+							<string>selectAllClassMethodsSubtopic:</string>
+							<string>selectAllDelegateMethodsSubtopic:</string>
+							<string>selectAllInstanceMethodsSubtopic:</string>
+							<string>selectAllNotificationsSubtopic:</string>
+							<string>selectAllPropertiesSubtopic:</string>
+							<string>selectClassMethodsSubtopic:</string>
+							<string>selectDelegateMethodsSubtopic:</string>
+							<string>selectHeaderFile:</string>
+							<string>selectInstanceMethodsSubtopic:</string>
+							<string>selectNotificationsSubtopic:</string>
+							<string>selectOverviewSubtopic:</string>
+							<string>selectPropertiesSubtopic:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -2400,7 +2447,18 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>doSubtopicTableAction:</string>
-							<string>selectSubtopicWithIndexFromTag:</string>
+							<string>selectAllClassMethodsSubtopic:</string>
+							<string>selectAllDelegateMethodsSubtopic:</string>
+							<string>selectAllInstanceMethodsSubtopic:</string>
+							<string>selectAllNotificationsSubtopic:</string>
+							<string>selectAllPropertiesSubtopic:</string>
+							<string>selectClassMethodsSubtopic:</string>
+							<string>selectDelegateMethodsSubtopic:</string>
+							<string>selectHeaderFile:</string>
+							<string>selectInstanceMethodsSubtopic:</string>
+							<string>selectNotificationsSubtopic:</string>
+							<string>selectOverviewSubtopic:</string>
+							<string>selectPropertiesSubtopic:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2409,7 +2467,51 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">selectSubtopicWithIndexFromTag:</string>
+								<string key="name">selectAllClassMethodsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectAllDelegateMethodsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectAllInstanceMethodsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectAllNotificationsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectAllPropertiesSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectClassMethodsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectDelegateMethodsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectHeaderFile:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectInstanceMethodsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectNotificationsSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectOverviewSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectPropertiesSubtopic:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

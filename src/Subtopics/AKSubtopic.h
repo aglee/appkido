@@ -43,10 +43,15 @@
 
 extern NSString *AKOverviewSubtopicName;
 extern NSString *AKPropertiesSubtopicName;
+extern NSString *AKAllPropertiesSubtopicName;
 extern NSString *AKClassMethodsSubtopicName;
+extern NSString *AKAllClassMethodsSubtopicName;
 extern NSString *AKInstanceMethodsSubtopicName;
+extern NSString *AKAllInstanceMethodsSubtopicName;
 extern NSString *AKDelegateMethodsSubtopicName;
+extern NSString *AKAllDelegateMethodsSubtopicName;
 extern NSString *AKNotificationsSubtopicName;
+extern NSString *AKAllNotificationsSubtopicName;
 
 #pragma mark -
 #pragma mark Getters and setters

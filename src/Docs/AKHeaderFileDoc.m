@@ -7,6 +7,8 @@
 
 #import "AKHeaderFileDoc.h"
 
+NSString *AKHeaderFileDocName = @"Header File";
+
 @implementation AKHeaderFileDoc
 
 #pragma mark -
@@ -19,7 +21,7 @@
 
 - (NSString *)_unqualifiedDocName
 {
-    return @"Header File";
+    return AKHeaderFileDocName;
 }
 
 @end

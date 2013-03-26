@@ -7,5 +7,7 @@
 
 #import "AKOverviewDoc.h"
 
+extern NSString *AKHeaderFileDocName;
+
 @interface AKHeaderFileDoc : AKOverviewDoc
 @end

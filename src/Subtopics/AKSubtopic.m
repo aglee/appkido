@@ -16,12 +16,17 @@
 #pragma mark -
 #pragma mark AKXyzSubtopicName
 
-NSString *AKOverviewSubtopicName        = @"General";
-NSString *AKPropertiesSubtopicName      = @"Properties";
-NSString *AKClassMethodsSubtopicName    = @"Class Methods";
-NSString *AKInstanceMethodsSubtopicName = @"Instance Methods";
-NSString *AKDelegateMethodsSubtopicName = @"Delegate Methods";
-NSString *AKNotificationsSubtopicName   = @"Notifications";
+NSString *AKOverviewSubtopicName           = @"General";
+NSString *AKPropertiesSubtopicName         = @"Properties";
+NSString *AKAllPropertiesSubtopicName      = @"ALL Properties";
+NSString *AKClassMethodsSubtopicName       = @"Class Methods";
+NSString *AKAllClassMethodsSubtopicName    = @"ALL Class Methods";
+NSString *AKInstanceMethodsSubtopicName    = @"Instance Methods";
+NSString *AKAllInstanceMethodsSubtopicName = @"ALL Instance Methods";
+NSString *AKDelegateMethodsSubtopicName    = @"Delegate Methods";
+NSString *AKAllDelegateMethodsSubtopicName = @"ALL Delegate Methods";
+NSString *AKNotificationsSubtopicName      = @"Notifications";
+NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
