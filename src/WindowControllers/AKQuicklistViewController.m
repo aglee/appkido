@@ -49,8 +49,6 @@ enum
     _AKViewClassesQuicklistMode = 3,
     _AKCellOrLayerClassesQuicklistMode = 4,
     _AKClassesWithDelegatesQuicklistMode = 5,
-// Getting rid of "Delegate protocols" in Quicklist.
-//    _AKDelegateProtocolsQuicklistMode = 6,
     _AKClassesWithDataSourcesQuicklistMode = 7,
     _AKDataSourceProtocolsQuicklistMode = 8,
     _AKAllClassesInFrameworkQuicklistMode = 9,
@@ -601,7 +599,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     if (!s_collectionClasses)
     {
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:
-                               @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable"]];
+                               @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable", @"NSMapTable", @"NSPointerArray"]];
         s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
     }
 
