@@ -73,8 +73,8 @@
 
 <p><b>Requirements:</b></p>
 <ul>
-<li>Mac OS X 10.5 or higher<br/></li>
-<li>Xcode 3.x or higher</li>
+<li>Mac OS X 10.6 (Snow Leopard) or higher <span style="font-weight:bold; color:red;">[10.5 is no longer supported]</span></li>
+<li>Xcode 3.2.6 or higher, with one or more docsets <a href="faq.html">downloaded</a></li>
 </ul>
 
 <p><b>Features:</b></p>
@@ -83,6 +83,7 @@
 <li><a href="#consolidated-list">Consolidated list of methods</a></li>
 <li><a href="#quicklists">Quicklists</a></li>
 <li><a href="#search">Search</a></li>
+<li><a href="#popquiz">Pop Quiz</a> <span style="font-weight:bold; color:red;">[new]</span></li>
 <li><a href="#system-service">Search from anywhere ("method-aware")</a></li>
 <li><a href="#header-files">Header files</a></li>
 </ul>
@@ -102,7 +103,7 @@
 <table class="featuresTable">
 <tr>
     <td class="featuresLeftColumn">
-    	<p>AppKiDo presents the class hierarchy in a view much like the Finder's "Columns" view. You can see sibling classes at a glance and go up and down the hierarchy with a single click. This is convenient because the method you're looking for is often in a superclass.</p>
+    	<p>AppKiDo presents the class hierarchy in a view much like the Finder's "Columns" view. You can see sibling classes at a glance and go up and down the hierarchy with a single click. This is convenient because the method you're looking for is sometimes in a superclass.</p>
 	    <p>If you are new to Cocoa, browse the class hierarchy to get acquainted with what's there and how it's organized. If you are more experienced, you can explore branches of the hierarchy you never paid attention to before.</p>
 	</td>
 
@@ -115,7 +116,7 @@
 
 <table class="featuresTable">
 <tr>
-    <td class="featuresLeftColumn"><p>AppKiDo can display a consolidated list of all methods a class implements, including inherited methods, methods that satisfy a protocol, and methods added by a framework other than the class's main framework (for example, the drawing methods that AppKit adds to NSAttributedString). This can help you understand the complete behavior of a class, and it's another quick way to find methods that are in a superclass.</p></td>
+    <td class="featuresLeftColumn"><p>AppKiDo can display a consolidated list of all methods a class implements, including inherited methods, methods that satisfy a protocol, and methods added by a framework other than the class's main framework (for example, the drawing methods that AppKit adds to NSString). This can help you understand the complete behavior of a class, and it's another quick way to find methods that are in a superclass.</p></td>
 
     <td class="featuresRightColumn"><img src="images/consolidated.png"></img></td>
 </tr>
@@ -126,9 +127,11 @@
 
 <table class="featuresTable">
 <tr>
-    <td class="featuresLeftColumn"><p>AppKiDo provides handy "quicklists" of logically related groups of classes. This puts many frequently used classes a click or two away. It can also help you understand some concepts. For example, if you find delegates confusing, it may help to browse "Classes with delegates" to see all the ways a delegate is used.</p></td>
+    <td class="featuresLeftColumn"><p>AppKiDo provides handy "quicklists" of logically related groups of classes. This puts many frequently used classes a click or two away. It can also help you understand some concepts. For example, if you find delegates confusing, it may help to browse "Classes with delegates" to see all the ways a delegate is used.</p>
 
-    <td class="featuresRightColumn"><img src="images/quicklists.png"></img></td>
+		<p>Since iOS doesn't have window or cell classes, AppKiDo-for-iPhone offers quicklists for "View controller classes" and "Layer classes" instead.</p></td>
+
+    <td class="featuresRightColumn"><img src="images/quicklists.png" style="vertical-align:top;"></img><img src="images/quicklists-ios.png" style="vertical-align:top;"></img></td>
 </tr>
 </table>
 
@@ -140,6 +143,17 @@
     <td class="featuresLeftColumn"><p>If you're not sure what you're looking for, AppKiDo can search for names of API constructs. For example, if you're wondering how to manage cursors, search for "cursor". Apple has conveniently put the word "cursor" in the names of most things related to cursors.</p></td>
 
     <td class="featuresRightColumn"><img src="images/search.png"></img></td>
+</tr>
+</table>
+
+<!-- --- pop quiz --- -->
+<h2><a name="popquiz">Pop Quiz</a></h2>
+
+<table class="featuresTable">
+<tr>
+    <td class="featuresLeftColumn"><p>To encourage exploration, AppKiDo has a "Pop Quiz" feature that presents a random API symbol. You can try to remember or guess the meaning of the symbol before seeing the documentation for it.</p></td>
+
+    <td class="featuresRightColumn"><img src="images/popquiz.png"></img></td>
 </tr>
 </table>
 
@@ -169,7 +183,7 @@
 
 <table class="featuresTable">
 <tr>
-    <td class="featuresLeftColumn"><p>AppKiDo can open the header file for any Cocoa class. Sometimes there is useful information in the headers that is not available in the documentation.</p></td>
+    <td class="featuresLeftColumn"><p>AppKiDo can open the header file for any Cocoa class or protocol. Sometimes there is useful information in the headers that is not available in the documentation.</p></td>
 
     <td class="featuresRightColumn"><img src="images/header.png"></img></td>
 </tr>

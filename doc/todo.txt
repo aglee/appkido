@@ -3,7 +3,7 @@
 * Store database on disk so it doesn't have to be reparsed on every launch.
 	* Treat anchors as primary way of linking.
 	* Look into BeautifulSoup for parsing
-* Use Sparkle for updates.
+* Use Sparkle for updates. (Shouldn't be *that* big.)
 * Overhaul parsing code. Maybe use NSXMLDocument?
 	* Add error handling to parser API.
 	* Make it easy to do things like:
@@ -15,27 +15,8 @@
 
 ## Smaller bugs/UX stuff
 
-* I thought type-to-select worked? Not working in middle tables.
-* search for "toolbar", the *second* matching result is selected
-* Pop Quiz feature
-	* call it Pop Quiz
-	* use custom window instead of alert
-	* add exact match so search after Random works right
-* Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
-
-* allow for "wip" to be in the version string
-* "Window classes" and "Cell classes" don't make sense for iPhone.
-	* Maybe "Layer classes"?
-* Get new icons.
-* Add menu under "General" and a hotkey for Header File
-* Get rid of the 1, 2, numbering in subtopics (I suspect no one uses them, plus easy to eyeball, plus what if user remaps menu shortcuts?). Make the subtopics list narrower accordingly.
-
-* reproduce recalc
-	* consider drawers
-	* consider popovers?
 * Move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
-* also use real build numbers
-* option to view classes-in-framework hierarchically
+* Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
 
 ----
 
@@ -48,6 +29,10 @@
 
 ## Code hygiene
 
+* have a dev branch and have master be the release branch
+* search *might* be quick enough now, but it should really be in the background instead of blocking the main thread
+* populateDocList: "protected" method is sketchy
+* clarify the navigation methods
 * split AKWindowController into categories? subclasses?
 * #pragma mark ... protocol methods"
 * be consistent about "Init/dealloc/awake"
@@ -69,6 +54,16 @@
 
 ## Maybe later
 
+* Ask about that annoying though presumably harmless exception that gets raised when trying to type-to-select in doc list.
+* ^P/^N to go up and down in lists
+* allow for "wip" to be in the version string
+* Get new icons.
+* Get type-to-select working, especially in the doc list. The prefixes added in the doc list are throwing it off.
+* fully reproduce recalculateKeyViewLoop
+	* consider drawers
+	* consider popovers?
+* also use real build numbers
+* option to view classes-in-framework hierarchically
 * Still getting double drawing -- just saw it in the doc list after a search for QCComposition.
 * Do I need to speed up validation?
 * tab chain: doesn't handle the tab-to-links web pref
