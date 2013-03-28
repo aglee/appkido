@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) IBOutlet NSTextField *symbolNameField;
 
-+ (AKDocLocator *)showPopQuiz;
++ (NSString *)showPopQuiz;
 
 #pragma mark -
 #pragma mark Action methods

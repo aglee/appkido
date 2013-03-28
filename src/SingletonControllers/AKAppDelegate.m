@@ -23,6 +23,7 @@
 #import "AKDocSetIndex.h"
 #import "AKFindPanelController.h"
 #import "AKLoadDatabaseOperation.h"
+#import "AKPopQuizWindowController.h"
 #import "AKPrefPanelController.h"
 #import "AKPrefUtils.h"
 #import "AKQuicklistViewController.h"
@@ -271,9 +272,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
 }
 
 #pragma mark -
-#pragma mark External search requests
+#pragma mark Search
 
 - (void)searchForString:(NSString *)searchString
+         forceNewWindow:(BOOL)shouldForceNewWindow
 {
     if ([[searchString ak_trimWhitespace] length] == 0)
     {
@@ -282,7 +284,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     
     AKWindowController *wc = nil;
     
-    if (![AKPrefUtils shouldSearchInNewWindow])
+    if (!shouldForceNewWindow)
     {
         wc = [self frontmostWindowController];
     }
@@ -300,7 +302,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    [self searchForString:[aCommand directParameter]];
+    [self searchForString:[aCommand directParameter]
+           forceNewWindow:[AKPrefUtils shouldSearchInNewWindow]];
     return nil;
 }
 
@@ -469,6 +472,18 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [exporter doExport];
 }
 
+- (IBAction)popQuiz:(id)sender
+{
+    NSString *apiSymbol = [AKPopQuizWindowController showPopQuiz];
+
+    [self searchForString:apiSymbol forceNewWindow:NO];
+
+    // When the symbol is a "globals" name, it is typically one of many globals
+    // in the same doc. We do a Find Next so that the symbol will be highlighted
+    // if this is the case.
+    [_findPanelController performSelector:@selector(findNextFindString:) withObject:nil afterDelay:0];
+}
+
 #pragma mark -
 #pragma mark AKUIController methods
 
@@ -512,7 +527,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
              || (itemAction == @selector(openPrefsPanel:))
              || (itemAction == @selector(checkForNewerVersion:))
              || (itemAction == @selector(openAboutPanel:))
-             || (itemAction == @selector(exportDatabase:)))
+             || (itemAction == @selector(exportDatabase:))
+             || (itemAction == @selector(popQuiz:)))
     {
         return YES;
     }

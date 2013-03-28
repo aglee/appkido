@@ -57,7 +57,7 @@
             [functionNode setNodeDocumentation:functionSection];
 
             AKGroupNode *groupNode = [[self targetDatabase] functionsGroupNamed:groupName
-                                                         inFrameworkNamed:[self targetFrameworkName]];
+                                                               inFrameworkNamed:[self targetFrameworkName]];
             if (!groupNode)
             {
                 groupNode = [AKGroupNode nodeWithNodeName:groupName

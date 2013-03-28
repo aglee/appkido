@@ -10,36 +10,39 @@
 
 #import "AKAppDelegate.h"
 #import "AKDatabase.h"
+#import "AKDatabaseNode.h"
 #import "AKDocLocator.h"
 #import "AKRandomSearch.h"
+#import "AKTopic.h"
 
 @implementation AKPopQuizWindowController
 
 @synthesize symbolNameField = _symbolNameField;
 
-+ (AKDocLocator *)showPopQuiz
++ (NSString *)showPopQuiz
 {
-    // Select a random doc.
+    // Select a random API symbol.
     AKDatabase *db = [(AKAppDelegate *)[NSApp delegate] appDatabase];
     AKRandomSearch *randomSearch = [[[AKRandomSearch alloc] initWithDatabase:db] autorelease];
-    AKDocLocator *docLocator = [randomSearch randomDocLocator];
+    NSString *symbol = [randomSearch randomAPISymbol];
 
     // The NSFont docs say U200B is Unicode for ZERO WIDTH SPACE. We do this so
     // that if we get a long method name, word wrap will be after the colons.
-    NSString *docName = [[docLocator docName] stringByReplacingOccurrencesOfString:@":"
-                                                                        withString:@":\u200B"];
+    NSString *adjustedSymbol = [symbol stringByReplacingOccurrencesOfString:@":" withString:@":\u200B"];
 
-    // Display the doc name and let the user ponder what it means.
+    // Display the symbol and let the user ponder what it means. Note that
+    // calling [wc window] forces the nib to be loaded, guaranteeing the
+    // symbolNameField outlet gets connected before we attempt to message it.
     AKPopQuizWindowController *wc = [[[self alloc] initWithWindowNibName:@"PopQuiz"] autorelease];
     
-    [[wc window] center];  // Forces the nib to be loaded, so symbolNameField gets set.
+    [[wc window] center];
     [[wc symbolNameField] setSelectable:YES];
-    [[wc symbolNameField] setStringValue:docName];
+    [[wc symbolNameField] setStringValue:adjustedSymbol];
 
     (void)[[NSApplication sharedApplication] runModalForWindow:[wc window]];
 
-    // Return the doc we chose.
-    return docLocator;
+    // Return the symbol we chose.
+    return symbol;
 }
 
 #pragma mark -

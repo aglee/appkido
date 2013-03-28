@@ -24,10 +24,8 @@
 #import "AKGlobalsTopic.h"
 #import "AKInformalProtocolsTopic.h"
 #import "AKLinkResolver.h"
-#import "AKPopQuizWindowController.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolTopic.h"
-#import "AKRandomSearch.h"
 #import "AKQuicklistViewController.h"
 #import "AKSavedWindowState.h"
 #import "AKSubtopicListViewController.h"
@@ -400,13 +398,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-- (IBAction)popQuiz:(id)sender
-{
-    AKDocLocator *docLocator = [AKPopQuizWindowController showPopQuiz];
-
-    [_quicklistController searchForString:[docLocator docName]];
-}
-
 - (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender
 {
     if ([sender isKindOfClass:[NSMenuItem class]]
@@ -688,8 +679,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
              || (itemAction == @selector(selectFunctionsTopic:))
              || (itemAction == @selector(selectGlobalsTopic:))
              || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
-             || (itemAction == @selector(rememberWindowLayout:))
-             || (itemAction == @selector(popQuiz:)))
+             || (itemAction == @selector(rememberWindowLayout:)))
     {
         return YES;
     }

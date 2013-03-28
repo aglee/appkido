@@ -1299,7 +1299,7 @@
 			name = export;
 			sourceTree = "<group>";
 		};
-		732BD5D405ED8FBE0055715D /* singleton controllers */ = {
+		732BD5D405ED8FBE0055715D /* one-time controllers */ = {
 			isa = PBXGroup;
 			children = (
 				7359EB2B0BADB68100574728 /* AKApplication.h */,
@@ -1320,10 +1320,12 @@
 				739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */,
 				73C74137066BFAEF00A76FEE /* AKFindPanelController.h */,
 				73C74138066BFAEF00A76FEE /* AKFindPanelController.m */,
+				737F1DEB17021C8A00D560C7 /* AKPopQuizWindowController.h */,
+				737F1DEC17021C8A00D560C7 /* AKPopQuizWindowController.m */,
 				73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */,
 				73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */,
 			);
-			name = "singleton controllers";
+			name = "one-time controllers";
 			path = SingletonControllers;
 			sourceTree = "<group>";
 		};
@@ -1370,7 +1372,7 @@
 		732BD60505ED90AB0055715D /* -- CONTROLLER CLASSES -- */ = {
 			isa = PBXGroup;
 			children = (
-				732BD5D405ED8FBE0055715D /* singleton controllers */,
+				732BD5D405ED8FBE0055715D /* one-time controllers */,
 				73A0230A16DD18C300240111 /* per-window controllers */,
 				734701A804ED644C00A80003 /* saveable window states (models) */,
 				735E298116E0508200E9FBC1 /* debugging */,
@@ -1554,8 +1556,6 @@
 				7320C17716DCF9ED00797F95 /* AKWindowController.h */,
 				7320C17816DCF9F900797F95 /* AKWindowController.m */,
 				7300310C0498501500A80007 /* AKWindowController+Toolbar.m */,
-				737F1DEB17021C8A00D560C7 /* AKPopQuizWindowController.h */,
-				737F1DEC17021C8A00D560C7 /* AKPopQuizWindowController.m */,
 				73A4ACCD16F1EE20004E6A1C /* view controllers */,
 			);
 			name = "per-window controllers";

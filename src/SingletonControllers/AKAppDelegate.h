@@ -93,9 +93,10 @@
 - (AKWindowController *)controllerForNewWindow;
 
 #pragma mark -
-#pragma mark External search requests
+#pragma mark Search
 
-- (void)searchForString:(NSString *)searchString;
+- (void)searchForString:(NSString *)searchString
+         forceNewWindow:(BOOL)shouldForceNewWindow;
 
 #pragma mark -
 #pragma mark AppleScript support
@@ -130,11 +131,14 @@
 
 /*!
  * If a text view is first responder, scrolls it to show the selected text, if
- * any.
+ * any. [agl] Doesn't seem to be used anywhere.
  */
 - (IBAction)scrollToTextSelection:(id)sender;
 
 /*! Prompts for a file name and exports the contents of the database as XML. */
 - (IBAction)exportDatabase:(id)sender;
+
+/*! Displays a random API symbol to test the user's knowledge. */
+- (IBAction)popQuiz:(id)sender;
 
 @end

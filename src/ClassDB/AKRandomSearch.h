@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @class AKDatabase;
-@class AKDocLocator;
 
+/*!
+ * Used by the Pop Quiz feature. Selects a random API symbol from the database.
+ */
 @interface AKRandomSearch : NSObject
 {
 @private
@@ -24,8 +26,8 @@
 - (id)initWithDatabase:(AKDatabase *)db;
 
 #pragma mark -
-#pragma mark Searching
+#pragma mark Random selection
 
-- (AKDocLocator *)randomDocLocator;
+- (NSString *)randomAPISymbol;
 
 @end
