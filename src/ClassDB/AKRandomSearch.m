@@ -52,12 +52,12 @@
     // Make one huge array of symbols and pick one.
     NSMutableArray *allSymbols = [NSMutableArray array];
 
-//    [self _addClassNamesToArray:allSymbols];
-//    [self _addClassMemberNamesToArray:allSymbols];
+    [self _addClassNamesToArray:allSymbols];
+    [self _addClassMemberNamesToArray:allSymbols];
     [self _addProtocolNamesToArray:allSymbols];
-//    [self _addProtocolMemberNamesToArray:allSymbols];
-//    [self _addFunctionNamesToArray:allSymbols];
-//    [self _addNamesOfGlobalsToArray:allSymbols];
+    [self _addProtocolMemberNamesToArray:allSymbols];
+    [self _addFunctionNamesToArray:allSymbols];
+    [self _addNamesOfGlobalsToArray:allSymbols];
 
     return [allSymbols objectAtIndex:(arc4random() % [allSymbols count])];
 }
