@@ -26,6 +26,22 @@
 @synthesize statusTextField = _statusTextField;
 
 #pragma mark -
+#pragma mark Factory methods
+
++ (id)sharedInstance
+{
+    static AKFindPanelController *s_sharedInstance = nil;
+
+    if (s_sharedInstance == nil)
+    {
+s_sharedInstance = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPanel"];
+(void)[s_sharedInstance window];  // Force the nib to be loaded.
+    }
+
+    return s_sharedInstance;
+}
+
+#pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithWindowNibName:(NSString *)windowNibName

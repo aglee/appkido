@@ -12,23 +12,17 @@
 #import "AKDatabase.h"
 #import "AKDatabaseNode.h"
 #import "AKDocLocator.h"
-#import "AKRandomSearch.h"
 #import "AKTopic.h"
 
 @implementation AKPopQuizWindowController
 
 @synthesize symbolNameField = _symbolNameField;
 
-+ (NSString *)showPopQuiz
++ (void)showPopQuizWithAPISymbol:(NSString *)apiSymbol
 {
-    // Select a random API symbol.
-    AKDatabase *db = [(AKAppDelegate *)[NSApp delegate] appDatabase];
-    AKRandomSearch *randomSearch = [[[AKRandomSearch alloc] initWithDatabase:db] autorelease];
-    NSString *symbol = [randomSearch randomAPISymbol];
-
     // The NSFont docs say U200B is Unicode for ZERO WIDTH SPACE. We do this so
     // that if we get a long method name, word wrap will be after the colons.
-    NSString *adjustedSymbol = [symbol stringByReplacingOccurrencesOfString:@":" withString:@":\u200B"];
+    NSString *adjustedSymbol = [apiSymbol stringByReplacingOccurrencesOfString:@":" withString:@":\u200B"];
 
     // Display the symbol and let the user ponder what it means. Note that
     // calling [wc window] forces the nib to be loaded, guaranteeing the
@@ -40,9 +34,6 @@
     [[wc symbolNameField] setStringValue:adjustedSymbol];
 
     (void)[[NSApplication sharedApplication] runModalForWindow:[wc window]];
-
-    // Return the symbol we chose.
-    return symbol;
 }
 
 #pragma mark -

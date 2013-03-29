@@ -75,6 +75,8 @@
 
 - (void)searchForString:(NSString *)aString;
 
+- (void)includeEverythingInSearch;
+
 #pragma mark -
 #pragma mark Action methods
 

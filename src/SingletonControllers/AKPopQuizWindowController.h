@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) IBOutlet NSTextField *symbolNameField;
 
-+ (NSString *)showPopQuiz;
++ (void)showPopQuizWithAPISymbol:(NSString *)apiSymbol;
 
 #pragma mark -
 #pragma mark Action methods

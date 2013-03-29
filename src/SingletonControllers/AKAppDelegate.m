@@ -27,6 +27,7 @@
 #import "AKPrefPanelController.h"
 #import "AKPrefUtils.h"
 #import "AKQuicklistViewController.h"
+#import "AKRandomSearch.h"
 #import "AKSavedWindowState.h"
 #import "AKServicesProvider.h"
 #import "AKSplashWindowController.h"
@@ -115,7 +116,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_operationQueue release];
     [_prefPanelController release];
     [_aboutWindowController release];
-    [_findPanelController release];
     [_windowControllers release];
     [_favoritesList release];
 
@@ -185,10 +185,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
                                                object:nil];
 
     // Put the find panel controller in the responder chain.
-    _findPanelController = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPanel"];
-    (void)[_findPanelController window];  // Force the nib to be loaded.
-    [_findPanelController setNextResponder:[NSApp nextResponder]];
-    [NSApp setNextResponder:_findPanelController];
+    [[AKFindPanelController sharedInstance] setNextResponder:[NSApp nextResponder]];
+    [NSApp setNextResponder:[AKFindPanelController sharedInstance]];
     
     // Force the DIGSFindBuffer to initialize.
     // [agl] ??? Why not in DIGSFindBuffer's +initialize?
@@ -274,8 +272,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #pragma mark -
 #pragma mark Search
 
-- (void)searchForString:(NSString *)searchString
-         forceNewWindow:(BOOL)shouldForceNewWindow
+- (void)performExternallyRequestedSearchForString:(NSString *)searchString
 {
     if ([[searchString ak_trimWhitespace] length] == 0)
     {
@@ -284,7 +281,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     
     AKWindowController *wc = nil;
     
-    if (!shouldForceNewWindow)
+    if (![AKPrefUtils shouldSearchInNewWindow])
     {
         wc = [self frontmostWindowController];
     }
@@ -302,8 +299,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    [self searchForString:[aCommand directParameter]
-           forceNewWindow:[AKPrefUtils shouldSearchInNewWindow]];
+    [self performExternallyRequestedSearchForString:[aCommand directParameter]];
     return nil;
 }
 
@@ -474,14 +470,20 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (IBAction)popQuiz:(id)sender
 {
-    NSString *apiSymbol = [AKPopQuizWindowController showPopQuiz];
+    // Select a random API symbol.
+    AKRandomSearch *randomSearch = [AKRandomSearch randomSearchWithDatabase:_appDatabase];
+    NSString *apiSymbol = [randomSearch selectedAPISymbol];
 
-    [self searchForString:apiSymbol forceNewWindow:NO];
+    [AKPopQuizWindowController showPopQuizWithAPISymbol:apiSymbol];
 
-    // When the symbol is a "globals" name, it is typically one of many globals
-    // in the same doc. We do a Find Next so that the symbol will be highlighted
-    // if this is the case.
-    [_findPanelController performSelector:@selector(findNextFindString:) withObject:nil afterDelay:0];
+    AKWindowController *wc = [self frontmostWindowController];
+
+    if (wc == nil)
+    {
+        wc = [self controllerForNewWindow];
+    }
+
+    [wc revealPopQuizSymbol:apiSymbol];
 }
 
 #pragma mark -

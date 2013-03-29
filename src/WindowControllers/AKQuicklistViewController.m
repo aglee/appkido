@@ -183,6 +183,16 @@ enum
     [self doSearch:self];
 }
 
+- (void)includeEverythingInSearch
+{
+    [_includeClassesItem setState:NSOnState];
+    [_includeMethodsItem setState:NSOnState];
+    [_includeFunctionsItem setState:NSOnState];
+    [_includeGlobalsItem setState:NSOnState];
+
+    [self _updateSearchQuery];
+}
+
 #pragma mark -
 #pragma mark Action methods
 

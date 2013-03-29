@@ -32,6 +32,11 @@
 @property (nonatomic, assign) IBOutlet NSTextField *statusTextField;
 
 #pragma mark -
+#pragma mark Factory methods
+
++ (id)sharedInstance;
+
+#pragma mark -
 #pragma mark Action methods
 
 - (IBAction)showFindPanel:(id)sender;

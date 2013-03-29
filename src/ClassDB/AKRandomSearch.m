@@ -16,7 +16,25 @@
 #import "AKGroupNode.h"
 #import "AKProtocolNode.h"
 
+@interface AKRandomSearch ()
+@property (nonatomic, readwrite, copy) NSString *selectedAPISymbol;
+@end
+
 @implementation AKRandomSearch
+
+@synthesize selectedAPISymbol = _selectedAPISymbol;
+
+#pragma mark -
+#pragma mark Factory methods
+
++ (id)randomSearchWithDatabase:(AKDatabase *)db
+{
+    AKRandomSearch *randomSearch = [[[self alloc] initWithDatabase:db] autorelease];
+
+    [randomSearch makeRandomSelection];
+
+    return randomSearch;
+}
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -40,6 +58,7 @@
 - (void)dealloc
 {
     [_database release];
+    [_selectedAPISymbol release];
 
     [super dealloc];
 }
@@ -47,76 +66,80 @@
 #pragma mark -
 #pragma mark Random selection
 
-- (NSString *)randomAPISymbol
+- (void)makeRandomSelection
 {
-    // Make one huge array of symbols and pick one.
+    // Construct an array containing all the API symbols we want to choose from,
+    // and a parallel array containing corresponding database nodes.
     NSMutableArray *allSymbols = [NSMutableArray array];
 
-    [self _addClassNamesToArray:allSymbols];
-    [self _addClassMemberNamesToArray:allSymbols];
-    [self _addProtocolNamesToArray:allSymbols];
-    [self _addProtocolMemberNamesToArray:allSymbols];
-    [self _addFunctionNamesToArray:allSymbols];
-    [self _addNamesOfGlobalsToArray:allSymbols];
+    [self _addClassesToSymbolArray:allSymbols];
+    [self _addClassMembersToSymbolArray:allSymbols];
+    [self _addProtocolsToSymbolArray:allSymbols];
+    [self _addProtocolMembersToSymbolArray:allSymbols];
+    [self _addFunctionsToSymbolArray:allSymbols];
+    [self _addGlobalsToSymbolArray:allSymbols];
 
-    return [allSymbols objectAtIndex:(arc4random() % [allSymbols count])];
+    // Make a random selection.
+    NSUInteger randomArrayIndex = (arc4random() % [allSymbols count]);
+
+    [self setSelectedAPISymbol:[allSymbols objectAtIndex:randomArrayIndex]];
 }
 
 #pragma mark -
 #pragma mark Private methods
 
-- (void)_addNamesOfNodes:(NSArray *)databaseNodes toArray:(NSMutableArray *)array
+- (void)_addNodes:(NSArray *)nodesToAdd toSymbolArray:(NSMutableArray *)apiSymbols
 {
-    for (AKDatabaseNode *node in databaseNodes)
+    for (AKDatabaseNode *node in nodesToAdd)
     {
-        [array addObject:[node nodeName]];
+        [apiSymbols addObject:[node nodeName]];
     }
 }
 
-- (void)_addClassNamesToArray:(NSMutableArray *)array
+- (void)_addClassesToSymbolArray:(NSMutableArray *)apiSymbols
 {
-    [self _addNamesOfNodes:[_database allClasses] toArray:array];
+    [self _addNodes:[_database allClasses] toSymbolArray:apiSymbols];
 }
 
-- (void)_addClassMemberNamesToArray:(NSMutableArray *)array
+- (void)_addClassMembersToSymbolArray:(NSMutableArray *)apiSymbols
 {
     for (AKClassNode *classNode in [_database allClasses])
     {
-        [self _addNamesOfNodes:[classNode documentedProperties] toArray:array];
-        [self _addNamesOfNodes:[classNode documentedClassMethods] toArray:array];
-        [self _addNamesOfNodes:[classNode documentedInstanceMethods] toArray:array];
-        [self _addNamesOfNodes:[classNode documentedDelegateMethods] toArray:array];
-        [self _addNamesOfNodes:[classNode documentedNotifications] toArray:array];
+        [self _addNodes:[classNode documentedProperties] toSymbolArray:apiSymbols];
+        [self _addNodes:[classNode documentedClassMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[classNode documentedInstanceMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[classNode documentedDelegateMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[classNode documentedNotifications] toSymbolArray:apiSymbols];
     }
 }
 
-- (void)_addProtocolNamesToArray:(NSMutableArray *)array
+- (void)_addProtocolsToSymbolArray:(NSMutableArray *)apiSymbols
 {
-    [self _addNamesOfNodes:[_database allProtocols] toArray:array];
+    [self _addNodes:[_database allProtocols] toSymbolArray:apiSymbols];
 }
 
-- (void)_addProtocolMemberNamesToArray:(NSMutableArray *)array
+- (void)_addProtocolMembersToSymbolArray:(NSMutableArray *)apiSymbols
 {
     for (AKProtocolNode *protocolNode in [_database allProtocols])
     {
-        [self _addNamesOfNodes:[protocolNode documentedProperties] toArray:array];
-        [self _addNamesOfNodes:[protocolNode documentedClassMethods] toArray:array];
-        [self _addNamesOfNodes:[protocolNode documentedInstanceMethods] toArray:array];
+        [self _addNodes:[protocolNode documentedProperties] toSymbolArray:apiSymbols];
+        [self _addNodes:[protocolNode documentedClassMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[protocolNode documentedInstanceMethods] toSymbolArray:apiSymbols];
     }
 }
 
-- (void)_addFunctionNamesToArray:(NSMutableArray *)array
+- (void)_addFunctionsToSymbolArray:(NSMutableArray *)apiSymbols
 {
     for (NSString *fwName in [_database frameworkNames])
     {
         for (AKGroupNode *groupNode in [_database functionsGroupsForFrameworkNamed:fwName])
         {
-            [self _addNamesOfNodes:[groupNode subnodes] toArray:array];
+            [self _addNodes:[groupNode subnodes] toSymbolArray:apiSymbols];
         }
     }
 }
 
-- (void)_addNamesOfGlobalsToArray:(NSMutableArray *)array
+- (void)_addGlobalsToSymbolArray:(NSMutableArray *)apiSymbols
 {
     for (NSString *fwName in [_database frameworkNames])
     {
@@ -124,7 +147,7 @@
         {
             for (AKGlobalsNode *globalsNode in [groupNode subnodes])
             {
-                [array addObjectsFromArray:[globalsNode namesOfGlobals]];
+                [apiSymbols addObjectsFromArray:[globalsNode namesOfGlobals]];
             }
         }
     }

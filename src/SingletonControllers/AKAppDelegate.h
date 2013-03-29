@@ -11,22 +11,14 @@
 @class AKAboutWindowController;
 @class AKDatabase;
 @class AKDocLocator;
-@class AKFindPanelController;
 @class AKPrefPanelController;
 @class AKSplashWindowController;
 @class AKWindowController;
 
 /*!
- * @class       AKAppDelegate
- * @abstract    Application-level controller object.
- * @discussion  AppKiDo's application delegate.  Has subordinate controllers:
- *              one for the Prefs panel, one for the Quicklist panel, and one
- *              for each browser window.
- *
- *              On launch, displays the splash window, loads the database,
- *              and loads window states that were remembered from the
- *              previous launch.  On quit, saves the states of all open
- *              windows.
+ * AppKiDo's application delegate. On launch, displays the splash window, loads
+ * the database, and loads window states remembered from the previous launch.
+ * On quit, saves the states of all open windows.
  */
 @interface AKAppDelegate : NSObject <AKUIController>
 {
@@ -45,7 +37,6 @@
     // Single-instance windows, lazily instantiated.
     AKPrefPanelController *_prefPanelController;
     AKAboutWindowController *_aboutWindowController;
-    AKFindPanelController *_findPanelController;
 
     // Elements are AKWindowControllers.
     NSMutableArray *_windowControllers;
@@ -95,8 +86,7 @@
 #pragma mark -
 #pragma mark Search
 
-- (void)searchForString:(NSString *)searchString
-         forceNewWindow:(BOOL)shouldForceNewWindow;
+- (void)performExternallyRequestedSearchForString:(NSString *)searchString;
 
 #pragma mark -
 #pragma mark AppleScript support

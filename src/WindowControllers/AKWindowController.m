@@ -19,6 +19,7 @@
 #import "AKDocLocator.h"
 #import "AKDocViewController.h"
 #import "AKFileSection.h"
+#import "AKFindPanelController.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKFunctionsTopic.h"
 #import "AKGlobalsTopic.h"
@@ -227,6 +228,27 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (NSView *)docView
 {
     return [_docViewController docView];
+}
+
+- (void)revealPopQuizSymbol:(NSString *)apiSymbol
+{
+    [_quicklistController includeEverythingInSearch];
+    [_quicklistController searchForString:apiSymbol];
+
+    // When the symbol is a "globals" name, it is typically one of many globals
+    // in the same doc. We do a Find Next so the doc view will highlight it.
+    // Example: NSXMLParserInvalidConditionalSectionError -- it's in the middle
+    // of the page, so we need this kludge to scroll the web view down.
+    if ([[[self currentDocLocator] topicToDisplay] isKindOfClass:[AKGlobalsTopic class]])
+    {
+        [self performSelector:@selector(_popQuizKludge) withObject:nil afterDelay:0];
+    }
+}
+
+- (void)_popQuizKludge
+{
+    [[AKFindPanelController sharedInstance] findNextFindString:nil];
+    [[[_quicklistDrawer contentView] window] makeFirstResponder:[_quicklistController quicklistTable]];
 }
 
 #pragma mark -

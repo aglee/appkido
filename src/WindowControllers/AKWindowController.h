@@ -153,6 +153,8 @@
 
 - (NSView *)docView;
 
+- (void)revealPopQuizSymbol:(NSString *)apiSymbol;
+
 #pragma mark -
 #pragma mark Action methods -- window layout
 

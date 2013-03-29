@@ -39,8 +39,7 @@
     }
     
     // Perform the requested search.
-    [(AKAppDelegate *)[NSApp delegate] searchForString:searchString
-                                        forceNewWindow:[AKPrefUtils shouldSearchInNewWindow]];
+    [(AKAppDelegate *)[NSApp delegate] performExternallyRequestedSearchForString:searchString];
 }
 
 #pragma mark -
