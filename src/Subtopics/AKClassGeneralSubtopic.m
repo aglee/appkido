@@ -1,11 +1,11 @@
 /*
- * AKClassOverviewSubtopic.m
+ * AKClassGeneralSubtopic.m
  *
  * Created by Andy Lee on Tue Jun 22 2004.
  * Copyright (c) 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKClassOverviewSubtopic.h"
+#import "AKClassGeneralSubtopic.h"
 
 #import "DIGSLog.h"
 
@@ -14,7 +14,7 @@
 #import "AKOverviewDoc.h"
 #import "AKFileSection.h"
 
-@implementation AKClassOverviewSubtopic
+@implementation AKClassGeneralSubtopic
 
 #pragma mark -
 #pragma mark Factory methods
@@ -72,7 +72,7 @@
 }
 
 #pragma mark -
-#pragma mark AKBehaviorOverviewSubtopic methods
+#pragma mark AKBehaviorGeneralSubtopic methods
 
 - (AKBehaviorNode *)behaviorNode
 {

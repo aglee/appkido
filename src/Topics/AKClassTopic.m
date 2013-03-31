@@ -11,7 +11,7 @@
 
 #import "AKAppDelegate.h"
 #import "AKClassMethodsSubtopic.h"
-#import "AKClassOverviewSubtopic.h"
+#import "AKClassGeneralSubtopic.h"
 #import "AKClassNode.h"
 #import "AKDatabase.h"
 #import "AKDelegateMethodsSubtopic.h"
@@ -126,8 +126,8 @@
 
 - (NSArray *)createSubtopicsArray
 {
-    AKClassOverviewSubtopic *overviewSubtopic;
-    overviewSubtopic = [AKClassOverviewSubtopic subtopicForClassNode:_classNode];
+    AKClassGeneralSubtopic *generalSubtopic;
+    generalSubtopic = [AKClassGeneralSubtopic subtopicForClassNode:_classNode];
 
     AKPropertiesSubtopic *propertiesSubtopic;
     propertiesSubtopic = [AKPropertiesSubtopic subtopicForBehaviorNode:_classNode
@@ -160,7 +160,7 @@
     allNotificationsSubtopic = [AKNotificationsSubtopic subtopicForClassNode:_classNode
                                                             includeAncestors:YES];
     return (@[
-            overviewSubtopic,
+            generalSubtopic,
             propertiesSubtopic,
             allPropertiesSubtopic,
             classMethodsSubtopic,

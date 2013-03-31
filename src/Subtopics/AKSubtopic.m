@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark AKXyzSubtopicName
 
-NSString *AKOverviewSubtopicName           = @"General";
+NSString *AKGeneralSubtopicName            = @"General";
 NSString *AKPropertiesSubtopicName         = @"Properties";
 NSString *AKAllPropertiesSubtopicName      = @"ALL Properties";
 NSString *AKClassMethodsSubtopicName       = @"Class Methods";

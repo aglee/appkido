@@ -1,17 +1,17 @@
 /*
- * AKProtocolOverviewSubtopic.m
+ * AKProtocolGeneralSubtopic.m
  *
  * Created by Andy Lee on Tue Jun 22 2004.
  * Copyright (c) 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKProtocolOverviewSubtopic.h"
+#import "AKProtocolGeneralSubtopic.h"
 
 #import "DIGSLog.h"
 #import "AKProtocolNode.h"
 #import "AKHTMLConstants.h"
 
-@implementation AKProtocolOverviewSubtopic
+@implementation AKProtocolGeneralSubtopic
 
 #pragma mark -
 #pragma mark Factory methods
@@ -48,7 +48,7 @@
 }
 
 #pragma mark -
-#pragma mark AKBehaviorOverviewSubtopic methods
+#pragma mark AKBehaviorGeneralSubtopic methods
 
 - (AKBehaviorNode *)behaviorNode
 {

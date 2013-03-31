@@ -1,15 +1,15 @@
 /*
- * AKClassOverviewSubtopic.h
+ * AKClassGeneralSubtopic.h
  *
  * Created by Andy Lee on Tue Jun 22 2004.
  * Copyright (c) 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKBehaviorOverviewSubtopic.h"
+#import "AKBehaviorGeneralSubtopic.h"
 
 @class AKClassNode;
 
-@interface AKClassOverviewSubtopic : AKBehaviorOverviewSubtopic
+@interface AKClassGeneralSubtopic : AKBehaviorGeneralSubtopic
 {
 @private
     AKClassNode *_classNode;

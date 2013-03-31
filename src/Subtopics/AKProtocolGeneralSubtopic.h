@@ -1,15 +1,15 @@
 /*
- * AKClassOverviewSubtopic.h
+ * AKProtocolGeneralSubtopic.h
  *
  * Created by Andy Lee on Tue Jun 22 2004.
  * Copyright (c) 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKBehaviorOverviewSubtopic.h"
+#import "AKBehaviorGeneralSubtopic.h"
 
 @class AKProtocolNode;
 
-@interface AKProtocolOverviewSubtopic : AKBehaviorOverviewSubtopic
+@interface AKProtocolGeneralSubtopic : AKBehaviorGeneralSubtopic
 {
 @private
     AKProtocolNode *_protocolNode;

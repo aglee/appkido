@@ -29,7 +29,6 @@
 
 ## Code hygiene
 
-* Change "Overview" in names to "General" where appropriate.
 * have a dev branch and have master be the release branch
 * search *might* be quick enough now, but it should really be in the background instead of blocking the main thread
 * populateDocList: "protected" method is sketchy

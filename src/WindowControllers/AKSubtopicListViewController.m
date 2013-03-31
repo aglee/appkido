@@ -80,16 +80,16 @@
     [[self owningWindowController] selectSubtopicWithName:newSubtopicName];
 }
 
-- (IBAction)selectOverviewSubtopic:(id)sender
+- (IBAction)selectGeneralSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKOverviewSubtopicName];
+    [[self owningWindowController] selectSubtopicWithName:AKGeneralSubtopicName];
 }
 
 - (IBAction)selectHeaderFile:(id)sender
 {
     AKDocLocator *oldDocLocator = [[self owningWindowController] currentDocLocator];
     AKDocLocator *newDocLocator = [[[AKDocLocator alloc] initWithTopic:[oldDocLocator topicToDisplay]
-                                                          subtopicName:AKOverviewSubtopicName
+                                                          subtopicName:AKGeneralSubtopicName
                                                                docName:AKHeaderFileDocName] autorelease];
     [[self owningWindowController] selectDocWithDocLocator:newDocLocator];
 }
@@ -218,7 +218,7 @@
 {
     SEL itemAction = [anItem action];
 
-    if ((itemAction == @selector(selectOverviewSubtopic:))
+    if ((itemAction == @selector(selectGeneralSubtopic:))
         || (itemAction == @selector(selectPropertiesSubtopic:))
         || (itemAction == @selector(selectAllPropertiesSubtopic:))
         || (itemAction == @selector(selectClassMethodsSubtopic:))

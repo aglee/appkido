@@ -41,7 +41,7 @@
 // Names of standard subtopics that are listed when the topic is a
 // class or protocol.
 
-extern NSString *AKOverviewSubtopicName;
+extern NSString *AKGeneralSubtopicName;
 extern NSString *AKPropertiesSubtopicName;
 extern NSString *AKAllPropertiesSubtopicName;
 extern NSString *AKClassMethodsSubtopicName;

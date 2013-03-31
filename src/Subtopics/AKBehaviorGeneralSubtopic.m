@@ -1,11 +1,11 @@
 /*
- * AKBehaviorOverviewSubtopic.m
+ * AKBehaviorGeneralSubtopic.m
  *
  * Created by Andy Lee on Wed Jul 03 2002.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKBehaviorOverviewSubtopic.h"
+#import "AKBehaviorGeneralSubtopic.h"
 
 #import "DIGSLog.h"
 
@@ -16,7 +16,7 @@
 #import "AKHeaderFileDoc.h"
 #import "AKInheritanceDoc.h"
 
-@implementation AKBehaviorOverviewSubtopic
+@implementation AKBehaviorGeneralSubtopic
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -72,7 +72,7 @@
 
 - (NSString *)subtopicName
 {
-    return AKOverviewSubtopicName;
+    return AKGeneralSubtopicName;
 }
 
 - (NSString *)stringToDisplayInSubtopicList

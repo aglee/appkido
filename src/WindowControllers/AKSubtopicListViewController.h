@@ -38,7 +38,7 @@
 
 - (IBAction)doSubtopicTableAction:(id)sender;
 
-- (IBAction)selectOverviewSubtopic:(id)sender;
+- (IBAction)selectGeneralSubtopic:(id)sender;
 
 - (IBAction)selectHeaderFile:(id)sender;
 
