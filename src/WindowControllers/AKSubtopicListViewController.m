@@ -10,6 +10,7 @@
 #import "AKBehaviorTopic.h"
 #import "AKDocLocator.h"
 #import "AKHeaderFileDoc.h"
+#import "AKBehaviorNode.h"
 #import "AKSubtopic.h"
 #import "AKTableView.h"
 #import "AKTopic.h"
@@ -218,7 +219,6 @@
     SEL itemAction = [anItem action];
 
     if ((itemAction == @selector(selectOverviewSubtopic:))
-        || (itemAction == @selector(selectHeaderFile:))
         || (itemAction == @selector(selectPropertiesSubtopic:))
         || (itemAction == @selector(selectAllPropertiesSubtopic:))
         || (itemAction == @selector(selectClassMethodsSubtopic:))
@@ -232,6 +232,12 @@
     {
         AKTopic *currentTopic = [[[self owningWindowController] currentDocLocator] topicToDisplay];
         return [currentTopic isKindOfClass:[AKBehaviorTopic class]];
+    }
+    else if (itemAction == @selector(selectHeaderFile:))
+    {
+        AKTopic *currentTopic = [[[self owningWindowController] currentDocLocator] topicToDisplay];
+        return ([currentTopic isKindOfClass:[AKBehaviorTopic class]]
+                && ([(AKBehaviorNode *)[currentTopic topicNode] headerFileWhereDeclared] != nil));
     }
 
     return NO;
