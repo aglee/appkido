@@ -9,12 +9,9 @@
 #import "AKPrefDictionary.h"
 #import "AKPrefUtils.h"
 
-@class AKSubtopic;
-@class AKDatabase;
-@class AKDatabaseNode;
 @class AKClassNode;
+@class AKDatabaseNode;
 @class AKSubtopic;
-@class AKDoc;
 
 /*!
  * @class       AKTopic

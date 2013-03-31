@@ -9,28 +9,13 @@
 
 #import "DIGSLog.h"
 
-#import "AKFrameworkConstants.h"
-#import "AKHTMLConstants.h"
-
 #import "AKDatabase.h"
-#import "AKFileSection.h"
-#import "AKClassNode.h"
-#import "AKProtocolNode.h"
-#import "AKPropertyNode.h"
-#import "AKMethodNode.h"
-#import "AKNotificationNode.h"
-#import "AKFunctionNode.h"
-#import "AKGlobalsNode.h"
-
+#import "AKDatabaseNode.h"
+#import "AKDoc.h"
 #import "AKDocLocator.h"
+#import "AKFileSection.h"
 #import "AKSearchQuery.h"
-
-#import "AKSubtopic.h"
-#import "AKClassTopic.h"
-#import "AKProtocolTopic.h"
-#import "AKFunctionsTopic.h"
-#import "AKGlobalsTopic.h"
-#import "AKOverviewDoc.h"
+#import "AKTopic.h"
 
 @implementation AKLinkResolver
 
