@@ -7,13 +7,22 @@
 
 #import "AKPrefPanelController.h"
 
+#import "AKAppDelegate.h"
+#import "AKDatabase.h"
+#import "AKDevToolsViewController.h"
 #import "AKFrameworkConstants.h"
 #import "AKPrefUtils.h"
-#import "AKDatabase.h"
-#import "AKAppDelegate.h"
-#import "AKDevToolsPathController.h"
 
 @implementation AKPrefPanelController
+
+@synthesize prefsTabView = _prefsTabView;
+@synthesize listFontNameChoice = _listFontNameChoice;
+@synthesize listFontSizeCombo = _listFontSizeCombo;
+@synthesize headerFontNameChoice = _headerFontNameChoice;
+@synthesize headerFontSizeCombo = _headerFontSizeCombo;
+@synthesize magnificationChoice = _magnificationChoice;
+@synthesize frameworksTable = _frameworksTable;
+@synthesize searchInNewWindowCheckbox = _searchInNewWindowCheckbox;
 
 #pragma mark -
 #pragma mark Private constants
@@ -41,13 +50,26 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 
 - (void)awakeFromNib
 {
-    [[_prefsTabView window] center];
+    // Plug the Dev Tools view into the tab view.
+    _devToolsViewController = [[AKDevToolsViewController alloc] initWithNibName:@"DevToolsView"
+                                                                         bundle:nil];
+    NSUInteger tabViewItemIndex = [_prefsTabView indexOfTabViewItemWithIdentifier:@"Dev Tools"];
+    NSTabViewItem *devToolsTabViewItem = [_prefsTabView tabViewItemAtIndex:tabViewItemIndex];
 
-    // Tweak the Frameworks table.
+    [devToolsTabViewItem setView:[_devToolsViewController view]];
+
+    // Tweak the Frameworks table. [agl] Can't I do this in IB?
     NSButtonCell *checkboxCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
 
     [checkboxCell setButtonType:NSSwitchButton];
     [[_frameworksTable tableColumnWithIdentifier:_AKCheckboxesColumnID] setDataCell:checkboxCell];
+}
+
+- (void)dealloc
+{
+    [_devToolsViewController release];
+
+    [super dealloc];
 }
 
 #pragma mark -
@@ -57,6 +79,8 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 {
     [self _updateAppearanceTabFromPrefs];
     [self _updateSearchTabFromPrefs];
+    
+    [[_prefsTabView window] center];
     [[_prefsTabView window] makeKeyAndOrderFront:nil];
 }
 

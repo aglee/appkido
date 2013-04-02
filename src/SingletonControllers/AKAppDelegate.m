@@ -611,7 +611,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         [AKPrefUtils setSDKVersionPref:nil];
         
         [self _displayDatabaseCreationErrorStrings:errorStrings];
-        if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
+        if (![AKDevToolsPanelController runDevToolsSetupPanel])
         {
             return nil;
         }
@@ -674,7 +674,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
                          informativeTextWithFormat:@"%@", alertText];
     [alert runModal];
 
-    if (![[AKDevToolsPanelController controller] runDevToolsSetupPanel])
+    if (![AKDevToolsPanelController runDevToolsSetupPanel])
     {
         [NSApp terminate:nil];
     }

@@ -398,7 +398,7 @@
 		7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */; };
 		7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */; };
 		7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
-		7399B31B0E632A5C001AE672 /* AKDevToolsPathController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsPathController.h */; };
+		7399B31B0E632A5C001AE672 /* AKDevToolsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsViewController.h */; };
 		7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7368B9AD0E0EFB2200AFEA2D /* AKCollectionOfNodes.h */; };
 		7399B31D0E632A5C001AE672 /* AKPropertyNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F3B0E396A71002AFB76 /* AKPropertyNode.h */; };
 		7399B31E0E632A5C001AE672 /* AKMemberNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F400E3974E1002AFB76 /* AKMemberNode.h */; };
@@ -520,7 +520,7 @@
 		7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */; };
 		7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */; };
 		7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
-		7399B3AD0E632A5C001AE672 /* AKDevToolsPathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsPathController.m */; };
+		7399B3AD0E632A5C001AE672 /* AKDevToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsViewController.m */; };
 		7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfNodes.m */; };
 		7399B3AF0E632A5C001AE672 /* AKPropertyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F3C0E396A71002AFB76 /* AKPropertyNode.m */; };
 		7399B3B00E632A5C001AE672 /* AKMemberNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F410E3974E1002AFB76 /* AKMemberNode.m */; };
@@ -567,20 +567,20 @@
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
 		73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
-		73B914950E089D180012C16F /* AKDevToolsPathController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsPathController.h */; };
-		73B914960E089D180012C16F /* AKDevToolsPathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsPathController.m */; };
+		73B914950E089D180012C16F /* AKDevToolsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsViewController.h */; };
+		73B914960E089D180012C16F /* AKDevToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsViewController.m */; };
 		73C735A70F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
 		73C735A80F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */; };
 		73C735A90F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
 		73C735AA0F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */; };
-		73C891DF14E10B7600A54FF6 /* DevToolsPath.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D814E10B7600A54FF6 /* DevToolsPath.xib */; };
+		73C891DF14E10B7600A54FF6 /* DevToolsPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D814E10B7600A54FF6 /* DevToolsPanel.xib */; };
 		73C891E014E10B7600A54FF6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DA14E10B7600A54FF6 /* MainMenu.xib */; };
 		73C891E114E10B7600A54FF6 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DC14E10B7600A54FF6 /* Prefs.xib */; };
 		73C983F40FE47F6800C4BEBA /* AKMacDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C983F20FE47F6800C4BEBA /* AKMacDevTools.h */; };
 		73C983F50FE47F6800C4BEBA /* AKMacDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */; };
 		73C983FE0FE4815E00C4BEBA /* AKMacDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C983F20FE47F6800C4BEBA /* AKMacDevTools.h */; };
 		73C983FF0FE4815E00C4BEBA /* AKMacDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */; };
-		73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D814E10B7600A54FF6 /* DevToolsPath.xib */; };
+		73D07C0A14E11D2E00383E06 /* DevToolsPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891D814E10B7600A54FF6 /* DevToolsPanel.xib */; };
 		73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DA14E10B7600A54FF6 /* MainMenu.xib */; };
 		73D07C0C14E11D3800383E06 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C891DC14E10B7600A54FF6 /* Prefs.xib */; };
 		73D237080D4561C300EF7503 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237010D4561C300EF7503 /* FMDatabase.h */; };
@@ -634,6 +634,8 @@
 		73FECB58170A27C000A7FB27 /* AKBehaviorGeneralDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73FECB55170A27BF00A7FB27 /* AKBehaviorGeneralDoc.h */; };
 		73FECB59170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FECB56170A27BF00A7FB27 /* AKBehaviorGeneralDoc.m */; };
 		73FECB5A170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FECB56170A27BF00A7FB27 /* AKBehaviorGeneralDoc.m */; };
+		73FECB8E170AA0D700A7FB27 /* DevToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73FECB8C170AA0D700A7FB27 /* DevToolsView.xib */; };
+		73FECB8F170AA0D700A7FB27 /* DevToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73FECB8C170AA0D700A7FB27 /* DevToolsView.xib */; };
 		F28A5B2B13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
 		F28A5B2C13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
 		F28A5B2D13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */; };
@@ -899,8 +901,8 @@
 		73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFunctionNode.m; sourceTree = "<group>"; };
 		73B722C104B5FF1900A80003 /* AKColoredBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKColoredBox.h; path = CustomViews/AKColoredBox.h; sourceTree = "<group>"; };
 		73B722C204B5FF1900A80003 /* AKColoredBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKColoredBox.m; path = CustomViews/AKColoredBox.m; sourceTree = "<group>"; };
-		73B914930E089D180012C16F /* AKDevToolsPathController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsPathController.h; sourceTree = "<group>"; };
-		73B914940E089D180012C16F /* AKDevToolsPathController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsPathController.m; sourceTree = "<group>"; };
+		73B914930E089D180012C16F /* AKDevToolsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsViewController.h; sourceTree = "<group>"; };
+		73B914940E089D180012C16F /* AKDevToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsViewController.m; sourceTree = "<group>"; };
 		73B9158806133DBF00066E17 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = English; path = English.lproj/Credits.html; sourceTree = "<group>"; };
 		73BACC00068573870016B38E /* AKParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKParser.h; sourceTree = "<group>"; };
 		73BACC01068573870016B38E /* AKParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKParser.m; sourceTree = "<group>"; };
@@ -910,7 +912,7 @@
 		73C74138066BFAEF00A76FEE /* AKFindPanelController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKFindPanelController.m; sourceTree = "<group>"; };
 		73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKPrefPanelController.h; sourceTree = "<group>"; };
 		73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKPrefPanelController.m; sourceTree = "<group>"; };
-		73C891D914E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DevToolsPath.xib; sourceTree = "<group>"; };
+		73C891D914E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DevToolsPanel.xib; sourceTree = "<group>"; };
 		73C891DB14E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		73C891DD14E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Prefs.xib; sourceTree = "<group>"; };
 		73C96E23049CA60200A87B79 /* AKSavedWindowState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSavedWindowState.h; sourceTree = "<group>"; };
@@ -967,6 +969,7 @@
 		73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKBorderHidingView.m; path = CustomViews/AKBorderHidingView.m; sourceTree = "<group>"; };
 		73FECB55170A27BF00A7FB27 /* AKBehaviorGeneralDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKBehaviorGeneralDoc.h; path = "../../../appkido-PRE-REBOOT/src/Docs/AKBehaviorGeneralDoc.h"; sourceTree = "<group>"; };
 		73FECB56170A27BF00A7FB27 /* AKBehaviorGeneralDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKBehaviorGeneralDoc.m; path = "../../../appkido-PRE-REBOOT/src/Docs/AKBehaviorGeneralDoc.m"; sourceTree = "<group>"; };
+		73FECB8D170AA0D700A7FB27 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DevToolsView.xib; sourceTree = "<group>"; };
 		F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMXMLWriter.m; sourceTree = "<group>"; };
 		F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMXMLWriter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1184,6 +1187,7 @@
 			isa = PBXGroup;
 			children = (
 				738D41B315B07A1C008950F6 /* AboutWindow.xib */,
+				73C891D814E10B7600A54FF6 /* DevToolsPanel.xib */,
 				7332E8DC16E8EFAE00A3764B /* FindPanel.xib */,
 				73C891DA14E10B7600A54FF6 /* MainMenu.xib */,
 				737F1DE717021BCD00D560C7 /* PopQuiz.xib */,
@@ -1196,7 +1200,7 @@
 		730A0FBC16DDB9A40004C76C /* utility nibs */ = {
 			isa = PBXGroup;
 			children = (
-				73C891D814E10B7600A54FF6 /* DevToolsPath.xib */,
+				73FECB8C170AA0D700A7FB27 /* DevToolsView.xib */,
 				73D59E8F15B46A7E00A1BEAF /* TestDocParser.xib */,
 			);
 			name = "utility nibs";
@@ -1305,8 +1309,8 @@
 				73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */,
 				738D41B015B078E0008950F6 /* AKAboutWindowController.h */,
 				738D41B115B078E0008950F6 /* AKAboutWindowController.m */,
-				73B914930E089D180012C16F /* AKDevToolsPathController.h */,
-				73B914940E089D180012C16F /* AKDevToolsPathController.m */,
+				73B914930E089D180012C16F /* AKDevToolsViewController.h */,
+				73B914940E089D180012C16F /* AKDevToolsViewController.m */,
 				739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */,
 				739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */,
 				73C74137066BFAEF00A76FEE /* AKFindPanelController.h */,
@@ -1348,13 +1352,13 @@
 				73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */,
 				73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */,
 				7304030B16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h */,
+				73A4ACD916F35814004E6A1C /* AKTabChain.h */,
+				73A4ACDA16F35815004E6A1C /* AKTabChain.m */,
+				73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */,
 				730030A90498501500A80007 /* AKTableView.h */,
 				730030AA0498501500A80007 /* AKTableView.m */,
 				734B2D9E0810C882001D5F3A /* AKWindow.h */,
 				734B2D9F0810C882001D5F3A /* AKWindow.m */,
-				73A4ACD916F35814004E6A1C /* AKTabChain.h */,
-				73A4ACDA16F35815004E6A1C /* AKTabChain.m */,
-				73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */,
 			);
 			name = "-- VIEW CLASSES --";
 			sourceTree = "<group>";
@@ -1895,7 +1899,7 @@
 				73D23C0F0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h in Headers */,
 				73D23C890D4CCE2800EF7503 /* AKDocSetIndex.h in Headers */,
 				73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */,
-				73B914950E089D180012C16F /* AKDevToolsPathController.h in Headers */,
+				73B914950E089D180012C16F /* AKDevToolsViewController.h in Headers */,
 				7368B9AF0E0EFB2200AFEA2D /* AKCollectionOfNodes.h in Headers */,
 				73E86F3D0E396A71002AFB76 /* AKPropertyNode.h in Headers */,
 				73E86F420E3974E1002AFB76 /* AKMemberNode.h in Headers */,
@@ -2039,7 +2043,7 @@
 				7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */,
 				7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */,
 				7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */,
-				7399B31B0E632A5C001AE672 /* AKDevToolsPathController.h in Headers */,
+				7399B31B0E632A5C001AE672 /* AKDevToolsViewController.h in Headers */,
 				7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */,
 				7399B31D0E632A5C001AE672 /* AKPropertyNode.h in Headers */,
 				7399B31E0E632A5C001AE672 /* AKMemberNode.h in Headers */,
@@ -2188,7 +2192,7 @@
 				65B109D909D7B6C300A8A637 /* about-the-code.markdown in Resources */,
 				73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */,
 				7399B3FB0E638B54001AE672 /* app-icon-iphone.icns in Resources */,
-				73C891DF14E10B7600A54FF6 /* DevToolsPath.xib in Resources */,
+				73C891DF14E10B7600A54FF6 /* DevToolsPanel.xib in Resources */,
 				73C891E014E10B7600A54FF6 /* MainMenu.xib in Resources */,
 				73C891E114E10B7600A54FF6 /* Prefs.xib in Resources */,
 				733DF62F14E183B1007E6313 /* AllFrameworkNames.sql in Resources */,
@@ -2207,6 +2211,7 @@
 				7312A76616DD293D00052FEA /* TopicBrowserView.xib in Resources */,
 				7332E8DE16E8EFAE00A3764B /* FindPanel.xib in Resources */,
 				737F1DE917021BCD00D560C7 /* PopQuiz.xib in Resources */,
+				73FECB8E170AA0D700A7FB27 /* DevToolsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2238,7 +2243,7 @@
 				7399B33F0E632A5C001AE672 /* Credits.html in Resources */,
 				7399B3410E632A5C001AE672 /* about-the-code.markdown in Resources */,
 				7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */,
-				73D07C0A14E11D2E00383E06 /* DevToolsPath.xib in Resources */,
+				73D07C0A14E11D2E00383E06 /* DevToolsPanel.xib in Resources */,
 				73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */,
 				73D07C0C14E11D3800383E06 /* Prefs.xib in Resources */,
 				733DF63414E183B2007E6313 /* AllFrameworkNames.sql in Resources */,
@@ -2257,6 +2262,7 @@
 				7312A76716DD293D00052FEA /* TopicBrowserView.xib in Resources */,
 				7332E8DF16E8EFAE00A3764B /* FindPanel.xib in Resources */,
 				737F1DEA17021BCD00D560C7 /* PopQuiz.xib in Resources */,
+				73FECB8F170AA0D700A7FB27 /* DevToolsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2357,7 +2363,7 @@
 				73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */,
 				73D23C880D4CCE2800EF7503 /* AKDocSetIndex.m in Sources */,
 				73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */,
-				73B914960E089D180012C16F /* AKDevToolsPathController.m in Sources */,
+				73B914960E089D180012C16F /* AKDevToolsViewController.m in Sources */,
 				7368B9B00E0EFB2200AFEA2D /* AKCollectionOfNodes.m in Sources */,
 				73E86F3E0E396A71002AFB76 /* AKPropertyNode.m in Sources */,
 				73E86F430E3974E1002AFB76 /* AKMemberNode.m in Sources */,
@@ -2496,7 +2502,7 @@
 				7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */,
 				7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */,
 				7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */,
-				7399B3AD0E632A5C001AE672 /* AKDevToolsPathController.m in Sources */,
+				7399B3AD0E632A5C001AE672 /* AKDevToolsViewController.m in Sources */,
 				7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */,
 				7399B3AF0E632A5C001AE672 /* AKPropertyNode.m in Sources */,
 				7399B3B00E632A5C001AE672 /* AKMemberNode.m in Sources */,
@@ -2632,12 +2638,12 @@
 			name = Credits.html;
 			sourceTree = "<group>";
 		};
-		73C891D814E10B7600A54FF6 /* DevToolsPath.xib */ = {
+		73C891D814E10B7600A54FF6 /* DevToolsPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				73C891D914E10B7600A54FF6 /* English */,
 			);
-			name = DevToolsPath.xib;
+			name = DevToolsPanel.xib;
 			sourceTree = "<group>";
 		};
 		73C891DA14E10B7600A54FF6 /* MainMenu.xib */ = {
@@ -2662,6 +2668,14 @@
 				73D59E9015B46A7E00A1BEAF /* English */,
 			);
 			name = TestDocParser.xib;
+			sourceTree = "<group>";
+		};
+		73FECB8C170AA0D700A7FB27 /* DevToolsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73FECB8D170AA0D700A7FB27 /* English */,
+			);
+			name = DevToolsView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

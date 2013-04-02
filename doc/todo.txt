@@ -39,10 +39,6 @@
 
 ## Code hygiene
 
-* normal NS...Controller for remaining cases
-	* AKPrefPanelController
-	* AKDevToolsPanelController
-	* AKDevToolsPathController
 * have a dev branch and have master be the release branch
 * proper CFBundleShortVersionString and proper 3-part version numbering
 * search *might* be quick enough now, but it should really be in the background instead of blocking the main thread
@@ -50,7 +46,10 @@
 * split AKWindowController into categories? subclasses?
 * be consistent about "Init/dealloc/awake"
 * refactor parsers -- decouple from notion of a file
-* build a docset, see how it loads in Dash/AppKiDo, see where HeaderDoc syntax broken
+* build a docset from the AppKiDo source code comments
+	* see how it loads in Dash
+	* see where HeaderDoc syntax broken
+	* post on appkido.com
 * *could* use newer singleton pattern using gcd
 * use unsafe_unretained instead of assign for objects
 * take varargs in DIGSLogError_ExitingMethodPrematurely

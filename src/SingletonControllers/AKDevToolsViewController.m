@@ -1,20 +1,26 @@
 //
-//  AKDevToolsPathController.m
+//  AKDevToolsPrefsViewController.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 6/17/08.
 //  Copyright 2008 Andy Lee. All rights reserved.
 //
 
-#import "AKDevToolsPathController.h"
+#import "AKDevToolsViewController.h"
 
 #import "DIGSLog.h"
 #import "AKDevToolsUtils.h"
-#import "AKPrefUtils.h"
-#import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
+#import "AKMacDevTools.h"
+#import "AKPrefUtils.h"
 
-@implementation AKDevToolsPathController
+@implementation AKDevToolsViewController
+
+@synthesize xcodeAppPathField = _xcodeAppPathField;
+@synthesize locateXcodeButton = _locateXcodeButton;
+@synthesize sdkVersionsPopUpButton = _sdkVersionsPopUpButton;
+@synthesize explanationField = _explanationField;
+@synthesize okButton = _okButton;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -28,9 +34,14 @@
     
     // Populate the UI with initial values.
     if (xcodeAppPath)
+    {
         [_xcodeAppPathField setStringValue:xcodeAppPath];
+    }
     else
+    {
         [_xcodeAppPathField setStringValue:@""];
+    }
+    
     [self _updateUIToReflectPrefs];
 }
 
@@ -39,6 +50,16 @@
     [_selectedXcodeAppPath release];
 
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Getters and setters
+
+- (void)setOkButton:(NSButton *)okButton
+{
+    _okButton = okButton;
+
+    [self _updateUIToReflectPrefs];
 }
 
 #pragma mark -

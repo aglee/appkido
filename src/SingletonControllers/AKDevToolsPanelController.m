@@ -10,41 +10,19 @@
 
 #import "DIGSLog.h"
 #import "AKPrefUtils.h"
-#import "AKDevToolsPathController.h"
+#import "AKDevToolsViewController.h"
 
 @implementation AKDevToolsPanelController
 
-#pragma mark -
-#pragma mark Factory methods
-
-+ (id)controller
-{
-    return [[[self alloc] init] autorelease];
-}
+@synthesize devToolsView = _devToolsView;
+@synthesize okButton = _okButton;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
-{
-    if ((self = [super init]))
-    {
-        if (![NSBundle loadNibNamed:@"DevToolsPath" owner:self])
-        {
-            DIGSLogDebug(@"Failed to load DevToolsPath");
-            return nil;
-        }
-    }
-
-    return self;
-}
-
 - (void)dealloc
 {
-    if ([_window delegate] == self)
-    {
-        [_window setDelegate:nil];
-    }
+    [_devToolsViewController release];
 
     [super dealloc];
 }
@@ -52,14 +30,12 @@
 #pragma mark -
 #pragma mark Running the panel
 
-- (BOOL)runDevToolsSetupPanel
++ (BOOL)runDevToolsSetupPanel
 {
-    DIGSLogDebug_EnteringMethod();
+    AKDevToolsPanelController *wc = [[[self alloc] initWithWindowNibName:@"DevToolsPanel"] autorelease];
+    NSInteger result = [[NSApplication sharedApplication] runModalForWindow:[wc window]];
 
-    NSInteger result = [[NSApplication sharedApplication] runModalForWindow:_window];
-
-    DIGSLogDebug(@"result of Dev Tools path panel: %ld", (long)result);
-    [_window orderOut:self];
+    [[wc window] orderOut:self];  // [agl] needed?
 
 	return (result == NSRunStoppedResponse);
 }
@@ -71,13 +47,31 @@
 {
     DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] stopModal];
-//    [_window close];
 }
 
 - (IBAction)cancel:(id)sender
 {
     DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] terminate:self];
+}
+
+#pragma mark -
+#pragma mark NSWindowController methods
+
+- (void)windowDidLoad
+{
+    // Plug the dev tools view into the window.
+    _devToolsViewController = [[AKDevToolsViewController alloc] initWithNibName:@"DevToolsView"
+                                                                         bundle:nil];
+    NSView *realDevToolsView = [_devToolsViewController view];
+    
+    [realDevToolsView setFrame:[_devToolsView frame]];
+    [realDevToolsView setAutoresizingMask:[_devToolsView autoresizingMask]];
+    [[_devToolsView superview] replaceSubview:_devToolsView with:realDevToolsView];
+    [self setDevToolsView:realDevToolsView];
+
+    // Tell the dev tools view controller where the OK button is.
+    [_devToolsViewController setOkButton:_okButton];
 }
 
 @end

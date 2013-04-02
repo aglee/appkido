@@ -7,38 +7,41 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AKDevToolsPathController;
+@class AKDevToolsViewController;
 
 /*!
  * Controller for the application-wide Preferences panel.
  */
 @interface AKPrefPanelController : NSObject
 {
-    // Tab view for switching between groups of preference settings.
-    IBOutlet NSTabView *_prefsTabView;
+    // Provides the controls in the Dev Tools tab.
+    AKDevToolsViewController *_devToolsViewController;
 
-    // Controls in the Appearance tab.
-    IBOutlet NSPopUpButton *_listFontNameChoice;
-    IBOutlet NSComboBox *_listFontSizeCombo;
+    // IBOutlets -- tab view for showing groups of preference settings.
+    NSTabView *_prefsTabView;
 
-    IBOutlet NSPopUpButton *_headerFontNameChoice;
-    IBOutlet NSComboBox *_headerFontSizeCombo;
+    // IBOutlets -- controls in the Appearance tab.
+    NSPopUpButton *_listFontNameChoice;
+    NSComboBox *_listFontSizeCombo;
+    NSPopUpButton *_headerFontNameChoice;
+    NSComboBox *_headerFontSizeCombo;
+    NSPopUpButton *_magnificationChoice;
 
-    IBOutlet NSPopUpButton *_magnificationChoice;
+    // IBOutlets -- controls in the Frameworks tab.
+    NSTableView *_frameworksTable;
 
-    // Controls in the Frameworks tab.
-    IBOutlet NSTableView *_frameworksTable;
-
-    // Controls in the Dev Tools tab.
-    // In our nib file, _devToolsPathController's two outlets are connected
-    // to _xcodeAppPathField and _sdkVersionsPopUpButton.
-    IBOutlet AKDevToolsPathController *_devToolsPathController;
-    IBOutlet NSTextField *_xcodeAppPathField;
-    IBOutlet NSPopUpButton *_sdkVersionsPopUpButton;
-    
-    // Controls in the Search tab.
-    IBOutlet NSButton *_searchInNewWindowCheckbox;
+    // IBOutlets -- controls in the Search tab.
+    NSButton *_searchInNewWindowCheckbox;
 }
+
+@property (nonatomic, assign) IBOutlet NSTabView *prefsTabView;
+@property (nonatomic, assign) IBOutlet NSPopUpButton *listFontNameChoice;
+@property (nonatomic, assign) IBOutlet NSComboBox *listFontSizeCombo;
+@property (nonatomic, assign) IBOutlet NSPopUpButton *headerFontNameChoice;
+@property (nonatomic, assign) IBOutlet NSComboBox *headerFontSizeCombo;
+@property (nonatomic, assign) IBOutlet NSPopUpButton *magnificationChoice;
+@property (nonatomic, assign) IBOutlet NSTableView *frameworksTable;
+@property (nonatomic, assign) IBOutlet NSButton *searchInNewWindowCheckbox;
 
 #pragma mark -
 #pragma mark Factory methods
