@@ -61,7 +61,7 @@
 				<string>Copy with Selector Awareness</string>
 			</dict>
 			<key>NSMessage</key>
-			<string>copyWithSelectorAwareness</string>
+			<string>xxxcopyWithSelectorAwareness</string>
 			<key>NSPortName</key>
 			<string>AppKiDo</string>
 			<key>NSRequiredContext</key>
