@@ -434,7 +434,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKDocLocator *docLocator = [AKDocLocator withTopic:[self _currentTopic]
                                           subtopicName:nil
                                                docName:nil];
-    [(AKAppDelegate *)[NSApp delegate] addFavorite:docLocator];
+    [[AKAppDelegate appDelegate] addFavorite:docLocator];
 }
 
 #pragma mark -
@@ -719,7 +719,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         }
 
         // Enable the item if the selected topic isn't already a favorite.
-        NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
+        NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
         AKDocLocator *proposedFavorite = [AKDocLocator withTopic:currentTopic subtopicName:nil docName:nil];
 
         if ([favoritesList containsObject:proposedFavorite])

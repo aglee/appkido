@@ -39,7 +39,7 @@
     }
     
     // Perform the requested search.
-    [(AKAppDelegate *)[NSApp delegate] performExternallyRequestedSearchForString:searchString];
+    [[AKAppDelegate appDelegate] performExternallyRequestedSearchForString:searchString];
 }
 
 #pragma mark -

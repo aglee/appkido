@@ -147,7 +147,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         NSEvent *currentEvent = [NSApp currentEvent];
         AKWindowController *wc = (([currentEvent modifierFlags] & NSCommandKeyMask)
-                                  ? [(AKAppDelegate *)[NSApp delegate] controllerForNewWindow]
+                                  ? [[AKAppDelegate appDelegate] controllerForNewWindow]
                                   : [self owningWindowController]);
 
         // Use a delayed perform to avoid mucking with the WebView's

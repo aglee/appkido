@@ -240,7 +240,7 @@ enum
 
     if (row >= 0)
     {
-        [(AKAppDelegate *)[NSApp delegate] removeFavoriteAtIndex:row];
+        [[AKAppDelegate appDelegate] removeFavoriteAtIndex:row];
     }
 }
 
@@ -337,7 +337,7 @@ enum
 {
     if (_AKFavoritesQuicklistMode == _selectedQuicklistMode)
     {
-        NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
+        NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
 
         if (![favoritesList isEqual:_docLocators])  // [agl] review
         {
@@ -462,7 +462,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         return NO;
     }
 
-    [(AKAppDelegate *)[NSApp delegate] moveFavoriteFromIndex:draggedRowIndex
+    [[AKAppDelegate appDelegate] moveFavoriteFromIndex:draggedRowIndex
                                                      toIndex:row];
     return YES;
 }
@@ -523,7 +523,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         case _AKFavoritesQuicklistMode:
         {
-            NSArray *favoritesList = [(AKAppDelegate *)[NSApp delegate] favoritesList];
+            NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
 
             tableValues = [NSArray arrayWithArray:favoritesList];
             break;

@@ -52,6 +52,11 @@
 @property (nonatomic, assign) IBOutlet NSMenuItem *firstGoMenuDivider;
 
 #pragma mark -
+#pragma mark Shared instance
+
++ (AKAppDelegate *)appDelegate;
+
+#pragma mark -
 #pragma mark Application startup
 
 /*!

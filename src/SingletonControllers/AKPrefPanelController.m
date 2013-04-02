@@ -63,14 +63,14 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 - (IBAction)applyAppearancePrefs:(id)sender
 {
     [self _updatePrefsFromAppearanceTab];
-    [(AKAppDelegate *)[NSApp delegate] applyUserPreferences];
+    [[AKAppDelegate appDelegate] applyUserPreferences];
 }
 
 - (IBAction)useDefaultAppearancePrefs:(id)sender
 {
     [AKPrefUtils resetAppearancePrefsToDefaults];
     [self _updateAppearanceTabFromPrefs];
-    [(AKAppDelegate *)[NSApp delegate] applyUserPreferences];
+    [[AKAppDelegate appDelegate] applyUserPreferences];
 }
 
 - (IBAction)doFrameworksListAction:(id)sender

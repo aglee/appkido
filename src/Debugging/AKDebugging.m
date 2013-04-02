@@ -140,7 +140,7 @@
 
 - (IBAction)printFunWindowFacts:(id)sender
 {
-    AKWindowController *wc = [(AKAppDelegate *)[NSApp delegate] frontmostWindowController];
+    AKWindowController *wc = [[AKAppDelegate appDelegate] frontmostWindowController];
 
     if (wc == nil)
     {

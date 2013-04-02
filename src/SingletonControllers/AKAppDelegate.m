@@ -53,7 +53,7 @@
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    return [(AKAppDelegate *)[NSApp delegate] handleSearchScriptCommand:aCommand];
+    return [[AKAppDelegate appDelegate] handleSearchScriptCommand:aCommand];
 }
 
 @end
@@ -63,6 +63,14 @@
 @implementation AKAppDelegate
 
 @synthesize firstGoMenuDivider = _firstGoMenuDivider;
+
+#pragma mark -
+#pragma mark Shared instance
+
++ (AKAppDelegate *)appDelegate
+{
+    return (AKAppDelegate *)[NSApp delegate];
+}
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
