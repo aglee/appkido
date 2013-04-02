@@ -25,12 +25,12 @@
     return nil;
 }
 
-- (BOOL)isPlainText
+- (BOOL)docTextIsHTML
 {
-    return NO;
+    return YES;
 }
 
-- (BOOL)textIncludesDescendantSections
+- (BOOL)docTextShouldIncludeDescendantSections
 {
     return YES;
 }
@@ -39,17 +39,17 @@
 {
     AKFileSection *fileSection = [self fileSection];
 
-    if ([self isPlainText])
+    if ([self docTextIsHTML])
     {
-        return [fileSection sectionData];
-    }
-    else
-    {
-        NSData *textData = ([self textIncludesDescendantSections]
+        NSData *textData = ([self docTextShouldIncludeDescendantSections]
                             ? [self _rolledUpTextForFileSection:fileSection]
                             : [fileSection sectionData]);
 
         return [self _kludgeHTML:textData];
+    }
+    else
+    {
+        return [fileSection sectionData];
     }
 }
 

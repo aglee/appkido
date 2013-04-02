@@ -10,18 +10,21 @@
 @class AKDatabase;
 
 /*!
- * Represents a framework topic. Subclasses represent different kinds of topic.
- * Provides implementations for several AKTopic abstract methods, but not
- * -childTopics, because that depends on the type of framework.
- *
- * -childTopics should return instances of AKChildTopicOfFrameworkTopic.
+ * Abstract class that represents an aspect of a framework other than its
+ * classes -- for example, its functions or its formal protocols. Provides
+ * implementations for several AKTopic abstract methods, but not childTopics,
+ * because that depends on the type of framework. Subclasses must override
+ * childTopics to return instances of AKChildTopicOfFrameworkTopic.
  */
 @interface AKFrameworkTopic : AKTopic
 {
-@protected  // [agl] revisit protected ivars
+@private
     AKDatabase *_topicDatabase;
     NSString *_topicFrameworkName;
 }
+
+@property (nonatomic, readonly, strong) AKDatabase *topicDatabase;
+@property (nonatomic, readonly, copy) NSString *topicFrameworkName;
 
 #pragma mark -
 #pragma mark Factory methods

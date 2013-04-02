@@ -53,7 +53,7 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 }
 
 #pragma mark -
-#pragma mark Managing the doc list
+#pragma mark Docs
 
 - (NSInteger)numberOfDocs
 {
@@ -105,9 +105,6 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 
     return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
 }
-
-#pragma mark -
-#pragma mark Protected methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {

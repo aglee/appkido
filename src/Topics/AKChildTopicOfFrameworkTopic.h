@@ -8,12 +8,11 @@
 #import "AKFrameworkTopic.h"
 
 /*!
- * Intermediate class holding shared behavior of topics that are related to a
- * a framework topic. When a framework is selected in the browser, the next
- * next column is populated with instances of this.
+ * Abstract class used for child topics of an AKFrameworkTopic. When a framework
+ * is selected in the topic browser, the next column is populated with instances
+ * of AKChildTopicOfFrameworkTopic classes.
  *
- * Subclasses reflect the type of framework and must implement
- * -stringToDisplayInTopicBrowser.
+ * Subclasses must implement stringToDisplayInTopicBrowser.
  */
 @interface AKChildTopicOfFrameworkTopic : AKFrameworkTopic
 @end

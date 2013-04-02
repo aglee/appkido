@@ -91,7 +91,7 @@
 
 - (void)applyUserPreferences
 {
-    if (![[_docLocator docToDisplay] isPlainText])
+    if ([[_docLocator docToDisplay] docTextIsHTML])
     {
         NSInteger docMagnifierPref = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
 
@@ -272,7 +272,11 @@ contextMenuItemsForElement:(NSDictionary *)element
 
     // Display the text in either _textView or _webView.  Whichever it
     // is, swap it in as our subview if necessary.
-    if ([docToDisplay isPlainText])
+    if ([docToDisplay docTextIsHTML])
+    {
+        [self _useWebViewToDisplayHTML:textData fromFile:htmlFilePath];
+    }
+    else
     {
         [self _useTextViewToDisplayPlainText:textData];
 
@@ -281,10 +285,6 @@ contextMenuItemsForElement:(NSDictionary *)element
         // invalidate the cursor rects for textView, but no, for some
         // reason it doesn't work unless we do it for scrollView.
         [[[self view] window] invalidateCursorRectsForView:[_textView enclosingScrollView]];
-    }
-    else
-    {
-        [self _useWebViewToDisplayHTML:textData fromFile:htmlFilePath];
     }
 }
 

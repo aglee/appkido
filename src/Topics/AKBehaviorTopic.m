@@ -59,12 +59,11 @@
 }
 
 #pragma mark -
-#pragma mark Initialization support
+#pragma mark Subtopics
 
-- (NSArray *)createSubtopicsArray
+- (void)populateSubtopicsArray:(NSMutableArray *)array
 {
     DIGSLogError_MissingOverride();
-    return nil;
 }
 
 #pragma mark -
@@ -82,7 +81,8 @@
 {
     if (!_subtopics)
     {
-        _subtopics = [[self createSubtopicsArray] retain];
+        _subtopics = [[NSMutableArray alloc] init];
+        [self populateSubtopicsArray:_subtopics];
     }
 
     return _subtopics;

@@ -7,20 +7,26 @@
 
 #import "AKTopic.h"
 
+/*!
+ * Not a real topic. Used for displaying label text in the topic browser.
+ */
 @interface AKLabelTopic : AKTopic
 {
 @private
     NSString *_label;
 }
 
+@property (nonatomic, copy) NSString *label;
+
+#pragma mark -
+#pragma mark String constants
+
+extern NSString *AKClassesLabelTopicName;
+extern NSString *AKOtherTopicsLabelTopicName;
+
 #pragma mark -
 #pragma mark Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label;
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (void)setLabel:(NSString *)label;
 
 @end

@@ -23,7 +23,7 @@
 
 - (NSInteger)numberOfSubtopics
 {
-    return [[_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName] count];
+    return [[[self topicDatabase] functionsGroupsForFrameworkNamed:[self topicFrameworkName]] count];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
@@ -35,7 +35,7 @@
 
     // [agl] Do we care about the cost of computing this every time?
     NSArray *groupNodes = [AKSortUtils arrayBySortingArray:
-                [_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName]];
+                [[self topicDatabase] functionsGroupsForFrameworkNamed:[self topicFrameworkName]]];
 
     if ((unsigned)subtopicIndex >= [groupNodes count])
     {

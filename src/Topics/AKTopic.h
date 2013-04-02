@@ -14,36 +14,24 @@
 @class AKSubtopic;
 
 /*!
- * @class       AKTopic
- * @abstract    The representedObject of cells in the topic browser.
- * @discussion  Each cell in the topic browser uses an AKTopic as its
- *              representedObject.  (The topic browser is the NSBrowserView
- *              at the top of the window.  It is managed by an
- *              AKTopicBrowserController.)
+ * Abstract class that represents a documentation topic to which an AppKiDo
+ * window can navigate. Used as the representedObject of cells in the
+ * topic browser.
  *
- *              When a topic is selected in the browser, the selected
- *              AKTopic knows how to populate the next column in the
- *              browser.  The AKTopic also generates AKSubtopic instances
- *              used to populate the subtopic list.  (The subtopic list is
- *              the NSTableView on the left side of the middle section of
- *              the window; it is managed by an AKSubtopicListController.)
- *
- *              For example, when a class is selected in the topic browser,
- *              the next column of the browser is populated with the
- *              class's subclasses, and the subtopic list is populated with
- *              subtopics related to the class like "Class Methods",
- *              "Instance Methods", and so forth.
- *
- *              AKTopic is an abstract class.
+ * UI notes: when a topic is selected in the topic browser, the selected AKTopic
+ * provides **child topics** for populating the next column of the browser, and
+ * **subtopics** for populating the subtopics list. For example, when a class is
+ * selected in the topic browser, the child topics are the class's subclasses
+ * and the subtopics are "General", "Class Methods", "Instance Methods", etc.
  */
 @interface AKTopic : NSObject <AKPrefDictionary, AKSortable>
 
 #pragma mark -
-#pragma mark AKXyzTopicName
+#pragma mark String constants
 
 extern NSString *AKTopicBrowserPathSeparator;
 
-// Canned strings displayed in the topic browser for certain types of topics.
+// Names displayed in the topic browser for certain types of topics.
 extern NSString *AKProtocolsTopicName;
 extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
@@ -84,20 +72,21 @@ extern NSString *AKGlobalsTopicName;
 - (BOOL)browserCellHasChildren;
 
 /*!
- * Subclasses must override if they may have children. Returns array of
- * AKTopics.
+ * Subclasses must override if they can possibly have children. Returns array of
+ * AKTopics. Note the distinction between child topics and subtopics.
  */
 - (NSArray *)childTopics;
 
 #pragma mark -
-#pragma mark Populating the subtopics table
+#pragma mark Subtopics
 
 /*! Subclasses must override. */
 - (NSInteger)numberOfSubtopics;
 
-/*! Subclasses must override. May not return the same object every time. */
+/*! Subclasses must override. */
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex;
 
+/*! Returns -1 if none found. */
 - (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName;
 
 - (AKSubtopic *)subtopicWithName:(NSString *)subtopicName;

@@ -12,14 +12,14 @@ NSString *AKHeaderFileDocName = @"Header File";
 @implementation AKHeaderFileDoc
 
 #pragma mark -
-#pragma mark AKOverviewDoc methods
+#pragma mark AKBehaviorGeneralDoc methods
 
-- (BOOL)isPlainText
+- (BOOL)docTextIsHTML
 {
-    return YES;
+    return NO;
 }
 
-- (NSString *)_unqualifiedDocName
+- (NSString *)unqualifiedDocName
 {
     return AKHeaderFileDocName;
 }

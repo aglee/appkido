@@ -15,7 +15,7 @@
 @implementation AKTopic
 
 #pragma mark -
-#pragma mark AKXyzTopicName
+#pragma mark String constants
 
 NSString *AKTopicBrowserPathSeparator = @"/";
 
@@ -81,7 +81,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 }
 
 #pragma mark -
-#pragma mark Populating the subtopics table
+#pragma mark Subtopics
 
 - (NSInteger)numberOfSubtopics
 {

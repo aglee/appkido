@@ -5,9 +5,13 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKOverviewDoc.h"
+#import "AKBehaviorGeneralDoc.h"
 
 extern NSString *AKHeaderFileDocName;
 
-@interface AKHeaderFileDoc : AKOverviewDoc
+/*!
+ * Represents the "Header File" doc under a class or protocol's "General"
+ * subtopic.
+ */
+@interface AKHeaderFileDoc : AKBehaviorGeneralDoc
 @end

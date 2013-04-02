@@ -11,6 +11,14 @@
 
 @implementation AKLabelTopic
 
+@synthesize label = _label;
+
+#pragma mark -
+#pragma mark String constants
+
+NSString *AKClassesLabelTopicName = @":: classes ::";
+NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
+
 #pragma mark -
 #pragma mark Factory methods
 
@@ -31,15 +39,6 @@
     [_label release];
 
     [super dealloc];
-}
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (void)setLabel:(NSString *)label
-{
-    [_label autorelease];
-    _label = [label copy];
 }
 
 #pragma mark -

@@ -9,10 +9,10 @@
 
 #import "DIGSLog.h"
 
+#import "AKBehaviorGeneralDoc.h"
 #import "AKClassNode.h"
-#import "AKHTMLConstants.h"
-#import "AKOverviewDoc.h"
 #import "AKFileSection.h"
+#import "AKHTMLConstants.h"
 
 @implementation AKClassGeneralSubtopic
 
@@ -103,9 +103,9 @@
         for (AKFileSection *majorSection in [self pertinentChildSectionsOf:extraRootSection])
         {
             NSString *sectionName = [majorSection sectionName];
-            AKOverviewDoc *sectionDoc = [[[AKOverviewDoc alloc] initWithFileSection:majorSection
-                                                              andExtraFrameworkName:extraFrameworkName]
-                                         autorelease];
+            AKBehaviorGeneralDoc *sectionDoc = [[[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection
+                                                                               extraFrameworkName:extraFrameworkName]
+                                                autorelease];
             NSInteger docIndex = [self indexOfDocWithName:sectionName];
 
             if (docIndex < 0)

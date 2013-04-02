@@ -19,6 +19,9 @@
 
 @implementation AKFrameworkTopic
 
+@synthesize topicDatabase = _topicDatabase;
+@synthesize topicFrameworkName = _topicFrameworkName;
+
 #pragma mark -
 #pragma mark Factory methods
 

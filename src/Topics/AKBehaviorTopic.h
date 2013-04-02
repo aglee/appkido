@@ -7,14 +7,15 @@
 
 #import "AKTopic.h"
 
-/*!
- * [agl] same for any class/protocol regardless of framework
- */
 @interface AKBehaviorTopic : AKTopic
 {
 @private
-    // Elements are instances of AKSubtopic classes.
-    NSArray *_subtopics;
+    // Elements are instances of AKSubtopic classes. The array is lazily
+    // instantiated and populated because there are common cases where we'll
+    // have AKBehaviorTopic instances and never need to ask for their subtopics
+    // (for example in a list of search results which the user may never
+    // select).
+    NSMutableArray *_subtopics;
 }
 
 #pragma mark -
@@ -24,9 +25,9 @@
 - (NSString *)behaviorName;
 
 #pragma mark -
-#pragma mark Initialization support
+#pragma mark Subtopics
 
 /*! Subclasses must override. For internal use only. */
-- (NSArray *)createSubtopicsArray;
+- (void)populateSubtopicsArray:(NSMutableArray *)array;
 
 @end

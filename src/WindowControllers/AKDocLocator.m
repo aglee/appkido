@@ -13,6 +13,10 @@
 
 @implementation AKDocLocator
 
+@synthesize topicToDisplay = _topic;
+@synthesize subtopicName = _subtopicName;
+@synthesize docName = _docName;
+
 #pragma mark -
 #pragma mark Factory methods
 
@@ -51,16 +55,6 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKTopic *)topicToDisplay
-{
-    return _topic;
-}
-
-- (NSString *)subtopicName
-{
-    return _subtopicName;
-}
-
 - (void)setSubtopicName:(NSString *)subtopicName
 {
     if (![_subtopicName isEqualToString:subtopicName])
@@ -70,11 +64,6 @@
 
     [_subtopicName autorelease];
     _subtopicName = [subtopicName copy];
-}
-
-- (NSString *)docName
-{
-    return _docName;
 }
 
 - (void)setDocName:(NSString *)docName
@@ -90,8 +79,7 @@
 
 - (NSString *)stringToDisplayInLists
 {
-    // Note the Unicode character.  Here's the info from
-    // Character Palette:
+    // As described by the Character Palette:
     //      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
     //      Unicode: 00AB
     //      UTF8: C2 AB
@@ -153,7 +141,7 @@
 // what two strings to compare next.
 static
 NSComparisonResult
-compareDocLocators(id locOne, id locTwo, void *context)
+compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 {
     NSString *sOne = nil;
     NSString *sTwo = nil;

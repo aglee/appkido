@@ -23,7 +23,7 @@
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ %@",
-            _topicFrameworkName, [self stringToDisplayInTopicBrowser]];
+            [self topicFrameworkName], [self stringToDisplayInTopicBrowser]];
 }
 
 - (NSString *)stringToDisplayInLists
@@ -35,7 +35,7 @@
 {
     return [NSString stringWithFormat:@"%@%@%@%@",
             AKTopicBrowserPathSeparator,
-            _topicFrameworkName,
+            [self topicFrameworkName],
             AKTopicBrowserPathSeparator,
             [self stringToDisplayInTopicBrowser]];
 }

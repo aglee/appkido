@@ -25,7 +25,7 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    NSArray *informalProtocols = [_topicDatabase informalProtocolsForFrameworkNamed:_topicFrameworkName];
+    NSArray *informalProtocols = [[self topicDatabase] informalProtocolsForFrameworkNamed:[self topicFrameworkName]];
 
     for (AKProtocolNode *protocolNode in informalProtocols)
     {

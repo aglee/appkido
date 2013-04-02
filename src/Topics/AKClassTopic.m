@@ -124,54 +124,21 @@
     return _classNode;
 }
 
-- (NSArray *)createSubtopicsArray
+- (void)populateSubtopicsArray:(NSMutableArray *)array
 {
-    AKClassGeneralSubtopic *generalSubtopic;
-    generalSubtopic = [AKClassGeneralSubtopic subtopicForClassNode:_classNode];
-
-    AKPropertiesSubtopic *propertiesSubtopic;
-    propertiesSubtopic = [AKPropertiesSubtopic subtopicForBehaviorNode:_classNode
-                                                      includeAncestors:NO];
-    AKPropertiesSubtopic *allPropertiesSubtopic;
-    allPropertiesSubtopic = [AKPropertiesSubtopic subtopicForBehaviorNode:_classNode
-                                                         includeAncestors:YES];
-    AKClassMethodsSubtopic *classMethodsSubtopic;
-    classMethodsSubtopic = [AKClassMethodsSubtopic subtopicForBehaviorNode:_classNode
-                                                          includeAncestors:NO];
-    AKClassMethodsSubtopic *allClassMethodsSubtopic;
-    allClassMethodsSubtopic = [AKClassMethodsSubtopic subtopicForBehaviorNode:_classNode
-                                                             includeAncestors:YES];
-    AKInstanceMethodsSubtopic *instMethodsSubtopic;
-    instMethodsSubtopic = [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_classNode
-                                                            includeAncestors:NO];
-    AKInstanceMethodsSubtopic *allInstanceMethodsSubtopic;
-    allInstanceMethodsSubtopic = [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_classNode
-                                                                   includeAncestors:YES];
-    AKDelegateMethodsSubtopic *delegateMethodsSubtopic;
-    delegateMethodsSubtopic = [AKDelegateMethodsSubtopic subtopicForClassNode:_classNode
-                                                             includeAncestors:NO];
-    AKDelegateMethodsSubtopic *allDelegateMethodsSubtopic;
-    allDelegateMethodsSubtopic = [AKDelegateMethodsSubtopic subtopicForClassNode:_classNode
-                                                                includeAncestors:YES];
-    AKNotificationsSubtopic *notificationsSubtopic;
-    notificationsSubtopic = [AKNotificationsSubtopic subtopicForClassNode:_classNode
-                                                         includeAncestors:NO];
-    AKNotificationsSubtopic *allNotificationsSubtopic;
-    allNotificationsSubtopic = [AKNotificationsSubtopic subtopicForClassNode:_classNode
-                                                            includeAncestors:YES];
-    return (@[
-            generalSubtopic,
-            propertiesSubtopic,
-            allPropertiesSubtopic,
-            classMethodsSubtopic,
-            allClassMethodsSubtopic,
-            instMethodsSubtopic,
-            allInstanceMethodsSubtopic,
-            delegateMethodsSubtopic,
-            allDelegateMethodsSubtopic,
-            notificationsSubtopic,
-            allNotificationsSubtopic,
-            ]);
+    [array setArray:(@[
+                     [AKClassGeneralSubtopic subtopicForClassNode:_classNode],
+                     [AKPropertiesSubtopic subtopicForBehaviorNode:_classNode includeAncestors:NO],
+                     [AKPropertiesSubtopic subtopicForBehaviorNode:_classNode includeAncestors:YES],
+                     [AKClassMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:NO],
+                     [AKClassMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:YES],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:NO],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:YES],
+                     [AKDelegateMethodsSubtopic subtopicForClassNode:_classNode includeAncestors:NO],
+                     [AKDelegateMethodsSubtopic subtopicForClassNode:_classNode includeAncestors:YES],
+                     [AKNotificationsSubtopic subtopicForClassNode:_classNode includeAncestors:NO],
+                     [AKNotificationsSubtopic subtopicForClassNode:_classNode includeAncestors:YES],
+                     ])];
 }
 
 #pragma mark -

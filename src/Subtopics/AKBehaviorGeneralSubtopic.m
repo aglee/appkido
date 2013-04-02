@@ -13,6 +13,7 @@
 
 #import "AKClassNode.h"
 #import "AKFileSection.h"
+#import "AKBehaviorGeneralDoc.h"
 #import "AKHeaderFileDoc.h"
 #import "AKInheritanceDoc.h"
 
@@ -87,7 +88,7 @@
 
     for (AKFileSection *majorSection in [self pertinentChildSectionsOf:rootSection])
     {
-        [docList addObject:[[[AKOverviewDoc alloc] initWithFileSection:majorSection] autorelease]];
+        [docList addObject:[[[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection] autorelease]];
     }
 
     // Add the "Inheritance" option as the first item.
@@ -95,7 +96,6 @@
     // root file section for the given node.
     AKInheritanceDoc *inheritanceDoc = [[[AKInheritanceDoc alloc] initWithFileSection:rootSection]
                                         autorelease];
-
     [docList insertObject:inheritanceDoc atIndex:0];
 
     // If a subsection named "XXX Description" or "Overview" is present, move

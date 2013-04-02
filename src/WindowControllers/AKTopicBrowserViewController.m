@@ -294,24 +294,25 @@ static const NSInteger AKMinBrowserColumns = 2;
     }
 }
 
-// on entry, _topicListsForBrowserColumns must be empty
+// On entry, _topicListsForBrowserColumns must be empty. The items in the
+// zeroeth column are in two sections: "classes" (root classes), and
+// "other topics" (list of frameworks so that we can navigate to things like
+// functions and protocols).
 - (void)_setUpTopicsForZeroethBrowserColumn
 {
     NSMutableArray *columnValues = [NSMutableArray array];
     AKDatabase *db = [[self owningWindowController] database];
 
-    // Set up the ":: classes ::" section of this browser column.  We want
-    // the browser column to list all classes that don't have superclasses.
-    [columnValues addObject:[AKLabelTopic topicWithLabel:@":: classes ::"]];
+    // Set up the "classes" section.
+    [columnValues addObject:[AKLabelTopic topicWithLabel:AKClassesLabelTopicName]];
 
     for (AKClassNode *classNode in [AKSortUtils arrayBySortingArray:[db rootClasses]])
     {
         [columnValues addObject:[AKClassTopic topicWithClassNode:classNode]];
     }
 
-    // Set up the ":: other topics ::" section of this browser column.
-    // We want the browser column to list all known frameworks.
-    [columnValues addObject:[AKLabelTopic topicWithLabel:@":: other topics ::"]];
+    // Set up the "other topics" section.
+    [columnValues addObject:[AKLabelTopic topicWithLabel:AKOtherTopicsLabelTopicName]];
 
     for (NSString *fwName in [db sortedFrameworkNames])
     {
