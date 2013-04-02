@@ -45,6 +45,10 @@
     // The height of the topic browser when it's not collapsed. Used when the
     // browser's visibility is toggled.
     CGFloat _browserHeightWhenVisible;
+
+    // Default browser height to use when we have neither an explicit height nor
+    // a fraction.
+    CGFloat _defaultBrowserHeight;
     
     // View controllers that manage different portions of the window.
     AKTopicBrowserViewController *_topicBrowserController;

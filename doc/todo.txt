@@ -27,6 +27,7 @@
 	* Articles I found with key view loop advice: <http://www.cocoabuilder.com/archive/cocoa/177975-guidelines-for-the-key-view-loop.html> (should ping Justin Bur <http://www.linkedin.com/pub/justin-bur/0/473/32> <http://jbb.poslfit.com/Pages/cv-en.html> <justin@cam.org> <http://www.druide.com/> <http://www.cocoabuilder.com/archive/cocoa/89019-executing-nextkeyview-from-nsdrawer-to-nswindow.html> <http://lapcatsoftware.com/blog/2008/02/20/nsscrollview-in-a-key-view-loop-or-fembot-in-a-wet-t-shirt/> <http://osdir.com/ml/cocoa-dev/2009-08/msg00488.html>
 * Reproduce reported bug: move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
 * Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
+* Re-examine browser height code. Maybe enforce minimum height. Issue: launched, it remembered zero-height browser, but did not expand browser when I tried to toggle it. Don't know why. Currently using _defaultBrowserHeight workaround.
 
 ----
 

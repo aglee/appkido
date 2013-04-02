@@ -577,13 +577,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[[self window] toolbar] setVisible:[windowLayout toolbarIsVisible]];
 
     // Figure out the browser height indicated by windowLayout. If an explicit
-    // height is given, use that. Otherwise, use the fraction to calculate it.
-    CGFloat browserFraction = [windowLayout browserFraction];
-    CGFloat browserHeight = ([windowLayout browserHeight] > 0
-                             ? [windowLayout browserHeight]
-                             : [self _heightByTakingFraction:browserFraction
-                                                 ofSplitView:_topLevelSplitView]);
-    _browserHeightWhenVisible = browserHeight;
+    // height is given, use that. Otherwise, if the (now obsolete) fraction is
+    // given, use the fraction to calculate the height. Otherwise, use the
+    // default height.
+    _browserHeightWhenVisible = [windowLayout browserHeight];
+
+    if (_browserHeightWhenVisible <= 0)
+    {
+        _browserHeightWhenVisible = [self _heightByTakingFraction:[windowLayout browserFraction]
+                                                      ofSplitView:_topLevelSplitView];
+
+        if (_browserHeightWhenVisible <= 0)
+        {
+            _browserHeightWhenVisible = _defaultBrowserHeight;
+        }
+    }
 
     // Apply the indicated height to the topic browser.
     if ([self _topicBrowserIsVisible]
@@ -786,6 +794,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)windowDidLoad
 {
+    _defaultBrowserHeight = NSHeight([_topicBrowserContainerView frame]);
+
     // Load our view controllers and plug their views into the UI. Do this
     // early, because a number of things we do next assume the view controllers
     // have been loaded.
@@ -1224,7 +1234,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     NSInteger numberOfDividers = [[splitView subviews] count] - 1;
     CGFloat totalHeightOfSubviews = ([splitView frame].size.height
                                      - numberOfDividers*[splitView dividerThickness]);
-    return fraction * totalHeightOfSubviews;
+    return round(fraction * totalHeightOfSubviews);
 }
 
 
