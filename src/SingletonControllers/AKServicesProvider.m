@@ -14,49 +14,61 @@
 
 @implementation AKServicesProvider
 
-- (void)searchForStringInPasteboard:(NSPasteboard *)pboard
-                  extractMethodName:(BOOL)shouldExtractMethodName
-                              error:(NSString **)errorMessagePtr
+#pragma mark -
+#pragma mark Methods listed in the NSServices section of Info.plist
+
+// "copyWithSelectorAwareness" is what appears in Info.plist. The rest of the
+// method name is implied.
+- (void)copyWithSelectorAwareness:(NSPasteboard *)pboard
+                         userData:(NSString *)userData
+                            error:(NSString **)errorMessagePtr
 {
     // Make sure the pasteboard contains a string.
-    
     if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}])
     {
         *errorMessagePtr = NSLocalizedString(@"Error: the pasteboard doesn't contain a string.", nil);
         return;
     }
-    
-    // Get the search string from the pasteboard.
-    NSString *searchString = [pboard stringForType:NSPasteboardTypeString];
-    
-    if (shouldExtractMethodName)
+
+    // Get the string from the pasteboard.
+    NSString *pasteboardString = [pboard stringForType:NSPasteboardTypeString];
+    NSString *methodName = [AKMethodNameExtractor extractMethodNameFromString:pasteboardString];
+
+    if (methodName)
     {
-        NSString *methodName = [AKMethodNameExtractor extractMethodNameFromString:searchString];
-        if (methodName)
-        {
-            searchString = methodName;
-        }
+        pasteboardString = methodName;
     }
+
+    // Stuff the extracted method name, or the original string if none, into the
+    // system-wide copy/paste pasteboard.
+    NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
     
-    // Perform the requested search.
-    [[AKAppDelegate appDelegate] performExternallyRequestedSearchForString:searchString];
-}
-
-#pragma mark -
-#pragma mark Methods listed in the NSServices section of Info.plist
-
-- (void)searchForString:(NSPasteboard *)pboard
-               userData:(NSString *)userData
-                  error:(NSString **)errorMessagePtr
-{
-    [self searchForStringInPasteboard:pboard extractMethodName:NO error:errorMessagePtr];
+    [generalPasteboard declareTypes:@[NSStringPboardType] owner:nil];
+    [generalPasteboard setString:pasteboardString forType:NSStringPboardType];
 }
 
 - (void)searchForMethod:(NSPasteboard *)pboard
                userData:(NSString *)userData
                   error:(NSString **)errorMessagePtr
 {
-    [self searchForStringInPasteboard:pboard extractMethodName:YES error:errorMessagePtr];
+    // Make sure the pasteboard contains a string.
+    if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}])
+    {
+        *errorMessagePtr = NSLocalizedString(@"Error: the pasteboard doesn't contain a string.", nil);
+        return;
+    }
+
+    // Get the search string from the pasteboard.
+    NSString *searchString = [pboard stringForType:NSPasteboardTypeString];
+    NSString *methodName = [AKMethodNameExtractor extractMethodNameFromString:searchString];
+
+    if (methodName)
+    {
+        searchString = methodName;
+    }
+
+    // Perform the requested search.
+    [[AKAppDelegate appDelegate] performExternallyRequestedSearchForString:searchString];
 }
 
 @end
