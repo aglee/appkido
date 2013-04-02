@@ -54,25 +54,6 @@
 			<key>NSServiceDescription</key>
 			<string>If your selected text contains a method call or declaration, AppKiDo tries to parse the method name and search for that.</string>
 		</dict>
-		<dict>
-			<key>NSMenuItem</key>
-			<dict>
-				<key>default</key>
-				<string>Copy with Selector Awareness</string>
-			</dict>
-			<key>NSMessage</key>
-			<string>xxxcopyWithSelectorAwareness</string>
-			<key>NSPortName</key>
-			<string>AppKiDo</string>
-			<key>NSRequiredContext</key>
-			<dict/>
-			<key>NSSendTypes</key>
-			<array>
-				<string>NSStringPboardType</string>
-			</array>
-			<key>NSServiceDescription</key>
-			<string>If your selected text contains a method call or declaration, AppKiDo tries to parse the method name and put that in the paste buffer.</string>
-		</dict>
 	</array>
 	<key>OSAScriptingDefinition</key>
 	<string>AppKiDo.sdef</string>
