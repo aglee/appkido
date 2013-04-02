@@ -67,7 +67,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 
 - (BOOL)isClassNode;
 
-- (void)addImplementedProtocol:(AKProtocolNode *)node;
+- (void)addImplementedProtocol:(AKProtocolNode *)protocolNode;
 
 /*!
  * Returns zero or more AKProtocolNodes, one for each protocol implemented by

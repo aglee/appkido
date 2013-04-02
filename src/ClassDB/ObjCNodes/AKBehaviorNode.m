@@ -57,19 +57,19 @@
     return NO;
 }
 
-- (void)addImplementedProtocol:(AKProtocolNode *)node
+- (void)addImplementedProtocol:(AKProtocolNode *)protocolNode
 {
-    if ([_protocolNodeNames containsObject:[node nodeName]])
+    if ([_protocolNodeNames containsObject:[protocolNode nodeName]])
     {
         // I've seen this happen when a .h contains two declarations of a
         // protocol in different #if branches. Example: NSURL.
         DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
-                     [node nodeName], [self nodeName]);
+                     [protocolNode nodeName], [self nodeName]);
     }
     else
     {
-        [_protocolNodes addObject:node];
-        [_protocolNodeNames addObject:[node nodeName]];
+        [_protocolNodes addObject:protocolNode];
+        [_protocolNodeNames addObject:[protocolNode nodeName]];
     }
 }
 
