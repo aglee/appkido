@@ -51,9 +51,6 @@
 
 - (NSString *)extractMethodName
 {
-    NSMutableString *methodName = [NSMutableString string];
-    NSString *lastTopLevelElement = nil;
-
     // Start at the beginning.
     _current = _buffer;
 
@@ -64,18 +61,18 @@
     //
     // Case 2, method declaration: If we have "- (SomeReturnType)someInstanceMethod..."
     // then we want to skip the "- (SomeReturnType)". Similarly if it's a class method.
-    [self _scanWhitespace];
+    [self _skipWhitespaceAndComments];
 
     if (*_current == '+' || *_current == '-')
     {
         _current++;
-        [self _scanWhitespace];
+        [self _skipWhitespace];
     }
 
     if (*_current == '(')
     {
-        [self _scanPastClosingBookend];
-        [self _scanWhitespace];
+        [self _skipPastClosingBookend];
+        [self _skipWhitespace];
     }
 
     if (*_current == '[')
@@ -83,11 +80,14 @@
         _current++;
     }
 
-    // Iterate over the top-level elements in the remainder of the input string. See
-    // the _scanElement comment for what an "element" is.
+    // Iterate over the top-level elements in the remainder of the input string.
+    // See the _skipElement comment for what we consider an "element".
+    NSMutableString *keywordMethodName = [NSMutableString string];
+    NSString *lastSimpleIdentifier = nil;
+
     while (*_current)
     {
-        [self _scanWhitespace];
+        [self _skipWhitespace];
 
         if (!*_current)
         {
@@ -96,29 +96,36 @@
 
         char *elementStart = _current;
         {{
-            [self _scanElement];
+            [self _skipElement];
         }}
         char *elementEnd = _current;
 
-        lastTopLevelElement = [[[NSString alloc] initWithBytes:elementStart
-                                                        length:(elementEnd - elementStart)
-                                                      encoding:NSUTF8StringEncoding] autorelease];
-
-        if ([lastTopLevelElement hasSuffix:@":"])
+        NSString *element = [[[NSString alloc] initWithBytes:elementStart
+                                                      length:(elementEnd - elementStart)
+                                                    encoding:NSUTF8StringEncoding] autorelease];
+        if ([element hasSuffix:@":"])
         {
-            // Note this accepts malformed method name components. Don't worry about it.
-            [methodName appendString:lastTopLevelElement];
+            // Assume element is one component of a multipart method name.
+            [keywordMethodName appendString:element];
+        }
+        else if ([self _isValidUnaryMethodName:element])
+        {
+            // Remember the last simple identifier we came across as a top-level
+            // element. If we don't detect a multi-part method name, we will
+            // assume this identifier is a unary method name.
+            lastSimpleIdentifier = element;
         }
     }
 
-    // At this point methodName only contains a method name if keyword method components
-    // were found. But the method might be a unary method.
-    if ([methodName length] == 0 && [self _isValidUnaryMethodName:lastTopLevelElement])
+    // Did we extract a multi-part method name?
+    if ([keywordMethodName length] == 0)
     {
-        [methodName appendString:lastTopLevelElement];
+        return lastSimpleIdentifier;
     }
-
-    return ([methodName length] ? methodName : nil);
+    else
+    {
+        return keywordMethodName;
+    }
 }
 
 #pragma mark -
@@ -157,7 +164,25 @@
     return YES;
 }
 
-- (void)_scanWhitespace
+- (void)_skipWhitespaceAndComments
+{
+    while (1)
+    {
+        [self _skipWhitespace];
+
+        if (_current[0] == '/'
+            && (_current[1] == '/' || _current[1] == '*'))
+        {
+            [self _maybeScanComment];
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+
+- (void)_skipWhitespace
 {
     while (isspace(*_current))
     {
@@ -189,7 +214,7 @@
 // Adjacent elements are separated by zero or more whitespace characters. For example, an
 // NSString literal looks to this parser like two elements, the @ and the "string",
 // separated by zero characters.
-- (void)_scanElement
+- (void)_skipElement
 {
     if (!*_current)
     {
@@ -211,7 +236,7 @@
     // See if we're on the opening bookend of an element like (...), [...], or {...}.
     if (ch == '(' || ch == '[' || ch == '{')
     {
-        [self _scanPastClosingBookend];
+        [self _skipPastClosingBookend];
         return;
     }
 
@@ -219,7 +244,7 @@
     // double-quotes.
     if (ch == '\'' || ch == '"')
     {
-        [self _scanQuotedString];
+        [self _skipQuotedString];
         return;
     }
 
@@ -238,7 +263,7 @@
     }
 
     // Any other characters are considered part of a "word".
-    [self _scanWord];
+    [self _skipWord];
 }
 
 // Assumes we are on a '/' character that *might* be the beginning of a comment
@@ -251,7 +276,7 @@
     if (*_current == '/')
     {
         _current++;
-        [self _scanPastEndOfLine];
+        [self _skipPastEndOfLine];
     }
     else if (*_current == '*')
     {
@@ -269,7 +294,7 @@
     }
 }
 
-- (void)_scanPastEndOfLine
+- (void)_skipPastEndOfLine
 {
     for ( ; *_current; _current++)
     {
@@ -293,7 +318,7 @@
 }
 
 // Assumes we're on the first character of the word.
-- (void)_scanWord
+- (void)_skipWord
 {
     for ( ; *_current; _current++)
     {
@@ -331,7 +356,7 @@
 }
 
 // Assumes we're on the opening bookend character -- either '(', '[', or '{'.
-- (void)_scanPastClosingBookend
+- (void)_skipPastClosingBookend
 {
     // Figure out what the closing delimiter is, based on the opening delimiter.
     char opener = *_current;
@@ -362,7 +387,7 @@
     // Skip all elements until we land on the closing delimiter.
     while (*_current)
     {
-        [self _scanWhitespace];
+        [self _skipWhitespace];
 
         if (!*_current)
         {
@@ -376,12 +401,12 @@
             break;
         }
 
-        [self _scanElement];
+        [self _skipElement];
     }
 }
 
 // Assumes we're on the opening quote character.
-- (void)_scanQuotedString
+- (void)_skipQuotedString
 {
     char closer = *_current;
 

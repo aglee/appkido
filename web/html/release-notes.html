@@ -85,8 +85,9 @@
 <h3>Fixes</h3>
 
 <ul>
-<li>After a search, we now select the first search result with the search string as a prefix. (Example: search for "query" and -[NSURL query] should be selected.) This is an old feature that was broken for awhile.</li>
+<li>After a search, we now select the first search result with the search string as a prefix. (Example: search for "query" and -[NSURL query] should be selected.) This is an old feature that was broken for a while.</li>
 <li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (e.g., NSString > "AppKit Additions" wasn't showing up).</li>
+<li>Fixed two bugs in the "method-aware search" service: failure to parse unary method name ("[self foo]"), and getting confused by leading comments ("/* foo */ [self foo:bar]").
 <li>Slight correction to what is displayed in the "Add X to Favorites" menu item. It now matches what gets displayed in the Quicklist -- e.g., "AppKit Functions", not just "Functions".</li>
 <li>Fixed a quirk: if you select text in the web view and do "Use Selection for Find" (Command-E), we were momentarily focusing the quicklist search field, thus removing focus from the web view, which caused "Find Next" (Command-G) to start from the beginning of the web view instead of from where you were.</li>
 <li>Fixed the autoenabling and actions of the "General", "Properties", "ALL Properties", etc. menu items.</li>
