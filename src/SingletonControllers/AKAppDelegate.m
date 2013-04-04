@@ -453,9 +453,13 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (IBAction)exportDatabase:(id)sender
 {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
-    NSInteger modalResult = [savePanel runModal];
 
-    if (modalResult != NSFileHandlingPanelOKButton)
+    [savePanel setAllowedFileTypes:@[ @"xml" ]];
+    [savePanel setAllowsOtherFileTypes:YES];
+    [savePanel setCanCreateDirectories:YES];
+    [savePanel setCanSelectHiddenExtension:YES];
+
+    if ([savePanel runModal] != NSFileHandlingPanelOKButton)
     {
         return;
     }
