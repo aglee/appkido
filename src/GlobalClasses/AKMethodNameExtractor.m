@@ -19,11 +19,11 @@
     self = [super init];
     if (self)
     {
-        const char *origChars = [string UTF8String];
-        size_t numChars = strlen(origChars);
+        NSData *asciiData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        size_t numChars = [asciiData length];
 
         _buffer = malloc(numChars + 1);
-        (void)strncpy(_buffer, origChars, numChars);
+        (void)strncpy(_buffer, [asciiData bytes], numChars);
         _buffer[numChars] = '\0';
 
         _current = _buffer;
