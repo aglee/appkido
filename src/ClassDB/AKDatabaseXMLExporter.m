@@ -10,13 +10,12 @@
 
 #import "DIGSLog.h"
 
-#import "AKSortUtils.h"
-
-#import "AKDatabase.h"
-#import "AKMemberNode.h"
 #import "AKClassNode.h"
-#import "AKProtocolNode.h"
+#import "AKDatabase.h"
 #import "AKGroupNode.h"
+#import "AKMemberNode.h"
+#import "AKProtocolNode.h"
+#import "AKSortUtils.h"
 
 @implementation AKDatabaseXMLExporter
 
@@ -57,7 +56,7 @@
 {
     [_xmlWriter instructXMLStandalone];
     [_xmlWriter tag:@"database" attributes:nil contentBlock:^{
-        for (NSString *frameworkName in [[_database frameworkNames] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)])
+        for (NSString *frameworkName in [_database sortedFrameworkNames])
         {
             [self _exportFrameworkNamed:frameworkName];
         }
@@ -73,7 +72,8 @@
     [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
         // Export classes.
         [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
-            for (AKClassNode *classNode in [_database classesForFrameworkNamed:fwName])
+            NSArray *allClassNodes = [_database classesForFrameworkNamed:fwName];
+            for (AKClassNode *classNode in [AKSortUtils arrayBySortingArray:allClassNodes])
             {
                 [self _exportClass:classNode];
             }
