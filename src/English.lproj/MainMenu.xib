@@ -505,8 +505,8 @@
 								<object class="NSMenuItem" id="609206211">
 									<reference key="NSMenu" ref="455019883"/>
 									<string key="NSTitle">Hide Toolbar</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSKeyEquiv">t</string>
+									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="843332767"/>
 									<reference key="NSMixedImage" ref="982793628"/>
@@ -1994,10 +1994,12 @@
 							<string>openLinkInNewWindow:</string>
 							<string>openNewWindow:</string>
 							<string>openPrefsPanel:</string>
+							<string>popQuiz:</string>
 							<string>scrollToTextSelection:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2017,6 +2019,7 @@
 							<string>openLinkInNewWindow:</string>
 							<string>openNewWindow:</string>
 							<string>openPrefsPanel:</string>
+							<string>popQuiz:</string>
 							<string>scrollToTextSelection:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -2043,6 +2046,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">openPrefsPanel:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">popQuiz:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2419,10 +2426,10 @@
 							<string>selectAllPropertiesSubtopic:</string>
 							<string>selectClassMethodsSubtopic:</string>
 							<string>selectDelegateMethodsSubtopic:</string>
+							<string>selectGeneralSubtopic:</string>
 							<string>selectHeaderFile:</string>
 							<string>selectInstanceMethodsSubtopic:</string>
 							<string>selectNotificationsSubtopic:</string>
-							<string>selectOverviewSubtopic:</string>
 							<string>selectPropertiesSubtopic:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -2454,10 +2461,10 @@
 							<string>selectAllPropertiesSubtopic:</string>
 							<string>selectClassMethodsSubtopic:</string>
 							<string>selectDelegateMethodsSubtopic:</string>
+							<string>selectGeneralSubtopic:</string>
 							<string>selectHeaderFile:</string>
 							<string>selectInstanceMethodsSubtopic:</string>
 							<string>selectNotificationsSubtopic:</string>
-							<string>selectOverviewSubtopic:</string>
 							<string>selectPropertiesSubtopic:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -2495,6 +2502,10 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">selectGeneralSubtopic:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">selectHeaderFile:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -2504,10 +2515,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">selectNotificationsSubtopic:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectOverviewSubtopic:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2622,7 +2629,6 @@
 							<string>goToHistoryItemInForwardMenu:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
-							<string>popQuiz:</string>
 							<string>printFunFacts:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
@@ -2659,7 +2665,6 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -2675,7 +2680,6 @@
 							<string>goToHistoryItemInForwardMenu:</string>
 							<string>openDocFileInBrowser:</string>
 							<string>openParseDebugWindow:</string>
-							<string>popQuiz:</string>
 							<string>printFunFacts:</string>
 							<string>rememberWindowLayout:</string>
 							<string>revealDocFileInFinder:</string>
@@ -2725,10 +2729,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">openParseDebugWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">popQuiz:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
