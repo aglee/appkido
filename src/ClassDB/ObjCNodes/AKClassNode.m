@@ -12,6 +12,7 @@
 #import "AKCategoryNode.h"
 #import "AKCollectionOfNodes.h"
 #import "AKDatabase.h"
+#import "AKFileSection.h"
 #import "AKMethodNode.h"
 #import "AKNotificationNode.h"
 #import "AKProtocolNode.h"
