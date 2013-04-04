@@ -608,6 +608,10 @@
 		73D59E8E15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */; };
 		73D59E9115B46A7E00A1BEAF /* TestDocParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73D59E8F15B46A7E00A1BEAF /* TestDocParser.xib */; };
 		73D59E9215B46A7E00A1BEAF /* TestDocParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73D59E8F15B46A7E00A1BEAF /* TestDocParser.xib */; };
+		73DB1379170E176500F3776A /* QuietLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 73DB1377170E176500F3776A /* QuietLog.h */; };
+		73DB137A170E176500F3776A /* QuietLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 73DB1377170E176500F3776A /* QuietLog.h */; };
+		73DB137B170E176500F3776A /* QuietLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DB1378170E176500F3776A /* QuietLog.m */; };
+		73DB137C170E176500F3776A /* QuietLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DB1378170E176500F3776A /* QuietLog.m */; };
 		73E86F3D0E396A71002AFB76 /* AKPropertyNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F3B0E396A71002AFB76 /* AKPropertyNode.h */; };
 		73E86F3E0E396A71002AFB76 /* AKPropertyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F3C0E396A71002AFB76 /* AKPropertyNode.m */; };
 		73E86F420E3974E1002AFB76 /* AKMemberNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F400E3974E1002AFB76 /* AKMemberNode.h */; };
@@ -951,6 +955,8 @@
 		73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKServicesProvider.m; sourceTree = "<group>"; };
 		73D59E9015B46A7E00A1BEAF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TestDocParser.xib; sourceTree = "<group>"; };
 		73DA45FD0966583A00BFD67E /* AppKiDo_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppKiDo_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		73DB1377170E176500F3776A /* QuietLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuietLog.h; sourceTree = "<group>"; };
+		73DB1378170E176500F3776A /* QuietLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuietLog.m; sourceTree = "<group>"; };
 		73E86F3B0E396A71002AFB76 /* AKPropertyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPropertyNode.h; sourceTree = "<group>"; };
 		73E86F3C0E396A71002AFB76 /* AKPropertyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPropertyNode.m; sourceTree = "<group>"; };
 		73E86F400E3974E1002AFB76 /* AKMemberNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMemberNode.h; sourceTree = "<group>"; };
@@ -1435,6 +1441,8 @@
 				734B2D990810C882001D5F3A /* DIGSMatchingBackgroundView.m */,
 				734B2D9C0810C882001D5F3A /* DIGSTextView.h */,
 				734B2D9D0810C882001D5F3A /* DIGSTextView.m */,
+				73DB1377170E176500F3776A /* QuietLog.h */,
+				73DB1378170E176500F3776A /* QuietLog.m */,
 			);
 			path = DIGS;
 			sourceTree = "<group>";
@@ -1946,6 +1954,7 @@
 				73A4ACE016F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
 				737F1DED17021C8A00D560C7 /* AKPopQuizWindowController.h in Headers */,
 				73FECB57170A27C000A7FB27 /* AKBehaviorGeneralDoc.h in Headers */,
+				73DB1379170E176500F3776A /* QuietLog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2090,6 +2099,7 @@
 				73A4ACE116F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
 				737F1DEE17021C8A00D560C7 /* AKPopQuizWindowController.h in Headers */,
 				73FECB58170A27C000A7FB27 /* AKBehaviorGeneralDoc.h in Headers */,
+				73DB137A170E176500F3776A /* QuietLog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2405,6 +2415,7 @@
 				73A4ACDD16F35815004E6A1C /* AKTabChain.m in Sources */,
 				737F1DEF17021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */,
 				73FECB59170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */,
+				73DB137B170E176500F3776A /* QuietLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2544,6 +2555,7 @@
 				73A4ACDE16F35815004E6A1C /* AKTabChain.m in Sources */,
 				737F1DF017021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */,
 				73FECB5A170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */,
+				73DB137C170E176500F3776A /* QuietLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
