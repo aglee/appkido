@@ -47,9 +47,9 @@
 
 <table><tr><td>
 
-<h2>Version 0.996 (April 2, 2013)</h2>
+<h2>Version 0.996 (April 4, 2013)</h2>
 
-(There was, briefly, a version 0.995 that a few people tested, but I decided to make some more changes before posting a new official release.)
+There was, briefly, a version 0.995 that a few people tested, but I decided to make some more changes before posting a new official release.
 
 <h3>System requirements</h3>
 
@@ -86,8 +86,9 @@
 
 <ul>
 <li>After a search, we now select the first search result with the search string as a prefix. (Example: search for "query" and -[NSURL query] should be selected.) This is an old feature that was broken for a while.</li>
-<li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (e.g., NSString > "AppKit Additions" wasn't showing up).</li>
 <li>Fixed two bugs in the "method-aware search" service: failure to parse unary method name ("[self foo]"), and getting confused by leading comments ("/* foo */ [self foo:bar]").
+<li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (e.g., NSString > "AppKit Additions" wasn't showing up).</li>
+<li>Fixed a bug causing AppKiDo-for-iPhone to think UIKit rather than Foundation is the owning framework for NSObject. As a result, when you selected NSObject, the displayed description was "UIKit class" rather than "Foundation class". If you then selected the "General" subtopic you'd see "Overview" and "Overview [Foundation Additions]" when it should have been "Overview" and "Overview [UIKit Additions]".</li>
 <li>Slight correction to what is displayed in the "Add X to Favorites" menu item. It now matches what gets displayed in the Quicklist -- e.g., "AppKit Functions", not just "Functions".</li>
 <li>Fixed a quirk: if you select text in the web view and do "Use Selection for Find" (Command-E), we were momentarily focusing the quicklist search field, thus removing focus from the web view, which caused "Find Next" (Command-G) to start from the beginning of the web view instead of from where you were.</li>
 <li>Fixed the autoenabling and actions of the "General", "Properties", "ALL Properties", etc. menu items.</li>
@@ -95,6 +96,8 @@
 </ul>
 
 <h3>Code cleanup and modernization</h3>
+
+Sweeping code changes. They don't affect the app's functionality, but if you care about the underlying code you might want to know about them.
 
 <ul>
 <li>Replaced NSEnumeration with fast enumeration everywhere. Doesn't make any difference to the user, but it makes the code seem less ancient.</li>
