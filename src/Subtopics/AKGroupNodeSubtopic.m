@@ -7,13 +7,7 @@
 
 #import "AKGroupNodeSubtopic.h"
 
-#import "DIGSLog.h"
-
-#import "AKSortUtils.h"
-#import "AKFileSection.h"
-#import "AKGlobalsNode.h"
 #import "AKGroupNode.h"
-#import "AKNodeDoc.h"
 
 @implementation AKGroupNodeSubtopic
 
@@ -51,16 +45,6 @@
 - (NSString *)subtopicName
 {
     return [_groupNode nodeName];
-}
-
-- (void)populateDocList:(NSMutableArray *)docList
-{
-    for (AKGlobalsNode *globalsNode in [AKSortUtils arrayBySortingArray:[_groupNode subnodes]])
-    {
-        AKDoc *newDoc = [[[AKNodeDoc alloc] initWithNode:globalsNode] autorelease];
-
-        [docList addObject:newDoc];
-    }
 }
 
 @end

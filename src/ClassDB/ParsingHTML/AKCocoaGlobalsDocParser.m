@@ -131,7 +131,7 @@
 
     if (behaviorNode == nil)
     {
-        globalsNodeName = [fileSection sectionName];
+        globalsNodeName = [self _modifyGlobalsNodeName:[fileSection sectionName]];
     }
     else if ([behaviorNode isClassNode])
     {
@@ -167,6 +167,22 @@
 
     // Return the result.
     return globalsNode;
+}
+
+// We append the doc title to the globals node name to ensure uniqueness.
+// Example: under ApplicationServices > Types & Constants > Constants,
+// "Color Modes" appears twice because there are two doc files with the same
+// section name.
+- (NSString *)_modifyGlobalsNodeName:(NSString *)globalsNodeName
+{
+    NSString *docTitle = [[self rootSectionOfCurrentFile] sectionName];
+    NSMutableArray *titleComponents = [[[docTitle componentsSeparatedByString:@" "] mutableCopy]
+                                       autorelease];
+
+    [titleComponents removeObject:@"Reference"];
+    docTitle = [titleComponents componentsJoinedByString:@" "];
+    
+    return [NSString stringWithFormat:@"%@ (%@)", globalsNodeName, docTitle];
 }
 
 - (NSSet *)_parseNamesOfGlobalsInFileSection:(AKFileSection *)fileSection

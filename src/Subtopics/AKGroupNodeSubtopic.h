@@ -9,6 +9,9 @@
 
 @class AKGroupNode;
 
+/*!
+ * Abstract class.
+ */
 @interface AKGroupNodeSubtopic : AKSubtopic
 {
 @private

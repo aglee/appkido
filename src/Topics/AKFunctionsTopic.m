@@ -9,7 +9,7 @@
 
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
-#import "AKFunctionsSubtopic.h"
+#import "AKFunctionsGroupSubtopic.h"
 
 @implementation AKFunctionsTopic
 
@@ -45,7 +45,7 @@
     {
         AKGroupNode *groupNode = [groupNodes objectAtIndex:subtopicIndex];
 
-        return [[[AKFunctionsSubtopic alloc] initWithGroupNode:groupNode] autorelease];
+        return [[[AKFunctionsGroupSubtopic alloc] initWithGroupNode:groupNode] autorelease];
     }
 }
 

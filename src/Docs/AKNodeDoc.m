@@ -8,10 +8,11 @@
 
 #import "AKNodeDoc.h"
 
-#import "DIGSLog.h"
 #import "AKDatabaseNode.h"
 
 @implementation AKNodeDoc
+
+@synthesize databaseNode = _databaseNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

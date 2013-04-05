@@ -9,8 +9,8 @@
 
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
+#import "AKGlobalsGroupSubtopic.h"
 #import "AKGroupNode.h"
-#import "AKGroupNodeSubtopic.h"
 #import "AKDoc.h"
 
 @implementation AKGlobalsTopic
@@ -46,7 +46,7 @@
     {
         AKGroupNode *groupNode = [groupNodes objectAtIndex:subtopicIndex];
 
-        return [[[AKGroupNodeSubtopic alloc] initWithGroupNode:groupNode] autorelease];
+        return [[[AKGlobalsGroupSubtopic alloc] initWithGroupNode:groupNode] autorelease];
     }
 }
 
