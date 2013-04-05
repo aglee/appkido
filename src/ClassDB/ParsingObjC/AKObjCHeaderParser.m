@@ -98,9 +98,14 @@ static BOOL isPunctuation(char c)
 
     if (!classNode)
     {
+        // Pass nil for the class's owning framework, because we don't know yet
+        // whether we are parsing a class declaration. It's possible this is a
+        // category declaration and the category's class belongs to a different
+        // framework. We will set the class's real owning framework when we know
+        // we're parsing the class declaration.
         classNode = [AKClassNode nodeWithNodeName:className
                                          database:[self targetDatabase]
-                                    frameworkName:[self targetFrameworkName]];
+                                    frameworkName:nil];
         [[self targetDatabase] addClassNode:classNode];
     }
 
@@ -128,7 +133,15 @@ static BOOL isPunctuation(char c)
     if (*_current == '<')
     {
         _current++;
-        [self _parseProtocolListFor:resultNode];
+
+        NSArray *implementedProtocols = [self _parseProtocolList];
+
+        [classNode addImplementedProtocols:implementedProtocols];
+
+        if (resultNode != classNode)
+        {
+            [resultNode addImplementedProtocols:implementedProtocols];
+        }
     }
 
     // Parse method declarations and ignore everything else.
@@ -298,7 +311,9 @@ static BOOL isPunctuation(char c)
         }
         else if (strcmp(token, "<") == 0)
         {
-            [self _parseProtocolListFor:resultNode];
+            NSArray *implementedProtocols = [self _parseProtocolList];
+
+            [resultNode addImplementedProtocols:implementedProtocols];
         }
         else if (strcmp(token, "+") == 0)
         {
@@ -319,15 +334,17 @@ static BOOL isPunctuation(char c)
 
 // Assumes opening angle-bracket has already been consumed.
 // Consumes the closing angle-bracket.
-- (void)_parseProtocolListFor:(AKBehaviorNode *)behaviorNode
+- (NSArray *)_parseProtocolList
 {
+    NSMutableArray *implementedProtocols = [NSMutableArray array];
+    
     char token[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:token]))
     {
         if (strcmp(token, ">") == 0)
         {
-            return;
+            break;
         }
         else if (strcmp(token, ",") == 0)
         {
@@ -340,15 +357,20 @@ static BOOL isPunctuation(char c)
 
             if (!protocolNode)
             {
+                // Pass nil as the protocol's framework name. We will set its
+                // real framework name when we encounter the @protocol
+                // declaration.
                 protocolNode = [AKProtocolNode nodeWithNodeName:protocolName
                                                        database:[self targetDatabase]
-                                                  frameworkName:[self targetFrameworkName]];
+                                                  frameworkName:nil];
                 [[self targetDatabase] addProtocolNode:protocolNode];
             }
 
-            [behaviorNode addImplementedProtocol:protocolNode];
+            [implementedProtocols addObject:protocolNode];
         }
     }
+
+    return implementedProtocols;
 }
 
 // Assumes we are at the start of a method declaration.

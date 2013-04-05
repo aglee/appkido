@@ -37,7 +37,11 @@
     if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
-        [_namesOfAllOwningFrameworks addObject:frameworkName];
+
+        if (frameworkName)
+        {
+            [_namesOfAllOwningFrameworks addObject:frameworkName];
+        }
 
         _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
@@ -155,6 +159,11 @@
 - (NSArray *)namesOfAllOwningFrameworks
 {
     return _namesOfAllOwningFrameworks;
+}
+
+- (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName
+{
+    return [_namesOfAllOwningFrameworks containsObject:frameworkName];
 }
 
 - (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName

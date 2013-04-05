@@ -31,6 +31,14 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 /*!
  * Abstract class. Represents an Objective-C construct that can have methods.
  * The concrete subclasses are AKClassNode, AKProtocolNode, and AKCategoryNode.
+ *
+ * Note: unlike other database nodes, class and protocols nodes can be
+ * initialized with nil as their owning framework name. The reason is that when
+ * we are constructing the database, we may encounter a reference to a class or
+ * protocol before it has been declared. For example, we may encounter a
+ * category (and thus the name of its owning class) before we encounter the
+ * owning class's declaration. Or we may encounter a protocol in a class's list
+ * of protocols before we've encountered its @protocol declaration.
  */
 @interface AKBehaviorNode : AKDatabaseNode
 {
@@ -68,6 +76,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 - (BOOL)isClassNode;
 
 - (void)addImplementedProtocol:(AKProtocolNode *)protocolNode;
+- (void)addImplementedProtocols:(NSArray *)protocolNodes;
 
 /*!
  * Returns zero or more AKProtocolNodes, one for each protocol implemented by

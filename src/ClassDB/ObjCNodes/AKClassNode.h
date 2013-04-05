@@ -77,6 +77,8 @@
  */
 - (NSArray *)namesOfAllOwningFrameworks;
 
+- (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName;
+
 - (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName;
 
 /*!

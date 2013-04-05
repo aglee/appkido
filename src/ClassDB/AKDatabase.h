@@ -47,11 +47,9 @@
 
     // Classes.
     NSMutableDictionary *_classNodesByName;  // @{CLASS_NAME: AKClassNode}
-    NSMutableDictionary *_classListsByFramework;  // @{FRAMEWORK_NAME: @[AKClassNode]}
 
     // Protocol.
     NSMutableDictionary *_protocolNodesByName;  // @{PROTOCOL_NAME -> @[AKProtocolNode]
-    NSMutableDictionary *_protocolListsByFramework;  // @{FRAMEWORK_NAME: @[AKProtocolNode]}
 
     // Functions.
     NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
@@ -113,7 +111,7 @@
 #pragma mark -
 #pragma mark Getters and setters -- classes
 
-/*! Array of AKClassNode. No guaranteed order. */
+/*! Array of AKClassNode. Matches any of the class's owning frameworks. */
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
 
 /*! * Class without parent class. Array of AKClassNode. No guaranteed order. */

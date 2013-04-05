@@ -109,10 +109,8 @@
         _namesOfAvailableFrameworks = [[docSetIndex selectableFrameworkNames] copy];
 
         _classNodesByName = [[NSMutableDictionary alloc] init];
-        _classListsByFramework = [[NSMutableDictionary alloc] init];
 
         _protocolNodesByName = [[NSMutableDictionary alloc] init];
-        _protocolListsByFramework = [[NSMutableDictionary alloc] init];
 
         _functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
         _functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
@@ -141,10 +139,8 @@
     [_namesOfAvailableFrameworks release];
 
     [_classNodesByName release];
-    [_classListsByFramework release];
 
     [_protocolNodesByName release];
-    [_protocolListsByFramework release];
 
     [_functionsGroupListsByFramework release];
     [_functionsGroupsByFrameworkAndGroup release];
@@ -217,7 +213,17 @@
 
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName
 {
-    return [_classListsByFramework objectForKey:frameworkName];
+    NSMutableArray *classNodes = [NSMutableArray array];
+
+    for (AKClassNode *classNode in [self allClasses])
+    {
+        if ([[classNode nameOfOwningFramework] isEqualToString:frameworkName])
+        {
+            [classNodes addObject:classNode];
+        }
+    }
+
+    return classNodes;
 }
 
 - (NSArray *)rootClasses
@@ -258,20 +264,11 @@
     // Add the class to our lookup by class name.
     [_classNodesByName setObject:classNode forKey:className];
 
-    // Add the class to our lookup by framework name.
-    NSString *frameworkName = [classNode nameOfOwningFramework];
-    NSMutableArray *classNodes = [_classListsByFramework objectForKey:frameworkName];
-
-    if (classNodes == nil)
+    // Add the class's framework to our framework list if it's not there already.
+    if ([classNode nameOfOwningFramework])
     {
-        classNodes = [NSMutableArray array];
-        [_classListsByFramework setObject:classNodes forKey:frameworkName];
+        [self _seeIfFrameworkIsNew:[classNode nameOfOwningFramework]];
     }
-
-    [classNodes addObject:classNode];
-
-    // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:frameworkName];
 }
 
 #pragma mark -
@@ -279,32 +276,12 @@
 
 - (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
-    NSMutableArray *result = [NSMutableArray array];
-
-    for (AKProtocolNode *protocolNode in [self _allProtocolsForFrameworkNamed:frameworkName])
-    {
-        if (![protocolNode isInformal])
-        {
-            [result addObject:protocolNode];
-        }
-    }
-
-    return result;
+    return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:NO];
 }
 
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
-    NSMutableArray *result = [NSMutableArray array];
-
-    for (AKProtocolNode *protocolNode in [self _allProtocolsForFrameworkNamed:frameworkName])
-    {
-        if ([protocolNode isInformal])
-        {
-            [result addObject:protocolNode];
-        }
-    }
-
-    return result;
+    return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:YES];
 }
 
 - (NSArray *)allProtocols
@@ -330,20 +307,11 @@
     // Add the protocol to our lookup by protocol name.
     [_protocolNodesByName setObject:protocolNode forKey:protocolName];
 
-    // Add the class to our lookup by framework name.
-    NSString *frameworkName = [protocolNode nameOfOwningFramework];
-    NSMutableArray *protocolNodes = [_protocolListsByFramework objectForKey:frameworkName];
-
-    if (protocolNodes == nil)
+    // Add the class's framework to our framework list if it's not there already.
+    if ([protocolNode nameOfOwningFramework])
     {
-        protocolNodes = [NSMutableArray array];
-        [_protocolListsByFramework setObject:protocolNodes forKey:frameworkName];
+        [self _seeIfFrameworkIsNew:[protocolNode nameOfOwningFramework]];
     }
-
-    [protocolNodes addObject:protocolNode];
-
-    // Add the framework to our framework list if it's not there already.
-    [self _seeIfFrameworkIsNew:frameworkName];
 }
 
 #pragma mark -
@@ -602,8 +570,20 @@
 }
 
 - (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName
+                           withInformalFlag:(BOOL)informalFlag
 {
-    return [_protocolListsByFramework objectForKey:fwName];
+    NSMutableArray *result = [NSMutableArray array];
+
+    for (AKProtocolNode *protocolNode in [self allProtocols])
+    {
+        if (([protocolNode isInformal] == informalFlag)
+            && [[protocolNode nameOfOwningFramework] isEqualToString:fwName])
+        {
+            [result addObject:protocolNode];
+        }
+    }
+
+    return result;
 }
 
 @end

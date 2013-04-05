@@ -73,6 +73,14 @@
     }
 }
 
+- (void)addImplementedProtocols:(NSArray *)protocolNodes
+{
+    for (AKProtocolNode *protocolNode in protocolNodes)
+    {
+        [self addImplementedProtocol:protocolNode];
+    }
+}
+
 - (NSArray *)implementedProtocols
 {
     NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolNodes];
