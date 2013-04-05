@@ -4,17 +4,16 @@
 	* Treat anchors as primary way of linking.
 	* Look into BeautifulSoup for parsing
 * Use Sparkle for updates. (Shouldn't be *that* big a project.)
-* Overhaul parsing code. Maybe use NSXMLDocument?
-	* Add error handling to parser API.
-	* Make it easy to do things like:
+* Overhaul parsing code. 
+	* Add error handling to parser API?
+	* Can we now eliminate parsing of .h files and get all data from sqlite and HTML?
+	* Maybe use NSXMLDocument for HTML parsing? Ideally this would make it easy to:
 		* Omit the page footer when showing a doc that is the very last thing on the page.
 		* Extract the method declaration line.
 		* Present link to send Apple feedback.
-
-----
-
-## Smaller bugs/UX stuff
-
+		* Parse all globals, e.g. the ones in ApplicationServices > Types & Constants > Constants > Color Modes (QuickTime Constants) -- </Users/alee/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleOSX10_8.CoreReference.docset/Contents/Resources/Documents/documentation/QuickTime/Reference/QTRef_Constants/Reference/reference.html>. Although actually that info can and should better be gotten from the sqlite database.
+		* Construct an HTML page that uses the original CSS files but only shows one doc component.
+	* Maybe decouple parsers from concept of file? So parser can operate on data that doesn't come from a file.
 * tab chain
 	* try Avi's suggestion of event tap
 	* tab chain: doesn't handle the tab-to-links web pref
@@ -25,7 +24,13 @@
 		* consider popovers?
 	* showWindow: and makeKeyAndOrderFront: both called recalculateKeyViewLoop despite my auto-recalc setting; the docs say the auto-recalc setting is for when views are added
 	* Articles I found with key view loop advice: <http://www.cocoabuilder.com/archive/cocoa/177975-guidelines-for-the-key-view-loop.html> (should ping Justin Bur <http://www.linkedin.com/pub/justin-bur/0/473/32> <http://jbb.poslfit.com/Pages/cv-en.html> <justin@cam.org> <http://www.druide.com/> <http://www.cocoabuilder.com/archive/cocoa/89019-executing-nextkeyview-from-nsdrawer-to-nswindow.html> <http://lapcatsoftware.com/blog/2008/02/20/nsscrollview-in-a-key-view-loop-or-fembot-in-a-wet-t-shirt/> <http://osdir.com/ml/cocoa-dev/2009-08/msg00488.html>
-* Reproduce reported bug: move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
+
+----
+
+## Smaller bugs/UX stuff
+
+* Crashed when toggling toolbar with Option-Command-T -- could not reproduce, and Instruments didn't show a zombie.
+* Try to reproduce reported bug: move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
 * Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
 * Re-examine browser height code. Maybe enforce minimum height. Issue: launched, it remembered zero-height browser, but did not expand browser when I tried to toggle it. Don't know why. Currently using _defaultBrowserHeight workaround.
 
@@ -33,8 +38,15 @@
 
 ## Correctness
 
-* "Classes in AppKit" doesn't include NSString
-* ApplicationServices -> Types & Constants -> Constants -- "Color Modes" appears twice, as does "Color Constants".
+* The #ifdef problem -- we only parse the first occurrence of NSURL here. AppKiDo-for-Cocoa won't know that NSURL conforms to NSURLHandleClient. In this case we get away with it, sort of, because NSURLHandleClient is deprecated.
+
+		#if (TARGET_OS_EMBEDDED || TARGET_OS_IPHONE)
+		@interface NSURL: NSObject <NSSecureCoding, NSCopying>
+		#else
+		@interface NSURL: NSObject <NSSecureCoding, NSCopying, NSURLHandleClient>
+		#endif
+
+* Maybe should parse QuartzCore before AppKit. CIColor is a QuartzCore class with AppKit additions.
 
 ----
 
@@ -46,11 +58,7 @@
 * clarify the navigation methods
 * split AKWindowController into categories? subclasses?
 * be consistent about "Init/dealloc/awake"
-* refactor parsers -- decouple from notion of a file
-* build a docset from the AppKiDo source code comments
-	* see how it loads in Dash
-	* see where HeaderDoc syntax broken
-	* post on appkido.com
+* Fix broken HeaderDoc syntax.
 * *could* use newer singleton pattern using gcd
 * use unsafe_unretained instead of assign for objects
 * take varargs in DIGSLogError_ExitingMethodPrematurely
@@ -99,19 +107,17 @@
 
 ----
 
-* "canny unvalley" -- having no font panel makes app look like a port or a Java app
-
-----
-
-* re-check small icon retina issue in A4i
+* Check again on A4i reported small icon issue on Retina screen.
 * Offer all fonts, not just hand-picked.
-* Can an alternative to the drawer work in a similar way?
+	* "canny unvalley" -- having no font panel makes app look like a port or a Java app
+* Can an alternative to the NSDrawer work in a similar way UI-wise?
 
 ----
 
 * syntax highlighting for header files
 * figure out command-line build
 * Get rid of Dev Tools concept and just present available SDKs?
+	* Eventually maybe only support docs in ~/Library/Developer/Shared?
 * web site
 	* add tips and tricks page
 	* fix HTML validation errors
@@ -205,13 +211,14 @@
 
 * parse _more_ stuff
 	* CoreFoundation?
+	* full-text search?
 
 * parse more correctly -- create better unit tests for detecting when a token is missing (like the NSIndexPath UI Kit Additions Guillaume reported)
 
 * save less stuff in memory
 	* query as needed from the docset index and the CoreData storage instead of storing everything in memory
 
-* would startup be noticeably faster if AKDocSetIndex kept the database open all the time instead of opening and closing for each query?
+* would startup be noticeably faster if AKDocSetIndex kept the sqlite database open all the time instead of opening and closing for each query?
 
 * Speed: try NSUncachedRead or NSMappedRead (search cocoa-dev mailbox for Wil Shipley's suggestion on 2009-01-27).
 	* I'm not read-only though, due to the kludgy tweaks of the HTML; but might help for parsing .h files
