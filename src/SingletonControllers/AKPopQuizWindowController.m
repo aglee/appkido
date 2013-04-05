@@ -20,17 +20,16 @@
 
 @synthesize chosenAPISymbol = _chosenAPISymbol;
 @synthesize symbolNameField = _symbolNameField;
-@synthesize pickAnotherButton = _pickAnotherButton;
 
 + (void)showPopQuiz
 {
     AKPopQuizWindowController *wc = [[[self alloc] initWithWindowNibName:@"PopQuiz"] autorelease];
-    
+
+    // Note that a side effect of calling [wc window] is to force the nib to be
+    // loaded, thus ensuring that the [wc symbolNameField] outlet is set.
     [[wc window] center];
     [[wc symbolNameField] setSelectable:YES];
-    [[wc pickAnotherButton] setEnabled:NO];
-    [[wc pickAnotherButton] setEnabled:YES];
-    
+
     [wc _chooseRandomAPISymbol];
 
     (void)[[NSApplication sharedApplication] runModalForWindow:[wc window]];

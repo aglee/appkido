@@ -17,11 +17,9 @@
 
     // IBOutlets.
     NSTextField *_symbolNameField;
-    NSButton *_pickAnotherButton;
 }
 
 @property (nonatomic, strong) IBOutlet NSTextField *symbolNameField;
-@property (nonatomic, assign) IBOutlet NSButton *pickAnotherButton;
 
 + (void)showPopQuiz;
 
