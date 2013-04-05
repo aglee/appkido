@@ -13,16 +13,25 @@
 @interface AKPopQuizWindowController : NSWindowController
 {
 @private
+    NSString *_chosenAPISymbol;
+
+    // IBOutlets.
     NSTextField *_symbolNameField;
+    NSButton *_pickAnotherButton;
 }
 
 @property (nonatomic, strong) IBOutlet NSTextField *symbolNameField;
+@property (nonatomic, assign) IBOutlet NSButton *pickAnotherButton;
 
-+ (void)showPopQuizWithAPISymbol:(NSString *)apiSymbol;
++ (void)showPopQuiz;
 
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)ok:(id)sender;
+- (IBAction)okPopQuiz:(id)sender;
+
+- (IBAction)cancelPopQuiz:(id)sender;
+
+- (IBAction)pickAnother:(id)sender;
 
 @end

@@ -482,20 +482,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (IBAction)popQuiz:(id)sender
 {
-    // Select a random API symbol.
-    AKRandomSearch *randomSearch = [AKRandomSearch randomSearchWithDatabase:_appDatabase];
-    NSString *apiSymbol = [randomSearch selectedAPISymbol];
-
-    [AKPopQuizWindowController showPopQuizWithAPISymbol:apiSymbol];
-
-    AKWindowController *wc = [self frontmostWindowController];
-
-    if (wc == nil)
-    {
-        wc = [self controllerForNewWindow];
-    }
-
-    [wc revealPopQuizSymbol:apiSymbol];
+    [AKPopQuizWindowController showPopQuiz];
 }
 
 #pragma mark -
