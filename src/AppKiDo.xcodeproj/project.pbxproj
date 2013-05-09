@@ -957,6 +957,7 @@
 		73D409E804A3A04F00A80003 /* AKSortUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSortUtils.m; sourceTree = "<group>"; };
 		73D409EE04A3A1EB00A80003 /* NSString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AppKiDo.h"; sourceTree = "<group>"; };
 		73D409EF04A3A1EB00A80003 /* NSString+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AppKiDo.m"; sourceTree = "<group>"; };
+		73D57F8A17379ED00078E389 /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMethodNameExtractor.h; sourceTree = "<group>"; };
 		73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMethodNameExtractor.m; sourceTree = "<group>"; };
 		73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKServicesProvider.h; sourceTree = "<group>"; };
@@ -1048,6 +1049,7 @@
 			isa = PBXGroup;
 			children = (
 				73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */,
+				73D57F8A17379ED00078E389 /* README.markdown */,
 				7302DF980767B65200F9FEC0 /* about-the-code.markdown */,
 				733DF63F14E18FAB007E6313 /* DocSetIndexTables.txt */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
