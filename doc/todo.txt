@@ -1,10 +1,10 @@
 ## Big projects
 
 * Store database on disk so it doesn't have to be reparsed on every launch.
-	* Treat anchors as primary way of linking.
-	* Look into BeautifulSoup for parsing
 * Use Sparkle for updates. (Shouldn't be *that* big a project.)
 * Overhaul parsing code. 
+	* Treat anchors as primary way of linking.
+	* Look into BeautifulSoup for parsing.
 	* Add error handling to parser API?
 	* Can we now eliminate parsing of .h files and get all data from sqlite and HTML?
 	* Maybe use NSXMLDocument for HTML parsing? Ideally this would make it easy to:
@@ -14,6 +14,7 @@
 		* Parse all globals, e.g. the ones in ApplicationServices > Types & Constants > Constants > Color Modes (QuickTime Constants) -- </Users/alee/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleOSX10_8.CoreReference.docset/Contents/Resources/Documents/documentation/QuickTime/Reference/QTRef_Constants/Reference/reference.html>. Although actually that info can and should better be gotten from the sqlite database.
 		* Construct an HTML page that uses the original CSS files but only shows one doc component.
 	* Maybe decouple parsers from concept of file? So parser can operate on data that doesn't come from a file.
+	* Ooh -- noticed new XML files in docset.
 * tab chain
 	* try Avi's suggestion of event tap
 	* tab chain: doesn't handle the tab-to-links web pref
@@ -27,8 +28,21 @@
 
 ----
 
-## Smaller bugs/UX stuff
+## Bugs/UX stuff
 
+* NSOpenPanel, beginForDirectory:file:types:modelessDelegate:didEndSelector:contextInfo:, "Use beginWithCompletionHandler: instead", click on the link to beginWithCompletionHandler:. It opens doc in browser instead of staying within AppKiDo. Link is file:///Users/alee/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleOSX10_8.CoreReference.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSavePanel_Class/Reference/Reference.html#//apple_ref/doc/uid/20000309-SW24
+
+
+
+* Fix the xcode-select bug Mike Morton found.
+	* Make alert more informative.
+	* Use custom alert window instead of NSAlert one.
+
+* Noticed in Dash: NSObject(DRBurnProgressPanelDelegateMethods) Class Reference -- seems to be a doc file linked to a category
+
+* Make web site Retina-friendly
+
+* Would like to rename digitalspokes plist to com.appkido.etc.
 * Crashed when toggling toolbar with Option-Command-T -- could not reproduce, and Instruments didn't show a zombie.
 * Try to reproduce reported bug: move AppKiDo to its own Space, open one window with the drawer open, minimize it.  Click an app in a different space, click back on AppKiDo -- the window unminiaturizes, but the drawer only opens part way.
 * Cmd-+/- bad choice for browser columns; have them affect web view instead; maybe use Opt-Cmd-=/- for browser columns.
@@ -46,25 +60,27 @@
 		@interface NSURL: NSObject <NSSecureCoding, NSCopying, NSURLHandleClient>
 		#endif
 
+* Class NSMovie is deprecated -- show that somehow.
+* Parsing flaw. Thinks "playback" is an enum; see ApplicationServices > Types & Constants > Constants > Atom ID Codes.
 * Maybe should parse QuartzCore before AppKit. CIColor is a QuartzCore class with AppKit additions.
 
 ----
 
 ## Code hygiene
 
-* have a dev branch and have master be the release branch
-* proper CFBundleShortVersionString and proper 3-part version numbering
-* search *might* be quick enough now, but it should really be in the background instead of blocking the main thread
-* clarify the navigation methods
-* split AKWindowController into categories? subclasses?
-* be consistent about "Init/dealloc/awake"
+* Have a dev branch and have master be the release branch.
+* Proper CFBundleShortVersionString and proper 3-part version numbering.
+* Search *might* be quick enough now, but it should really be in the background instead of blocking the main thread.
+* Clarify terminology in the navigation methods -- maybe should change all selectXXX to goToXXX for consistency.
+* AKWindowController is huge. Split into categories? Subclasses? Separate classes?
+* Be consistent about "Init/dealloc/awake" vs. "Init/awake/dealloc".
 * Fix broken HeaderDoc syntax.
-* *could* use newer singleton pattern using gcd
-* use unsafe_unretained instead of assign for objects
-* take varargs in DIGSLogError_ExitingMethodPrematurely
-* rename digitalspokes plist to com.appkido.etc
-* [AKDocParser parseToken] treats bytes with high bit set as whitespace; works for now, but may someday have to properly handle charsets and encodings.
-* review "[agl]" comments now and then
+* *Could* use newer singleton pattern using dispatch_once.
+* Use unsafe_unretained instead of assign for objects.
+* Take varargs in DIGSLogError_ExitingMethodPrematurely.
+* Replace "DIGS" prefix with "AL", move to ALUtilities.
+* [AKDocParser parseToken] treats bytes with high bit set as whitespace; works for now, but should really properly handle charsets and encodings.
+* Review "[agl]" comments now and then.
 
 ----
 
