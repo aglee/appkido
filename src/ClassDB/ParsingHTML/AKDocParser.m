@@ -8,55 +8,18 @@
 #import "AKDocParser.h"
 
 #import "DIGSLog.h"
-#import "AKTextUtils.h"
+
 #import "AKDatabase.h"
-#import "AKFramework.h"
 #import "AKFileSection.h"
 
-
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKDocParser (Private)
-
-/*!
- * @method      _parseRootSection
- * @discussion  Partitions the current file into a hierarchy of
- *              AKFileSections, and returns the root section.
- *
- *              This method is called by -parseCurrentFile, which sets up
- *              preconditions and cleans up afterward.  You can override
- *              this, but do not call it directly.
- */
-- (AKFileSection *)_parseRootSection;
-
-- (AKFileSection *)_popSectionStack;
-- (AKFileSection *)_peekSectionStack;
-- (char)_headerLevelAtTopOfSectionStack;
-- (void)_rollUpSiblings;
-
-- (void)_processHeaderTag;
-- (void)_processAnchorTag;
-
-- (void)_skipPastClosingAngleBracket;
-
-- (NSString *)_parseTitleAtLevel:(char)headerLevel;
-
-+ (NSMutableData *)_kludgeDivTagsToH3:(NSData *)sourceData;
-+ (NSMutableData *)_kludgeSpanTagsToH1:(NSData *)sourceData;
-
-@end
-
 @implementation AKDocParser
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFramework:(AKFramework *)aFramework
+- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithFramework:aFramework]))
+    if ((self = [super initWithDatabase:database frameworkName:frameworkName]))
     {
         _sectionStack = [[NSMutableArray alloc] init];
         _token[0] = '\0';
@@ -72,7 +35,6 @@
 
     [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark Parsing
@@ -204,7 +166,6 @@
     return NO;
 }
 
-
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
 
@@ -213,13 +174,17 @@
     return [[filePath pathExtension] isEqualToString:@"html"];
 }
 
-
 #pragma mark -
 #pragma mark AKParser methods
 
 - (NSMutableData *)loadDataToBeParsed
 {
-    NSMutableData *originalData = [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
+    NSMutableData *originalData = nil;
+    NSMutableData *afterFirstKludge = nil;
+    NSMutableData *afterSecondKludge = nil;
+
+    // Load the file.
+    originalData = [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
     if (!originalData)
     {
         DIGSLogWarning(@"could not load contents of file [%@]", [self currentPath]);
@@ -229,49 +194,42 @@
     // Add a NULL terminator so strstr() will work.
     [originalData setLength:([originalData length] + 1)];
 
-    // Perform the kludge.
-    NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
-    NSMutableData *afterFirstKludge = [[self class] _kludgeDivTagsToH3:originalData];
-    [afterFirstKludge retain];
-    [tempPool release];
+    // Perform the first kludge.
+    @autoreleasepool
+    {
+        afterFirstKludge = [[[self class] _kludgeDivTagsToH3:originalData] retain];
+    }
     [originalData release];
+    originalData = nil;
 
-    tempPool = [[NSAutoreleasePool alloc] init];
-    NSMutableData *afterSecondKludge = [[self class] _kludgeSpanTagsToH1:afterFirstKludge];
-    [afterSecondKludge retain];
-    [tempPool release];
+    // Perform the second kludge.
+    @autoreleasepool
+    {
+        afterSecondKludge = [[[self class] _kludgeSpanTagsToH1:afterFirstKludge] retain];
+    }
     [afterFirstKludge release];
+    afterFirstKludge = nil;
 
     // Remove the NULL terminator, which was copied by the kludge.
     [afterSecondKludge setLength:([afterSecondKludge length] - 1)];
-    [afterSecondKludge autorelease];
 
-    return afterSecondKludge;
+    return [afterSecondKludge autorelease];
 }
 
 - (void)parseCurrentFile
 {
-    NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];
-
-    // Do the parse.
-    AKFileSection *rootSection = [self _parseRootSection];
-
-    // Save the parse tree.
-    [rootSection retain];
-    [_rootSectionOfCurrentFile release];
-    _rootSectionOfCurrentFile = rootSection;
-
-    // Apply the parse results to the database.
-    if (rootSection != nil)
+    @autoreleasepool
     {
-        [[_parserFW fwDatabase] rememberFrameworkName:[_parserFW frameworkName] forHTMLFile:[self currentPath]];
-        [[_parserFW fwDatabase] rememberRootSection:rootSection forHTMLFile:[self currentPath]];
-        [self applyParseResults];
+        // Parse the file, to extract the hierarchy of sections therein.
+        _rootSectionOfCurrentFile = [[self _parseRootSection] retain];
+
+        // Apply the parse results to the database.
+        if (_rootSectionOfCurrentFile != nil)
+        {
+            [self applyParseResults];
+        }
     }
-
-    [tempPool release];
 }
-
 
 #pragma mark -
 #pragma mark Using parse results
@@ -286,7 +244,6 @@
     // Do nothing by default.
 }
 
-
 #pragma mark -
 #pragma mark Heinous kludge
 
@@ -299,14 +256,13 @@
     return result;    
 }
 
-@end
-
-
 #pragma mark -
 #pragma mark Private methods
 
-@implementation AKDocParser (Private)
-
+// Called by -parseCurrentFile, which sets up preconditions and cleans up
+// afterward. Partitions the current file into a hierarchy of AKFileSections,
+// and returns the root section in that hierarchy.
+//
 // Pseudo-syntax for doc file:
 //
 //  <hA>rootSection.title</hA>           // where A is probably 1
@@ -448,7 +404,7 @@
         [parentSection addChildSection:childSection];
     }
 
-    [siblings release];  // release here
+      // release here
 }
 
 // on entry, _current points to the opening angle bracket of an <hX> tag;
@@ -520,48 +476,12 @@
         return;
     }
 
-    // Scan tokens up to and including the closing ">".  On the way,
-    // look for the "name" attribute.
+    // Scan tokens up to and including the closing ">".
     while (([self parseToken]))
     {
         if (strcmp(_token, ">") == 0)
         {
             break;
-        }
-        else if (strcmp(_token, "name") == 0) // [agl] case-sensitive
-        {
-            // Skip the "=" sign.
-            (void)[self parseToken];
-            if (strcmp(_token, "=") != 0)
-            {
-                // The token "name" must be in this tag in some way
-                // other than being an attribute.
-                continue;
-            }
-
-            // Skip the opening quote.
-            // [agl] add an assert making sure it's a quote
-            (void)[self parseToken];
-
-            // The sequence of characters from here to the closing quote
-            // is the anchor string.
-            const char *anchorStart = _current;
-
-            while ((_current < _dataEnd) && (_current[0] != '\"'))
-            {
-                _current++;
-            }
-
-            NSString *anchorString =
-                [[[NSString alloc]
-                    initWithBytes:anchorStart
-                    length:(_current - anchorStart)
-                    encoding:NSUTF8StringEncoding] autorelease];
-
-            [[_parserFW fwDatabase]
-                rememberOffset:(anchorStart - _dataStart)
-                ofAnchorString:anchorString
-                inHTMLFile:[self currentPath]];
         }
     }
 }
@@ -671,11 +591,9 @@
 
     if (trimmedTitleStart)
     {
-        result =
-            [[[NSString alloc]
-                initWithBytes:titleBuf
-                length:(trimmedTitleEnd - trimmedTitleStart + 1)
-                encoding:NSUTF8StringEncoding] autorelease];
+        result = [[[NSString alloc] initWithBytes:titleBuf
+                                           length:(trimmedTitleEnd - trimmedTitleStart + 1)
+                                         encoding:NSUTF8StringEncoding] autorelease];
     }
     else
     {
@@ -718,12 +636,12 @@
 
     char *endOfLastDivTag = (char *)[sourceData bytes];
     char *startOfDivOpenTag = strstr(endOfLastDivTag, divOpenTag);
+    
     while (startOfDivOpenTag)
     {
         // Append the good text we just skipped to the new HTML.
-        [newHTMLData
-            appendBytes:endOfLastDivTag
-            length:(startOfDivOpenTag - endOfLastDivTag)];
+        [newHTMLData appendBytes:endOfLastDivTag
+                          length:(startOfDivOpenTag - endOfLastDivTag)];
 
         // Append an <h3> tag to the new HTML to replace the divOpenTag --
         // but take up exactly as much space as divOpenTag did.
@@ -737,9 +655,8 @@
         if (startOfDivCloseTag)
         {
             // Append the good text we just skipped to the new HTML.
-            [newHTMLData
-                appendBytes:endOfLastDivTag
-                length:(startOfDivCloseTag - endOfLastDivTag)];
+            [newHTMLData appendBytes:endOfLastDivTag
+                              length:(startOfDivCloseTag - endOfLastDivTag)];
 
             // Append "</h3>" to the new HTML to replace the divCloseTag --
             // but take up exactly as much space as divCloseTag did.
@@ -755,18 +672,16 @@
 
     // Add the remaining good text.  There will be at least one byte
     // of good text, namely the NULL terminator.
-    [newHTMLData
-        appendBytes:endOfLastDivTag
-        length:((char *)[sourceData bytes] + [sourceData length]
-                    - endOfLastDivTag)];
+    [newHTMLData appendBytes:endOfLastDivTag
+                      length:((char *)[sourceData bytes] + [sourceData length]
+                              - endOfLastDivTag)];
 
     return newHTMLData;
 }
 
 + (NSMutableData *)_kludgeSpanTagsToH1:(NSData *)sourceData
 {
-    NSMutableData *newHTMLData =
-        [NSMutableData dataWithCapacity:([sourceData length] + 32)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 32)];
     static char *spanOpenTag = "<span class=\"page_title\">";
     static char *spanCloseTag = "</span>";
     NSInteger spanOpenTagLength = strlen(spanOpenTag);
@@ -774,19 +689,19 @@
 
     char *endOfLastSpanTag = (char *)[sourceData bytes];
     char *startOfSpanOpenTag = strstr(endOfLastSpanTag, spanOpenTag);
+    
     while (startOfSpanOpenTag)
     {
         // Append the good text we just skipped to the new HTML.
-        [newHTMLData
-            appendBytes:endOfLastSpanTag
-            length:(startOfSpanOpenTag - endOfLastSpanTag)];
+        [newHTMLData appendBytes:endOfLastSpanTag
+                          length:(startOfSpanOpenTag - endOfLastSpanTag)];
 
         // Append an <h1> tag to the new HTML to replace the spanOpenTag --
         // but take up exactly as much space as spanOpenTag did.
         //                        .........................
         //                        <span class="page_title">
         [newHTMLData appendBytes:"<h1                     >"
-            length:spanOpenTagLength];
+                          length:spanOpenTagLength];
 
         // Look for the closing tag.
         endOfLastSpanTag = startOfSpanOpenTag + spanOpenTagLength;  // Skip over the spanOpenTag.
@@ -794,9 +709,8 @@
         if (startOfSpanCloseTag)
         {
             // Append the good text we just skipped to the new HTML.
-            [newHTMLData
-                appendBytes:endOfLastSpanTag
-                length:(startOfSpanCloseTag - endOfLastSpanTag)];
+            [newHTMLData appendBytes:endOfLastSpanTag
+                              length:(startOfSpanCloseTag - endOfLastSpanTag)];
 
             // Append "</h3>" to the new HTML to replace the spanCloseTag --
             // but take up exactly as much space as spanCloseTag did.
@@ -812,10 +726,9 @@
 
     // Add the remaining good text.  There will be at least one byte
     // of good text, namely the NULL terminator.
-    [newHTMLData
-        appendBytes:endOfLastSpanTag
-        length:((char *)[sourceData bytes] + [sourceData length]
-                    - endOfLastSpanTag)];
+    [newHTMLData appendBytes:endOfLastSpanTag
+                      length:((char *)[sourceData bytes] + [sourceData length]
+                              - endOfLastSpanTag)];
 
     return newHTMLData;
 }

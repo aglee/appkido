@@ -9,18 +9,17 @@
 
 @implementation AKInheritanceDoc
 
-
 #pragma mark -
-#pragma mark AKOverviewDoc methods
+#pragma mark AKBehaviorGeneralDoc methods
 
 // The "Inheritance" doc uses the root section of the HTML file.  If we
 // were to include descendant sections, we'd be displaying the whole file.
-- (BOOL)textIncludesDescendantSections
+- (BOOL)docTextShouldIncludeDescendantSections
 {
     return NO;
 }
 
-- (NSString *)_unqualifiedDocName
+- (NSString *)unqualifiedDocName
 {
     return @"Inheritance";
 }

@@ -11,17 +11,14 @@
 
 @implementation AKGlobalsNode
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    if ((self =
-            [super
-                initWithNodeName:nodeName
-                owningFramework:theFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _namesOfGlobals = [[NSMutableArray alloc] init];
     }
@@ -35,7 +32,6 @@
 
     [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters

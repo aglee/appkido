@@ -9,7 +9,4 @@
 #import "AKRealMethodsSubtopic.h"
 
 @interface AKPropertiesSubtopic : AKRealMethodsSubtopic
-{
-}
-
 @end

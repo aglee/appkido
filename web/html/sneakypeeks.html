@@ -1,59 +1,85 @@
 <html>
-<head>
-<title>AppKiDo sneakypeeks</title>
+<head profile="http://www.w3.org/2005/10/profile">
+	<title>AppKiDo sneakypeeks</title>
+
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 
-<body bgcolor="#FFFFFF">
-<h1>AppKiDo sneakypeeks</h1>
-[ <a href="appkido.html">home</a> ]
+<body>
+<h1><a href="index.html">AppKiDo</a> sneakypeeks</h1>
+
+<!-- ========== TOP-OF-PAGE LINKS ========== -->
+<table>
+<tr>
+
+<td>
+<ul style="margin-bottom: 8px;">
+<li><a href="AppKiDo-0.996.zip">Download <b>AppKiDo</b> 0.996</a></li>
+<li><a href="AppKiDo-for-iPhone-0.996.zip">Download <b>AppKiDo-for-iPhone</b> 0.996</a></li>
+<li><a href="http://github.com/aglee/appkido" target="_blank">Source code</a> on GitHub</li>
+</ul>
+</td>
+
+<td>
+<ul>
+<li><a href="release-notes.html">Release notes</a></li>
+<li><a href="sneakypeeks.html">Sneakypeeks</a></li>
+<li><a href="faq.html">FAQ</a></li>
+</ul>
+</td>
+
+<td>
+<ul>
+<li><a href="http://notesfromandy.com/" target="_blank">Blog</a></li>
+<li><a href="https://twitter.com/cocoadog" target="_blank">@cocoadog</a></li>
+<li><a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">Email</a> to Andy Lee</li>
+</ul>
+</td>
+
+</tr>
+</table>
+<!-- ========== END, TOP-OF-PAGE LINKS ========== -->
 
 
-<div style="width:600px;">
+<div style="width:600px; margin-top:0px;">
 
 
-<p>AppKiDo <b>sneakypeeks</b> are works in progress that are not ready for final release.  Sneakypeeks may be larger than official releases, because debug symbols may not have been stripped.  Although they may contain bug fixes and improvements, they may also contain newly added bugs and debugging code that causes them to perform poorly.</p>
+<p>AppKiDo sneakypeeks are works in progress that are not ready for final release. Sneakypeeks may be larger than official releases, because debug symbols may not have been stripped. Although they may contain bug fixes and improvements, they may also contain newly added bugs and debugging code that causes them to perform poorly.</p>
 
 <table><tr><td>
 
+<h2>Version 0.989sp1 (Feb 20, 2012)</h2>
+<ul>
+<li>Support for the changes in how the Dev Tools are organized as of Xcode 4.3 and 4.4. In Prefs &gt; Dev Tools, you can specify /Applications/Xcode as the location of your Dev Tools.</li>
+</ul>
+
 <h2>Version 0.986sp4 (March 11, 2010)</h2>
-[ <a href="AppKiDo-0.986sp4.zip">download <b>AppKiDo</b> 0.986sp4</a> ]
-[ <a href="AppKiDo-for-iPhone-0.986sp4.zip">download <b>AppKiDo-for-iPhone</b> 0.986sp4</a> ]
 <ul>
 <li>Bug fixes and now works with Xcode 4.</li>
 </ul>
 
 <h2>Version 0.986sp3 (November 23, 2010)</h2>
-[ <a href="AppKiDo-0.986sp3.zip">download <b>AppKiDo</b> 0.986sp3</a> ]
-[ <a href="AppKiDo-for-iPhone-0.986sp3.zip">download <b>AppKiDo-for-iPhone</b> 0.986sp3</a> ]
 <ul>
 <li>Fixed a problem with 10.4.</li>
 <li>Now displaying more info about Dev Tools directories and why they are or aren't recognized as such.</li>
 </ul>
 
 <h2>Version 0.985sp2 (May 16, 2010)</h2>
-[ <a href="AppKiDo-0.985sp2.tgz">download <b>AppKiDo</b> 0.985sp2</a> ]
-[ <a href="AppKiDo-for-iPhone-0.985sp2.tgz">download <b>AppKiDo-for-iPhone</b> 0.985sp2</a> ]
-[ <a href="AppKiDo-src-0.985sp2.tgz">download the <b>source</b></a> ]
 <ul>
-<li>The bug Fritz found went deeper than I thought.  Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
+<li>The bug Fritz found went deeper than I thought. Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
 <li>Added fix, sent by Michael Klein, for the fact that -[NSFont defaultLineHeightForFont:] is deprecated and isn't available to 64-bit applications.</li>
 </ul>
 
 <h2>Version 0.985sp1 (April 19, 2010)</h2>
-[ <a href="AppKiDo-0.985sp1.tgz">download <b>AppKiDo</b> 0.985sp1</a> ]
-[ <a href="AppKiDo-for-iPhone-0.985sp1.tgz">download <b>AppKiDo-for-iPhone</b> 0.985sp1</a> ]
-[ <a href="AppKiDo-src-0.985sp1.tgz">download the <b>source</b></a> ]
 <ul>
-<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one.  Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
+<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one. Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
 </ul>
 
 <h2>Version 0.983sp1 (December 14, 2008)</h2>
-[ <a href="AppKiDo-0.983sp1.tgz">download <b>AppKiDo</b> 0.983sp1</a> ]
-[ <a href="AppKiDo-for-iPhone-0.983sp1.tgz">download <b>AppKiDo-for-iPhone</b> 0.983sp1</a> ]
-[ <a href="AppKiDo-src-0.983sp1.tgz">download the <b>source</b></a> ]
 <ul>
 <li>Added a nil check that fixed a crashing bug.</li>
-<li>In AppKiDo-for-iPhone, I was parsing header files under iPhoneSimulator.platform when it should have been iPhoneOS.platform.  As a result, NSTask was showing up in the class browser even though there is no NSTask on the iPhone.</li>
+<li>In AppKiDo-for-iPhone, I was parsing header files under iPhoneSimulator.platform when it should have been iPhoneOS.platform. As a result, NSTask was showing up in the class browser even though there is no NSTask on the iPhone.</li>
 </ul>
 
 

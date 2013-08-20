@@ -13,7 +13,6 @@
 
 @implementation AKCollectionOfNodes
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -36,7 +35,6 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -48,10 +46,8 @@
 - (NSArray *)nodesWithDocumentation
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSEnumerator *en = [_nodeList objectEnumerator];
-    AKDatabaseNode *databaseNode;
 
-    while ((databaseNode = [en nextObject]))
+    for (AKDatabaseNode *databaseNode in _nodeList)
     {
         if ([databaseNode nodeDocumentation])
         {

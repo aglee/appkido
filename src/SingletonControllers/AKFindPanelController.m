@@ -10,91 +10,80 @@
 #import "AKFindPanelController.h"
 
 #import <WebKit/WebKit.h>
+
 #import "DIGSFindBuffer.h"
-#import "AKTextUtils.h"
-#import "AKAppController.h"
+
+#import "AKAppDelegate.h"
+#import "AKTestDocParserWindowController.h"
 #import "AKWindowController.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKFindPanelController (Private)
-- (BOOL)_find:(BOOL)isForwardDirection;
-- (void)_findStringDidChange:(DIGSFindBuffer *)findWatcher;
-@end
+#import "NSString+AppKiDo.h"
 
 @implementation AKFindPanelController
 
+@synthesize findTextField = _findTextField;
+@synthesize findNextButton = _findNextButton;
+@synthesize statusTextField = _statusTextField;
 
 #pragma mark -
 #pragma mark Factory methods
 
-static AKFindPanelController *s_sharedInstance = nil;
-
-+ (AKFindPanelController *)sharedInstance
++ (id)sharedInstance
 {
-    if (!s_sharedInstance)
+    static AKFindPanelController *s_sharedInstance = nil;
+
+    if (s_sharedInstance == nil)
     {
-        s_sharedInstance = [[self alloc] init];
+s_sharedInstance = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPanel"];
+(void)[s_sharedInstance window];  // Force the nib to be loaded.
     }
 
     return s_sharedInstance;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
+- (id)initWithWindowNibName:(NSString *)windowNibName
 {
-    if (s_sharedInstance)
+    self = [super initWithWindowNibName:windowNibName];
+    if (self)
     {
-        [self release];
-        return s_sharedInstance;
-    }
-
-    if ((self = [super init]))
-    {
-        [[DIGSFindBuffer sharedInstance]
-            addListener:self
-            withSelector:@selector(_findStringDidChange:)];
-
-        s_sharedInstance = self;
+        [[DIGSFindBuffer sharedInstance] addDelegate:self];
     }
 
     return self;
 }
 
-- (void)awakeFromNib
-{
-    [_findTextField setStringValue:
-        [[DIGSFindBuffer sharedInstance] findString]];
-}
-
 - (void)dealloc
 {
-    if (self != s_sharedInstance)
-    {
-        [[DIGSFindBuffer sharedInstance] removeListener:self];
+    [[DIGSFindBuffer sharedInstance] removeDelegate:self];
 
-        [super dealloc];
-    }
+    [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark Action methods
 
-- (IBAction)orderFrontFindPanel:(id)sender
+- (IBAction)showFindPanel:(id)sender
 {
+    [self showWindow:nil];
     [_findTextField selectText:nil];
-    [[_findTextField window] makeKeyAndOrderFront:nil];
 }
 
-- (IBAction)findNextAndOrderFindPanelOut:(id)sender
+- (IBAction)findNextFindString:(id)sender
+{
+    if (_findTextField)
+    {
+        [[DIGSFindBuffer sharedInstance] setFindString:[_findTextField stringValue]];
+    }
+    [self _findWithForwardFlag:YES];
+}
+
+- (IBAction)findNextFindStringAndOrderOut:(id)sender
 {
     [_findNextButton performClick:nil];
+
     if (_lastFindWasSuccessful)
     {
         [[_findTextField window] orderOut:sender];
@@ -105,130 +94,114 @@ static AKFindPanelController *s_sharedInstance = nil;
     }
 }
 
-- (IBAction)findNext:(id)sender
+- (IBAction)findPreviousFindString:(id)sender
 {
     if (_findTextField)
     {
-        [[DIGSFindBuffer sharedInstance]
-            setFindString:[_findTextField stringValue]];
+        [[DIGSFindBuffer sharedInstance] setFindString:[_findTextField stringValue]];
     }
-    (void)[self _find:YES];
+    [self _findWithForwardFlag:NO];
 }
 
-- (IBAction)findPrevious:(id)sender
+- (IBAction)useSelectionAsFindString:(id)sender
 {
-    if (_findTextField)
+    NSResponder *firstResponder = [[NSApp mainWindow] firstResponder];
+    NSString *selection = nil;
+
+    if ([firstResponder isKindOfClass:[NSTextView class]])
     {
-        [[DIGSFindBuffer sharedInstance]
-            setFindString:[_findTextField stringValue]];
+        NSTextView *textView = (NSTextView *)firstResponder;
+        selection = [[textView string] substringWithRange:[textView selectedRange]];
     }
-    (void)[self _find:NO];
-}
-
-- (IBAction)takeFindStringFromSelection:(id)sender
-{
-    id fr = [[NSApp keyWindow] firstResponder];
-
-    if ([fr isKindOfClass:[NSTextView class]])
+    else if ([firstResponder isKindOfClass:[NSView class]])
     {
-        NSTextView *textView = (NSTextView *)fr;
-        NSString *selection =
-            [[textView string] substringWithRange:[textView selectedRange]];
-
-        [[DIGSFindBuffer sharedInstance]
-            setFindString:[selection ak_trimWhitespace]];
-    }
-    else if ([fr isKindOfClass:[NSView class]])
-    {
-        NSView *view = (NSView *)fr;
-
-        while (view)
+        for (NSView *view = (NSView *)firstResponder; view != nil; view = [view superview])
         {
             if ([view isKindOfClass:[WebView class]])
             {
-                WebView *webView = (WebView *)view;
-                NSString *selection =
-                    [[[webView selectedDOMRange] markupString]
-                        ak_stripHTML];
-
                 // Note that ak_stripHTML can have a newline at the end
                 // of its result, even if the user's selected text doesn't
                 // end with a newline.  This happens, for example, if the
                 // selected text is in the middle of a <pre> element.
-                [[DIGSFindBuffer sharedInstance]
-                    setFindString:[selection ak_trimWhitespace]];
-
+                selection = [[[(WebView *)view selectedDOMRange] markupString] ak_stripHTML];
+                
                 break;
             }
 
-            // Prepare for next loop iteration.
             view = [view superview];
         }
     }
+
+    if (selection)
+    {
+        [[DIGSFindBuffer sharedInstance] setFindString:[selection ak_trimWhitespace]];
+    }
 }
 
-@end
+#pragma mark -
+#pragma mark DIGSFindBufferDelegate methods
 
+- (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer
+{
+    [_findTextField setStringValue:[findBuffer findString]];
+}
+
+#pragma mark -
+#pragma mark NSWindowController methods
+
+- (void)windowDidLoad
+{
+    [_findTextField setStringValue: [[DIGSFindBuffer sharedInstance] findString]];
+}
 
 #pragma mark -
 #pragma mark Private methods
 
-@implementation AKFindPanelController (Private)
-
-// Does a find in the whatever text view it makes sense to do the find in,
-// if any.  Selects the found range or beeps if not found.  Sets the status
-// field accordingly.
-- (BOOL)_find:(BOOL)isForwardDirection
+- (NSView *)_viewToSearch
 {
-    NSWindow *mainWindow = [NSApp mainWindow];
-    id oldFirstResponder = [mainWindow firstResponder];
-    AKAppController *appController = [NSApp delegate];
-    AKWindowController *wc = [appController frontmostWindowController];
-    NSView *viewToSearch = [wc focusOnDocView];
+    id windowDelegate = [[NSApp mainWindow] delegate];
+    
+    if ([windowDelegate isKindOfClass:[AKWindowController class]])
+    {
+        return [(AKWindowController *)windowDelegate docView];
+    }
+    else if ([windowDelegate isKindOfClass:[AKTestDocParserWindowController class]])
+    {
+        return [(AKTestDocParserWindowController *)windowDelegate viewToSearch];
+    }
+                
+    return nil;
+}
 
-    _lastFindWasSuccessful = NO;
-
+// Does a find in the whatever view it makes sense to do the find in, if any.
+// Selects the found range or beeps if not found.  Sets _lastFindWasSuccessful
+// and the status field accordingly.
+- (void)_findWithForwardFlag:(BOOL)isForwardDirection
+{
+    NSWindow *windowToSearch = [NSApp mainWindow];
+    id oldFirstResponder = [windowToSearch firstResponder];
+    NSView *viewToSearch = [self _viewToSearch];
+    
     if (viewToSearch == nil)
     {
-        // Do nothing
+        return;
     }
-    else if([viewToSearch isKindOfClass:[WebView class]])
+    
+    _lastFindWasSuccessful = NO;
+
+    if ([viewToSearch isKindOfClass:[WebView class]])
     {
         NSString *findString = [[DIGSFindBuffer sharedInstance] findString];
 
-        _lastFindWasSuccessful =
-            [(WebView *)viewToSearch
-                searchFor:findString
-                direction:isForwardDirection
-                caseSensitive:NO
-                wrap:YES];
+        _lastFindWasSuccessful = [(WebView *)viewToSearch searchFor:findString
+                                                          direction:isForwardDirection
+                                                      caseSensitive:NO
+                                                               wrap:YES];
     }
-    else if([viewToSearch isKindOfClass:[NSTextView class]])
+    else if ([viewToSearch isKindOfClass:[NSTextView class]])
     {
-        NSTextView *textView = (NSTextView *)viewToSearch;
-        NSString *textContents = [textView string];
-        NSString *findString =
-            [[DIGSFindBuffer sharedInstance] findString];
-
-        if ([textContents length])
-        {
-            NSRange range;
-            unsigned options = NSCaseInsensitiveSearch;
-
-            if (!isForwardDirection)
-            {
-                options |= NSBackwardsSearch;
-            }
-
-            range = [textContents ak_findString:findString selectedRange:[textView selectedRange] options:options wrap:YES];
-
-            if (range.length)
-            {
-                [textView setSelectedRange:range];
-                [textView scrollRangeToVisible:range];
-                _lastFindWasSuccessful = YES;
-            }
-        }
+        _lastFindWasSuccessful = [self _findInTextView:(NSTextView *)viewToSearch
+                                               forward:isForwardDirection];
     }
 
     if (_lastFindWasSuccessful)
@@ -240,15 +213,42 @@ static AKFindPanelController *s_sharedInstance = nil;
     {
         NSBeep();
         [_statusTextField setStringValue:@"Not found"];
-        (void)[mainWindow makeFirstResponder:oldFirstResponder];
+        (void)[windowToSearch makeFirstResponder:oldFirstResponder];
     }
-
-    return _lastFindWasSuccessful;
 }
 
-- (void)_findStringDidChange:(DIGSFindBuffer *)findWatcher
+- (BOOL)_findInTextView:(NSTextView *)textView forward:(BOOL)isForwardDirection
 {
-    [_findTextField setStringValue:[findWatcher findString]];
+    NSString *textContents = [textView string];
+
+    if ([textContents length] == 0)
+    {
+        return NO;
+    }
+
+    unsigned searchOptions = NSCaseInsensitiveSearch;
+
+    if (!isForwardDirection)
+    {
+        searchOptions |= NSBackwardsSearch;
+    }
+
+    NSString *findString = [[DIGSFindBuffer sharedInstance] findString];
+    NSRange range = [textContents ak_findString:findString
+                                  selectedRange:[textView selectedRange]
+                                        options:searchOptions
+                                           wrap:YES];
+    if (range.length == 0)
+    {
+        return NO;
+    }
+    else
+    {
+        [textView setSelectedRange:range];
+        [textView scrollRangeToVisible:range];
+        (void)[[textView window] makeFirstResponder:textView];
+        return YES;
+    }
 }
 
 @end

@@ -8,21 +8,11 @@
 #import "AKPrefUtils.h"
 
 #import "DIGSLog.h"
+
+#import "AKDevToolsUtils.h"
 #import "AKFrameworkConstants.h"
-#import "AKPrefConstants.h"
-
-
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKPrefUtils (Private)
-+ (void)_registerStandardDefaults;
-@end
-
 
 @implementation AKPrefUtils
-
 
 #pragma mark -
 #pragma mark Class initialization
@@ -33,22 +23,18 @@
     [self _registerStandardDefaults];
 
     // Set logging verbosity, based on user preferences.
-    DIGSSetVerbosityLevel(
-        [[NSUserDefaults standardUserDefaults]
-            integerForKey:(id)DIGSLogVerbosityUserDefault]);
+    DIGSSetVerbosityLevel( [[NSUserDefaults standardUserDefaults] integerForKey:(id)DIGSLogVerbosityUserDefault]);
 //    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
-
 #pragma mark -
-#pragma mark App-specific getters and setters
+#pragma mark AppKiDo preferences
 
 + (NSArray *)selectedFrameworkNamesPref
 {
     // Note that if you pass nil to -arrayWithArray:, it returns an empty
     // array rather than nil.
-    NSArray *prefArray =
-        [self arrayValueForPref:AKSelectedFrameworksPrefName];
+    NSArray *prefArray = [self arrayValueForPref:AKSelectedFrameworksPrefName];
 
     if (prefArray == nil)
     {
@@ -62,24 +48,18 @@
     if (frameworkIndex != NSNotFound)
     {
         [fwNames removeObjectAtIndex:frameworkIndex];
-        [fwNames
-            insertObject:AKAppKitFrameworkName
-            atIndex:frameworkIndex];
+        [fwNames insertObject:AKAppKitFrameworkName atIndex:frameworkIndex];
     }
 
     // It seems prefs files can be messed up from earlier app versions.  In
     // particular, required frameworks can be missing from the prefs setting.
     // Thanks to Gerriet for pointing this out.
-    NSEnumerator *essentialFrameworkNamesEnum =
-        [AKNamesOfEssentialFrameworks objectEnumerator];
-    NSString *essentialFrameworkName;
-
-    while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
+    for (NSString *essentialFrameworkName in AKNamesOfEssentialFrameworks)
     {
         if (![fwNames containsObject:essentialFrameworkName])
         {
             [fwNames addObject:essentialFrameworkName];
-        };
+        }
     } 
 
     return fwNames;
@@ -110,9 +90,18 @@
     [self setStringValue:dir forPref:AKSDKVersionPrefName];
 }
 
++ (BOOL)shouldSearchInNewWindow
+{
+    return [self boolValueForPref:AKSearchInNewWindowPrefName];
+}
+
++ (void)setShouldSearchInNewWindow:(BOOL)flag
+{
+    [self setBoolValue:flag forPref:AKSearchInNewWindowPrefName];
+}
 
 #pragma mark -
-#pragma mark Clearing preferences
+#pragma mark Clearing groups of preferences
 
 + (void)resetAllPrefsToDefaults
 {
@@ -120,6 +109,7 @@
 
     [userPrefs removeObjectForKey:(id)DIGSLogVerbosityUserDefault];
     [userPrefs removeObjectForKey:AKDevToolsPathPrefName];
+    [userPrefs removeObjectForKey:AKSearchInNewWindowPrefName];
 
     [self resetAppearancePrefsToDefaults];
     [self resetNavigationPrefsToDefaults];
@@ -168,13 +158,8 @@
     [userPrefs removeObjectForKey:AKIgnoreCasePrefKey];
 }
 
-@end
-
-
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKPrefUtils (Private)
 
 // Register the default values for all user preferences, i.e., the
 // value to use for each preference unless the user specifies a
@@ -188,82 +173,82 @@
 // because the default for this is simply the empty list.
 + (void)_registerStandardDefaults
 {
-    NSMutableDictionary *defaultPrefsDictionary
-        = [NSMutableDictionary dictionary];
+    NSMutableDictionary *defaultPrefsDictionary = [NSMutableDictionary dictionary];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:DIGS_VERBOSITY_WARNING]
-        forKey:(id)DIGSLogVerbosityUserDefault];
+    [defaultPrefsDictionary setObject:@(DIGS_VERBOSITY_WARNING)
+                               forKey:(id)DIGSLogVerbosityUserDefault];
 
-    [defaultPrefsDictionary
-        setObject:@"/Developer"
-        forKey:AKDevToolsPathPrefName];
+    [defaultPrefsDictionary setObject:[self _defaultDevToolsPath]
+                               forKey:AKDevToolsPathPrefName];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:20]
-        forKey:AKMaxSearchStringsPrefName];
+    [defaultPrefsDictionary setObject:@NO
+                               forKey:AKSearchInNewWindowPrefName];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeClassesAndProtocolsPrefKey];
+    [defaultPrefsDictionary setObject:@20
+                               forKey:AKMaxSearchStringsPrefName];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeMethodsPrefKey];
+    [defaultPrefsDictionary setObject:@YES
+                               forKey:AKIncludeClassesAndProtocolsPrefKey];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeFunctionsPrefKey];
+    [defaultPrefsDictionary setObject:@YES
+                               forKey:AKIncludeMethodsPrefKey];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIncludeGlobalsPrefKey];
+    [defaultPrefsDictionary setObject:@YES
+                               forKey:AKIncludeFunctionsPrefKey];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKIgnoreCasePrefKey];
+    [defaultPrefsDictionary setObject:@YES
+                               forKey:AKIncludeGlobalsPrefKey];
 
-    [defaultPrefsDictionary
-        setObject:@"Lucida Grande"
-        forKey:AKListFontNamePrefName];
+    [defaultPrefsDictionary setObject:@YES
+                               forKey:AKIgnoreCasePrefKey];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:12]
-        forKey:AKListFontSizePrefName];
+    [defaultPrefsDictionary setObject:@"Lucida Grande"
+                               forKey:AKListFontNamePrefName];
 
-    [defaultPrefsDictionary
-        setObject:@"Monaco"
-        forKey:AKHeaderFontNamePrefName];
+    [defaultPrefsDictionary setObject:@12
+                               forKey:AKListFontSizePrefName];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:10]
-        forKey:AKHeaderFontSizePrefName];
+    [defaultPrefsDictionary setObject:@"Monaco"
+                               forKey:AKHeaderFontNamePrefName];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:100]
-        forKey:AKDocMagnificationPrefName];
+    [defaultPrefsDictionary setObject:@10
+                               forKey:AKHeaderFontSizePrefName];
 
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithBool:YES]
-        forKey:AKUseTexturedWindowsPrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSNumber numberWithInt:50]
-        forKey:AKMaxHistoryPrefName];
-
-    [defaultPrefsDictionary
-        setObject:[NSArray array]
-        forKey:AKFavoritesPrefName];
+    [defaultPrefsDictionary setObject:@100
+                               forKey:AKDocMagnificationPrefName];
+    
+    [defaultPrefsDictionary setObject:@YES
+                               forKey:AKUseTexturedWindowsPrefName];
+    
+    [defaultPrefsDictionary setObject:@50
+                               forKey:AKMaxHistoryPrefName];
+    
+    [defaultPrefsDictionary setObject:@[]
+                               forKey:AKFavoritesPrefName];
 
 // Don't register a default for the selected-frameworks pref.  We'll set it
-// in -[AKAppController awakeFromNib] if it hasn't been set.  We do it there
+// in -[AKAppDelegate awakeFromNib] if it hasn't been set.  We do it there
 // because we may have to query the AKDatabase for the frameworks to use.
 //    [defaultPrefsDictionary
 //        setObject:AKNamesOfEssentialFrameworks
 //        forKey:AKSelectedFrameworksPrefName];
 
-    [[NSUserDefaults standardUserDefaults]
-        registerDefaults:defaultPrefsDictionary];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefsDictionary];
+}
+
++ (NSString *)_defaultDevToolsPath
+{
+    NSString *xcodeSelectPath = [AKDevToolsUtils pathReturnedByXcodeSelect];
+
+    if ([xcodeSelectPath length] == 0)
+    {
+        // We got nothing from xcode-select, so return a hard-coded default.
+        return @"/Applications/Xcode.app/Contents/Developer";
+    }
+    else
+    {
+        return [AKDevToolsUtils devToolsPathFromPossibleXcodePath:xcodeSelectPath];
+    }
 }
 
 @end

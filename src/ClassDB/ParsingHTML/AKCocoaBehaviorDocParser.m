@@ -9,43 +9,18 @@
 
 #import "DIGSLog.h"
 
-#import "AKTextUtils.h"
-#import "AKHTMLConstants.h"
-#import "AKDatabase.h"
-#import "AKPropertyNode.h"
 #import "AKClassNode.h"
-#import "AKProtocolNode.h"
+#import "AKDatabase.h"
+#import "AKFileSection.h"
+#import "AKHTMLConstants.h"
 #import "AKMethodNode.h"
 #import "AKNotificationNode.h"
-#import "AKFileSection.h"
+#import "AKPropertyNode.h"
+#import "AKProtocolNode.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKCocoaBehaviorDocParser (Private)
-
-- (void)_parseMethodsAndProperties;
-- (void)_tweakRootSection;
-- (BOOL)_currentFileIsClassReference:(BOOL *)isMainClassReference;
-- (BOOL)_currentFileIsProtocolReference;
-- (BOOL)_currentFileIsDeprecatedMethodsFile;
-- (NSString *)_parseBehaviorName;
-- (AKClassNode *)_classForRootSection;
-- (AKProtocolNode *)_protocolForRootSection;
-- (void)_addMembersFromMajorSection:(NSString *)htmlSectionName
-    toBehaviorNode:(AKBehaviorNode *)behaviorNode
-    usingMemberNodeClass:(Class)methodNodeClass
-    getSelector:(SEL)selectorForGettingNode
-    addSelector:(SEL)selectorForAddingNode;
-- (void)_addDeprecatedMethodsToBehaviorNode:(AKBehaviorNode *)behaviorNode;
-- (void)_addMethodsToBehaviorNode:(AKBehaviorNode *)behaviorNode;
-
-@end
-
+#import "NSString+AppKiDo.h"
 
 @implementation AKCocoaBehaviorDocParser
-
 
 #pragma mark -
 #pragma mark AKDocParser methods
@@ -54,17 +29,12 @@
 {
     [self _parseMethodsAndProperties];
 
-    // Parse the "Constants" section if there is one.
+    // Parse the "Constants" section if there is one. <== [agl] I see this comment -- where is it actually done?
     [super applyParseResults];
 }
 
-@end
-
-
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKCocoaBehaviorDocParser (Private)
 
 - (void)_parseMethodsAndProperties
 {
@@ -82,19 +52,23 @@
         AKClassNode *classNode = [self _classForRootSection];
 
         if (classNode == nil)
+        {
             return;
-        
+        }
+
         // Store bits of information about the class node relating it to its
         // HTML documentation file.
-        [[_parserFW fwDatabase]
-            rememberThatClass:classNode
-            isDocumentedInHTMLFile:[self currentPath]];
-        if (isMainClassReference)  // [agl] REMOVE why only if main?
+        [[self targetDatabase] rememberThatClass:classNode
+                    isDocumentedInHTMLFile:[self currentPath]];
+
+        if (isMainClassReference)
         {
-            [classNode
-                setNodeDocumentation:_rootSectionOfCurrentFile
-                forFrameworkNamed:[_parserFW frameworkName]];
+            [classNode setNodeDocumentation:_rootSectionOfCurrentFile];
+            [classNode setNameOfOwningFramework:[self targetFrameworkName]];
         }
+
+        [classNode associateDocumentation:_rootSectionOfCurrentFile
+                       withFrameworkNamed:[self targetFrameworkName]];
 
         behaviorNode = classNode;
     }
@@ -103,17 +77,18 @@
         AKProtocolNode *protocolNode = [self _protocolForRootSection];
 
         if (protocolNode == nil)
+        {
             return;
+        }
         
         // Store bits of information about the protocol node relating it to its
         // HTML documentation file.
-        [[_parserFW fwDatabase]
-            rememberThatProtocol:protocolNode
-            isDocumentedInHTMLFile:[self currentPath]];
-        [protocolNode
-            setNodeDocumentation:_rootSectionOfCurrentFile
-            forFrameworkNamed:[_parserFW frameworkName]];
-        
+        [[self targetDatabase] rememberThatProtocol:protocolNode
+                       isDocumentedInHTMLFile:[self currentPath]];
+
+        [protocolNode setNodeDocumentation:_rootSectionOfCurrentFile];
+        [protocolNode setNameOfOwningFramework:[self targetFrameworkName]];
+
         behaviorNode = protocolNode;
     }
     else
@@ -121,7 +96,10 @@
         return;
     }
 
-    // Parse methods in the file and add them to the behavior node.
+    // If we got this far, we are looking at docs for a class or protocol. Add
+    // method nodes for the methods documented in the file. There are two cases:
+    // either the file contains deprecated methods or it contains regular
+    // un-deprecated methods.
     if ([self _currentFileIsDeprecatedMethodsFile])
     {
         [self _addDeprecatedMethodsToBehaviorNode:behaviorNode];
@@ -141,8 +119,7 @@
 
     for (majorIndex = 0; majorIndex < numMajorSections; majorIndex++)
     {
-        AKFileSection *majorSection =
-            [_rootSectionOfCurrentFile childSectionAtIndex:majorIndex];
+        AKFileSection *majorSection = [_rootSectionOfCurrentFile childSectionAtIndex:majorIndex];
         NSString *majorSectionName = [majorSection sectionName];
 
         if ([majorSectionName isEqualToString:@"Programming Topics"])
@@ -157,8 +134,7 @@
 
         for (minorIndex = 0; minorIndex < numMinorSections; minorIndex++)
         {
-            AKFileSection *minorSection =
-                [majorSection childSectionAtIndex:minorIndex];
+            AKFileSection *minorSection = [majorSection childSectionAtIndex:minorIndex];
             NSString *minorSectionName = [minorSection sectionName];
 
             if ([minorSectionName isEqualToString:@"Programming Topics"])
@@ -167,9 +143,8 @@
                 // a minor item; raise it to the level of a major item.
                 // Make sure to do the insert before the remove, so
                 // minorSection doesn't get dealloc'ed.
-                [_rootSectionOfCurrentFile
-                    insertChildSection:minorSection
-                    atIndex:(majorIndex + 1)];
+                [_rootSectionOfCurrentFile insertChildSection:minorSection
+                                                      atIndex:(majorIndex + 1)];
                 [majorSection removeChildSectionAtIndex:minorIndex];
                 return;
             }
@@ -177,7 +152,6 @@
     }
 }
 
-// [agl] FIXME -- I think the idiom is to return void and have both args returned by reference.
 - (BOOL)_currentFileIsClassReference:(BOOL *)isMainClassReference
 {
     // Exclude table-of-contents files, which can look deceptively like class
@@ -187,17 +161,17 @@
         *isMainClassReference = NO;
         return NO;
     }
-    
+
     // See if the current file contains methods added to a class by a framework
     // other than the class's main framework, like the NSAttributedString
     // methods added by AppKit.
     if ([[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions Reference"]
-            || [[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions"])
+        || [[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Additions"])
     {
         *isMainClassReference = NO;
         return YES;
     }
-    
+
     // See if the current file is a "Deprecated Methods" file.  Files of this
     // form were added in the Feb 2007 update (maybe earlier, I haven't checked).
     if ([self _currentFileIsDeprecatedMethodsFile])
@@ -215,21 +189,19 @@
         *isMainClassReference = YES;
         return YES;
     }
-    
+
     // Assume we have a class's main doc file if it has a major section named
     // "Class Description".
-    if ([_rootSectionOfCurrentFile
-            hasChildSectionWithName:
-                AKClassDescriptionHTMLSectionName])
+    if ([_rootSectionOfCurrentFile hasChildSectionWithName:AKClassDescriptionHTMLSectionName])
     {
         *isMainClassReference = YES;
         return YES;
     }
-    
+
     // Assume we have a class's main doc file if it's somewhere in a ...Classes
     // directory and the file name matches the name of the root section.
-    NSString *filenameSansExtension =
-        [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+    NSString *filenameSansExtension = [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+
     if ([[self currentPath] ak_contains:@"Classes"]
         && [rootSectionName isEqualToString:filenameSansExtension])
     {
@@ -245,17 +217,14 @@
     // Assume we have a protocol's doc file if its root section is named
     // "Protocol Reference" or "Protocol Objective-C Reference".
     if ([[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Protocol Reference"]
-        ||
-        [[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Protocol Objective-C Reference"])
+        || [[_rootSectionOfCurrentFile sectionName] hasSuffix:@"Protocol Objective-C Reference"])
     {
         return YES;
     }
     
     // Assume we have a protocol's doc file if it has a major section named
     // "Protocol Description".
-    if ([_rootSectionOfCurrentFile
-            hasChildSectionWithName:
-                AKProtocolDescriptionHTMLSectionName])
+    if ([_rootSectionOfCurrentFile hasChildSectionWithName:AKProtocolDescriptionHTMLSectionName])
     {
         return YES;
     }
@@ -263,8 +232,8 @@
     // Assume we have a protocol's doc file if it's somewhere in a ...Protocols
     // directory and the file name matches the name of the root section.
     NSString *rootSectionName = [_rootSectionOfCurrentFile sectionName];
-    NSString *filenameSansExtension =
-        [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+    NSString *filenameSansExtension = [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+    
     if ([[self currentPath] ak_contains:@"Protocols"]
         && [rootSectionName isEqualToString:filenameSansExtension])
     {
@@ -281,21 +250,19 @@
 
 - (NSString *)_parseBehaviorName
 {
-    NSArray *parts =
-        [[_rootSectionOfCurrentFile sectionName]
-            componentsSeparatedByString:@" "];
+    NSArray *partsOfTitle = [[_rootSectionOfCurrentFile sectionName] componentsSeparatedByString:@" "];
     
-    if ([parts count] == 0)
+    if ([partsOfTitle count] == 0)
     {
         return nil;
     }
-    else if ([parts count] > 1 && [[parts objectAtIndex:0] isEqualToString:@"Deprecated"])
+    else if ([partsOfTitle count] > 1 && [[partsOfTitle objectAtIndex:0] isEqualToString:@"Deprecated"])
     {
-        return [parts objectAtIndex:1];
+        return [partsOfTitle objectAtIndex:1];
     }
     else
     {
-        return [parts objectAtIndex:0];
+        return [partsOfTitle objectAtIndex:0];
     }
 }
 
@@ -304,23 +271,19 @@
     // Get our hands on the node for the class whose documentation is
     // in _rootSectionOfCurrentFile.
     NSString *className = [self _parseBehaviorName];
-    AKClassNode *classNode = [[_parserFW fwDatabase] classWithName:className];
+    AKClassNode *classNode = [[self targetDatabase] classWithName:className];
 
     // We assume the database has already been populated from header files.
     // If a class isn't already in the database, we assume it's an accident
     // that we've come across the class's doc file.  Case in point: in the
     // Feb 2007 docs, the QuartzFramework doc directory contains docs for *two*
     // frameworks: PDFKit (thus PDF*.html) and QuartzComposer (thus QC*.html).
-/*
-    if (!classNode)
-    {
-        classNode =
-            [AKClassNode
-                nodeWithNodeName:className
-                owningFramework:_frameworkName];
-    }
-    [_databaseBeingPopulated addClassNode:classNode];
-*/
+
+//    if (!classNode)
+//    {
+//        classNode = [AKClassNode nodeWithNodeName:className owningFrameworkName:_frameworkName];
+//    }
+//    [[self targetDatabase] addClassNode:classNode];
 
     return classNode;
 }
@@ -333,8 +296,7 @@
 //    NSString *protocolName = [_rootSectionOfCurrentFile sectionName];
     NSString *protocolName = [self _parseBehaviorName];
 
-    AKProtocolNode *protocolNode =
-        [[_parserFW fwDatabase] protocolWithName:protocolName];
+    AKProtocolNode *protocolNode = [[self targetDatabase] protocolWithName:protocolName];
 
     // We assume the database has already been populated from header files.
     // [agl] FIXME -- I don't like this assumption -- presumes class knows
@@ -343,51 +305,41 @@
     // However, it's possible we're looking at the doc for an *informal* protocol.
     if (!protocolNode)
     {
-        protocolNode =
-            [AKProtocolNode
-                nodeWithNodeName:protocolName
-                owningFramework:_parserFW];
-        [[_parserFW fwDatabase] addProtocolNode:protocolNode];
+        protocolNode = [AKProtocolNode nodeWithNodeName:protocolName
+                                               database:[self targetDatabase]
+                                          frameworkName:[self targetFrameworkName]];
+        [[self targetDatabase] addProtocolNode:protocolNode];
     }
 
     return protocolNode;
 }
 
 - (void)_addMembersFromMajorSection:(NSString *)htmlSectionName
-    toBehaviorNode:(AKBehaviorNode *)behaviorNode
-    usingMemberNodeClass:(Class)methodNodeClass
-    getSelector:(SEL)selectorForGettingNode
-    addSelector:(SEL)selectorForAddingNode
+                     toBehaviorNode:(AKBehaviorNode *)behaviorNode
+               usingMemberNodeClass:(Class)memberNodeClass
+                    blockForGetting:(AKBlockForGettingMemberNode)getMemberNode
+                     blockForAdding:(AKBlockForAddingMemberNode)addMemberNode
 {
-    AKFileSection *majorSection =
-        [_rootSectionOfCurrentFile childSectionWithName:htmlSectionName];
-    NSEnumerator *minorSectionEnum = [majorSection childSectionEnumerator];
-    AKFileSection *minorSection;
+    AKFileSection *majorSection = [_rootSectionOfCurrentFile childSectionWithName:htmlSectionName];
 
-    while ((minorSection = [minorSectionEnum nextObject]))
+    for (AKFileSection *minorSection in [majorSection childSections])
     {
         NSString *memberName = [minorSection sectionName];
-        AKMemberNode *memberNode =
-            [behaviorNode
-                performSelector:selectorForGettingNode
-                withObject:memberName];
-
+        AKMemberNode *memberNode = getMemberNode(behaviorNode, memberName);
+        
         if (memberNode == nil)
         {
-            memberNode =
-                [[[methodNodeClass alloc]
-                    initWithNodeName:memberName
-                    owningFramework:_parserFW
-                    owningBehavior:behaviorNode] autorelease];;
-            [behaviorNode
-                performSelector:selectorForAddingNode
-                withObject:memberNode];
+            memberNode = [[[memberNodeClass alloc] initWithNodeName:memberName
+                                                           database:[self targetDatabase]
+                                                      frameworkName:[self targetFrameworkName]
+                                                     owningBehavior:behaviorNode]
+                          autorelease];
+            addMemberNode(behaviorNode, memberNode);
         }
 
         if ([memberNode nodeDocumentation] != nil)
         {
-            DIGSLogWarning(@"trying to set documentation twice for node %@",
-                memberNode);
+            DIGSLogWarning(@"trying to set documentation twice for node %@", memberNode);
         }
         else
         {
@@ -409,27 +361,16 @@
     // Look for major sections that contain method docs.  There can be more
     // than one -- e.g., "Deprecated in Mac OS X v10.3" and
     // "Deprecated in Mac OS X v10.4".
-    NSEnumerator *majorSectionEnum =
-        [_rootSectionOfCurrentFile childSectionEnumerator];
-    AKFileSection *majorSection;
-    
-    while ((majorSection = [majorSectionEnum nextObject]))
+    for (AKFileSection *majorSection in [_rootSectionOfCurrentFile childSections])
     {
         if ([[majorSection sectionName] hasPrefix:@"Deprecated in"])
         {
             // Add each of the methods in the major section to the behavior node.
-            NSEnumerator *minorSectionEnum = [majorSection childSectionEnumerator];
-            AKFileSection *minorSection;
-            
-            while ((minorSection = [minorSectionEnum nextObject]))
+            for (AKFileSection *minorSection in [majorSection childSections])
             {
                 NSString *methodName = [minorSection sectionName];
-
-                AKMethodNode *methodNode =
-                    [behaviorNode
-                        addDeprecatedMethodIfAbsentWithName:methodName
-                        owningFramework:_parserFW];
-
+                AKMethodNode *methodNode = [behaviorNode addDeprecatedMethodIfAbsentWithName:methodName
+                                                                               frameworkName:[self targetFrameworkName]];
                 if (methodNode != nil)
                 {
                     [methodNode setNodeDocumentation:minorSection];
@@ -446,53 +387,48 @@
 - (void)_addMethodsToBehaviorNode:(AKBehaviorNode *)behaviorNode
 {
     // Add property nodes.
-    [self
-        _addMembersFromMajorSection:AKPropertiesHTMLSectionName
-        toBehaviorNode:behaviorNode
-        usingMemberNodeClass:[AKPropertyNode class]
-        getSelector:@selector(propertyNodeWithName:)
-        addSelector:@selector(addPropertyNode:)];
+    [self _addMembersFromMajorSection:AKPropertiesHTMLSectionName
+                       toBehaviorNode:behaviorNode
+                 usingMemberNodeClass:[AKPropertyNode class]
+                      blockForGetting:blockForGettingMemberNode(propertyNodeWithName)
+                       blockForAdding:blockForAddingMemberNode(addPropertyNode)];
 
     // Add class method nodes.
-    [self
-        _addMembersFromMajorSection:AKClassMethodsHTMLSectionName
-        toBehaviorNode:behaviorNode
-        usingMemberNodeClass:[AKMethodNode class]
-        getSelector:@selector(classMethodWithName:)
-        addSelector:@selector(addClassMethod:)];
+    [self _addMembersFromMajorSection:AKClassMethodsHTMLSectionName
+                       toBehaviorNode:behaviorNode
+                 usingMemberNodeClass:[AKMethodNode class]
+                      blockForGetting:blockForGettingMemberNode(classMethodWithName)
+                       blockForAdding:blockForAddingMemberNode(addClassMethod)];
 
     // Add instance method nodes.
-    [self
-        _addMembersFromMajorSection:AKInstanceMethodsHTMLSectionName
-            toBehaviorNode:behaviorNode
-            usingMemberNodeClass:[AKMethodNode class]
-            getSelector:@selector(instanceMethodWithName:)
-            addSelector:@selector(addInstanceMethod:)];
+    [self _addMembersFromMajorSection:AKInstanceMethodsHTMLSectionName
+                       toBehaviorNode:behaviorNode
+                 usingMemberNodeClass:[AKMethodNode class]
+                      blockForGetting:blockForGettingMemberNode(instanceMethodWithName)
+                       blockForAdding:blockForAddingMemberNode(addInstanceMethod)];
 
     // Add member nodes specific to classes.
     if ([behaviorNode isClassNode])
     {
         // Add delegate method nodes.
-        [self
-            _addMembersFromMajorSection:AKDelegateMethodsHTMLSectionName
-            toBehaviorNode:behaviorNode
-            usingMemberNodeClass:[AKMethodNode class]
-            getSelector:@selector(delegateMethodWithName:)
-            addSelector:@selector(addDelegateMethod:)];
-        [self
-            _addMembersFromMajorSection:AKDelegateMethodsAlternateHTMLSectionName
-            toBehaviorNode:behaviorNode
-            usingMemberNodeClass:[AKMethodNode class]
-            getSelector:@selector(delegateMethodWithName:)
-            addSelector:@selector(addDelegateMethod:)];
-        
+        [self _addMembersFromMajorSection:AKDelegateMethodsHTMLSectionName
+                           toBehaviorNode:behaviorNode
+                     usingMemberNodeClass:[AKMethodNode class]
+                          blockForGetting:blockForGettingMemberNode(delegateMethodWithName)
+                           blockForAdding:blockForAddingMemberNode(addDelegateMethod)];
+
+        [self _addMembersFromMajorSection:AKDelegateMethodsAlternateHTMLSectionName
+                           toBehaviorNode:behaviorNode
+                     usingMemberNodeClass:[AKMethodNode class]
+                          blockForGetting:blockForGettingMemberNode(delegateMethodWithName)
+                           blockForAdding:blockForAddingMemberNode(addDelegateMethod)];
+
         // Add method nodes for notifications.
-        [self
-            _addMembersFromMajorSection:AKNotificationsHTMLSectionName
-            toBehaviorNode:behaviorNode
-            usingMemberNodeClass:[AKNotificationNode class]
-            getSelector:@selector(notificationWithName:)
-            addSelector:@selector(addNotification:)];
+        [self _addMembersFromMajorSection:AKNotificationsHTMLSectionName
+                           toBehaviorNode:behaviorNode
+                     usingMemberNodeClass:[AKNotificationNode class]
+                          blockForGetting:blockForGettingMemberNode(notificationWithName)
+                           blockForAdding:blockForAddingMemberNode(addNotification)];
     }
 }
 

@@ -15,33 +15,6 @@
 #import "AKCategoryNode.h"
 #import "AKMethodNode.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKObjCHeaderParser (Private)
-
-// -- parsing tokens and generating parse nodes
-- (BOOL)_parseTopLevelNode;
-- (void)_parseClassOrCategoryDeclaration;
-- (void)_parseProtocolDeclaration;
-- (void)_parseProtocolListFor:(AKBehaviorNode *)behaviorNode;
-- (void)_parseMethodDeclarationFor:(AKBehaviorNode *)behaviorNode
-    usingGetSelector:(SEL)selectorForGettingNode
-    addSelector:(SEL)selectorForAddingNode;
-- (BOOL)_parseTokenIntoBuffer:(char[AKTokenBufferSize])buffer;
-
-// -- skipping stuff in the input stream
-- (void)_skipJunk;
-- (void)_skipRemainderOfLine;
-- (void)_skipWhitespace;
-- (void)_skipPastEndOfToken;
-- (void)_skipPastClosingBrace;
-- (void)_skipPastClosingParen;
-
-@end
-
-
 #pragma mark -
 #pragma mark Character test functions
 
@@ -49,16 +22,14 @@
 // full-blown Objective-C parsing.
 static BOOL isPunctuation(char c)
 {
-    return
-        (c == '{') || (c == '}')
-        || (c == '(') || (c == ')')
-        || (c == '<') || (c == '>')
-        || (c == ';') || (c == ':') || (c == ',')
-        || (c == '-') || (c == '+');
+    return ((c == '{') || (c == '}')
+            || (c == '(') || (c == ')')
+            || (c == '<') || (c == '>')
+            || (c == ';') || (c == ':') || (c == ',')
+            || (c == '-') || (c == '+'));
 }
 
 @implementation AKObjCHeaderParser
-
 
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
@@ -68,18 +39,9 @@ static BOOL isPunctuation(char c)
     return [[filePath pathExtension] isEqualToString:@"h"];
 }
 
-
 #pragma mark -
 #pragma mark AKParser methods
 
-/*
- * On entry, the file name is in _currentFile; the file
- * contents are in _fileContents; _dataStart and _current
- * both point to the beginning of the data; and _dataEnd points
- * the byte after the last data byte.  Subclasses can modify
- * _current as they do their thing, as a convenient way of
- * keeping their place.
- */
 - (void)parseCurrentFile
 {
     // Keep parsing until we run out of top-level nodes.
@@ -87,12 +49,6 @@ static BOOL isPunctuation(char c)
     {
     }
 }
-
-@end
-
-
-@implementation AKObjCHeaderParser (Private)
-
 
 #pragma mark -
 #pragma mark Private methods -- parsing
@@ -102,7 +58,7 @@ static BOOL isPunctuation(char c)
 // class, a category, or a protocol.  Or nil.
 - (BOOL)_parseTopLevelNode
 {
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:token]))
     {
@@ -122,31 +78,78 @@ static BOOL isPunctuation(char c)
     return NO;
 }
 
-// On entry, we've just consumed an @interface token, which means we're
-// sitting on a class name.  We are inside either a class declaration
-// or a category declaration, but we won't know which until we've parsed
-// a few tokens.
+// On entry, we've just consumed an "@interface" token, which means we're
+// sitting on a class name. We are inside either a class declaration or a
+// category declaration; we won't know which until we've parsed a few tokens.
 //
-// Note that curly braces are optional if a class doesn't declare ivars.
+// [agl] I add methods to the class node even if they're declared in a category.
+// I suppose I could add to both, but we never really use AKCategoryNode, so it
+// doesn't matter.
 //
 // Consumes the @end token that closes the class or category declaration.
 - (void)_parseClassOrCategoryDeclaration
 {
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
 
-    // Get or create the class node whose name is the class name we are
-    // sitting on.
+    // Parse the class name and get or create the node for it.
     (void)[self _parseTokenIntoBuffer:token];
     NSString *className = [NSString stringWithUTF8String:token];
-    AKClassNode *classNode = [[_parserFW fwDatabase] classWithName:className];
+    AKClassNode *classNode = [[self targetDatabase] classWithName:className];
 
     if (!classNode)
     {
-        classNode = [AKClassNode nodeWithNodeName:className owningFramework:_parserFW];
+        // Pass nil for the class's owning framework, because we don't know yet
+        // whether we are parsing a class declaration. It's possible this is a
+        // category declaration and the category's class belongs to a different
+        // framework. We will set the class's real owning framework when we know
+        // we're parsing the class declaration.
+        classNode = [AKClassNode nodeWithNodeName:className
+                                         database:[self targetDatabase]
+                                    frameworkName:nil];
+        [[self targetDatabase] addClassNode:classNode];
     }
-    [[_parserFW fwDatabase] addClassNode:classNode];
 
-    AKBehaviorNode *resultNode = nil;
+    // Assume we're parsing a class declaration unless and until we learn it's a
+    // category declaration.
+    AKBehaviorNode *resultNode = classNode;
+
+    // If we're sitting on the declaration of a superclass, parse it.
+    [self _skipJunk];
+    if (*_current == ':')
+    {
+        [self _parseSuperclassNameForClassNode:classNode];
+    }
+
+    // If we're sitting on the declaration of a category name, parse it, and
+    // note that we're parsing a category and not a class.
+    [self _skipJunk];
+    if (*_current == '(')
+    {
+        resultNode = [self _parseCategoryNameForClassNode:classNode];
+    }
+
+    // If we're sitting on a list of protocol names, parse it.
+    [self _skipJunk];
+    if (*_current == '<')
+    {
+        _current++;
+
+        NSArray *implementedProtocols = [self _parseProtocolList];
+
+        [classNode addImplementedProtocols:implementedProtocols];
+
+        if (resultNode != classNode)
+        {
+            [resultNode addImplementedProtocols:implementedProtocols];
+        }
+    }
+
+    // Parse method declarations and ignore everything else.
+    //
+    // We "fast forward" in a few special cases, to minimize the possibility of
+    // seeing a stray "-" or "+" and confusing it for a method declaration. For
+    // example, it's possible for an enum to be declared with a negative number;
+    // by fast-forwarding over the {}, we avoid being confused by the "-".
     while (([self _parseTokenIntoBuffer:token]))
     {
         if (strcmp(token, "@end") == 0)
@@ -155,121 +158,116 @@ static BOOL isPunctuation(char c)
         }
         else if (strcmp(token, "@property") == 0)
         {
-            // Skip the rest of the line so that the opening paren in the property
-            // declaration doesn't fool us into thinking we're looking at a category.
-            // [agl] I'm assuming the whole property declaration is on one line so
-            // that I can use this quicker approach rather than scan to the semicolon.
             [self _skipRemainderOfLine];
         }
-        else if (strcmp(token, ":") == 0)
+        else if (strcmp(token, "#define") == 0)
         {
-            // We now know we are parsing a class declaration, because
-            // we've come across the specification of its superclass.
-            (void)[self _parseTokenIntoBuffer:token];
-            NSString *parentClassName = [NSString stringWithUTF8String:token];
-            AKClassNode *parentClassNode = [[_parserFW fwDatabase] classWithName:parentClassName];
-
-            if (!parentClassNode)
-            {
-                parentClassNode = [AKClassNode nodeWithNodeName:parentClassName owningFramework:_parserFW];
-                [[_parserFW fwDatabase] addClassNode:parentClassNode];
-            }
-
-            // [agl] KLUDGE  Some .h files use #ifndef WIN32 to decide
-            // which declaration of a class to use.  Since our parsing
-            // does not handle macros, we will see the same class declared
-            // twice.  The nil check ensures that this doesn't cause us to
-            // add a class twice to its superclass.  We stick with the
-            // first declaration we encounter, since it looks like this is
-            // always the #ifndef WIN32 case.
-            if ([classNode parentClass] == nil)
-            {
-                [parentClassNode addChildClass:classNode];
-            }
-
-            resultNode = classNode;
+            [self _skipRemainderOfLine];
         }
         else if (strcmp(token, "(") == 0)
         {
-            // We now know we are parsing a category declaration, because
-            // we've come across the specification of the category name.
-            (void)[self _parseTokenIntoBuffer:token];
-            NSString *catName = [NSString stringWithUTF8String:token];
-            AKCategoryNode *categoryNode = [classNode categoryNamed:catName];
-
-            if (categoryNode == nil)
-            {
-                categoryNode = [AKCategoryNode nodeWithNodeName:catName owningFramework:_parserFW];
-                [classNode addCategory:categoryNode];
-            }
-
             [self _skipPastClosingParen];
-            resultNode = categoryNode;
-        }
-        else if (strcmp(token, "<") == 0)
-        {
-            // We've come across a declaration of protocols conformed to
-            // by the ThingWeAreParsing.
-            if (resultNode == nil)
-            {
-                // If we haven't determined what we're parsing by now,
-                // we must be parsing a class.
-                resultNode = classNode;
-            }
-
-            [self _parseProtocolListFor:resultNode];
         }
         else if (strcmp(token, "{") == 0)
         {
-            // We now know we are parsing a class declaration, because
-            // we've come across the declaration of its ivars.
-            resultNode = classNode;
             [self _skipPastClosingBrace];
         }
         else if (strcmp(token, "+") == 0)
         {
-            // If we haven't determined what we're parsing by now,
-            // we must be parsing a class and not a category.
-            if (resultNode == nil)
-            {
-                resultNode = classNode;
-            }
-
-            // We've come across the declaration of a class method.
-            // Note: I'm adding the method to the class node even if
-            // resultNode is a category node.
-            [self
-                _parseMethodDeclarationFor:classNode
-                usingGetSelector:@selector(classMethodWithName:)
-                addSelector:@selector(addClassMethod:)];
+            // Parse the declaration of a class method.
+            [self _parseMethodDeclarationFor:classNode
+                             blockForGetting:blockForGettingMemberNode(classMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addClassMethod)];
         }
         else if (strcmp(token, "-") == 0)
         {
-            // If we haven't determined what we're parsing by now,
-            // we must be parsing a class and not a category.
-            if (resultNode == nil)
-            {
-                resultNode = classNode;
-            }
-
-            // We've come across the declaration of an instance method.
-            // Note: I'm adding the method to the class node even if
-            // resultNode is a category node.
-            [self
-                _parseMethodDeclarationFor:classNode
-                usingGetSelector:@selector(instanceMethodWithName:)
-                addSelector:@selector(addInstanceMethod:)];
+            // Parse the declaration of an instance method.
+            [self _parseMethodDeclarationFor:classNode
+                             blockForGetting:blockForGettingMemberNode(instanceMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addInstanceMethod)];
         }
     }
 
     if (resultNode == classNode)
     {
         [classNode setHeaderFileWhereDeclared:[self currentPath]];
-
-        // Make sure the framework which the class's .h file lives in is
-        // recognized as the node's main framework.
-        [classNode setOwningFramework:_parserFW];
+        [classNode setNameOfOwningFramework:[self targetFrameworkName]];
     }
+}
+
+// Assumes we're sitting on the ":" that indicates we're about to declare the
+// class's superclass.
+- (void)_parseSuperclassNameForClassNode:(AKClassNode *)classNode
+{
+    char token[AKParserTokenBufferSize];
+    
+    // Skip past the ':'.
+    _current++;
+
+    // Parse the superclass name and get or create the node for it.
+    (void)[self _parseTokenIntoBuffer:token];
+    NSString *parentClassName = [NSString stringWithUTF8String:token];
+    AKClassNode *parentClassNode = [[self targetDatabase] classWithName:parentClassName];
+
+    if (!parentClassNode)
+    {
+        parentClassNode = [AKClassNode nodeWithNodeName:parentClassName
+                                               database:[self targetDatabase]
+                                          frameworkName:[self targetFrameworkName]];
+        [[self targetDatabase] addClassNode:parentClassNode];
+    }
+
+    // Connect the class to its superclass.
+    // [agl] KLUDGE  Some .h files use #ifndef WIN32 to decide
+    // which declaration of a class to use.  Since our parsing
+    // does not handle macros, we will see the same class declared
+    // twice.  The nil check ensures that this doesn't cause us to
+    // add a class twice to its superclass.  We stick with the
+    // first declaration we encounter, since it looks like this is
+    // always the #ifndef WIN32 case.
+    if ([classNode parentClass] == nil)
+    {
+        [parentClassNode addChildClass:classNode];
+    }
+}
+
+// Assumes we're sitting on the "(" that begins a category name declaration.
+// The category name might be empty, indicating a class extension. Skips past
+// the closing ")".
+- (AKCategoryNode *)_parseCategoryNameForClassNode:(AKClassNode *)classNode
+{
+    char token[AKParserTokenBufferSize];
+    
+    // Skip past the opening paren.
+    _current++;
+
+    // The next token will be either be a category name or, in the case of a
+    // class extension, the closing ")". We treat a class extension as a
+    // category whose name is @"".
+    (void)[self _parseTokenIntoBuffer:token];
+    NSString *categoryName;
+    if (strcmp(token, ")") == 0)
+    {
+        categoryName = @"";
+    }
+    else
+    {
+        categoryName = [NSString stringWithUTF8String:token];
+        [self _skipPastClosingParen];
+    }
+
+    // Parse the category name and get or create the node for it.
+    AKCategoryNode *categoryNode = [classNode categoryNamed:categoryName];
+
+    if (categoryNode == nil)
+    {
+        categoryNode = [AKCategoryNode nodeWithNodeName:categoryName
+                                               database:[self targetDatabase]
+                                          frameworkName:[self targetFrameworkName]];
+        [classNode addCategory:categoryNode];
+    }
+
+    return categoryNode;
 }
 
 // Assumes we've already consumed the @protocol token and we're looking
@@ -283,15 +281,17 @@ static BOOL isPunctuation(char c)
 // AKProtocolNode.
 - (void)_parseProtocolDeclaration
 {
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
     (void)[self _parseTokenIntoBuffer:token];
     NSString *protocolName = [NSString stringWithUTF8String:token];
-    AKProtocolNode *resultNode = [[_parserFW fwDatabase] protocolWithName:protocolName];
+    AKProtocolNode *resultNode = [[self targetDatabase] protocolWithName:protocolName];
 
     if (!resultNode)
     {
-        resultNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
-        [[_parserFW fwDatabase] addProtocolNode:resultNode];
+        resultNode = [AKProtocolNode nodeWithNodeName:protocolName
+                                             database:[self targetDatabase]
+                                        frameworkName:[self targetFrameworkName]];
+        [[self targetDatabase] addProtocolNode:resultNode];
     }
 
     [resultNode setHeaderFileWhereDeclared:[self currentPath]];
@@ -311,38 +311,40 @@ static BOOL isPunctuation(char c)
         }
         else if (strcmp(token, "<") == 0)
         {
-            [self _parseProtocolListFor:resultNode];
+            NSArray *implementedProtocols = [self _parseProtocolList];
+
+            [resultNode addImplementedProtocols:implementedProtocols];
         }
         else if (strcmp(token, "+") == 0)
         {
             // We've come across the declaration of a class method.
-            [self
-                _parseMethodDeclarationFor:resultNode
-                usingGetSelector:@selector(classMethodWithName:)
-                addSelector:@selector(addClassMethod:)];
+            [self _parseMethodDeclarationFor:resultNode
+                             blockForGetting:blockForGettingMemberNode(classMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addClassMethod)];
         }
         else if (strcmp(token, "-") == 0)
         {
             // We've come across the declaration of an instance method.
-            [self
-                _parseMethodDeclarationFor:resultNode
-                usingGetSelector:@selector(instanceMethodWithName:)
-                addSelector:@selector(addInstanceMethod:)];
+            [self _parseMethodDeclarationFor:resultNode
+                             blockForGetting:blockForGettingMemberNode(instanceMethodWithName)
+                              blockForAdding:blockForAddingMemberNode(addInstanceMethod)];
         }
     }
 }
 
 // Assumes opening angle-bracket has already been consumed.
 // Consumes the closing angle-bracket.
-- (void)_parseProtocolListFor:(AKBehaviorNode *)behaviorNode
+- (NSArray *)_parseProtocolList
 {
-    char token[AKTokenBufferSize];
+    NSMutableArray *implementedProtocols = [NSMutableArray array];
+    
+    char token[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:token]))
     {
         if (strcmp(token, ">") == 0)
         {
-            return;
+            break;
         }
         else if (strcmp(token, ",") == 0)
         {
@@ -351,17 +353,24 @@ static BOOL isPunctuation(char c)
         else
         {
             NSString *protocolName = [NSString stringWithUTF8String:token];
-            AKProtocolNode *protocolNode = [[_parserFW fwDatabase] protocolWithName:protocolName];
+            AKProtocolNode *protocolNode = [[self targetDatabase] protocolWithName:protocolName];
 
             if (!protocolNode)
             {
-                protocolNode = [AKProtocolNode nodeWithNodeName:protocolName owningFramework:_parserFW];
-                [[_parserFW fwDatabase] addProtocolNode:protocolNode];
+                // Pass nil as the protocol's framework name. We will set its
+                // real framework name when we encounter the @protocol
+                // declaration.
+                protocolNode = [AKProtocolNode nodeWithNodeName:protocolName
+                                                       database:[self targetDatabase]
+                                                  frameworkName:nil];
+                [[self targetDatabase] addProtocolNode:protocolNode];
             }
 
-            [behaviorNode addImplementedProtocol:protocolNode];
+            [implementedProtocols addObject:protocolNode];
         }
     }
+
+    return implementedProtocols;
 }
 
 // Assumes we are at the start of a method declaration.
@@ -371,8 +380,8 @@ static BOOL isPunctuation(char c)
 // This logic handles variable arg lists just fine; it omits the trailing
 // comma and ellipsis.
 - (void)_parseMethodDeclarationFor:(AKBehaviorNode *)behaviorNode
-    usingGetSelector:(SEL)selectorForGettingNode
-    addSelector:(SEL)selectorForAddingNode
+                   blockForGetting:(AKBlockForGettingMemberNode)getMemberNode
+                    blockForAdding:(AKBlockForAddingMemberNode)addMemberNode
 {
     // We append to methodName a token at a time, as we discover the
     // parts of the method signature.  When we've reached the semicolon
@@ -382,23 +391,22 @@ static BOOL isPunctuation(char c)
     NSMutableArray *argTypes = [NSMutableArray array];
 
     // Process all tokens in the method declaration.
-    char token[AKTokenBufferSize];
+    char token[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:token]))
     {
         if (strcmp(token, ";") == 0)
         {
-            AKMethodNode *methodNode =
-                [behaviorNode performSelector:selectorForGettingNode withObject:methodName];
+            AKMethodNode *methodNode = getMemberNode(behaviorNode, methodName);
 
             if (methodNode == nil)
             {
-                methodNode =
-                    [[[AKMethodNode alloc]
-                        initWithNodeName:methodName
-                        owningFramework:_parserFW
-                        owningBehavior:behaviorNode] autorelease];
-                [behaviorNode performSelector:selectorForAddingNode withObject:methodNode];
+                methodNode = [[[AKMethodNode alloc] initWithNodeName:methodName
+                                                            database:[self targetDatabase]
+                                                       frameworkName:[self targetFrameworkName]
+                                                      owningBehavior:behaviorNode]
+                              autorelease];
+                addMemberNode(behaviorNode, methodNode);
             }
 
             [methodNode setArgumentTypes:argTypes];
@@ -419,7 +427,7 @@ static BOOL isPunctuation(char c)
             // way, add the colon to the method name.
             [methodName appendString:@":"];
 
-            char argTok[AKTokenBufferSize];
+            char argTok[AKParserTokenBufferSize];
             (void)[self _parseTokenIntoBuffer:argTok];
             if (strcmp(argTok, "(") != 0)
             {
@@ -474,7 +482,7 @@ static BOOL isPunctuation(char c)
     DIGSLogError(@"shouldn't have gotten this far");
 }
 
-- (BOOL)_parseTokenIntoBuffer:(char[AKTokenBufferSize])buffer
+- (BOOL)_parseTokenIntoBuffer:(char[AKParserTokenBufferSize])buffer
 {
     const char *tokenStart;
 
@@ -601,7 +609,7 @@ static BOOL isPunctuation(char c)
 // Consumes the closing brace.
 - (void)_skipPastClosingBrace
 {
-    char buffer[AKTokenBufferSize];
+    char buffer[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:buffer]))
     {
@@ -620,7 +628,7 @@ static BOOL isPunctuation(char c)
 // Consumes the closing paren.
 - (void)_skipPastClosingParen
 {
-    char buffer[AKTokenBufferSize];
+    char buffer[AKParserTokenBufferSize];
 
     while (([self _parseTokenIntoBuffer:buffer]))
     {

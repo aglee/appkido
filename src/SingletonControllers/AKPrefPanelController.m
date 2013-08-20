@@ -7,26 +7,22 @@
 
 #import "AKPrefPanelController.h"
 
+#import "AKAppDelegate.h"
+#import "AKDatabase.h"
+#import "AKDevToolsViewController.h"
 #import "AKFrameworkConstants.h"
 #import "AKPrefUtils.h"
-#import "AKDatabase.h"
-#import "AKAppController.h"
-#import "AKDevToolsPathController.h"
-
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKPrefPanelController (Private)
-
-- (void)_updateAppearanceTabFromPrefs;
-- (void)_updatePrefsFromAppearanceTab;
-- (NSArray *)_namesOfAvailableFrameworks;
-
-@end
 
 @implementation AKPrefPanelController
 
+@synthesize prefsTabView = _prefsTabView;
+@synthesize listFontNameChoice = _listFontNameChoice;
+@synthesize listFontSizeCombo = _listFontSizeCombo;
+@synthesize headerFontNameChoice = _headerFontNameChoice;
+@synthesize headerFontSizeCombo = _headerFontSizeCombo;
+@synthesize magnificationChoice = _magnificationChoice;
+@synthesize frameworksTable = _frameworksTable;
+@synthesize searchInNewWindowCheckbox = _searchInNewWindowCheckbox;
 
 #pragma mark -
 #pragma mark Private constants
@@ -34,14 +30,13 @@
 static NSString *_AKCheckboxesColumnID     = @"checkboxes";
 static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 
-
 #pragma mark -
 #pragma mark Factory methods
 
-static AKPrefPanelController *s_sharedInstance = nil;
-
 + (AKPrefPanelController *)sharedInstance
 {
+    static AKPrefPanelController *s_sharedInstance = nil;
+    
     if (!s_sharedInstance)
     {
         s_sharedInstance = [[self alloc] init];
@@ -50,48 +45,32 @@ static AKPrefPanelController *s_sharedInstance = nil;
     return s_sharedInstance;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
-{
-    if (s_sharedInstance)
-    {
-        [self release];
-        return s_sharedInstance;
-    }
-
-    if ((self = [super init]))
-    {
-        s_sharedInstance = self;
-    }
-
-    return self;
-}
-
 - (void)awakeFromNib
 {
-    [[_prefsTabView window] center];
+    // Plug the Dev Tools view into the tab view.
+    _devToolsViewController = [[AKDevToolsViewController alloc] initWithNibName:@"DevToolsView"
+                                                                         bundle:nil];
+    NSUInteger tabViewItemIndex = [_prefsTabView indexOfTabViewItemWithIdentifier:@"Dev Tools"];
+    NSTabViewItem *devToolsTabViewItem = [_prefsTabView tabViewItemAtIndex:tabViewItemIndex];
 
-    // Tweak the Frameworks table.
-    NSButtonCell *checkboxCell =
-        [[[NSButtonCell alloc] initTextCell:@""] autorelease];
+    [devToolsTabViewItem setView:[_devToolsViewController view]];
+
+    // Tweak the Frameworks table. [agl] Can't I do this in IB?
+    NSButtonCell *checkboxCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
 
     [checkboxCell setButtonType:NSSwitchButton];
-    [[_frameworksTable
-        tableColumnWithIdentifier:_AKCheckboxesColumnID]
-        setDataCell:checkboxCell];
+    [[_frameworksTable tableColumnWithIdentifier:_AKCheckboxesColumnID] setDataCell:checkboxCell];
 }
 
 - (void)dealloc
 {
-    if (self != s_sharedInstance)
-    {
-        [super dealloc];
-    }
-}
+    [_devToolsViewController release];
 
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark Action methods
@@ -99,20 +78,23 @@ static AKPrefPanelController *s_sharedInstance = nil;
 - (IBAction)openPrefsPanel:(id)sender
 {
     [self _updateAppearanceTabFromPrefs];
+    [self _updateSearchTabFromPrefs];
+    
+    [[_prefsTabView window] center];
     [[_prefsTabView window] makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)applyAppearancePrefs:(id)sender
 {
     [self _updatePrefsFromAppearanceTab];
-    [(AKAppController *)[NSApp delegate] applyUserPreferences];
+    [[AKAppDelegate appDelegate] applyUserPreferences];
 }
 
 - (IBAction)useDefaultAppearancePrefs:(id)sender
 {
     [AKPrefUtils resetAppearancePrefsToDefaults];
     [self _updateAppearanceTabFromPrefs];
-    [(AKAppController *)[NSApp delegate] applyUserPreferences];
+    [[AKAppDelegate appDelegate] applyUserPreferences];
 }
 
 - (IBAction)doFrameworksListAction:(id)sender
@@ -122,13 +104,10 @@ static AKPrefPanelController *s_sharedInstance = nil;
         if ([sender clickedColumn] == 0)
         {
             // The user toggled a framework.
-            NSString *clickedFramework =
-                [[self _namesOfAvailableFrameworks]
-                    objectAtIndex:[sender clickedRow]];
-            NSMutableArray *selectedFrameworks =
-                [NSMutableArray
-                    arrayWithArray:
-                        [AKPrefUtils selectedFrameworkNamesPref]];
+            NSArray *frameworkNames = [self _namesOfAvailableFrameworks];
+            NSString *clickedFramework = [frameworkNames objectAtIndex:[sender clickedRow]];
+            NSArray *namesOfSelectedFrameworks = [AKPrefUtils selectedFrameworkNamesPref];
+            NSMutableArray *selectedFrameworks = [NSMutableArray arrayWithArray:namesOfSelectedFrameworks];
 
             if ([selectedFrameworks containsObject:clickedFramework])
             {
@@ -158,6 +137,10 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_frameworksTable reloadData];
 }
 
+- (IBAction)toggleShouldSearchInNewWindow:(id)sender
+{
+    [self _updatePrefsFromSearchTab];
+}
 
 #pragma mark -
 #pragma mark NSTableView datasource methods
@@ -168,27 +151,22 @@ static AKPrefPanelController *s_sharedInstance = nil;
 }
 
 - (id)tableView:(NSTableView *)aTableView
-    objectValueForTableColumn:(NSTableColumn *)aTableColumn
-    row:(NSInteger)rowIndex
+objectValueForTableColumn:(NSTableColumn *)aTableColumn
+            row:(NSInteger)rowIndex
 {
-    return
-        [[self _namesOfAvailableFrameworks]
-            objectAtIndex:rowIndex];
+    return [[self _namesOfAvailableFrameworks] objectAtIndex:rowIndex];
 }
-
 
 #pragma mark -
 #pragma mark NSTableView delegate methods
 
 - (void)tableView:(NSTableView *)aTableView
-    willDisplayCell:(id)aCell
-    forTableColumn:(NSTableColumn *)aTableColumn
-    row:(int)rowIndex
+  willDisplayCell:(id)aCell
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(int)rowIndex
 {
     NSString *columnID = [aTableColumn identifier];
-    NSString *fwName =
-        [[self _namesOfAvailableFrameworks]
-            objectAtIndex:rowIndex];
+    NSString *fwName = [[self _namesOfAvailableFrameworks] objectAtIndex:rowIndex];
 
     if ([columnID isEqualToString:_AKCheckboxesColumnID])
     {
@@ -203,8 +181,7 @@ static AKPrefPanelController *s_sharedInstance = nil;
             // All other frameworks are up to the user to include or not.
             [aCell setEnabled:YES];
 
-            if ([[AKPrefUtils selectedFrameworkNamesPref]
-                    containsObject:fwName])
+            if ([[AKPrefUtils selectedFrameworkNamesPref] containsObject:fwName])
             {
                 // The framework is currently included.
                 [aCell setState:NSOnState];
@@ -223,28 +200,20 @@ static AKPrefPanelController *s_sharedInstance = nil;
     }
 }
 
-@end
-
-
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKPrefPanelController (Private)
 
 // Update control settings in the prefs panel based on user preference
 // values given by NSUserDefaults.
 - (void)_updateAppearanceTabFromPrefs
 {
     // The list-font-name pref.
-    NSString *listFontName =
-        [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    NSInteger listFontNameIndex =
-        [_listFontNameChoice indexOfItemWithTitle:listFontName];
+    NSString *listFontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
+    NSInteger listFontNameIndex = [_listFontNameChoice indexOfItemWithTitle:listFontName];
 
     if (listFontNameIndex < 0)
     {
-        listFontNameIndex =
-            [_listFontNameChoice indexOfItemWithTitle:@"Helvetica"];
+        listFontNameIndex = [_listFontNameChoice indexOfItemWithTitle:@"Helvetica"];
 
         if (listFontNameIndex < 0)
         {
@@ -254,19 +223,15 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_listFontNameChoice selectItemAtIndex:listFontNameIndex];
 
     // The list-font-size pref.
-    [_listFontSizeCombo setIntegerValue:
-        [AKPrefUtils intValueForPref:AKListFontSizePrefName]];
+    [_listFontSizeCombo setIntegerValue:[AKPrefUtils intValueForPref:AKListFontSizePrefName]];
 
     // The header-font-name pref.
-    NSString *headerFontName =
-        [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-    NSInteger headerFontNameIndex =
-        [_headerFontNameChoice indexOfItemWithTitle:headerFontName];
+    NSString *headerFontName = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
+    NSInteger headerFontNameIndex = [_headerFontNameChoice indexOfItemWithTitle:headerFontName];
 
     if (headerFontNameIndex < 0)
     {
-        headerFontNameIndex =
-            [_headerFontNameChoice indexOfItemWithTitle:@"Monaco"];
+        headerFontNameIndex = [_headerFontNameChoice indexOfItemWithTitle:@"Monaco"];
 
         if (headerFontNameIndex < 0)
         {
@@ -276,19 +241,15 @@ static AKPrefPanelController *s_sharedInstance = nil;
     [_headerFontNameChoice selectItemAtIndex:headerFontNameIndex];
 
     // The header-font-size pref.
-    [_headerFontSizeCombo setIntegerValue:
-        [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName]];
+    [_headerFontSizeCombo setIntegerValue:[AKPrefUtils intValueForPref:AKHeaderFontSizePrefName]];
 
     // The doc-magnification pref.
-    NSInteger magnificationChoiceTag =
-        [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
-    NSInteger magnificationIndex =
-        [_magnificationChoice indexOfItemWithTag:magnificationChoiceTag];
+    NSInteger magnificationChoiceTag = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
+    NSInteger magnificationIndex = [_magnificationChoice indexOfItemWithTag:magnificationChoiceTag];
 
     if (magnificationIndex < 0)
     {
-        magnificationIndex =
-            [_magnificationChoice indexOfItemWithTag:100];
+        magnificationIndex = [_magnificationChoice indexOfItemWithTag:100];
     }
     [_magnificationChoice selectItemAtIndex:magnificationIndex];
 
@@ -301,38 +262,46 @@ static AKPrefPanelController *s_sharedInstance = nil;
 - (void)_updatePrefsFromAppearanceTab
 {
     // The list-font-name pref.
-    [AKPrefUtils
-        setStringValue:[[_listFontNameChoice selectedItem] title]
-        forPref:AKListFontNamePrefName];
+    [AKPrefUtils setStringValue:[[_listFontNameChoice selectedItem] title]
+                        forPref:AKListFontNamePrefName];
 
     // The list-font-size pref.
-    [AKPrefUtils
-        setIntValue:[_listFontSizeCombo intValue]
-        forPref:AKListFontSizePrefName];
+    [AKPrefUtils setIntValue:[_listFontSizeCombo intValue]
+                     forPref:AKListFontSizePrefName];
 
     // The header-font-name pref.
-    [AKPrefUtils
-        setStringValue:[[_headerFontNameChoice selectedItem] title]
-        forPref:AKHeaderFontNamePrefName];
+    [AKPrefUtils setStringValue:[[_headerFontNameChoice selectedItem] title]
+                        forPref:AKHeaderFontNamePrefName];
 
     // The header-font-size pref.
-    [AKPrefUtils
-        setIntValue:[_headerFontSizeCombo intValue]
-        forPref:AKHeaderFontSizePrefName];
+    [AKPrefUtils setIntValue:[_headerFontSizeCombo intValue]
+                     forPref:AKHeaderFontSizePrefName];
 
     // The doc-magnification pref.
-    [AKPrefUtils
-        setIntValue:[_magnificationChoice selectedTag]
-        forPref:AKDocMagnificationPrefName];
+    [AKPrefUtils setIntValue:[_magnificationChoice selectedTag]
+                     forPref:AKDocMagnificationPrefName];
 
     // The small-contextual-menus pref.
     // [agl] fill in small-contextual-menus pref
 }
 
+- (void)_updateSearchTabFromPrefs
+{
+    BOOL shouldSearchInNewWindow = [AKPrefUtils shouldSearchInNewWindow];
+    
+    [_searchInNewWindowCheckbox setState:(shouldSearchInNewWindow ? NSOnState : NSOffState)];
+}
+
+- (void)_updatePrefsFromSearchTab
+{
+    BOOL shouldSearchInNewWindow = ([_searchInNewWindowCheckbox state] == NSOnState);
+    
+    [AKPrefUtils setShouldSearchInNewWindow:shouldSearchInNewWindow];
+}
+
 - (NSArray *)_namesOfAvailableFrameworks
 {
-    return
-        [[[NSApp delegate] appDatabase] namesOfAvailableFrameworks];
+    return [[[NSApp delegate] appDatabase] namesOfAvailableFrameworks];
 }
 
 @end

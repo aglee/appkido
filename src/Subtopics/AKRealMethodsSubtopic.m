@@ -15,25 +15,21 @@
 
 @implementation AKRealMethodsSubtopic
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
-    includeAncestors:(BOOL)includeAncestors
+             includeAncestors:(BOOL)includeAncestors
 {
-    return
-        [[[self alloc]
-            initWithBehaviorNode:behaviorNode
-            includeAncestors:includeAncestors] autorelease];
+    return [[[self alloc] initWithBehaviorNode:behaviorNode
+                              includeAncestors:includeAncestors] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
-    includeAncestors:(BOOL)includeAncestors
+          includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
@@ -46,7 +42,6 @@
 - (id)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -56,7 +51,6 @@
 
     [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods

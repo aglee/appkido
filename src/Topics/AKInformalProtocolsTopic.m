@@ -14,7 +14,6 @@
 
 @implementation AKInformalProtocolsTopic
 
-
 #pragma mark -
 #pragma mark AKTopic methods
 
@@ -26,12 +25,9 @@
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    NSEnumerator *en =
-        [[[_topicFramework fwDatabase]
-            informalProtocolsForFrameworkNamed:[_topicFramework frameworkName]] objectEnumerator];
-    AKProtocolNode *protocolNode;
+    NSArray *informalProtocols = [[self topicDatabase] informalProtocolsForFrameworkNamed:[self topicFrameworkName]];
 
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in informalProtocols)
     {
         [columnValues addObject:[AKProtocolTopic topicWithProtocolNode:protocolNode]];
     }

@@ -6,42 +6,54 @@
  */
 
 #import <AppKit/AppKit.h>
+#import "AKMultiRadioViewDelegate.h"
 
 /*!
- * @class       AKMultiRadioView
- * @abstract    Manages multiple radio matrixes ("co-matrixes") so that
- *              they behave together like one big radio matrix.
- * @discussion  The co-matrixes must be radio style and allow empty
- *              selection.  Cell tags must be unique across all
- *              co-matrixes.
+ * Manages multiple radio-style NSMatrix objects ("submatrixes") so that they
+ * they behave together like one big radio matrix.
  *
- *              In IB, create a setup matrix that will be used by
- *              -awakeFromNib and then discarded.  The setup matrix has
- *              one cell per co-matrix.  Each cell of the setup matrix
- *              points to a co-matrix via its target outlet (select any
- *              action; it is ignored).  The target and action of the
- *              setup matrix itself (as opposed to its cells) are what
- *              the target and action of the co-matrixes would have been
- *              if there were only one.
+ * At any given time, the submatrixes are defined as those immediate subviews
+ * (i.e., elements of [self subviews]) which:
+ *
+ *  * are instances of NSMatrix,
+ *  * have NSRadioModeMatrix as their -mode,
+ *  * return true for -allowsEmptySelection, and
+ *  * have self as their target with doRadioAction: as the action.
+ *
+ * Cell tags must be unique across all submatrixes. It's up to you to make this
+ * so.
+ *
+ * HOW TO USE
+ * ----------
+ * In the nib, create an AKMultiRadioView and drop one or more NSMatrix
+ * instances into it as subviews. Make the matrixes all of type radio and give
+ * their cells unique tags. Make the AKMultiRadioView the target of all the
+ * NSMatrix instances (not the cells, but the matrix controls), with
+ * doRadioAction: as the action.
+ * 
+ * Connect the AKMultiRadioView's delegate, either in IB or in code. In the
+ * delegate, implement multiRadioViewDidMakeSelection: to take some action based
+ * on the selectedTag of the sender.
  */
 @interface AKMultiRadioView : NSView
 {
-    NSMatrix *_selectedRadioMatrix;
-    SEL _radioAction;  // gets set in -awakeFromNib
-    id _radioTarget;  // gets set in -awakeFromNib
+@private
+    id <AKMultiRadioViewDelegate> _delegate;
 }
 
+@property (nonatomic, assign) IBOutlet id <AKMultiRadioViewDelegate> delegate;
 
 #pragma mark -
 #pragma mark Getters and setters
 
+/*! Returns -1 if no submatrix has a selected cell. */
 - (NSInteger)selectedTag;
 - (BOOL)selectCellWithTag:(NSInteger)tag;
-
 
 #pragma mark -
 #pragma mark Action methods
 
+/*! Messages the delegate. */
 - (IBAction)doRadioAction:(id)sender;
 
 @end

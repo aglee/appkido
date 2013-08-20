@@ -17,28 +17,27 @@
     BOOL _includesAncestors;
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-// Designated initializer
+/*! Designated initializer. */
 - (id)initIncludingAncestors:(BOOL)includeAncestors;
-
 
 #pragma mark -
 #pragma mark Getters and setters
 
 - (BOOL)includesAncestors;
 
-// subclasses must override
+/*! Subclasses must override this. */
 - (AKBehaviorNode *)behaviorNode;
 
-// Override this.  Returns method nodes for a single node -- no superclasses
-// or protocols included.
+/*!
+ * Subclass must override this.  Returns method nodes for a single node -- no
+ * superclasses or protocols included.
+ */
 - (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode;
 
-// Override this.
+/*! Subclasses must override this. */
 + (id)memberDocClass;
 
 @end
-

@@ -7,16 +7,11 @@
 
 #import "AKGroupNodeSubtopic.h"
 
-#import "DIGSLog.h"
-
-#import "AKSortUtils.h"
-#import "AKFileSection.h"
-#import "AKGlobalsNode.h"
 #import "AKGroupNode.h"
-#import "AKNodeDoc.h"
 
 @implementation AKGroupNodeSubtopic
 
+@synthesize groupNode = _groupNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -34,7 +29,6 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -45,29 +39,12 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {
     return [_groupNode nodeName];
-}
-
-- (void)populateDocList:(NSMutableArray *)docList
-{
-    NSEnumerator *subnodesEnum =
-        [[AKSortUtils arrayBySortingArray:[_groupNode subnodes]]
-            objectEnumerator];
-    AKGlobalsNode *globalsNode;
-
-    while ((globalsNode = [subnodesEnum nextObject]))
-    {
-        AKDoc *newDoc =
-            [[[AKNodeDoc alloc] initWithNode:globalsNode] autorelease];
-
-        [docList addObject:newDoc];
-    }
 }
 
 @end

@@ -6,27 +6,32 @@
  */
 
 #import <Cocoa/Cocoa.h>
-
+#import "AKPrefDictionary.h"
 #import "AKSortable.h"
 
-@class AKFileSection;
+
 @class AKDoc;
 @class AKTopic;
 
 /*!
- * @class       AKDocLocator
- * @discussion  Base class for objects representing states the user can
- *              navigate to in a browser window.
+ * Represents an AppKiDo window's navigational state as a three-component path:
+ *
+ *  - a selected topic (never nil)
+ *  - a subtopic within that topic (possibly nil)
+ *  - if the subtopic is non-nil, a doc within that subtopic (possibly nil)
+ *
+ * Doc locators are used in various navigation lists presented to the user, such
+ * as search results and popup menus (go to superclass, go back, go forward).
+ * Doc locators are also part of the saved state that we use to restore windows
+ * when the app relaunches (see AKSavedWindowState).
+ *
+ * The term "locator" suggests rough conceptual similarity to a URL.
  */
-@interface AKDocLocator : NSObject <AKSortable>
+@interface AKDocLocator : NSObject <AKPrefDictionary, AKSortable>
 {
-    // The topic selected in the window's topic browser.
+@private
     AKTopic *_topic;
-
-    // The selected item in the window's subtopics table.
     NSString *_subtopicName;
-
-    // The selected item in the window's doc list.
     NSString *_docName;
 
     NSString *_cachedDisplayString;
@@ -34,59 +39,35 @@
     AKDoc *_cachedDoc;
 }
 
+@property (nonatomic, readonly, strong) AKTopic *topicToDisplay;
+@property (nonatomic, copy) NSString *subtopicName;
+@property (nonatomic, copy) NSString *docName;
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)withTopic:(AKTopic *)topic
-    subtopicName:(NSString *)subtopicName
-    docName:(NSString *)docName;
-
-
-#pragma mark -
-#pragma mark Preferences
-
-+ (id)fromPrefDictionary:(NSDictionary *)prefDict;
-
-- (NSDictionary *)asPrefDictionary;
-
+   subtopicName:(NSString *)subtopicName
+        docName:(NSString *)docName;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithTopic:(AKTopic *)topic
-    subtopicName:(NSString *)subtopicName
-    docName:(NSString *)docName;
-
+       subtopicName:(NSString *)subtopicName
+            docName:(NSString *)docName;
 
 #pragma mark -
 #pragma mark Getters and setters
-
-- (AKTopic *)topicToDisplay;
-
-- (NSString *)subtopicName;
-
-- (void)setSubtopicName:(NSString *)subtopicName;
-
-- (NSString *)docName;
-
-- (void)setDocName:(NSString *)docName;
 
 - (NSString *)stringToDisplayInLists;
 
 - (AKDoc *)docToDisplay;
 
-
 #pragma mark -
 #pragma mark Sorting
 
-// *Should* be equivalent to using the -sortName mechanism, but faster.
+/*! *Should* be equivalent to using the -sortName mechanism, but faster. */
 + (void)sortArrayOfDocLocators:(NSMutableArray *)array;
-
-
-#pragma mark -
-#pragma mark AKSortable methods
-
-- (NSString *)sortName;
 
 @end

@@ -9,30 +9,38 @@
 
 #import "DIGSLog.h"
 
-#import "AKTextUtils.h"
-#import "AKClassNode.h"
-#import "AKFileSection.h"
-
 @implementation AKDatabaseNode
+
+@synthesize nodeName = _nodeName;
+@synthesize owningDatabase = _owningDatabase;
+@synthesize nameOfOwningFramework = _nameOfOwningFramework;
+@synthesize nodeDocumentation = _nodeDocumentation;
+@synthesize isDeprecated = _isDeprecated;
 
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)aFramework
++ (id)nodeWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    return [[[self alloc] initWithNodeName:nodeName owningFramework:aFramework] autorelease];
+    return [[[self alloc] initWithNodeName:nodeName
+                                  database:database
+                             frameworkName:frameworkName] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)aFramework
+- (id)initWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
     if ((self = [super init]))
     {
-        _nodeName = [nodeName retain];
-        _owningFramework = [aFramework retain];
+        _nodeName = [nodeName copy];
+        _owningDatabase = database;
+        _nameOfOwningFramework = [frameworkName copy];
         _nodeDocumentation = nil;
         _isDeprecated = NO;
     }
@@ -43,62 +51,17 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
 - (void)dealloc
 {
     [_nodeName release];
-    [_owningFramework release];
+    [_nameOfOwningFramework release];
     [_nodeDocumentation release];
 
     [super dealloc];
 }
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (NSString *)nodeName
-{
-    return _nodeName;
-}
-
-- (AKFramework *)owningFramework
-{
-    return _owningFramework;
-}
-
-- (void)setOwningFramework:(AKFramework *)aFramework
-{
-    [aFramework retain];
-    [_owningFramework release];
-    _owningFramework = aFramework;
-}
-
-- (AKFileSection *)nodeDocumentation
-{
-    return _nodeDocumentation;
-}
-
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-{
-    [fileSection retain];
-    [_nodeDocumentation release];
-    _nodeDocumentation = fileSection;
-}
-
-- (BOOL)isDeprecated
-{
-    return _isDeprecated;
-}
-
-- (void)setIsDeprecated:(BOOL)isDeprecated
-{
-    _isDeprecated = isDeprecated;
-}
-
 
 #pragma mark -
 #pragma mark AKSortable methods
@@ -107,7 +70,6 @@
 {
     return _nodeName;
 }
-
 
 #pragma mark -
 #pragma mark NSObject methods

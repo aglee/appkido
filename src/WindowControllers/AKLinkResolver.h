@@ -11,22 +11,20 @@
 @class AKDocLocator;
 
 /*!
- * First steps toward more reliable resolving of hyperlinks, i.e., figuring
- * out what database node a given hyperlink points to.  I think this should
- * get simpler when (a) I drop support for pre-3.0 Xcode, and (b) I
- * overhaul the low-level parsing.
+ * Used for traversing hyperlinks in the documentation.
  */
 @interface AKLinkResolver : NSObject
 {
+@private
     AKDatabase *_database;
 }
 
+@property (nonatomic, readonly, strong) AKDatabase *database;
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)linkResolverWithDatabase:(AKDatabase *)database;
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -34,10 +32,14 @@
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database;
 
-
 #pragma mark -
 #pragma mark Resolving links
 
+/*!
+ * Tries to derive a doc locator from the given URL. If we succeed, we can
+ * follow the link within AppKiDo. Otherwise, we have to open the link in the
+ * user's browser.
+ */
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL;
 
 @end

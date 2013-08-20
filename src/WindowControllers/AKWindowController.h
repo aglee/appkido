@@ -6,272 +6,223 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "AKUIController.h"
 
 @class AKDatabase;
-@class AKTopic;
 @class AKDoc;
+@class AKDocListViewController;
 @class AKDocLocator;
-@class AKTopicBrowserController;
-@class AKDocListController;
-@class AKQuicklistController;
-@class AKWindowLayout;
+@class AKDocViewController;
+@class AKQuicklistViewController;
 @class AKSavedWindowState;
-@class AKDocView;
+@class AKTopic;
+@class AKSubtopicListViewController;
+@class AKTopicBrowserViewController;
+@class AKWindowLayout;
 
 /*!
- * @class       AKWindowController
- * @abstract    Controller for AppKiDo browser windows.
- * @discussion  Each browser window has a AKWindowController as its
- *              delegate.  An AKWindowController coordinates subcontroller
- *              objects that manage various subviews.  It also manages its
- *              window's navigation history.
+ * Manages an AppKiDo browser window. Coordinates view controllers for the views
+ * in the window. Manages the window's navigation history.
  *
- *              The information displayed in a browser window has a
- *              hierarchical structure.  At any given time, a "topic"
- *              (also called the "main topic") is selected in the window.
- *              This is the object selected in the topic browser.  Details
- *              about the topic are displayed in the "subtopics" list, the
- *              doc list, and the doc text view.
+ * Patches the view controllers after self in the responder chain so they can
+ * pick up action messages even when not in the first responder's responder
+ * chain. The action methods of the view controllers are such that this
+ * shouldn't cause a conflict between action messages with the same name.
  */
-// "jumpTo" methods are all here; "jumpTo" means "navigate to and add to
-// history"; "navigate" means "navigate the various subcontrollers to";
-// navigation always starts here at the window controller and propagates
-// to subcontrollers
-@interface AKWindowController : NSObject <NSToolbarDelegate>
+@interface AKWindowController : NSWindowController <AKUIController, NSToolbarDelegate>
 {
+@private
+    // The source of all data the window displays.
     AKDatabase *_database;
 
-    // The window's navigation history.  Elements are AKDocLocators.
-    // Elements are added to the end.
+    // The window's navigation history. Elements are AKDocLocators. The last
+    // element is the most recent.
     NSMutableArray *_windowHistory;
 
     // The index within _windowHistory of our current navigation state.
     NSInteger _windowHistoryIndex;
 
-    // Remembered for when we hide/show the browser.  We remember it as a
-    // fraction instead of an absolute height because the user can toggle
-    // the browser off, resize the window, and toggle the browser back on.
-    CGFloat _browserFractionWhenVisible;
+    // The height of the topic browser when it's not collapsed. Used when the
+    // browser's visibility is toggled.
+    CGFloat _browserHeightWhenVisible;
 
-    // Outlets to subcontrollers that manage different portions of the
-    // window.
-    IBOutlet AKTopicBrowserController *_topicBrowserController;
-    IBOutlet AKDocListController *_docListController;
-    IBOutlet AKQuicklistController *_quicklistController;
+    // Default browser height to use when we have neither an explicit height nor
+    // a fraction.
+    CGFloat _defaultBrowserHeight;
+    
+    // View controllers that manage different portions of the window.
+    AKTopicBrowserViewController *_topicBrowserController;
+    AKSubtopicListViewController *_subtopicListController;
+    AKDocListViewController *_docListController;
+    AKDocViewController *_docViewController;
+    AKQuicklistViewController *_quicklistController;
 
-    // UI outlets -- navigation buttons.
-    IBOutlet NSButton *_backButton;
-    IBOutlet NSButton *_forwardButton;
-    IBOutlet NSButton *_superclassButton;
+    // IBOutlets.
+    NSSplitView *_topLevelSplitView;
+    NSSplitView *_bottomTwoThirdsSplitView;
+    NSView *_middleView;
+    NSSplitView *_middleThirdSplitView;
 
-    // UI outlets -- top-level view that fills the window.
-    IBOutlet NSSplitView *_topLevelSplitView;
+    NSView *_topicBrowserContainerView;
+    NSView *_subtopicListContainerView;
+    NSView *_docListContainerView;
+    NSView *_docContainerView;
+    
+    NSTextField *_topicDescriptionField;
+    NSTextField *_docCommentField;
 
-    // UI outlets -- the splitview containing the two bottom sections.
-    IBOutlet NSSplitView *_innerSplitView;
-    IBOutlet NSView *_middleView;
+    NSButton *_backButton;
+    NSButton *_forwardButton;
+    NSButton *_superclassButton;
 
-    // UI outlets -- the topic browser.
-    IBOutlet NSBrowser *_topicBrowser;
+    NSMenu *_backMenu;
+    NSMenu *_forwardMenu;
+    NSMenu *_superclassesMenu;
 
-    // UI outlets -- bottom pane, showing the doc text.
-    IBOutlet AKDocView *_docView;
-
-    // UI outlets -- contextual menus.
-    IBOutlet NSMenu *_docTextMenu;
-    IBOutlet NSMenu *_backMenu;
-    IBOutlet NSMenu *_forwardMenu;
-    IBOutlet NSMenu *_superclassesMenu;
-
-    // UI outlets -- the Quicklist drawer.  This is connected to
-    // _quicklistController.
-    IBOutlet NSDrawer *_quicklistDrawer;
+    NSDrawer *_quicklistDrawer;
 }
 
+/*! Top pane contains the topic browser, bottom pane contains bottomTwoThirdsSplitView. */
+@property (nonatomic, assign) IBOutlet NSSplitView *topLevelSplitView;
+
+/*! Top pane contains the "middle third", bottom pane contains the doc view. */
+@property (nonatomic, assign) IBOutlet NSSplitView *bottomTwoThirdsSplitView;
+
+/*! Contains topicDescriptionField and middleThirdSplitView. */
+@property (nonatomic, assign) IBOutlet NSView *middleView;
+
+/*! The "middle third" contains the subtopic list and doc list, side by side. */
+@property (nonatomic, assign) IBOutlet NSSplitView *middleThirdSplitView;
+
+// These container views will have views stuffed inside them. Those views will
+// be loaded by various view controllers.
+@property (nonatomic, assign) IBOutlet NSView *topicBrowserContainerView;
+@property (nonatomic, assign) IBOutlet NSView *subtopicListContainerView;
+@property (nonatomic, assign) IBOutlet NSView *docListContainerView;
+@property (nonatomic, assign) IBOutlet NSView *docContainerView;
+
+// These things are in the "middle third".
+@property (nonatomic, assign) IBOutlet NSTextField *topicDescriptionField;
+@property (nonatomic, assign) IBOutlet NSButton *backButton;
+@property (nonatomic, assign) IBOutlet NSButton *forwardButton;
+@property (nonatomic, assign) IBOutlet NSButton *superclassButton;
+@property (nonatomic, assign) IBOutlet NSMenu *backMenu;
+@property (nonatomic, assign) IBOutlet NSMenu *forwardMenu;
+@property (nonatomic, assign) IBOutlet NSMenu *superclassesMenu;
+
+/*! At the bottom of the window. May display info about the selected doc. */
+@property (nonatomic, assign) IBOutlet NSTextField *docCommentField;
+
+/*! On the left side of the window. */
+@property (nonatomic, assign) IBOutlet NSDrawer *quicklistDrawer;
 
 #pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark Init/dealloc/awake
 
 /*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database;
-
 
 #pragma mark -
 #pragma mark Getters and setters
 
 - (AKDatabase *)database;
 
-- (NSWindow *)window;
-
-- (AKDocLocator *)currentHistoryItem;
-
-/*!
- * Returns the currently displayed doc. If there is no current doc, looks for a
- * General/Overview doc on the assumption that the current topic is probably a class.
- * For example, when NSFileWrapper > "Class Methods" is selected, there is no doc in
- * the doc view, because NSFileWrapper has no class methods, but it is useful to
- * return the file containing the NSFileWrapper docs. (Thanks to Gerriet for pointing
- * out this case and providing code to look for General/Overview.)
- *
- * If all else fails, returns nil.
- */
-- (AKDoc *)currentDoc;
-
-/*! Returns the path to the file containing [self currentDoc], or nil. */
-- (NSString *)currentDocPath;
-
-/*! Returns the URL for [self currentDocPath], or nil. */
-- (NSURL *)currentDocURL;
-
-#pragma mark -
-#pragma mark User preferences
-
-/*!
- * @method      applyUserPreferences
- * @discussion  Tells my subordinate controller objects to apply the user
- *   preference settings.
- */
-- (void)applyUserPreferences;
-
+- (AKDocLocator *)currentDocLocator;
 
 #pragma mark -
 #pragma mark Navigation
 
-/*!
- * @method      openWindowWithQuicklistDrawer:
- * @discussion  Called to display the window just after it has been
- *   initialized.  The first time we display the window is special, because
- *   if we have to open the Search drawer, we have to do so after the window
- *   is displayed.
- */
-- (void)openWindowWithQuicklistDrawer:(BOOL)drawerIsOpen;
+/*! Selects the topic in the topic browser. Updates the rest of the window. */
+- (void)selectTopic:(AKTopic *)obj;
 
-- (void)jumpToTopic:(AKTopic *)obj;
+/*! Tries to select the specified subtopic within the selected topic. */
+- (void)selectSubtopicWithName:(NSString *)subtopicName;
 
-- (void)jumpToSubtopicWithName:(NSString *)subtopicName;
+/*! Tries to select the specified doc within the selected subtopic. */
+- (void)selectDocWithName:(NSString *)docName;
 
-- (void)jumpToDocName:(NSString *)docName;
-
-- (void)jumpToDocLocator:(AKDocLocator *)docLocator;
-
-// all the other "jumpTo" methods come through here
-- (void)jumpToTopic:(AKTopic *)obj
-    subtopicName:(NSString *)subtopicName
-    docName:(NSString *)docName;
-
-// linkObj must be either an NSURL or a string containing an absolute URL.
-// Returns YES if we are able to jump to the URL, either within the app if
-// possible or, if necessary, via NSWorkspace.
-- (BOOL)jumpToLinkURL:(NSURL *)linkURL;
+- (void)selectDocWithDocLocator:(AKDocLocator *)docLocator;
 
 /*!
- * @method      focusOnDocView
- * @discussion  Tries to give first responder status to the doc text view.
- *              Returns that view if successful.
+ * Returns YES if we are able to jump to the URL, either within the app if
+ * possible or, if necessary, in the user's browser.
  */
-- (NSView *)focusOnDocView;
+- (BOOL)followLinkURL:(NSURL *)linkURL;
 
-- (void)focusOnDocListTable;
-
-- (void)bringToFront;
+- (void)openQuicklistDrawer;
 
 - (void)searchForString:(NSString *)aString;
 
-
-#pragma mark -
-#pragma mark Window layout
-
-- (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout;
-
-- (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout;
-
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
 
+- (NSView *)docView;
 
-#pragma mark -
-#pragma mark UI item validation
-
-/*!
- * @method      validateItem:
- * @discussion  Returns true if the specified UI item should be enabled.
- *              Contains shared logic for validating both menu items and
- *              toolbar items.
- * @param       anItem  Either an NSMenuItem or an NSToolbarItem
- */
-- (BOOL)validateItem:(id)anItem;
-
+- (void)revealPopQuizSymbol:(NSString *)apiSymbol;
 
 #pragma mark -
 #pragma mark Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender;
 
-- (IBAction)addBrowserColumn:(id)sender;
-
-- (IBAction)removeBrowserColumn:(id)sender;
-
 - (IBAction)toggleBrowserVisible:(id)sender;
 
-- (IBAction)showBrowser:(id)sender;
-
 - (IBAction)toggleQuicklistDrawer:(id)sender;
-
 
 #pragma mark -
 #pragma mark Action methods -- navigation
 
-- (IBAction)navigateBack:(id)sender;
+- (IBAction)goBackInHistory:(id)sender;
 
-- (IBAction)navigateForward:(id)sender;
+- (IBAction)goForwardInHistory:(id)sender;
 
-- (IBAction)doBackMenuAction:(id)sender;
+/*! Expects sender to be an NSMenuItem in the Back popup menu. */
+- (IBAction)goToHistoryItemInBackMenu:(id)sender;
 
-- (IBAction)doForwardMenuAction:(id)sender;
+/*! Expects sender to be an NSMenuItem in the Forward popup menu. */
+- (IBAction)goToHistoryItemInForwardMenu:(id)sender;
 
-- (IBAction)jumpToSuperclass:(id)sender;
+- (IBAction)selectSuperclass:(id)sender;
 
-- (IBAction)jumpToFrameworkFormalProtocols:(id)sender;
+/*! Expects sender to be an NSMenuItem in the Superclasses popup menu. */
+- (IBAction)selectAncestorClass:(id)sender;
 
-- (IBAction)jumpToFrameworkInformalProtocols:(id)sender;
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectFormalProtocolsTopic:(id)sender;
 
-- (IBAction)jumpToFrameworkFunctions:(id)sender;
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectInformalProtocolsTopic:(id)sender;
 
-- (IBAction)jumpToFrameworkGlobals:(id)sender;
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectFunctionsTopic:(id)sender;
+
+/*! Expects sender to be an NSMenuItem whose title is a framework name. */
+- (IBAction)selectGlobalsTopic:(id)sender;
 
 /*!
- * @method      jumpToDocLocatorRepresentedBy:
- * @discussion  Used by items in the Favorites menu.
- * @param       sender  Should either respond to -representedObject by
- *              returning an AKDocLocator, or respond to -selectedCell
- *              with a cell whose -representedObject is an AKDocLocator.
+ * Used by items in the Favorites menu. Does nothing unless sender is an
+ * NSMenuItem whose representedObject is an AKDocLocator.
  */
-- (IBAction)jumpToDocLocatorRepresentedBy:(id)sender;
+- (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender;
 
-/*!
- * @method      addTopicToFavorites:
- * @discussion  Action method that adds the currently selected topic
- *              to the Favorites quicklist.
- */
+/*! Adds the currently selected topic to the Favorites quicklist. */
 - (IBAction)addTopicToFavorites:(id)sender;
 
-- (IBAction)findNext:(id)sender;
+#pragma mark -
+#pragma mark Action methods -- accessing the doc file
 
-- (IBAction)findPrevious:(id)sender;
+- (IBAction)copyDocFileURL:(id)sender;
+
+- (IBAction)copyDocFilePath:(id)sender;
+
+- (IBAction)openDocFileInBrowser:(id)sender;
 
 - (IBAction)revealDocFileInFinder:(id)sender;
 
-- (IBAction)copyDocTextURL:(id)sender;
-
-- (IBAction)openDocURLInBrowser:(id)sender;
-
-
 #pragma mark -
-#pragma mark Action methods -- search (forwarded to the quicklist controller)
+#pragma mark Action methods -- debugging
 
-- (IBAction)selectSearchField:(id)sender;
+- (IBAction)openParseDebugWindow:(id)sender;
 
-- (IBAction)selectPreviousSearchResult:(id)sender;
-
-- (IBAction)selectNextSearchResult:(id)sender;
+- (IBAction)printFunFacts:(id)sender;
 
 @end

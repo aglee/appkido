@@ -12,26 +12,22 @@
 
 @implementation AKInstanceMethodsSubtopic
 
-
 #pragma mark -
 #pragma mark AKSubtopic methods
 
 - (NSString *)subtopicName
 {
-    return
-        [self includesAncestors]
-        ? [@"ALL " stringByAppendingString:AKInstanceMethodsSubtopicName]
-        : AKInstanceMethodsSubtopicName;
+    return ([self includesAncestors]
+            ? AKAllInstanceMethodsSubtopicName
+            : AKInstanceMethodsSubtopicName);
 }
 
 - (NSString *)stringToDisplayInSubtopicList
 {
-    return
-        [self includesAncestors]
-        ? [@"       " stringByAppendingString:[self subtopicName]]
-        : [@"4.  " stringByAppendingString:[self subtopicName]];
+    return ([self includesAncestors]
+            ? [@"       " stringByAppendingString:[self subtopicName]]
+            : [self subtopicName]);
 }
-
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods

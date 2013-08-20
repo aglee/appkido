@@ -5,12 +5,11 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import <Foundation/Foundation.h>
+#import "AKBehaviorGeneralDoc.h"
 
-#import "AKOverviewDoc.h"
-
-@interface AKInheritanceDoc : AKOverviewDoc
-{
-}
-
+/*!
+ * Represents the "Inheritance" doc under a class or protocol's "General"
+ * subtopic.
+ */
+@interface AKInheritanceDoc : AKBehaviorGeneralDoc
 @end

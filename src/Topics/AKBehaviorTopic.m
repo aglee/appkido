@@ -9,17 +9,7 @@
 
 #import "DIGSLog.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKBehaviorTopic (Private)
-- (NSArray *)_subtopics;
-@end
-
-
 @implementation AKBehaviorTopic
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -31,7 +21,6 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -40,7 +29,6 @@
     DIGSLogError_MissingOverride();
     return nil;
 }
-
 
 #pragma mark -
 #pragma mark AKTopic methods
@@ -70,16 +58,13 @@
     return [[self _subtopics] objectAtIndex:subtopicIndex];
 }
 
-
 #pragma mark -
-#pragma mark Initialization support
+#pragma mark Subtopics
 
-- (NSArray *)createSubtopicsArray
+- (void)populateSubtopicsArray:(NSMutableArray *)array
 {
     DIGSLogError_MissingOverride();
-    return nil;
 }
-
 
 #pragma mark -
 #pragma mark AKSortable methods
@@ -89,25 +74,18 @@
     return [self behaviorName];
 }
 
-@end
-
-
-
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKBehaviorTopic (Private)
 
 - (NSArray *)_subtopics
 {
     if (!_subtopics)
     {
-        _subtopics = [[self createSubtopicsArray] retain];
+        _subtopics = [[NSMutableArray alloc] init];
+        [self populateSubtopicsArray:_subtopics];
     }
 
     return _subtopics;
 }
 
 @end
-
-

@@ -8,9 +8,5 @@
 
 #import "AKMemberNode.h"
 
-/*! Not sure if it's a misnomer to call a property a member. */
 @interface AKPropertyNode : AKMemberNode
-{
-}
-
 @end

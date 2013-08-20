@@ -8,43 +8,9 @@
 #import "AKDocSetIndex.h"
 
 #import "AKFileUtils.h"
-#import "AKFrameworkConstants.h"
-#import "AKIPhoneDevTools.h"
-#import "AKMacDevTools.h"
 #import "AKSQLTemplate.h"
-#import "AKTextUtils.h"
 
 #import "FMDatabase.h"
-
-
-@interface AKDocSetIndex ()
-
-- (NSMutableArray *)_allFrameworkNames;
-- (NSMutableArray *)_objectiveCFrameworkNames;
-- (NSMutableArray *)_stringArrayFromQuery:(NSString *)queryString;
-
-- (NSString *)_resourcesPath;
-- (NSString *)_pathToSqliteFile;
-- (FMDatabase *)_openSQLiteDB;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    forFramework:(NSString *)frameworkName;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    orType:(NSString *)tokenType2
-    forFramework:(NSString *)frameworkName;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    forFramework:(NSString *)frameworkName;
-- (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    orType:(NSString *)tokenType4
-    forFramework:(NSString *)frameworkName;
-- (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames;
-
-@end
-
-#pragma mark -
 
 @implementation AKDocSetIndex
 
@@ -57,8 +23,8 @@
 
     if ((self = [super init]))
     {
-        _docSetPath = [docSetPath retain];
-        _basePathForHeaders = [basePathForHeaders retain];
+        _docSetPath = [docSetPath copy];
+        _basePathForHeaders = [basePathForHeaders copy];
 
         DIGSLogInfo(@"docset index -- [%@]", [self _pathToSqliteFile]);
         
@@ -66,26 +32,22 @@
         if (![[NSFileManager defaultManager] fileExistsAtPath:[self _pathToSqliteFile] isDirectory:&isDir])
         {
             DIGSLogDebug(@"AKDocSetIndex -- There is no docset at [%@]", _docSetPath);
-            [self release];
             return nil;
         }
         else if (isDir)
         {
             DIGSLogDebug(@"AKDocSetIndex -- Dsidx path [%@] is a directory, not a file", [self _pathToSqliteFile]);
-            [self release];
             return nil;
         }
 
         if (![[NSFileManager defaultManager] fileExistsAtPath:_basePathForHeaders isDirectory:&isDir])
         {
             DIGSLogWarning(@"AKDocSetIndex -- There is no directory [%@]", _basePathForHeaders);
-            [self release];
             return nil;
         }
         else if (!isDir)
         {
             DIGSLogDebug(@"AKDocSetIndex -- Header path [%@] is a file, not a directory", _basePathForHeaders);
-            [self release];
             return nil;
         }
     }
@@ -96,7 +58,6 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -108,9 +69,13 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
+
+- (NSString *)docSetPath
+{
+    return _docSetPath;
+}
 
 - (NSArray *)selectableFrameworkNames
 {
@@ -206,32 +171,26 @@
 
 - (NSArray *)behaviorDocPathsForFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:@"cl"
-            orType:@"intf"
-            orType:@"clm"
-            orType:@"instm"  // to pick up "XXX Additions Reference"
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:@"cl"
+                                   orType:@"intf"
+                                   orType:@"clm"
+                                   orType:@"instm"  // to pick up "XXX Additions Reference"
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)functionsDocPathsForFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:@"func"
-            orType:@"macro"
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:@"func"
+                                   orType:@"macro"
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)globalsDocPathsForFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:@"econst"
-            orType:@"data"
-            orType:@"tdef"
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:@"econst"
+                                   orType:@"data"
+                                   orType:@"tdef"
+                             forFramework:frameworkName];
 
 /* [agl] I don't think we need to filter globals file names when we have a docset.
     // KLUDGE -- Globals are declared in many files, but currently we only
@@ -259,7 +218,6 @@
 */
 }
 
-
 #pragma mark -
 #pragma mark Private methods
 
@@ -280,7 +238,7 @@
     NSMutableArray *stringArray = [NSMutableArray array];
 
     // Open the database.
-    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    FMDatabase *sqliteDB = [self _openSQLiteDB];
     if (sqliteDB == nil)
     {
         return nil;
@@ -363,47 +321,41 @@
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType
     forFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:tokenType
-            orType:nil
-            orType:nil
-            orType:nil
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:tokenType
+                                   orType:nil
+                                   orType:nil
+                                   orType:nil
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
-    orType:(NSString *)tokenType2
-    forFramework:(NSString *)frameworkName
+                               orType:(NSString *)tokenType2
+                         forFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:tokenType1
-            orType:tokenType2
-            orType:nil
-         orType:nil
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:tokenType1
+                                   orType:tokenType2
+                                   orType:nil
+                                   orType:nil
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    forFramework:(NSString *)frameworkName
+                               orType:(NSString *)tokenType2
+                               orType:(NSString *)tokenType3
+                         forFramework:(NSString *)frameworkName
 {
-    return
-        [self
-            _docPathsForTokensOfType:tokenType1
-            orType:tokenType2
-            orType:tokenType3
-            orType:nil
-            forFramework:frameworkName];
+    return [self _docPathsForTokensOfType:tokenType1
+                                   orType:tokenType2
+                                   orType:tokenType3
+                                   orType:nil
+                             forFramework:frameworkName];
 }
 
 - (NSArray *)_docPathsForTokensOfType:(NSString *)tokenType1
-    orType:(NSString *)tokenType2
-    orType:(NSString *)tokenType3
-    orType:(NSString *)tokenType4
-    forFramework:(NSString *)frameworkName
+                               orType:(NSString *)tokenType2
+                               orType:(NSString *)tokenType3
+                               orType:(NSString *)tokenType4
+                         forFramework:(NSString *)frameworkName
 {
     // Make sure we pass non-nil for all four tokenType arguments.
     if (tokenType2 == nil)
@@ -432,6 +384,7 @@
                                                orType:tokenType3
                                                orType:tokenType4
                                          forFramework:frameworkName];
+    
     [docPaths unionSet:[self _docPathsFromQuery:docPathsSecondQueryTemplate
                                   withTokenType:tokenType1
                                          orType:tokenType2
@@ -444,13 +397,11 @@
 
 - (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames
 {
-    NSEnumerator *essentialFrameworkNamesEnum = [AKNamesOfEssentialFrameworks reverseObjectEnumerator];
-    NSString *essentialFrameworkName;
-
-    while ((essentialFrameworkName = [essentialFrameworkNamesEnum nextObject]))
+    for (NSString *essentialFrameworkName in [AKNamesOfEssentialFrameworks reverseObjectEnumerator])
     {
         if ([fwNames containsObject:essentialFrameworkName])
         {
+            [[essentialFrameworkName retain] autorelease];  // Prevent premature dealloc.
             [fwNames removeObject:essentialFrameworkName];
             [fwNames insertObject:essentialFrameworkName atIndex:0];
         }

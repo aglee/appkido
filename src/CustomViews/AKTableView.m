@@ -8,31 +8,36 @@
 #import "AKTableView.h"
 
 #import "AKPrefUtils.h"
-#import <tgmath.h>
+#import "AKTabChain.h"
+#import "AKWindowController.h"
+
+#import "NSView+AppKiDo.h"
 
 @implementation AKTableView
-
 
 #pragma mark -
 #pragma mark Preferences
 
 - (void)applyListFontPrefs
 {
-    NSString *fontName =
-        [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-    NSInteger fontSize =
-        [AKPrefUtils intValueForPref:AKListFontSizePrefName];
+    NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
+    NSInteger fontSize = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];
-    //int newRowHeight = round([font defaultLineHeightForFont] + 1.0);
-    NSLayoutManager * lm = [[NSLayoutManager alloc] init]; 
+    NSLayoutManager * lm = [[[NSLayoutManager alloc] init] autorelease];
  	NSInteger newRowHeight = round([lm defaultLineHeightForFont:font] + 1.0); 
- 	[lm release]; 
 
     [[[[self tableColumns] objectAtIndex:0] dataCell] setFont:font];
     [self setRowHeight:newRowHeight];
     [self setNeedsDisplay:YES];
 }
 
+#pragma mark -
+#pragma mark NSView methods
+
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
+{
+    return YES;
+}
 
 #pragma mark -
 #pragma mark NSResponder methods
@@ -61,29 +66,34 @@
     }
 }
 
-// Allow the user to use left and right arrow keys to move between the subtopic
-// list and the doc list.
+// This is a total KLUDGE. Allows left and right arrow keys to move between the
+// subtopic list and the doc list.
 - (void)moveLeft:(id)sender
 {
-    if ([[self previousKeyView] isKindOfClass:[AKTableView class]])
-        [[self window] makeFirstResponder:[self previousKeyView]];
+    if ([[[self window] delegate] isKindOfClass:[AKWindowController class]])
+    {
+        NSSplitView *splitView = [self ak_enclosingViewOfClass:[NSSplitView class]];
+
+        if ([self isDescendantOf:[[splitView subviews] objectAtIndex:1]])
+        {
+            (void)[AKTabChain stepThroughTabChainInWindow:[self window] forward:NO];
+        }
+    }
 }
 
-// Allow the user to use left and right arrow keys to move between the subtopic
-// list and the doc list.
+// This is a total KLUDGE. Allows left and right arrow keys to move between the
+// subtopic list and the doc list.
 - (void)moveRight:(id)sender
 {
-    if ([[self nextKeyView] isKindOfClass:[AKTableView class]])
-        [[self window] makeFirstResponder:[self nextKeyView]];
-}
+    if ([[[self window] delegate] isKindOfClass:[AKWindowController class]])
+    {
+        NSSplitView *splitView = [self ak_enclosingViewOfClass:[NSSplitView class]];
 
-
-#pragma mark -
-#pragma mark NSView methods
-
-- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
-{
-    return YES;
+        if ([self isDescendantOf:[[splitView subviews] objectAtIndex:0]])
+        {
+            (void)[AKTabChain stepThroughTabChainInWindow:[self window] forward:YES];
+        }
+    }
 }
 
 @end

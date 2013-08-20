@@ -9,19 +9,21 @@
 
 @class AKGroupNode;
 
+/*!
+ * Abstract class.
+ */
 @interface AKGroupNodeSubtopic : AKSubtopic
 {
+@private
     AKGroupNode *_groupNode;
 }
 
+@property (nonatomic, readonly, retain) AKGroupNode *groupNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*!
- * @method      initWithGroupNode:
- * @discussion  Designated initializer.
- */
+/*! Designated initializer. */
 - (id)initWithGroupNode:(AKGroupNode *)groupNode;
 
 @end

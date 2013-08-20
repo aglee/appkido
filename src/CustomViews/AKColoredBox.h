@@ -8,8 +8,4 @@
 #import <AppKit/AppKit.h>
 
 @interface AKColoredBox : NSBox
-{
-
-}
-
 @end

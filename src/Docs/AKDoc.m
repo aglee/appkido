@@ -8,33 +8,13 @@
 #import "AKDoc.h"
 
 #import <WebKit/WebKit.h>
+
 #import "DIGSLog.h"
-#import "AKTextUtils.h"
-#import "AKFileSection.h"
+
 #import "AKDocParser.h"
-
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKDoc (Private)
-
-- (NSData *)_rolledUpTextForFileSection:(AKFileSection *)fileSection;
-
-- (void)_addDescendantSectionsOf:(AKFileSection *)fileSection
-    depthFirstToArray:(NSMutableArray *)sectionArray;
-
-- (NSData *)_kludgeHTML:(NSData *)htmlData;
-- (NSMutableData *)_kludgeOne:(NSData *)sourceData;
-- (void)_kludgeThree:(NSMutableData *)sourceData;
-- (void)_kludgeFour:(NSMutableData *)sourceData;
-- (NSMutableData *)_kludgeFive:(NSData *)sourceData;
-
-@end
-
+#import "AKFileSection.h"
 
 @implementation AKDoc
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -45,12 +25,12 @@
     return nil;
 }
 
-- (BOOL)isPlainText
+- (BOOL)docTextIsHTML
 {
-    return NO;
+    return YES;
 }
 
-- (BOOL)textIncludesDescendantSections
+- (BOOL)docTextShouldIncludeDescendantSections
 {
     return YES;
 }
@@ -59,18 +39,17 @@
 {
     AKFileSection *fileSection = [self fileSection];
 
-    if ([self isPlainText])
+    if ([self docTextIsHTML])
     {
-        return [fileSection sectionData];
+        NSData *textData = ([self docTextShouldIncludeDescendantSections]
+                            ? [self _rolledUpTextForFileSection:fileSection]
+                            : [fileSection sectionData]);
+
+        return [self _kludgeHTML:textData];
     }
     else
     {
-        NSData *textData =
-            [self textIncludesDescendantSections]
-            ? [self _rolledUpTextForFileSection:fileSection]
-            : [fileSection sectionData];
-
-        return [self _kludgeHTML:textData];
+        return [fileSection sectionData];
     }
 }
 
@@ -92,44 +71,28 @@
     return @"";
 }
 
-
 #pragma mark -
 #pragma mark NSObject methods
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:
-            @"<%@: docName=%@>",
-            [self className],
-            [self docName]];
+    return [NSString stringWithFormat:@"<%@: docName=%@>", [self className], [self docName]];
 }
-
-@end
-
-
 
 #pragma mark -
 #pragma mark Private methods
 
-@implementation AKDoc (Private)
-
 - (NSData *)_rolledUpTextForFileSection:(AKFileSection *)fileSection
 {
     // Put all the file sections we want to roll up into an array.
-    NSMutableArray *sectionArray =
-        [NSMutableArray arrayWithObject:fileSection];
+    NSMutableArray *sectionArray = [NSMutableArray arrayWithObject:fileSection];
 
-    [self
-        _addDescendantSectionsOf:fileSection
-        depthFirstToArray:sectionArray];
+    [self _addDescendantSectionsOf:fileSection depthFirstToArray:sectionArray];
 
     // Concatenate the text from all the sections.
     NSMutableData *rolledUpData = [NSMutableData data];
-    NSEnumerator *elemEnum = [sectionArray objectEnumerator];
-    AKFileSection *elem;
 
-    while ((elem = [elemEnum nextObject]))
+    for (AKFileSection *elem in sectionArray)
     {
         [rolledUpData appendData:[elem sectionData]];
     }
@@ -138,7 +101,7 @@
 }
 
 - (void)_addDescendantSectionsOf:(AKFileSection *)fileSection
-    depthFirstToArray:(NSMutableArray *)sectionArray
+               depthFirstToArray:(NSMutableArray *)sectionArray
 {
     NSInteger numSubs = [fileSection numberOfChildSections];
 
@@ -153,9 +116,7 @@
         AKFileSection *sub = [fileSection childSectionAtIndex:i];
 
         [sectionArray addObject:sub];
-        [self
-            _addDescendantSectionsOf:sub
-            depthFirstToArray:sectionArray];
+        [self _addDescendantSectionsOf:sub depthFirstToArray:sectionArray];
     }
 }
 
@@ -187,8 +148,7 @@
 
 - (NSMutableData *)_kludgeOne:(NSData *)sourceData
 {
-    NSMutableData *newHTMLData =
-        [NSMutableData dataWithCapacity:([sourceData length] + 64)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 64)];
 
     // Find all <pre>...</pre> elements in the source HTML.
     char *endOfPreElement = (char *)[sourceData bytes];
@@ -236,18 +196,18 @@
             {
                 // Replace \n with <br>.
                 [newHTMLData appendBytes:"<br>" length:4];
-                isNewLine = YES;
+//                isNewLine = YES;
             }
             else if (c == '\r')
             {
                 // Discard \r characters.
-                isNewLine = YES;
+//                isNewLine = YES;
             }
             else
             {
                 // Copy the source character as is.
                 [newHTMLData appendBytes:cp length:1];
-                isNewLine = NO;
+//                isNewLine = NO;
             }
         }
 
@@ -261,10 +221,8 @@
 
     // Add the remaining non-<pre> text.  There will be at least one byte
     // of non-<pre> text, namely the NULL terminator.
-    [newHTMLData
-        appendBytes:endOfPreElement
-        length:((char *)[sourceData bytes] + [sourceData length]
-                    - endOfPreElement)];
+    [newHTMLData appendBytes:endOfPreElement
+                      length:((char *)[sourceData bytes] + [sourceData length] - endOfPreElement)];
 
     return newHTMLData;
 }

@@ -8,7 +8,5 @@
 
 #import "AKNotificationNode.h"
 
-
 @implementation AKNotificationNode
-
 @end

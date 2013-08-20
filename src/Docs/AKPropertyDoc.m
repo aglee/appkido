@@ -13,7 +13,6 @@
 
 @implementation AKPropertyDoc
 
-
 #pragma mark -
 #pragma mark AKMemberDoc methods
 
@@ -22,17 +21,17 @@
     return methodName;
 }
 
-
 #pragma mark -
 #pragma mark AKDoc methods
 
 - (NSString *)commentString
 {
-    AKFramework *methodFrameworkName = [_memberNode owningFramework];
-    BOOL methodIsInSameFramework = [methodFrameworkName isEqual:[_behaviorNode owningFramework]];
-    AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
+    NSString *methodFrameworkName = [[self memberNode] nameOfOwningFramework];
+    NSString *behaviorFrameworkName = [[self behaviorNode] nameOfOwningFramework];
+    BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
+    AKBehaviorNode *ownerOfMethod = [[self memberNode] owningBehavior];
 
-    if (_behaviorNode == ownerOfMethod)
+    if ([self behaviorNode] == ownerOfMethod)
     {
         // We're the first class/protocol to declare this property.
         if (methodIsInSameFramework)
@@ -41,7 +40,8 @@
         }
         else
         {
-            return [NSString stringWithFormat:@"This property comes from the %@ framework.", methodFrameworkName];
+            return [NSString stringWithFormat:@"This property comes from the %@ framework.",
+                    methodFrameworkName];
         }
     }
     else
@@ -51,7 +51,8 @@
         {
             if ([ownerOfMethod isClassNode])
             {
-                return [NSString stringWithFormat:@"This property is inherited from class %@.", [ownerOfMethod nodeName]];
+                return [NSString stringWithFormat:@"This property is inherited from class %@.",
+                        [ownerOfMethod nodeName]];
             }
             else
             {
@@ -62,15 +63,13 @@
         {
             if ([ownerOfMethod isClassNode])
             {
-                return
-                    [NSString stringWithFormat:
-                        @"This property is inherited from @% class %@.", methodFrameworkName, [ownerOfMethod nodeName]];
+                return [NSString stringWithFormat:@"This property is inherited from %@ class %@.",
+                        methodFrameworkName, [ownerOfMethod nodeName]];
             }
             else
             {
-                return
-                    [NSString stringWithFormat:
-                        @"This property is declared in %@ protocol <%@>.", methodFrameworkName, [ownerOfMethod nodeName]];
+                return [NSString stringWithFormat:@"This property is declared in %@ protocol <%@>.",
+                        methodFrameworkName, [ownerOfMethod nodeName]];
             }
         }
     }

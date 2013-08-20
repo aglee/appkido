@@ -7,62 +7,40 @@
 
 #import "DIGSFindBuffer.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface DIGSFindBuffer (Private)
-- (void)_setFindString:(NSString *)string writeToPasteboard:(BOOL)flag;
-- (void)_loadFindStringFromPasteboard;
-- (void)_writeFindStringToPasteboard;
-- (void)_handleAppDidActivateNotification:(NSNotification *)notification;
-- (void)_notifyListeners;
-@end
-
 @implementation DIGSFindBuffer
-
 
 #pragma mark -
 #pragma mark Factory methods
 
-static DIGSFindBuffer *s_sharedInstance = nil;
+@dynamic findString;
 
 + (DIGSFindBuffer *)sharedInstance
 {
+    static DIGSFindBuffer *s_sharedInstance = nil;
+    
     if (!s_sharedInstance)
     {
-        (void)[[self allocWithZone:[[NSApplication sharedApplication] zone]] init];
+        s_sharedInstance = [[self alloc] init];
     }
 
     return s_sharedInstance;
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)init
 {
-    if (s_sharedInstance)
-    {
-        [super dealloc];
-        return s_sharedInstance;
-    }
-
     if ((self = [super init]))
     {
         _findString = @"";
-        _listenerPointers = [[NSMutableArray alloc] init];
-        _listenerActions = [[NSMutableArray alloc] init];
+        _delegatePointerValues = [[NSCountedSet alloc] init];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
-            selector:@selector(_handleAppDidActivateNotification:)
-            name:NSApplicationDidBecomeActiveNotification
-            object:NSApp];
-
+                                                 selector:@selector(_handleAppDidActivateNotification:)
+                                                     name:NSApplicationDidBecomeActiveNotification
+                                                   object:NSApp];
         [self _loadFindStringFromPasteboard];
-
-        s_sharedInstance = self;
     }
 
     return self;
@@ -70,18 +48,13 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 
 - (void)dealloc
 {
-    if (self != s_sharedInstance)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-        [_findString release];
-        [_listenerPointers release];
-        [_listenerActions release];
+    [_findString release];
+    [_delegatePointerValues release];
 
-        [super dealloc];
-    }
+    [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -100,64 +73,42 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     [self _setFindString:string writeToPasteboard:YES];
 }
 
-
 #pragma mark -
-#pragma mark Managing listeners
+#pragma mark Delegates
 
-- (void)addListener:(id)listenerObject withSelector:(SEL)handlerSelector
+- (void)addDelegate:(id <DIGSFindBufferDelegate>)delegate;
 {
-    NSValue *pointerHolder = [NSValue valueWithNonretainedObject:listenerObject];
-    NSUInteger listenerIndex = [_listenerPointers indexOfObject:pointerHolder];
+    NSValue *pointerValue = [NSValue valueWithNonretainedObject:delegate];
 
-    if (listenerIndex == NSNotFound)
-    {
-        NSValue *actionHolder = [NSValue valueWithBytes:&handlerSelector objCType:@encode(SEL)];
-
-        [_listenerPointers addObject:pointerHolder];
-        [_listenerActions addObject:actionHolder];
-    }
+    [_delegatePointerValues addObject:pointerValue];
 }
 
-- (void)removeListener:(id)listenerObject
+- (void)removeDelegate:(id <DIGSFindBufferDelegate>)delegate;
 {
-    NSValue *pointerHolder = [NSValue valueWithNonretainedObject:listenerObject];
-    NSUInteger listenerIndex = [_listenerPointers indexOfObject:pointerHolder];
+    NSValue *pointerValue = [NSValue valueWithNonretainedObject:delegate];
 
-    if (listenerIndex != NSNotFound)
-    {
-        [_listenerPointers removeObjectAtIndex:listenerIndex];
-        [_listenerActions removeObjectAtIndex:listenerIndex];
-    }
+    [_delegatePointerValues removeObject:pointerValue];
 }
-
-@end
-
 
 #pragma mark -
 #pragma mark Private methods
 
-@implementation DIGSFindBuffer (Private)
-
-/*
- * Sets my find buffer and updates the UI accordingly.  If flag is YES,
- * copies my find buffer to the system find-pasteboard.
- */
-- (void)_setFindString:(NSString *)string writeToPasteboard:(BOOL)flag
+- (void)_setFindString:(NSString *)newFindString writeToPasteboard:(BOOL)flag
 {
-    if ([string isEqualToString:_findString])
+    if ([newFindString isEqualToString:_findString])
     {
         return;
     }
 
     [_findString autorelease];
-    _findString = [string copyWithZone:[self zone]];
+    _findString = [newFindString copy];
 
     if (flag)
     {
         [self _writeFindStringToPasteboard];
     }
 
-    [self _notifyListeners];
+    [self _notifyDelegatesBufferDidChange];
 }
 
 - (void)_loadFindStringFromPasteboard
@@ -168,7 +119,7 @@ static DIGSFindBuffer *s_sharedInstance = nil;
     {
         NSString *string = [pasteboard stringForType:NSStringPboardType];
 
-        if (string && [string length])
+        if ([string length])
         {
             [self _setFindString:string writeToPasteboard:NO];
         }
@@ -178,43 +129,29 @@ static DIGSFindBuffer *s_sharedInstance = nil;
 - (void)_writeFindStringToPasteboard
 {
     NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:NSFindPboard];
-    NSArray *pasteboardTypes = [NSArray arrayWithObject:NSStringPboardType];
 
-    [pasteboard declareTypes:pasteboardTypes owner:nil];
+    [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
     [pasteboard setString:[self findString] forType:NSStringPboardType];
 }
 
-/*
- * This is called whenever the application I am in is activated.
- */
-- (void)_handleAppDidActivateNotification:(NSNotification *)ignored
+- (void)_handleAppDidActivateNotification:(NSNotification *)notif
 {
-    NSString *oldFindString = _findString;
+    NSString *oldFindString = [[_findString retain] autorelease];
 
-    [self _loadFindStringFromPasteboard];
+    [self _loadFindStringFromPasteboard];  // May release the old find string.
     if (![_findString isEqualToString:oldFindString])
     {
-        [self _notifyListeners];
+        [self _notifyDelegatesBufferDidChange];
     }
 }
 
-/*
- * Tells my listeners that the find string has changed.
- */
-- (void)_notifyListeners
+- (void)_notifyDelegatesBufferDidChange
 {
-    NSInteger numListeners = [_listenerPointers count];
-    NSInteger i;
-
-    for (i = 0; i < numListeners; i++)
+    for (NSValue *pointerValue in [_delegatePointerValues objectEnumerator])
     {
-        NSValue *pointerHolder = [_listenerPointers objectAtIndex:i];
-        id listenerObject = [pointerHolder nonretainedObjectValue];
-        NSValue *actionHolder = [_listenerActions objectAtIndex:i];
-        SEL actionSelector;
+        id <DIGSFindBufferDelegate> delegate = [pointerValue nonretainedObjectValue];
 
-        [actionHolder getValue:&actionSelector];
-        [listenerObject performSelector:actionSelector withObject:self];
+        [delegate findBufferDidChange:self];
     }
 }
 

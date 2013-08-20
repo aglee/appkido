@@ -16,11 +16,12 @@
     AKDatabaseNode *_databaseNode;
 }
 
+@property (nonatomic, readonly) AKDatabaseNode *databaseNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-// Designated initializer
+/*! Designated initializer. */
 - (id)initWithNode:(AKDatabaseNode *)databaseNode;
 
 @end

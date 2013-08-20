@@ -6,19 +6,14 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "AKPrefDictionary.h"
+
+// [agl] Currently not used and not tested in a very long time.
 
 /*!
- * @class       DIGSTextSelection
- * @abstract    A DIGSTextSelection specifies a selection and scroll
- *              position within an NSTextView.
- * @discussion  A DIGSTextSelection remembers what was selected in the
- *              NSTextView, and the position to which it was scrolled at
- *              the moment of the snapshot.
- *
- *              To take a snapshot of an NSTextView, use
- *              -takeSelectionFromTextView:.  To apply a remembered
- *              display state to an NSTextView, use
- *              -applySelectionToTextView:.
+ * Remembers the selection range and scroll position of an NSTextView. To take a
+ * snapshot of an NSTextView, use -takeSelectionFromTextView:.  To apply a
+ * remembered display state to an NSTextView, use applySelectionToTextView:.
  */
 @interface DIGSTextSelection : NSObject <NSCoding>
 {
@@ -45,46 +40,20 @@
     NSDictionary *_typingAttributes;
 }
 
-
-#pragma mark -
-#pragma mark Preferences
-
-+ (DIGSTextSelection *)fromPrefDictionary:(NSDictionary *)prefDict;
-
-- (NSDictionary *)asPrefDictionary;
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (NSRect)visibleRect;
-- (void)setVisibleRect:(NSRect)aRect;
-
-- (NSRange)visibleCharsRange;
-- (void)setVisibleCharsRange:(NSRange)aRange;
-
-- (NSRange)selectedCharsRange;
-- (void)setSelectedCharsRange:(NSRange)aRange;
-
-- (NSDictionary *)typingAttributes;
-- (void)setTypingAttributes:(NSDictionary *)attrDict;
-
+@property (nonatomic, assign) NSRect visibleRect;
+@property (nonatomic, assign) NSRange visibleCharsRange;
+@property (nonatomic, assign) NSRange selectedCharsRange;
+@property (nonatomic, copy) NSDictionary *typingAttributes;
 
 #pragma mark -
 #pragma mark Interacting with text views
 
-/*!
- * @method      takeSelectionFromTextView:
- * @discussion  Takes a snapshot of the selection state of the given text
- *              view.
- */
+/*! Takes a snapshot of the text view's selection range and scroll position. */
 - (void)takeSelectionFromTextView:(NSTextView *)textView;
 
 /*!
- * @method      applySelectionToTextView:
- * @discussion  Applies the selection state I contain to the given text
- *              view.  You might want to send the text view a -sizeToFit
- *              message just before calling this.
+ * Applies the receiver's info to the given text view.  You might want to send
+ * the text view a sizeToFit message just before calling this.
  */
 - (void)applySelectionToTextView:(NSTextView *)textView;
 

@@ -7,22 +7,15 @@
 
 #import "AKDocLocator.h"
 
-#import "AKFileSection.h"
 #import "AKTopic.h"
 #import "AKSubtopic.h"
 #import "AKDoc.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKDocLocator (Private)
-- (void)_clearCachedObjects;
-@end
-
-
 @implementation AKDocLocator
 
+@synthesize topicToDisplay = _topic;
+@synthesize subtopicName = _subtopicName;
+@synthesize docName = _docName;
 
 #pragma mark -
 #pragma mark Factory methods
@@ -32,7 +25,6 @@
     return [[[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName] autorelease];
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -41,8 +33,8 @@
     if ((self = [super init]))
     {
         _topic = [topic retain];
-        _subtopicName = [subtopicName retain];
-        _docName = [docName retain];
+        _subtopicName = [subtopicName copy];
+        _docName = [docName copy];
     }
 
     return self;
@@ -53,7 +45,6 @@
     [_topic release];
     [_subtopicName release];
     [_docName release];
-
     [_cachedDisplayString release];
     [_cachedSortName release];
     [_cachedDoc release];
@@ -61,61 +52,8 @@
     [super dealloc];
 }
 
-
-#pragma mark -
-#pragma mark Preferences
-
-+ (id)fromPrefDictionary:(NSDictionary *)prefDict
-{
-    if (prefDict == nil)
-    {
-        return nil;
-    }
-
-    id topicPref           = [prefDict objectForKey:AKTopicPrefKey];
-    NSString *subtopicName = [prefDict objectForKey:AKSubtopicPrefKey];
-    NSString *docName      = [prefDict objectForKey:AKDocNamePrefKey];
-
-    AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
-
-    return [self withTopic:topic subtopicName:subtopicName docName:docName];
-}
-
-- (NSDictionary *)asPrefDictionary
-{
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
-
-    if (_topic)
-    {
-        [prefDict setObject:[_topic asPrefDictionary] forKey:AKTopicPrefKey];
-    }
-
-    if (_subtopicName)
-    {
-        [prefDict setObject:_subtopicName forKey:AKSubtopicPrefKey];
-    }
-
-    if (_docName)
-    {
-        [prefDict setObject:_docName forKey:AKDocNamePrefKey];
-    }
-
-    return prefDict;
-}
-
-
 #pragma mark -
 #pragma mark Getters and setters
-
-- (AKTopic *)topicToDisplay
-{
-    return _topic;
-}
-
-- (NSString *)subtopicName
-{
-    return _subtopicName;
-}
 
 - (void)setSubtopicName:(NSString *)subtopicName
 {
@@ -124,14 +62,8 @@
         [self _clearCachedObjects];
     }
 
-    [subtopicName retain];
-    [_subtopicName release];
-    _subtopicName = subtopicName;
-}
-
-- (NSString *)docName
-{
-    return _docName;
+    [_subtopicName autorelease];
+    _subtopicName = [subtopicName copy];
 }
 
 - (void)setDocName:(NSString *)docName
@@ -141,46 +73,41 @@
         [self _clearCachedObjects];
     }
 
-    [docName retain];
-    [_docName release];
-    _docName = docName;
+    [_docName autorelease];
+    _docName = [docName copy];
 }
 
 - (NSString *)stringToDisplayInLists
 {
+    // As described by the Character Palette:
+    //      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+    //      Unicode: 00AB
+    //      UTF8: C2 AB
+    static unichar kLeftDoubleAngle = 0x00AB;
+    
     if (_cachedDisplayString == nil)
     {
         NSString *topicName = [_topic stringToDisplayInLists];
 
         if (_subtopicName == nil)
         {
-            _cachedDisplayString = topicName;
+            _cachedDisplayString = [topicName retain];
         }
         else if (_docName == nil)
         {
-            // Note the Unicode character.  Here's the info from
-            // Character Palette:
-            //      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
-            //      Unicode: 00AB
-            //      UTF8: C2 AB
-            _cachedDisplayString =
-                [NSString stringWithFormat:@"%@  %C  %@",
-                    _subtopicName,  // [agl] displayed string?
-                    0x00AB,
-                    topicName];
+            _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
+                                    _subtopicName,  // [agl] displayed string?
+                                    kLeftDoubleAngle,
+                                    topicName];
         }
         else
         {
-            AKDoc *doc = [self docToDisplay];
-
-            _cachedDisplayString =
-                [NSString stringWithFormat:@"%@  %C  %@",
-                    [doc stringToDisplayInDocList],
-                    0x00AB,
-                    topicName];
+            _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
+                                    [[self docToDisplay] stringToDisplayInDocList],
+                                    kLeftDoubleAngle,
+                                    topicName];
         }
 
-        [_cachedDisplayString retain];
     }
 
     return _cachedDisplayString;
@@ -198,7 +125,6 @@
     return _cachedDoc;
 }
 
-
 #pragma mark -
 #pragma mark Sorting
 
@@ -215,7 +141,7 @@
 // what two strings to compare next.
 static
 NSComparisonResult
-compareDocLocators(id locOne, id locTwo, void *context)
+compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 {
     NSString *sOne = nil;
     NSString *sTwo = nil;
@@ -310,6 +236,46 @@ compareDocLocators(id locOne, id locTwo, void *context)
     [array sortUsingFunction:&compareDocLocators context:NULL];
 }
 
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
+{
+    if (prefDict == nil)
+    {
+        return nil;
+    }
+
+    id topicPref = [prefDict objectForKey:AKTopicPrefKey];
+    NSString *subtopicName = [prefDict objectForKey:AKSubtopicPrefKey];
+    NSString *docName = [prefDict objectForKey:AKDocNamePrefKey];
+
+    AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
+
+    return [self withTopic:topic subtopicName:subtopicName docName:docName];
+}
+
+- (NSDictionary *)asPrefDictionary
+{
+    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
+
+    if (_topic)
+    {
+        [prefDict setObject:[_topic asPrefDictionary] forKey:AKTopicPrefKey];
+    }
+
+    if (_subtopicName)
+    {
+        [prefDict setObject:_subtopicName forKey:AKSubtopicPrefKey];
+    }
+
+    if (_docName)
+    {
+        [prefDict setObject:_docName forKey:AKDocNamePrefKey];
+    }
+
+    return prefDict;
+}
 
 #pragma mark -
 #pragma mark AKSortable methods
@@ -322,26 +288,24 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
         if (_subtopicName == nil)
         {
-            _cachedSortName = topicName;
+            _cachedSortName = [topicName retain];
         }
         else
         {
             if (_docName == nil)
             {
-                _cachedSortName = [NSString stringWithFormat:@"%@-%@", _subtopicName, topicName];
+                _cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _subtopicName, topicName];
             }
             else
             {
-                _cachedSortName = [NSString stringWithFormat:@"%@-%@", _docName, topicName];
+                _cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _docName, topicName];
             }
         }
 
-        [_cachedSortName retain];
     }
 
     return _cachedSortName;
 }
-
 
 #pragma mark -
 #pragma mark NSObject methods
@@ -382,22 +346,15 @@ compareDocLocators(id locOne, id locTwo, void *context)
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
+    return [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
             [self className],
             [_topic pathInTopicBrowser],
             _subtopicName,
             _docName];
 }
 
-@end
-
-
-
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKDocLocator (Private)
 
 - (void)_clearCachedObjects
 {
@@ -412,4 +369,3 @@ compareDocLocators(id locOne, id locTwo, void *context)
 }
 
 @end
-

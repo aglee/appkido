@@ -17,20 +17,15 @@
     #import "DIGSMarginView.h"
     #import "DIGSMatchingBackgroundView.h"
     #import "DIGSTextView.h"
-    #import "DIGSWindow.h"
 
     #import "AKFrameworkConstants.h"
     #import "AKHTMLConstants.h"
-    #import "AKPrefConstants.h"
 
     #import "AKFileUtils.h"
     #import "AKSortable.h"
     #import "AKSortUtils.h"
-    #import "AKTextUtils.h"
-    #import "AKViewUtils.h"
-    #import "AKSubcontroller.h"
     #import "AKFileSection.h"
     #import "AKPrefUtils.h"
-    #import "AKFrameworkInfo.h"
-    #import "AKDebugUtils.h"
+
+    #import "QuietLog.h"
 #endif

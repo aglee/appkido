@@ -16,20 +16,12 @@ typedef enum {
 @class AKDatabase;
 
 /*!
- * @class       AKSearchQuery
- * @abstract    Performs searches on an AKDatabase.
- * @discussion  An AKSearchQuery searches the nodes in an AKDatabase,
- *              subject to a set of search parameters.  Search results are
- *              returned as a sorted array of AKDatabaseNodes.
+ * Searches the nodes in an AKDatabase, subject to a set of search parameters.
+ * Caches search results. Clears the cache whenever a search parameter changes.
  *
- *              An AKSearchQuery caches its search results.  All of the
- *              -setXXX: methods clear the cache if they change a search
- *              parameter.  If there is no change, the cache is left alone.
- *
- *              An AKSearchQuery does not detect changes to the database,
- *              so the cached search results could be incorrect if the
- *              database contents have changed since the last time the
- *              search was performed.
+ * Does not detect changes to the database, which means the cached search
+ * results could be incorrect if the database contents have changed since the
+ * last time a search was performed.
  */
 @interface AKSearchQuery : NSObject
 {
@@ -38,7 +30,6 @@ typedef enum {
     NSString *_searchString;
     NSRange _rangeForEntireSearchString;  // used for prefix searches;
                                           //  saves calls to NSMakeRange()
-
     // Search flags.
     BOOL _includesClassesAndProtocols;
     BOOL _includesMembers;
@@ -47,57 +38,41 @@ typedef enum {
     BOOL _ignoresCase;
     AKSearchComparison _searchComparison;
 
-    // Cached search results.  The cache is cleared whenever the search
-    // string or a search flag changes.
+    // Cached search results. Is set to nil whenever the search string or a
+    // search flag changes. nil means the search needs to be (re)performed.
     NSMutableArray *_searchResults;
 }
 
+@property (nonatomic, copy) NSString *searchString;
+
+@property (nonatomic, assign) NSRange rangeForEntireSearchString;
+@property (nonatomic, assign) BOOL includesClassesAndProtocols;
+
+/*!
+ * If true, searches properties, methods (including delegate methods), and
+ * notifications. If the search string has the form "setXYZ", searches for a
+ * property whose name begins with "XYZ".
+ */
+@property (nonatomic, assign) BOOL includesMembers;
+
+@property (nonatomic, assign) BOOL includesFunctions;
+@property (nonatomic, assign) BOOL includesGlobals;
+@property (nonatomic, assign) BOOL ignoresCase;
+@property (nonatomic, assign) AKSearchComparison searchComparison;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*!
- * @method      initWithDatabase:
- * @discussion  Designated initializer.
- */
+/*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)db;
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (NSString *)searchString;
-- (void)setSearchString:(NSString *)s;
-
-- (BOOL)includesClassesAndProtocols;
-- (void)setIncludesClassesAndProtocols:(BOOL)flag;
-
-- (BOOL)includesMembers;
-- (void)setIncludesMembers:(BOOL)flag;
-
-- (BOOL)includesFunctions;
-- (void)setIncludesFunctions:(BOOL)flag;
-
-- (BOOL)includesGlobals;
-- (void)setIncludesGlobals:(BOOL)flag;
-
-/*! Sends all the -setIncludesXXX: messages with YES as the flag. */
-- (void)setIncludesEverything;
-
-- (BOOL)ignoresCase;
-- (void)setIgnoresCase:(BOOL)flag;
-
-- (AKSearchComparison)searchComparison;
-- (void)setSearchComparison:(AKSearchComparison)searchComparison;
-
 
 #pragma mark -
 #pragma mark Searching
 
-/*!
- * @method      queryResults
- * @discussion  Returns a sorted array of AKDocLocators.
- */
+/*! Sends all the -setIncludesXXX: messages with YES as the flag. */
+- (void)includeEverythingInSearch;
+
+/*! Returns a sorted array of AKDocLocators. */
 - (NSArray *)queryResults;
 
 @end

@@ -8,34 +8,33 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AKDevToolsPathController;
+@class AKDevToolsViewController;
 
 /*!
- * Controller for the panel that comes up during launch if the user's
- * prefs don't contain a valid Dev Tools path.
+ * Modal panel that appears on launch if we can't load our database using the
+ * existing dev tools settings.
  */
-@interface AKDevToolsPanelController : NSObject
+@interface AKDevToolsPanelController : NSWindowController
 {
-    IBOutlet NSWindow *_window;
-    IBOutlet AKDevToolsPathController *_devToolsPathController;
+@private
+    AKDevToolsViewController *_devToolsViewController;
+
+    // IBOutlets.
+    NSView *_devToolsView;  // A placeholder in the nib; the real view is swapped in after the nib is loaded.
+    NSButton *_okButton;  // We connect this to _devToolsViewController.
 }
 
-#pragma mark -
-#pragma mark Factory methods
-
-+ (id)controller;
-
+@property (nonatomic, assign) IBOutlet NSView *devToolsView;
+@property (nonatomic, assign) IBOutlet NSButton *okButton;
 
 #pragma mark -
 #pragma mark Running the panel
 
 /*!
- * Prompts the user for a valid Dev Tools path.  If a Dev Tools path is selected,
- * updates the AKDevToolsPathPrefName and AKSDKVersionPrefName user prefs and
- * returns YES.  If the user cancels, returns NO.
+ * Prompts the user to specify an Xcode location and an SDK, and updates user
+ * prefs accordingly. Returns NO if the user cancels.
  */
-- (BOOL)runDevToolsSetupPanel;
-
++ (BOOL)runDevToolsSetupPanel;
 
 #pragma mark -
 #pragma mark Action methods

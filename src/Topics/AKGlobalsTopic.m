@@ -9,12 +9,11 @@
 
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
+#import "AKGlobalsGroupSubtopic.h"
 #import "AKGroupNode.h"
-#import "AKGroupNodeSubtopic.h"
 #import "AKDoc.h"
 
 @implementation AKGlobalsTopic
-
 
 #pragma mark -
 #pragma mark AKTopic methods
@@ -26,9 +25,7 @@
 
 - (NSInteger)numberOfSubtopics
 {
-    return
-        [[_topicFramework fwDatabase]
-            numberOfGlobalsGroupsForFrameworkNamed:[_topicFramework frameworkName]];
+    return [[[self topicDatabase] globalsGroupsForFrameworkNamed:[self topicFrameworkName]] count];
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
@@ -38,10 +35,7 @@
         return nil;
     }
 
-    NSArray *groupNodes =
-        [AKSortUtils
-            arrayBySortingArray:
-                [[_topicFramework fwDatabase] globalsGroupsForFrameworkNamed:[_topicFramework frameworkName]]];
+    NSArray *groupNodes = [AKSortUtils arrayBySortingArray:[[self topicDatabase] globalsGroupsForFrameworkNamed:[self topicFrameworkName]]];
 
 
     if ((unsigned)subtopicIndex >= [groupNodes count])
@@ -52,7 +46,7 @@
     {
         AKGroupNode *groupNode = [groupNodes objectAtIndex:subtopicIndex];
 
-        return [[[AKGroupNodeSubtopic alloc] initWithGroupNode:groupNode] autorelease];
+        return [[[AKGlobalsGroupSubtopic alloc] initWithGroupNode:groupNode] autorelease];
     }
 }
 

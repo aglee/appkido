@@ -8,12 +8,7 @@
 #import "AKDocParser.h"
 
 /*
- * @class       AKCocoaFunctionsDocParser
- * @abstract    Parses an HTML file that documents a framework's functions.
- * @discussion  Parses an HTML file that documents a framework's functions.
+ * Parses an HTML file that documents a framework's functions.
  */
 @interface AKCocoaFunctionsDocParser : AKDocParser
-{
-}
-
 @end

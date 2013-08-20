@@ -7,29 +7,45 @@
 
 #import "AKDatabaseNode.h"
 
-@class AKProtocolNode;
-@class AKPropertyNode;
-@class AKMethodNode;
+@class AKBehaviorNode;
 @class AKCollectionOfNodes;
+@class AKMemberNode;
+@class AKMethodNode;
+@class AKPropertyNode;
+@class AKProtocolNode;
+
+#pragma mark -
+#pragma mark Blocks as alternatives to performSelector
+
+typedef id (^AKBlockForGettingMemberNode)(AKBehaviorNode *behaviorNode, NSString *memberName);
+
+typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMemberNode *memberNode);
+
+#define blockForGettingMemberNode(xxxWithName) ^id (AKBehaviorNode *behaviorNode, NSString *memberName) { return [(id)behaviorNode xxxWithName:memberName]; }
+
+#define blockForAddingMemberNode(addXXXNode) ^void (AKBehaviorNode *behaviorNode, AKMemberNode *memberNode) { [(id)behaviorNode addXXXNode:(id)memberNode]; }
+
+
+#pragma mark -
 
 /*!
- * @class       AKBehaviorNode
- * @abstract    Abstract class that represents an Objective-C construct
- *              that can have methods.
- * @discussion  An AKBehaviorNode represents an Objective-C construct
- *              that can have methods -- i.e., a class, protocol, or
- *              category.
+ * Abstract class. Represents an Objective-C construct that can have methods.
+ * The concrete subclasses are AKClassNode, AKProtocolNode, and AKCategoryNode.
+ *
+ * Note: unlike other database nodes, class and protocols nodes can be
+ * initialized with nil as their owning framework name. The reason is that when
+ * we are constructing the database, we may encounter a reference to a class or
+ * protocol before it has been declared. For example, we may encounter a
+ * category (and thus the name of its owning class) before we encounter the
+ * owning class's declaration. Or we may encounter a protocol in a class's list
+ * of protocols before we've encountered its @protocol declaration.
  */
 @interface AKBehaviorNode : AKDatabaseNode
 {
-// [agl] put back @private -- really only need _indexOfInstanceMethods
-//@private
-    // Fully qualified path name of the .h file where my behavior is
-    // declared.
+@private
     NSString *_headerFileWhereDeclared;
 
-    // Contains AKProtocolNodes, one for each protocol my behavior
-    // conforms to.
+    // One AKProtocolNode for each protocol this behavior conforms to.
     NSMutableArray *_protocolNodes;
 
     // Indexes the contents of _protocolNodes.
@@ -47,64 +63,41 @@
     // been found in my .h file or been found in the documentation for my
     // behavior.
     AKCollectionOfNodes *_indexOfInstanceMethods;
-
-    // Contains names of all frameworks I belong to.  The first element
-    // of the array is my primary framework.  Aside from that, the order
-    // of the array is the order in which it was discovered that I belong
-    // to the framework.
-    NSMutableArray *_allOwningFrameworks;
-
-    // Keys are names of frameworks I belong to.  Values are the
-    // root file sections containing documentation specific to the
-    // framework.
-    NSMutableDictionary *_nodeDocumentationByFrameworkName;
 }
 
+/*! Path to the .h file that declares this behavior. */
+@property (nonatomic, copy) NSString *headerFileWhereDeclared;
 
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-/*!
- * @method      allOwningFrameworks
- * @discussion  Returned elements are instances of AKFramework.  The first
- *              one in the returned array is the node's -owningFramework.
- */
-- (NSArray *)allOwningFrameworks;
+// [agl] Old note to self says that classes can have multiple header paths. Example?
 
 - (BOOL)isClassNode;
 
-// nb classes can have multiple header paths
-- (NSString *)headerFileWhereDeclared;
-
-- (void)setHeaderFileWhereDeclared:(NSString *)aPath;
-
-- (void)addImplementedProtocol:(AKProtocolNode *)node;
+- (void)addImplementedProtocol:(AKProtocolNode *)protocolNode;
+- (void)addImplementedProtocols:(NSArray *)protocolNodes;
 
 /*!
- * @method      implementedProtocols
- * @discussion  Returns an array of zero or more AKProtocolNodes, one
- *              for each protocol implemented by my behavior, including
- *              protocols implemented via inheritance.
+ * Returns zero or more AKProtocolNodes, one for each protocol implemented by
+ * the represented behavior. Includes protocols implemented by virtue of
+ * inheritance.
  */
 - (NSArray *)implementedProtocols;
 
-// frameworkName can be the main framework or an extra one
-- (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName;
-
-- (void)setNodeDocumentation:(AKFileSection *)fileSection forFrameworkNamed:(NSString *)frameworkName;
-
+/*! Returns zero or more AKMethodNodes. */
+- (NSArray *)instanceMethodNodes;
 
 #pragma mark -
 #pragma mark Getters and setters -- properties
 
-/** Returns only properties that are in this class's documentation. */
+/*! Returns only properties that are in this class's documentation. */
 - (NSArray *)documentedProperties;
 
 - (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName;
 
 /*! Does nothing if a property with the same name already exists. */
 - (void)addPropertyNode:(AKPropertyNode *)propertyNode;
-
 
 #pragma mark -
 #pragma mark Getters and setters -- class methods
@@ -120,7 +113,6 @@
 /*! Does nothing if a class method with the same name already exists. */
 - (void)addClassMethod:(AKMethodNode *)methodNode;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- instance methods
 
@@ -135,7 +127,6 @@
 /*! Does nothing if an instance method with the same name already exists. */
 - (void)addInstanceMethod:(AKMethodNode *)methodNode;
 
-
 #pragma mark -
 #pragma mark Getters and setters -- deprecated methods
 
@@ -144,6 +135,6 @@
  * because the docs lump all deprecated methods together.
  */
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-    owningFramework:(AKFramework *)nodeOwningFW;
+                                        frameworkName:(NSString *)frameworkName;
 
 @end

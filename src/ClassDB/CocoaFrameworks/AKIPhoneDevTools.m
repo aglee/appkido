@@ -7,8 +7,8 @@
 //
 
 #import "AKIPhoneDevTools.h"
-#import "AKTextUtils.h"
 
+#import "NSString+AppKiDo.h"
 
 @implementation AKIPhoneDevTools
 
@@ -17,25 +17,25 @@
 
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {
-    // Are we using the standalone Xcode in /Applications introduced by Xcode 4.3
-    // or the older Dev Tools installation model?
-    if ([devToolsPath isEqualToString:AKDevToolsPathForStandaloneXcode])
+    // Are we using the standalone Xcode introduced by Xcode 4.3
+    // or the older package-installation model?
+    if ([AKDevTools devToolsPathIsOldStyle:devToolsPath])
     {
-        return [NSArray arrayWithObjects:
-                @"Platforms/iPhoneOS.platform",
-                @"Platforms/iPhoneSimulator.platform",
-                @"Documentation",
-                nil];
-    }
-    else
-    {
-        return [NSArray arrayWithObjects:
+        return (@[
                 @"Platforms/iPhoneOS.platform",
                 @"Platforms/iPhoneSimulator.platform",
                 @"Applications/Xcode.app",
                 @"Documentation",
                 @"Examples",
-                nil];
+                ]);
+    }
+    else
+    {
+        return (@[
+                @"Platforms/iPhoneOS.platform",
+                @"Platforms/iPhoneSimulator.platform",
+                @"Documentation",
+                ]);
     }
 }
 
@@ -47,16 +47,14 @@
     // contain NSFileVersion, and a newer one in AKSharedDocSetDirectory which did. So I moved
     // AKSharedDocSetDirectory later in this array so that it "wins" when docsets appear in both
     // places. This fixed the problem, at least for me.
-    return [NSArray arrayWithObjects:
+    return (@[
             [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/"],
             AKLibraryDocSetDirectory,
             AKSharedDocSetDirectory,
-            
+
             // New directories to look in as of Xcode 4.3.
-            [AKDevToolsPathForStandaloneXcode stringByAppendingPathComponent:@"Documentation/DocSets"],
             [NSHomeDirectory() stringByAppendingPathComponent:AKSharedDocSetDirectory],
-            
-            nil];
+            ]);
 }
 
 - (BOOL)isValidDocSetName:(NSString *)fileName

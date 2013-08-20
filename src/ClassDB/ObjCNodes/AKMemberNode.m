@@ -13,44 +13,28 @@
 
 @implementation AKMemberNode
 
+@synthesize owningBehavior = _owningBehavior;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
-    owningBehavior:(AKBehaviorNode *)behaviorNode
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
+        owningBehavior:(AKBehaviorNode *)behaviorNode
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
-        _owningBehavior = [behaviorNode retain];
+        _owningBehavior = behaviorNode;
     }
 
     return self;
 }
 
-- (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
+- (id)initWithNodeName:(NSString *)nodeName frameworkName:(NSString *)frameworkName
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
-}
-
-- (void)dealloc
-{
-    [_owningBehavior release];
-
-    [super dealloc];
-}
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (AKBehaviorNode *)owningBehavior
-{
-    return _owningBehavior;
 }
 
 @end

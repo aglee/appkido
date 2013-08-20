@@ -15,22 +15,22 @@
 
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {
-    // Are we using the standalone Xcode in /Applications introduced by Xcode 4.3
-    // or the older Dev Tools installation model?
-    if ([devToolsPath isEqualToString:AKDevToolsPathForStandaloneXcode])
+    // Are we using the standalone Xcode introduced by Xcode 4.3
+    // or the older package-installation model?
+    if ([AKDevTools devToolsPathIsOldStyle:devToolsPath])
     {
-        return [NSArray arrayWithObjects:
-                @"Platforms/MacOSX.platform",
-                @"Documentation",
-                nil];
-    }
-    else
-    {
-        return [NSArray arrayWithObjects:
+        return (@[
                 @"Applications/Xcode.app",
                 @"Documentation",
                 @"Examples",
-                nil];
+                ]);
+    }
+    else
+    {
+        return (@[
+                @"Platforms/MacOSX.platform",
+                @"Documentation",
+                ]);
     }
 }
 
@@ -42,16 +42,14 @@
     // contain NSFileVersion, and a newer one in AKSharedDocSetDirectory which did. So I moved
     // AKSharedDocSetDirectory later in this array so that it "wins" when docsets appear in both
     // places. This fixed the problem, at least for me.
-    return [NSArray arrayWithObjects:
+    return (@[
             [[self devToolsPath] stringByAppendingPathComponent:@"Documentation/DocSets/"],
             AKLibraryDocSetDirectory,
             AKSharedDocSetDirectory,
-            
+
             // New directories to look in as of Xcode 4.3.
-            [AKDevToolsPathForStandaloneXcode stringByAppendingPathComponent:@"Documentation/DocSets"],
             [NSHomeDirectory() stringByAppendingPathComponent:AKSharedDocSetDirectory],
-            
-            nil];
+            ]);
 }
 
 - (BOOL)isValidDocSetName:(NSString *)fileName
@@ -62,15 +60,15 @@
 
 - (NSString *)sdkSearchPath
 {
-    // Are we using the standalone Xcode in /Applications introduced by Xcode 4.3
+    // Are we using the standalone Xcode introduced by Xcode 4.3
     // or the older Dev Tools installation model?
-    if ([[self devToolsPath] isEqualToString:AKDevToolsPathForStandaloneXcode])
+    if ([AKDevTools devToolsPathIsOldStyle:[self devToolsPath]])
     {
-        return [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/MacOSX.platform/Developer/SDKs/"];
+        return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
     }
     else
     {
-        return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
+        return [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/MacOSX.platform/Developer/SDKs/"];
     }
 }
 

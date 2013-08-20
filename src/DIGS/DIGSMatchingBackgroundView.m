@@ -9,7 +9,6 @@
 
 @implementation DIGSMatchingBackgroundView
 
-
 #pragma mark -
 #pragma mark NSView methods
 

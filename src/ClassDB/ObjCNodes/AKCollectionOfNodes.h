@@ -16,13 +16,13 @@
  */
 @interface AKCollectionOfNodes : NSObject
 {
+@private
     // Contains all the AKDatabaseNodes that have been added to us.
     NSMutableArray *_nodeList;
 
-    // Keys are method names.  Values are AKDatabaseNodes.
+    // Keys are node names.  Values are AKDatabaseNodes.
     NSMutableDictionary *_nodesByName;
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters

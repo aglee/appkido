@@ -7,16 +7,7 @@
 
 #import "DIGSPrefUtils.h"
 
-@interface DIGSPrefUtils (Private)
-+ (id)_valueWhoseClassIs:(Class)cl forPref:(NSString *)prefName;
-@end
-
-
 @implementation DIGSPrefUtils
-
-
-#pragma mark -
-#pragma mark Low-level getters and setters
 
 + (BOOL)boolValueForPref:(NSString *)prefName
 {
@@ -25,8 +16,7 @@
 
 + (void)setBoolValue:(BOOL)prefValue forPref:(NSString *)prefName
 {
-    [[NSUserDefaults standardUserDefaults]
-        setBool:prefValue forKey:prefName];
+    [[NSUserDefaults standardUserDefaults] setBool:prefValue forKey:prefName];
 }
 
 + (NSInteger)intValueForPref:(NSString *)prefName
@@ -36,8 +26,7 @@
 
 + (void)setIntValue:(NSInteger)prefValue forPref:(NSString *)prefName
 {
-    [[NSUserDefaults standardUserDefaults]
-        setInteger:prefValue forKey:prefName];
+    [[NSUserDefaults standardUserDefaults] setInteger:prefValue forKey:prefName];
 }
 
 + (NSString *)stringValueForPref:(NSString *)prefName
@@ -47,8 +36,7 @@
 
 + (void)setStringValue:(NSString *)prefValue forPref:(NSString *)prefName
 {
-    [[NSUserDefaults standardUserDefaults]
-        setObject:prefValue forKey:prefName];
+    [[NSUserDefaults standardUserDefaults] setObject:prefValue forKey:prefName];
 }
 
 + (NSArray *)arrayValueForPref:(NSString *)prefName
@@ -58,8 +46,7 @@
 
 + (void)setArrayValue:(NSArray *)prefValue forPref:(NSString *)prefName
 {
-    [[NSUserDefaults standardUserDefaults]
-        setObject:prefValue forKey:prefName];
+    [[NSUserDefaults standardUserDefaults] setObject:prefValue forKey:prefName];
 }
 
 + (NSDictionary *)dictionaryValueForPref:(NSString *)prefName
@@ -67,22 +54,17 @@
     return [self _valueWhoseClassIs:[NSDictionary class] forPref:prefName];
 }
 
-+ (void)setDictionaryValue:(NSDictionary *)prefValue
-    forPref:(NSString *)prefName
++ (void)setDictionaryValue:(NSDictionary *)prefValue forPref:(NSString *)prefName
 {
-    [[NSUserDefaults standardUserDefaults]
-        setObject:prefValue forKey:prefName];
+    [[NSUserDefaults standardUserDefaults] setObject:prefValue forKey:prefName];
 }
 
-@end
-
-
-@implementation DIGSPrefUtils (Private)
+#pragma mark -
+#pragma mark Private methods
 
 + (id)_valueWhoseClassIs:(Class)cl forPref:(NSString *)prefName
 {
-    id prefValue =
-        [[NSUserDefaults standardUserDefaults] objectForKey:prefName];
+    id prefValue = [[NSUserDefaults standardUserDefaults] objectForKey:prefName];
 
     if ([prefValue isKindOfClass:cl])
     {

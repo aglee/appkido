@@ -9,7 +9,6 @@
 
 @implementation AKBrowser
 
-
 #pragma mark -
 #pragma mark NSView methods
 

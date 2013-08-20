@@ -49,9 +49,10 @@
  */
 - (id)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders;
 
-
 #pragma mark -
 #pragma mark Getters and setters
+
+- (NSString *)docSetPath;
 
 /*! 
  * Names of frameworks the user can choose from, with "essential"

@@ -11,28 +11,22 @@
 
 #import "AKDoc.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKSubtopic (Private)
-- (void)_makeSureDocListIsReady;
-@end
-
-
 @implementation AKSubtopic
-
 
 #pragma mark -
 #pragma mark AKXyzSubtopicName
 
-NSString *AKOverviewSubtopicName        = @"General";
-NSString *AKPropertiesSubtopicName      = @"Properties";
-NSString *AKClassMethodsSubtopicName    = @"Class Methods";
-NSString *AKInstanceMethodsSubtopicName = @"Instance Methods";
-NSString *AKDelegateMethodsSubtopicName = @"Delegate Methods";
-NSString *AKNotificationsSubtopicName   = @"Notifications";
-
+NSString *AKGeneralSubtopicName            = @"General";
+NSString *AKPropertiesSubtopicName         = @"Properties";
+NSString *AKAllPropertiesSubtopicName      = @"ALL Properties";
+NSString *AKClassMethodsSubtopicName       = @"Class Methods";
+NSString *AKAllClassMethodsSubtopicName    = @"ALL Class Methods";
+NSString *AKInstanceMethodsSubtopicName    = @"Instance Methods";
+NSString *AKAllInstanceMethodsSubtopicName = @"ALL Instance Methods";
+NSString *AKDelegateMethodsSubtopicName    = @"Delegate Methods";
+NSString *AKAllDelegateMethodsSubtopicName = @"ALL Delegate Methods";
+NSString *AKNotificationsSubtopicName      = @"Notifications";
+NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -43,7 +37,6 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 
     [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -59,9 +52,8 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
     return [self subtopicName];
 }
 
-
 #pragma mark -
-#pragma mark Managing the doc list
+#pragma mark Docs
 
 - (NSInteger)numberOfDocs
 {
@@ -107,50 +99,35 @@ NSString *AKNotificationsSubtopicName   = @"Notifications";
 {
     [self _makeSureDocListIsReady];
 
-    NSInteger docIndex =
-        (docName == nil)
-        ? -1
-        : [self indexOfDocWithName:docName];
+    NSInteger docIndex = ((docName == nil)
+                          ? -1
+                          : [self indexOfDocWithName:docName]);
 
     return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
 }
-
-
-#pragma mark -
-#pragma mark Protected methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
     DIGSLogError_MissingOverride();
 }
 
-
 #pragma mark -
 #pragma mark NSObject methods
 
 - (NSString *)description
 {
-    return
-        [NSString stringWithFormat:
-            @"<%@: subtopicName=%@>",
-            [self className],
-            [self subtopicName]];
+    return [NSString stringWithFormat:@"<%@: subtopicName=%@>",
+            [self className],[self subtopicName]];
 }
-
-@end
-
-
 
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKSubtopic (Private)
 
 - (void)_makeSureDocListIsReady
 {
     if (_docList == nil)
     {
-        _docList = [[NSMutableArray array] retain];
+        _docList = [[NSMutableArray alloc] init];
         [self populateDocList:_docList];
     }
 }

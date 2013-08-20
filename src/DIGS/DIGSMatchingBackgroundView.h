@@ -21,7 +21,6 @@
     IBOutlet NSView *_viewToMatch;
 }
 
-
 #pragma mark -
 #pragma mark NSView methods
 

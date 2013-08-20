@@ -9,35 +9,20 @@
 
 #import "DIGSLog.h"
 
-#import "AKTextUtils.h"
+#import "AKBehaviorNode.h"
 #import "AKDatabase.h"
 #import "AKFileSection.h"
-#import "AKBehaviorNode.h"
-#import "AKGroupNode.h"
 #import "AKGlobalsNode.h"
-
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface AKCocoaGlobalsDocParser (Private)
-- (void)_parseGlobalsFromMajorSections;
-- (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection usingGroupName:(NSString *)groupName;
-- (AKGlobalsNode *)_globalsNodeFromFileSection:(AKFileSection *)fileSection;
-- (NSSet *)_parseNamesOfGlobalsInFileSection:(AKFileSection *)fileSection;
-- (BOOL)_privatelyParseNonMarkupToken;
-@end
-
+#import "AKGroupNode.h"
 
 @implementation AKCocoaGlobalsDocParser
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFramework:(AKFramework *)aFramework
+- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithFramework:aFramework]))
+    if ((self = [super initWithDatabase:database frameworkName:frameworkName]))
     {
         _prevToken[0] = '\0';
         _currTokenStart = NULL;
@@ -49,7 +34,6 @@
     return self;
 }
 
-
 #pragma mark -
 #pragma mark AKDocParser methods
 
@@ -60,14 +44,13 @@
     [self _parseGlobalsFromMajorSections];
 }
 
-
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    if ([[_parserFW fwDatabase] classDocumentedInHTMLFile:filePath]
-        || [[_parserFW fwDatabase] protocolDocumentedInHTMLFile:filePath])
+    if ([[self targetDatabase] classDocumentedInHTMLFile:filePath]
+        || [[self targetDatabase] protocolDocumentedInHTMLFile:filePath])
     {
         // Don't process the file if it's already been processed as a
         // behavior doc.  This is to catch the case where the docset index
@@ -79,58 +62,49 @@
     return [super shouldProcessFile:filePath];
 }
 
-@end
-
-
 #pragma mark -
 #pragma mark Private methods
-
-@implementation AKCocoaGlobalsDocParser (Private)
 
 // Parse the file in the case where each major section corresponds to a
 // group of types/constants.
 - (void)_parseGlobalsFromMajorSections
 {
-    NSEnumerator *majorSectionEnum = [_rootSectionOfCurrentFile childSectionEnumerator];
-    AKFileSection *majorSection;
-
     // Iterate through major sections.  Each major section corresponds
     // to a group of types/constants.
-    while ((majorSection = [majorSectionEnum nextObject]))
+    for (AKFileSection *majorSection in [_rootSectionOfCurrentFile childSections])
     {
         if ([[majorSection sectionName] isEqualToString:@"Constants"]
              || [[majorSection sectionName] isEqualToString:@"Data Types"])
         {
-            [self
-                _parseGlobalsGroupFromFileSection:majorSection
-                usingGroupName:[majorSection sectionName]];
+            [self _parseGlobalsGroupFromFileSection:majorSection
+                                     usingGroupName:[majorSection sectionName]];
         }
     }
 }
 
 // Each subsection of the given section contains one global.
 - (void)_parseGlobalsGroupFromFileSection:(AKFileSection *)groupSection
-    usingGroupName:(NSString *)groupName
+                           usingGroupName:(NSString *)groupName
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKGroupNode *groupNode = [[_parserFW fwDatabase] globalsGroupNamed:groupName inFrameworkNamed:[_parserFW frameworkName]];
-
+    AKGroupNode *groupNode = [[self targetDatabase] globalsGroupNamed:groupName
+                                               inFrameworkNamed:[self targetFrameworkName]];
     if (!groupNode)
     {
-        groupNode = [AKGroupNode nodeWithNodeName:groupName owningFramework:_parserFW];
+        groupNode = [AKGroupNode nodeWithNodeName:groupName
+                                         database:[self targetDatabase]
+                                    frameworkName:[self targetFrameworkName]];
         // [agl] FIXME -- There is a slight flaw in this reasoning: the
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
         [groupNode setNodeDocumentation:groupSection];
-        [[_parserFW fwDatabase] addGlobalsGroup:groupNode];
+        [[self targetDatabase] addGlobalsGroup:groupNode];
     }
 
     // Iterate through child sections.  Each child section corresponds
     // to a type/constant within the group.
-    NSEnumerator *childSectionEnum = [groupSection childSectionEnumerator];
-    AKFileSection *childSection;
-    while ((childSection = [childSectionEnum nextObject]))
+    for (AKFileSection *childSection in [groupSection childSections])
     {
         // Create a globals node and add it to the group.
         AKGlobalsNode *globalsNode = [self _globalsNodeFromFileSection:childSection];
@@ -145,11 +119,11 @@
     // See if the file we're parsing is a behavior doc.  Relies on the
     // assumption that if so, the doc was already parsed as such and is
     // therefore known to the database.
-    id behaviorNode = [[_parserFW fwDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
+    id behaviorNode = [[self targetDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
 
     if (behaviorNode == nil)
     {
-        behaviorNode = [[_parserFW fwDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
+        behaviorNode = [[self targetDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
     }
 
     // Create a node.
@@ -157,31 +131,58 @@
 
     if (behaviorNode == nil)
     {
-        globalsNodeName = [fileSection sectionName];
+        globalsNodeName = [self _modifyGlobalsNodeName:[fileSection sectionName]];
     }
     else if ([behaviorNode isClassNode])
     {
-        globalsNodeName = [NSString stringWithFormat:@"%@ [%@]", [fileSection sectionName], [behaviorNode nodeName]];
+        globalsNodeName = [NSString stringWithFormat:@"%@ [%@]",
+                           [fileSection sectionName], [behaviorNode nodeName]];
     }
     else
     {
-        globalsNodeName = [NSString stringWithFormat:@"%@ <%@>", [fileSection sectionName], [behaviorNode nodeName]];
+        globalsNodeName = [NSString stringWithFormat:@"%@ <%@>",
+                           [fileSection sectionName], [behaviorNode nodeName]];
     }
 
-    AKGlobalsNode *globalsNode =
-        [[[AKGlobalsNode alloc] initWithNodeName:globalsNodeName owningFramework:_parserFW] autorelease];
+    AKGlobalsNode *globalsNode = [[[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
+                                                                 database:[self targetDatabase]
+                                                            frameworkName:[self targetFrameworkName]]
+                                  autorelease];
 
     // Add any individual names we find in the minor section.
-    NSEnumerator *namesOfGlobalsEnum = [[self _parseNamesOfGlobalsInFileSection:fileSection] objectEnumerator];
-    NSString *nameOfGlobal;
-
-    while ((nameOfGlobal = [namesOfGlobalsEnum nextObject]))
+    for (NSString *nameOfGlobal in [self _parseNamesOfGlobalsInFileSection:fileSection])
     {
         [globalsNode addNameOfGlobal:nameOfGlobal];
+    }
+    
+    // [agl] 2012-07-16 I noticed NSCocoaErrorDomain wasn't getting added, among lots of
+    // other constants. Seems I now need to go another level deep to parse those.
+    for (AKFileSection *fs in [fileSection childSections])
+    {
+        for (NSString *name in [self _parseNamesOfGlobalsInFileSection:fs])
+        {
+            [globalsNode addNameOfGlobal:name];
+        }
     }
 
     // Return the result.
     return globalsNode;
+}
+
+// We append the doc title to the globals node name to ensure uniqueness.
+// Example: under ApplicationServices > Types & Constants > Constants,
+// "Color Modes" appears twice because there are two doc files with the same
+// section name.
+- (NSString *)_modifyGlobalsNodeName:(NSString *)globalsNodeName
+{
+    NSString *docTitle = [[self rootSectionOfCurrentFile] sectionName];
+    NSMutableArray *titleComponents = [[[docTitle componentsSeparatedByString:@" "] mutableCopy]
+                                       autorelease];
+
+    [titleComponents removeObject:@"Reference"];
+    docTitle = [titleComponents componentsJoinedByString:@" "];
+    
+    return [NSString stringWithFormat:@"%@ (%@)", globalsNodeName, docTitle];
 }
 
 - (NSSet *)_parseNamesOfGlobalsInFileSection:(AKFileSection *)fileSection
@@ -266,7 +267,7 @@
             }
         }
         else if ((strcmp(_token, "define") == 0)
-            && (strcmp(_prevToken, "#") == 0))
+                 && (strcmp(_prevToken, "#") == 0))
         {
             (void)[self _privatelyParseNonMarkupToken];
             [namesOfGlobals addObject:[NSString stringWithUTF8String:_token]];
@@ -288,7 +289,7 @@
 
         }
         else if ((strcmp(_token, "pre") == 0)
-            && (strcmp(_prevToken, "/") == 0))
+                 && (strcmp(_prevToken, "/") == 0))
         {
             break;
         }

@@ -13,8 +13,8 @@
 #import "AKDatabase.h"
 #import "AKProtocolNode.h"
 
-#import "AKAppController.h"
-#import "AKProtocolOverviewSubtopic.h"
+#import "AKAppDelegate.h"
+#import "AKProtocolGeneralSubtopic.h"
 #import "AKPropertiesSubtopic.h"
 #import "AKClassMethodsSubtopic.h"
 #import "AKInstanceMethodsSubtopic.h"
@@ -23,7 +23,6 @@
 
 @implementation AKProtocolTopic
 
-
 #pragma mark -
 #pragma mark Factory methods
 
@@ -31,7 +30,6 @@
 {
     return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -49,22 +47,85 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
 - (void)dealloc
 {
-    [_protocolNode release];
+    [_protocolNode retain];
 
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark AKTopic methods
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
+- (NSString *)stringToDisplayInTopicBrowser
+{
+    return [NSString stringWithFormat:@"<%@>", [_protocolNode nodeName]];
+}
+
+- (NSString *)stringToDisplayInDescriptionField
+{
+    NSString *stringFormat = ([_protocolNode isInformal]
+                              ? @"%@ INFORMAL protocol <%@>"
+                              : @"%@ protocol <%@>");
+
+    return [NSString stringWithFormat:stringFormat,
+            [_protocolNode nameOfOwningFramework], [_protocolNode nodeName]];
+}
+
+- (NSString *)pathInTopicBrowser
+{
+    NSString *whichProtocols = ([_protocolNode isInformal]
+                                ? AKInformalProtocolsTopicName
+                                : AKProtocolsTopicName);
+
+    return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
+            AKTopicBrowserPathSeparator, [_protocolNode nameOfOwningFramework],
+            AKTopicBrowserPathSeparator, whichProtocols,
+            AKTopicBrowserPathSeparator, [_protocolNode nodeName]];
+}
+
+- (BOOL)browserCellHasChildren
+{
+    return NO;
+}
+
+#pragma mark -
+#pragma mark AKBehaviorTopic methods
+
+- (NSString *)behaviorName
+{
+    return [_protocolNode nodeName];
+}
+
+- (AKDatabaseNode *)topicNode
+{
+    return _protocolNode;
+}
+
+- (void)populateSubtopicsArray:(NSMutableArray *)array
+{
+    [array setArray:(@[
+                     [AKProtocolGeneralSubtopic subtopicForProtocolNode:_protocolNode],
+                     [AKPropertiesSubtopic subtopicForBehaviorNode:_protocolNode includeAncestors:NO],
+                     [AKPropertiesSubtopic subtopicForBehaviorNode:_protocolNode includeAncestors:YES],
+                     [AKClassMethodsSubtopic subtopicForBehaviorNode:_protocolNode includeAncestors:NO],
+                     [AKClassMethodsSubtopic subtopicForBehaviorNode:_protocolNode includeAncestors:YES],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_protocolNode includeAncestors:NO],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_protocolNode includeAncestors:YES],
+                     [AKDelegateMethodsSubtopic subtopicForClassNode:nil includeAncestors:NO],
+                     [AKDelegateMethodsSubtopic subtopicForClassNode:nil includeAncestors:YES],
+                     [AKNotificationsSubtopic subtopicForClassNode:nil includeAncestors:NO],
+                     [AKNotificationsSubtopic subtopicForClassNode:nil includeAncestors:YES],
+                     ])];
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {
@@ -91,122 +152,6 @@
 
         return [self topicWithProtocolNode:protocolNode];
     }
-}
-
-- (NSString *)stringToDisplayInTopicBrowser
-{
-    return [NSString stringWithFormat:@"<%@>", [_protocolNode nodeName]];
-}
-
-- (NSString *)stringToDisplayInDescriptionField
-{
-    NSString *stringFormat =
-        [_protocolNode isInformal]
-        ? @"%@ INFORMAL protocol <%@>"
-        : @"%@ protocol <%@>";
-
-    return
-        [NSString stringWithFormat:stringFormat,
-            [[_protocolNode owningFramework] frameworkName], [_protocolNode nodeName]];
-}
-
-- (NSString *)pathInTopicBrowser
-{
-    NSString *whichProtocols =
-        [_protocolNode isInformal]
-        ? AKInformalProtocolsTopicName
-        : AKProtocolsTopicName;
-
-    return
-        [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
-            AKTopicBrowserPathSeparator, [[_protocolNode owningFramework] frameworkName],
-            AKTopicBrowserPathSeparator, whichProtocols,
-            AKTopicBrowserPathSeparator, [_protocolNode nodeName]];
-}
-
-- (BOOL)browserCellHasChildren
-{
-    return NO;
-}
-
-
-#pragma mark -
-#pragma mark AKBehaviorTopic methods
-
-- (NSString *)behaviorName
-{
-    return [_protocolNode nodeName];
-}
-
-- (AKDatabaseNode *)topicNode
-{
-    return _protocolNode;
-}
-
-- (NSArray *)createSubtopicsArray
-{
-    AKProtocolOverviewSubtopic *overviewSubtopic =
-        [AKProtocolOverviewSubtopic subtopicForProtocolNode:_protocolNode];
-
-    AKPropertiesSubtopic *propertiesSubtopic =
-        [AKPropertiesSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:NO];
-    AKPropertiesSubtopic *allPropertiesSubtopic =
-        [AKPropertiesSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:YES];
-
-    AKClassMethodsSubtopic *classMethodsSubtopic =
-        [AKClassMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:NO];
-    AKClassMethodsSubtopic *allClassMethodsSubtopic =
-        [AKClassMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:YES];
-
-    AKInstanceMethodsSubtopic *instMethodsSubtopic =
-        [AKInstanceMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:NO];
-    AKInstanceMethodsSubtopic *allInstanceMethodsSubtopic =
-        [AKInstanceMethodsSubtopic
-            subtopicForBehaviorNode:_protocolNode
-            includeAncestors:YES];
-
-    AKDelegateMethodsSubtopic *delegateMethodsSubtopic =
-        [AKDelegateMethodsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:NO];
-    AKDelegateMethodsSubtopic *allDelegateMethodsSubtopic =
-        [AKDelegateMethodsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:YES];
-
-    AKNotificationsSubtopic *notificationsSubtopic =
-        [AKNotificationsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:NO];
-    AKNotificationsSubtopic *allNotificationsSubtopic =
-        [AKNotificationsSubtopic
-            subtopicForClassNode:nil
-            includeAncestors:YES];
-
-    return
-        [NSArray arrayWithObjects:
-            overviewSubtopic,
-            propertiesSubtopic,
-                allPropertiesSubtopic,
-            classMethodsSubtopic,
-                allClassMethodsSubtopic,
-            instMethodsSubtopic,
-                allInstanceMethodsSubtopic,
-            delegateMethodsSubtopic,
-                allDelegateMethodsSubtopic,
-            notificationsSubtopic,
-                allNotificationsSubtopic,
-            nil];
 }
 
 @end

@@ -9,20 +9,18 @@
 
 #import "DIGSLog.h"
 
-#import "AKSortUtils.h"
-#import "AKDatabase.h"
-#import "AKClassNode.h"
-
-#import "AKAppController.h"
-#import "AKClassOverviewSubtopic.h"
-#import "AKPropertiesSubtopic.h"
+#import "AKAppDelegate.h"
 #import "AKClassMethodsSubtopic.h"
-#import "AKInstanceMethodsSubtopic.h"
+#import "AKClassGeneralSubtopic.h"
+#import "AKClassNode.h"
+#import "AKDatabase.h"
 #import "AKDelegateMethodsSubtopic.h"
+#import "AKInstanceMethodsSubtopic.h"
 #import "AKNotificationsSubtopic.h"
+#import "AKPropertiesSubtopic.h"
+#import "AKSortUtils.h"
 
 @implementation AKClassTopic
-
 
 #pragma mark -
 #pragma mark Factory methods
@@ -31,7 +29,6 @@
 {
     return [[[self alloc] initWithClassNode:classNode] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -49,7 +46,6 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -60,11 +56,95 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark AKTopic methods
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
+- (AKClassNode *)parentClassOfTopic
+{
+    return [_classNode parentClass];
+}
+
+- (NSString *)stringToDisplayInTopicBrowser
+{
+    return [_classNode nodeName];
+}
+
+- (NSString *)stringToDisplayInDescriptionField
+{
+    return [NSString stringWithFormat:@"%@ class %@",
+            [_classNode nameOfOwningFramework], [_classNode nodeName]];
+}
+
+- (NSString *)pathInTopicBrowser
+{
+    if (_classNode == nil)
+    {
+        return nil;
+    }
+
+    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:[_classNode nodeName]];
+    AKClassNode *superNode = _classNode;
+
+    while ((superNode = [superNode parentClass]))
+    {
+        path = [AKTopicBrowserPathSeparator stringByAppendingString:
+                [[superNode nodeName] stringByAppendingString:path]];
+    }
+
+    return path;
+}
+
+- (BOOL)browserCellHasChildren
+{
+    return [_classNode hasChildClasses];
+}
+
+- (NSArray *)childTopics
+{
+    NSMutableArray *columnValues = [NSMutableArray array];
+
+    for (AKClassNode *subclassNode in [AKSortUtils arrayBySortingArray:[_classNode childClasses]])
+    {
+        [columnValues addObject:[AKClassTopic topicWithClassNode:subclassNode]];
+    }
+
+    return columnValues;
+}
+
+#pragma mark -
+#pragma mark AKBehaviorTopic methods
+
+- (NSString *)behaviorName
+{
+    return [_classNode nodeName];
+}
+
+- (AKDatabaseNode *)topicNode
+{
+    return _classNode;
+}
+
+- (void)populateSubtopicsArray:(NSMutableArray *)array
+{
+    [array setArray:(@[
+                     [AKClassGeneralSubtopic subtopicForClassNode:_classNode],
+                     [AKPropertiesSubtopic subtopicForBehaviorNode:_classNode includeAncestors:NO],
+                     [AKPropertiesSubtopic subtopicForBehaviorNode:_classNode includeAncestors:YES],
+                     [AKClassMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:NO],
+                     [AKClassMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:YES],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:NO],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorNode:_classNode includeAncestors:YES],
+                     [AKDelegateMethodsSubtopic subtopicForClassNode:_classNode includeAncestors:NO],
+                     [AKDelegateMethodsSubtopic subtopicForClassNode:_classNode includeAncestors:YES],
+                     [AKNotificationsSubtopic subtopicForClassNode:_classNode includeAncestors:NO],
+                     [AKNotificationsSubtopic subtopicForClassNode:_classNode includeAncestors:YES],
+                     ])];
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {
@@ -91,142 +171,6 @@
 
         return [self topicWithClassNode:classNode];
     }
-}
-
-- (AKClassNode *)parentClassOfTopic
-{
-    return [_classNode parentClass];
-}
-
-- (NSString *)stringToDisplayInTopicBrowser
-{
-    return [_classNode nodeName];
-}
-
-- (NSString *)stringToDisplayInDescriptionField
-{
-    return
-        [NSString stringWithFormat:@"%@ class %@",
-            [[_classNode owningFramework] frameworkName], [_classNode nodeName]];
-}
-
-- (NSString *)pathInTopicBrowser
-{
-    if (_classNode == nil)
-    {
-        return nil;
-    }
-
-    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:[_classNode nodeName]];
-    AKClassNode *superNode = _classNode;
-
-    while ((superNode = [superNode parentClass]))
-    {
-        path =
-            [AKTopicBrowserPathSeparator stringByAppendingString:
-                [[superNode nodeName] stringByAppendingString:path]];
-    }
-
-    return path;
-}
-
-- (BOOL)browserCellHasChildren
-{
-    return [_classNode hasChildClasses];
-}
-
-- (NSArray *)childTopics
-{
-    NSMutableArray *columnValues = [NSMutableArray array];
-    NSEnumerator *en = [[AKSortUtils arrayBySortingArray:[_classNode childClasses]] objectEnumerator];
-    AKClassNode *subclassNode;
-
-    while ((subclassNode = [en nextObject]))
-    {
-        [columnValues addObject:[AKClassTopic topicWithClassNode:subclassNode]];
-    }
-
-    return columnValues;
-}
-
-
-#pragma mark -
-#pragma mark AKBehaviorTopic methods
-
-- (NSString *)behaviorName
-{
-    return [_classNode nodeName];
-}
-
-- (AKDatabaseNode *)topicNode
-{
-    return _classNode;
-}
-
-- (NSArray *)createSubtopicsArray
-{
-    AKClassOverviewSubtopic *overviewSubtopic =
-        [AKClassOverviewSubtopic subtopicForClassNode:_classNode];
-
-    AKPropertiesSubtopic *propertiesSubtopic =
-        [AKPropertiesSubtopic
-            subtopicForBehaviorNode:_classNode
-            includeAncestors:NO];
-    AKPropertiesSubtopic *allPropertiesSubtopic =
-        [AKPropertiesSubtopic
-            subtopicForBehaviorNode:_classNode
-            includeAncestors:YES];
-
-    AKClassMethodsSubtopic *classMethodsSubtopic =
-        [AKClassMethodsSubtopic
-            subtopicForBehaviorNode:_classNode
-            includeAncestors:NO];
-    AKClassMethodsSubtopic *allClassMethodsSubtopic =
-        [AKClassMethodsSubtopic
-            subtopicForBehaviorNode:_classNode
-            includeAncestors:YES];
-
-    AKInstanceMethodsSubtopic *instMethodsSubtopic =
-        [AKInstanceMethodsSubtopic
-            subtopicForBehaviorNode:_classNode
-            includeAncestors:NO];
-    AKInstanceMethodsSubtopic *allInstanceMethodsSubtopic =
-        [AKInstanceMethodsSubtopic
-            subtopicForBehaviorNode:_classNode
-            includeAncestors:YES];
-
-    AKDelegateMethodsSubtopic *delegateMethodsSubtopic =
-        [AKDelegateMethodsSubtopic
-            subtopicForClassNode:_classNode
-            includeAncestors:NO];
-    AKDelegateMethodsSubtopic *allDelegateMethodsSubtopic =
-        [AKDelegateMethodsSubtopic
-            subtopicForClassNode:_classNode
-            includeAncestors:YES];
-
-    AKNotificationsSubtopic *notificationsSubtopic =
-        [AKNotificationsSubtopic
-            subtopicForClassNode:_classNode
-            includeAncestors:NO];
-    AKNotificationsSubtopic *allNotificationsSubtopic =
-        [AKNotificationsSubtopic
-            subtopicForClassNode:_classNode
-            includeAncestors:YES];
-
-    return
-        [NSArray arrayWithObjects:
-            overviewSubtopic,
-            propertiesSubtopic,
-                allPropertiesSubtopic,
-            classMethodsSubtopic,
-                allClassMethodsSubtopic,
-            instMethodsSubtopic,
-                allInstanceMethodsSubtopic,
-            delegateMethodsSubtopic,
-                allDelegateMethodsSubtopic,
-            notificationsSubtopic,
-                allNotificationsSubtopic,
-            nil];
 }
 
 @end

@@ -15,13 +15,16 @@
 
 @implementation AKBehaviorNode
 
+@synthesize headerFileWhereDeclared = _headerFileWhereDeclared;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName owningFramework:(AKFramework *)theFramework
+- (id)initWithNodeName:(NSString *)nodeName
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _protocolNodes = [[NSMutableArray alloc] init];
         _protocolNodeNames = [[NSMutableSet alloc] init];
@@ -29,10 +32,6 @@
         _indexOfProperties = [[AKCollectionOfNodes alloc] init];
         _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
         _indexOfInstanceMethods = [[AKCollectionOfNodes alloc] init];
-
-        _allOwningFrameworks = [[NSMutableArray arrayWithObject:theFramework] retain];
-
-        _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
     }
 
     return self;
@@ -41,69 +40,52 @@
 - (void)dealloc
 {
     [_headerFileWhereDeclared release];
-
     [_protocolNodes release];
     [_protocolNodeNames release];
-
     [_indexOfProperties release];
     [_indexOfClassMethods release];
     [_indexOfInstanceMethods release];
 
-    [_allOwningFrameworks release];
-
-    [_nodeDocumentationByFrameworkName release];
-
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- general
-
-- (NSArray *)allOwningFrameworks
-{
-    return _allOwningFrameworks;
-}
 
 - (BOOL)isClassNode
 {
     return NO;
 }
 
-- (NSString *)headerFileWhereDeclared
+- (void)addImplementedProtocol:(AKProtocolNode *)protocolNode
 {
-    return _headerFileWhereDeclared;
-}
-
-- (void)setHeaderFileWhereDeclared:(NSString *)aPath
-{
-    [aPath retain];
-    [_headerFileWhereDeclared release];
-    _headerFileWhereDeclared = aPath;
-}
-
-- (void)addImplementedProtocol:(AKProtocolNode *)node
-{
-    if ([_protocolNodeNames containsObject:[node nodeName]])
+    if ([_protocolNodeNames containsObject:[protocolNode nodeName]])
     {
-        DIGSLogWarning(
-            @"trying to add protocol [%@] again to behavior [%@]",
-            [node nodeName], [self nodeName]);
+        // I've seen this happen when a .h contains two declarations of a
+        // protocol in different #if branches. Example: NSURL.
+        DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
+                     [protocolNode nodeName], [self nodeName]);
     }
     else
     {
-        [_protocolNodes addObject:node];
-        [_protocolNodeNames addObject:[node nodeName]];
+        [_protocolNodes addObject:protocolNode];
+        [_protocolNodeNames addObject:[protocolNode nodeName]];
+    }
+}
+
+- (void)addImplementedProtocols:(NSArray *)protocolNodes
+{
+    for (AKProtocolNode *protocolNode in protocolNodes)
+    {
+        [self addImplementedProtocol:protocolNode];
     }
 }
 
 - (NSArray *)implementedProtocols
 {
     NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolNodes];
-    NSEnumerator *en = [_protocolNodes objectEnumerator];
-    AKProtocolNode *protocolNode;
 
-    while ((protocolNode = [en nextObject]))
+    for (AKProtocolNode *protocolNode in _protocolNodes)
     {
         [result addObjectsFromArray:[protocolNode implementedProtocols]];
     }
@@ -111,26 +93,10 @@
     return result;
 }
 
-- (AKFileSection *)nodeDocumentationForFrameworkNamed:(NSString *)frameworkName
+- (NSArray *)instanceMethodNodes
 {
-    return [_nodeDocumentationByFrameworkName objectForKey:frameworkName];
+    return [_indexOfInstanceMethods allNodes];
 }
-
-- (void)setNodeDocumentation:(AKFileSection *)fileSection forFrameworkNamed:(NSString *)frameworkName
-{
-    if ((frameworkName == nil) || [frameworkName isEqualToString:[[self owningFramework] frameworkName]])
-    {
-        [super setNodeDocumentation:fileSection];
-    }
-
-    if (![_allOwningFrameworks containsObject:frameworkName])
-    {
-        [_allOwningFrameworks addObject:frameworkName];
-    }
-
-    [_nodeDocumentationByFrameworkName setObject:fileSection forKey:frameworkName];
-}
-
 
 #pragma mark -
 #pragma mark Getters and setters -- properties
@@ -150,7 +116,6 @@
     [_indexOfProperties addNode:propertyNode];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- class methods
 
@@ -168,7 +133,6 @@
 {
     [_indexOfClassMethods addNode:methodNode];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters -- instance methods
@@ -188,17 +152,17 @@
     [_indexOfInstanceMethods addNode:methodNode];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters -- deprecated methods
 
 - (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-    owningFramework:(AKFramework *)nodeOwningFW
+                                        frameworkName:(NSString *)frameworkName
 {
     // Is this an instance method or a class method?  Note this assumes a
     // a method node for the method already exists, presumably because we
     // parsed the header files.
     AKMethodNode *methodNode = [self classMethodWithName:methodName];
+    
     if (methodNode == nil)
     {
         methodNode = [self instanceMethodWithName:methodName];
@@ -206,9 +170,9 @@
     
     if (methodNode == nil)
     {
-        DIGSLogInfo(
-            @"Couldn't find class method or instance method named %@ while processing deprecated methods for behavior %@",
-            methodName, [self nodeName]);
+        DIGSLogInfo(@"Couldn't find class method or instance method named %@"
+                    @" while processing deprecated methods for behavior %@",
+                    methodName, [self nodeName]);
     }
     else
     {
@@ -216,29 +180,6 @@
     }
     
     return methodNode;
-}
-
-
-#pragma mark -
-#pragma mark AKDatabaseNode methods
-
-- (void)setOwningFramework:(AKFramework *)aFramework
-{
-    [super setOwningFramework:aFramework];
-
-    // Move this framework name to the beginning of _allOwningFrameworks.
-    if (aFramework)
-    {
-        [_allOwningFrameworks removeObject:aFramework];
-        [_allOwningFrameworks insertObject:aFramework atIndex:0];
-    }
-}
-
-- (void)setNodeDocumentation:(AKFileSection *)fileSection
-{
-    DIGSLogDebug(@"Unexpected: behavior node %@ getting a -setNodeDocumentation: message", [self nodeName]);
-    [super setNodeDocumentation:fileSection];
-    [self setNodeDocumentation:fileSection forFrameworkNamed:[[self owningFramework] frameworkName]];
 }
 
 @end

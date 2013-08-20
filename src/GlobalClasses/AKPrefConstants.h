@@ -7,11 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
-
 #pragma mark -
-#pragma mark AKXyzPrefName
-//
-// Keys for NSUserDefaults.
+#pragma mark "PrefName" = key for NSUserDefaults
 
 // Value is a dictionary that can be converted to an AKWindowLayout.
 extern NSString *AKLayoutForNewWindowsPrefName;
@@ -69,11 +66,10 @@ extern NSString *AKDevToolsPathPrefName;
 // see AKDevTools.
 extern NSString *AKSDKVersionPrefName;
 
+extern NSString *AKSearchInNewWindowPrefName;
 
 #pragma mark -
-#pragma mark AKXyzPrefKey
-//
-// Keys within pref values that are of type NSDictionary.
+#pragma mark "PrefKey" = key within a pref that is a dictionary
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.
@@ -92,8 +88,10 @@ extern NSString *AKDocNamePrefKey;   // string
 extern NSString *AKWindowFramePrefKey;                 // string <-> rect
 extern NSString *AKToolbarIsVisiblePrefKey;            // boolean
 extern NSString *AKMiddleViewHeightPrefKey;            // float
+extern NSString *AKSubtopicListWidthPrefKey;           // float
 extern NSString *AKBrowserIsVisiblePrefKey;            // boolean
 extern NSString *AKBrowserFractionPrefKey;             // float
+extern NSString *AKBrowserHeightPrefKey;               // float
 extern NSString *AKNumberOfBrowserColumnsPrefKey;      // int
 extern NSString *AKQuicklistDrawerIsOpenPrefKey;       // boolean
 extern NSString *AKQuicklistDrawerWidthPrefKey;        // float
@@ -101,7 +99,7 @@ extern NSString *AKQuicklistModePrefKey;               // int
 extern NSString *AKIncludeClassesAndProtocolsPrefKey;  // boolean
 extern NSString *AKIncludeMethodsPrefKey;              // boolean
 extern NSString *AKIncludeFunctionsPrefKey;            // boolean
-extern NSString *AKIncludeGlobalsPrefKey;    // boolean
+extern NSString *AKIncludeGlobalsPrefKey;              // boolean
 extern NSString *AKIgnoreCasePrefKey;                  // boolean
 extern NSString *AKFrameworkPopupSelectionPrefKey;     // string
 

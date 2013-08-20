@@ -8,11 +8,9 @@
 #import "AKFileSectionDoc.h"
 
 #import "DIGSLog.h"
-
 #import "AKFileSection.h"
 
 @implementation AKFileSectionDoc
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -30,7 +28,6 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -40,7 +37,6 @@
 
     [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark AKDoc methods

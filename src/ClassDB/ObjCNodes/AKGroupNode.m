@@ -11,14 +11,14 @@
 
 @implementation AKGroupNode
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework]))
+    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _subnodes = [[NSMutableArray alloc] init];
     }
@@ -32,7 +32,6 @@
 
     [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -54,10 +53,7 @@
 
 - (AKDatabaseNode *)subnodeWithName:(NSString *)nodeName
 {
-    NSEnumerator *subnodeEnum = [_subnodes objectEnumerator];
-    AKDatabaseNode *subnode;
-
-    while ((subnode = [subnodeEnum nextObject]))
+    for (AKDatabaseNode *subnode in _subnodes)
     {
         if ([[subnode nodeName] isEqualToString:nodeName])
         {

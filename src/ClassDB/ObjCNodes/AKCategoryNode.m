@@ -8,5 +8,4 @@
 #import "AKCategoryNode.h"
 
 @implementation AKCategoryNode
-
 @end

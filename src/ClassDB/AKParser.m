@@ -12,48 +12,49 @@
 
 @implementation AKParser
 
+@synthesize targetDatabase = _targetDatabase;
+@synthesize targetFrameworkName = _targetFrameworkName;
 
 #pragma mark -
 #pragma mark Class methods
 
-+ (void)recursivelyParseDirectory:(NSString *)dirPath forFramework:(AKFramework *)aFramework
++ (void)recursivelyParseDirectory:(NSString *)dirPath
+                      forDatabase:(AKDatabase *)database
+                    frameworkName:(NSString *)frameworkName
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:dirPath])
     {
         return;
     }
 
-    AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
-
+    AKParser *parser = [[[self alloc] initWithDatabase:database
+                                         frameworkName:frameworkName] autorelease];
     [parser processDirectory:dirPath recursively:YES];
-    [parser release];  // release here
 }
 
-+ (void)parseFilesInPaths:(NSArray *)docPaths
-    underBaseDir:(NSString *)baseDir
-    forFramework:(AKFramework *)aFramework
++ (void)parseFilesInSubpaths:(NSArray *)subpaths
+                underBaseDir:(NSString *)baseDir
+                 forDatabase:(AKDatabase *)database
+               frameworkName:(NSString *)frameworkName
 {
-    NSInteger numDocs = [docPaths count];
-    NSInteger i;
-    for (i = 0; i < numDocs; i++)
+    for (NSString *subpath in subpaths)
     {
-        NSString *docPath = [baseDir stringByAppendingPathComponent:[docPaths objectAtIndex:i]];
-        AKParser *parser = [[self alloc] initWithFramework:aFramework];  // no autorelease
-
-        [parser processFile:docPath];
-        [parser release];  // release here
+        NSString *fullPath = [baseDir stringByAppendingPathComponent:subpath];
+        AKParser *parser = [[[self alloc] initWithDatabase:database
+                                             frameworkName:frameworkName] autorelease];
+        [parser processFile:fullPath];
     }
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFramework:(AKFramework *)aFramework
+- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super init]))
     {
-        _parserFW = [aFramework retain];
+        _targetDatabase = [database retain];
+        _targetFrameworkName = [frameworkName copy];
     }
 
     return self;
@@ -62,17 +63,16 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
 - (void)dealloc
 {
-    [_parserFW release];
+    [_targetDatabase release];
+    [_targetFrameworkName release];
 
     [super dealloc];
 }
-
 
 #pragma mark -
 #pragma mark Parsing
@@ -87,7 +87,6 @@
     DIGSLogError_MissingOverride();
 }
 
-
 #pragma mark -
 #pragma mark DIGSFileProcessor methods
 
@@ -95,7 +94,7 @@
 - (void)processCurrentFile
 {
     // Set up.
-    NSMutableData *fileContents = [self loadDataToBeParsed];
+    NSMutableData *fileContents = [[self loadDataToBeParsed] retain];
 
     if (fileContents)
     {
@@ -117,6 +116,7 @@
     _dataStart = NULL;
     _current = NULL;
     _dataEnd = NULL;
+    [fileContents release];
 }
 
 @end

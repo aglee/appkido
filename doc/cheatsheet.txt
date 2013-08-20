@@ -67,6 +67,8 @@ Deleting a branch:
 
 ---- RELEASE ----
 
+Do at least one test run where you delete the app's plist etc. first, to see what the experience is like for new users.
+
 Edit version string in Info.plist, Info-iPhone.plist
 	If going from sneakypeek to official release, remember to just drop the "sp..." suffix; don't increment the version number.
 	[agl] Add a note here about the release numbering conventions I'm using.
@@ -86,8 +88,9 @@ Do git commit
 Do git push origin master
 
 Tag the release:
+	Have to be in the appkido directory. [agl] Maybe the script should sanity-check.
 	akdtag <version-number>
-		This pushes the tag to GitHub -- but is not the same as git push origin master
+		This pushes the *tag* to GitHub -- not the same as pushing commits.
 	Note the actual tag will be release-<version-number>
 	Note that ideally we tag after editing the HTML files, since they will be part of the version
 		But if I forget or have to go back and edit an HTML file, it's probably okay; no need to move the tag
@@ -95,7 +98,7 @@ Tag the release:
 	[agl] Maybe akdtag could inject the version number into Info.plist etc. and commit before tagging?
 
 Generate the three release tarballs (two for app and one for source)
-	akdbuild <version-number>
+	Either akdbuild <version-number> or akdsneakypeek <version-number>.
 	This creates ~/AKDBUILD directory, deleting it first if it exists already
 	Note that akdbuild renames the src directory to "AppKiDo" so the tarball will untar with that name
 	Untar the generated tarballs and run the apps as a sanity check

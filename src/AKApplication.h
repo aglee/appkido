@@ -8,7 +8,4 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AKApplication : NSApplication
-{
-}
-
 @end

@@ -1,0 +1,50 @@
+#!/bin/bash
+
+if [ ! "${1}" ]; then
+    echo "USAGE:"
+    echo "  `basename ${0}` <releasenumber>"
+    echo
+	echo "  **NOTE: For historical reasons, the actual tag will have 'release-'"
+	echo "  prepended to <releasenumber>.**"
+	echo
+    echo "  Deletes the specified tag and pushes the change to the remote git"
+	echo "  repository."
+	echo
+	echo "  When you run this you must be in the root directory of an AppKiDo"
+	echo "  repository (the one that contains .git, bin, doc, src, and web)."
+    echo
+    echo "  Make sure <releasenumber> is a nicely formed release number. This"
+	echo "  script doesn't check for whitespace or any other characters that"
+	echo "  are special to the shell."
+    echo
+	echo "  If you have the project checked out elsewhere you can fetch the"
+	echo "  updated tags with:"
+	echo
+	echo "    git fetch --tags"
+    echo
+    echo "EXAMPLE:"
+    echo "  `basename ${0}` 0.95"
+    exit
+fi
+
+echo
+echo "Sanity-checking the current directory..."
+if [[ ! -d .git || ! -d bin || ! -d doc || ! -d src || ! -d web || ! -d src/AppKiDo.xcodeproj ]] ; then
+	echo "  ...Oops -- you need to be at the top level of an AppKiDo git repository."
+	exit
+fi
+
+AKD_VERSION="$1"
+RELEASE_TAG="release-$AKD_VERSION"
+
+echo
+echo "Deleting the tag $RELEASE_TAG..."
+git tag -d "$RELEASE_TAG"
+
+echo
+echo "Pushing the change to the remote repository..."
+git push origin ":refs/tags/$RELEASE_TAG"
+
+echo
+echo "...Done!"
+echo

@@ -8,7 +8,4 @@
 #import "AKMemberDoc.h"
 
 @interface AKClassMethodDoc : AKMemberDoc
-{
-}
-
 @end

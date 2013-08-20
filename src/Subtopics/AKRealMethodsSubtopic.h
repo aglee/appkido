@@ -11,25 +11,22 @@
 
 @interface AKRealMethodsSubtopic : AKMembersSubtopic
 {
+@private
     AKBehaviorNode *_behaviorNode;
 }
-
 
 #pragma mark -
 #pragma mark Factory methods
 
-// convenience method uses the designated initializer
 + (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
-    includeAncestors:(BOOL)includeAncestors;
-
+             includeAncestors:(BOOL)includeAncestors;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-// Designated initializer
+/*! Designated initializer. */
 - (id)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
-    includeAncestors:(BOOL)includeAncestors;
-
+          includeAncestors:(BOOL)includeAncestors;
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -37,4 +34,3 @@
 - (AKBehaviorNode *)behaviorNode;
 
 @end
-

@@ -12,7 +12,6 @@
 
 @implementation AKDelegateMethodDoc
 
-
 #pragma mark -
 #pragma mark AKMemberDoc methods
 
@@ -21,17 +20,17 @@
     return [@"-" stringByAppendingString:methodName];
 }
 
-
 #pragma mark -
 #pragma mark AKDoc methods
 
 - (NSString *)commentString
 {
-    AKFramework *methodFramework = [_memberNode owningFramework];
-    BOOL methodIsInSameFramework = [methodFramework isEqual:[_behaviorNode owningFramework]];
-    AKBehaviorNode *ownerOfMethod = [_memberNode owningBehavior];
+    NSString *methodFrameworkName = [[self memberNode] nameOfOwningFramework];
+    NSString *behaviorFrameworkName = [[self behaviorNode] nameOfOwningFramework];
+    BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
+    AKBehaviorNode *ownerOfMethod = [[self memberNode] owningBehavior];
 
-    if (_behaviorNode == ownerOfMethod)
+    if ([self behaviorNode] == ownerOfMethod)
     {
         // We're the first class/protocol to declare this method.
         if (methodIsInSameFramework)
@@ -40,7 +39,7 @@
         }
         else
         {
-            return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFramework];
+            return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFrameworkName];
         }
     }
     else if ([ownerOfMethod isClassNode])
@@ -54,7 +53,7 @@
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is used by %@ class %@.", methodFramework, [ownerOfMethod nodeName]];
+                    @"This delegate method is used by %@ class %@.", methodFrameworkName, [ownerOfMethod nodeName]];
         }
     }
     else
@@ -68,7 +67,7 @@
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is declared in %@ protocol %@.", methodFramework, [ownerOfMethod nodeName]];
+                    @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, [ownerOfMethod nodeName]];
         }
     }
 }

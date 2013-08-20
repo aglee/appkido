@@ -6,21 +6,9 @@
  */
 
 #import "DIGSTextView.h"
-
 #import "DIGSLog.h"
 
-
-#pragma mark -
-#pragma mark Forward declarations of private methods
-
-@interface DIGSTextView (Private)
-- (void)_initLinkCursor;
-- (void)_setCursorRectsForLinks;
-@end
-
-
 @implementation DIGSTextView
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -52,7 +40,6 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -66,7 +53,6 @@
     return NSMakePoint(6, 0);
 }
 
-
 #pragma mark -
 #pragma mark NSTextView methods
 
@@ -76,15 +62,10 @@
     [self _setCursorRectsForLinks];
 }
 
-@end
-
-
-
 #pragma mark -
 #pragma mark Private methods
 
-@implementation DIGSTextView (Private)
-
+// Called by the init methods.
 - (void)_initLinkCursor
 {
     if (_linkCursor == nil)
@@ -94,19 +75,18 @@
 
         if (image != nil)
         {
-            _linkCursor =
-                [[NSCursor alloc] initWithImage:image hotSpot:hotSpot];
+            _linkCursor = [[NSCursor alloc] initWithImage:image hotSpot:hotSpot];
         }
         else
         {
-            DIGSLogWarning(
-                @"failed to load image named %@ for use as the link cursor",
-                [self linkCursorImageName]);
+            DIGSLogWarning(@"failed to load image named %@ for use as the link cursor",
+                           [self linkCursorImageName]);
             _linkCursor = [[NSCursor arrowCursor] retain];
         }
     }
 }
 
+// This logic was copied from <http://cocoa.mamasam.com/COCOADEV/2001/12/2/20937.php>.
 - (void)_setCursorRectsForLinks
 {
      NSTextStorage *attrString = [self textStorage];
@@ -116,19 +96,14 @@
      while (loc < end)
      {
          NSRange linkRange;
-         id attributeValue =
-            [attrString attribute:NSLinkAttributeName
-                atIndex:loc
-                longestEffectiveRange:&linkRange
-                inRange:NSMakeRange(loc, end - loc)];
-
+         id attributeValue = [attrString attribute:NSLinkAttributeName
+                                           atIndex:loc
+                             longestEffectiveRange:&linkRange
+                                           inRange:NSMakeRange(loc, end - loc)];
          if (attributeValue != nil)
          {
-            NSRect linkRect =
-                [[self layoutManager]
-                    boundingRectForGlyphRange:linkRange
-                    inTextContainer:[self textContainer]];
-
+             NSRect linkRect = [[self layoutManager] boundingRectForGlyphRange:linkRange
+                                                               inTextContainer:[self textContainer]];
             [self addCursorRect:linkRect cursor:_linkCursor];
             loc = NSMaxRange(linkRange);
          }

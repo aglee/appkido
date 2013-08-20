@@ -11,19 +11,25 @@
 
 @implementation AKLabelTopic
 
+@synthesize label = _label;
+
+#pragma mark -
+#pragma mark String constants
+
+NSString *AKClassesLabelTopicName = @":: classes ::";
+NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 
 #pragma mark -
 #pragma mark Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
-    AKLabelTopic *obj = [[[self alloc] init] autorelease];
+    AKLabelTopic *topic = [[[self alloc] init] autorelease];
 
-    [obj setLabel:label];
+    [topic setLabel:label];
 
-    return obj;
+    return topic;
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -35,22 +41,33 @@
     [super dealloc];
 }
 
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (void)setLabel:(NSString *)label
-{
-    [label retain];
-    [_label release];
-    _label = label;
-}
-
-
 #pragma mark -
 #pragma mark AKTopic methods
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
+- (NSString *)stringToDisplayInTopicBrowser
+{
+    return _label;
+}
+
+- (NSString *)pathInTopicBrowser
+{
+    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, _label];
+}
+
+- (BOOL)browserCellShouldBeEnabled
+{
+    return NO;
+}
+
+- (BOOL)browserCellHasChildren
+{
+    return NO;
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {
@@ -79,27 +96,6 @@
 
     return prefDict;
 }
-
-- (NSString *)stringToDisplayInTopicBrowser
-{
-    return _label;
-}
-
-- (NSString *)pathInTopicBrowser
-{
-    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, _label];
-}
-
-- (BOOL)browserCellShouldBeEnabled
-{
-    return NO;
-}
-
-- (BOOL)browserCellHasChildren
-{
-    return NO;
-}
-
 
 #pragma mark -
 #pragma mark AKSortable methods

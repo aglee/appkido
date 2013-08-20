@@ -21,11 +21,10 @@ int DIGSPrintf(NSString *format, ...)
     va_list args;
     va_start(args, format);
     
-    NSString *output = [[NSString alloc] initWithFormat:format arguments:args];
+    NSString *output = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
     va_end(args);
     
     int result = printf("%s", [output UTF8String]);
-    [output release];
     
     return result;
 }
@@ -35,12 +34,11 @@ int DIGSPrintln(NSString *format, ...)
     va_list args;
     va_start(args, format);
     
-    NSString *output = [[NSString alloc] initWithFormat:[format stringByAppendingString:@"\n"]
-                                              arguments:args];
+    NSString *output = [[[NSString alloc] initWithFormat:[format stringByAppendingString:@"\n"]
+                                               arguments:args] autorelease];
     va_end(args);
     
     int result = printf("%s", [output UTF8String]);
-    [output release];
     
     return result;
 }

@@ -15,8 +15,7 @@ static
 NSComparisonResult
 compareSortNames(id objectOne, id objectTwo, void *context)
 {
-    NSComparisonResult result =
-        [[objectOne sortName] caseInsensitiveCompare:[objectTwo sortName]];
+    NSComparisonResult result = [[objectOne sortName] caseInsensitiveCompare:[objectTwo sortName]];
 
     if (result == NSOrderedSame)
     {

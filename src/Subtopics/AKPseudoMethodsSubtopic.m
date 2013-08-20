@@ -15,25 +15,21 @@
 
 @implementation AKPseudoMethodsSubtopic
 
-
 #pragma mark -
 #pragma mark Factory methods
 
 + (id)subtopicForClassNode:(AKClassNode *)classNode
     includeAncestors:(BOOL)includeAncestors
 {
-    return
-        [[[self alloc]
-            initWithClassNode:classNode
-            includeAncestors:includeAncestors] autorelease];
+    return [[[self alloc] initWithClassNode:classNode
+                           includeAncestors:includeAncestors] autorelease];
 }
-
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithClassNode:(AKClassNode *)classNode
-    includeAncestors:(BOOL)includeAncestors
+       includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
@@ -46,7 +42,6 @@
 - (id)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
@@ -57,7 +52,6 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
@@ -65,7 +59,6 @@
 {
     return _classNode;
 }
-
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods

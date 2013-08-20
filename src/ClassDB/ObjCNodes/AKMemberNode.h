@@ -20,22 +20,15 @@
     AKBehaviorNode *_owningBehavior;
 }
 
+@property (nonatomic, readonly, unsafe_unretained) AKBehaviorNode *owningBehavior;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*!
- * @method      initWithNodeName:owningFramework:owningBehavior:
- * @discussion  Designated initializer.
- */
+/*! Designated initializer. */
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
-    owningBehavior:(AKBehaviorNode *)behaviorNode;
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (AKBehaviorNode *)owningBehavior;
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
+        owningBehavior:(AKBehaviorNode *)behaviorNode;
 
 @end

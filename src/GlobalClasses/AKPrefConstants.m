@@ -9,7 +9,7 @@
 
 
 #pragma mark -
-#pragma mark AKXyzPrefName
+#pragma mark Keys for NSUserDefaults
 
 NSString *AKLayoutForNewWindowsPrefName       = @"AKLayoutForNewWindows";
 NSString *AKSavedWindowStatesPrefName         = @"AKSavedWindowStates";
@@ -33,9 +33,10 @@ NSString *AKSelectedFrameworksPrefName = @"AKSelectedFrameworks";
 NSString *AKDevToolsPathPrefName = @"AKDevToolsPath";
 NSString *AKSDKVersionPrefName = @"AKSDKVersion";
 
+NSString *AKSearchInNewWindowPrefName         = @"AKSearchInNewWindow";
 
 #pragma mark -
-#pragma mark AKXyzPrefKey
+#pragma mark "PrefKey" = key within a pref that is a dictionary
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.
@@ -54,8 +55,10 @@ NSString *AKDocNamePrefKey  = @"DocName";
 NSString *AKWindowFramePrefKey             = @"WindowFrame";
 NSString *AKToolbarIsVisiblePrefKey        = @"ToolbarIsVisible";
 NSString *AKMiddleViewHeightPrefKey        = @"MiddleViewHeight";
+NSString *AKSubtopicListWidthPrefKey       = @"SubtopicListWidth";
 NSString *AKBrowserIsVisiblePrefKey        = @"BrowserIsVisible";
 NSString *AKBrowserFractionPrefKey         = @"BrowserFraction";
+NSString *AKBrowserHeightPrefKey           = @"BrowserHeight";
 NSString *AKNumberOfBrowserColumnsPrefKey  = @"NumBrowserColumns";
 NSString *AKQuicklistDrawerIsOpenPrefKey   = @"DrawerIsOpen";
 NSString *AKQuicklistDrawerWidthPrefKey    = @"DrawerWidth";

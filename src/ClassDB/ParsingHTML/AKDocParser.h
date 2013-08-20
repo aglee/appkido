@@ -10,31 +10,23 @@
 @class AKFileSection;
 
 /*
- * @class       AKDocParser
- * @abstract    Base class for parsers that parse HTML documentation
- *              files.
- * @discussion  An AKDocParser parses HTML files.  It uses the results to
- *              instantiate or update AKDatabaseNodes and update the
- *              AKDatabase those nodes belong to.
+ * Base class for parsers that parse HTML documentation files.
  *
- *              Subclasses parse specific types of doc files and
- *              instantiate different kinds of AKDatabaseNode, depending
- *              on what the files contain.
+ * Uses parse results to create and/or modify database nodes.
  *
- *              Doc files have a three-level hierarchical structure, which
- *              is reflected in the tree of AKFileSections that gets
- *              constructed during parsing.  There is a <b>root section</b>,
- *              whose child sections are called <b>major sections</b>.
- *              The child sections of a major section are called
- *              <b>minor sections</b>.
+ * Subclasses parse specific types of doc files and instantiate different kinds
+ * of AKDatabaseNode, depending on what the files contain.
  *
- *              In general, the root section corresponds to a topic (see
- *              AKTopic), the major sections to subtopics within the topic
- *              (see AKSubtopic), and the minor sections to docs within a
- *              subtopic (see AKDoc).  In some cases, when we done parsing,
- *              we promote a minor section to a major section, so things
- *              get grouped more logically for our purposes (see
- *              AKCocoaBehaviorDocParser).
+ * Doc files have a three-level hierarchical structure, which is reflected in a
+ * tree of AKFileSections that gets constructed during parsing.  There is a
+ * <b>root section</b>, whose child sections are called <b>major sections</b>.
+ * The child sections of a major section are called <b>minor sections</b>.
+ *
+ * In general, the root section corresponds to a topic (see AKTopic), the major
+ * sections to subtopics within the topic (see AKSubtopic), and the minor
+ * sections to docs within a subtopic (see AKDoc).  In some cases, when we are
+ * done parsing, we promote a minor section to a major section, so things get
+ * grouped more logically for our purposes (see AKCocoaBehaviorDocParser).
  */
 // [agl] illustrate thus:
 //  <h1>TopicName</h1>       <-->  root section
@@ -46,7 +38,7 @@
 //
 // DocName might contain extraneous whitespace (including
 // leading/trailing and newlines) and/or HTML character constants.  It's
-// too expensive to de-HTMLize during doc parsing (or is it? think about
+// too expensive to de-HTMLize during doc parsing ([agl] or is it? think about
 // this); so we defer de-HTMLizing to when we display the doc name.
 @interface AKDocParser : AKParser
 {
@@ -60,7 +52,7 @@
     AKFileSection *_rootSectionOfCurrentFile;
 
     // Contains the most recently parsed token.
-    char _token[AKTokenBufferSize];
+    char _token[AKParserTokenBufferSize];
 }
 
 
@@ -68,31 +60,19 @@
 #pragma mark Parsing
 
 /*!
- * @method      parseToken
- * @discussion  Parses a token, puts it into the protected ivar _token,
- *              and updates _current to point just after the token.
- *              Punctuation characters -- i.e., non-alphanumeric,
- *              non-whitespace characters -- are treated as individual
- *              tokens.
+ * Consumes a token from the input stream and puts it into _token. On exit,
+ * _current points just after the token.
  *
- *              This method is used by -_parseRootSection.  Subclasses can
- *              use it for their own custom parsing needs -- for example,
- *              to further analyze chunks of text after the initial parse.
+ * All non-alphanumeric, non-whitespace characters are considered punctuation
+ * and are treated as individual tokens.
  */
 - (BOOL)parseToken;
 
 /*!
- * @method      parseNonMarkupToken
- * @discussion  Parses a token, treating HTML tags (e.g., <font> or
- *              </font>) and character entities (e.g., &#8212;).  Puts the
- *              token into _token and updates _current to point just after
- *              the token.  Punctuation characters -- i.e., non-alphanumeric,
- *              non-whitespace characters -- are treated as individual
- *              tokens.
- *
- *              This method is used by -_parseRootSection.  Subclasses can
- *              use it for their own custom parsing needs -- for example,
- *              to further analyze chunks of text after the initial parse.
+ * Calls -parseToken one or more times. Skips over tokens that are HTML markup
+ * (tags, character entities, etc.) and consumes the next non-markup token in
+ * the input stream. Puts that token in _token. On exit, _current points just
+ * after the token.
  */
 - (BOOL)parseNonMarkupToken;
 
@@ -101,18 +81,12 @@
 #pragma mark Using parse results
 
 /*!
- * @method      rootSectionOfCurrentFile
- * @discussion  Returns the root of the file section hierarchy for the
- *              file most recently parsed by the receiver.
+ * Returns the root of the file section hierarchy for the file most recently
+ * parsed by the receiver.
  */
 - (AKFileSection *)rootSectionOfCurrentFile;
 
-/*!
- * @method      applyParseResults
- * @discussion  This is called each time a file is parsed.
- *
- *              The default behavior does nothing.
- */
+/*! Called after each file is parsed. Does nothing by default. */
 - (void)applyParseResults;
 
 
@@ -130,5 +104,6 @@
 // [agl] had to add another kludge to convert <span> tags to <h1> tags
 // so the Functions and TypesAndConstants pages get parsed properly.
 + (NSMutableData *)kludgeHTMLForTiger:(NSData *)sourceData;
+
 
 @end

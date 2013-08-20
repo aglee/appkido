@@ -9,8 +9,14 @@
 
 #import "DIGSLog.h"
 
+@interface DIGSFileProcessor ()
+@property (nonatomic, copy) NSString *currentPath;
+@end
+
 @implementation DIGSFileProcessor
 
+@synthesize basePath = _basePath;
+@synthesize currentPath = _currentPath;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -20,7 +26,7 @@
     if ((self = [super init]))
     {
         // [agl] TODO handle case where basePath is nil
-        _basePath = [basePath retain];
+        _basePath = [basePath copy];
     }
     
     return self;
@@ -38,21 +44,6 @@
 
     [super dealloc];
 }
-
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (NSString *)basePath
-{
-    return _basePath;
-}
-
-- (NSString *)currentPath
-{
-    return _currentPath;
-}
-
 
 #pragma mark -
 #pragma mark Processing files
@@ -76,31 +67,26 @@
     }
 
     // Remember the current file.
-    _currentPath = [[_basePath stringByAppendingPathComponent:filePath] retain];
+    [self setCurrentPath:[_basePath stringByAppendingPathComponent:filePath]];
 
     // Do the job.
     [self processCurrentFile];
 
     // Un-remember the current file.
-    [_currentPath release];
-    _currentPath = nil;
+    [self setCurrentPath:nil];
 }
 
 - (void)processDirectory:(NSString *)dirPath recursively:(BOOL)recurseFlag
 {
-    if ((dirPath == nil) || ([dirPath length] == 0))
+    if ([dirPath length] == 0)
     {
         return;
     }
 
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSEnumerator *en;
-    NSString *filename;
-    NSString *startPath =
-        [[_basePath stringByAppendingPathComponent:dirPath]
-            stringByStandardizingPath];
-    en = [[fm contentsOfDirectoryAtPath:startPath error:NULL] objectEnumerator];
-    while ((filename = [en nextObject]))
+    NSString *startPath = [[_basePath stringByAppendingPathComponent:dirPath] stringByStandardizingPath];
+
+    for (NSString *filename in [fm contentsOfDirectoryAtPath:startPath error:NULL])
     {
         BOOL isDir;
 
@@ -110,16 +96,14 @@
         {
             if (recurseFlag)
             {
-                [self
-                    processDirectory:
-                        [dirPath stringByAppendingPathComponent:filename]
-                    recursively:YES];
+                [self processDirectory:[dirPath stringByAppendingPathComponent:filename]
+                           recursively:YES];
             }
         }
         else
         {
-            filename = [dirPath stringByAppendingPathComponent:filename];
-            [self processFile:filename];
+            NSString *filePath = [dirPath stringByAppendingPathComponent:filename];
+            [self processFile:filePath];
         }
     }
 }

@@ -8,7 +8,4 @@
 #import "AKChildTopicOfFrameworkTopic.h"
 
 @interface AKFunctionsTopic : AKChildTopicOfFrameworkTopic
-{
-}
-
 @end

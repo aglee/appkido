@@ -8,14 +8,8 @@
 #import "AKCocoaGlobalsDocParser.h"
 
 /*
- * @class       AKCocoaBehaviorDocParser
- * @abstract    Parses an HTML file that documents a class or protocol.
- * @discussion  Parses an HTML file that documents a class or protocol.
- *              Inherits from AKCocoaGlobalsDocParser because class docs
- *              can contain a "Constants" section.
+ * Parses an HTML file that documents a class or protocol. Inherits from
+ * AKCocoaGlobalsDocParser because class docs can contain a "Constants" section.
  */
 @interface AKCocoaBehaviorDocParser : AKCocoaGlobalsDocParser
-{
-}
-
 @end

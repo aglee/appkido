@@ -8,12 +8,10 @@
 #import "AKFrameworkTopic.h"
 
 #import "DIGSLog.h"
-#import "AKPrefConstants.h"
 #import "AKFrameworkConstants.h"
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
-#import "AKFramework.h"
-#import "AKAppController.h"
+#import "AKAppDelegate.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKInformalProtocolsTopic.h"
 #import "AKFunctionsTopic.h"
@@ -21,6 +19,8 @@
 
 @implementation AKFrameworkTopic
 
+@synthesize topicDatabase = _topicDatabase;
+@synthesize topicFrameworkName = _topicFrameworkName;
 
 #pragma mark -
 #pragma mark Factory methods
@@ -30,7 +30,6 @@
     return [[[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database] autorelease];
 }
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
@@ -38,7 +37,8 @@
 {
     if ((self = [super init]))
     {
-        _topicFramework = [[aDatabase frameworkWithName:frameworkName] retain];
+        _topicDatabase = [aDatabase retain];
+        _topicFrameworkName = [frameworkName copy];
     }
 
     return self;
@@ -47,22 +47,66 @@
 - (id)init
 {
     DIGSLogError_NondesignatedInitializer();
-    [self release];
     return nil;
 }
 
 - (void)dealloc
 {
-    [_topicFramework release];
+    [_topicDatabase release];
+    [_topicFrameworkName release];
 
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark AKTopic methods
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
+- (NSString *)stringToDisplayInTopicBrowser
+{
+    return _topicFrameworkName;
+}
+
+- (NSString *)pathInTopicBrowser
+{
+    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator,
+            [self stringToDisplayInTopicBrowser]];
+}
+
+- (NSArray *)childTopics
+{
+    NSMutableArray *columnValues = [NSMutableArray array];
+
+    if ([[_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    {
+        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                               inDatabase:_topicDatabase]];
+    }
+
+    if ([[_topicDatabase globalsGroupsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    {
+        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                             inDatabase:_topicDatabase]];
+    }
+
+    if ([[_topicDatabase formalProtocolsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    {
+        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                                     inDatabase:_topicDatabase]];
+    }
+
+    if ([[_topicDatabase informalProtocolsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    {
+        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
+                                                                       inDatabase:_topicDatabase]];
+    }
+
+    return columnValues;
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {
@@ -100,48 +144,9 @@
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
     [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
-    [prefDict setObject:[_topicFramework frameworkName] forKey:AKFrameworkNamePrefKey];
+    [prefDict setObject:_topicFrameworkName forKey:AKFrameworkNamePrefKey];
 
     return prefDict;
-}
-
-- (NSString *)stringToDisplayInTopicBrowser
-{
-    return [_topicFramework frameworkName];
-}
-
-- (NSString *)pathInTopicBrowser
-{
-    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, [self stringToDisplayInTopicBrowser]];
-}
-
-- (NSArray *)childTopics
-{
-    NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *aDatabase = [_topicFramework fwDatabase];
-    NSString *frameworkName = [_topicFramework frameworkName];
-
-    if ([aDatabase numberOfFunctionsGroupsForFrameworkNamed:frameworkName] > 0)
-    {
-        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
-    }
-
-    if ([aDatabase numberOfGlobalsGroupsForFrameworkNamed:frameworkName] > 0)
-    {
-        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
-    }
-
-    if ([[aDatabase formalProtocolsForFrameworkNamed:frameworkName] count] > 0)
-    {
-        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
-    }
-
-    if ([[aDatabase informalProtocolsForFrameworkNamed:frameworkName] count] > 0)
-    {
-        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName inDatabase:aDatabase]];
-    }
-
-    return columnValues;
 }
 
 @end

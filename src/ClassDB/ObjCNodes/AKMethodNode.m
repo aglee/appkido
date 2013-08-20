@@ -11,15 +11,18 @@
 
 @implementation AKMethodNode
 
-
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (id)initWithNodeName:(NSString *)nodeName
-    owningFramework:(AKFramework *)theFramework
-    owningBehavior:(AKBehaviorNode *)behaviorNode
+              database:(AKDatabase *)database
+         frameworkName:(NSString *)frameworkName
+        owningBehavior:(AKBehaviorNode *)behaviorNode
 {
-    if ((self = [super initWithNodeName:nodeName owningFramework:theFramework owningBehavior:behaviorNode]))
+    if ((self = [super initWithNodeName:nodeName
+                               database:database
+                          frameworkName:frameworkName
+                         owningBehavior:behaviorNode]))
     {
         _argumentTypes = [[NSMutableArray alloc] init];
     }
@@ -34,23 +37,18 @@
     [super dealloc];
 }
 
-
 #pragma mark -
 #pragma mark Getters and setters
 
 - (BOOL)isClassMethod
 {
-    return
-        ([(AKClassNode *)[self owningBehavior]
-            classMethodWithName:[self nodeName]] != nil);
+    return ([(AKClassNode *)[self owningBehavior] classMethodWithName:[self nodeName]] != nil);
 }
 
 - (BOOL)isDelegateMethod
 {
-    return
-        [[self owningBehavior] isClassNode]
-        && ([(AKClassNode *)[self owningBehavior]
-                delegateMethodWithName:[self nodeName]] != nil);
+    return ([[self owningBehavior] isClassNode]
+            && ([(AKClassNode *)[self owningBehavior] delegateMethodWithName:[self nodeName]] != nil));
 }
 
 - (NSArray *)argumentTypes

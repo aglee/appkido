@@ -7,26 +7,18 @@
 
 #import "AKParser.h"
 
-@class AKObjCFramework;
-
 /*!
- * @class       AKObjCHeaderParser
- * @abstract    Parses Objective-C header files.
- * @discussion  Looks for @interface and @protocol declarations, and the
- *              method declarations that go with them.  Modifies and
- *              creates AKDatabaseNodes and plugs them into the database.
+ * Parses Objective-C header files.
  *
- *              Parsing is simplistic and assumes well-formed Objective-C
- *              syntax.  Ignores instance variables, C functions, and
- *              #imported or #included files.  Does not evaluate macros or
- *              #ifdefs.
+ * Looks for @interface and @protocol declarations and the method declarations
+ * that go with them. Creates and/or modifies database nodes in the database.
  *
- *              There is a kludge to get around the #ifdef WIN32 that
- *              appears in many headers, causing things to seem to be
- *              declared twice, once in each branch of the #ifdef.
+ * Parsing is simplistic and assumes well-formed Objective-C. Ignores ivars, C
+ * functions, and preprocessor directives.
+ *
+ * There is a kludge to get around the #ifdef WIN32 that appears in many
+ * headers, causing things to seem to be declared twice, once in each branch of
+ * the #ifdef.
  */
 @interface AKObjCHeaderParser : AKParser
-{
-}
-
 @end

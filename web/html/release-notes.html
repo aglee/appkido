@@ -1,122 +1,189 @@
 <html>
-<head>
-<title>AppKiDo version history</title>
+<head profile="http://www.w3.org/2005/10/profile">
+	<title>AppKiDo version history</title>
+
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 
-<body bgcolor="#FFFFFF">
-<h1>AppKiDo version history</h1>
-[ <a href="appkido.html">home</a> ]
-<li><a href="AppKiDo-0.988.tgz">download <b>AppKiDo</b> 0.988</a>
-<li><a href="AppKiDo-for-iPhone-0.988.tgz">download <b>AppKiDo-for-iPhone</b> 0.988</a>
-<li>The source is now on <a href="http://github.com/aglee/appkido">GitHub</a>
-<br/>
-[ <a href="release-notes.html">release notes</a> ]
-[ <a href="screenshot.html">screenshot</a> ]
-[ <a href="sneakypeeks.html">sneakypeeks</a> ]
-[ <a href="faq.html">FAQ</a> ]
+<body>
+<h1><a href="index.html">AppKiDo</a> version history</h1>
+
+<!-- ========== TOP-OF-PAGE LINKS ========== -->
+<table>
+<tr>
+
+<td>
+<ul style="margin-bottom: 8px;">
+<li><a href="AppKiDo-0.996.zip">Download <b>AppKiDo</b> 0.996</a></li>
+<li><a href="AppKiDo-for-iPhone-0.996.zip">Download <b>AppKiDo-for-iPhone</b> 0.996</a></li>
+<li><a href="http://github.com/aglee/appkido" target="_blank">Source code</a> on GitHub</li>
+</ul>
+</td>
+
+<td>
+<ul>
+<li><a href="release-notes.html">Release notes</a></li>
+<li><a href="sneakypeeks.html">Sneakypeeks</a></li>
+<li><a href="faq.html">FAQ</a></li>
+</ul>
+</td>
+
+<td>
+<ul>
+<li><a href="http://notesfromandy.com/" target="_blank">Blog</a></li>
+<li><a href="https://twitter.com/cocoadog" target="_blank">@cocoadog</a></li>
+<li><a href="mailto:aglee@earthlink.net?subject=AppKiDo feedback">Email</a> to Andy Lee</li>
+</ul>
+</td>
+
+</tr>
+</table>
+<!-- ========== END, TOP-OF-PAGE LINKS ========== -->
 
 
-<div style="width:600px; margin-top:16px;">
+<div style="width:600px; margin-top:0px;">
 
 
 <table><tr><td>
 
+<h2>Version 0.996 (April 5, 2013)</h2>
 
-<h2>Version 0.988 (Feb 7, 2012)</h2>
+There was, briefly, a version 0.995 that a few people tested privately. I've made a bunch of changes since then; I hope I didn't break anything.
+
+<h3>System requirements</h3>
+
 <ul>
-<li>Fixed corrupted nib files and converted them to xibs.</li>
+<li>AppKiDo 0.996 requires OS X 10.6 (Snow Leopard) or higher. 10.5 is no longer supported.</li>
 </ul>
 
+<h3>Features and feature improvements</h3>
 
-<h2>Version 0.987 (Feb 6, 2012)</h2>
 <ul>
-<li>Fixed (at least for me) the bug where NSFileVersion wasn't appearing.</li>
-<li>Fixed bug where docs for NSFetchedResultsControllerDelegate weren't appearing.</li>
-<li>Made version number selectable in the About window.</li>
+<li>"Pop Quiz" feature. Just for grins. Hit Go > Pop Quiz (Control-Command-P) and you're presented with a random API symbol. You can quiz yourself on what the symbol is before proceeding to see the docs for it.</li>
+<li>The "Window classes" and "Cell classes" quicklists don't make sense for iOS. AppKiDo-for-iPhone now lists "View controller classes" and "Layer classes" instead.</li>
+<li>Added NSHashTable, NSMapTable, and NSPointerArray to the "Strings, data collections" quicklist.</li>
+<li>Doing a search for "setFoo" now searches for properties named "foo" as well as any symbol containing "setfoo" (inspired by the same feature in Xcode and Dash).</li>
+<li>Added a "Header File" menu item, with Shift-Command-H as the shortcut.</li>
+<li>The standard Option-Command-H shortcut is now assigned to "Hide Others".</li>
+<li>Added Option-Command-T keyboard shortcut for toggling the toolbar.</li>
+<li>Added Copy, Copy File Path, and Speech to the contextual menu in the doc view.</li>
 </ul>
 
+<h3>Appearance and layout</h3>
 
-<h2>Version 0.986 (Feb 2, 2012)</h2>
 <ul>
-<li>This is a bug fix release.</li>
-<li>Fixed an exception that occurs when you use the contextual menu in the doc view and there is no doc (e.g., when you select NSFileWrapper &gt; Class Methods -- NSFileWrapper doesn't have class methods).</li>
-<li>Includes changes from 0.986 sneakypeeks:
+<li>The two views in the middle section -- the "subtopic list" and the "doc list" -- are now in a split view so you can adjust their relative widths. The widths are remembered when the window is restored on relaunch and when you use the "Remember This Window's Layout" feature.</li>
+<li>More sensible split view resizing when you resize the window and when you collapse/expand the topic browser. Only the bottom section (the "doc view") resizes, instead of all three sections (top, middle, bottom).</li>
+<li>Thin splitters in the split views. A little harder to hit with the mouse, but looks nicer.</li>
+<li>Made the default drawer size wider.</li>
+<li>Focus ring appearance. Solid blue border around the browser, around each list, and around the web/text view. (Other items such as buttons use the standard Cocoa focus ring.)</li>
+<li>Focus ring behavior. Tab/Shift-Tab cycles through views in the drawer as well as the main window, and it includes the topic browser as it makes the rounds.</li>
+<li>Changed the look of the small navigation buttons below the topic browser (they're now black triangles with no borders), and the button in the quicklist drawer for deleting the selected Favorite (it's now a lighter "x" with no border). The popup menus for the navigation buttons now use small fonts.</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>After a search, we now select the first search result with the search string as a prefix. (Example: search for "query" and -[NSURL query] should be selected.) This is an old feature that was broken for a while.</li>
+<li>Fixed two bugs in the "method-aware search" service: failure to parse unary method name ("[self foo]"), and getting confused by leading comments ("/* foo */ [self foo:bar]").
+<li>Fixed bug where secondary frameworks weren't showing up in the Overview doc list (e.g., NSString > "AppKit Additions" wasn't showing up).</li>
+<li>Fixed bug causing ApplicationServices > Types & Constants > Constants > "Color Modes" to appear twice as the same doc instead of two different docs. It now appears as "Color Modes (Core Printing)" and "Color Modes (QuickTime Constances)".</li>
+<li>Fixed a bug causing AppKiDo-for-iPhone to think UIKit rather than Foundation is the owning framework for NSObject. As a result, when you selected NSObject, the displayed description was "UIKit class" rather than "Foundation class". If you then selected the "General" subtopic you'd see "Overview" and "Overview [Foundation Additions]" when it should have been "Overview" and "Overview [UIKit Additions]".</li>
+<li>Slight correction to what is displayed in the "Add X to Favorites" menu item. It now matches what gets displayed in the Quicklist -- e.g., "AppKit Functions", not just "Functions".</li>
+<li>Fixed a quirk: if you select text in the web view and do "Use Selection for Find" (Command-E), we were momentarily focusing the quicklist search field, thus removing focus from the web view, which caused "Find Next" (Command-G) to start from the beginning of the web view instead of from where you were.</li>
+<li>Fixed the autoenabling and actions of the "General", "Properties", "ALL Properties", etc. menu items.</li>
+<li>When the subtopic list navigates, it now scrolls if necessary to reveal the newly selected subtopic. Example: do a search for "clip", and in the search results select CGContextClip; the subtopics list autoscrolls to make "CGContextClip" visible.</li>
+</ul>
+
+<h3>Code cleanup and modernization</h3>
+
+Sweeping code changes. They don't affect the app's functionality, but if you care about the underlying code you might want to know about them.
+
+<ul>
+<li>Replaced NSEnumeration with fast enumeration everywhere. Doesn't make any difference to the user, but it makes the code seem less ancient.</li>
+<li>Replaced deprecated method calls with their recommended replacements.</li>
+<li>Replaced most of my hand-rolled view controllers and window controllers with NSViewControllers and NSWindowControllers.</li>
+<li>Tabless NSTabView for the doc view. One tab for the web view used to display docs, one for the text view used to display headers. This replaces the hand-coded view swapping I was doing (not sure why, since it looks like tabless tabviews have always been supported). Also replaces programmatically creating the WebView, which was left over from back when WebKit was not necessarily present on the user's machine.</li>
+<li>Got rid of the AKFramework class. A string containing the framework name is used to indicate membership in a framework.</li>
+<li>Coding conventions.
 	<ul>
-		<li>Now works with Xcode 4.</li>
-		<li>Fixed a problem with 10.4.</li>
-		<li>Fixed a rarely occurring crash on quit. (Could reproduce by selecting CGEventTapIsEnabled before quitting.)</li>
-		<li>Now displaying more info about Dev Tools directories and why they are or aren't recognized as such.</li>
-		<li>Fixes for 64-bit (NSInteger instead of int).</li>
+	<li>Now using Xcode's built-in reformatting, so for example multi-line method names align on colons.</li>
+	<li>Replaced hand-coded accessors with properties (although still declaring ivars in the @interface to be 32-bit compatible).</li>
+	<li>Using the new @-literals (although not square-bracket collection indexing, because it's not supported in 10.6).</li>
+	<li>Simplified class and method comments. Got rid of HeaderDoc tags (@description, @param, etc.). Haven't made these changes to all the source files yet, but many.</li>
 	</ul>
 </li>
 </ul>
 
-
-<h2>Version 0.985 (September 25, 2010)</h2>
+<h2>Version 0.994 (February 17, 2013)</h2>
 <ul>
-<li>Added patch submitted by Gerriet Denkmann that fixes the problem with Xcode 3.2.4 due to the name change from "iPhoneOS" to "iOS", which caused AppKiDo not to recognize a valid dev tools folder as such.</li>
-<li>Includes changes from 0.985 sneakypeeks:
-	<ul>
-	<li>Fixed a bug where if a third party installs a docset in the Dev Tools directory, we might try to use that as our docset instead of the correct Apple one.  Thanks to Fritz Anderson for finding this and correctly suggesting the cause.</li>
-	<li>The bug Fritz found went deeper than I thought.  Added handling for the case where docset is missing expected plist file, and for the fact that 3.1 iPhone docs now get installed in /Library/Developer/Shared/Documentation/DocSets.</li>
-	<li>Added fix, sent by Michael Klein, for the fact that -[NSFont defaultLineHeightForFont:] is deprecated and isn't available to 64-bit applications.</li>
-	</ul>
-</li>
+<li>(Thanks to Peter Hosey.) In the Dev Tools prefs you now indicate where Xcode.app is, and AppKiDo figures out which type of Xcode you have -- whether it's a standalone Xcode with all the Dev Tools inside it, or the old-style Dev Tools where Xcode is in /Developer/Applications.</li>
+<li>Improved handling and reporting of errors that arise from Dev Tools setup.</li>
+<li>Added a sanity check for whether the docset needs to be downloaded. If so, an alert appears explaining this fact, and then you get the Dev Tools setup window where you can try selecting a different Xcode installation or a different SDK version. This should reduce the occurrences where AppKiDo launches and the windows don't have any docs in them.</li>
+<li>Dropped support for very old Dev Tools installations that don't use docsets. I'm not sure AppKiDo can even run on systems that old any more.</li>
+<li>Splash window no longer ties up main thread -- for example you can Quit or Hide Others while it's displaying. Makes accidental launch a bit less annoying.</li>
+<li>Edited the credits in the About box.</li>
+<li>A little thing -- the About box uses a WebView, which by default has elasticity when you use the trackpad to scroll. Removed that elasticity.</li>
+<li>(In case you're wondering, there *was* an 0.993, but I forgot to code-sign it. Many thanks to Rainer Brockerhoff for catching this quickly and for his extremely helpful validation app, <a href="http://brockerhoff.net/RB/AppCheckerLite/">RB App Checker Lite</a>.)</li>
+</ul>
+
+<h2>Version 0.992 (July 25, 2012)</h2>
+<ul>
+<li>Codesigned, so you can run AppKiDo on Mountain Lion with Gatekeeper in "Mac App Store and identified developers" mode.</li>
+<li>Known issue: If you select the 10.8 SDK AppKiDo won't find any docs, because Xcode doesn't (yet) download them locally. You can browse classes, methods, etc., but the doc text pane will be empty.</li>
 </ul>
 
 
-<h2>Version 0.984 (April 8, 2010)</h2>
+<h2>Version 0.991 (July 24, 2012)</h2>
 <ul>
-<li>Added Jeff Johnson's fix for a problem with the latest 3.2 docs whereby no docs would appear.</li>
+<li>Added a system service: "Look Up in AppKiDo". (In AppKiDo-for-iPhone it's "Look Up in AppKiDo-for-iPhone".) See the note below this list for details.</li>
+<li>Added a preference for whether a search request via AppleScript or system services opens a new window. Defaults to NO. Previously, a search via AppleScript would always open a new window.</li>
+<li>Fixed a bug causing a lot of constants (e.g. NSCocoaErrorDomain) not to appear.</li>
+<li>I'm starting to use fast enumeration in the code, which means AppKiDo now requires at least 10.5 (Leopard). I've updated the system requirements on the home page accordingly.</li>
+<li>"Check for Newer Version" now connects to appkido.com, the new home for AppKiDo now that MobileMe has been shut down.</li>
+<li>"Check for Newer Version" should now work for AppKiDo-for-iPhone. It was broken even before MobileMe was turned off, because a file was missing on the web site.</li>
+<li>Links in the About box now connect to appkido.com.</li>
+<li>Fixed the AppKiDo-for-iPhone icon so it displays properly on Retina displays. (Only AppKiDo-for-iPhone had this problem.)</li>
 </ul>
 
+<h3>About "Look Up in AppKiDo"</h3>
 
-<h2>Version 0.983 (August 28, 2009)</h2>
-<ul>
-<li>Works with the Xcode 3.2 docs (i.e., Snow Leopard).</li>
-<li>Added NSDate to the "Strings, data, collections" quicklist.</li>
-<li>If you switch to a different app while AppKiDo is loading, you won't get AppKiDo windows popping up in front when it's done loading.</li>
-<li>Changed to look for docs in the right place when the Dev Tools version is 2.5 and the Dev Tools directory is not /Developer.</li>
-<li>Added a popup button in prefs so you can choose between iPhone SDKs if you have more than one installed.</li>
-<li>Fixed bug where links to http: pages (like the sample code links in +stringWithString:) weren't going anywhere.</li>
-<li>Fixed bug causing DOM classes to show up as root classes.</li>
-<li>When you do a search, jumps to the first search result that has the search string as a prefix, if there is one.</li>
-<li>Staggers placement of new windows.</li>
-</ul>
+<p>"Look Up in AppKiDo" is a service that you can invoke from any application where you have selected some text. It activates AppKiDo and performs a search for that text.</p>
 
+<p>Often what we want to search for is a method name. AppKiDo tries to help by determining whether the selected text contains an Objective-C message-send or method declaration. If so, it searches for that method name. Otherwise, it searches for the literal text you have selected.</p>
 
-<h2>Version 0.982 (December 11, 2008)</h2>
-<ul>
-<li>This is a bug-fix release, not the faster-loading version I promised earlier (that version will be 0.99).</li>
-<li>Now that the iPhone NDA has been lifted, AppKiDo-for-iPhone is available.  It is a separate app with a very slightly different icon.  Also, the AppKiDo source code is again available.  I don't think it contains anything all that secret, but I wanted to be on the safe side.</li>
-<li>Added nil checks to prevent some of the crashes that were reported in 0.981.</li>
-<li>Some docs weren't showing up -- for example, NSIndexPath UIKit Additions and UITextField's delegate methods.</li>
-<li>The "Classes with delegates" quicklist was missing classes that have a delegate property as opposed to an explicit setDelegate: method.</li>
-<li>Fixed the Spaces bug where a new window would be created every time you switch to the space containing AppKiDo.</li>
-<li>Known issue: a few deprecated methods show up in "Delegate Methods" section -- for example, [NSData deserializeAlignedBytesLengthAtCursor:].</li>
-</ul>
+<p>For example, in Xcode if you have <code>[self flyToX:100 y:200 z:300]</code>, you can double-click one of the square brackets to select the whole expression, then invoke this service. AppKiDo will search for the method name <code>flyToX:y:z:</code>.</p>
 
+<p>If you happen to be in BBEdit, where double-clicking a bracket selects the text <i>inside</i> the brackets, the service should still work. If there is leading whitespace or a cast, or newlines or comments anywhere, it should still work, so if you have lines like this you can select them all and then invoke the service:</p>
 
-<h2>Version 0.981 (September 3, 2008)</h2>
-<ul>
-<li>Documentation for Core Animation classes now shows up.  I believe a few classes in other frameworks are also fixed.</li>
-<li>Documentation for properties now shows up.</li>
-<li>Hyperlinks work better, although links to Core Foundation docs still open a browser page.  Thanks to Gerriet Denkmann for help with links.</li>
-<li>You can specify the location of your Dev Tools if it isn't /Developer.</li>
-<li>More frameworks are supported if you use Xcode 3, which is recommended.</li>
-<li>The contextual menu in the doc pane now has an "Open Page in Browser" option, which is handy if you want to send feedback to Apple using the link at the bottom of the HTML page.</li>
-<li>Keyboard shortcuts have changed.  Command-(number) and Command-Option-(number) are now used to select items in the table of contents ("General", "Properties", "ALL Properties", "Classes", "ALL Classes", etc.).  The keyboard shortcut for selecting a Favorite is now Control-(number).</li>
-<li>In the prefs panel, you can "Select All" and "Deselect All" when specifying which frameworks to include.</li>
-<li>You can do a prefix search by ending your search string with "*".  This is not a general regex search, just a special case for prefixes.</li>
-<li><b>Note #1:</b> There was a 0.98 release, but it only went out to a handful of people as a beta.  This version fixes a performance bug that was found in 0.98.</li>
-<li><b>Note #2:</b> AppKiDo works best with Xcode 3.x.  It will work with 2.4 and 2.5, but some of the docs will be missing.</li>
-<li><b>Note #3:</b> I'll release the source code if Apple tells me I'm not violating the iPhone NDA by doing so (I've asked), or when the NDA gets lifted, whichever comes first.  At that time I will also release a compiled version that supports the iPhone SDK docs.  AppKiDo-for-iPhone will be a separate app that is compiled from the same code as regular AppKiDo except for a few #ifdefs.</li>
-</ul>
+<pre>
+    (void)[self flyToX:100  // cast to void to discard the return value
+                     y:200
+                     z:900 /*300*/];
+</pre>
+
+<p>Note that "Look Up in AppKiDo" doesn't work if there is an assignment in the selected text. For example, it won't work if you select this whole line:</p>
+
+<pre>    BOOL didFly = [self flyToX:100 y:200 z:300];</pre>
+
+<p>The workaround is to select just the message-send -- the part after the "=".</p>
+
+<p>Another intended use is when you're looking at code that <b>declares</b> a method and you want to search for that method name. For example, you can select these lines and it will search for <code>browser:child:ofItem:</code> (the "-<nbsp/>(id)" will be ignored):</p>
+
+<pre>
+    - (id)browser:(NSBrowser *)browser
+            child:(NSInteger)index
+           ofItem:(id)item</pre>
+
+<p>This service assumes well-formed Objective-C. You might get unexpected results otherwise. If there are nested messages, it uses the top-level one. The algorithm mainly looks at punctuation -- delimiters like brackets and a few other characters that need special treatment. The basic idea is that it ignores anything between delimiters, like <code>(blah blah blah)</code>, <code>[blah blah blah]</code>, or <code>{blah blah blah}</code>. For this reason it should work if your selected code contains blocks or the new object literals.</p>
+
+<p>If you use the "Look Up" service, remember to assign a hotkey in System Preferences > Keyboard > Keyboard Shortcuts > Services for maximum convenience.</p>
 
 
 </td></tr></table>
 
-[ <a href="release-notes-old.html">older release notes</a> ]
+<p>[ <a href="release-notes-old.html">older release notes</a> ]</p>
 
 
 </div>

@@ -14,9 +14,8 @@
 
 @implementation AKTopic
 
-
 #pragma mark -
-#pragma mark AKXyzTopicName
+#pragma mark String constants
 
 NSString *AKTopicBrowserPathSeparator = @"/";
 
@@ -25,11 +24,114 @@ NSString *AKInformalProtocolsTopicName = @"Informal Protocols";
 NSString *AKFunctionsTopicName         = @"Functions";
 NSString *AKGlobalsTopicName           = @"Types & Constants";
 
+#pragma mark -
+#pragma mark Getters and setters
+
+- (AKClassNode *)parentClassOfTopic
+{
+    return nil;
+}
+
+- (AKDatabaseNode *)topicNode
+{
+    return nil;
+}
 
 #pragma mark -
-#pragma mark Preferences
+#pragma mark Names for various display contexts
 
-+ (AKTopic *)fromPrefDictionary:(NSDictionary *)prefDict
+- (NSString *)stringToDisplayInTopicBrowser
+{
+    DIGSLogError_MissingOverride();
+    return @"??";
+}
+
+- (NSString *)stringToDisplayInDescriptionField
+{
+    return @"...";
+}
+
+- (NSString *)stringToDisplayInLists
+{
+    return [self stringToDisplayInTopicBrowser];
+}
+
+#pragma mark -
+#pragma mark Populating the topic browser
+
+- (NSString *)pathInTopicBrowser
+{
+    DIGSLogError_MissingOverride();
+    return nil;
+}
+
+- (BOOL)browserCellShouldBeEnabled
+{
+    return YES;
+}
+
+- (BOOL)browserCellHasChildren
+{
+    return YES;
+}
+
+- (NSArray *)childTopics
+{
+    return nil;
+}
+
+#pragma mark -
+#pragma mark Subtopics
+
+- (NSInteger)numberOfSubtopics
+{
+    return 0;
+}
+
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
+{
+    DIGSLogError_MissingOverride();
+    return nil;
+}
+
+- (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName
+{
+    if (subtopicName == nil)
+    {
+        return -1;
+    }
+
+    NSInteger numSubtopics = [self numberOfSubtopics];
+    NSInteger i;
+
+    for (i = 0; i < numSubtopics; i++)
+    {
+        AKSubtopic *subtopic = [self subtopicAtIndex:i];
+
+        if ([[subtopic subtopicName] isEqualToString:subtopicName])
+        {
+            return i;
+        }
+    }
+
+    // If we got this far, the search failed.
+    return -1;
+}
+
+- (AKSubtopic *)subtopicWithName:(NSString *)subtopicName
+{
+    NSInteger subtopicIndex = ((subtopicName == nil)
+                               ? -1
+                               : [self indexOfSubtopicWithName:subtopicName]);
+    return ((subtopicIndex < 0)
+            ? nil
+            : [self subtopicAtIndex:subtopicIndex]);
+}
+
+#pragma mark -
+#pragma mark AKPrefDictionary methods
+
++ (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
     if (prefDict == nil)
     {
@@ -78,118 +180,6 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-
-#pragma mark -
-#pragma mark Getters and setters
-
-- (AKClassNode *)parentClassOfTopic
-{
-    return nil;
-}
-
-- (AKDatabaseNode *)topicNode
-{
-    return nil;
-}
-
-
-#pragma mark -
-#pragma mark Names for various display contexts
-
-- (NSString *)stringToDisplayInTopicBrowser
-{
-    DIGSLogError_MissingOverride();
-    return @"??";
-}
-
-- (NSString *)stringToDisplayInDescriptionField
-{
-    return @"...";
-}
-
-- (NSString *)stringToDisplayInLists
-{
-    return [self stringToDisplayInTopicBrowser];
-}
-
-
-#pragma mark -
-#pragma mark Populating the topic browser
-
-- (NSString *)pathInTopicBrowser
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
-- (BOOL)browserCellShouldBeEnabled
-{
-    return YES;
-}
-
-- (BOOL)browserCellHasChildren
-{
-    return YES;
-}
-
-- (NSArray *)childTopics
-{
-    return nil;
-}
-
-
-#pragma mark -
-#pragma mark Populating the subtopics table
-
-- (NSInteger)numberOfSubtopics
-{
-    return 0;
-}
-
-- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
-- (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName
-{
-    if (subtopicName == nil)
-    {
-        return -1;
-    }
-
-    NSInteger numSubtopics = [self numberOfSubtopics];
-    NSInteger i;
-
-    for (i = 0; i < numSubtopics; i++)
-    {
-        AKSubtopic *subtopic = [self subtopicAtIndex:i];
-
-        if ([[subtopic subtopicName] isEqualToString:subtopicName])
-        {
-            return i;
-        }
-    }
-
-    // If we got this far, the search failed.
-    return -1;
-}
-
-- (AKSubtopic *)subtopicWithName:(NSString *)subtopicName
-{
-    NSInteger subtopicIndex =
-        (subtopicName == nil)
-        ? -1
-        : [self indexOfSubtopicWithName:subtopicName];
-
-    return
-        (subtopicIndex < 0)
-        ? nil
-        : [self subtopicAtIndex:subtopicIndex];
-}
-
-
 #pragma mark -
 #pragma mark AKSortable methods
 
@@ -198,9 +188,8 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return [self stringToDisplayInLists];
 }
 
-
 #pragma mark -
-#pragma mark Object methods
+#pragma mark NSObject methods
 
 - (BOOL)isEqual:(id)anObject
 {
@@ -212,10 +201,6 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     // Compare topics by comparing their browser paths.
     return ([[anObject pathInTopicBrowser] isEqualToString:[self pathInTopicBrowser]]);
 }
-
-
-#pragma mark -
-#pragma mark NSObject methods
 
 - (NSString *)description
 {

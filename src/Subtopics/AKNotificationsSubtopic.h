@@ -7,11 +7,10 @@
 
 #import "AKPseudoMethodsSubtopic.h"
 
-// Notifications aren't really methods, but we treat them that way for
-// purposes of navigation.
-
+/*!
+ * Notifications aren't really methods, but we treat them that way for purposes
+ * purposes of navigating the docs.
+ */
 @interface AKNotificationsSubtopic : AKPseudoMethodsSubtopic
-{
-}
 @end
 
