@@ -116,18 +116,18 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     
     if (![AKFileUtils directoryExistsAtPath:devToolsPath])
     {
-        NSString *errorString = [NSString stringWithFormat:@"The directory \"%@\" doesn't exist.", devToolsPath];
+        NSString *errorString = [NSString stringWithFormat:@"Expected \"%@\" to be a valid Dev Tools path, but the directory doesn't exist.", devToolsPath];
         [errorStrings addObject:errorString];
         return NO;
     }
     
     for (NSString *subdir in [self expectedSubdirsForDevToolsPath:devToolsPath])
     {
-        NSString *expectedSubdirPath = [devToolsPath stringByAppendingPathComponent:subdir];
-        if (![AKFileUtils directoryExistsAtPath:expectedSubdirPath])
+        if (![AKFileUtils directoryExistsAtPath:[devToolsPath stringByAppendingPathComponent:subdir]])
         {
-            NSString *errorString = [NSString stringWithFormat:@"The directory \"%@\" doesn't exist.",
-                                     expectedSubdirPath];
+            NSString *errorString = [NSString stringWithFormat:@"Expected \"%@\" to be a valid Dev Tools path, but it does not have subdirectory \"%@\".",
+                                     devToolsPath,
+                                     subdir];
             [errorStrings addObject:errorString];
             return NO;
         }
