@@ -2723,10 +2723,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Andrew Lee";
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = AppKiDo;
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2747,11 +2745,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Andrew Lee";
 				GCC_PREPROCESSOR_DEFINITIONS = "APPKIDO_FOR_IPHONE=1";
 				INFOPLIST_FILE = "Info-iPhone.plist";
 				PRODUCT_NAME = "AppKiDo-for-iPhone";
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
