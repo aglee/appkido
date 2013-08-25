@@ -8,9 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "AKDatabaseDelegate.h"
-
-@interface AKSplashWindowController : NSWindowController <AKDatabaseDelegate>
+@interface AKSplashWindowController : NSWindowController
 {
 @private
     NSTextField *_splashVersionField;

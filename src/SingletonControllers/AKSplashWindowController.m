@@ -17,15 +17,6 @@
 @synthesize splashMessage2Field = _splashMessage2Field;
 
 #pragma mark -
-#pragma mark AKDatabase delegate methods
-
-- (void)database:(AKDatabase *)database willLoadTokensForFramework:(NSString *)frameworkName
-{
-    [_splashMessage2Field setStringValue:frameworkName];
-    [_splashMessage2Field display];
-}
-
-#pragma mark -
 #pragma mark NSWindowController methods
 
 - (void)windowDidLoad

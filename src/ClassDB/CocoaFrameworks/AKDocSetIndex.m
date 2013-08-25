@@ -218,6 +218,38 @@
 */
 }
 
+- (NSString *)relativePathToDocsForClassNamed:(NSString *)nameOfClass
+{
+    // Open the database.
+    FMDatabase* sqliteDB = [self _openSQLiteDB];
+    if (sqliteDB == nil)
+    {
+        return nil;
+    }
+
+    // Do the query and process the results.
+    NSString *docPath = nil;
+    NSString *sql = [AKSQLTemplate templateNamed:@"DocPathForClass"];
+    FMResultSet *rs = [sqliteDB executeQuery:sql, nameOfClass];
+
+    while ([rs next])
+    {
+        if (docPath)
+        {
+            DIGSLogWarning(@"Found more than one doc file for class '%@'.  In addition to '%@', found '%@'.  Will return the last one found.",
+                           nameOfClass, docPath, [rs stringForColumnIndex:0]);
+        }
+
+        docPath = [rs stringForColumnIndex:0];
+    }
+    [rs close];
+
+    // Close the database.
+    [sqliteDB close];
+
+    return docPath;
+}
+
 #pragma mark -
 #pragma mark Private methods
 

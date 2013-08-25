@@ -266,12 +266,6 @@
 		734B75D816D062060027514D /* AKSplashWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B75D316D062060027514D /* AKSplashWindowController.m */; };
 		734B75D916D062060027514D /* SplashWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 734B75D416D062060027514D /* SplashWindow.xib */; };
 		734B75DA16D062060027514D /* SplashWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 734B75D416D062060027514D /* SplashWindow.xib */; };
-		734B75DD16D06CA20027514D /* AKLoadDatabaseOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B75DB16D06CA20027514D /* AKLoadDatabaseOperation.h */; };
-		734B75DE16D06CA20027514D /* AKLoadDatabaseOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B75DB16D06CA20027514D /* AKLoadDatabaseOperation.h */; };
-		734B75DF16D06CA20027514D /* AKLoadDatabaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B75DC16D06CA20027514D /* AKLoadDatabaseOperation.m */; };
-		734B75E016D06CA20027514D /* AKLoadDatabaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B75DC16D06CA20027514D /* AKLoadDatabaseOperation.m */; };
-		734B75E316D077E30027514D /* AKDatabaseDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B75E116D077E20027514D /* AKDatabaseDelegate.h */; };
-		734B75E416D077E30027514D /* AKDatabaseDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B75E116D077E20027514D /* AKDatabaseDelegate.h */; };
 		7359EB2D0BADB68100574728 /* AKApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 7359EB2B0BADB68100574728 /* AKApplication.h */; };
 		7359EB2E0BADB68100574728 /* AKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359EB2C0BADB68100574728 /* AKApplication.m */; };
 		735D9F7716CC5DAC00B72158 /* ALSimpleTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */; };
@@ -626,6 +620,8 @@
 		73E86F430E3974E1002AFB76 /* AKMemberNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F410E3974E1002AFB76 /* AKMemberNode.m */; };
 		73E86F4A0E397760002AFB76 /* AKNotificationNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E86F480E397760002AFB76 /* AKNotificationNode.h */; };
 		73E86F4B0E397760002AFB76 /* AKNotificationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F490E397760002AFB76 /* AKNotificationNode.m */; };
+		73F2F7B617C7D27000AF4B06 /* DocPathForClass.sql in Resources */ = {isa = PBXBuildFile; fileRef = 73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */; };
+		73F2F7B717C7D27000AF4B06 /* DocPathForClass.sql in Resources */ = {isa = PBXBuildFile; fileRef = 73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */; };
 		73F8F99316ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */; };
 		73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */; };
 		73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */; };
@@ -802,9 +798,6 @@
 		734B75D216D062060027514D /* AKSplashWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSplashWindowController.h; sourceTree = "<group>"; };
 		734B75D316D062060027514D /* AKSplashWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSplashWindowController.m; sourceTree = "<group>"; };
 		734B75D416D062060027514D /* SplashWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashWindow.xib; path = English.lproj/SplashWindow.xib; sourceTree = "<group>"; };
-		734B75DB16D06CA20027514D /* AKLoadDatabaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKLoadDatabaseOperation.h; sourceTree = "<group>"; };
-		734B75DC16D06CA20027514D /* AKLoadDatabaseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKLoadDatabaseOperation.m; sourceTree = "<group>"; };
-		734B75E116D077E20027514D /* AKDatabaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDatabaseDelegate.h; sourceTree = "<group>"; };
 		7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKBehaviorNode.h; sourceTree = "<group>"; };
 		7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorNode.m; sourceTree = "<group>"; };
 		7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKBehaviorTopic.h; path = Topics/AKBehaviorTopic.h; sourceTree = SOURCE_ROOT; };
@@ -978,6 +971,7 @@
 		73E86F490E397760002AFB76 /* AKNotificationNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNotificationNode.m; sourceTree = "<group>"; };
 		73EE9E3D06856D120008CBEC /* AKDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabase.h; sourceTree = "<group>"; };
 		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; };
+		73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocPathForClass.sql; sourceTree = "<group>"; };
 		73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AppKiDo.h"; sourceTree = "<group>"; };
 		73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AppKiDo.m"; sourceTree = "<group>"; };
 		73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+AppKiDo.h"; sourceTree = "<group>"; };
@@ -1154,7 +1148,6 @@
 			children = (
 				73EE9E3D06856D120008CBEC /* AKDatabase.h */,
 				73EE9E3E06856D120008CBEC /* AKDatabase.m */,
-				734B75E116D077E20027514D /* AKDatabaseDelegate.h */,
 				73C8ABB60836AF2D0000E3F7 /* database nodes */,
 				731D743A0E4357F000C54AD5 /* export */,
 			);
@@ -1325,8 +1318,6 @@
 				7359EB2C0BADB68100574728 /* AKApplication.m */,
 				732BD5D505ED8FBE0055715D /* AKAppDelegate.h */,
 				732BD5D605ED8FBE0055715D /* AKAppDelegate.m */,
-				734B75DB16D06CA20027514D /* AKLoadDatabaseOperation.h */,
-				734B75DC16D06CA20027514D /* AKLoadDatabaseOperation.m */,
 				734B75D216D062060027514D /* AKSplashWindowController.h */,
 				734B75D316D062060027514D /* AKSplashWindowController.m */,
 				738D41B015B078E0008950F6 /* AKAboutWindowController.h */,
@@ -1416,6 +1407,7 @@
 			children = (
 				733DF5F014E17A81007E6313 /* AllFrameworkNames.sql */,
 				733DF5FB14E17F7A007E6313 /* ObjCFrameworkNames.sql */,
+				73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */,
 				733DF5FC14E17FA0007E6313 /* DocPaths.sql */,
 				733DF5FD14E17FAA007E6313 /* DocPaths2.sql */,
 				733DF5FE14E17FBC007E6313 /* HeaderPaths.sql */,
@@ -1948,8 +1940,6 @@
 				730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */,
 				735D9F7716CC5DAC00B72158 /* ALSimpleTask.h in Headers */,
 				734B75D516D062060027514D /* AKSplashWindowController.h in Headers */,
-				734B75DD16D06CA20027514D /* AKLoadDatabaseOperation.h in Headers */,
-				734B75E316D077E30027514D /* AKDatabaseDelegate.h in Headers */,
 				7320C13616DBAB3600797F95 /* AKFileSectionCache.h in Headers */,
 				7320C17916DCF9FC00797F95 /* AKSubtopicListViewController.h in Headers */,
 				7320C17D16DCF9FC00797F95 /* AKTopicBrowserViewController.h in Headers */,
@@ -2095,8 +2085,6 @@
 				730F68CA15C1503400E0B7B0 /* FMDatabasePool.h in Headers */,
 				735D9F7816CC5DAC00B72158 /* ALSimpleTask.h in Headers */,
 				734B75D616D062060027514D /* AKSplashWindowController.h in Headers */,
-				734B75DE16D06CA20027514D /* AKLoadDatabaseOperation.h in Headers */,
-				734B75E416D077E30027514D /* AKDatabaseDelegate.h in Headers */,
 				7320C13716DBAB3600797F95 /* AKFileSectionCache.h in Headers */,
 				7320C17A16DCF9FC00797F95 /* AKSubtopicListViewController.h in Headers */,
 				7320C17E16DCF9FC00797F95 /* AKTopicBrowserViewController.h in Headers */,
@@ -2244,6 +2232,7 @@
 				7332E8DE16E8EFAE00A3764B /* FindPanel.xib in Resources */,
 				737F1DE917021BCD00D560C7 /* PopQuiz.xib in Resources */,
 				73FECB8E170AA0D700A7FB27 /* DevToolsView.xib in Resources */,
+				73F2F7B617C7D27000AF4B06 /* DocPathForClass.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2295,6 +2284,7 @@
 				7332E8DF16E8EFAE00A3764B /* FindPanel.xib in Resources */,
 				737F1DEA17021BCD00D560C7 /* PopQuiz.xib in Resources */,
 				73FECB8F170AA0D700A7FB27 /* DevToolsView.xib in Resources */,
+				73F2F7B717C7D27000AF4B06 /* DocPathForClass.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2418,7 +2408,6 @@
 				730F68C215C1478300E0B7B0 /* FMDatabaseQueue.m in Sources */,
 				735D9F7916CC5DAC00B72158 /* ALSimpleTask.m in Sources */,
 				734B75D716D062060027514D /* AKSplashWindowController.m in Sources */,
-				734B75DF16D06CA20027514D /* AKLoadDatabaseOperation.m in Sources */,
 				7320C13816DBAB3600797F95 /* AKFileSectionCache.m in Sources */,
 				7320C17B16DCF9FC00797F95 /* AKSubtopicListViewController.m in Sources */,
 				7320C17F16DCF9FC00797F95 /* AKTopicBrowserViewController.m in Sources */,
@@ -2560,7 +2549,6 @@
 				730F68C915C1503000E0B7B0 /* FMDatabasePool.m in Sources */,
 				735D9F7A16CC5DAC00B72158 /* ALSimpleTask.m in Sources */,
 				734B75D816D062060027514D /* AKSplashWindowController.m in Sources */,
-				734B75E016D06CA20027514D /* AKLoadDatabaseOperation.m in Sources */,
 				7320C13916DBAB3600797F95 /* AKFileSectionCache.m in Sources */,
 				7320C17C16DCF9FC00797F95 /* AKSubtopicListViewController.m in Sources */,
 				7320C18016DCF9FC00797F95 /* AKTopicBrowserViewController.m in Sources */,

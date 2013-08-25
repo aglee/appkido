@@ -7,8 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AKDatabaseDelegate.h"
-
 @class AKClassNode;
 @class AKDatabaseNode;
 @class AKDocSetIndex;
@@ -37,8 +35,7 @@
 {
 @private
     AKDocSetIndex *_docSetIndex;
-    id <AKDatabaseDelegate> _delegate;
-    
+
     // Frameworks.
     // Note: there are constants in AKFrameworkConstants.h for the names of some
     // frameworks that need to be treated specially.
@@ -64,16 +61,20 @@
     NSMutableDictionary *_protocolNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolNode}
 }
 
-@property (nonatomic, unsafe_unretained) id <AKDatabaseDelegate> delegate;
-
 #pragma mark -
 #pragma mark Factory methods
 
-/*! On failure, returns nil with the reasons added to errorStrings. */
-+ (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings;
+/*!
+ * On failure, returns nil with the reasons added to errorStrings.  A docset that hasn't
+ * been downloaded counts as a failure.
+ */
++ (id)databaseWithErrorStrings:(NSMutableArray *)errorStrings;
 
-/*! On failure, returns nil with the reasons added to errorStrings. */
-+ (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings;
+///*! On failure, returns nil with the reasons added to errorStrings. */
+//+ (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings;
+//
+///*! On failure, returns nil with the reasons added to errorStrings. */
+//+ (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -85,14 +86,20 @@
 #pragma mark Populating the database
 
 /*!
- * For each given framework names, queries the docSetIndex for all API tokens in
- * the that framework. Adds database nodes accordingly. Sends a delegate message
- * for each framework loaded.
- *
- * If frameworkNames is nil, all "essential" frameworks are loaded. The meaning
- * "essential" depends on the platform the database is for.
+ * Adds database nodes for all API tokens in the specified framework.  Gets this
+ * information by querying the docset.
  */
-- (void)loadTokensForFrameworksWithNames:(NSArray *)frameworkNames;
+- (void)loadTokensForFrameworkWithName:(NSString *)fwName;
+
+///*!
+// * For each given framework names, queries the docSetIndex for all API tokens in
+// * the that framework. Adds database nodes accordingly. Sends a delegate message
+// * for each framework loaded.
+// *
+// * If frameworkNames is nil, all "essential" frameworks are loaded. The meaning
+// * "essential" depends on the platform the database is for.
+// */
+//- (void)loadTokensForFrameworksWithNames:(NSArray *)frameworkNames;
 
 #pragma mark -
 #pragma mark Getters and setters -- frameworks

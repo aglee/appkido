@@ -28,14 +28,12 @@
 
 @implementation AKDatabase
 
-@synthesize delegate = _delegate;
-
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings
++ (id)databaseWithErrorStrings:(NSMutableArray *)errorStrings
 {
-    AKDatabase *dbToReturn = nil;
+    // Instantiate AKDevTools.
     NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
 
     if (![AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
@@ -43,54 +41,64 @@
         return nil;
     }
 
-    AKDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
-    AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools
-                                                  errorStrings:errorStrings];
-    if (docSetIndex == nil)
-    {
-        return nil;
-    }
-
-    dbToReturn = [[[self alloc] initWithDocSetIndex:docSetIndex] autorelease];
-
-    // For a new user of AppKiDo for Mac OS, only load the "essential"
-    // frameworks by default and leave it up to them to add more as needed.
-    // It would be nice to simply provide everything, but until we cut down
-    // the amount of startup time used by parsing, that will take too long.
-    if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
-    {
-        [AKPrefUtils setSelectedFrameworkNamesPref:AKNamesOfEssentialFrameworks];
-    }
-
-    return dbToReturn;
-}
-
-+ (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings
-{
-    AKDatabase *dbToReturn = nil;
-    NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
-
-    if (![AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
-    {
-        return nil;
-    }
-    
+#if APPKIDO_FOR_IPHONE
     AKDevTools *devTools = [AKIPhoneDevTools devToolsWithPath:devToolsPath];
+#else
+    AKDevTools *devTools = [AKMacDevTools devToolsWithPath:devToolsPath];
+#endif
+
+    // Use that to instantiate AKDocSetIndex.
     AKDocSetIndex *docSetIndex = [self _docSetIndexForDevTools:devTools
                                                   errorStrings:errorStrings];
     if (docSetIndex == nil)
     {
         return nil;
     }
-    
-    dbToReturn = [[[self alloc] initWithDocSetIndex:docSetIndex] autorelease];
 
-    // Assume a new user of AppKiDo-for-iPhone is going to want all possible
-    // frameworks in the iPhone SDK by default, and will deselect whichever
-    // ones they don't want.  The docset is small enough that we can do this.  [agl] Still?
+    // Use that to instantiate AKDatabase.
+    AKDatabase *dbToReturn = [[[self alloc] initWithDocSetIndex:docSetIndex] autorelease];
+
+    // Query the sqlite database for the location of the NSObject class doc, and see if that
+    // file exists.  If not, the reason is probably that the user has to download the docs.
+    //
+    // [agl] How does Xcode know whether to put an "Install" button by the docset?  I would
+    // guess it checks the RSS feed -- at least there *used* to be a feed for docs.  I believe
+    // docsets have version numbers, so maybe Xcode compares the number from the feed to the
+    // currently installed number.
+    NSString *docsBaseDirPath = [docSetIndex baseDirForDocs];
+    NSString *relativeDocPathForNSObject = [docSetIndex relativePathToDocsForClassNamed:@"NSObject"];
+    NSString *docPathForNSObject = [docsBaseDirPath stringByAppendingPathComponent:relativeDocPathForNSObject];
+
+    if (![[NSFileManager defaultManager] fileExistsAtPath:docPathForNSObject])
+    {
+        NSString *msg = [NSString stringWithFormat:(@"The selected docset (%@) is missing documentation for NSObject."
+                                                    @" Usually this means you need to download the docset."
+                                                    @" You can do this by going to Xcode > Preferences > Downloads > Documentation."
+//                                                    @"\n\nAlternatively, you can try selecting a different SDK."
+                                                    ),
+                                                    [docSetIndex docSetPath]];
+        [errorStrings addObject:msg];
+        return nil;
+    }
+
+    // If we got this far, we can return a valid AKDatabase instance.  Before we do, check
+    // whether any selected frameworks have been specified; if not, select a default set.
     if ([AKPrefUtils selectedFrameworkNamesPref] == nil)
     {
-        [AKPrefUtils setSelectedFrameworkNamesPref:[docSetIndex selectableFrameworkNames]];
+#if APPKIDO_FOR_IPHONE
+        // Assume a new user of AppKiDo-for-iPhone is going to want all possible
+        // frameworks in the iPhone SDK by default, and will deselect whichever
+        // ones they don't want.  The docset is small enough that we can do this.  [agl] Still?
+        NSArray *namesOfDefaultFrameworksToSelect = [docSetIndex selectableFrameworkNames];
+#else
+        // For a new user of AppKiDo for Mac OS, only load the "essential"
+        // frameworks by default and leave it up to them to add more as needed.
+        // It would be nice to simply provide everything, but until we cut down
+        // the amount of startup time used by parsing, that will take too long.
+        NSArray *namesOfDefaultFrameworksToSelect = AKNamesOfEssentialFrameworks;
+#endif
+
+        [AKPrefUtils setSelectedFrameworkNamesPref:namesOfDefaultFrameworksToSelect];
     }
 
     return dbToReturn;
@@ -157,30 +165,17 @@
 #pragma mark -
 #pragma mark Populating the database
 
-- (void)loadTokensForFrameworksWithNames:(NSArray *)frameworkNames
+- (void)loadTokensForFrameworkWithName:(NSString *)fwName
 {
-    if (frameworkNames == nil)
+    if ([[_docSetIndex selectableFrameworkNames] containsObject:fwName])
     {
-        frameworkNames = AKNamesOfEssentialFrameworks;
-    }
-
-    for (NSString *fwName in frameworkNames)
-    {
-        if ([[_docSetIndex selectableFrameworkNames] containsObject:fwName])
+        @autoreleasepool
         {
-            @autoreleasepool
-            {
-                DIGSLogDebug(@"===================================================");
-                DIGSLogDebug(@"Loading tokens for framework %@", fwName);
-                DIGSLogDebug(@"===================================================");
+            DIGSLogDebug(@"===================================================");
+            DIGSLogDebug(@"Loading tokens for framework %@", fwName);
+            DIGSLogDebug(@"===================================================");
 
-                if ([(id)_delegate respondsToSelector:@selector(database:willLoadTokensForFramework:)])
-                {
-                    [_delegate database:self willLoadTokensForFramework:fwName];
-                }
-
-                [self _loadTokensForFrameworkNamed:fwName];
-            }
+            [self _loadTokensForFrameworkNamed:fwName];
         }
     }
 }
