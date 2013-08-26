@@ -281,7 +281,11 @@
     while ([rs next])
     {
         NSString *fwName = [rs stringForColumnIndex:0];
-        [stringArray addObject:fwName];
+        
+        if (fwName)
+        {
+            [stringArray addObject:fwName];
+        }
     }
     [rs close];
 
