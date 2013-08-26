@@ -622,6 +622,10 @@
 		73E86F4B0E397760002AFB76 /* AKNotificationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E86F490E397760002AFB76 /* AKNotificationNode.m */; };
 		73F2F7B617C7D27000AF4B06 /* DocPathForClass.sql in Resources */ = {isa = PBXBuildFile; fileRef = 73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */; };
 		73F2F7B717C7D27000AF4B06 /* DocPathForClass.sql in Resources */ = {isa = PBXBuildFile; fileRef = 73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */; };
+		73F3BC8417CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F3BC8217CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h */; };
+		73F3BC8517CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F3BC8217CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h */; };
+		73F3BC8617CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F3BC8317CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m */; };
+		73F3BC8717CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F3BC8317CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m */; };
 		73F8F99316ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */; };
 		73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */; };
 		73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */; };
@@ -638,10 +642,6 @@
 		73F8F9C016EED364001650D7 /* AKBorderHidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F8F9BD16EED364001650D7 /* AKBorderHidingView.h */; };
 		73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */; };
 		73F8F9C216EED364001650D7 /* AKBorderHidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */; };
-		73FECB57170A27C000A7FB27 /* AKBehaviorGeneralDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73FECB55170A27BF00A7FB27 /* AKBehaviorGeneralDoc.h */; };
-		73FECB58170A27C000A7FB27 /* AKBehaviorGeneralDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 73FECB55170A27BF00A7FB27 /* AKBehaviorGeneralDoc.h */; };
-		73FECB59170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FECB56170A27BF00A7FB27 /* AKBehaviorGeneralDoc.m */; };
-		73FECB5A170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FECB56170A27BF00A7FB27 /* AKBehaviorGeneralDoc.m */; };
 		73FECB8E170AA0D700A7FB27 /* DevToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73FECB8C170AA0D700A7FB27 /* DevToolsView.xib */; };
 		73FECB8F170AA0D700A7FB27 /* DevToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73FECB8C170AA0D700A7FB27 /* DevToolsView.xib */; };
 		F28A5B2B13E5C73600BB8F76 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */; };
@@ -972,6 +972,8 @@
 		73EE9E3D06856D120008CBEC /* AKDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabase.h; sourceTree = "<group>"; };
 		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; };
 		73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocPathForClass.sql; sourceTree = "<group>"; };
+		73F3BC8217CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBehaviorGeneralDoc.h; sourceTree = "<group>"; };
+		73F3BC8317CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorGeneralDoc.m; sourceTree = "<group>"; };
 		73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AppKiDo.h"; sourceTree = "<group>"; };
 		73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AppKiDo.m"; sourceTree = "<group>"; };
 		73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+AppKiDo.h"; sourceTree = "<group>"; };
@@ -980,8 +982,6 @@
 		73F8F9B216EE99A3001650D7 /* AKFocusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFocusView.m; path = CustomViews/AKFocusView.m; sourceTree = "<group>"; };
 		73F8F9BD16EED364001650D7 /* AKBorderHidingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKBorderHidingView.h; path = CustomViews/AKBorderHidingView.h; sourceTree = "<group>"; };
 		73F8F9BE16EED364001650D7 /* AKBorderHidingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKBorderHidingView.m; path = CustomViews/AKBorderHidingView.m; sourceTree = "<group>"; };
-		73FECB55170A27BF00A7FB27 /* AKBehaviorGeneralDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKBehaviorGeneralDoc.h; path = "../../../appkido-PRE-REBOOT/src/Docs/AKBehaviorGeneralDoc.h"; sourceTree = "<group>"; };
-		73FECB56170A27BF00A7FB27 /* AKBehaviorGeneralDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKBehaviorGeneralDoc.m; path = "../../../appkido-PRE-REBOOT/src/Docs/AKBehaviorGeneralDoc.m"; sourceTree = "<group>"; };
 		73FECB8D170AA0D700A7FB27 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DevToolsView.xib; sourceTree = "<group>"; };
 		F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMXMLWriter.m; sourceTree = "<group>"; };
 		F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMXMLWriter.h; sourceTree = "<group>"; };
@@ -1495,8 +1495,8 @@
 		7369B979060E4BAC00E0C9B6 /* behavior "General" docs */ = {
 			isa = PBXGroup;
 			children = (
-				73FECB55170A27BF00A7FB27 /* AKBehaviorGeneralDoc.h */,
-				73FECB56170A27BF00A7FB27 /* AKBehaviorGeneralDoc.m */,
+				73F3BC8217CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h */,
+				73F3BC8317CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m */,
 				73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */,
 				73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */,
 				73197A840606E025002E4E83 /* AKHeaderFileDoc.h */,
@@ -1961,10 +1961,10 @@
 				73A4ACDB16F35815004E6A1C /* AKTabChain.h in Headers */,
 				73A4ACE016F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
 				737F1DED17021C8A00D560C7 /* AKPopQuizWindowController.h in Headers */,
-				73FECB57170A27C000A7FB27 /* AKBehaviorGeneralDoc.h in Headers */,
 				73DB1379170E176500F3776A /* QuietLog.h in Headers */,
 				73DB1380170E731400F3776A /* AKGlobalsGroupSubtopic.h in Headers */,
 				73DB1386170E75FC00F3776A /* AKGlobalsDoc.h in Headers */,
+				73F3BC8417CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2106,10 +2106,10 @@
 				73A4ACDC16F35815004E6A1C /* AKTabChain.h in Headers */,
 				73A4ACE116F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
 				737F1DEE17021C8A00D560C7 /* AKPopQuizWindowController.h in Headers */,
-				73FECB58170A27C000A7FB27 /* AKBehaviorGeneralDoc.h in Headers */,
 				73DB137A170E176500F3776A /* QuietLog.h in Headers */,
 				73DB1381170E731400F3776A /* AKGlobalsGroupSubtopic.h in Headers */,
 				73DB1387170E75FC00F3776A /* AKGlobalsDoc.h in Headers */,
+				73F3BC8517CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2425,10 +2425,10 @@
 				73A4ACD716F25D81004E6A1C /* AKRandomSearch.m in Sources */,
 				73A4ACDD16F35815004E6A1C /* AKTabChain.m in Sources */,
 				737F1DEF17021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */,
-				73FECB59170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */,
 				73DB137B170E176500F3776A /* QuietLog.m in Sources */,
 				73DB1382170E731400F3776A /* AKGlobalsGroupSubtopic.m in Sources */,
 				73DB1388170E75FC00F3776A /* AKGlobalsDoc.m in Sources */,
+				73F3BC8617CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2566,10 +2566,10 @@
 				73A4ACD816F25D81004E6A1C /* AKRandomSearch.m in Sources */,
 				73A4ACDE16F35815004E6A1C /* AKTabChain.m in Sources */,
 				737F1DF017021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */,
-				73FECB5A170A27C000A7FB27 /* AKBehaviorGeneralDoc.m in Sources */,
 				73DB137C170E176500F3776A /* QuietLog.m in Sources */,
 				73DB1383170E731400F3776A /* AKGlobalsGroupSubtopic.m in Sources */,
 				73DB1389170E75FC00F3776A /* AKGlobalsDoc.m in Sources */,
+				73F3BC8717CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
