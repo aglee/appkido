@@ -15,8 +15,8 @@
 
 <td>
 <ul style="margin-bottom: 8px;">
-<li><a href="AppKiDo-0.996.zip">Download <b>AppKiDo</b> 0.996</a></li>
-<li><a href="AppKiDo-for-iPhone-0.996.zip">Download <b>AppKiDo-for-iPhone</b> 0.996</a></li>
+<li><a href="AppKiDo-0.997.zip">Download <b>AppKiDo</b> 0.997</a></li>
+<li><a href="AppKiDo-for-iPhone-0.997.zip">Download <b>AppKiDo-for-iPhone</b> 0.997</a></li>
 <li><a href="http://github.com/aglee/appkido" target="_blank">Source code</a> on GitHub</li>
 </ul>
 </td>
@@ -46,6 +46,16 @@
 
 
 <table><tr><td>
+
+<h2>Version 0.997 (August 26, 2013)</h2>
+
+<ul>
+<li>Now able to load the most recent docsets from Apple, including Xcode 5 docsets.  (Gory details: there is now an extra &lt;h1> tag in HTML files containing class docs, which was throwing off my parsing logic.)</li>
+<li>Fixed a problem that was causing launch to fail for users whose bash initialization generates any output.  (Gory details: I had an NSTask running xcode-select via bash.  There was a reason for this, but not a very good one.  Now the NSTask runs xcode-select directly.)</li>
+<li>On launch, now detects immediately when the user hasn't downloaded the docset, instead of first parsing a bunch of files, which was a waste of time.  (Gory details: my sanity check is to look for the local HTML file containing NSObject documentation.  If it's not there, the docset needs to be downloaded.)</li>
+<li>Added missing source files (AKBehaviorGeneralDoc.[hm]) whose absence broke the build.  (Gory details: the build did not break for me because the Xcode project was pointing to files that are present on my machine, but in the wrong directory.  When I used a clean checkout to do the build I saw the same problem as others did.)</li>
+</ul>
+
 
 <h2>Version 0.996 (April 5, 2013)</h2>
 
