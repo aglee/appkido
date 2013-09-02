@@ -83,9 +83,8 @@
         [openPanel setDirectoryURL:[NSURL fileURLWithPath:_selectedXcodeAppPath]];
     } else {
         NSURL *appDirURL = [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationDirectory inDomains:NSSystemDomainMask] lastObject];
-        [openPanel setDirectoryURL:appDirURL];
         if (appDirURL) {
-            [openPanel setDirectoryURL:[NSURL fileURLWithPath:appDirURL]];
+            [openPanel setDirectoryURL:appDirURL];
         }
     }
     [openPanel setAllowedFileTypes:@[@"app"]];
