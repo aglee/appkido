@@ -452,6 +452,14 @@
 	}
 	// JJ End
 
+    // 2013-08-26 A recent update to the docs broke the parsing in AppKiDo (iOS 6.1,
+    // I think; I forget the OS X version).  The reason was that class docs have *two*
+    // <h1> tags.  The workaround is to ignore any <h1> tags after the first.
+    if (headerLevel == '1' && [_sectionStack count] > 0)
+    {
+        return;
+    }
+
     // Push a new file section onto the stack, corresponding to the
     // <h#> element we are looking at.  We don't know the length of
     // the section yet, so for now we put 0.  We will fill in the real

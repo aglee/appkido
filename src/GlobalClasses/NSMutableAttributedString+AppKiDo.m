@@ -13,7 +13,7 @@
 - (void)ak_magnifyUsingMultiplier:(float)multiplier
 {
     NSRange selectedRange;
-    unsigned int charIndex;
+    NSUInteger charIndex;
 
     selectedRange = NSMakeRange(0, [self length]);
     charIndex = 0;

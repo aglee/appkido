@@ -38,6 +38,11 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     return self;
 }
 
+- (void)awakeFromNib
+{
+    [self resizeSubviewsWithOldSize:[self bounds].size];
+}
+
 - (void)dealloc
 {
     [self _stopObservingKeyWindowChanges];

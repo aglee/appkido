@@ -22,7 +22,6 @@
 #import "AKDocLocator.h"
 #import "AKDocSetIndex.h"
 #import "AKFindPanelController.h"
-#import "AKLoadDatabaseOperation.h"
 #import "AKPopQuizWindowController.h"
 #import "AKPrefPanelController.h"
 #import "AKPrefUtils.h"
@@ -128,97 +127,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [_favoritesList release];
 
     [super dealloc];
-}
-
-#pragma mark -
-#pragma mark Application startup
-
-- (void)startApplicationStartup
-{
-	// Try to create an AKDatabase instance. If we have problems doing so, the
-    // user might opt to cancel launching the app.
-    _appDatabase = [self _instantiateDatabase];
-    if (_appDatabase == nil)
-    {
-        [NSApp terminate:nil];
-    }
-    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
-
-    // Put up the splash window.
-    _splashWindowController = [[AKSplashWindowController alloc] initWithWindowNibName:@"SplashWindow"];
-    [[_splashWindowController window] center];
-    [[_splashWindowController window] makeKeyAndOrderFront:nil];
-
-    // Start loading the database asynchronously while the splash window stays
-    // on-screen. When the AKLoadDatabaseOperation finishes it will send us a
-    // finishApplicationStartup message.
-// [agl] working on performance
-#if MEASURE_PARSE_SPEED
-[self _timeParseStart];
-#endif //MEASURE_PARSE_SPEED
-
-    AKLoadDatabaseOperation *op = [[AKLoadDatabaseOperation alloc] init];
-
-    [op setAppDatabase:_appDatabase];
-    [op setDatabaseDelegate:_splashWindowController];
-    [_operationQueue addOperation:op];
-}
-
-- (void)finishApplicationStartup
-{
-// [agl] working on performance
-#if MEASURE_PARSE_SPEED
-[self _timeParseEnd];
-#endif //MEASURE_PARSE_SPEED
-
-    // Take down the splash window.
-    [[_splashWindowController window] close];
-    [_splashWindowController release];
-    _splashWindowController = nil;
-
-    // See whether the docset contains local HTML files we can use.
-    if (![self _sanityCheckTheDatabase])
-    {
-        return;
-    }
-    
-    // Finish initializing the UI.
-    [self _initGoMenu];
-    [self _getFavoritesFromPrefs];
-
-    // Register interest in window-close events.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(_handleWindowWillCloseNotification:)
-                                                 name:NSWindowWillCloseNotification
-                                               object:nil];
-
-    // Put the find panel controller in the responder chain.
-    [[AKFindPanelController sharedInstance] setNextResponder:[NSApp nextResponder]];
-    [NSApp setNextResponder:[AKFindPanelController sharedInstance]];
-    
-    // Force the DIGSFindBuffer to initialize.
-    // [agl] ??? Why not in DIGSFindBuffer's +initialize?
-    (void)[DIGSFindBuffer sharedInstance];
-
-    // Reopen windows from the previous session.
-    [self _openInitialWindows];
-
-    // Add the Debug menu if certain conditions are met.
-    AKDebugging *debugging = [AKDebugging sharedInstance];
-
-    [debugging setNextResponder:[NSApp nextResponder]];
-    [NSApp setNextResponder:debugging];
-
-    if ([AKDebugging userCanDebug])
-    {
-        [debugging addDebugMenu];
-    }
-    
-    // Set the provider of system services.
-    [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
-    NSUpdateDynamicServices();
-
-    _finishedInitializing = YES;
 }
 
 #pragma mark -
@@ -550,7 +458,24 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [self startApplicationStartup];
+	// Create the AKDatabase instance or bust.
+    _appDatabase = [[self _instantiateDatabase] retain];
+    if (_appDatabase == nil)
+    {
+        [NSApp terminate:nil];
+    }
+    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
+
+    // Put up the splash window, which will show progress as we populate the database.
+    _splashWindowController = [[AKSplashWindowController alloc] initWithWindowNibName:@"SplashWindow"];
+    [[_splashWindowController window] center];
+    [[_splashWindowController window] makeKeyAndOrderFront:nil];
+
+    // Populate the database asynchronously.
+    NSOperation *op = [[NSInvocationOperation alloc] initWithTarget:self
+                                                           selector:@selector(_populateDatabase)
+                                                             object:nil];
+    [_operationQueue addOperation:op];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
@@ -577,20 +502,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (AKDatabase *)_instantiateDatabase
 {
-    NSMutableArray *errorStrings = [NSMutableArray array];
-    AKDatabase *dbToReturn = nil;
-
+    // Keep trying to create a database instance until we succeed or the user cancels.
 	while (1)
 	{
-		// Try to create a database instance.
-        [errorStrings removeAllObjects];
-#if APPKIDO_FOR_IPHONE
-		dbToReturn = [AKDatabase databaseForIPhonePlatformWithErrorStrings:errorStrings];
-#else
-		dbToReturn = [AKDatabase databaseForMacPlatformWithErrorStrings:errorStrings];
-#endif
-		if (dbToReturn)
-		{
+        NSMutableArray *errorStrings = [NSMutableArray array];
+        AKDatabase *dbToReturn = [AKDatabase databaseWithErrorStrings:errorStrings];
+        
+        if (dbToReturn)
+        {
             return dbToReturn;
         }
 
@@ -598,10 +517,18 @@ static NSTimeInterval g_checkpointTime = 0.0;
         // Dev Tools info, and try again. Note that runDevToolsSetupPanel may
         // modify values for devToolsPathPref and sdkVersionPref (that's what
         // it's for).
-//        [AKPrefUtils setDevToolsPathPref:nil];
+        NSString *alertText = [NSString stringWithFormat:(@"Try re-entering info about your Dev Tools setup.\n\n"
+                                                          @"The gory details:\n\n%@"),
+                               [errorStrings componentsJoinedByString:@"\n"]];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Problem loading docs and/or SDK info"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@"%@", alertText];
+        [alert runModal];
+
         [AKPrefUtils setSDKVersionPref:nil];
-        
-        [self _displayDatabaseCreationErrorStrings:errorStrings];
+
         if (![AKDevToolsPanelController runDevToolsSetupPanel])
         {
             return nil;
@@ -609,71 +536,86 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-- (void)_displayDatabaseCreationErrorStrings:(NSArray *)errorStrings
+- (void)_populateDatabase
 {
-    NSString *alertText = [NSString stringWithFormat:(@"Try re-entering info about your Dev Tools setup.\n\n"
-                                                      @"The gory details:\n\n%@"),
-                           [errorStrings componentsJoinedByString:@"\n"]];
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Problem loading docs and/or SDK info"
-                                     defaultButton:@"OK"
-                                   alternateButton:nil
-                                       otherButton:nil
-                         informativeTextWithFormat:@"%@", alertText];
-    [alert runModal];
+    NSArray *frameworkNames = [AKPrefUtils selectedFrameworkNamesPref];
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AKFoundationOnly"])
+    {
+        // Undocumented debug mode makes testing easier during development.
+        // defaults write com.digitalspokes.appkido AKFoundationOnly YES  # or NO
+        // defaults write com.appkido.appkidoforiphone AKFoundationOnly YES  # or NO
+        frameworkNames = @[@"Foundation"];
+    }
+
+#if MEASURE_PARSE_SPEED
+    [self _timeParseStart];
+#endif //MEASURE_PARSE_SPEED
+    for (NSString *fwName in frameworkNames)
+    {
+        [_appDatabase loadTokensForFrameworkWithName:fwName];
+
+        [[_splashWindowController splashMessage2Field] performSelectorOnMainThread:@selector(setStringValue:)
+                                                                        withObject:fwName
+                                                                     waitUntilDone:NO];
+    }
+#if MEASURE_PARSE_SPEED
+    [self _timeParseEnd];
+#endif //MEASURE_PARSE_SPEED
+
+    // Tell the main thread we're done populating the database, so it can proceed with the
+    // rest of the app initialization.
+    [self performSelectorOnMainThread:@selector(_didPopulateDatabase)
+                           withObject:nil
+                        waitUntilDone:NO];
 }
 
-// If the database is missing NSObject documentation, the user probably has
-// to download the docs.
-//
-// [agl] It would be nice to sanity-check the docset documentation *before*
-// spending all that time iterating through header files and docset files.
-// Xcode is clearly able to do it -- it knows whether to put an "Install"
-// button by the docset.
-//
-// I see nothing in the docset's Info.plist that indicates whether it's
-// downloaded. Purely guessing after browsing a few docsets, I notice that
-// downloaded docsets *don't* seem to have a version.plist file next to
-// Info.plist. But my sample size is too small to trust this as a reliable
-// indicator. It might be worth asking the Apple docs people, or the answer
-// might even be documented somewhere.
-//
-// One solution might be to query the sqlite database for the location of
-// the NSObject class doc, and see if that file exists.
-//
-// Maybe someday this won't be a problem any more because I'll able to
-// assume all downloaded docsets are in ~/Library/Developer.
-//
-// I'm going with the current solution purely because it's quick to
-// implement. I can revisit when I have more time.
-- (BOOL)_sanityCheckTheDatabase
+// Called on the main thread when we're done populating the database.  Finishes
+// initializing the app.
+- (void)_didPopulateDatabase
 {
-    // If we find NSObject docs, assume the docset has been downloaded.
-    if ([[_appDatabase classWithName:@"NSObject"] nodeDocumentation])
+    // Take down the splash window.
+    [[_splashWindowController window] close];
+    [_splashWindowController release];
+    _splashWindowController = nil;
+
+    // Finish initializing the UI.
+    [self _initGoMenu];
+    [self _getFavoritesFromPrefs];
+
+    // Register interest in window-close events.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_handleWindowWillCloseNotification:)
+                                                 name:NSWindowWillCloseNotification
+                                               object:nil];
+
+    // Put the find panel controller in the responder chain.
+    [[AKFindPanelController sharedInstance] setNextResponder:[NSApp nextResponder]];
+    [NSApp setNextResponder:[AKFindPanelController sharedInstance]];
+
+    // Force the DIGSFindBuffer to initialize.
+    // [agl] ??? Why not in DIGSFindBuffer's +initialize?
+    (void)[DIGSFindBuffer sharedInstance];
+
+    // Reopen windows from the previous session.
+    [self _openInitialWindows];
+
+    // Add the Debug menu if certain conditions are met.
+    AKDebugging *debugging = [AKDebugging sharedInstance];
+
+    [debugging setNextResponder:[NSApp nextResponder]];
+    [NSApp setNextResponder:debugging];
+
+    if ([AKDebugging userCanDebug])
     {
-        return YES;
+        [debugging addDebugMenu];
     }
 
-    // Prompt the user to either select a different docset or quit.
-    NSString *alertText = [NSString stringWithFormat:(@"The selected docset is missing HTML files.\n\n"
-                                                      @"You can tell Xcode to download the docset by going to Xcode > Preferences > Downloads > Documentation.\n\n"
-                                                      @"Alternatively, you can try selecting a different SDK."
-                                                      )];
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Missing HTML files"
-                                     defaultButton:@"OK"
-                                   alternateButton:nil
-                                       otherButton:nil
-                         informativeTextWithFormat:@"%@", alertText];
-    [alert runModal];
-
-    if (![AKDevToolsPanelController runDevToolsSetupPanel])
-    {
-        [NSApp terminate:nil];
-    }
-
-    // The user didn't quit, so redo app startup from the top.
-    [self performSelector:@selector(startApplicationStartup) withObject:nil afterDelay:0];
-
-    return NO;
+    // Set the provider of system services.
+    [NSApp setServicesProvider:[[[AKServicesProvider alloc] init] autorelease]];
+    NSUpdateDynamicServices();
+    
+    _finishedInitializing = YES;
 }
 
 - (void)_initGoMenu

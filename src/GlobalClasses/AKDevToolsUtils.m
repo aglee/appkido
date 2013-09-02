@@ -8,6 +8,7 @@
 #import "AKDevToolsUtils.h"
 
 #import "ALSimpleTask.h"
+#import "NSString+AppKiDo.h"
 
 @implementation AKDevToolsUtils
 
@@ -42,13 +43,31 @@
 //
 + (NSString *)pathReturnedByXcodeSelect
 {
-	ALSimpleTask *tw = [[[ALSimpleTask alloc] initWithCommandPath:@"/bin/bash"
-                                                        arguments:(@[
-                                                                   @"-l",
-                                                                   @"-c",
-                                                                   @"echo -n `/usr/bin/xcode-select -print-path`"
-                                                                   ])]
-                        autorelease];
+// The reason I invoked xcode-select via bash was that there is an environment variable,
+// DEVELOPER_DIR, that, if set, overrides the Xcode path.  The problem is: if a person's
+// .bashrc executes commands that have output, this throws off my extracting of the Xcode
+// path from that output.  And in any case, people might not have bash as their primary
+// shell.  So, better to call xcode-select directly after all.  The user can always use
+// the prefs panel to select a different Xcode.
+//
+// On 2013-06-16, blenko sent an alternate solution: "My fix, in APDevToolUtils.m at line
+// 46, add @"--noprofile", as an argument to bash (it must appear before the -l and -c
+// arguments)."  But the original point was to pick up any value that bash startup sets
+// for DEVELOPER_DIR, so it's simpler just to not use bash at all.  Still, nice to know
+// about --noprofile.
+//
+//	ALSimpleTask *tw = [[[ALSimpleTask alloc] initWithCommandPath:@"/bin/bash"
+//                                                        arguments:(@[
+//                                                                   @"-l",
+//                                                                   @"-c",
+//                                                                   @"echo -n `/usr/bin/xcode-select -print-path`"
+//                                                                   ])]
+//                        autorelease];
+
+    // Note: passing either -print-path or --print-path works when calling xcode-select
+    // from a shell, but only --print-path works when using NSTask.
+	ALSimpleTask *tw = [[[ALSimpleTask alloc] initWithCommandPath:@"/usr/bin/xcode-select"
+                                                        arguments:@[ @"--print-path" ]] autorelease];
 	if (![tw runTask])
 	{
 		NSLog(@"Failed to launch xcode-select. Reason: %@.", [tw outputString]);
@@ -61,7 +80,7 @@
         return nil;
     }
 
-    return [tw outputString];
+    return [[tw outputString] ak_trimWhitespace];
 }
 
 + (NSString *)devToolsPathFromXcodeAppPath:(NSString *)xcodeAppPath

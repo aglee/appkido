@@ -117,6 +117,13 @@ Send release email to cocoa-dev if release is significant enough
 	Cc individuals who might be interested but not be on cocoa-dev.
 
 
+---- BROWSE WITH SQLITE ----
+
+ls ~/Library/Developer/Shared/Documentation/DocSets/
+
+sqlite3 ~/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleiOS6.1.iOSLibrary.docset/Contents/Resources/docSet.dsidx
+
+sqlite3 ~/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleiOS6.1.iOSLibrary.docset/Contents/Resources/docSet.dsidx
 
 
 

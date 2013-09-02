@@ -67,15 +67,15 @@
  */
 - (NSString *)basePathForHeaders;
 
-/*! Returns absolute directories containing header files. */
+/*! Returns absolute paths to directories containing header files. */
 - (NSSet *)headerDirsForFramework:(NSString *)frameworkName;
 
 /*! Returns paths relative to -basePathForHeaders. */
 - (NSArray *)headerPathsForFramework:(NSString *)frameworkName;
 
 /*!
- * The doc paths returned by the xxxDocPathsForFramework: methods are relative
- * to this directory.
+ * Root directory for doc files.  The "relative doc paths" returned by various methods of
+ * this class are relative to this directory.
  */
 - (NSString *)baseDirForDocs;
 
@@ -92,5 +92,11 @@
 
 /*! Returns paths relative to -baseDirForDocs. */
 - (NSArray *)globalsDocPathsForFramework:(NSString *)frameworkName;
+
+/*!
+ * Returns relative path to the file that contains the documentation for the specified
+ * class.  We expect to find only one such file.
+ */
+- (NSString *)relativePathToDocsForClassNamed:(NSString *)nameOfClass;
 
 @end

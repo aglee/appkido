@@ -57,21 +57,6 @@
 + (AKAppDelegate *)appDelegate;
 
 #pragma mark -
-#pragma mark Application startup
-
-/*!
- * Called by applicationDidFinishLaunching: -- and possibly again by
- * finishApplicationStartup if it finds something amiss with the database.
- */
-- (void)startApplicationStartup;
-
-/*!
- * Called by AKLoadDatabaseOperation after the docset has been loaded into the
- * database.
- */
-- (void)finishApplicationStartup;
-
-#pragma mark -
 #pragma mark Getters and setters
 
 - (AKDatabase *)appDatabase;

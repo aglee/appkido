@@ -20,7 +20,7 @@
 #import "NSString+AppKiDo.h"
 
 @interface AKClassNode ()
-@property (nonatomic, weak) AKClassNode *parentClass;
+@property (nonatomic, unsafe_unretained) AKClassNode *parentClass;
 @end
 
 @implementation AKClassNode
