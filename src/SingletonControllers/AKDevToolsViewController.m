@@ -79,7 +79,15 @@
     [openPanel setDelegate:self];
     [openPanel setResolvesAliases:YES];
 
-    [openPanel setDirectoryURL:[NSURL fileURLWithPath:_selectedXcodeAppPath]];
+    if (_selectedXcodeAppPath) {
+        [openPanel setDirectoryURL:[NSURL fileURLWithPath:_selectedXcodeAppPath]];
+    } else {
+        NSURL *appDirURL = [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationDirectory inDomains:NSSystemDomainMask] lastObject];
+        [openPanel setDirectoryURL:appDirURL];
+        if (appDirURL) {
+            [openPanel setDirectoryURL:[NSURL fileURLWithPath:appDirURL]];
+        }
+    }
     [openPanel setAllowedFileTypes:@[@"app"]];
     
     [openPanel beginSheetModalForWindow:[_xcodeAppPathField window]
