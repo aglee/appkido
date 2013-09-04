@@ -158,10 +158,11 @@ static BOOL isPunctuation(char c)
         }
         else if (strcmp(token, "@property") == 0)
         {
-            [self _skipRemainderOfLine];
+            [self _skipPastTerminatingSemicolon];
         }
         else if (strcmp(token, "#define") == 0)
         {
+            // [agl] Might be multi-line macro.
             [self _skipRemainderOfLine];
         }
         else if (strcmp(token, "(") == 0)
@@ -308,6 +309,10 @@ static BOOL isPunctuation(char c)
         else if (strcmp(token, "@end") == 0)
         {
             return;
+        }
+        else if (strcmp(token, "@property") == 0)
+        {
+            [self _skipPastTerminatingSemicolon];
         }
         else if (strcmp(token, "<") == 0)
         {
@@ -567,11 +572,26 @@ static BOOL isPunctuation(char c)
     }
 }
 
+// Assumes we are on a semicolon-terminated statement.
+- (void)_skipPastTerminatingSemicolon
+{
+    char buffer[AKParserTokenBufferSize];
+
+    while (([self _parseTokenIntoBuffer:buffer]))
+    {
+        if (strcmp(buffer, ";") == 0)
+        {
+            return;
+        }
+    }
+}
+
+// Skips to the end of the line, which may be the current position.
+// Does *not* consume the newline/return character if one is found.
 - (void)_skipRemainderOfLine
 {
     while (_current < _dataEnd)
     {
-        // [agl] not exactly right for \n\r line endings, but ok
         if ((*_current == '\n') || (*_current == '\r'))
         {
             return;
@@ -580,6 +600,7 @@ static BOOL isPunctuation(char c)
     }
 }
 
+// Skips to the next whitespace character, which may be the current character.
 - (void)_skipWhitespace
 {
     while (_current < _dataEnd)
