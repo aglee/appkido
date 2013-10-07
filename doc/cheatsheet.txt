@@ -109,12 +109,9 @@ Upload files to web site
 	then AppKiDo.version (note this is last; it's used by the "check for new version" feature, so it shouldn't be posted until everything else is in place for the user to actually get the newer version)
 
 Delete obsolete versions from web site (keep a version or two around so people can revert)
-	[agl] when I drop 10.4 support, make a note of the last version that supports it
+	[agl] when I drop pre-10.4.3 support, make a note of the last version that supports it
 
 Sanity-check links on HTML pages
-
-Send release email to cocoa-dev if release is significant enough
-	Cc individuals who might be interested but not be on cocoa-dev.
 
 
 ---- BROWSE WITH SQLITE ----
