@@ -87,7 +87,9 @@
 
     for (AKProtocolNode *protocolNode in _protocolNodes)
     {
-        [result addObjectsFromArray:[protocolNode implementedProtocols]];
+        if (protocolNode != self) {
+            [result addObjectsFromArray:[protocolNode implementedProtocols]];
+        }
     }
 
     return result;
