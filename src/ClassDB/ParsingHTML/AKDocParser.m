@@ -404,7 +404,7 @@
         [parentSection addChildSection:childSection];
     }
 
-      // release here
+    [siblings release];  // release here
 }
 
 // on entry, _current points to the opening angle bracket of an <hX> tag;
