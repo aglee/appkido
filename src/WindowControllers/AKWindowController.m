@@ -850,12 +850,17 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [(NSWindow *)[aNotification object] orderFront:nil];
 }
 
-// "If you want the closing of a window to make both window and window controller go away when it isn’t part of a document, your subclass of NSWindowController can observe the NSWindowWillCloseNotification notification or, as the window delegate, implement the windowWillClose: method."
-// http://developer.apple.com/library/Mac/documentation/Cocoa/Conceptual/WinPanel/Concepts/UsingWindowController.html
-- (void)windowWillClose:(NSNotification *)aNotification
-{
-    [self autorelease];
-}
+// [agl] Not sure why this is here.  The app delegate listens for
+// NSWindowWillCloseNotification and removes the window controller from its
+// array of window controllers.  No need to do that *and* implement
+// windowWillClose: -- right?
+//
+//// "If you want the closing of a window to make both window and window controller go away when it isn’t part of a document, your subclass of NSWindowController can observe the NSWindowWillCloseNotification notification or, as the window delegate, implement the windowWillClose: method."
+//// http://developer.apple.com/library/Mac/documentation/Cocoa/Conceptual/WinPanel/Concepts/UsingWindowController.html
+//- (void)windowWillClose:(NSNotification *)aNotification
+//{
+//    [self autorelease];
+//}
 
 #pragma mark -
 #pragma mark Private methods

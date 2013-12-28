@@ -764,6 +764,15 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if ([windowDelegate isKindOfClass:[AKWindowController class]])
     {
+        // I've been getting some crashes after 0.998 that look like messages
+        // are getting sent to a dealloc'ed object. I *suspect* it's because I
+        // was over-releasing the window controller (see windowWillClose: in
+        // AKWindowController). Between commenting that method out and adding
+        // a retain/autorelease here, I think I fixed that.
+        //
+        // As evidence, I was able to get a crash consistently while running in
+        // Instruments and closing a window.  Now, no longer.
+        [[windowDelegate retain] autorelease];
         [_windowControllers removeObjectIdenticalTo:windowDelegate];
     }
 }
