@@ -472,9 +472,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [[_splashWindowController window] makeKeyAndOrderFront:nil];
 
     // Populate the database asynchronously.
-    NSOperation *op = [[NSInvocationOperation alloc] initWithTarget:self
-                                                           selector:@selector(_populateDatabase)
-                                                             object:nil];
+    NSOperation *op = [[[NSInvocationOperation alloc] initWithTarget:self
+                                                            selector:@selector(_populateDatabase)
+                                                              object:nil] autorelease];
     [_operationQueue addOperation:op];
 }
 
