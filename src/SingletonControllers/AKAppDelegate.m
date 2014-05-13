@@ -310,11 +310,17 @@ static NSTimeInterval g_checkpointTime = 0.0;
                                                          @"\n\nWould you like to go to the AppKiDo web page?"),
                               [latestVersion displayString],
                               [thisVersion displayString]];
+    //  fritza@mac.com 13-May-2014
+    //  An annoying, spurious warning on a computed format string.
+    //  Suppress it.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-security"
     NSInteger whichButton = NSRunAlertPanel(@"Newer version available",  // title
                                             alertMessage,  // msg
                                             @"Yes, go to web site",  // defaultButton
                                             nil,  // alternateButton
                                             @"No");  // otherButton
+#pragma clang diagnostic pop
     if (whichButton == NSAlertDefaultReturn)
     {
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:AKHomePageURL]];
