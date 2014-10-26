@@ -778,6 +778,12 @@ static NSTimeInterval g_checkpointTime = 0.0;
         //
         // As evidence, I was able to get a crash consistently while running in
         // Instruments and closing a window.  Now, no longer.
+        //
+        // [2014-10-26] More info: I reproduced the crash by commenting this line
+        // out (the retain/autorelease) and closing a window with the Search
+        // quicklist selected and a non-zero number of search results.  Maybe I
+        // have a memory bug in the Search stuff.  Anyway, it'll be moot when I
+        // go to ARC.
         [[windowDelegate retain] autorelease];
         [_windowControllers removeObjectIdenticalTo:windowDelegate];
     }
