@@ -97,9 +97,6 @@
 #pragma mark -
 #pragma mark Dev Tools paths
 
-/*! Returns NO if any path component ends with ".app". */
-+ (BOOL)devToolsPathIsOldStyle:(NSString *)devToolsPath;
-
 /*! Used by looksLikeValidDevToolsPath:errorStrings:. */
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath;
 

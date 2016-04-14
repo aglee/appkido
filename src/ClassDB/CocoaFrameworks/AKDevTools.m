@@ -257,7 +257,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     [self _findDocSetsInDirectory:standardDocSetsLocation];
 }
 
-// Locates all docsets in the given directory. Adds entries to _installedSDKPathsBySDKVersion.
+// Locates all SDKs in the given directory. Adds entries to _installedSDKPathsBySDKVersion.
 - (void)_findSDKsInDirectory:(NSString *)sdkSearchPath
 {
     NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:sdkSearchPath error:NULL];

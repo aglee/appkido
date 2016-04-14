@@ -16,26 +16,11 @@
 
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {
-    // Are we using the standalone Xcode introduced by Xcode 4.3
-    // or the older package-installation model?
-    if ([AKDevTools devToolsPathIsOldStyle:devToolsPath])
-    {
-        return (@[
-                @"Platforms/iPhoneOS.platform",
-                @"Platforms/iPhoneSimulator.platform",
-                @"Applications/Xcode.app",
-                @"Documentation",
-                @"Examples",
-                ]);
-    }
-    else
-    {
-        return (@[
-                @"Platforms/iPhoneOS.platform",
-                @"Platforms/iPhoneSimulator.platform",
-                @"Documentation",
-                ]);
-    }
+    return @[
+             @"Platforms/iPhoneOS.platform",
+             @"Platforms/iPhoneSimulator.platform",
+             @"Documentation",
+             ];
 }
 
 - (BOOL)isValidDocSetName:(NSString *)fileName

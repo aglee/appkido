@@ -16,23 +16,10 @@
 
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {
-    // Are we using the standalone Xcode introduced by Xcode 4.3
-    // or the older package-installation model?
-    if ([AKDevTools devToolsPathIsOldStyle:devToolsPath])
-    {
-        return (@[
-                @"Applications/Xcode.app",
-                @"Documentation",
-                @"Examples",
-                ]);
-    }
-    else
-    {
-        return (@[
-                @"Platforms/MacOSX.platform",
-                @"Documentation",
-                ]);
-    }
+    return @[
+             @"Platforms/MacOSX.platform",
+             @"Documentation",
+             ];
 }
 
 - (BOOL)isValidDocSetName:(NSString *)fileName
@@ -44,16 +31,7 @@
 
 - (NSString *)sdkSearchPath
 {
-    // Are we using the standalone Xcode introduced by Xcode 4.3
-    // or the older Dev Tools installation model?
-    if ([AKDevTools devToolsPathIsOldStyle:[self devToolsPath]])
-    {
-        return [[self devToolsPath] stringByAppendingPathComponent:@"SDKs/"];
-    }
-    else
-    {
-        return [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/MacOSX.platform/Developer/SDKs/"];
-    }
+    return [[self devToolsPath] stringByAppendingPathComponent:@"Platforms/MacOSX.platform/Developer/SDKs/"];
 }
 
 @end
