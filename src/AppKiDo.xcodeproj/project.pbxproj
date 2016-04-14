@@ -2159,7 +2159,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = AK;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Andy Lee";
 			};
 			buildConfigurationList = 73DA1ED0089AEA560016F230 /* Build configuration list for PBXProject "AppKiDo" */;
@@ -2714,6 +2714,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.digitalspokes.AppKiDo;
 				PRODUCT_NAME = AppKiDo;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2727,6 +2728,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.digitalspokes.AppKiDo;
 				PRODUCT_NAME = AppKiDo;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -2741,6 +2743,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "APPKIDO_FOR_IPHONE=1";
 				INFOPLIST_FILE = "Info-iPhone.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appkido.appkidoforiphone;
 				PRODUCT_NAME = "AppKiDo-for-iPhone";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2755,6 +2758,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "APPKIDO_FOR_IPHONE=1";
 				INFOPLIST_FILE = "Info-iPhone.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appkido.appkidoforiphone;
 				PRODUCT_NAME = "AppKiDo-for-iPhone";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -2764,8 +2768,8 @@
 		73DA1ED1089AEA560016F230 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2804,7 +2808,6 @@
 		73DA1ED2089AEA560016F230 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Andrew Lee";
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = NO;
