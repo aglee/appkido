@@ -30,7 +30,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-/*! Designated initialzer. */
+/*! Designated initializer. */
 - (id)initWithDatabase:(AKDatabase *)database fileURL:(NSURL *)outfileURL;
 
 #pragma mark -
