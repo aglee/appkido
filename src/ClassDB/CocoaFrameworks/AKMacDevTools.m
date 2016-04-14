@@ -7,6 +7,7 @@
 //
 
 #import "AKMacDevTools.h"
+#import "NSString+AppKiDo.h"
 
 @implementation AKMacDevTools
 
@@ -34,28 +35,11 @@
     }
 }
 
-- (NSArray *)docSetSearchPaths
-{
-    // NOTE: Order matters. On 2011-10-31, Gerriet reported that NSFileVersion (new in 10.7) wasn't
-    // appearing in AppKiDo even though it did appear in the Xcode doc window. I reproduced the bug
-    // and noticed that I had *two* Lion docsets: one in AKLibraryDocSetDirectory which did not
-    // contain NSFileVersion, and a newer one in AKSharedDocSetDirectory which did. So I moved
-    // AKSharedDocSetDirectory later in this array so that it "wins" when docsets appear in both
-    // places. This fixed the problem, at least for me.
-    return (@[
-            [[self devToolsPath] stringByAppendingPathComponent:@"Documentation/DocSets/"],
-            AKLibraryDocSetDirectory,
-            AKSharedDocSetDirectory,
-
-            // New directories to look in as of Xcode 4.3.
-            [NSHomeDirectory() stringByAppendingPathComponent:AKSharedDocSetDirectory],
-            ]);
-}
-
 - (BOOL)isValidDocSetName:(NSString *)fileName
 {
-    return ([fileName hasPrefix:@"com.apple"]
-            && [fileName hasSuffix:@"CoreReference.docset"]);
+    return ([fileName hasPrefix:@"com.apple.adc.documentation."]
+            && [fileName ak_contains:@"OSX"]
+            && [fileName hasSuffix:@".docset"]);
 }
 
 - (NSString *)sdkSearchPath

@@ -8,23 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-/*! At some point docsets (at least some of them) started getting installed here. */
-#define AKSharedDocSetDirectory @"/Library/Developer/Shared/Documentation/DocSets"
-
-/*! Xcode 4, up to 4.2, puts the docsets here. */
-#define AKLibraryDocSetDirectory @"/Library/Developer/Documentation/DocSets"
-
-// [agl] Long-term, it *may* make sense to get rid of Dev Tools installations as a
-// core AppKiDo concept. Instead, there are SDKs in various expected places and there are
-// docsets in various expected places. We look for matching SDK/docset pairs (based on
-// version number), not Dev Tools installations. I suspect this is how Dash avoids making
-// users think about picking one.
-
 /*!
- * Abstract class that represents an Apple Dev Tools installation as it relates
- * to development for a particular platform. At the moment the concrete
+ * Abstract class that represents an Apple developer tools installation as it
+ * relates to development for a particular platform. At the moment the concrete
  * subclasses are AKMacDevTools and AKIPhoneDevTools. Who knows, maybe someday
- * there will be AKWristwatchDevTools and AKTelevisionDevTools.
+ * there will be AKWatchOSDevTools and AKAppleTVDevTools.
  *
  * "Old-style" vs. "standalone" Dev Tools
  * ======================================

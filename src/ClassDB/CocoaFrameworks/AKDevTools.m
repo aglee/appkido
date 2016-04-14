@@ -145,12 +145,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 #pragma mark -
 #pragma mark Docset paths
 
-- (NSArray *)docSetSearchPaths
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
 - (BOOL)isValidDocSetName:(NSString *)fileName
 {
     DIGSLogError_MissingOverride();
@@ -258,10 +252,9 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
 - (void)_findInstalledDocSetPaths
 {
-    for (NSString *docSetSearchPath in [self docSetSearchPaths])
-    {
-        [self _findDocSetsInDirectory:docSetSearchPath];
-    }
+    NSString *standardDocSetsLocation = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Developer/Shared/Documentation/DocSets"];
+
+    [self _findDocSetsInDirectory:standardDocSetsLocation];
 }
 
 // Locates all docsets in the given directory. Adds entries to _installedSDKPathsBySDKVersion.
