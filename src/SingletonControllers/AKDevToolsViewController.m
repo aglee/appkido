@@ -146,12 +146,6 @@
                 selectedSDKVersion:(NSString *)selectedSDKVersion
                   docSetSDKVersion:(NSString *)docSetSDKVersion
 {
-//    NSMutableString *explanationString = [NSMutableString string];
-//
-//    [explanationString appendFormat:@"Search paths for docsets: %@.\n\n",
-//     [[devTools docSetSearchPaths] componentsJoinedByString:@", "]];
-//    [explanationString appendFormat:@"Search path for SDKs: %@.\n\n", [devTools sdkSearchPath]];
-
     if (selectedSDKVersion == nil)
     {
         return @"";

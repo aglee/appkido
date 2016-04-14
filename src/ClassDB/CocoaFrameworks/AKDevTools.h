@@ -118,14 +118,6 @@
 #pragma mark Docset paths
 
 /*!
- * Subclasses must override.  Returns the directories in which we look for docsets.
- *
- * Docsets are sometimes outside of the Dev Tools directory. At some point (I forget
- * when) Xcode started installing them in /Library/Developer.
- */
-- (NSArray *)docSetSearchPaths;
-
-/*!
  * Subclasses must override.  Checks whether fileName is a valid docset name for
  * the platform we address.
  */
