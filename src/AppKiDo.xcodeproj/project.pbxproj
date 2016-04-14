@@ -1303,8 +1303,6 @@
 		731D743A0E4357F000C54AD5 /* export */ = {
 			isa = PBXGroup;
 			children = (
-				F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */,
-				F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */,
 				7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */,
 				7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */,
 			);
@@ -1340,7 +1338,7 @@
 		732BD5FB05ED90900055715D /* -- MODEL CLASSES -- */ = {
 			isa = PBXGroup;
 			children = (
-				739CD2600E4498AC00CFA042 /* Dev Tools */,
+				739CD2600E4498AC00CFA042 /* dev tools */,
 				734B75E716D14B700027514D /* docsets */,
 				730030820498501500A80007 /* database */,
 				73C8ABF50836B2EE0000E3F7 /* parsers */,
@@ -1392,7 +1390,7 @@
 		732BD61605ED913B0055715D /* -- SUPPORT CLASSES -- */ = {
 			isa = PBXGroup;
 			children = (
-				73D237000D4561C300EF7503 /* fmdb */,
+				738FD8EC1CBF692B007C9B99 /* Third-Party */,
 				734B2D8D0810C882001D5F3A /* DIGS */,
 				73A1B612061B6A7B002C95F1 /* AppKiDo constants */,
 				73F8F99816ECEA21001650D7 /* AppKiDo Cocoa categories */,
@@ -1563,7 +1561,25 @@
 			name = "class and protocol topics";
 			sourceTree = "<group>";
 		};
-		739CD2600E4498AC00CFA042 /* Dev Tools */ = {
+		738FD8EC1CBF692B007C9B99 /* Third-Party */ = {
+			isa = PBXGroup;
+			children = (
+				73D237000D4561C300EF7503 /* fmdb */,
+				738FD8ED1CBF692B007C9B99 /* TCMXMLWriter */,
+			);
+			path = "Third-Party";
+			sourceTree = "<group>";
+		};
+		738FD8ED1CBF692B007C9B99 /* TCMXMLWriter */ = {
+			isa = PBXGroup;
+			children = (
+				F28A5B2A13E5C73600BB8F76 /* TCMXMLWriter.h */,
+				F28A5B2913E5C73600BB8F76 /* TCMXMLWriter.m */,
+			);
+			path = TCMXMLWriter;
+			sourceTree = "<group>";
+		};
+		739CD2600E4498AC00CFA042 /* dev tools */ = {
 			isa = PBXGroup;
 			children = (
 				731657910FE48AE70097F3A1 /* AKDevTools.h */,
@@ -1573,7 +1589,7 @@
 				73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */,
 				73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */,
 			);
-			name = "Dev Tools";
+			name = "dev tools";
 			path = ClassDB;
 			sourceTree = "<group>";
 		};
