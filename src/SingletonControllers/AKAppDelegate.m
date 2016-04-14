@@ -726,22 +726,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (NSWindow *)_frontmostBrowserWindow
 {
-    NSInteger numWindows;
+    NSArray<NSNumber *> *windowNumbers = [NSWindow windowNumbersWithOptions:NSWindowNumberListAllSpaces];
 
-    NSCountWindows(&numWindows);
-
-    NSInteger windowList[numWindows];
-
-    NSWindowList(numWindows, windowList);
-
-    int i;
-    for (i = 0; i < numWindows; i++)
+    for (NSNumber *windowNum in windowNumbers)
     {
-        NSInteger windowNum = windowList[i];
-        NSWindow *win = [NSApp windowWithWindowNumber:windowNum];
-        id del = [win delegate];
+        NSWindow *win = [NSApp windowWithWindowNumber:[windowNum integerValue]];
+        id windowDelegate = [win delegate];
 
-        if ([del isKindOfClass:[AKWindowController class]])
+        if ([windowDelegate isKindOfClass:[AKWindowController class]])
         {
             return win;
         }
@@ -789,29 +781,21 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-// takes snapshot of all open windows, returns array of dictionaries
-// suitable for NSUserDefaults
+// Takes snapshot of all open windows.  Returns array of dictionaries
+// suitable for NSUserDefaults.
 - (NSArray *)_allWindowsAsPrefArray
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSInteger numWindows;
+    NSArray<NSNumber *> *windowNumbers = [NSWindow windowNumbersWithOptions:NSWindowNumberListAllSpaces];
 
-    NSCountWindows(&numWindows);
-
-    NSInteger windowList[numWindows];
-
-    NSWindowList(numWindows, windowList);
-
-    NSInteger i;
-    for (i = 0; i < numWindows; i++)
+    for (NSNumber *windowNum in windowNumbers)
     {
-        NSInteger windowNum = windowList[i];
-        NSWindow *win = [NSApp windowWithWindowNumber:windowNum];
-        id del = [win delegate];
+        NSWindow *win = [NSApp windowWithWindowNumber:[windowNum integerValue]];
+        id windowDelegate = [win delegate];
 
-        if ([del isKindOfClass:[AKWindowController class]])
+        if ([windowDelegate isKindOfClass:[AKWindowController class]])
         {
-            AKWindowController *wc = (AKWindowController *)del;
+            AKWindowController *wc = (AKWindowController *)windowDelegate;
             AKSavedWindowState *savedWindowState = [[[AKSavedWindowState alloc] init] autorelease];
 
             [wc putSavedWindowStateInto:savedWindowState];
