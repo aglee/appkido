@@ -135,7 +135,7 @@
     }
     else
     {
-        AKDatabase *db = [NSApp.delegate appDatabase];
+        AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
         AKProtocolNode *protocolNode = [db protocolWithName:protocolName];
 
         if (!protocolNode)

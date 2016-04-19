@@ -121,7 +121,7 @@
         return nil;
     }
 
-    AKDatabase *db = [NSApp.delegate appDatabase];
+    AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
     if (![db hasFrameworkWithName:fwName])
     {
         DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);

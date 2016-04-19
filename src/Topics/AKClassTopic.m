@@ -154,7 +154,7 @@
     }
     else
     {
-        AKDatabase *db = [NSApp.delegate appDatabase];
+        AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
         AKClassNode *classNode = [db classWithName:className];
 
         if (!classNode)
