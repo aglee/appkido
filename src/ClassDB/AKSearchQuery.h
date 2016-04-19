@@ -7,11 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
+typedef NS_ENUM(unsigned int, AKSearchComparison) {
     AKSearchForSubstring = 0,
     AKSearchForExactMatch = 1,
     AKSearchForPrefix = 2,
-} AKSearchComparison;
+};
 
 @class AKDatabase;
 
@@ -64,7 +64,7 @@ typedef enum {
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithDatabase:(AKDatabase *)db;
+- (instancetype)initWithDatabase:(AKDatabase *)db NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Searching
@@ -73,6 +73,6 @@ typedef enum {
 - (void)includeEverythingInSearch;
 
 /*! Returns a sorted array of AKDocLocators. */
-- (NSArray *)queryResults;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *queryResults;
 
 @end

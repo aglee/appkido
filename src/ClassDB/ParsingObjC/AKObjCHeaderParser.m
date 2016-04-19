@@ -36,7 +36,7 @@ static BOOL isPunctuation(char c)
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    return [[filePath pathExtension] isEqualToString:@"h"];
+    return [filePath.pathExtension isEqualToString:@"h"];
 }
 
 #pragma mark -
@@ -93,8 +93,8 @@ static BOOL isPunctuation(char c)
 
     // Parse the class name and get or create the node for it.
     (void)[self _parseTokenIntoBuffer:token];
-    NSString *className = [NSString stringWithUTF8String:token];
-    AKClassNode *classNode = [[self targetDatabase] classWithName:className];
+    NSString *className = @(token);
+    AKClassNode *classNode = [self.targetDatabase classWithName:className];
 
     if (!classNode)
     {
@@ -104,9 +104,9 @@ static BOOL isPunctuation(char c)
         // framework. We will set the class's real owning framework when we know
         // we're parsing the class declaration.
         classNode = [AKClassNode nodeWithNodeName:className
-                                         database:[self targetDatabase]
+                                         database:self.targetDatabase
                                     frameworkName:nil];
-        [[self targetDatabase] addClassNode:classNode];
+        [self.targetDatabase addClassNode:classNode];
     }
 
     // Assume we're parsing a class declaration unless and until we learn it's a
@@ -191,8 +191,8 @@ static BOOL isPunctuation(char c)
 
     if (resultNode == classNode)
     {
-        [classNode setHeaderFileWhereDeclared:[self currentPath]];
-        [classNode setNameOfOwningFramework:[self targetFrameworkName]];
+        classNode.headerFileWhereDeclared = self.currentPath;
+        classNode.nameOfOwningFramework = self.targetFrameworkName;
     }
 }
 
@@ -207,15 +207,15 @@ static BOOL isPunctuation(char c)
 
     // Parse the superclass name and get or create the node for it.
     (void)[self _parseTokenIntoBuffer:token];
-    NSString *parentClassName = [NSString stringWithUTF8String:token];
-    AKClassNode *parentClassNode = [[self targetDatabase] classWithName:parentClassName];
+    NSString *parentClassName = @(token);
+    AKClassNode *parentClassNode = [self.targetDatabase classWithName:parentClassName];
 
     if (!parentClassNode)
     {
         parentClassNode = [AKClassNode nodeWithNodeName:parentClassName
-                                               database:[self targetDatabase]
-                                          frameworkName:[self targetFrameworkName]];
-        [[self targetDatabase] addClassNode:parentClassNode];
+                                               database:self.targetDatabase
+                                          frameworkName:self.targetFrameworkName];
+        [self.targetDatabase addClassNode:parentClassNode];
     }
 
     // Connect the class to its superclass.
@@ -226,7 +226,7 @@ static BOOL isPunctuation(char c)
     // add a class twice to its superclass.  We stick with the
     // first declaration we encounter, since it looks like this is
     // always the #ifndef WIN32 case.
-    if ([classNode parentClass] == nil)
+    if (classNode.parentClass == nil)
     {
         [parentClassNode addChildClass:classNode];
     }
@@ -253,7 +253,7 @@ static BOOL isPunctuation(char c)
     }
     else
     {
-        categoryName = [NSString stringWithUTF8String:token];
+        categoryName = @(token);
         [self _skipPastClosingParen];
     }
 
@@ -263,8 +263,8 @@ static BOOL isPunctuation(char c)
     if (categoryNode == nil)
     {
         categoryNode = [AKCategoryNode nodeWithNodeName:categoryName
-                                               database:[self targetDatabase]
-                                          frameworkName:[self targetFrameworkName]];
+                                               database:self.targetDatabase
+                                          frameworkName:self.targetFrameworkName];
         [classNode addCategory:categoryNode];
     }
 
@@ -284,18 +284,18 @@ static BOOL isPunctuation(char c)
 {
     char token[AKParserTokenBufferSize];
     (void)[self _parseTokenIntoBuffer:token];
-    NSString *protocolName = [NSString stringWithUTF8String:token];
-    AKProtocolNode *resultNode = [[self targetDatabase] protocolWithName:protocolName];
+    NSString *protocolName = @(token);
+    AKProtocolNode *resultNode = [self.targetDatabase protocolWithName:protocolName];
 
     if (!resultNode)
     {
         resultNode = [AKProtocolNode nodeWithNodeName:protocolName
-                                             database:[self targetDatabase]
-                                        frameworkName:[self targetFrameworkName]];
-        [[self targetDatabase] addProtocolNode:resultNode];
+                                             database:self.targetDatabase
+                                        frameworkName:self.targetFrameworkName];
+        [self.targetDatabase addProtocolNode:resultNode];
     }
 
-    [resultNode setHeaderFileWhereDeclared:[self currentPath]];
+    resultNode.headerFileWhereDeclared = self.currentPath;
 
     while (([self _parseTokenIntoBuffer:token]))
     {
@@ -357,8 +357,8 @@ static BOOL isPunctuation(char c)
         }
         else
         {
-            NSString *protocolName = [NSString stringWithUTF8String:token];
-            AKProtocolNode *protocolNode = [[self targetDatabase] protocolWithName:protocolName];
+            NSString *protocolName = @(token);
+            AKProtocolNode *protocolNode = [self.targetDatabase protocolWithName:protocolName];
 
             if (!protocolNode)
             {
@@ -366,9 +366,9 @@ static BOOL isPunctuation(char c)
                 // real framework name when we encounter the @protocol
                 // declaration.
                 protocolNode = [AKProtocolNode nodeWithNodeName:protocolName
-                                                       database:[self targetDatabase]
+                                                       database:self.targetDatabase
                                                   frameworkName:nil];
-                [[self targetDatabase] addProtocolNode:protocolNode];
+                [self.targetDatabase addProtocolNode:protocolNode];
             }
 
             [implementedProtocols addObject:protocolNode];
@@ -407,8 +407,8 @@ static BOOL isPunctuation(char c)
             if (methodNode == nil)
             {
                 methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
-                                                            database:[self targetDatabase]
-                                                       frameworkName:[self targetFrameworkName]
+                                                            database:self.targetDatabase
+                                                       frameworkName:self.targetFrameworkName
                                                       owningBehavior:behaviorNode];
                 addMemberNode(behaviorNode, methodNode);
             }
@@ -451,12 +451,12 @@ static BOOL isPunctuation(char c)
                 (void)[self _parseTokenIntoBuffer:argTok];
                 while (strcmp(argTok, ")") != 0)
                 {
-                    if ([argType length] > 0)
+                    if (argType.length > 0)
                     {
                         [argType appendString:@" "];
                     }
 
-                    [argType appendString:[NSString stringWithUTF8String:argTok]];
+                    [argType appendString:@(argTok)];
                     (void)[self _parseTokenIntoBuffer:argTok];
                 }
                 [argTypes addObject:argType];
@@ -474,9 +474,9 @@ static BOOL isPunctuation(char c)
             // the DEPRECATED_IN_MAC_OS_X_VERSION_10_4_AND_LATER macro that's in
             // NSATSTypesetter.h.  Or possibly the comma and ellipsis in a
             // method that takes varargs.
-            if (([methodName length] == 0) || ((_current < _dataEnd) && (*_current == ':')))
+            if ((methodName.length == 0) || ((_current < _dataEnd) && (*_current == ':')))
             {
-                [methodName appendString:[NSString stringWithUTF8String:token]];
+                [methodName appendString:@(token)];
             }
         }
     }

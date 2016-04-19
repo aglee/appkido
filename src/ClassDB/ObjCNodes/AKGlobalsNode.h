@@ -26,6 +26,6 @@
 
 - (void)addNameOfGlobal:(NSString *)nameOfGlobal;
 
-- (NSArray *)namesOfGlobals;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesOfGlobals;
 
 @end

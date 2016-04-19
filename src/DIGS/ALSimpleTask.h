@@ -37,20 +37,20 @@
 }
 
 /*! Throws an exception (well, actually NSTask throws it) if args is nil. */
-- (id)initWithCommandPath:(NSString *)commandPath arguments:(NSArray *)args;
+- (instancetype)initWithCommandPath:(NSString *)commandPath arguments:(NSArray *)args NS_DESIGNATED_INITIALIZER;
 
 /*!
  * Runs the command synchronously. Returns NO if the command fails to launch.
  * You can only call this once.
  */
-- (BOOL)runTask;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL runTask;
 
 /*!
  * Returns the combined stdout and stderr output of the command. If the command
  * failed to launch, contains a UTF-8 string that gives the reason why. You can
  * call this before the task completes.
  */
-- (NSData *)outputData;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *outputData;
 
 /*!
  * Convenience method that converts [self outputData] to a string, using UTF-8
@@ -59,12 +59,12 @@
  * the UTF-8 conversion won't work properly. If you aren't expecting any
  * multi-byte characters you should be fine.
  */
-- (NSString *)outputString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *outputString;
 
 /*!
  * Returns the NSTask's terminationStatus, which is 0 on success. Note that this
  * also returns 0 if the task hasn't launched or has launched but not completed.
  */
-- (int)exitStatus;
+@property (NS_NONATOMIC_IOSONLY, readonly) int exitStatus;
 
 @end

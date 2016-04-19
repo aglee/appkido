@@ -42,7 +42,7 @@
 #pragma mark -
 #pragma mark Find Panel support
 
-- (NSView *)viewToSearch;  // Enables us to be targeted by the Find panel.
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *viewToSearch;  // Enables us to be targeted by the Find panel.
 
 #pragma mark -
 #pragma mark Action methods

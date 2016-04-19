@@ -20,9 +20,9 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Each subnode of a functions group node represents one function.
-    for (AKDatabaseNode *functionNode in [AKSortUtils arrayBySortingArray:[[self groupNode] subnodes]])
+    for (AKDatabaseNode *functionNode in [AKSortUtils arrayBySortingArray:[self.groupNode subnodes]])
     {
-        AKFileSection *functionSection = [functionNode nodeDocumentation];
+        AKFileSection *functionSection = functionNode.nodeDocumentation;
 
         if (functionSection != nil)
         {

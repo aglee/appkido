@@ -68,7 +68,7 @@
 
 + (AKAppDelegate *)appDelegate
 {
-    return (AKAppDelegate *)[NSApp delegate];
+    return (AKAppDelegate *)NSApp.delegate;
 }
 
 #pragma mark -
@@ -101,7 +101,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 }
 #endif //MEASURE_PARSE_SPEED
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init]))
     {
@@ -135,14 +135,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
 // [agl] what about using [NSView +focusView]?
 - (NSTextView *)selectedTextView
 {
-    id obj = [[NSApp keyWindow] firstResponder];
+    id obj = NSApp.keyWindow.firstResponder;
 
     return (obj && [obj isKindOfClass:[NSTextView class]]) ? obj : nil;
 }
 
 - (AKWindowController *)frontmostWindowController
 {
-    return (AKWindowController *)[[self _frontmostBrowserWindow] delegate];
+    return (AKWindowController *)[self _frontmostBrowserWindow].delegate;
 }
 
 - (AKWindowController *)controllerForNewWindow
@@ -157,19 +157,19 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     if (existingWindow)
     {
-        NSRect existingFrame = [existingWindow frame];
-        NSRect newFrame = [[wc window] frame];
+        NSRect existingFrame = existingWindow.frame;
+        NSRect newFrame = wc.window.frame;
 
         newFrame = NSOffsetRect(newFrame,
                                 NSMinX(existingFrame) - NSMinX(newFrame) + 20,
                                 NSMaxY(existingFrame) - NSMaxY(newFrame) - 20);
-        [[wc window] setFrame:newFrame display:NO];
+        [wc.window setFrame:newFrame display:NO];
     }
 
     // Display the window.
     [wc showWindow:nil];
 
-    if ((windowLayout == nil) || [windowLayout quicklistDrawerIsOpen])
+    if ((windowLayout == nil) || windowLayout.quicklistDrawerIsOpen)
     {
         [wc openQuicklistDrawer];
     }
@@ -182,7 +182,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)performExternallyRequestedSearchForString:(NSString *)searchString
 {
-    if ([[searchString ak_trimWhitespace] length] == 0)
+    if ([searchString ak_trimWhitespace].length == 0)
     {
         return;
     }
@@ -207,7 +207,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
-    [self performExternallyRequestedSearchForString:[aCommand directParameter]];
+    [self performExternallyRequestedSearchForString:aCommand.directParameter];
     return nil;
 }
 
@@ -242,7 +242,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)moveFavoriteFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
-    AKDocLocator *fav = [_favoritesList objectAtIndex:fromIndex];
+    AKDocLocator *fav = _favoritesList[fromIndex];
 
     if (fromIndex > toIndex)
     {
@@ -268,8 +268,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
         _aboutWindowController = [[AKAboutWindowController alloc] initWithWindowNibName:@"AboutWindow"];
     }
     
-    [[_aboutWindowController window] center];
-    [[_aboutWindowController window] makeKeyAndOrderFront:nil];
+    [_aboutWindowController.window center];
+    [_aboutWindowController.window makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)checkForNewerVersion:(id)sender
@@ -360,7 +360,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
 
-    [savePanel setAllowedFileTypes:@[ @"xml" ]];
+    savePanel.allowedFileTypes = @[ @"xml" ];
     [savePanel setAllowsOtherFileTypes:YES];
     [savePanel setCanCreateDirectories:YES];
     [savePanel setCanSelectHiddenExtension:YES];
@@ -370,7 +370,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         return;
     }
 
-    BOOL fileOK = [[NSFileManager defaultManager] createFileAtPath:[[savePanel URL] path]
+    BOOL fileOK = [[NSFileManager defaultManager] createFileAtPath:savePanel.URL.path
                                                           contents:nil
                                                         attributes:nil];
     if (!fileOK)
@@ -381,7 +381,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     AKDatabaseXMLExporter *exporter = [[AKDatabaseXMLExporter alloc] initWithDatabase:_appDatabase
-                                                                               fileURL:[savePanel URL]];
+                                                                               fileURL:savePanel.URL];
     [exporter doExport];
 }
 
@@ -465,8 +465,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     // Put up the splash window, which will show progress as we populate the database.
     _splashWindowController = [[AKSplashWindowController alloc] initWithWindowNibName:@"SplashWindow"];
-    [[_splashWindowController window] center];
-    [[_splashWindowController window] makeKeyAndOrderFront:nil];
+    [_splashWindowController.window center];
+    [_splashWindowController.window makeKeyAndOrderFront:nil];
 
     // Populate the database asynchronously.
     NSOperation *op = [[NSInvocationOperation alloc] initWithTarget:self
@@ -552,7 +552,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         [_appDatabase loadTokensForFrameworkWithName:fwName];
 
-        [[_splashWindowController splashMessage2Field] performSelectorOnMainThread:@selector(setStringValue:)
+        [_splashWindowController.splashMessage2Field performSelectorOnMainThread:@selector(setStringValue:)
                                                                         withObject:fwName
                                                                      waitUntilDone:NO];
     }
@@ -572,7 +572,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)_didPopulateDatabase
 {
     // Take down the splash window.
-    [[_splashWindowController window] close];
+    [_splashWindowController.window close];
     _splashWindowController = nil;
 
     // Finish initializing the UI.
@@ -586,8 +586,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
                                                object:nil];
 
     // Put the find panel controller in the responder chain.
-    [[AKFindPanelController sharedInstance] setNextResponder:[NSApp nextResponder]];
-    [NSApp setNextResponder:[AKFindPanelController sharedInstance]];
+    [[AKFindPanelController sharedInstance] setNextResponder:NSApp.nextResponder];
+    NSApp.nextResponder = [AKFindPanelController sharedInstance];
 
     // Force the DIGSFindBuffer to initialize.
     // [agl] ??? Why not in DIGSFindBuffer's +initialize?
@@ -599,8 +599,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Add the Debug menu if certain conditions are met.
     AKDebugging *debugging = [AKDebugging sharedInstance];
 
-    [debugging setNextResponder:[NSApp nextResponder]];
-    [NSApp setNextResponder:debugging];
+    debugging.nextResponder = NSApp.nextResponder;
+    NSApp.nextResponder = debugging;
 
     if ([AKDebugging userCanDebug])
     {
@@ -608,7 +608,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 
     // Set the provider of system services.
-    [NSApp setServicesProvider:[[AKServicesProvider alloc] init]];
+    NSApp.servicesProvider = [[AKServicesProvider alloc] init];
     NSUpdateDynamicServices();
     
     _finishedInitializing = YES;
@@ -618,7 +618,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     DIGSLogDebug_EnteringMethod();
 
-    NSMenu *goMenu = [_firstGoMenuDivider menu];
+    NSMenu *goMenu = _firstGoMenuDivider.menu;
     NSInteger menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
 
     for (NSString *fwName in [_appDatabase sortedFrameworkNames])
@@ -632,7 +632,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
         // Construct the submenu of framework-related topics.
         NSMenu *fwTopicSubmenu = [[NSMenu alloc] initWithTitle:fwName];
 
-        if ([formalProtocolNodes count] > 0)
+        if (formalProtocolNodes.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKProtocolsTopicName
                                                               action:@selector(selectFormalProtocolsTopic:)
@@ -641,7 +641,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [fwTopicSubmenu addItem:subitem];
         }
 
-        if ([informalProtocolNodes count] > 0)
+        if (informalProtocolNodes.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKInformalProtocolsTopicName
                                                               action:@selector(selectInformalProtocolsTopic:)
@@ -650,7 +650,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [fwTopicSubmenu addItem:subitem];
         }
 
-        if ([functionsGroupNodes count] > 0)
+        if (functionsGroupNodes.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKFunctionsTopicName
                                                               action:@selector(selectFunctionsTopic:)
@@ -659,7 +659,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [fwTopicSubmenu addItem:subitem];
         }
 
-        if ([globalsGroupNodes count] > 0)
+        if (globalsGroupNodes.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKGlobalsTopicName
                                                               action:@selector(selectGlobalsTopic:)
@@ -673,7 +673,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
                                                              action:nil
                                                       keyEquivalent:@""];
 
-        [fwMenuItem setSubmenu:fwTopicSubmenu];
+        fwMenuItem.submenu = fwTopicSubmenu;
         menuIndex++;
         [goMenu insertItem:fwMenuItem atIndex:menuIndex];
     }
@@ -684,27 +684,27 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // If there's no saved window state, open a single new window.
     NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
 
-    if ([savedWindows count] == 0)
+    if (savedWindows.count == 0)
     {
         (void)[self controllerForNewWindow];
         return;
     }
 
     // Restore windows from saved window state.
-    NSInteger numWindows = [savedWindows count];
+    NSInteger numWindows = savedWindows.count;
     NSInteger i;
 
     for (i = numWindows - 1; i >= 0; i--)
     {
-        NSDictionary *prefDict = [savedWindows objectAtIndex:i];
+        NSDictionary *prefDict = savedWindows[i];
         AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
-        AKWindowLayout *windowLayout = [savedWindowState savedWindowLayout];
+        AKWindowLayout *windowLayout = savedWindowState.savedWindowLayout;
         AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
 
-        [wc selectDocWithDocLocator:[savedWindowState savedDocLocator]];
+        [wc selectDocWithDocLocator:savedWindowState.savedDocLocator];
         [wc showWindow:nil];
 
-        if ([[savedWindowState savedWindowLayout] quicklistDrawerIsOpen])
+        if (savedWindowState.savedWindowLayout.quicklistDrawerIsOpen)
         {
             [wc openQuicklistDrawer];
         }
@@ -720,8 +720,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     for (NSNumber *windowNum in windowNumbers)
     {
-        NSWindow *win = [NSApp windowWithWindowNumber:[windowNum integerValue]];
-        id windowDelegate = [win delegate];
+        NSWindow *win = [NSApp windowWithWindowNumber:windowNum.integerValue];
+        id windowDelegate = win.delegate;
 
         if ([windowDelegate isKindOfClass:[AKWindowController class]])
         {
@@ -748,7 +748,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_handleWindowWillCloseNotification:(NSNotification *)notification
 {
-    id windowDelegate = [(NSWindow *)[notification object] delegate];
+    id windowDelegate = ((NSWindow *)notification.object).delegate;
 
     if ([windowDelegate isKindOfClass:[AKWindowController class]])
     {
@@ -779,8 +779,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
     for (NSNumber *windowNum in windowNumbers)
     {
-        NSWindow *win = [NSApp windowWithWindowNumber:[windowNum integerValue]];
-        id windowDelegate = [win delegate];
+        NSWindow *win = [NSApp windowWithWindowNumber:windowNum.integerValue];
+        id windowDelegate = win.delegate;
 
         if ([windowDelegate isKindOfClass:[AKWindowController class]])
         {
@@ -827,14 +827,14 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     NSString *expectedPrefix = @"AppKiDoVersion";
     
     if ((![latestAppVersionString hasPrefix:expectedPrefix])
-        || ([latestAppVersionString length] > 30))
+        || (latestAppVersionString.length > 30))
     {
         DIGSLogWarning(@"the received contents of the version-number URL don't"
                        @" look like a valid version string");
         return nil;
     }
     
-    latestAppVersionString = [latestAppVersionString substringFromIndex:[expectedPrefix length]];
+    latestAppVersionString = [latestAppVersionString substringFromIndex:expectedPrefix.length];
     
     return [AKAppVersion appVersionFromString:latestAppVersionString];
 }
@@ -847,7 +847,7 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     DIGSLogDebug_EnteringMethod();
     
     NSArray *favPrefList = [AKPrefUtils arrayValueForPref:AKFavoritesPrefName];
-    NSInteger numFavs = [favPrefList count];
+    NSInteger numFavs = favPrefList.count;
     NSInteger i;
 
     // Get values from NSUserDefaults.
@@ -855,7 +855,7 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     BOOL someFavsWereInvalid = NO;
     for (i = 0; i < numFavs; i++)
     {
-        id favPref = [favPrefList objectAtIndex:i];
+        id favPref = favPrefList[i];
         AKDocLocator *favItem = [AKDocLocator fromPrefDictionary:favPref];
 
         // It is possible for a Favorite to be invalid if the user has
@@ -881,13 +881,13 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
 - (void)_putFavoritesIntoPrefs
 {
     NSMutableArray *favPrefList = [NSMutableArray array];
-    NSInteger numFavs = [_favoritesList count];
+    NSInteger numFavs = _favoritesList.count;
     NSInteger i;
 
     // Update the UserDefaults.
     for (i = 0; i < numFavs; i++)
     {
-        AKDocLocator *favItem = [_favoritesList objectAtIndex:i];
+        AKDocLocator *favItem = _favoritesList[i];
 
         [favPrefList addObject:[favItem asPrefDictionary]];
     }
@@ -899,30 +899,30 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
 
 - (void)_updateFavoritesMenu
 {
-    NSMenu *mainMenu = [NSApp mainMenu];
-    NSMenu *favoritesMenu = [[mainMenu itemWithTitle:@"Favorites"] submenu];
-    NSInteger numFavs = [_favoritesList count];
+    NSMenu *mainMenu = NSApp.mainMenu;
+    NSMenu *favoritesMenu = [mainMenu itemWithTitle:@"Favorites"].submenu;
+    NSInteger numFavs = _favoritesList.count;
     NSInteger i;
 
-    while ([favoritesMenu numberOfItems] > 2)
+    while (favoritesMenu.numberOfItems > 2)
     {
         [favoritesMenu removeItemAtIndex:2];
     }
 
     for (i = 0; i < numFavs; i++)
     {
-        AKDocLocator *favItem = [_favoritesList objectAtIndex:i];
+        AKDocLocator *favItem = _favoritesList[i];
         NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[favItem stringToDisplayInLists]
                                                            action:@selector(selectDocWithDocLocatorRepresentedBy:)
                                                     keyEquivalent:@""];
 
         if (i < 9)
         {
-            [menuItem setKeyEquivalent:[NSString stringWithFormat:@"%ld", (long)(i + 1)]];
-            [menuItem setKeyEquivalentModifierMask:NSControlKeyMask];
+            menuItem.keyEquivalent = [NSString stringWithFormat:@"%ld", (long)(i + 1)];
+            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
         }
 
-        [menuItem setRepresentedObject:favItem];
+        menuItem.representedObject = favItem;
         [favoritesMenu addItem:menuItem];
     }
 }

@@ -26,7 +26,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
++ (instancetype)topicWithProtocolNode:(AKProtocolNode *)protocolNode
 {
     return [[self alloc] initWithProtocolNode:protocolNode];
 }
@@ -34,7 +34,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
+- (instancetype)initWithProtocolNode:(AKProtocolNode *)protocolNode
 {
     if ((self = [super init]))
     {
@@ -44,7 +44,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -56,29 +56,29 @@
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return [NSString stringWithFormat:@"<%@>", [_protocolNode nodeName]];
+    return [NSString stringWithFormat:@"<%@>", _protocolNode.nodeName];
 }
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-    NSString *stringFormat = ([_protocolNode isInformal]
+    NSString *stringFormat = (_protocolNode.isInformal
                               ? @"%@ INFORMAL protocol <%@>"
                               : @"%@ protocol <%@>");
 
     return [NSString stringWithFormat:stringFormat,
-            [_protocolNode nameOfOwningFramework], [_protocolNode nodeName]];
+            _protocolNode.nameOfOwningFramework, _protocolNode.nodeName];
 }
 
 - (NSString *)pathInTopicBrowser
 {
-    NSString *whichProtocols = ([_protocolNode isInformal]
+    NSString *whichProtocols = (_protocolNode.isInformal
                                 ? AKInformalProtocolsTopicName
                                 : AKProtocolsTopicName);
 
     return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
-            AKTopicBrowserPathSeparator, [_protocolNode nameOfOwningFramework],
+            AKTopicBrowserPathSeparator, _protocolNode.nameOfOwningFramework,
             AKTopicBrowserPathSeparator, whichProtocols,
-            AKTopicBrowserPathSeparator, [_protocolNode nodeName]];
+            AKTopicBrowserPathSeparator, _protocolNode.nodeName];
 }
 
 - (BOOL)browserCellHasChildren
@@ -91,7 +91,7 @@
 
 - (NSString *)behaviorName
 {
-    return [_protocolNode nodeName];
+    return _protocolNode.nodeName;
 }
 
 - (AKDatabaseNode *)topicNode
@@ -126,7 +126,7 @@
         return nil;
     }
 
-    NSString *protocolName = [prefDict objectForKey:AKBehaviorNamePrefKey];
+    NSString *protocolName = prefDict[AKBehaviorNamePrefKey];
 
     if (protocolName == nil)
     {
@@ -135,7 +135,7 @@
     }
     else
     {
-        AKDatabase *db = [[NSApp delegate] appDatabase];
+        AKDatabase *db = [NSApp.delegate appDatabase];
         AKProtocolNode *protocolNode = [db protocolWithName:protocolName];
 
         if (!protocolNode)

@@ -14,18 +14,18 @@ static const CGFloat AKThicknessOfBorderToHide = 1;
 
 - (void)awakeFromNib
 {
-    NSView *innerView = [[self subviews] lastObject];
+    NSView *innerView = self.subviews.lastObject;
 
-    [innerView setFrame:NSInsetRect([self bounds],
+    innerView.frame = NSInsetRect(self.bounds,
                                     -AKThicknessOfBorderToHide,
-                                    -AKThicknessOfBorderToHide)];
-    [innerView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+                                    -AKThicknessOfBorderToHide);
+    innerView.autoresizingMask = (NSViewWidthSizable | NSViewHeightSizable);
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     [[NSColor redColor] set];
-    NSRectFill([self bounds]);
+    NSRectFill(self.bounds);
 }
 
 @end

@@ -46,32 +46,29 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithFile:(NSString *)filePath;
+- (instancetype)initWithFile:(NSString *)filePath NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (NSString *)filePath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *filePath;
 
 /*! Lazily loaded from disk. */
-- (NSData *)fileContents;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *fileContents;
 
-- (NSString *)sectionName;
-- (void)setSectionName:(NSString *)name;
+@property (NS_NONATOMIC_IOSONLY, copy) NSString *sectionName;
 
-- (NSUInteger)sectionOffset;
-- (void)setSectionOffset:(NSUInteger)offset;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger sectionOffset;
 
-- (NSUInteger)sectionLength;
-- (void)setSectionLength:(NSUInteger)length;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger sectionLength;
 
-- (NSData *)sectionData;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *sectionData;
 
-- (NSArray *)childSections;
-- (NSInteger)numberOfChildSections;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childSections;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfChildSections;
 - (AKFileSection *)childSectionAtIndex:(NSInteger)childSectionIndex;
 - (AKFileSection *)childSectionWithName:(NSString *)name;
-- (AKFileSection *)lastChildSection;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKFileSection *lastChildSection;
 - (NSInteger)indexOfChildSectionWithName:(NSString *)name;
 - (BOOL)hasChildSectionWithName:(NSString *)name;
 - (void)addChildSection:(AKFileSection *)childSection;
@@ -84,6 +81,6 @@
 #pragma mark Debugging
 
 /*! Returns a string that uses indentation to show the hierarchy of file sections. */
-- (NSString *)descriptionAsOutline;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *descriptionAsOutline;
 
 @end

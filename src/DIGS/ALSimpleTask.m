@@ -21,7 +21,7 @@
 
 @implementation ALSimpleTask
 
-- (id)initWithCommandPath:(NSString *)commandPath arguments:(NSArray *)args
+- (instancetype)initWithCommandPath:(NSString *)commandPath arguments:(NSArray *)args
 {
 	self = [super init];
 	if (self)
@@ -49,17 +49,17 @@
 	if (_task)
 	{
 		NSLog(@"%@ should only be called once per instance of %@.",
-			  NSStringFromSelector(_cmd), [self className]);
+			  NSStringFromSelector(_cmd), self.className);
 		abort();
 	}
 
 	// Set up the NSTask instance that will run the command.
 	_task = [[NSTask alloc] init];
 
-	[_task setStandardOutput:[NSPipe pipe]];
-	[_task setStandardError:[_task standardOutput]];
-	[_task setLaunchPath:_commandPath];
-	[_task setArguments:_commandArguments];
+	_task.standardOutput = [NSPipe pipe];
+	_task.standardError = _task.standardOutput;
+	_task.launchPath = _commandPath;
+	_task.arguments = _commandArguments;
 
 	// Register to be notified when there is data waiting in the task's file
 	// handle (the pipe to which we connected stdout and stderr above). We do
@@ -69,12 +69,12 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(_taskDidProduceOutput:)
 												 name:NSFileHandleReadCompletionNotification
-											   object:[[_task standardOutput] fileHandleForReading]];
+											   object:[_task.standardOutput fileHandleForReading]];
 
 	// Tell the file handle to read in the background asynchronously. The file
 	// handle will send a NSFileHandleReadCompletionNotification (which we just
 	// registered to observe) when it has data available.
-	[[[_task standardOutput] fileHandleForReading] readInBackgroundAndNotify];
+	[[_task.standardOutput fileHandleForReading] readInBackgroundAndNotify];
 
 	// Try to launch the task.
 	@try
@@ -83,13 +83,13 @@
 		_taskDidLaunch = YES;
         
 		[_task waitUntilExit];
-		_taskExitStatus = [_task terminationStatus];
+		_taskExitStatus = _task.terminationStatus;
 	}
 	@catch (NSException *exception)
 	{
-		if ([[exception name] isEqualToString:NSInvalidArgumentException])
+		if ([exception.name isEqualToString:NSInvalidArgumentException])
 		{
-			[_taskOutputData setData:[[exception reason] dataUsingEncoding:NSUTF8StringEncoding]];
+			[_taskOutputData setData:[exception.reason dataUsingEncoding:NSUTF8StringEncoding]];
 			return NO;
 		}
 		else
@@ -124,15 +124,15 @@
 // [aNotification object] is the file handle.
 - (void)_taskDidProduceOutput:(NSNotification *)aNotification
 {
-	NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+	NSData *data = aNotification.userInfo[NSFileHandleNotificationDataItem];
 
-	if ([data length])
+	if (data.length)
 	{
 		// Collect the task's output.
 		[_taskOutputData appendData:data];
 
 		// Schedule the file handle to read more data.
-		[[aNotification object] readInBackgroundAndNotify];
+		[aNotification.object readInBackgroundAndNotify];
 	}
 	else
 	{
@@ -145,14 +145,14 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:NSFileHandleReadCompletionNotification
-												  object:[[_task standardOutput] fileHandleForReading]];
+												  object:[_task.standardOutput fileHandleForReading]];
 	if (_taskDidLaunch)
 	{
 		[_task terminate];
 
 		// Drain any remaining output data the task generates.
 		NSData *data;
-		while ((data = [[[_task standardOutput] fileHandleForReading] availableData]) && [data length])
+		while ((data = [_task.standardOutput fileHandleForReading].availableData) && data.length)
 		{
 			[_taskOutputData appendData:data];
 		}

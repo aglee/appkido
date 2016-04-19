@@ -18,7 +18,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)subtopicForClassNode:(AKClassNode *)classNode
++ (instancetype)subtopicForClassNode:(AKClassNode *)classNode
     includeAncestors:(BOOL)includeAncestors
 {
     return [[self alloc] initWithClassNode:classNode
@@ -28,7 +28,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithClassNode:(AKClassNode *)classNode
+- (instancetype)initWithClassNode:(AKClassNode *)classNode
        includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
@@ -39,7 +39,7 @@
     return self;
 }
 
-- (id)initIncludingAncestors:(BOOL)includeAncestors
+- (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;

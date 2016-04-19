@@ -25,12 +25,12 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [[self memberNode] nameOfOwningFramework];
-    NSString *behaviorFrameworkName = [[self behaviorNode] nameOfOwningFramework];
+    NSString *methodFrameworkName = self.memberNode.nameOfOwningFramework;
+    NSString *behaviorFrameworkName = self.behaviorNode.nameOfOwningFramework;
     BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-    AKBehaviorNode *ownerOfMethod = [[self memberNode] owningBehavior];
+    AKBehaviorNode *ownerOfMethod = self.memberNode.owningBehavior;
 
-    if ([self behaviorNode] == ownerOfMethod)
+    if (self.behaviorNode == ownerOfMethod)
     {
         // We're the first class/protocol to declare this method.
         if (methodIsInSameFramework)
@@ -47,13 +47,13 @@
         // We inherited this method from an ancestor class.
         if (methodIsInSameFramework)
         {
-            return [NSString stringWithFormat:@"This delegate method is used by class %@.", [ownerOfMethod nodeName]];
+            return [NSString stringWithFormat:@"This delegate method is used by class %@.", ownerOfMethod.nodeName];
         }
         else
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is used by %@ class %@.", methodFrameworkName, [ownerOfMethod nodeName]];
+                    @"This delegate method is used by %@ class %@.", methodFrameworkName, ownerOfMethod.nodeName];
         }
     }
     else
@@ -61,13 +61,13 @@
         // This method is declared in a formal protocol.
         if (methodIsInSameFramework)
         {
-            return [NSString stringWithFormat:@"This delegate method is declared in protocol %@.", [ownerOfMethod nodeName]];
+            return [NSString stringWithFormat:@"This delegate method is declared in protocol %@.", ownerOfMethod.nodeName];
         }
         else
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, [ownerOfMethod nodeName]];
+                    @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, ownerOfMethod.nodeName];
         }
     }
 }

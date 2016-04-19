@@ -14,7 +14,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
@@ -37,7 +37,7 @@
 
 - (NSInteger)numberOfSubnodes
 {
-    return [_subnodes count];
+    return _subnodes.count;
 }
 
 - (NSArray *)subnodes
@@ -49,7 +49,7 @@
 {
     for (AKDatabaseNode *subnode in _subnodes)
     {
-        if ([[subnode nodeName] isEqualToString:nodeName])
+        if ([subnode.nodeName isEqualToString:nodeName])
         {
             return subnode;
         }

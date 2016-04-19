@@ -29,7 +29,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init]))
     {
@@ -111,11 +111,11 @@
 {
     NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:NSFindPboard];
 
-    if ([[pasteboard types] containsObject:NSStringPboardType])
+    if ([pasteboard.types containsObject:NSStringPboardType])
     {
         NSString *string = [pasteboard stringForType:NSStringPboardType];
 
-        if ([string length])
+        if (string.length)
         {
             [self _setFindString:string writeToPasteboard:NO];
         }
@@ -127,7 +127,7 @@
     NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:NSFindPboard];
 
     [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
-    [pasteboard setString:[self findString] forType:NSStringPboardType];
+    [pasteboard setString:self.findString forType:NSStringPboardType];
 }
 
 - (void)_handleAppDidActivateNotification:(NSNotification *)notif
@@ -145,7 +145,7 @@
 {
     for (NSValue *pointerValue in [_delegatePointerValues objectEnumerator])
     {
-        id <DIGSFindBufferDelegate> delegate = [pointerValue nonretainedObjectValue];
+        id <DIGSFindBufferDelegate> delegate = pointerValue.nonretainedObjectValue;
 
         [delegate findBufferDidChange:self];
     }

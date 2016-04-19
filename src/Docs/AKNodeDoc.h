@@ -22,6 +22,6 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithNode:(AKDatabaseNode *)databaseNode;
+- (instancetype)initWithNode:(AKDatabaseNode *)databaseNode NS_DESIGNATED_INITIALIZER;
 
 @end

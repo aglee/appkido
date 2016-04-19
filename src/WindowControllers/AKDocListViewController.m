@@ -29,7 +29,7 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
+- (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
     self = [super initWithNibName:@"DocListView" windowController:windowController];
     if (self)
@@ -45,7 +45,7 @@
 
 - (NSString *)docComment
 {
-    NSInteger docIndex = [_docListTable selectedRow];
+    NSInteger docIndex = _docListTable.selectedRow;
     
     return ((docIndex >= 0)
             ? [[_subtopic docAtIndex:docIndex] commentString]
@@ -57,7 +57,7 @@
 
 - (void)focusOnDocListTable
 {
-    (void)[[_docListTable window] makeFirstResponder:_docListTable];
+    (void)[_docListTable.window makeFirstResponder:_docListTable];
 }
 
 #pragma mark -
@@ -65,13 +65,13 @@
 
 - (IBAction)doDocListTableAction:(id)sender
 {
-    NSInteger selectedRow = [_docListTable selectedRow];
+    NSInteger selectedRow = _docListTable.selectedRow;
     NSString *docName = ((selectedRow < 0)
                          ? nil
                          : [[_subtopic docAtIndex:selectedRow] docName]);
 
     // Tell the main window to select the doc at the selected index.
-    [[self owningWindowController] selectDocWithName:docName];
+    [self.owningWindowController selectDocWithName:docName];
 }
 
 #pragma mark -
@@ -103,7 +103,7 @@
     else
     {
         // Figure out what row index to select in the doc list table.
-        NSString *docName = [whereTo docName];
+        NSString *docName = whereTo.docName;
 
         if (docName == nil)
         {
@@ -125,7 +125,7 @@
 
         // Modify whereTo.
         AKDoc *docToDisplay = [_subtopic docAtIndex:docIndex];
-        [whereTo setDocName:[docToDisplay docName]];
+        whereTo.docName = [docToDisplay docName];
     }
 }
 

@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init]))
     {
@@ -42,7 +42,7 @@
 
     for (AKDatabaseNode *databaseNode in _nodeList)
     {
-        if ([databaseNode nodeDocumentation])
+        if (databaseNode.nodeDocumentation)
         {
             [result addObject:databaseNode];
         }
@@ -53,21 +53,21 @@
 
 - (AKDatabaseNode *)nodeWithName:(NSString *)nodeName
 {
-    return [_nodesByName objectForKey:nodeName];
+    return _nodesByName[nodeName];
 }
 
 - (void)addNode:(AKDatabaseNode *)databaseNode
 {
-    NSString *nodeName = [databaseNode nodeName];
+    NSString *nodeName = databaseNode.nodeName;
 
-    if ([_nodesByName objectForKey:nodeName])
+    if (_nodesByName[nodeName])
     {
         DIGSLogWarning(@"ignoring attempt to add node %@ twice", nodeName);
     }
     else
     {
         [_nodeList addObject:databaseNode];
-        [_nodesByName setObject:databaseNode forKey:nodeName];
+        _nodesByName[nodeName] = databaseNode;
     }
 }
 

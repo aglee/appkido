@@ -27,7 +27,7 @@ static void _common_init(AKButtonCell *self)
     self->_disabledTextColor = AKButtonCellDisabledTextColor;
 }
 
-- (id)initImageCell:(NSImage *)anImage
+- (instancetype)initImageCell:(NSImage *)anImage
 {
     self = [super initImageCell:anImage];
     if (self)
@@ -38,7 +38,7 @@ static void _common_init(AKButtonCell *self)
     return self;
 }
 
-- (id)initTextCell:(NSString *)aString
+- (instancetype)initTextCell:(NSString *)aString
 {
     self = [super initTextCell:aString];
     if (self)
@@ -49,7 +49,7 @@ static void _common_init(AKButtonCell *self)
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self)
@@ -68,14 +68,14 @@ static void _common_init(AKButtonCell *self)
 {
     _enabledTextColor = enabledTextColor;
 
-    [[self controlView] setNeedsDisplay:YES];
+    [self.controlView setNeedsDisplay:YES];
 }
 
 - (void)setDisabledTextColor:(NSColor *)disabledTextColor
 {
     _disabledTextColor = disabledTextColor;
 
-    [[self controlView] setNeedsDisplay:YES];
+    [self.controlView setNeedsDisplay:YES];
 }
 
 #pragma mark -
@@ -87,18 +87,18 @@ static void _common_init(AKButtonCell *self)
 - (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
 {
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    [style setAlignment:[self alignment]];
+    style.alignment = self.alignment;
 
-    NSColor *textColor = ([self isEnabled]
-                          ? [self enabledTextColor]
-                          : [self disabledTextColor]);
+    NSColor *textColor = (self.enabled
+                          ? self.enabledTextColor
+                          : self.disabledTextColor);
     NSDictionary *textAttributes = (@{
-                                      NSFontAttributeName: [self font],
+                                      NSFontAttributeName: self.font,
                                       NSForegroundColorAttributeName: textColor,
                                       NSParagraphStyleAttributeName: style,
                                       });
 
-    title = [[NSAttributedString alloc] initWithString:[title string]
+    title = [[NSAttributedString alloc] initWithString:title.string
                                              attributes:textAttributes];
     
     return [super drawTitle:title withFrame:frame inView:controlView];

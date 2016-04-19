@@ -23,7 +23,7 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
+- (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
     self = [super initWithNibName:@"SubtopicListView" windowController:windowController];
     if (self)
@@ -41,7 +41,7 @@
     NSBrowserCell *browserCell = [[NSBrowserCell alloc] initTextCell:@""];
     [browserCell setLeaf:NO];
     [browserCell setLoaded:YES];
-    [[[_subtopicsTable tableColumns] objectAtIndex:0] setDataCell:browserCell];
+    _subtopicsTable.tableColumns[0].dataCell = browserCell;
 
     // Populate the subtopics table.
     [_subtopicsTable reloadData];
@@ -53,10 +53,10 @@
 
 - (AKSubtopic *)selectedSubtopic
 {
-    NSInteger subtopicIndex = [_subtopicsTable selectedRow];
+    NSInteger subtopicIndex = _subtopicsTable.selectedRow;
 
     return ((subtopicIndex >= 0)
-            ? [_subtopics objectAtIndex:subtopicIndex]
+            ? _subtopics[subtopicIndex]
             : nil);
 }
 
@@ -65,77 +65,77 @@
 
 - (IBAction)doSubtopicTableAction:(id)sender
 {
-    NSInteger selectedRow = [_subtopicsTable selectedRow];
+    NSInteger selectedRow = _subtopicsTable.selectedRow;
     NSString *newSubtopicName = ((selectedRow < 0)
                                  ? nil
-                                 : [[_subtopics objectAtIndex:selectedRow] subtopicName]);
+                                 : [_subtopics[selectedRow] subtopicName]);
 
     // Tell the main window to select the subtopic at the selected index.
-    [[self owningWindowController] selectSubtopicWithName:newSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:newSubtopicName];
 }
 
 - (IBAction)selectGeneralSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKGeneralSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKGeneralSubtopicName];
 }
 
 - (IBAction)selectHeaderFile:(id)sender
 {
-    AKDocLocator *oldDocLocator = [[self owningWindowController] currentDocLocator];
-    AKDocLocator *newDocLocator = [[AKDocLocator alloc] initWithTopic:[oldDocLocator topicToDisplay]
+    AKDocLocator *oldDocLocator = [self.owningWindowController currentDocLocator];
+    AKDocLocator *newDocLocator = [[AKDocLocator alloc] initWithTopic:oldDocLocator.topicToDisplay
                                                           subtopicName:AKGeneralSubtopicName
                                                                docName:AKHeaderFileDocName];
-    [[self owningWindowController] selectDocWithDocLocator:newDocLocator];
+    [self.owningWindowController selectDocWithDocLocator:newDocLocator];
 }
 
 - (IBAction)selectPropertiesSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKPropertiesSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKPropertiesSubtopicName];
 }
 
 - (IBAction)selectAllPropertiesSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKAllPropertiesSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKAllPropertiesSubtopicName];
 }
 
 - (IBAction)selectClassMethodsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKClassMethodsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKClassMethodsSubtopicName];
 }
 
 - (IBAction)selectAllClassMethodsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKAllClassMethodsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKAllClassMethodsSubtopicName];
 }
 
 - (IBAction)selectInstanceMethodsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKInstanceMethodsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKInstanceMethodsSubtopicName];
 }
 
 - (IBAction)selectAllInstanceMethodsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKAllInstanceMethodsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKAllInstanceMethodsSubtopicName];
 }
 
 - (IBAction)selectDelegateMethodsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKDelegateMethodsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKDelegateMethodsSubtopicName];
 }
 
 - (IBAction)selectAllDelegateMethodsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKAllDelegateMethodsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKAllDelegateMethodsSubtopicName];
 }
 
 - (IBAction)selectNotificationsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKNotificationsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKNotificationsSubtopicName];
 }
 
 - (IBAction)selectAllNotificationsSubtopic:(id)sender
 {
-    [[self owningWindowController] selectSubtopicWithName:AKAllNotificationsSubtopicName];
+    [self.owningWindowController selectSubtopicWithName:AKAllNotificationsSubtopicName];
 }
 
 #pragma mark -
@@ -144,8 +144,8 @@
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
     // Is the topic changing?  (The "!=" test handles nil cases.)
-    AKTopic *currentTopic = [whereFrom topicToDisplay];
-    AKTopic *newTopic = [whereTo topicToDisplay];
+    AKTopic *currentTopic = whereFrom.topicToDisplay;
+    AKTopic *newTopic = whereTo.topicToDisplay;
     BOOL topicIsChanging = ((currentTopic != newTopic)
                             && ![currentTopic isEqual:newTopic]);
     if (topicIsChanging)
@@ -165,9 +165,9 @@
     }
 
     // Update the selection in the subtopics table.
-    NSString *currentSubtopicName = [whereFrom subtopicName];
-    NSString *newSubtopicName = [whereTo subtopicName];
-    if ([_subtopics count] == 0)
+    NSString *currentSubtopicName = whereFrom.subtopicName;
+    NSString *newSubtopicName = whereTo.subtopicName;
+    if (_subtopics.count == 0)
     {
         // Modify whereTo.
         [whereTo setSubtopicName:nil];
@@ -191,9 +191,9 @@
                      byExtendingSelection:NO];
 
         // Modify whereTo.
-        AKSubtopic *subtopic = [_subtopics objectAtIndex:subtopicIndex];
+        AKSubtopic *subtopic = _subtopics[subtopicIndex];
 
-        [whereTo setSubtopicName:[subtopic subtopicName]];
+        whereTo.subtopicName = [subtopic subtopicName];
     }
 }
 
@@ -224,14 +224,14 @@
         || (itemAction == @selector(selectNotificationsSubtopic:))
         || (itemAction == @selector(selectAllNotificationsSubtopic:)))
     {
-        AKTopic *currentTopic = [[[self owningWindowController] currentDocLocator] topicToDisplay];
+        AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
         return [currentTopic isKindOfClass:[AKBehaviorTopic class]];
     }
     else if (itemAction == @selector(selectHeaderFile:))
     {
-        AKTopic *currentTopic = [[[self owningWindowController] currentDocLocator] topicToDisplay];
+        AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
         return ([currentTopic isKindOfClass:[AKBehaviorTopic class]]
-                && ([(AKBehaviorNode *)[currentTopic topicNode] headerFileWhereDeclared] != nil));
+                && (((AKBehaviorNode *)[currentTopic topicNode]).headerFileWhereDeclared != nil));
     }
 
     return NO;
@@ -242,14 +242,14 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return [_subtopics count];
+    return _subtopics.count;
 }
 
 - (id)tableView:(NSTableView *)aTableView
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
             row:(NSInteger)rowIndex
 {
-    return [[_subtopics objectAtIndex:rowIndex] stringToDisplayInSubtopicList];
+    return [_subtopics[rowIndex] stringToDisplayInSubtopicList];
 }
 
 #pragma mark -
@@ -262,7 +262,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
     if ([aCell isKindOfClass:[NSBrowserCell class]])
     {
-        AKSubtopic *subtopic = [_subtopics objectAtIndex:rowIndex];
+        AKSubtopic *subtopic = _subtopics[rowIndex];
 
         [aCell setLeaf:([subtopic numberOfDocs] == 0)];
     }

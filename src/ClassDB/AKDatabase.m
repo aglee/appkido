@@ -31,7 +31,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)databaseWithErrorStrings:(NSMutableArray *)errorStrings
++ (instancetype)databaseWithErrorStrings:(NSMutableArray *)errorStrings
 {
     // Instantiate AKDevTools.
     NSString *devToolsPath = [AKPrefUtils devToolsPathPref];
@@ -107,7 +107,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex
+- (instancetype)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex
 {
     if ((self = [super init]))
     {
@@ -133,7 +133,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -190,7 +190,7 @@
 
     for (AKClassNode *classNode in [self allClasses])
     {
-        if ([[classNode nameOfOwningFramework] isEqualToString:frameworkName])
+        if ([classNode.nameOfOwningFramework isEqualToString:frameworkName])
         {
             [classNodes addObject:classNode];
         }
@@ -205,7 +205,7 @@
 
     for (AKClassNode *classNode in [self allClasses])
     {
-        if ([classNode parentClass] == nil)
+        if (classNode.parentClass == nil)
         {
             [result addObject:classNode];
         }
@@ -216,31 +216,31 @@
 
 - (NSArray *)allClasses
 {
-    return [_classNodesByName allValues];
+    return _classNodesByName.allValues;
 }
 
 - (AKClassNode *)classWithName:(NSString *)className
 {
-    return [_classNodesByName objectForKey:className];
+    return _classNodesByName[className];
 }
 
 - (void)addClassNode:(AKClassNode *)classNode
 {
     // Do nothing if we already have a class with the same name.
-    NSString *className = [classNode nodeName];
-    if ([_classNodesByName objectForKey:className])
+    NSString *className = classNode.nodeName;
+    if (_classNodesByName[className])
     {
         DIGSLogDebug3(@"Trying to add class [%@] again", className);
         return;
     }
 
     // Add the class to our lookup by class name.
-    [_classNodesByName setObject:classNode forKey:className];
+    _classNodesByName[className] = classNode;
 
     // Add the class's framework to our framework list if it's not there already.
-    if ([classNode nameOfOwningFramework])
+    if (classNode.nameOfOwningFramework)
     {
-        [self _seeIfFrameworkIsNew:[classNode nameOfOwningFramework]];
+        [self _seeIfFrameworkIsNew:classNode.nameOfOwningFramework];
     }
 }
 
@@ -259,31 +259,31 @@
 
 - (NSArray *)allProtocols
 {
-    return [_protocolNodesByName allValues];
+    return _protocolNodesByName.allValues;
 }
 
 - (AKProtocolNode *)protocolWithName:(NSString *)name
 {
-    return [_protocolNodesByName objectForKey:name];
+    return _protocolNodesByName[name];
 }
 
 - (void)addProtocolNode:(AKProtocolNode *)protocolNode
 {
     // Do nothing if we already have a protocol with the same name.
-    NSString *protocolName = [protocolNode nodeName];
-    if ([_protocolNodesByName objectForKey:protocolName])
+    NSString *protocolName = protocolNode.nodeName;
+    if (_protocolNodesByName[protocolName])
     {
         DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
         return;
     }
 
     // Add the protocol to our lookup by protocol name.
-    [_protocolNodesByName setObject:protocolNode forKey:protocolName];
+    _protocolNodesByName[protocolName] = protocolNode;
 
     // Add the class's framework to our framework list if it's not there already.
-    if ([protocolNode nameOfOwningFramework])
+    if (protocolNode.nameOfOwningFramework)
     {
-        [self _seeIfFrameworkIsNew:[protocolNode nameOfOwningFramework]];
+        [self _seeIfFrameworkIsNew:protocolNode.nameOfOwningFramework];
     }
 }
 
@@ -292,46 +292,46 @@
 
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [_functionsGroupListsByFramework objectForKey:frameworkName];
+    return _functionsGroupListsByFramework[frameworkName];
 }
 
 - (AKGroupNode *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
 {
-    return [[_functionsGroupsByFrameworkAndGroup objectForKey:frameworkName] objectForKey:groupName];
+    return _functionsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
 
 - (void)addFunctionsGroup:(AKGroupNode *)groupNode
 {
-    NSString *frameworkName = [groupNode nameOfOwningFramework];
+    NSString *frameworkName = groupNode.nameOfOwningFramework;
 
     // See if we have any functions groups in the framework yet.
     NSMutableArray *groupList = nil;
-    NSMutableDictionary *groupsByName = [_functionsGroupsByFrameworkAndGroup objectForKey:frameworkName];
+    NSMutableDictionary *groupsByName = _functionsGroupsByFrameworkAndGroup[frameworkName];
 
     if (groupsByName)
     {
-        groupList = [_functionsGroupListsByFramework objectForKey:frameworkName];
+        groupList = _functionsGroupListsByFramework[frameworkName];
     }
     else
     {
         groupsByName = [NSMutableDictionary dictionary];
-        [_functionsGroupsByFrameworkAndGroup setObject:groupsByName forKey:frameworkName];
+        _functionsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
 
         groupList = [NSMutableArray array];
-        [_functionsGroupListsByFramework setObject:groupList forKey:frameworkName];
+        _functionsGroupListsByFramework[frameworkName] = groupList;
     }
 
     // Add the functions group if it isn't already in the framework.
-    NSString *groupName = [groupNode nodeName];
+    NSString *groupName = groupNode.nodeName;
 
-    if ([groupsByName objectForKey:groupName])
+    if (groupsByName[groupName])
     {
         DIGSLogWarning(@"Trying to add functions group [%@] again", groupName);
     }
     else
     {
         [groupList addObject:groupNode];
-        [groupsByName setObject:groupNode forKey:[groupNode nodeName]];
+        groupsByName[groupNode.nodeName] = groupNode;
     }
 
     // Add the framework to our framework list if it's not there already.
@@ -343,47 +343,47 @@
 
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [_globalsGroupListsByFramework objectForKey:frameworkName];
+    return _globalsGroupListsByFramework[frameworkName];
 }
 
 - (AKGroupNode *)globalsGroupNamed:(NSString *)groupName
                   inFrameworkNamed:(NSString *)frameworkName
 {
-    return [[_globalsGroupsByFrameworkAndGroup objectForKey:frameworkName] objectForKey:groupName];
+    return _globalsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
 
 - (void)addGlobalsGroup:(AKGroupNode *)groupNode
 {
-    NSString *frameworkName = [groupNode nameOfOwningFramework];
+    NSString *frameworkName = groupNode.nameOfOwningFramework;
 
     // See if we have any globals groups in the framework yet.
     NSMutableArray *groupList = nil;
-    NSMutableDictionary *groupsByName = [_globalsGroupsByFrameworkAndGroup objectForKey:frameworkName];
+    NSMutableDictionary *groupsByName = _globalsGroupsByFrameworkAndGroup[frameworkName];
 
     if (groupsByName)
     {
-        groupList = [_globalsGroupListsByFramework objectForKey:frameworkName];
+        groupList = _globalsGroupListsByFramework[frameworkName];
     }
     else
     {
         groupsByName = [NSMutableDictionary dictionary];
-        [_globalsGroupsByFrameworkAndGroup setObject:groupsByName forKey:frameworkName];
+        _globalsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
 
         groupList = [NSMutableArray array];
-        [_globalsGroupListsByFramework setObject:groupList forKey:frameworkName];
+        _globalsGroupListsByFramework[frameworkName] = groupList;
     }
 
     // Add the globals group if it isn't already in the framework.
-    NSString *groupName = [groupNode nodeName];
+    NSString *groupName = groupNode.nodeName;
 
-    if ([groupsByName objectForKey:groupName])
+    if (groupsByName[groupName])
     {
         DIGSLogWarning(@"Trying to add globals group [%@] again", groupName);
     }
     else
     {
         [groupList addObject:groupNode];
-        [groupsByName setObject:groupNode forKey:[groupNode nodeName]];
+        groupsByName[groupNode.nodeName] = groupNode;
     }
 
     // Add the framework to our framework list if it's not there already.
@@ -395,24 +395,24 @@
 
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    return [_classNodesByHTMLPath objectForKey:htmlFilePath];
+    return _classNodesByHTMLPath[htmlFilePath];
 }
 
 - (void)rememberThatClass:(AKClassNode *)classNode
    isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    [_classNodesByHTMLPath setObject:classNode forKey:htmlFilePath];
+    _classNodesByHTMLPath[htmlFilePath] = classNode;
 }
 
 - (AKProtocolNode *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    return [_protocolNodesByHTMLPath objectForKey:htmlFilePath];
+    return _protocolNodesByHTMLPath[htmlFilePath];
 }
 
 - (void)rememberThatProtocol:(AKProtocolNode *)protocolNode
       isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    [_protocolNodesByHTMLPath setObject:protocolNode forKey:htmlFilePath];
+    _protocolNodesByHTMLPath[htmlFilePath] = protocolNode;
 }
 
 #pragma mark -
@@ -482,7 +482,7 @@
         return nil;
     }
 
-    if ([[devTools sdkVersionsThatAreCoveredByDocSets] count] == 0)
+    if ([devTools sdkVersionsThatAreCoveredByDocSets].count == 0)
     {
         NSString *msg = [NSString stringWithFormat:@"No docsets were found for any SDKs installed in %@.",
                          devToolsPath];
@@ -494,7 +494,7 @@
 
     if (sdkVersion == nil)
     {
-        sdkVersion = [[devTools sdkVersionsThatAreCoveredByDocSets] lastObject];
+        sdkVersion = [devTools sdkVersionsThatAreCoveredByDocSets].lastObject;
     }
 
     if (sdkVersion == nil)
@@ -549,8 +549,8 @@
 
     for (AKProtocolNode *protocolNode in [self allProtocols])
     {
-        if (([protocolNode isInformal] == informalFlag)
-            && [[protocolNode nameOfOwningFramework] isEqualToString:fwName])
+        if ((protocolNode.isInformal == informalFlag)
+            && [protocolNode.nameOfOwningFramework isEqualToString:fwName])
         {
             [result addObject:protocolNode];
         }

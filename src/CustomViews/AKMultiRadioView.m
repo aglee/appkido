@@ -76,13 +76,13 @@
 {
     NSMutableArray *submatrixes = [NSMutableArray array];
 
-    for (NSView *subview in [self subviews])
+    for (NSView *subview in self.subviews)
     {
         if ([subview isKindOfClass:[NSMatrix class]]
-            && ([(NSMatrix *)subview mode] == NSRadioModeMatrix)
-            && [(NSMatrix *)subview allowsEmptySelection]
-            && ([(NSMatrix *)subview target] == self)
-            && ([(NSMatrix *)subview action] == @selector(doRadioAction:)))
+            && (((NSMatrix *)subview).mode == NSRadioModeMatrix)
+            && ((NSMatrix *)subview).allowsEmptySelection
+            && (((NSMatrix *)subview).target == self)
+            && (((NSMatrix *)subview).action == @selector(doRadioAction:)))
         {
             [submatrixes addObject:subview];
         }

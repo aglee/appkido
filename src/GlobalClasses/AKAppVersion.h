@@ -44,6 +44,6 @@ extern NSString *AKHomePageURL;
 
 - (BOOL)isNewerThanVersion:(AKAppVersion *)rhs;
 
-- (NSString *)displayString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *displayString;
 
 @end

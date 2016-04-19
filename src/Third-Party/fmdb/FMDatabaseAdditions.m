@@ -58,7 +58,7 @@ return ret;
 
 - (BOOL)tableExists:(NSString*)tableName {
     
-    tableName = [tableName lowercaseString];
+    tableName = tableName.lowercaseString;
     
     FMResultSet *rs = [self executeQuery:@"select [sql] from sqlite_master where [type] = 'table' and lower(name) = ?", tableName];
     
@@ -98,14 +98,14 @@ return ret;
     
     BOOL returnBool = NO;
     
-    tableName  = [tableName lowercaseString];
-    columnName = [columnName lowercaseString];
+    tableName  = tableName.lowercaseString;
+    columnName = columnName.lowercaseString;
     
     FMResultSet *rs = [self getTableSchema:tableName];
     
     //check if column is present in table schema
     while ([rs next]) {
-        if ([[[rs stringForColumn:@"name"] lowercaseString] isEqualToString:columnName]) {
+        if ([[rs stringForColumn:@"name"].lowercaseString isEqualToString:columnName]) {
             returnBool = YES;
             break;
         }
@@ -134,7 +134,7 @@ return ret;
     
     while (keepTrying == YES) {
         keepTrying = NO;
-        int rc = sqlite3_prepare_v2(_db, [sql UTF8String], -1, &pStmt, 0);
+        int rc = sqlite3_prepare_v2(_db, sql.UTF8String, -1, &pStmt, 0);
         if (rc == SQLITE_BUSY || rc == SQLITE_LOCKED) {
             keepTrying = YES;
             usleep(20);
@@ -149,8 +149,7 @@ return ret;
             if (error) {
                 *error = [NSError errorWithDomain:NSCocoaErrorDomain 
                                              code:[self lastErrorCode]
-                                         userInfo:[NSDictionary dictionaryWithObject:[self lastErrorMessage] 
-                                                                              forKey:NSLocalizedDescriptionKey]];
+                                         userInfo:@{NSLocalizedDescriptionKey: [self lastErrorMessage]}];
             }
         }
     }

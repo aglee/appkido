@@ -35,11 +35,11 @@
     // Populate the UI with initial values.
     if (xcodeAppPath)
     {
-        [_xcodeAppPathField setStringValue:xcodeAppPath];
+        _xcodeAppPathField.stringValue = xcodeAppPath;
     }
     else
     {
-        [_xcodeAppPathField setStringValue:@""];
+        _xcodeAppPathField.stringValue = @"";
     }
     
     [self _updateUIToReflectPrefs];
@@ -65,36 +65,36 @@
 
     // Even though a .app bundle is a directory and not a file, we pretend
     // otherwise when setting up the open panel.
-    [openPanel setTitle:@"Locate Xcode.app"];
-    [openPanel setPrompt:@"Select Xcode"];
+    openPanel.title = @"Locate Xcode.app";
+    openPanel.prompt = @"Select Xcode";
     [openPanel setAllowsMultipleSelection:NO];
     [openPanel setCanChooseDirectories:NO];
     [openPanel setCanChooseFiles:YES];
-    [openPanel setDelegate:self];
+    openPanel.delegate = self;
     [openPanel setResolvesAliases:YES];
 
     if (_selectedXcodeAppPath) {
-        [openPanel setDirectoryURL:[NSURL fileURLWithPath:_selectedXcodeAppPath]];
+        openPanel.directoryURL = [NSURL fileURLWithPath:_selectedXcodeAppPath];
     } else {
-        NSURL *appDirURL = [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationDirectory inDomains:NSSystemDomainMask] lastObject];
+        NSURL *appDirURL = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationDirectory inDomains:NSSystemDomainMask].lastObject;
         if (appDirURL) {
-            [openPanel setDirectoryURL:appDirURL];
+            openPanel.directoryURL = appDirURL;
         }
     }
-    [openPanel setAllowedFileTypes:@[@"app"]];
+    openPanel.allowedFileTypes = @[@"app"];
     
-    [openPanel beginSheetModalForWindow:[_xcodeAppPathField window]
+    [openPanel beginSheetModalForWindow:_xcodeAppPathField.window
                       completionHandler:^(NSInteger result) {
                           if (result == NSFileHandlingPanelOKButton)
                           {
-                              [self _handleProposedXcodeAppPath:[[openPanel URL] path]];
+                              [self _handleProposedXcodeAppPath:openPanel.URL.path];
                           }
                       }];
 }
 
 - (IBAction)selectSDKVersion:(id)sender
 {
-    [AKPrefUtils setSDKVersionPref:[[(NSPopUpButton *)sender selectedItem] title]];
+    [AKPrefUtils setSDKVersionPref:((NSPopUpButton *)sender).selectedItem.title];
     [self _updateUIToReflectPrefs];
 }
 
@@ -103,7 +103,7 @@
 
 - (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url
 {
-    NSString *path = [url path];
+    NSString *path = url.path;
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir = NO;
 
@@ -119,7 +119,7 @@
     }
 
     // Allow any directory that is not an app bundle.
-    if (![[path pathExtension] isEqualToString:@"app"])
+    if (![path.pathExtension isEqualToString:@"app"])
     {
         return YES;
     }
@@ -196,7 +196,7 @@
     
     if ((selectedSDKVersion == nil) || (docSetSDKVersion == nil))
     {
-        selectedSDKVersion = [sdkVersionsToOffer lastObject];
+        selectedSDKVersion = sdkVersionsToOffer.lastObject;
         docSetSDKVersion = [devTools docSetSDKVersionThatCoversSDKVersion:selectedSDKVersion];
         
         [AKPrefUtils setSDKVersionPref:selectedSDKVersion];
@@ -207,10 +207,10 @@
     NSString *infoText = [self _infoTextForDevTools:devTools
                                  selectedSDKVersion:selectedSDKVersion
                                    docSetSDKVersion:docSetSDKVersion];
-    [_explanationField setStringValue:infoText];
+    _explanationField.stringValue = infoText;
     
     // Update the enabledness of the OK button.
-    [_okButton setEnabled:(selectedSDKVersion != nil)];
+    _okButton.enabled = (selectedSDKVersion != nil);
 }
 
 - (void)_handleProposedXcodeAppPath:(NSString *)proposedXcodeAppPath
@@ -222,7 +222,7 @@
 
     if ([AKDevTools looksLikeValidDevToolsPath:devToolsPath errorStrings:errorStrings])
     {
-        [_xcodeAppPathField setStringValue:proposedXcodeAppPath];
+        _xcodeAppPathField.stringValue = proposedXcodeAppPath;
         [AKPrefUtils setDevToolsPathPref:devToolsPath];
         [self _updateUIToReflectPrefs];
     }
@@ -247,7 +247,7 @@
                       @"OK",  // defaultButton
                       nil,  // alternateButton
                       nil,  // otherButton
-                      [_xcodeAppPathField window],  // docWindow
+                      _xcodeAppPathField.window,  // docWindow
                       self,  // modalDelegate -- will release when alert ends
                       @selector(_badPathAlertDidEnd:returnCode:contextInfo:),  // didEndSelector
                       (SEL)NULL,  // didDismissSelector

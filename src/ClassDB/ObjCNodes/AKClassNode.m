@@ -30,7 +30,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
@@ -78,11 +78,11 @@
 
     // Handle case where node already has a parent.  This will be a
     // no-op if the node has no parent.
-    [[node parentClass] removeChildClass:node];
+    [node.parentClass removeChildClass:node];
 
     // Set new parent-child connections.
     // [agl] Note that this creates an object cycle.
-    [node setParentClass:self];
+    node.parentClass = self;
     [_childClassNodes addObject:node];
 }
 
@@ -113,14 +113,14 @@
 
 - (BOOL)hasChildClasses
 {
-    return ([_childClassNodes count] > 0);
+    return (_childClassNodes.count > 0);
 }
 
 - (AKCategoryNode *)categoryNamed:(NSString *)catName
 {
     for (AKDatabaseNode *node in _categoryNodes)
     {
-        if ([[node nodeName] isEqualToString:catName])
+        if ([node.nodeName isEqualToString:catName])
         {
             return (AKCategoryNode *)node;
         }
@@ -162,7 +162,7 @@
 
 - (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName
 {
-    return [_nodeDocumentationByFrameworkName objectForKey:frameworkName];
+    return _nodeDocumentationByFrameworkName[frameworkName];
 }
 
 - (void)associateDocumentation:(AKFileSection *)fileSection
@@ -180,7 +180,7 @@
         [_namesOfAllOwningFrameworks addObject:frameworkName];
     }
 
-    [_nodeDocumentationByFrameworkName setObject:fileSection forKey:frameworkName];
+    _nodeDocumentationByFrameworkName[frameworkName] = fileSection;
 }
 
 #pragma mark -
@@ -256,7 +256,7 @@
         if ([methodName ak_contains:@":"])
         {
             methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
-                                                        database:[self owningDatabase]
+                                                        database:self.owningDatabase
                                                    frameworkName:frameworkName
                                                   owningBehavior:self];
             [methodNode setIsDeprecated:YES];
@@ -278,7 +278,7 @@
 
 - (void)setNameOfOwningFramework:(NSString *)frameworkName
 {
-    [super setNameOfOwningFramework:frameworkName];
+    super.nameOfOwningFramework = frameworkName;
 
     // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
     if (frameworkName)
@@ -306,8 +306,8 @@
 - (void)_addExtraDelegateMethodsTo:(NSMutableArray *)methodsList
 {
     // Look for a protocol named ThisClassDelegate.
-    AKDatabase *db = [self owningDatabase];
-    NSString *possibleDelegateProtocolName = [[self nodeName] stringByAppendingString:@"Delegate"];
+    AKDatabase *db = self.owningDatabase;
+    NSString *possibleDelegateProtocolName = [self.nodeName stringByAppendingString:@"Delegate"];
     AKProtocolNode *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
     
     if (delegateProtocol)
@@ -319,20 +319,19 @@
     // [agl] To be really thorough, check for fooDelegate properties.
     for (AKMethodNode *methodNode in [self instanceMethodNodes])
     {
-        NSString *methodName = [methodNode nodeName];
+        NSString *methodName = methodNode.nodeName;
 
         if ([methodName hasPrefix:@"set"]
             && [methodName hasSuffix:@"Delegate:"]
             && ![methodName isEqualToString:@"setDelegate:"])
         {
             // [agl] FIXME Can't I just look for protocol FooDelegate?
-            NSString *protocolSuffix = [[[methodName substringToIndex:([methodName length] - 1)]
-                                         substringFromIndex:3]
-                                        uppercaseString];
+            NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
+                                         substringFromIndex:3].uppercaseString;
             
             for (AKProtocolNode *protocolNode in [db allProtocols])
             {
-                NSString *protocolName = [[protocolNode nodeName] uppercaseString];
+                NSString *protocolName = protocolNode.nodeName.uppercaseString;
 
                 if ([protocolName hasSuffix:protocolSuffix])
                 {

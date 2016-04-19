@@ -47,7 +47,7 @@
     }
     else
     {
-        return r.location + [searchString length];
+        return r.location + searchString.length;
     }
 }
 
@@ -57,7 +57,7 @@
                     wrap:(BOOL)wrap
 {
     BOOL forwards = ((options & NSBackwardsSearch) == 0);
-    NSUInteger length = [self length];
+    NSUInteger length = self.length;
     NSRange searchRange, range;
 
     if (forwards)
@@ -104,7 +104,7 @@
 
 - (NSString *)ak_stripHTML
 {
-    if ([self length] == 0)
+    if (self.length == 0)
     {
         return @"";
     }
@@ -119,16 +119,16 @@
         DIGSLogError(@"Error str%@", xmlError);
     }
     
-    return [[xmlDoc rootElement] stringValue];
+    return [xmlDoc rootElement].stringValue;
 }
 
 - (NSString *)ak_firstWord
 {
     NSArray *words = [[self ak_trimWhitespace] componentsSeparatedByString:@" "];
 
-    if ([words count])
+    if (words.count)
     {
-        return [words objectAtIndex:0];
+        return words[0];
     }
     else
     {

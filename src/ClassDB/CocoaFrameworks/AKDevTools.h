@@ -84,14 +84,14 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)devToolsWithPath:(NSString *)devToolsPath;
++ (instancetype)devToolsWithPath:(NSString *)devToolsPath;
 
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithPath:(NSString *)devToolsPath;
+- (instancetype)initWithPath:(NSString *)devToolsPath NS_DESIGNATED_INITIALIZER;
 
 
 #pragma mark -
@@ -111,7 +111,7 @@
  * Xcode 4.3+, this is typically but not necessarily
  * /Applications/Xcode.app/Contents/Developer.
  */
-- (NSString *)devToolsPath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *devToolsPath;
 
 
 #pragma mark -
@@ -133,10 +133,10 @@
  * Subclasses must override.  Returns the directory in which we look for
  * SDKs (special directories whose names end in .sdk).
  */
-- (NSString *)sdkSearchPath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sdkSearchPath;
 
 /*! Returns a sorted array of strings in order of version number. */
-- (NSArray *)sdkVersionsThatAreCoveredByDocSets;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sdkVersionsThatAreCoveredByDocSets;
 
 /*!
  * Returns latest version we know of if sdkVersion is nil.  Note that sdkVersion could

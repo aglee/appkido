@@ -26,7 +26,7 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 {
     AKLabelTopic *topic = [[self alloc] init];
 
-    [topic setLabel:label];
+    topic.label = label;
 
     return topic;
 }
@@ -68,7 +68,7 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
         return nil;
     }
 
-    NSString *labelString = [prefDict objectForKey:AKLabelStringPrefKey];
+    NSString *labelString = prefDict[AKLabelStringPrefKey];
 
     if (labelString == nil)
     {
@@ -85,8 +85,8 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
-    [prefDict setObject:_label forKey:AKLabelStringPrefKey];
+    prefDict[AKTopicClassNamePrefKey] = self.className;
+    prefDict[AKLabelStringPrefKey] = _label;
 
     return prefDict;
 }

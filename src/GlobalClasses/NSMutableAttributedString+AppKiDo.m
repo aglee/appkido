@@ -15,7 +15,7 @@
     NSRange selectedRange;
     NSUInteger charIndex;
 
-    selectedRange = NSMakeRange(0, [self length]);
+    selectedRange = NSMakeRange(0, self.length);
     charIndex = 0;
     do
     {
@@ -27,19 +27,19 @@
         attributes = [self attributesAtIndex:charIndex
                        longestEffectiveRange:&foundRange
                                      inRange:selectedRange];
-        foundFont = [attributes objectForKey:NSFontAttributeName];
+        foundFont = attributes[NSFontAttributeName];
 
         if (foundFont != nil) // [agl] FIXME-PURISM: can this equal nil?
         {
             float newSize;
 
             // Get the current size and calculate the new size.
-            newSize = [foundFont pointSize] * multiplier;
+            newSize = foundFont.pointSize * multiplier;
 
             //  Get a font of that size, and stick it in
             foundFont = [[NSFontManager sharedFontManager] convertFont:foundFont toSize:newSize];
             newAttributes = [attributes mutableCopy];
-            [newAttributes setObject:foundFont forKey:NSFontAttributeName];
+            newAttributes[NSFontAttributeName] = foundFont;
             [self setAttributes:newAttributes range:foundRange];
         }
 

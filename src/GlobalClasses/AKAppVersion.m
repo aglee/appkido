@@ -19,7 +19,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
 
 + (AKAppVersion *)appVersion
 {
-    NSString *versionString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    NSString *versionString = [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"];
     
     return [self appVersionFromString:versionString];
 }
@@ -31,19 +31,19 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     // Parse out the major version number.
     parts = [versionString componentsSeparatedByString:@"."];
     
-    if ([parts count] != 2)
+    if (parts.count != 2)
     {
         DIGSLogWarning(@"error parsing major/minor version numbers");
         return nil;
     }
     
-    NSString *majorNumber = [parts objectAtIndex:0];
-    NSString *minorNumber = [parts objectAtIndex:1];
+    NSString *majorNumber = parts[0];
+    NSString *minorNumber = parts[1];
     
     // Parse out the sneakypeek number if it's there.
     parts = [minorNumber componentsSeparatedByString:@"sp"];
     
-    if ([parts count] > 2)
+    if (parts.count > 2)
     {
         DIGSLogWarning(@"error parsing sneakypeek version number");
         return nil;
@@ -51,14 +51,14 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     
     NSString *sneakypeekNumber = @"";
     
-    if ([parts count] == 2)
+    if (parts.count == 2)
     {
-        minorNumber = [parts objectAtIndex:0];
-        sneakypeekNumber = [parts objectAtIndex:1];
+        minorNumber = parts[0];
+        sneakypeekNumber = parts[1];
     }
     
     // Parse out the patch number if it's there.
-    if (([minorNumber length] < 2) || ([minorNumber length] > 3))
+    if ((minorNumber.length < 2) || (minorNumber.length > 3))
     {
         DIGSLogWarning(@"error parsing minor/patch version numbers");
         return nil;
@@ -66,7 +66,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     
     NSString *patchNumber = @"";
     
-    if ([minorNumber length] == 3)
+    if (minorNumber.length == 3)
     {
         patchNumber = [minorNumber substringFromIndex:2];
         minorNumber = [minorNumber substringToIndex:2];
@@ -75,10 +75,10 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     // Construct and return an instance with the parts we have.
     AKAppVersion *appVersion = [[AKAppVersion alloc] init];
     
-    [appVersion setMajor:majorNumber];
-    [appVersion setMinor:minorNumber];
-    [appVersion setSneakypeek:sneakypeekNumber];
-    [appVersion setPatch:patchNumber];
+    appVersion.major = majorNumber;
+    appVersion.minor = minorNumber;
+    appVersion.sneakypeek = sneakypeekNumber;
+    appVersion.patch = patchNumber;
     
     return appVersion;
 }
@@ -88,7 +88,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     NSComparisonResult comparison;
 
     // Compare the major version numbers.
-    comparison = [self _compareValue:_major withValue:[rhs major] nilIsGreatest:NO];
+    comparison = [self _compareValue:_major withValue:rhs.major nilIsGreatest:NO];
 
     if (comparison == NSOrderedDescending)
     {
@@ -100,7 +100,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     }
 
     // Compare the minor version numbers.
-    comparison = [self _compareValue:_minor withValue:[rhs minor] nilIsGreatest:NO];
+    comparison = [self _compareValue:_minor withValue:rhs.minor nilIsGreatest:NO];
 
     if (comparison == NSOrderedDescending)
     {
@@ -112,7 +112,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     }
 
     // Compare the patch version numbers, if they are present.
-    comparison = [self _compareValue:_patch withValue:[rhs patch] nilIsGreatest:NO];
+    comparison = [self _compareValue:_patch withValue:rhs.patch nilIsGreatest:NO];
 
     if (comparison == NSOrderedDescending)
     {
@@ -124,7 +124,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     }
 
     // Compare the sneakypeek version numbers, if they are present.
-    comparison = [self _compareValue:_sneakypeek withValue:[rhs sneakypeek] nilIsGreatest:YES];
+    comparison = [self _compareValue:_sneakypeek withValue:rhs.sneakypeek nilIsGreatest:YES];
 
     if (comparison == NSOrderedDescending)
     {
@@ -145,13 +145,13 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     NSMutableString *versionString = [NSMutableString stringWithFormat:@"%@.%@", _major, _minor];
     
     // See if there is a patch number.
-    if ([_patch length])
+    if (_patch.length)
     {
         [versionString appendString:_patch];
     }
     
     // See if there is a sneakypeek number.
-    if ([_sneakypeek length])
+    if (_sneakypeek.length)
     {
         [versionString appendFormat:@"sp%@", _sneakypeek];
     }

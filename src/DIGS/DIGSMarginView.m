@@ -14,7 +14,7 @@
 
 - (void)awakeFromNib
 {
-    _initialSize = [self bounds].size;
+    _initialSize = self.bounds.size;
 
     // Set remaining ivars.
     [self _figureOutWhichSubviewIsWhich];
@@ -36,8 +36,8 @@
     [self _doTheEasyCalc:&newFrameTwo];
 
     // Update the subviews' frames.
-    [_viewOne setFrame:newFrameOne];
-    [_viewTwo setFrame:newFrameTwo];
+    _viewOne.frame = newFrameOne;
+    _viewTwo.frame = newFrameTwo;
 }
 
 #pragma mark -
@@ -52,13 +52,13 @@
 // the views are side-by-side, _viewOne will be the *left* one.
 - (void)_figureOutWhichSubviewIsWhich
 {
-    NSArray *subs = [self subviews];
+    NSArray *subs = self.subviews;
     NSView *subviewA;
     NSView *subviewB;
     NSRect frameA;
     NSRect frameB;
 
-    if ([subs count] != 2)
+    if (subs.count != 2)
     {
         // FIXME [agl] also make sure both views completely contained
         // FIXME [agl] also make sure views don't overlap
@@ -67,10 +67,10 @@
         return;
     }
 
-    subviewA = [subs objectAtIndex:0];
-    subviewB = [subs objectAtIndex:1];
-    frameA = [subviewA frame];
-    frameB = [subviewB frame];
+    subviewA = subs[0];
+    subviewB = subs[1];
+    frameA = subviewA.frame;
+    frameB = subviewB.frame;
 
     // Set _isSideBySide, _viewOne, and _viewTwo.
     if (NSMaxY(frameA) <= NSMinY(frameB))
@@ -99,26 +99,26 @@
     }
 
     // Set _initialFrameOne and _initialFrameTwo.
-    _initialFrameOne = [_viewOne frame];
-    _initialFrameTwo = [_viewTwo frame];
+    _initialFrameOne = _viewOne.frame;
+    _initialFrameTwo = _viewTwo.frame;
 
     // Set _isViewOneFlexible and _isViewTwoFlexible.
     if (_isSideBySide)
     {
-        _isViewOneFlexible = ([_viewOne autoresizingMask] & NSViewWidthSizable) != 0;
-        _isViewTwoFlexible = ([_viewTwo autoresizingMask] & NSViewWidthSizable) != 0;
+        _isViewOneFlexible = (_viewOne.autoresizingMask & NSViewWidthSizable) != 0;
+        _isViewTwoFlexible = (_viewTwo.autoresizingMask & NSViewWidthSizable) != 0;
     }
     else
     {
-        _isViewOneFlexible = ([_viewOne autoresizingMask] & NSViewHeightSizable) != 0;
-        _isViewTwoFlexible = ([_viewTwo autoresizingMask] & NSViewHeightSizable) != 0;
+        _isViewOneFlexible = (_viewOne.autoresizingMask & NSViewHeightSizable) != 0;
+        _isViewTwoFlexible = (_viewTwo.autoresizingMask & NSViewHeightSizable) != 0;
     }
 }
 
 // Called by resizeSubviewsWithOldSize:.
 - (void)_doTheHardCalc:(NSRect *)frameOnePtr :(NSRect *)frameTwoPtr
 {
-    NSSize newSize = [self bounds].size;
+    NSSize newSize = self.bounds.size;
     CGFloat initialTotalLength = (_isSideBySide
                                   ? _initialSize.width
                                   : _initialSize.height);
@@ -198,7 +198,7 @@
 // in _doTheHardCalc::.
 - (void)_doTheEasyCalc:(NSRect *)framePtr
 {
-    NSSize newSize = [self bounds].size;
+    NSSize newSize = self.bounds.size;
     CGFloat initialTotalLength = (_isSideBySide
                                   ? _initialSize.height
                                   : _initialSize.width);

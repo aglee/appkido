@@ -33,7 +33,7 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (NSString *)docComment;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *docComment;
 
 #pragma mark -
 #pragma mark Navigation

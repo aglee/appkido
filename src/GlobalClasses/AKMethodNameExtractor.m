@@ -14,13 +14,13 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithString:(NSString *)string
+- (instancetype)initWithString:(NSString *)string
 {
     self = [super init];
     if (self)
     {
         NSData *asciiData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-        size_t numChars = [asciiData length];
+        size_t numChars = asciiData.length;
 
         _buffer = malloc(numChars + 1);
         (void)strncpy(_buffer, [asciiData bytes], numChars);
@@ -117,7 +117,7 @@
     }
 
     // Did we extract a multi-part method name?
-    if ([keywordMethodName length] == 0)
+    if (keywordMethodName.length == 0)
     {
         return lastSimpleIdentifier;
     }
@@ -132,7 +132,7 @@
 
 - (BOOL)_isValidUnaryMethodName:(NSString *)string
 {
-    NSUInteger len = [string length];
+    NSUInteger len = string.length;
 
     if (len == 0)
     {

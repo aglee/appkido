@@ -10,11 +10,10 @@
 
 #define TCMWriterOptionNoOptions = 0UL;
 
-enum {
+typedef NS_OPTIONS(NSUInteger, TCMXMLWriterOptions) {
 	TCMXMLWriterOptionPrettyPrinted = 1UL << 0,
 	TCMXMLWriterOptionOrderedAttributes = 1UL << 1 // mainly for unit testing to get reproducible results, but can also be helpful otherwise for stable results
 };
-typedef NSUInteger TCMXMLWriterOptions;
 
 @interface TCMXMLWriter : NSObject
 {
@@ -33,10 +32,10 @@ typedef NSUInteger TCMXMLWriterOptions;
 @property (weak, readonly) NSData *XMLData; // works for in memory streams and file URLs
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
-- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField; // stores marshalled stuff in string
-- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField fileURL:(NSURL *)aFileURL;
+- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField NS_DESIGNATED_INITIALIZER; // stores marshalled stuff in string
+- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField fileURL:(NSURL *)aFileURL;
 // stream must be open
-- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField outputStream:(NSOutputStream *)anOutputStream;
+- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField outputStream:(NSOutputStream *)anOutputStream;
 
 // meta
 - (void)instructXMLStandalone; // <?xml version="1.0" encoding="UTF-8" standalone="yes"?>

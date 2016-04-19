@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithGroupNode:(AKGroupNode *)groupNode
+- (instancetype)initWithGroupNode:(AKGroupNode *)groupNode
 {
     if ((self = [super init]))
     {
@@ -26,7 +26,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -38,7 +38,7 @@
 
 - (NSString *)subtopicName
 {
-    return [_groupNode nodeName];
+    return _groupNode.nodeName;
 }
 
 @end

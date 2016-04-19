@@ -25,7 +25,7 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController;
+- (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Navigation

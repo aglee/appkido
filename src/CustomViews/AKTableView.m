@@ -26,8 +26,8 @@
     NSLayoutManager * lm = [[NSLayoutManager alloc] init];
  	NSInteger newRowHeight = round([lm defaultLineHeightForFont:font] + 1.0); 
 
-    [[[[self tableColumns] objectAtIndex:0] dataCell] setFont:font];
-    [self setRowHeight:newRowHeight];
+    [self.tableColumns[0].dataCell setFont:font];
+    self.rowHeight = newRowHeight;
     [self setNeedsDisplay:YES];
 }
 
@@ -46,22 +46,22 @@
 // This override does.
 - (void)keyDown:(NSEvent *)theEvent
 {
-    NSString *eventChars = [theEvent characters];
+    NSString *eventChars = theEvent.characters;
 
     if ([eventChars isEqualToString:@"\n"]
         || [eventChars isEqualToString:@"\r"])
     {
-        [[self target] performSelector:[self doubleAction] withObject:self];
+        [self.target performSelector:self.doubleAction withObject:self];
     }
     else
     {
-        NSInteger oldSelectedRow = [self selectedRow];
+        NSInteger oldSelectedRow = self.selectedRow;
 
         [super keyDown:theEvent];
 
-        if ([self selectedRow] != oldSelectedRow)
+        if (self.selectedRow != oldSelectedRow)
         {
-            [[self target] performSelector:[self action] withObject:self];
+            [self.target performSelector:self.action withObject:self];
         }
     }
 }
@@ -70,13 +70,13 @@
 // subtopic list and the doc list.
 - (void)moveLeft:(id)sender
 {
-    if ([[[self window] delegate] isKindOfClass:[AKWindowController class]])
+    if ([self.window.delegate isKindOfClass:[AKWindowController class]])
     {
         NSSplitView *splitView = [self ak_enclosingViewOfClass:[NSSplitView class]];
 
-        if ([self isDescendantOf:[[splitView subviews] objectAtIndex:1]])
+        if ([self isDescendantOf:splitView.subviews[1]])
         {
-            (void)[AKTabChain stepThroughTabChainInWindow:[self window] forward:NO];
+            (void)[AKTabChain stepThroughTabChainInWindow:self.window forward:NO];
         }
     }
 }
@@ -85,13 +85,13 @@
 // subtopic list and the doc list.
 - (void)moveRight:(id)sender
 {
-    if ([[[self window] delegate] isKindOfClass:[AKWindowController class]])
+    if ([self.window.delegate isKindOfClass:[AKWindowController class]])
     {
         NSSplitView *splitView = [self ak_enclosingViewOfClass:[NSSplitView class]];
 
-        if ([self isDescendantOf:[[splitView subviews] objectAtIndex:0]])
+        if ([self isDescendantOf:splitView.subviews[0]])
         {
-            (void)[AKTabChain stepThroughTabChainInWindow:[self window] forward:YES];
+            (void)[AKTabChain stepThroughTabChainInWindow:self.window forward:YES];
         }
     }
 }

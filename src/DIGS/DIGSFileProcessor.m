@@ -21,7 +21,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithBasePath:(NSString *)basePath
+- (instancetype)initWithBasePath:(NSString *)basePath
 {
     if ((self = [super init]))
     {
@@ -32,7 +32,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     return [self initWithBasePath:@""];
 }
@@ -60,7 +60,7 @@
     }
 
     // Remember the current file.
-    [self setCurrentPath:[_basePath stringByAppendingPathComponent:filePath]];
+    self.currentPath = [_basePath stringByAppendingPathComponent:filePath];
 
     // Do the job.
     [self processCurrentFile];
@@ -71,13 +71,13 @@
 
 - (void)processDirectory:(NSString *)dirPath recursively:(BOOL)recurseFlag
 {
-    if ([dirPath length] == 0)
+    if (dirPath.length == 0)
     {
         return;
     }
 
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *startPath = [[_basePath stringByAppendingPathComponent:dirPath] stringByStandardizingPath];
+    NSString *startPath = [_basePath stringByAppendingPathComponent:dirPath].stringByStandardizingPath;
 
     for (NSString *filename in [fm contentsOfDirectoryAtPath:startPath error:NULL])
     {

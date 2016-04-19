@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNode:(AKDatabaseNode *)databaseNode
+- (instancetype)initWithNode:(AKDatabaseNode *)databaseNode
 {
     if ((self = [super init]))
     {
@@ -27,7 +27,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -39,12 +39,12 @@
 
 - (AKFileSection *)fileSection
 {
-    return [_databaseNode nodeDocumentation];
+    return _databaseNode.nodeDocumentation;
 }
 
 - (NSString *)docName
 {
-    return [_databaseNode nodeName];
+    return _databaseNode.nodeName;
 }
 
 @end

@@ -41,47 +41,47 @@ extern NSString *AKGlobalsTopicName;
 #pragma mark Getters and setters
 
 // [agl] KLUDGE
-- (AKClassNode *)parentClassOfTopic;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassNode *parentClassOfTopic;
 
 /*!
  * Returns nil by default.  Subclasses return a node, if one is relevant.
  * Specifically, AKBehaviorTopics return AKBehaviorNodes.
  */
-- (AKDatabaseNode *)topicNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDatabaseNode *topicNode;
 
 #pragma mark -
 #pragma mark Names for various display contexts
 
 /*! Subclasses must override. */
-- (NSString *)stringToDisplayInTopicBrowser;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInTopicBrowser;
 
-- (NSString *)stringToDisplayInDescriptionField;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInDescriptionField;
 
-- (NSString *)stringToDisplayInLists;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
 
 #pragma mark -
 #pragma mark Populating the topic browser
 
 /*! Subclasses must override. */
-- (NSString *)pathInTopicBrowser;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pathInTopicBrowser;
 
 /*! Subclasses may override. Defaults to YES. */
-- (BOOL)browserCellShouldBeEnabled;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL browserCellShouldBeEnabled;
 
 /*! Subclasses may override. Defaults to YES. */
-- (BOOL)browserCellHasChildren;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL browserCellHasChildren;
 
 /*!
  * Subclasses must override if they can possibly have children. Returns array of
  * AKTopics. Note the distinction between child topics and subtopics.
  */
-- (NSArray *)childTopics;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childTopics;
 
 #pragma mark -
 #pragma mark Subtopics
 
 /*! Subclasses must override. */
-- (NSInteger)numberOfSubtopics;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSubtopics;
 
 /*! Subclasses must override. */
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex;

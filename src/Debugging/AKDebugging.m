@@ -45,7 +45,7 @@
 - (void)addDebugMenu
 {
     // Add the "Debug" menu item to the menu bar.
-    NSMenu *mainMenu = [NSApp mainMenu];
+    NSMenu *mainMenu = NSApp.mainMenu;
     NSMenuItem *debugMenuItem = [mainMenu addItemWithTitle:@"Debug"
                                                     action:@selector(testParser:)
                                              keyEquivalent:@""];
@@ -92,7 +92,7 @@
 
 - (IBAction)printFirstResponder:(id)sender
 {
-    id firstResponder = [[NSApp keyWindow] firstResponder];
+    id firstResponder = NSApp.keyWindow.firstResponder;
 
     if (firstResponder == nil)
     {
@@ -106,26 +106,26 @@
 
 - (IBAction)printModifiedTabChain:(id)sender
 {
-    NSLog(@"MODIFIED TAB CHAIN for %@", [[NSApp keyWindow] ak_bareDescription]);
+    NSLog(@"MODIFIED TAB CHAIN for %@", [NSApp.keyWindow ak_bareDescription]);
 
-    for (NSView *v in [AKTabChain modifiedTabChainForWindow:[NSApp keyWindow]])
+    for (NSView *v in [AKTabChain modifiedTabChainForWindow:NSApp.keyWindow])
     {
         NSLog(@"  %@", [v ak_bareDescription]);
     }
 
-    NSLog(@"END MODIFIED TAB CHAIN for %@\n\n", [[NSApp keyWindow] ak_bareDescription]);
+    NSLog(@"END MODIFIED TAB CHAIN for %@\n\n", [NSApp.keyWindow ak_bareDescription]);
 }
 
 - (IBAction)printUnmodifiedTabChain:(id)sender
 {
-    NSLog(@"UNMODIFIED TAB CHAIN for %@", [[NSApp keyWindow] ak_bareDescription]);
+    NSLog(@"UNMODIFIED TAB CHAIN for %@", [NSApp.keyWindow ak_bareDescription]);
 
-    for (NSView *v in [AKTabChain unmodifiedTabChainForWindow:[NSApp keyWindow]])
+    for (NSView *v in [AKTabChain unmodifiedTabChainForWindow:NSApp.keyWindow])
     {
         NSLog(@"  %@", [v ak_bareDescription]);
     }
 
-    NSLog(@"END UNMODIFIED TAB CHAIN for %@\n\n", [[NSApp keyWindow] ak_bareDescription]);
+    NSLog(@"END UNMODIFIED TAB CHAIN for %@\n\n", [NSApp.keyWindow ak_bareDescription]);
 }
 
 - (IBAction)printValidKeyViewLoop:(id)sender
@@ -159,7 +159,7 @@
 {
     [self printFirstResponder:nil];
     
-    id firstResponder = [[NSApp keyWindow] firstResponder];
+    id firstResponder = NSApp.keyWindow.firstResponder;
 
     if ([firstResponder isKindOfClass:[NSView class]])
     {

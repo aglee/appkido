@@ -52,9 +52,9 @@
                                                                                error:NULL];
 	unsigned int i;
 
-	for (i = 0; i < [dirContents count]; i++)
+	for (i = 0; i < dirContents.count; i++)
 	{
-		NSString *f = [dirContents objectAtIndex:i];
+		NSString *f = dirContents[i];
 
 		if ([f hasSuffix:suffix])
 		{

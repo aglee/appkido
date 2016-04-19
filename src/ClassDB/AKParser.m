@@ -49,7 +49,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super init]))
     {
@@ -60,7 +60,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -72,7 +72,7 @@
 
 - (NSMutableData *)loadDataToBeParsed
 {
-    return [NSMutableData dataWithContentsOfFile:[self currentPath]];
+    return [NSMutableData dataWithContentsOfFile:self.currentPath];
 }
 
 - (void)parseCurrentFile
@@ -91,9 +91,9 @@
 
     if (fileContents)
     {
-        _dataStart = [fileContents bytes];
+        _dataStart = fileContents.bytes;
         _current = _dataStart;
-        _dataEnd = _dataStart + [fileContents length];
+        _dataEnd = _dataStart + fileContents.length;
     }
     else
     {

@@ -50,7 +50,7 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
     self = [super initWithWindowNibName:windowNibName];
     if (self)
@@ -67,17 +67,17 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 
 - (void)parseFileAtPath:(NSString *)filePath
 {
-    [_filePathField setStringValue:filePath];
+    _filePathField.stringValue = filePath;
 
     AKDocParser *dp = [[AKDocParser alloc] initWithDatabase:nil frameworkName:nil];
 
     [dp processFile:filePath];
 
-    [self setRootSection:[dp rootSectionOfCurrentFile]];
+    self.rootSection = [dp rootSectionOfCurrentFile];
 
     NSString *textOutline = [_rootSection descriptionAsOutline];
 
-    [_parseResultTextView setString:(textOutline ?: @"<error>")];
+    _parseResultTextView.string = (textOutline ?: @"<error>");
     [_parseResultBrowser loadColumnZero];
 }
 
@@ -86,11 +86,11 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 
 - (NSView *)viewToSearch
 {
-    if ([[[_tabView selectedTabViewItem] identifier] isEqualToString:@"outline"])
+    if ([_tabView.selectedTabViewItem.identifier isEqualToString:@"outline"])
     {
         return _parseResultTextView;
     }
-    else if ([[[_tabView selectedTabViewItem] identifier] isEqualToString:@"browser"])
+    else if ([_tabView.selectedTabViewItem.identifier isEqualToString:@"browser"])
     {
         return _fileSectionTextView;
     }
@@ -109,14 +109,14 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
     [op setCanChooseDirectories:NO];
     [op setAllowsMultipleSelection:NO];
     
-    [op beginSheetModalForWindow:[self window]
+    [op beginSheetModalForWindow:self.window
                completionHandler:^(NSInteger result) {
                    if (result == NSFileHandlingPanelCancelButton)
                    {
                        return;
                    }
 
-                   NSString *selectedFilePath = [[op URL] path];
+                   NSString *selectedFilePath = op.URL.path;
 
                    if (selectedFilePath)
                    {
@@ -132,16 +132,16 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 
 - (IBAction)doBrowserAction:(id)sender
 {
-    NSIndexPath *selectionIndexPath = [_parseResultBrowser selectionIndexPath];
+    NSIndexPath *selectionIndexPath = _parseResultBrowser.selectionIndexPath;
     AKFileSection *fileSection = [_parseResultBrowser itemAtIndexPath:selectionIndexPath];
     NSData *sectionData = [fileSection sectionData];
     NSString *sectionString = [[NSString alloc] initWithData:sectionData
                                                      encoding:NSUTF8StringEncoding];
-    [_fileSectionTextView setString:sectionString];
-    [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%ld-%ld, %ld chars",
+    _fileSectionTextView.string = sectionString;
+    _fileSectionInfoField.stringValue = [NSString stringWithFormat:@"%ld-%ld, %ld chars",
                                            (long)[fileSection sectionOffset],
                                            (long)[fileSection sectionOffset] + [fileSection sectionLength],
-                                           (long)[fileSection sectionLength]]];
+                                           (long)[fileSection sectionLength]];
 }
 
 #pragma mark -
@@ -151,8 +151,8 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 {
     // If you use IB to set an NSTextView's font, the font doesn't stick,
 	// even if you've turned off the text view's richText setting.
-    [_parseResultTextView setFont:[NSFont fontWithName:@"Courier" size:13.0]];
-    [_fileSectionTextView setFont:[NSFont fontWithName:@"Courier" size:13.0]];
+    _parseResultTextView.font = [NSFont fontWithName:@"Courier" size:13.0];
+    _fileSectionTextView.font = [NSFont fontWithName:@"Courier" size:13.0];
 }
 
 #pragma mark -
@@ -160,7 +160,7 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    if ([notification object] == [self window])
+    if (notification.object == self.window)
     {
         [_testDocParserWindowControllers removeObject:self];
     }

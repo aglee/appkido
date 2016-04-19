@@ -120,14 +120,14 @@
 #pragma mark Init/dealloc/awake
 
 /*! Designated initializer. */
-- (id)initWithDatabase:(AKDatabase *)database;
+- (instancetype)initWithDatabase:(AKDatabase *)database NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKDatabase *)database;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDatabase *database;
 
-- (AKDocLocator *)currentDocLocator;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDocLocator *currentDocLocator;
 
 #pragma mark -
 #pragma mark Navigation
@@ -155,7 +155,7 @@
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
 
-- (NSView *)docView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *docView;
 
 - (void)revealPopQuizSymbol:(NSString *)apiSymbol;
 

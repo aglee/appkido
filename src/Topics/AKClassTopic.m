@@ -25,7 +25,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)topicWithClassNode:(AKClassNode *)classNode
++ (instancetype)topicWithClassNode:(AKClassNode *)classNode
 {
     return [[self alloc] initWithClassNode:classNode];
 }
@@ -33,7 +33,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithClassNode:(AKClassNode *)classNode
+- (instancetype)initWithClassNode:(AKClassNode *)classNode
 {
     if ((self = [super init]))
     {
@@ -43,7 +43,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -55,18 +55,18 @@
 
 - (AKClassNode *)parentClassOfTopic
 {
-    return [_classNode parentClass];
+    return _classNode.parentClass;
 }
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return [_classNode nodeName];
+    return _classNode.nodeName;
 }
 
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ class %@",
-            [_classNode nameOfOwningFramework], [_classNode nodeName]];
+            _classNode.nameOfOwningFramework, _classNode.nodeName];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -76,13 +76,13 @@
         return nil;
     }
 
-    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:[_classNode nodeName]];
+    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classNode.nodeName];
     AKClassNode *superNode = _classNode;
 
-    while ((superNode = [superNode parentClass]))
+    while ((superNode = superNode.parentClass))
     {
         path = [AKTopicBrowserPathSeparator stringByAppendingString:
-                [[superNode nodeName] stringByAppendingString:path]];
+                [superNode.nodeName stringByAppendingString:path]];
     }
 
     return path;
@@ -110,7 +110,7 @@
 
 - (NSString *)behaviorName
 {
-    return [_classNode nodeName];
+    return _classNode.nodeName;
 }
 
 - (AKDatabaseNode *)topicNode
@@ -145,7 +145,7 @@
         return nil;
     }
 
-    NSString *className = [prefDict objectForKey:AKBehaviorNamePrefKey];
+    NSString *className = prefDict[AKBehaviorNamePrefKey];
 
     if (className == nil)
     {
@@ -154,7 +154,7 @@
     }
     else
     {
-        AKDatabase *db = [[NSApp delegate] appDatabase];
+        AKDatabase *db = [NSApp.delegate appDatabase];
         AKClassNode *classNode = [db classWithName:className];
 
         if (!classNode)

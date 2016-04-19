@@ -58,17 +58,17 @@
 
         // Store bits of information about the class node relating it to its
         // HTML documentation file.
-        [[self targetDatabase] rememberThatClass:classNode
-                    isDocumentedInHTMLFile:[self currentPath]];
+        [self.targetDatabase rememberThatClass:classNode
+                    isDocumentedInHTMLFile:self.currentPath];
 
         if (isMainClassReference)
         {
-            [classNode setNodeDocumentation:_rootSectionOfCurrentFile];
-            [classNode setNameOfOwningFramework:[self targetFrameworkName]];
+            classNode.nodeDocumentation = _rootSectionOfCurrentFile;
+            classNode.nameOfOwningFramework = self.targetFrameworkName;
         }
 
         [classNode associateDocumentation:_rootSectionOfCurrentFile
-                       withFrameworkNamed:[self targetFrameworkName]];
+                       withFrameworkNamed:self.targetFrameworkName];
 
         behaviorNode = classNode;
     }
@@ -83,11 +83,11 @@
         
         // Store bits of information about the protocol node relating it to its
         // HTML documentation file.
-        [[self targetDatabase] rememberThatProtocol:protocolNode
-                       isDocumentedInHTMLFile:[self currentPath]];
+        [self.targetDatabase rememberThatProtocol:protocolNode
+                       isDocumentedInHTMLFile:self.currentPath];
 
-        [protocolNode setNodeDocumentation:_rootSectionOfCurrentFile];
-        [protocolNode setNameOfOwningFramework:[self targetFrameworkName]];
+        protocolNode.nodeDocumentation = _rootSectionOfCurrentFile;
+        protocolNode.nameOfOwningFramework = self.targetFrameworkName;
 
         behaviorNode = protocolNode;
     }
@@ -156,7 +156,7 @@
 {
     // Exclude table-of-contents files, which can look deceptively like class
     // doc files.
-    if ([[self currentPath] hasSuffix:@"toc.html"])
+    if ([self.currentPath hasSuffix:@"toc.html"])
     {
         *isMainClassReference = NO;
         return NO;
@@ -200,9 +200,9 @@
 
     // Assume we have a class's main doc file if it's somewhere in a ...Classes
     // directory and the file name matches the name of the root section.
-    NSString *filenameSansExtension = [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+    NSString *filenameSansExtension = self.currentPath.lastPathComponent.stringByDeletingPathExtension;
 
-    if ([[self currentPath] ak_contains:@"Classes"]
+    if ([self.currentPath ak_contains:@"Classes"]
         && [rootSectionName isEqualToString:filenameSansExtension])
     {
         *isMainClassReference = YES;
@@ -232,9 +232,9 @@
     // Assume we have a protocol's doc file if it's somewhere in a ...Protocols
     // directory and the file name matches the name of the root section.
     NSString *rootSectionName = [_rootSectionOfCurrentFile sectionName];
-    NSString *filenameSansExtension = [[[self currentPath] lastPathComponent] stringByDeletingPathExtension];
+    NSString *filenameSansExtension = self.currentPath.lastPathComponent.stringByDeletingPathExtension;
     
-    if ([[self currentPath] ak_contains:@"Protocols"]
+    if ([self.currentPath ak_contains:@"Protocols"]
         && [rootSectionName isEqualToString:filenameSansExtension])
     {
         return YES;
@@ -245,24 +245,24 @@
 
 - (BOOL)_currentFileIsDeprecatedMethodsFile
 {
-    return [[self currentPath] ak_contains:@"Deprecat"];
+    return [self.currentPath ak_contains:@"Deprecat"];
 }
 
 - (NSString *)_parseBehaviorName
 {
     NSArray *partsOfTitle = [[_rootSectionOfCurrentFile sectionName] componentsSeparatedByString:@" "];
     
-    if ([partsOfTitle count] == 0)
+    if (partsOfTitle.count == 0)
     {
         return nil;
     }
-    else if ([partsOfTitle count] > 1 && [[partsOfTitle objectAtIndex:0] isEqualToString:@"Deprecated"])
+    else if (partsOfTitle.count > 1 && [partsOfTitle[0] isEqualToString:@"Deprecated"])
     {
-        return [partsOfTitle objectAtIndex:1];
+        return partsOfTitle[1];
     }
     else
     {
-        return [partsOfTitle objectAtIndex:0];
+        return partsOfTitle[0];
     }
 }
 
@@ -271,7 +271,7 @@
     // Get our hands on the node for the class whose documentation is
     // in _rootSectionOfCurrentFile.
     NSString *className = [self _parseBehaviorName];
-    AKClassNode *classNode = [[self targetDatabase] classWithName:className];
+    AKClassNode *classNode = [self.targetDatabase classWithName:className];
 
     // We assume the database has already been populated from header files.
     // If a class isn't already in the database, we assume it's an accident
@@ -296,7 +296,7 @@
 //    NSString *protocolName = [_rootSectionOfCurrentFile sectionName];
     NSString *protocolName = [self _parseBehaviorName];
 
-    AKProtocolNode *protocolNode = [[self targetDatabase] protocolWithName:protocolName];
+    AKProtocolNode *protocolNode = [self.targetDatabase protocolWithName:protocolName];
 
     // We assume the database has already been populated from header files.
     // [agl] FIXME -- I don't like this assumption -- presumes class knows
@@ -306,9 +306,9 @@
     if (!protocolNode)
     {
         protocolNode = [AKProtocolNode nodeWithNodeName:protocolName
-                                               database:[self targetDatabase]
-                                          frameworkName:[self targetFrameworkName]];
-        [[self targetDatabase] addProtocolNode:protocolNode];
+                                               database:self.targetDatabase
+                                          frameworkName:self.targetFrameworkName];
+        [self.targetDatabase addProtocolNode:protocolNode];
     }
 
     return protocolNode;
@@ -330,19 +330,19 @@
         if (memberNode == nil)
         {
             memberNode = [[memberNodeClass alloc] initWithNodeName:memberName
-                                                           database:[self targetDatabase]
-                                                      frameworkName:[self targetFrameworkName]
+                                                           database:self.targetDatabase
+                                                      frameworkName:self.targetFrameworkName
                                                      owningBehavior:behaviorNode];
             addMemberNode(behaviorNode, memberNode);
         }
 
-        if ([memberNode nodeDocumentation] != nil)
+        if (memberNode.nodeDocumentation != nil)
         {
             DIGSLogWarning(@"trying to set documentation twice for node %@", memberNode);
         }
         else
         {
-            [memberNode setNodeDocumentation:minorSection];
+            memberNode.nodeDocumentation = minorSection;
         }
     }
 }
@@ -369,10 +369,10 @@
             {
                 NSString *methodName = [minorSection sectionName];
                 AKMethodNode *methodNode = [behaviorNode addDeprecatedMethodIfAbsentWithName:methodName
-                                                                               frameworkName:[self targetFrameworkName]];
+                                                                               frameworkName:self.targetFrameworkName];
                 if (methodNode != nil)
                 {
-                    [methodNode setNodeDocumentation:minorSection];
+                    methodNode.nodeDocumentation = minorSection;
                 }
             }
         }

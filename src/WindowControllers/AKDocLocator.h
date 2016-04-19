@@ -53,16 +53,16 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithTopic:(AKTopic *)topic
+- (instancetype)initWithTopic:(AKTopic *)topic
        subtopicName:(NSString *)subtopicName
-            docName:(NSString *)docName;
+            docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (NSString *)stringToDisplayInLists;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
 
-- (AKDoc *)docToDisplay;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDoc *docToDisplay;
 
 #pragma mark -
 #pragma mark Sorting

@@ -45,7 +45,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDatabase:(AKDatabase *)db
+- (instancetype)initWithDatabase:(AKDatabase *)db
 {
     if ((self = [super init]))
     {
@@ -66,7 +66,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -92,7 +92,7 @@
     _searchString = [s copy];
 
     // Update other ivars.
-    _rangeForEntireSearchString = NSMakeRange(0, [s length]);
+    _rangeForEntireSearchString = NSMakeRange(0, s.length);
     [self setSearchResults:nil];
 }
 
@@ -195,9 +195,9 @@
 {
     if (_searchResults == nil)
     {
-        [self setSearchResults:[NSMutableArray array]];
+        self.searchResults = [NSMutableArray array];
 
-        if ([_searchString length] == 0)
+        if (_searchString.length == 0)
         {
             return _searchResults;
         }
@@ -243,7 +243,7 @@
         {
             if (_ignoresCase)
             {
-                return (([s length] >= _rangeForEntireSearchString.length)
+                return ((s.length >= _rangeForEntireSearchString.length)
                         && ([s compare:_searchString
                                options:NSCaseInsensitiveSearch
                                  range:_rangeForEntireSearchString] == 0));
@@ -264,7 +264,7 @@
 
 - (BOOL)_matchesNode:(AKDatabaseNode *)node
 {
-    return [self _matchesString:[node nodeName]];
+    return [self _matchesString:node.nodeName];
 }
 
 - (void)_searchClassNames
@@ -333,8 +333,8 @@
 
     // If the search string has the form "setXYZ", search the class's
     // properties for "XYZ".
-    if ([[_searchString lowercaseString] hasPrefix:@"set"]
-        && [_searchString length] > 3)
+    if ([_searchString.lowercaseString hasPrefix:@"set"]
+        && _searchString.length > 3)
     {
         // Kludge to temporarily set _searchString to "XYZ".
         NSString *savedSearchString = _searchString;
@@ -372,8 +372,8 @@
                     AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName
                                                                     inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:[groupNode nodeName]
-                                                              docName:[subnode nodeName]]];
+                                                         subtopicName:groupNode.nodeName
+                                                              docName:subnode.nodeName]];
                 }
             }
         }
@@ -415,8 +415,8 @@
                     AKTopic *topic = [AKGlobalsTopic topicWithFrameworkNamed:fwName
                                                                   inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:[groupNode nodeName]
-                                                              docName:[subnode nodeName]]];
+                                                         subtopicName:groupNode.nodeName
+                                                              docName:subnode.nodeName]];
                 }
             }
         }
@@ -433,7 +433,7 @@
         {
             [_searchResults addObject:[AKDocLocator withTopic:topic
                                                  subtopicName:subtopicName
-                                                      docName:[node nodeName]]];
+                                                      docName:node.nodeName]];
         }
     }
 }

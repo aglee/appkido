@@ -24,13 +24,13 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     NSArray *rightComponents = [(NSString *)rightVersionString componentsSeparatedByString:@"."];
     unsigned int i;
 
-    for (i = 0; i < [leftComponents count]; i++)
+    for (i = 0; i < leftComponents.count; i++)
     {
-        if (i >= [rightComponents count])
+        if (i >= rightComponents.count)
             return NSOrderedDescending;  // left has more components and is therefore greater than right
 
-        int leftNumber = [[leftComponents objectAtIndex:i] intValue];
-        int rightNumber = [[rightComponents objectAtIndex:i] intValue];
+        int leftNumber = [leftComponents[i] intValue];
+        int rightNumber = [rightComponents[i] intValue];
 
         if (leftNumber < rightNumber)
             return NSOrderedAscending;
@@ -39,7 +39,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     }
 
     // If we got this far, rightComponents has leftComponents as a prefix.
-    if ([leftComponents count] < [rightComponents count])
+    if (leftComponents.count < rightComponents.count)
         return NSOrderedAscending;  // left has fewer components and is therefore less than right
     else
         return NSOrderedSame;  // all left components equal all right components
@@ -48,7 +48,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)devToolsWithPath:(NSString *)devToolsPath
++ (instancetype)devToolsWithPath:(NSString *)devToolsPath
 {
     return [[self alloc] initWithPath:devToolsPath];
 }
@@ -56,7 +56,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithPath:(NSString *)devToolsPath
+- (instancetype)initWithPath:(NSString *)devToolsPath
 {
     if ((self = [super init]))
     {
@@ -77,9 +77,9 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
 + (BOOL)devToolsPathIsOldStyle:(NSString *)devToolsPath
 {
-    for (NSString *pathComponent in [devToolsPath pathComponents])
+    for (NSString *pathComponent in devToolsPath.pathComponents)
     {
-        if ([[pathComponent pathExtension] isEqualToString:@"app"])
+        if ([pathComponent.pathExtension isEqualToString:@"app"])
         {
             return NO;
         }
@@ -145,7 +145,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
 - (NSString *)docSetPathForSDKVersion:(NSString *)docSetSDKVersion
 {
-    return [_installedDocSetPathsBySDKVersion objectForKey:docSetSDKVersion];
+    return _installedDocSetPathsBySDKVersion[docSetSDKVersion];
 
     // The following was useful for testing how we handle the case when a docset
     // needs to be downloaded.
@@ -181,10 +181,10 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 {
     if (sdkVersion == nil)
     {
-        sdkVersion = [[self sdkVersionsThatAreCoveredByDocSets] lastObject];
+        sdkVersion = [self sdkVersionsThatAreCoveredByDocSets].lastObject;
     }
     
-    return [_installedSDKPathsBySDKVersion objectForKey:sdkVersion];
+    return _installedSDKPathsBySDKVersion[sdkVersion];
 }
 
 #pragma mark -
@@ -234,7 +234,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
             }
             else
             {
-                NSString *sdkVersion = [docSetPlist objectForKey:@"DocSetPlatformVersion"];
+                NSString *sdkVersion = docSetPlist[@"DocSetPlatformVersion"];
 
                 if (sdkVersion == nil)
                 {
@@ -243,7 +243,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
                 }
                 else
                 {
-                    [_installedDocSetPathsBySDKVersion setObject:docSetPath forKey:sdkVersion];
+                    _installedDocSetPathsBySDKVersion[sdkVersion] = docSetPath;
                 }
             }
         }
@@ -264,7 +264,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
     for (NSString *dirItem in dirContents)
     {
-        if ([[dirItem pathExtension] isEqualToString:@"sdk"])
+        if ([dirItem.pathExtension isEqualToString:@"sdk"])
         {
             NSString *sdkPath = [sdkSearchPath stringByAppendingPathComponent:dirItem];
             NSString *plistPath = [sdkPath stringByAppendingPathComponent:@"SDKSettings.plist"];
@@ -276,7 +276,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
             }
             else
             {
-                NSString *sdkVersion = [sdkPlist objectForKey:@"Version"];
+                NSString *sdkVersion = sdkPlist[@"Version"];
 
                 if (sdkVersion == nil)
                 {
@@ -284,7 +284,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
                 }
                 else
                 {
-                    [_installedSDKPathsBySDKVersion setObject:sdkPath forKey:sdkVersion];
+                    _installedSDKPathsBySDKVersion[sdkVersion] = sdkPath;
                 }
             }
         }

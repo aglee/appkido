@@ -20,7 +20,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName
++ (instancetype)nodeWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
@@ -32,7 +32,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
@@ -48,7 +48,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -68,7 +68,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: nodeName=%@>", [self className], _nodeName];
+    return [NSString stringWithFormat:@"<%@: nodeName=%@>", self.className, _nodeName];
 }
 
 @end

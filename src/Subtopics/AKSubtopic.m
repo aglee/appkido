@@ -53,14 +53,14 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 {
     [self _makeSureDocListIsReady];
 
-    return [_docList count];
+    return _docList.count;
 }
 
 - (AKDoc *)docAtIndex:(NSInteger)docIndex
 {
     [self _makeSureDocListIsReady];
 
-    return [_docList objectAtIndex:docIndex];
+    return _docList[docIndex];
 }
 
 - (NSInteger)indexOfDocWithName:(NSString *)docName
@@ -72,12 +72,12 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
         return -1;
     }
 
-    NSInteger numDocs = [_docList count];
+    NSInteger numDocs = _docList.count;
     NSInteger i;
 
     for (i = 0; i < numDocs; i++)
     {
-        AKDoc *doc = [_docList objectAtIndex:i];
+        AKDoc *doc = _docList[i];
 
         if ([[doc docName] isEqualToString:docName])
         {
@@ -111,7 +111,7 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@: subtopicName=%@>",
-            [self className],[self subtopicName]];
+            self.className,[self subtopicName]];
 }
 
 #pragma mark -

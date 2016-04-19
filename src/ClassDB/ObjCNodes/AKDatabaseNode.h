@@ -53,7 +53,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)nodeWithNodeName:(NSString *)nodeName
++ (instancetype)nodeWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName;
 
@@ -61,8 +61,8 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName;
+         frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -24,8 +24,8 @@
 #pragma mark Init/awake/dealloc
 
 // Designated initializer
-- (id)initWithMemberNode:(AKMemberNode *)memberNode
-     inheritedByBehavior:(AKBehaviorNode *)behaviorNode;
+- (instancetype)initWithMemberNode:(AKMemberNode *)memberNode
+     inheritedByBehavior:(AKBehaviorNode *)behaviorNode NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Manipulating node names
@@ -41,6 +41,6 @@
  * method.  Subclasses of AKMemberDoc for which this is not true need to
  * override this method.
  */
-- (NSString *)commentString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *commentString;
 
 @end

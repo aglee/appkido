@@ -32,79 +32,79 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
     if ([itemIdentifier isEqualToString:_AKQuicklistToolID])
     {
         // Set item appearance.
-        [toolbarItem setLabel:@"Quicklist"];
-        [toolbarItem setPaletteLabel:@"Quicklist"];
-        [toolbarItem setToolTip:@"Hide/show the Quicklist panel"];
-        [toolbarItem setImage:[NSImage imageNamed:@"quicklist-tool"]];
+        toolbarItem.label = @"Quicklist";
+        toolbarItem.paletteLabel = @"Quicklist";
+        toolbarItem.toolTip = @"Hide/show the Quicklist panel";
+        toolbarItem.image = [NSImage imageNamed:@"quicklist-tool"];
 
         // Set item behavior.
-        [toolbarItem setAction:@selector(toggleQuicklistDrawer:)];
+        toolbarItem.action = @selector(toggleQuicklistDrawer:);
     }
     else if ([itemIdentifier isEqualToString:_AKBrowserToolID])
     {
         // Set item appearance.
-        [toolbarItem setLabel:@"Browser"];
-        [toolbarItem setPaletteLabel:@"Browser"];
-        [toolbarItem setToolTip:@"Hide/show the browser"];
-        [toolbarItem setImage:[NSImage imageNamed:@"browser-tool"]];
+        toolbarItem.label = @"Browser";
+        toolbarItem.paletteLabel = @"Browser";
+        toolbarItem.toolTip = @"Hide/show the browser";
+        toolbarItem.image = [NSImage imageNamed:@"browser-tool"];
 
         // Set item behavior.
-        [toolbarItem setAction:@selector(toggleBrowserVisible:)];
+        toolbarItem.action = @selector(toggleBrowserVisible:);
     }
     else if ([itemIdentifier isEqualToString:_AKBackToolID])
     {
         // Set item appearance.
-        [toolbarItem setLabel:@"Back"];
-        [toolbarItem setPaletteLabel:@"Back"];
-        [toolbarItem setToolTip:@"Go to previous item in navigation history"];
-        [toolbarItem setImage:[NSImage imageNamed:@"back-tool"]];
+        toolbarItem.label = @"Back";
+        toolbarItem.paletteLabel = @"Back";
+        toolbarItem.toolTip = @"Go to previous item in navigation history";
+        toolbarItem.image = [NSImage imageNamed:@"back-tool"];
 
         // Set item behavior.
-        [toolbarItem setAction:@selector(goBackInHistory:)];
+        toolbarItem.action = @selector(goBackInHistory:);
     }
     else if ([itemIdentifier isEqualToString:_AKForwardToolID])
     {
         // Set item appearance.
-        [toolbarItem setLabel:@"Forward"];
-        [toolbarItem setPaletteLabel:@"Forward"];
-        [toolbarItem setToolTip:@"Go to next item in navigation history"];
-        [toolbarItem setImage:[NSImage imageNamed:@"forward-tool"]];
+        toolbarItem.label = @"Forward";
+        toolbarItem.paletteLabel = @"Forward";
+        toolbarItem.toolTip = @"Go to next item in navigation history";
+        toolbarItem.image = [NSImage imageNamed:@"forward-tool"];
 
         // Set item behavior.
-        [toolbarItem setAction:@selector(goForwardInHistory:)];
+        toolbarItem.action = @selector(goForwardInHistory:);
     }
     else if ([itemIdentifier isEqualToString:_AKSuperclassToolID])
     {
         // Set item appearance.
-        [toolbarItem setLabel:@"Superclass"];
-        [toolbarItem setPaletteLabel:@"Superclass"];
-        [toolbarItem setToolTip:@"Go to superclass of selected class"];
-        [toolbarItem setImage:[NSImage imageNamed:@"superclass-tool"]];
+        toolbarItem.label = @"Superclass";
+        toolbarItem.paletteLabel = @"Superclass";
+        toolbarItem.toolTip = @"Go to superclass of selected class";
+        toolbarItem.image = [NSImage imageNamed:@"superclass-tool"];
 
         // Set item behavior.
-        [toolbarItem setAction:@selector(selectSuperclass:)];
+        toolbarItem.action = @selector(selectSuperclass:);
     }
     else if ([itemIdentifier isEqualToString:_AKAddColumnToolID])
     {
         // Set item appearance.
-        [toolbarItem setLabel:@"++Columns"];
-        [toolbarItem setPaletteLabel:@"++Columns"];
-        [toolbarItem setToolTip:@"Add a column to the browser"];
-        [toolbarItem setImage:[NSImage imageNamed:@"add-column-tool"]];
+        toolbarItem.label = @"++Columns";
+        toolbarItem.paletteLabel = @"++Columns";
+        toolbarItem.toolTip = @"Add a column to the browser";
+        toolbarItem.image = [NSImage imageNamed:@"add-column-tool"];
 
         // Set item behavior.
-        [toolbarItem setAction:@selector(addBrowserColumn:)];
+        toolbarItem.action = @selector(addBrowserColumn:);
     }
     else if ([itemIdentifier isEqualToString:_AKRemoveColumnToolID])
     {
         // Set item appearance.
-        [toolbarItem setLabel:@"--Columns"];
-        [toolbarItem setPaletteLabel:@"--Columns"];
-        [toolbarItem setToolTip:@"Remove a column from the browser"];
-        [toolbarItem setImage:[NSImage imageNamed:@"remove-column-tool"]];
+        toolbarItem.label = @"--Columns";
+        toolbarItem.paletteLabel = @"--Columns";
+        toolbarItem.toolTip = @"Remove a column from the browser";
+        toolbarItem.image = [NSImage imageNamed:@"remove-column-tool"];
 
         // Set item behavior.
-        [toolbarItem setAction:@selector(removeBrowserColumn:)];
+        toolbarItem.action = @selector(removeBrowserColumn:);
     }
     else
     {

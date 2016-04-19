@@ -17,6 +17,6 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithFileSection:(AKFileSection *)fileSection;
+- (instancetype)initWithFileSection:(AKFileSection *)fileSection NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -60,7 +60,7 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName;
+- (instancetype)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Parsing
@@ -73,7 +73,7 @@
  * to modify the data before it is parsed, or if they get their data in some way
  * other than loading the file.
  */
-- (NSMutableData *)loadDataToBeParsed;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSMutableData *loadDataToBeParsed;
 
 /*!
  * Parses the current file. Subclasses must override this method. Do not call it

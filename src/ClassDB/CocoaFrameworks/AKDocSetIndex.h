@@ -47,25 +47,25 @@
  * Returns nil if the docset path or base path for headers is missing or
  * not a directory.
  */
-- (id)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders;
+- (instancetype)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (NSString *)docSetPath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *docSetPath;
 
 /*! 
  * Names of frameworks the user can choose from, with "essential"
  * frameworks forced to the beginning of the list but otherwise in
  * alphabetical order.  (See AKNamesOfEssentialFrameworks.)
  */
-- (NSArray *)selectableFrameworkNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *selectableFrameworkNames;
 
 /*!
  * The header paths returned by the headerPathsForFramework: are relative
  * to this directory.
  */
-- (NSString *)basePathForHeaders;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *basePathForHeaders;
 
 /*! Returns absolute paths to directories containing header files. */
 - (NSSet *)headerDirsForFramework:(NSString *)frameworkName;
@@ -77,7 +77,7 @@
  * Root directory for doc files.  The "relative doc paths" returned by various methods of
  * this class are relative to this directory.
  */
-- (NSString *)baseDirForDocs;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *baseDirForDocs;
 
 /*!
  * Class docs, protocol docs, "FrameworkX ClassY Additions" docs, deprecated

@@ -13,7 +13,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self)
@@ -31,18 +31,18 @@
 
 - (NSData *)likeFileAtPath:(NSString *)filePath
 {
-    NSData *fileContents = [_fileCache objectForKey:filePath];
+    NSData *fileContents = _fileCache[filePath];
 
     if (fileContents)
     {
         // The file is already in the cache. Increment the "like" count.
-        NSNumber *cacheCountObj = [_fileCacheCounts objectForKey:filePath];
+        NSNumber *cacheCountObj = _fileCacheCounts[filePath];
 
         if (cacheCountObj == nil) abort();
 
-        int cacheCount = [cacheCountObj intValue];
+        int cacheCount = cacheCountObj.intValue;
 
-        [_fileCacheCounts setObject:@(cacheCount + 1) forKey:filePath];
+        _fileCacheCounts[filePath] = @(cacheCount + 1);
     }
     else
     {
@@ -51,8 +51,8 @@
 
         if (fileContents)
         {
-            [_fileCache setObject:fileContents forKey:filePath];
-            [_fileCacheCounts setObject:@1 forKey:filePath];
+            _fileCache[filePath] = fileContents;
+            _fileCacheCounts[filePath] = @1;
         }
     }
 
@@ -61,14 +61,14 @@
 
 - (void)unlikeFileAtPath:(NSString *)filePath
 {
-    NSNumber *cacheCountObj = [_fileCacheCounts objectForKey:filePath];
+    NSNumber *cacheCountObj = _fileCacheCounts[filePath];
 
     if (cacheCountObj == nil)
     {
         return;
     }
 
-    int cacheCount = [cacheCountObj intValue];
+    int cacheCount = cacheCountObj.intValue;
 
     if (cacheCount == 1)
     {
@@ -79,7 +79,7 @@
     else
     {
         // This was not the last "like". Just decrement the cache count.
-        [_fileCacheCounts setObject:@(cacheCount - 1) forKey:filePath];
+        _fileCacheCounts[filePath] = @(cacheCount - 1);
     }
 }
 

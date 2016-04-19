@@ -40,7 +40,7 @@ compareSortNames(id objectOne, id objectTwo, void *context)
 
 + (NSArray *)arrayBySortingSet:(NSSet *)aSet
 {
-    return [self arrayBySortingArray:[aSet allObjects]];
+    return [self arrayBySortingArray:aSet.allObjects];
 }
 
 @end

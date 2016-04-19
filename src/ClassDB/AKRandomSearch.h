@@ -30,7 +30,7 @@
 #pragma mark Factory methods
 
 /*! Sends makeRandomSelection to the new instance before returning it. */
-+ (id)randomSearchWithDatabase:(AKDatabase *)db;
++ (instancetype)randomSearchWithDatabase:(AKDatabase *)db;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -40,7 +40,7 @@
  * selectedAPISymbol and selectedNode. Rather than use this method, it's usually
  * more convenient to use randomSearchWithDatabase:.
  */
-- (id)initWithDatabase:(AKDatabase *)db;
+- (instancetype)initWithDatabase:(AKDatabase *)db NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Random selection

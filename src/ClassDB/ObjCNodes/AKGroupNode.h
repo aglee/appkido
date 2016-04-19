@@ -24,10 +24,10 @@
 
 - (void)addSubnode:(AKDatabaseNode *)node;
 
-- (NSInteger)numberOfSubnodes;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSubnodes;
 
 /*! Order of returned nodes is not guaranteed. */
-- (NSArray *)subnodes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *subnodes;
 
 - (AKDatabaseNode *)subnodeWithName:(NSString *)nodeName;
 

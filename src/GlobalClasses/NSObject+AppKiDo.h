@@ -11,7 +11,7 @@
 @interface NSObject (AppKiDo)
 
 /*! Of the form <NSTableView: 0x179a770>, and nothing else. */
-- (NSString *)ak_bareDescription;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *ak_bareDescription;
 
 /*!
  * Logs a sequence of objects starting at self and ending when we either hit

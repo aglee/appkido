@@ -58,13 +58,13 @@
 // Handles case of node having existing parent.
 - (void)addChildClass:(AKClassNode *)node;
 - (void)removeChildClass:(AKClassNode *)node;
-- (NSArray *)childClasses;
-- (NSSet *)descendantClasses;
-- (BOOL)hasChildClasses;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childClasses;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSSet *descendantClasses;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasChildClasses;
 
 - (void)addCategory:(AKCategoryNode *)node;
 - (AKCategoryNode *)categoryNamed:(NSString *)catName;
-- (NSArray *)allCategories;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allCategories;
 
 #pragma mark -
 #pragma mark Getters and setters -- multiple owning frameworks
@@ -75,7 +75,7 @@
  * owningFramework). After that, the order of the array is the order in which it
  * was discovered that the class belongs to the framework.
  */
-- (NSArray *)namesOfAllOwningFrameworks;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesOfAllOwningFrameworks;
 
 - (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName;
 
@@ -94,7 +94,7 @@
 #pragma mark Getters and setters -- delegate methods
 
 /*! Returns only methods that are in this class's documentation. */
-- (NSArray *)documentedDelegateMethods;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedDelegateMethods;
 
 - (AKMethodNode *)delegateMethodWithName:(NSString *)methodName;
 
@@ -105,7 +105,7 @@
 #pragma mark Getters and setters -- notifications
 
 /*! Returns only methods that are in this class's documentation. */
-- (NSArray *)documentedNotifications;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedNotifications;
 
 - (AKNotificationNode *)notificationWithName:(NSString *)notificationName;
 

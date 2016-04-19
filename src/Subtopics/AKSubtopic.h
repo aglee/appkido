@@ -44,14 +44,14 @@ extern NSString *AKAllNotificationsSubtopicName;
 #pragma mark Getters and setters
 
 /*! Subclasses must override. */
-- (NSString *)subtopicName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *subtopicName;
 
-- (NSString *)stringToDisplayInSubtopicList;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInSubtopicList;
 
 #pragma mark -
 #pragma mark Docs
 
-- (NSInteger)numberOfDocs;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDocs;
 
 - (AKDoc *)docAtIndex:(NSInteger)docIndex;
 

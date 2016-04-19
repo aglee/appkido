@@ -14,7 +14,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
         owningBehavior:(AKBehaviorNode *)behaviorNode
@@ -36,13 +36,13 @@
 
 - (BOOL)isClassMethod
 {
-    return ([(AKClassNode *)[self owningBehavior] classMethodWithName:[self nodeName]] != nil);
+    return ([(AKClassNode *)self.owningBehavior classMethodWithName:self.nodeName] != nil);
 }
 
 - (BOOL)isDelegateMethod
 {
-    return ([[self owningBehavior] isClassNode]
-            && ([(AKClassNode *)[self owningBehavior] delegateMethodWithName:[self nodeName]] != nil));
+    return ([self.owningBehavior isClassNode]
+            && ([(AKClassNode *)self.owningBehavior delegateMethodWithName:self.nodeName] != nil));
 }
 
 - (NSArray *)argumentTypes

@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super initWithDatabase:database frameworkName:frameworkName]))
     {
@@ -164,7 +164,7 @@
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    return [[filePath pathExtension] isEqualToString:@"html"];
+    return [filePath.pathExtension isEqualToString:@"html"];
 }
 
 #pragma mark -
@@ -177,7 +177,7 @@
     NSMutableData *afterSecondKludge = nil;
 
     // Load the file.
-    originalData = [[NSMutableData alloc] initWithContentsOfFile:[self currentPath]];
+    originalData = [[NSMutableData alloc] initWithContentsOfFile:self.currentPath];
     if (!originalData)
     {
         DIGSLogWarning(@"could not load contents of file [%@]", [self currentPath]);
@@ -185,7 +185,7 @@
     }
 
     // Add a NULL terminator so strstr() will work.
-    [originalData setLength:([originalData length] + 1)];
+    originalData.length = (originalData.length + 1);
 
     // Perform the first kludge.
     @autoreleasepool
@@ -202,7 +202,7 @@
     afterFirstKludge = nil;
 
     // Remove the NULL terminator, which was copied by the kludge.
-    [afterSecondKludge setLength:([afterSecondKludge length] - 1)];
+    afterSecondKludge.length = (afterSecondKludge.length - 1);
 
     return afterSecondKludge;
 }
@@ -314,7 +314,7 @@
     }
 
     // Roll up any remaining non-root sections on the stack.
-    while ([_sectionStack count] > 1)
+    while (_sectionStack.count > 1)
     {
         [self _rollUpSiblings];
     }
@@ -326,7 +326,7 @@
 
 - (AKFileSection *)_popSectionStack
 {
-    NSInteger stackSize = [_sectionStack count];
+    NSInteger stackSize = _sectionStack.count;
 
     if (stackSize == 0)
     {
@@ -334,7 +334,7 @@
     }
     else
     {
-        AKFileSection *stackTop = [_sectionStack objectAtIndex:(stackSize - 1)];
+        AKFileSection *stackTop = _sectionStack[(stackSize - 1)];
 
         [_sectionStack removeLastObject];
 
@@ -344,7 +344,7 @@
 
 - (AKFileSection *)_peekSectionStack
 {
-    NSInteger stackSize = [_sectionStack count];
+    NSInteger stackSize = _sectionStack.count;
 
     if (stackSize == 0)
     {
@@ -352,13 +352,13 @@
     }
     else
     {
-        return [_sectionStack objectAtIndex:(stackSize - 1)];
+        return _sectionStack[(stackSize - 1)];
     }
 }
 
 - (char)_headerLevelAtTopOfSectionStack
 {
-    NSInteger stackSize = [_sectionStack count];
+    NSInteger stackSize = _sectionStack.count;
 
     if (stackSize == 0)
     {
@@ -366,7 +366,7 @@
     }
     else
     {
-        AKFileSection *stackTop = [_sectionStack objectAtIndex:(stackSize - 1)];
+        AKFileSection *stackTop = _sectionStack[(stackSize - 1)];
 
         return _dataStart[[stackTop sectionOffset] + 2];
     }
@@ -385,12 +385,12 @@
     }
 
     AKFileSection *parentSection = [self _peekSectionStack];
-    NSInteger numSiblings = [siblings count];
+    NSInteger numSiblings = siblings.count;
     NSInteger i;
 
     for (i = numSiblings - 1; i >= 0; i--)
     {
-        AKFileSection *childSection = [siblings objectAtIndex:i];
+        AKFileSection *childSection = siblings[i];
 
         [parentSection addChildSection:childSection];
     }
@@ -446,7 +446,7 @@
     // 2013-08-26 A recent update to the docs broke the parsing in AppKiDo (iOS 6.1,
     // I think; I forget the OS X version).  The reason was that class docs have *two*
     // <h1> tags.  The workaround is to ignore any <h1> tags after the first.
-    if (headerLevel == '1' && [_sectionStack count] > 0)
+    if (headerLevel == '1' && _sectionStack.count > 0)
     {
         return;
     }
@@ -455,7 +455,7 @@
     // <h#> element we are looking at.  We don't know the length of
     // the section yet, so for now we put 0.  We will fill in the real
     // length later.
-    AKFileSection *newFileSection = [AKFileSection withFile:[self currentPath]];
+    AKFileSection *newFileSection = [AKFileSection withFile:self.currentPath];
 
     [newFileSection setSectionName:sectionName];
     [newFileSection setSectionOffset:(startOfOpeningTag - _dataStart)];
@@ -627,13 +627,13 @@
         return nil;
     }
 
-    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 32)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:(sourceData.length + 32)];
     static char *divOpenTag = "<div class=\"mach4\">";
     static char *divCloseTag = "</div>";
     NSInteger divOpenTagLength = strlen(divOpenTag);
     NSInteger divCloseTagLength = strlen(divCloseTag);
 
-    char *endOfLastDivTag = (char *)[sourceData bytes];
+    char *endOfLastDivTag = (char *)sourceData.bytes;
     char *startOfDivOpenTag = strstr(endOfLastDivTag, divOpenTag);
     
     while (startOfDivOpenTag)
@@ -672,7 +672,7 @@
     // Add the remaining good text.  There will be at least one byte
     // of good text, namely the NULL terminator.
     [newHTMLData appendBytes:endOfLastDivTag
-                      length:((char *)[sourceData bytes] + [sourceData length]
+                      length:((char *)sourceData.bytes + sourceData.length
                               - endOfLastDivTag)];
 
     return newHTMLData;
@@ -680,13 +680,13 @@
 
 + (NSMutableData *)_kludgeSpanTagsToH1:(NSData *)sourceData
 {
-    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 32)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:(sourceData.length + 32)];
     static char *spanOpenTag = "<span class=\"page_title\">";
     static char *spanCloseTag = "</span>";
     NSInteger spanOpenTagLength = strlen(spanOpenTag);
     NSInteger spanCloseTagLength = strlen(spanCloseTag);
 
-    char *endOfLastSpanTag = (char *)[sourceData bytes];
+    char *endOfLastSpanTag = (char *)sourceData.bytes;
     char *startOfSpanOpenTag = strstr(endOfLastSpanTag, spanOpenTag);
     
     while (startOfSpanOpenTag)
@@ -726,7 +726,7 @@
     // Add the remaining good text.  There will be at least one byte
     // of good text, namely the NULL terminator.
     [newHTMLData appendBytes:endOfLastSpanTag
-                      length:((char *)[sourceData bytes] + [sourceData length]
+                      length:((char *)sourceData.bytes + sourceData.length
                               - endOfLastSpanTag)];
 
     return newHTMLData;

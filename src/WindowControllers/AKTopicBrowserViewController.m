@@ -33,7 +33,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
+- (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
     self = [super initWithNibName:@"TopicBrowserView" windowController:windowController];
     if (self)
@@ -47,7 +47,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 - (void)awakeFromNib
 {
-    [_topicBrowser setPathSeparator:AKTopicBrowserPathSeparator];
+    _topicBrowser.pathSeparator = AKTopicBrowserPathSeparator;
     [_topicBrowser setReusesColumns:NO];
     [_topicBrowser loadColumnZero];
     [_topicBrowser selectRow:1 inColumn:0];  // selects "NSObject"
@@ -58,24 +58,24 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 - (IBAction)addBrowserColumn:(id)sender
 {
-    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
+    NSInteger numColumns = _topicBrowser.maxVisibleColumns;
 
-    [_topicBrowser setMaxVisibleColumns:(numColumns + 1)];
+    _topicBrowser.maxVisibleColumns = (numColumns + 1);
 }
 
 - (IBAction)removeBrowserColumn:(id)sender
 {
-    NSInteger numColumns = [_topicBrowser maxVisibleColumns];
+    NSInteger numColumns = _topicBrowser.maxVisibleColumns;
 
     if (numColumns > AKMinBrowserColumns)
     {
-        [_topicBrowser setMaxVisibleColumns:(numColumns - 1)];
+        _topicBrowser.maxVisibleColumns = (numColumns - 1);
     }
 }
 
 - (IBAction)doBrowserAction:(id)sender
 {
-    [[self owningWindowController] selectTopic:[[_topicBrowser selectedCell] representedObject]];
+    [self.owningWindowController selectTopic:[_topicBrowser.selectedCell representedObject]];
 }
 
 #pragma mark -
@@ -95,15 +95,15 @@ static const NSInteger AKMinBrowserColumns = 2;
         return;
     }
 
-    if ([whereTo topicToDisplay] == nil)
+    if (whereTo.topicToDisplay == nil)
     {
         DIGSLogInfo(@"can't navigate to a nil topic");
         return;
     }
 
     // Is the topic changing?  (The "!=" check handles nil cases.)
-    AKTopic *currentTopic = [whereFrom topicToDisplay];
-    AKTopic *newTopic = [whereTo topicToDisplay];
+    AKTopic *currentTopic = whereFrom.topicToDisplay;
+    AKTopic *newTopic = whereTo.topicToDisplay;
     if ((currentTopic != newTopic) && ![currentTopic isEqual:newTopic])
     {
         NSString *newBrowserPath = [newTopic pathInTopicBrowser];
@@ -124,10 +124,10 @@ static const NSInteger AKMinBrowserColumns = 2;
 
         // Workaround for -setPath: annoyance: make the browser
         // columns as right-justified as possible.
-        [[_topicBrowser window] disableFlushWindow];
+        [_topicBrowser.window disableFlushWindow];
         [_topicBrowser scrollColumnToVisible:0];
-        [_topicBrowser scrollColumnToVisible:[_topicBrowser lastColumn]];
-        [[_topicBrowser window] enableFlushWindow];
+        [_topicBrowser scrollColumnToVisible:_topicBrowser.lastColumn];
+        [_topicBrowser.window enableFlushWindow];
     }
 }
 
@@ -142,7 +142,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     NSInteger fontSize = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];
 
-    [[_topicBrowser cellPrototype] setFont:font];
+    [_topicBrowser.cellPrototype setFont:font];
 
     // Make the browser redraw to reflect its new display attributes.
     NSString *savedPath = [_topicBrowser path];
@@ -159,13 +159,13 @@ static const NSInteger AKMinBrowserColumns = 2;
     }
 
     // Restore the number of browser columns.
-    if ([windowLayout numberOfBrowserColumns])
+    if (windowLayout.numberOfBrowserColumns)
     {
-        [_topicBrowser setMaxVisibleColumns:[windowLayout numberOfBrowserColumns]];
+        _topicBrowser.maxVisibleColumns = windowLayout.numberOfBrowserColumns;
     }
     else
     {
-        [_topicBrowser setMaxVisibleColumns:3];
+        _topicBrowser.maxVisibleColumns = 3;
     }
 }
 
@@ -176,7 +176,7 @@ static const NSInteger AKMinBrowserColumns = 2;
         return;
     }
 
-    [windowLayout setNumberOfBrowserColumns:[_topicBrowser maxVisibleColumns]];
+    windowLayout.numberOfBrowserColumns = _topicBrowser.maxVisibleColumns;
 }
 
 #pragma mark -
@@ -188,12 +188,12 @@ static const NSInteger AKMinBrowserColumns = 2;
 
     if (itemAction == @selector(addBrowserColumn:))
     {
-        return ([[self view] frame].size.height > 0.0);
+        return (self.view.frame.size.height > 0.0);
     }
     else if (itemAction == @selector(removeBrowserColumn:))
     {
-        return (([[self view] frame].size.height > 0.0)
-                && ([_topicBrowser maxVisibleColumns] > AKMinBrowserColumns));
+        return ((self.view.frame.size.height > 0.0)
+                && (_topicBrowser.maxVisibleColumns > AKMinBrowserColumns));
     }
     else
     {
@@ -211,8 +211,8 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 - (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(int)row column:(int)column
 {
-    NSArray *topicList = [_topicListsForBrowserColumns objectAtIndex:column];
-    AKTopic *topic = [topicList objectAtIndex:row];
+    NSArray *topicList = _topicListsForBrowserColumns[column];
+    AKTopic *topic = topicList[row];
 
     [cell setRepresentedObject:topic];
     [cell setTitle:[topic stringToDisplayInTopicBrowser]];
@@ -232,29 +232,29 @@ static const NSInteger AKMinBrowserColumns = 2;
 {
     // Defensive programming: see if we are trying to populate a
     // browser column that's too far to the right.
-    if (column > (int)[_topicListsForBrowserColumns count])
+    if (column > (int)_topicListsForBrowserColumns.count)
     {
         DIGSLogError(@"_topicListsForBrowserColumns has too few elements");
         return 0;
     }
 
     // Discard data for columns we will no longer displaying.
-    NSInteger numBrowserColumns = [_topicBrowser lastColumn] + 1;
+    NSInteger numBrowserColumns = _topicBrowser.lastColumn + 1;
     if (column > numBrowserColumns)  // gmd
     {
         DIGSLogError(@"_topicListsForBrowserColumns has too few elements /gmd");
         return 0;
     }
-    while (numBrowserColumns < (int)[_topicListsForBrowserColumns count])
+    while (numBrowserColumns < (int)_topicListsForBrowserColumns.count)
     {
         [_topicListsForBrowserColumns removeLastObject];
     }
 
     // Compute browser values for this column if we don't have them already.
-    if (column == (int)[_topicListsForBrowserColumns count])
+    if (column == (int)_topicListsForBrowserColumns.count)
     {
         [self _setUpChildTopics];
-        if (column >= (int)[_topicListsForBrowserColumns count]) // gmd
+        if (column >= (int)_topicListsForBrowserColumns.count) // gmd
         {
             // This Framework has no additional topics like Functions,
             // Protocols, etc. (happens for PDFKit, PreferencePanes, which
@@ -265,12 +265,12 @@ static const NSInteger AKMinBrowserColumns = 2;
 
     // Now that the data ducks have been lined up, simply pluck our answer
     // from _topicListsForBrowserColumns.
-    return [[_topicListsForBrowserColumns objectAtIndex:column] count];
+    return [_topicListsForBrowserColumns[column] count];
 }
 
 - (void)_setUpChildTopics
 {
-    NSInteger columnNumber = [_topicListsForBrowserColumns count];
+    NSInteger columnNumber = _topicListsForBrowserColumns.count;
 
     if (columnNumber == 0)
     {
@@ -281,7 +281,7 @@ static const NSInteger AKMinBrowserColumns = 2;
         AKTopic *prevTopic = [[_topicBrowser selectedCellInColumn:(columnNumber - 1)] representedObject];
         NSArray *columnValues = [prevTopic childTopics];
 
-        if ([columnValues count] > 0)
+        if (columnValues.count > 0)
         {
             [_topicListsForBrowserColumns addObject:columnValues];
         }
@@ -295,7 +295,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 - (void)_setUpTopicsForZeroethBrowserColumn
 {
     NSMutableArray *columnValues = [NSMutableArray array];
-    AKDatabase *db = [[self owningWindowController] database];
+    AKDatabase *db = [self.owningWindowController database];
 
     // Set up the "classes" section.
     [columnValues addObject:[AKLabelTopic topicWithLabel:AKClassesLabelTopicName]];

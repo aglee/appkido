@@ -18,7 +18,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
++ (instancetype)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
              includeAncestors:(BOOL)includeAncestors
 {
     return [[self alloc] initWithBehaviorNode:behaviorNode
@@ -28,7 +28,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
+- (instancetype)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
           includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
@@ -39,7 +39,7 @@
     return self;
 }
 
-- (id)initIncludingAncestors:(BOOL)includeAncestors
+- (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;

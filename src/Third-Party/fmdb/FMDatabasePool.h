@@ -45,12 +45,12 @@ in the main.m file.
 @property (atomic, assign) id delegate;
 @property (atomic, assign) NSUInteger maximumNumberOfDatabasesToCreate;
 
-+ (id)databasePoolWithPath:(NSString*)aPath;
-- (id)initWithPath:(NSString*)aPath;
++ (instancetype)databasePoolWithPath:(NSString*)aPath;
+- (instancetype)initWithPath:(NSString*)aPath NS_DESIGNATED_INITIALIZER;
 
-- (NSUInteger)countOfCheckedInDatabases;
-- (NSUInteger)countOfCheckedOutDatabases;
-- (NSUInteger)countOfOpenDatabases;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger countOfCheckedInDatabases;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger countOfCheckedOutDatabases;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger countOfOpenDatabases;
 - (void)releaseAllDatabases;
 
 - (void)inDatabase:(void (^)(FMDatabase *db))block;

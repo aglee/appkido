@@ -24,12 +24,12 @@
  * Returns the name of the image resource that should be used for the cursor
  * when it hovers over a link. Defaults to "handcursor.tiff".
  */
-- (NSString *)linkCursorImageName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *linkCursorImageName;
 
 /*!
  * Returns the hot spot point that should be used when the cursor hovers over a
  * link in my displayed text. Defaults to (6, 0).
  */
-- (NSPoint)linkCursorHotSpot;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSPoint linkCursorHotSpot;
 
 @end

@@ -38,13 +38,13 @@
 #pragma mark Getters and setters
 
 /*! Subclasses must override. */
-- (AKBehaviorNode *)behaviorNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorNode *behaviorNode;
 
 /*! For internal use. */
-- (NSString *)htmlNameOfDescriptionSection;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *htmlNameOfDescriptionSection;
 
 /*! For internal use. */
-- (NSString *)altHtmlNameOfDescriptionSection;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *altHtmlNameOfDescriptionSection;
 
 #pragma mark -
 #pragma mark Utility methods

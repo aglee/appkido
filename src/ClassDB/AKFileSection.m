@@ -35,7 +35,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 {
     AKFileSection *fileSection = [[self alloc] initWithFile:filePath];
 
-    [fileSection setSectionName:[filePath lastPathComponent]];
+    [fileSection setSectionName:filePath.lastPathComponent];
     [fileSection setSectionOffset:0];
     [fileSection setSectionLength:0];
 
@@ -46,13 +46,13 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 {
     // Find out the file size.
     NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithPath:filePath];
-    NSDictionary *fileAttributes = [fileWrapper fileAttributes];
-    int fileSize = [[fileAttributes objectForKey:NSFileSize] intValue];
+    NSDictionary *fileAttributes = fileWrapper.fileAttributes;
+    int fileSize = [fileAttributes[NSFileSize] intValue];
 
     // Create the new instance.
     AKFileSection *fileSection = [self withFile:filePath];
 
-    [fileSection setSectionName:[filePath lastPathComponent]];
+    [fileSection setSectionName:filePath.lastPathComponent];
     [fileSection setSectionOffset:0];
     [fileSection setSectionLength:fileSize];
 
@@ -62,7 +62,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFile:(NSString *)filePath
+- (instancetype)initWithFile:(NSString *)filePath
 {
     if ((self = [super init]))
     {
@@ -73,7 +73,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -157,12 +157,12 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 
 - (NSInteger)numberOfChildSections
 {
-    return [_childSections count];
+    return _childSections.count;
 }
 
 - (AKFileSection *)childSectionAtIndex:(NSInteger)childSectionIndex
 {
-    return [_childSections objectAtIndex:childSectionIndex];
+    return _childSections[childSectionIndex];
 }
 
 - (AKFileSection *)childSectionWithName:(NSString *)name
@@ -182,21 +182,21 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 
 - (AKFileSection *)lastChildSection
 {
-    NSInteger numSubs = [_childSections count];
+    NSInteger numSubs = _childSections.count;
 
     return ((numSubs == 0)
             ? nil
-            : [_childSections objectAtIndex:(numSubs - 1)]);
+            : _childSections[(numSubs - 1)]);
 }
 
 - (NSInteger)indexOfChildSectionWithName:(NSString *)name
 {
-    NSInteger numChildSections = [_childSections count];
+    NSInteger numChildSections = _childSections.count;
     NSInteger i;
 
     for (i = 0; i < numChildSections; i++)
     {
-        AKFileSection *childSection = [_childSections objectAtIndex:i];
+        AKFileSection *childSection = _childSections[i];
         NSString *childSectionName = [childSection sectionName];
 
         if ([childSectionName caseInsensitiveCompare:name] == NSOrderedSame)
@@ -296,7 +296,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@: sectionName=%@, filePath=%@>",
-            [self className], _sectionName, [self filePath]];
+            self.className, _sectionName, [self filePath]];
 }
 
 @end

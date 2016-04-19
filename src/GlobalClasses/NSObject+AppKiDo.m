@@ -12,7 +12,7 @@
 
 - (NSString *)ak_bareDescription
 {
-    return [NSString stringWithFormat:@"<%@: %p>", [self className], self];
+    return [NSString stringWithFormat:@"<%@: %p>", self.className, self];
 }
 
 - (void)ak_printSequenceUsingSelector:(SEL)nextObjectSelector
@@ -25,7 +25,7 @@
     while (YES)
     {
         // Log the object.
-        NSLog(@"  <%@: %p>", [obj className], obj);
+        NSLog(@"  <%@: %p>", obj.className, obj);
 
         // Have we encountered this view before?
         NSValue *objWrapper = [NSValue valueWithNonretainedObject:obj];

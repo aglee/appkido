@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders
+- (instancetype)initWithDocSetPath:(NSString *)docSetPath basePathForHeaders:(NSString *)basePathForHeaders
 {
     DIGSLogDebug(@"initWithDocSetPath:basePathForHeaders: -- [%@], [%@]", docSetPath, basePathForHeaders);
 
@@ -55,7 +55,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -140,7 +140,7 @@
     while ([rs next])
     {
         NSString *headerFilePath = [rs stringForColumnIndex:0];
-        NSString *headerDirPath = [headerFilePath stringByDeletingLastPathComponent];
+        NSString *headerDirPath = headerFilePath.stringByDeletingLastPathComponent;
 
         if (_basePathForHeaders)
         {
@@ -421,7 +421,7 @@
                                          orType:tokenType4
                                    forFramework:frameworkName]];
 
-    return [docPaths allObjects];
+    return docPaths.allObjects;
 }
 
 - (void)_forceEssentialFrameworkNamesToTopOfList:(NSMutableArray *)fwNames

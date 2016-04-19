@@ -22,6 +22,6 @@
  * Returns a plist dictionary suitable for use by NSUserDefaults. Uses the same
  * dictionary structure as +fromPrefDictionary.
  */
-- (NSDictionary *)asPrefDictionary;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *asPrefDictionary;
 
 @end

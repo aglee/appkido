@@ -19,7 +19,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initIncludingAncestors:(BOOL)includeAncestors
+- (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
     if ((self = [super init]))
     {
@@ -65,12 +65,12 @@
 
     // Create an AKMemberDoc instance for each method we want to list.
     Class methodClass = [[self class] memberDocClass];
-    NSArray *sortedMethodNames = [[methodNodesByName allKeys]
+    NSArray *sortedMethodNames = [methodNodesByName.allKeys
                                   sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 
     for (NSString *methodName in sortedMethodNames)
     {
-        AKMethodNode *methodNode = [methodNodesByName objectForKey:methodName];
+        AKMethodNode *methodNode = methodNodesByName[methodName];
         AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberNode:methodNode
                                                       inheritedByBehavior:[self behaviorNode]];
         [docList addObject:methodDoc];
@@ -100,7 +100,7 @@
         {
             AKClassNode *classNode = (AKClassNode *)[self behaviorNode];
 
-            while ((classNode = [classNode parentClass]))
+            while ((classNode = classNode.parentClass))
             {
                 [ancestorNodes addObject:classNode];
             }
@@ -126,7 +126,7 @@
     {
         for (AKMethodNode *methodNode in [self memberNodesForBehavior:ancestorNode])
         {
-            [methodsByName setObject:methodNode forKey:[methodNode nodeName]];
+            methodsByName[methodNode.nodeName] = methodNode;
         }
     }
 

@@ -59,19 +59,19 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKDatabase *)appDatabase;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDatabase *appDatabase;
 
 #pragma mark -
 #pragma mark Navigation
 
 /*! If a text view has keyboard focus, returns that text view. */
-- (NSTextView *)selectedTextView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSTextView *selectedTextView;
 
 /*! Search the window controller of the topmost browser window, or nil. */
-- (AKWindowController *)frontmostWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKWindowController *frontmostWindowController;
 
 /*! Opens a new browser window.  Returns the newly created window controller. */
-- (AKWindowController *)controllerForNewWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKWindowController *controllerForNewWindow;
 
 #pragma mark -
 #pragma mark Search
@@ -87,7 +87,7 @@
 #pragma mark Managing the user's Favorites list
 
 /*! Returns AKDocLocators for the items in the user's Favorites list. */
-- (NSArray *)favoritesList;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *favoritesList;
 
 - (void)addFavorite:(AKDocLocator *)docLocator;
 

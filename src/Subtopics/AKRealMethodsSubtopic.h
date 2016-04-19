@@ -18,19 +18,19 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
++ (instancetype)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
              includeAncestors:(BOOL)includeAncestors;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
-          includeAncestors:(BOOL)includeAncestors;
+- (instancetype)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
+          includeAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKBehaviorNode *)behaviorNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorNode *behaviorNode;
 
 @end

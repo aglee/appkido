@@ -32,25 +32,25 @@
 
 @synthesize fileURL = _fileURL;
 
-- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField {
+- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField {
 	if ((self = [super init])) {
 		_elementNameStackArray = [NSMutableArray new];
 		self.writerOptions = anOptionField;
 		_indentationString = [NSMutableString new];
 		_dateFormatter = [NSDateFormatter new];
-		[_dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-		[_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+		_dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+		_dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
 	}
 	return self;
 }
-- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField fileURL:(NSURL *)aFileURL {
+- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField fileURL:(NSURL *)aFileURL {
 	if ((self = [self initWithOptions:anOptionField])) {
 		self.fileURL = aFileURL;
 	}
 	return self;
 }
 
-- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField outputStream:(NSOutputStream *)anOutputStream {
+- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField outputStream:(NSOutputStream *)anOutputStream {
 	if ((self = [self initWithOptions:anOptionField])) {
 		self.outputStream = anOutputStream;
 	}
@@ -65,8 +65,8 @@
 
 - (void)createAndOpenStream {
 	if (self.fileURL) {
-		if (![[NSFileManager defaultManager] isWritableFileAtPath:[self.fileURL path]]) {
-			[[NSFileManager defaultManager] createDirectoryAtPath:[[self.fileURL path] stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
+		if (![[NSFileManager defaultManager] isWritableFileAtPath:(self.fileURL).path]) {
+			[[NSFileManager defaultManager] createDirectoryAtPath:(self.fileURL).path.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
 		}
 		self.outputStream = [NSOutputStream outputStreamWithURL:self.fileURL append:NO];
 	} else {
@@ -86,7 +86,7 @@
 			do {
 				NSInteger writtenLength = [_outputStream write:bytes maxLength:endOfBytes-bytes];
 				if (writtenLength == -1 || writtenLength == 0) {
-					NSLog(@"stream error occured: %@", [_outputStream streamError]);
+					NSLog(@"stream error occured: %@", _outputStream.streamError);
 					break;
 				}
 				bytes += writtenLength;
@@ -113,7 +113,7 @@
 		} else if (value == (NSNumber *)kCFBooleanFalse) {
 			string = @"no";
 		} else {
-			string = [value stringValue];
+			string = value.stringValue;
 		}
 	}
 	if (needsEscaping) {
@@ -146,10 +146,10 @@
 		[self writeString:@"\""];
 	};
 	if (_writerOptions & TCMXMLWriterOptionOrderedAttributes) {
-		NSMutableArray *sortedAttributeKeys = [[anAttributeDictionary allKeys] mutableCopy];
+		NSMutableArray *sortedAttributeKeys = [anAttributeDictionary.allKeys mutableCopy];
 		[sortedAttributeKeys sortUsingSelector:@selector(caseInsensitiveCompare:)];
 		for (NSString *key in sortedAttributeKeys) {
-			writerBlock(key, [anAttributeDictionary objectForKey:key], NULL);
+			writerBlock(key, anAttributeDictionary[key], NULL);
 		}
 	} else {
 		[anAttributeDictionary enumerateKeysAndObjectsUsingBlock:writerBlock];
@@ -157,20 +157,20 @@
 }
 
 - (void)instructXML {
-	[self instruct:@"xml" attributes:[NSDictionary dictionaryWithObjectsAndKeys:@"1.0",@"version",@"UTF-8",@"encoding", nil]];
+	[self instruct:@"xml" attributes:@{@"version": @"1.0",@"encoding": @"UTF-8"}];
 }
 
 - (void)instructXMLStandalone {
-	[self instruct:@"xml" attributes:[NSDictionary dictionaryWithObjectsAndKeys:@"1.0",@"version",@"UTF-8",@"encoding",@"yes",@"standalone", nil]];
+	[self instruct:@"xml" attributes:@{@"version": @"1.0",@"encoding": @"UTF-8",@"standalone": @"yes"}];
 }
 
 - (void)instruct:(NSString *)anInstructionName attributes:(NSDictionary *)anAttributeDictionary {
 	[self writeString:@"<?"];
 	[self writeString:anInstructionName];
-	if ([anAttributeDictionary objectForKey:@"version"]) {
+	if (anAttributeDictionary[@"version"]) {
 		// special case - version needs to be first
 		NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
-		[tempDictionary setObject:[anAttributeDictionary objectForKey:@"version"] forKey:@"version"];
+		tempDictionary[@"version"] = anAttributeDictionary[@"version"];
 		[self writeAttributes:tempDictionary];
 		[tempDictionary addEntriesFromDictionary:anAttributeDictionary];
 		[tempDictionary removeObjectForKey:@"version"];
@@ -206,7 +206,7 @@
 }
 
 - (void)closeLastTag {
-	NSString *tagName = [self.elementNameStackArray lastObject];
+	NSString *tagName = (self.elementNameStackArray).lastObject;
 	[_indentationString deleteCharactersInRange:NSMakeRange(_indentationString.length-1,1)];
 	if (SHOULDPRETTYPRINT) {
 		[self writeString:_indentationString];

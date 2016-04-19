@@ -68,7 +68,7 @@
  * On failure, returns nil with the reasons added to errorStrings.  A docset that hasn't
  * been downloaded counts as a failure.
  */
-+ (id)databaseWithErrorStrings:(NSMutableArray *)errorStrings;
++ (instancetype)databaseWithErrorStrings:(NSMutableArray *)errorStrings;
 
 ///*! On failure, returns nil with the reasons added to errorStrings. */
 //+ (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings;
@@ -80,7 +80,7 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex;
+- (instancetype)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Populating the database
@@ -105,15 +105,15 @@
 #pragma mark Getters and setters -- frameworks
 
 /*! Names of all frameworks that have been loaded, in no guaranteed order. */
-- (NSArray *)frameworkNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *frameworkNames;
 
 /*! Same as -frameworkNames, but sorted alphabetically. */
-- (NSArray *)sortedFrameworkNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedFrameworkNames;
 
 - (BOOL)hasFrameworkWithName:(NSString *)frameworkName;
 
 /*! Names of all frameworks we can offer for the user to load. */
-- (NSArray *)namesOfAvailableFrameworks;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesOfAvailableFrameworks;
 
 #pragma mark -
 #pragma mark Getters and setters -- classes
@@ -122,10 +122,10 @@
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
 
 /*! * Class without parent class. Array of AKClassNode. No guaranteed order. */
-- (NSArray *)rootClasses;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *rootClasses;
 
 /*! Array of AKClassNode. No guaranteed order. */
-- (NSArray *)allClasses;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allClasses;
 
 - (AKClassNode *)classWithName:(NSString *)className;
 
@@ -142,7 +142,7 @@
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
 
 /*! Array of AKProtocolNode. No guaranteed order. */
-- (NSArray *)allProtocols;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allProtocols;
 
 - (AKProtocolNode *)protocolWithName:(NSString *)name;
 

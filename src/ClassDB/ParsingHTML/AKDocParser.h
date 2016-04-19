@@ -66,7 +66,7 @@
  * All non-alphanumeric, non-whitespace characters are considered punctuation
  * and are treated as individual tokens.
  */
-- (BOOL)parseToken;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL parseToken;
 
 /*!
  * Calls -parseToken one or more times. Skips over tokens that are HTML markup
@@ -74,7 +74,7 @@
  * the input stream. Puts that token in _token. On exit, _current points just
  * after the token.
  */
-- (BOOL)parseNonMarkupToken;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL parseNonMarkupToken;
 
 
 #pragma mark -
@@ -84,7 +84,7 @@
  * Returns the root of the file section hierarchy for the file most recently
  * parsed by the receiver.
  */
-- (AKFileSection *)rootSectionOfCurrentFile;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKFileSection *rootSectionOfCurrentFile;
 
 /*! Called after each file is parsed. Does nothing by default. */
 - (void)applyParseResults;

@@ -25,12 +25,12 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = [[self memberNode] nameOfOwningFramework];
-    NSString *behaviorFrameworkName = [[self behaviorNode] nameOfOwningFramework];
+    NSString *methodFrameworkName = self.memberNode.nameOfOwningFramework;
+    NSString *behaviorFrameworkName = self.behaviorNode.nameOfOwningFramework;
     BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-    AKBehaviorNode *ownerOfMethod = [[self memberNode] owningBehavior];
+    AKBehaviorNode *ownerOfMethod = self.memberNode.owningBehavior;
 
-    if ([self behaviorNode] == ownerOfMethod)
+    if (self.behaviorNode == ownerOfMethod)
     {
         // We're the first class/protocol to declare this method.
         if (methodIsInSameFramework)
@@ -49,12 +49,12 @@
         if (methodIsInSameFramework)
         {
             return [NSString stringWithFormat:@"This notification is delivered by class %@.",
-                    [ownerOfMethod nodeName]];
+                    ownerOfMethod.nodeName];
         }
         else
         {
             return [NSString stringWithFormat:@"This notification is delivered by %@ class %@.",
-                    methodFrameworkName, [ownerOfMethod nodeName]];
+                    methodFrameworkName, ownerOfMethod.nodeName];
         }
     }
 }

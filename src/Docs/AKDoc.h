@@ -29,19 +29,19 @@
  * associated with this doc. When the doc text is HTML, the filePath of this
  * file section is used as the base URL for links in the HTML.
  */
-- (AKFileSection *)fileSection;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKFileSection *fileSection;
 
 /*! Returns YES if the doc text contains HTML. Defaults to YES. */
-- (BOOL)docTextIsHTML;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL docTextIsHTML;
 
 /*!
  * Returns YES if [self docTextData] should include text from the descendant
  * sections of [self fileSection]. Defaults to YES.
  */
-- (BOOL)docTextShouldIncludeDescendantSections;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL docTextShouldIncludeDescendantSections;
 
 /*! The doc text. */
-- (NSData *)docTextData;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *docTextData;
 
 /*!
  * Returns the doc name that should be used in doc locators. This name must be
@@ -50,18 +50,18 @@
  * By default, returns [[self fileSection] sectionName] with HTML markup
  * stripped.
  */
-- (NSString *)docName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *docName;
 
 /*!
  * Returns the string that should be displayed in the doc list table. Defaults
  * to [self docName].
  */
-- (NSString *)stringToDisplayInDocList;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInDocList;
 
 /*!
  * Returns the string to display in the comment field at the bottom of the
  * window. Default is the empty string.
  */
-- (NSString *)commentString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *commentString;
 
 @end

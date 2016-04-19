@@ -30,8 +30,8 @@
  * protocol, frameworkName should always be nil -- a protocol can only belong to
  * one framework.
  */
-- (id)initWithFileSection:(AKFileSection *)fileSection
-       extraFrameworkName:(NSString *)frameworkName;
+- (instancetype)initWithFileSection:(AKFileSection *)fileSection
+       extraFrameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Doc name
@@ -40,6 +40,6 @@
  * Used to calculate docName and stringToDisplayInDocList by "qualifying" the
  * doc name with the name of the extra framework, if there is one.
  */
-- (NSString *)unqualifiedDocName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *unqualifiedDocName;
 
 @end

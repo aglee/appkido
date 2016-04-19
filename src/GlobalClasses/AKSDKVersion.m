@@ -13,24 +13,24 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)versionFromString:(NSString *)versionString
++ (instancetype)versionFromString:(NSString *)versionString
 {
 	id version = [[self alloc] init];
 	NSArray *versionParts = [versionString componentsSeparatedByString:@"."];
 	
-	if ([versionParts count] > 0)
+	if (versionParts.count > 0)
 	{
-		[version setMajorNumber:[[versionParts objectAtIndex:0] intValue]];
+		[version setMajorNumber:[versionParts[0] intValue]];
 	}
 	
-	if ([versionParts count] > 1)
+	if (versionParts.count > 1)
 	{
-		[version setMinorNumber:[[versionParts objectAtIndex:1] intValue]];
+		[version setMinorNumber:[versionParts[1] intValue]];
 	}
 	
-	if ([versionParts count] > 2)
+	if (versionParts.count > 2)
 	{
-		[version setPatchNumber:[[versionParts objectAtIndex:2] intValue]];
+		[version setPatchNumber:[versionParts[2] intValue]];
 	}
 	
 	return version;

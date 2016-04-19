@@ -21,7 +21,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithMemberNode:(AKMemberNode *)memberNode
+- (instancetype)initWithMemberNode:(AKMemberNode *)memberNode
      inheritedByBehavior:(AKBehaviorNode *)behaviorNode
 {
     if ((self = [super init]))
@@ -33,7 +33,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -54,13 +54,13 @@
 
 - (AKFileSection *)fileSection
 {
-    return [_memberNode nodeDocumentation];
+    return _memberNode.nodeDocumentation;
 }
 
 - (NSString *)stringToDisplayInDocList
 {
     NSString *displayString = [[self class] punctuateNodeName:[self docName]];
-    AKBehaviorNode *owningBehavior = [_memberNode owningBehavior];
+    AKBehaviorNode *owningBehavior = _memberNode.owningBehavior;
 
     // Qualify the member name with ancestor or protocol info if any.
     if (_behaviorNode != owningBehavior)
@@ -69,21 +69,21 @@
         {
             // We inherited this member from an ancestor class.
             displayString = [NSString stringWithFormat:@"%@ (%@)",
-                             displayString, [owningBehavior nodeName]];
+                             displayString, owningBehavior.nodeName];
         }
         else
         {
             // This member is a method we implement in order to conform to
             // a protocol.
             displayString = [NSString stringWithFormat:@"%@ <%@>",
-                             displayString, [owningBehavior nodeName]];
+                             displayString, owningBehavior.nodeName];
         }
     }
 
     // If this is a method that is added by a framework that is not the class's
     // main framework, show that.
-    NSString *memberFrameworkName = [_memberNode nameOfOwningFramework];
-    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:[_behaviorNode nameOfOwningFramework]];
+    NSString *memberFrameworkName = _memberNode.nameOfOwningFramework;
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorNode.nameOfOwningFramework];
 
     if (!memberIsInSameFramework)
     {
@@ -96,7 +96,7 @@
     // assuming the docs are accurate.
     //
     // If we know the method is deprecated, show that.
-    if ([_memberNode isDeprecated])
+    if (_memberNode.isDeprecated)
     {
         displayString = [NSString stringWithFormat:@"%@ (deprecated)", displayString];
     }
@@ -110,9 +110,9 @@
 // override this method.
 - (NSString *)commentString
 {
-    NSString *memberFrameworkName = [_memberNode nameOfOwningFramework];
-    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:[_behaviorNode nameOfOwningFramework]];
-    AKBehaviorNode *owningBehavior = [_memberNode owningBehavior];
+    NSString *memberFrameworkName = _memberNode.nameOfOwningFramework;
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorNode.nameOfOwningFramework];
+    AKBehaviorNode *owningBehavior = _memberNode.owningBehavior;
 
     if (_behaviorNode == owningBehavior)
     {
@@ -133,12 +133,12 @@
         if (memberIsInSameFramework)
         {
             return [NSString stringWithFormat:@"This method is inherited from class %@.",
-                    [owningBehavior nodeName]];
+                    owningBehavior.nodeName];
         }
         else
         {
             return [NSString stringWithFormat:@"This method is inherited from %@ class %@.",
-                    memberFrameworkName, [owningBehavior nodeName]];
+                    memberFrameworkName, owningBehavior.nodeName];
         }
     }
     else
@@ -147,12 +147,12 @@
         if (memberIsInSameFramework)
         {
             return [NSString stringWithFormat:@"This method is declared in protocol <%@>.",
-                    [owningBehavior nodeName]];
+                    owningBehavior.nodeName];
         }
         else
         {
             return [NSString stringWithFormat:@"This method is declared in %@ protocol <%@>.",
-                    memberFrameworkName, [owningBehavior nodeName]];
+                    memberFrameworkName, owningBehavior.nodeName];
         }
     }
 }

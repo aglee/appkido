@@ -76,7 +76,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: docName=%@>", [self className], [self docName]];
+    return [NSString stringWithFormat:@"<%@: docName=%@>", self.className, [self docName]];
 }
 
 #pragma mark -
@@ -123,12 +123,12 @@
 - (NSData *)_kludgeHTML:(NSData *)htmlData
 {
     NSMutableData *sourceData =
-        [NSMutableData dataWithCapacity:([htmlData length] + 1)];
+        [NSMutableData dataWithCapacity:(htmlData.length + 1)];
 
     // Add a null terminator to the source data so it contains a
     // C string.
     [sourceData setData:htmlData];
-    [sourceData setLength:([sourceData length] + 1)];
+    sourceData.length = (sourceData.length + 1);
 
     // ===== KLUDGE #3: get rid of trailing Apple copyright =====
 
@@ -148,10 +148,10 @@
 
 - (NSMutableData *)_kludgeOne:(NSData *)sourceData
 {
-    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:([sourceData length] + 64)];
+    NSMutableData *newHTMLData = [NSMutableData dataWithCapacity:(sourceData.length + 64)];
 
     // Find all <pre>...</pre> elements in the source HTML.
-    char *endOfPreElement = (char *)[sourceData bytes];
+    char *endOfPreElement = (char *)sourceData.bytes;
     char *startOfPreElement = strstr(endOfPreElement, "<pre>");
     while (startOfPreElement)
     {
@@ -222,7 +222,7 @@
     // Add the remaining non-<pre> text.  There will be at least one byte
     // of non-<pre> text, namely the NULL terminator.
     [newHTMLData appendBytes:endOfPreElement
-                      length:((char *)[sourceData bytes] + [sourceData length] - endOfPreElement)];
+                      length:((char *)sourceData.bytes + sourceData.length - endOfPreElement)];
 
     return newHTMLData;
 }
@@ -230,7 +230,7 @@
 - (void)_kludgeThree:(NSMutableData *)sourceData
 {
     // Find the last copyright symbol in the text.
-    char *dataPtr = (char *)[sourceData bytes];
+    char *dataPtr = (char *)sourceData.bytes;
     char *copyrightPtr = NULL;
 
     while ((dataPtr = strstr(dataPtr, "&#169;")))
@@ -245,16 +245,16 @@
     // Truncate the text at the copyright symbol.
     if (copyrightPtr)
     {
-        [sourceData setLength:(copyrightPtr - (char *)[sourceData bytes])];
+        sourceData.length = (copyrightPtr - (char *)sourceData.bytes);
 
         // Add NULL termination by incrementing data length.
-        [sourceData setLength:([sourceData length] + 1)];
+        sourceData.length = (sourceData.length + 1);
     }
 }
 
 - (void)_kludgeFour:(NSMutableData *)sourceData
 {
-    const char *dataStart = (const char *)[sourceData bytes];
+    const char *dataStart = (const char *)sourceData.bytes;
 
     // Find the last <hr> tag in the text.  Note that we search for "<hr"
     // rather than "<hr>", because it might be a tag like <hr WIDTH=...>.
@@ -308,10 +308,10 @@
         // Truncate at the appropriate point, if any.
         if (shouldTruncateAfterHR)
         {
-            [sourceData setLength:(lastHRPtr - dataStart)];
+            sourceData.length = (lastHRPtr - dataStart);
 
             // Add NULL termination by incrementing data length.
-            [sourceData setLength:([sourceData length] + 1)];
+            sourceData.length = (sourceData.length + 1);
         }
     }
 }

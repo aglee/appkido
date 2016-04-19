@@ -95,7 +95,7 @@
 {
     // Case 1: The given path isn't an app bundle. Assume it's a Dev Tools
     // directory and we don't have to do any adjusting.
-    if (![[possibleXcodePath pathExtension] isEqualToString:@"app"])
+    if (![possibleXcodePath.pathExtension isEqualToString:@"app"])
     {
         return possibleXcodePath;
     }
@@ -117,12 +117,12 @@
     // to be /Developer/Applications/Xcode.app, meaning we'd want to return
     // /Developer here. But then Apple started allowing a directory other than
     // /Developer to be the root Dev Tools directory, so we can't assume that.
-    NSString *pathToDirContainingApp = [possibleXcodePath stringByDeletingLastPathComponent];
-    NSString *nameOfDirContainingApp = [pathToDirContainingApp lastPathComponent];
+    NSString *pathToDirContainingApp = possibleXcodePath.stringByDeletingLastPathComponent;
+    NSString *nameOfDirContainingApp = pathToDirContainingApp.lastPathComponent;
 
     if ([nameOfDirContainingApp isEqualToString:@"Applications"])
     {
-        return [pathToDirContainingApp stringByDeletingLastPathComponent];
+        return pathToDirContainingApp.stringByDeletingLastPathComponent;
     }
 
     // Case 4: The path is probably not a valid Dev Tools path, but we have to
@@ -161,14 +161,14 @@
 // Xcode app lives in an old-style Dev Tools installation.
 + (NSString *)_oldStyleDevToolsPathFromXcodeAppPath:(NSString *)xcodeAppPath
 {
-    NSString *parentPath = [xcodeAppPath stringByDeletingLastPathComponent];
+    NSString *parentPath = xcodeAppPath.stringByDeletingLastPathComponent;
 
-    if (![[parentPath lastPathComponent] isEqualToString:@"Applications"])
+    if (![parentPath.lastPathComponent isEqualToString:@"Applications"])
     {
         return nil;
     }
 
-    NSString *parentOfApplicationsDir = [parentPath stringByDeletingLastPathComponent];
+    NSString *parentOfApplicationsDir = parentPath.stringByDeletingLastPathComponent;
 
     if ([[NSFileManager defaultManager] fileExistsAtPath:parentOfApplicationsDir])
     {
@@ -183,21 +183,21 @@
 // Checks whether devToolsPath looks like SOMEPATH/SOMETHING.app/Contents/Developer.
 + (NSString *)_standaloneXcodeAppPathFromDevToolsPath:(NSString *)devToolsPath
 {
-    if (![[devToolsPath lastPathComponent] isEqualToString:@"Developer"])
+    if (![devToolsPath.lastPathComponent isEqualToString:@"Developer"])
     {
         return nil;
     }
 
-    NSString *contentsDirPath = [devToolsPath stringByDeletingLastPathComponent];
+    NSString *contentsDirPath = devToolsPath.stringByDeletingLastPathComponent;
 
-    if (![[contentsDirPath lastPathComponent] isEqualToString:@"Contents"])
+    if (![contentsDirPath.lastPathComponent isEqualToString:@"Contents"])
     {
         return nil;
     }
 
-    NSString *xcodeAppPath = [contentsDirPath stringByDeletingLastPathComponent];
+    NSString *xcodeAppPath = contentsDirPath.stringByDeletingLastPathComponent;
 
-    if (![[xcodeAppPath pathExtension] isEqualToString:@"app"])
+    if (![xcodeAppPath.pathExtension isEqualToString:@"app"])
     {
         return nil;
     }

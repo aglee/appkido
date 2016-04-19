@@ -84,7 +84,7 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Add whichever of the standard sections are available.
-    AKFileSection *rootSection = [[self behaviorNode] nodeDocumentation];
+    AKFileSection *rootSection = [self behaviorNode].nodeDocumentation;
 
     for (AKFileSection *majorSection in [self pertinentChildSectionsOf:rootSection])
     {
@@ -101,12 +101,12 @@
     // it to the top.
     NSString *descriptionSectionName = [self htmlNameOfDescriptionSection];
     NSString *altDescriptionSectionName = [self altHtmlNameOfDescriptionSection];
-    NSInteger numDocs = [docList count];
+    NSInteger numDocs = docList.count;
     NSInteger i;
 
     for (i = 0; i < numDocs; i++)
     {
-        AKDoc *doc = [docList objectAtIndex:i];  // Avoid premature dealloc.
+        AKDoc *doc = docList[i];  // Avoid premature dealloc.
         NSString *docName = [doc docName];
 
         if ([docName isEqualToString:descriptionSectionName]
@@ -123,7 +123,7 @@
     }
 
     // Add the "Header File" doc if appropriate.
-    NSString *headerFilePath = [[self behaviorNode] headerFileWhereDeclared];
+    NSString *headerFilePath = [self behaviorNode].headerFileWhereDeclared;
 
     if ([[NSFileManager defaultManager] fileExistsAtPath:headerFilePath])
     {

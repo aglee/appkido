@@ -24,10 +24,10 @@
     [super windowDidLoad];
 
     // Put up the splash window.
-    [_splashVersionField setStringValue:[[AKAppVersion appVersion] displayString]];
-    [[self window] center];
-    [[self window] makeKeyAndOrderFront:nil];
-    [_splashMessageField setStringValue:@"Parsing files for framework:"];
+    _splashVersionField.stringValue = [[AKAppVersion appVersion] displayString];
+    [self.window center];
+    [self.window makeKeyAndOrderFront:nil];
+    _splashMessageField.stringValue = @"Parsing files for framework:";
     [_splashMessageField display];
 }
 

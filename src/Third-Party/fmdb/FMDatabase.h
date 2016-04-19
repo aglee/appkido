@@ -52,34 +52,34 @@
 @property (atomic, strong) NSMutableDictionary *cachedStatements;
 
 
-+ (id)databaseWithPath:(NSString*)inPath;
-- (id)initWithPath:(NSString*)inPath;
++ (instancetype)databaseWithPath:(NSString*)inPath;
+- (instancetype)initWithPath:(NSString*)inPath NS_DESIGNATED_INITIALIZER;
 
-- (BOOL)open;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL open;
 #if SQLITE_VERSION_NUMBER >= 3005000
 - (BOOL)openWithFlags:(int)flags;
 #endif
-- (BOOL)close;
-- (BOOL)goodConnection;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL close;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL goodConnection;
 - (void)clearCachedStatements;
 - (void)closeOpenResultSets;
-- (BOOL)hasOpenResultSets;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasOpenResultSets;
 
 // encryption methods.  You need to have purchased the sqlite encryption extensions for these to work.
 - (BOOL)setKey:(NSString*)key;
 - (BOOL)rekey:(NSString*)key;
 
-- (NSString *)databasePath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *databasePath;
 
-- (NSString*)lastErrorMessage;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *lastErrorMessage;
 
-- (int)lastErrorCode;
-- (BOOL)hadError;
-- (NSError*)lastError;
+@property (NS_NONATOMIC_IOSONLY, readonly) int lastErrorCode;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hadError;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSError *lastError;
 
-- (sqlite_int64)lastInsertRowId;
+@property (NS_NONATOMIC_IOSONLY, readonly) sqlite_int64 lastInsertRowId;
 
-- (sqlite3*)sqliteHandle;
+@property (NS_NONATOMIC_IOSONLY, readonly) sqlite3 *sqliteHandle;
 
 - (BOOL)update:(NSString*)sql withErrorAndBindings:(NSError**)outErr, ...;
 - (BOOL)executeUpdate:(NSString*)sql, ...;
@@ -92,13 +92,12 @@
 - (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments;
 - (FMResultSet *)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary *)arguments;
 
-- (BOOL)rollback;
-- (BOOL)commit;
-- (BOOL)beginTransaction;
-- (BOOL)beginDeferredTransaction;
-- (BOOL)inTransaction;
-- (BOOL)shouldCacheStatements;
-- (void)setShouldCacheStatements:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL rollback;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL commit;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL beginTransaction;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL beginDeferredTransaction;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL inTransaction;
+@property (NS_NONATOMIC_IOSONLY) BOOL shouldCacheStatements;
 
 #if SQLITE_VERSION_NUMBER >= 3007000
 - (BOOL)startSavePointWithName:(NSString*)name error:(NSError**)outErr;
@@ -110,7 +109,7 @@
 + (BOOL)isSQLiteThreadSafe;
 + (NSString*)sqliteLibVersion;
 
-- (int)changes;
+@property (NS_NONATOMIC_IOSONLY, readonly) int changes;
 
 - (void)makeFunctionNamed:(NSString*)name maximumArguments:(int)count withBlock:(void (^)(sqlite3_context *context, int argc, sqlite3_value **argv))block;
 

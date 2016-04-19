@@ -17,7 +17,7 @@
     if ([_viewToMatch respondsToSelector:@selector(backgroundColor)])
     {
         // The cast to NSTextView* is to avoid a compiler warning.
-        [[(NSTextView *)_viewToMatch backgroundColor] set];
+        [((NSTextView *)_viewToMatch).backgroundColor set];
         NSRectFill(aRect);
     }
 }

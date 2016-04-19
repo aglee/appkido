@@ -73,7 +73,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 
 // [agl] Old note to self says that classes can have multiple header paths. Example?
 
-- (BOOL)isClassNode;
+@property (NS_NONATOMIC_IOSONLY, getter=isClassNode, readonly) BOOL classNode;
 
 - (void)addImplementedProtocol:(AKProtocolNode *)protocolNode;
 - (void)addImplementedProtocols:(NSArray *)protocolNodes;
@@ -83,16 +83,16 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * the represented behavior. Includes protocols implemented by virtue of
  * inheritance.
  */
-- (NSArray *)implementedProtocols;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *implementedProtocols;
 
 /*! Returns zero or more AKMethodNodes. */
-- (NSArray *)instanceMethodNodes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodNodes;
 
 #pragma mark -
 #pragma mark Getters and setters -- properties
 
 /*! Returns only properties that are in this class's documentation. */
-- (NSArray *)documentedProperties;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedProperties;
 
 - (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName;
 
@@ -106,7 +106,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * Returns AKMethodNodes for class methods that have documentation
  * associated with them.  Does not include inherited methods.
  */
-- (NSArray *)documentedClassMethods;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedClassMethods;
 
 - (AKMethodNode *)classMethodWithName:(NSString *)methodName;
 
@@ -120,7 +120,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * Returns AKMethodNodes for instance methods that have documentation
  * associated with them.  Does not include inherited methods.
  */
-- (NSArray *)documentedInstanceMethods;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedInstanceMethods;
 
 - (AKMethodNode *)instanceMethodWithName:(NSString *)methodName;
 

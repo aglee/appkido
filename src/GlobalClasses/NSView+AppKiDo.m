@@ -11,34 +11,34 @@
 
 + (void)ak_connectViewsIntoKeyViewLoop:(NSArray *)viewsToConnect
 {
-    NSView *previousView = [viewsToConnect lastObject];
+    NSView *previousView = viewsToConnect.lastObject;
     
     for (NSView *view in viewsToConnect)
     {
-        [previousView setNextKeyView:view];
+        previousView.nextKeyView = view;
         previousView = view;
     }
 }
 
 - (void)ak_setFrameWidth:(CGFloat)newWidth
 {
-    NSRect frame = [self frame];
+    NSRect frame = self.frame;
 
     frame.size.width = newWidth;
-    [self setFrame:frame];
+    self.frame = frame;
 }
 
 - (void)ak_setFrameHeight:(CGFloat)newHeight
 {
-    NSRect frame = [self frame];
+    NSRect frame = self.frame;
 
     frame.size.height = newHeight;
-    [self setFrame:frame];
+    self.frame = frame;
 }
 
 - (id)ak_enclosingViewOfClass:(Class)viewClass
 {
-    for (NSView *view = self; view != nil; view = [view superview])
+    for (NSView *view = self; view != nil; view = view.superview)
     {
         if ([view isKindOfClass:viewClass])
         {
@@ -53,11 +53,11 @@
 {
     if ([self isKindOfClass:[NSScrollView class]])
     {
-        [(NSScrollView *)self setHorizontalScrollElasticity:NSScrollElasticityNone];
-        [(NSScrollView *)self setVerticalScrollElasticity:NSScrollElasticityNone];
+        ((NSScrollView *)self).horizontalScrollElasticity = NSScrollElasticityNone;
+        ((NSScrollView *)self).verticalScrollElasticity = NSScrollElasticityNone;
     }
 
-    for (NSView *subview in [self subviews])
+    for (NSView *subview in self.subviews)
     {
         [subview ak_removeAllElasticity];
     }

@@ -15,7 +15,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFileSection:(AKFileSection *)fileSection
+- (instancetype)initWithFileSection:(AKFileSection *)fileSection
 {
     if ((self = [super init]))
     {
@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;

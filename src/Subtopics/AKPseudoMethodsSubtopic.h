@@ -18,19 +18,19 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)subtopicForClassNode:(AKClassNode *)classNode
++ (instancetype)subtopicForClassNode:(AKClassNode *)classNode
           includeAncestors:(BOOL)includeAncestors;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithClassNode:(AKClassNode *)classNode
-       includeAncestors:(BOOL)includeAncestors;
+- (instancetype)initWithClassNode:(AKClassNode *)classNode
+       includeAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKClassNode *)classNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassNode *classNode;
 
 @end

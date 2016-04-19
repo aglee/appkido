@@ -27,9 +27,9 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (NSArray *)allNodes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allNodes;
 
-- (NSArray *)nodesWithDocumentation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *nodesWithDocumentation;
 
 - (AKDatabaseNode *)nodeWithName:(NSString *)nodeName;
 

@@ -19,7 +19,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)subtopicForClassNode:(AKClassNode *)classNode
++ (instancetype)subtopicForClassNode:(AKClassNode *)classNode
 {
     return [[self alloc] initWithClassNode:classNode];
 }
@@ -27,7 +27,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithClassNode:(AKClassNode *)classNode
+- (instancetype)initWithClassNode:(AKClassNode *)classNode
 {
     if ((self = [super init]))
     {
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -54,7 +54,7 @@
 
     // If we're looking at a class that spans multiple frameworks, add
     // doc names for those frameworks.
-    NSString *classFrameworkName = [_classNode nameOfOwningFramework];
+    NSString *classFrameworkName = _classNode.nameOfOwningFramework;
 
     for (NSString *extraFrameworkName in [_classNode namesOfAllOwningFrameworks])
     {

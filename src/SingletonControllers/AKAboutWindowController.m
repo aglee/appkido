@@ -36,7 +36,7 @@
         
         creditsString = [creditsString stringByReplacingOccurrencesOfString:@"$APPVERSION"
                                                                  withString:versionString];
-        [[_creditsView mainFrame] loadHTMLString:creditsString baseURL:nil];
+        [_creditsView.mainFrame loadHTMLString:creditsString baseURL:nil];
     }
 }
 
@@ -61,15 +61,15 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
           frame:(WebFrame *)frame
 decisionListener:(id <WebPolicyDecisionListener>)listener
 {
-    NSNumber *navType = [actionInformation objectForKey:WebActionNavigationTypeKey];
-    BOOL isLinkClicked = ((navType != nil) && ([navType intValue] == WebNavigationTypeLinkClicked));
+    NSNumber *navType = actionInformation[WebActionNavigationTypeKey];
+    BOOL isLinkClicked = ((navType != nil) && (navType.intValue == WebNavigationTypeLinkClicked));
     
     if (isLinkClicked)
     {
         // Use a delayed perform to avoid mucking with the WebView's
         // display while it's in the middle of processing a UI event.
         [[NSWorkspace sharedWorkspace] performSelector:@selector(openURL:)
-                                            withObject:[request URL]
+                                            withObject:request.URL
                                             afterDelay:0];
     }
     else

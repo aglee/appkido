@@ -21,7 +21,7 @@
 
 @synthesize path = _path;
 
-+ (id)databaseQueueWithPath:(NSString*)aPath {
++ (instancetype)databaseQueueWithPath:(NSString*)aPath {
     
     FMDatabaseQueue *q = [[self alloc] initWithPath:aPath];
     
@@ -30,7 +30,7 @@
     return q;
 }
 
-- (id)initWithPath:(NSString*)aPath {
+- (instancetype)initWithPath:(NSString*)aPath {
     
     self = [super init];
     
@@ -47,7 +47,7 @@
         
         _path = FMDBReturnRetained(aPath);
         
-        _queue = dispatch_queue_create([[NSString stringWithFormat:@"fmdb.%@", self] UTF8String], NULL);
+        _queue = dispatch_queue_create([NSString stringWithFormat:@"fmdb.%@", self].UTF8String, NULL);
     }
     
     return self;

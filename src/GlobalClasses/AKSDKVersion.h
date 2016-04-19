@@ -19,19 +19,16 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)versionFromString:(NSString *)versionString;
++ (instancetype)versionFromString:(NSString *)versionString;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (int)majorNumber;
-- (void)setMajorNumber:(int)n;
+@property (NS_NONATOMIC_IOSONLY) int majorNumber;
 
-- (int)minorNumber;
-- (void)setMinorNumber:(int)n;
+@property (NS_NONATOMIC_IOSONLY) int minorNumber;
 
-- (int)patchNumber;
-- (void)setPatchNumber:(int)n;
+@property (NS_NONATOMIC_IOSONLY) int patchNumber;
 
 #pragma mark -
 #pragma mark Comparing versions

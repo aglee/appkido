@@ -56,13 +56,13 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
     NSUInteger tabViewItemIndex = [_prefsTabView indexOfTabViewItemWithIdentifier:@"Dev Tools"];
     NSTabViewItem *devToolsTabViewItem = [_prefsTabView tabViewItemAtIndex:tabViewItemIndex];
 
-    [devToolsTabViewItem setView:[_devToolsViewController view]];
+    devToolsTabViewItem.view = _devToolsViewController.view;
 
     // Tweak the Frameworks table. [agl] Can't I do this in IB?
     NSButtonCell *checkboxCell = [[NSButtonCell alloc] initTextCell:@""];
 
     [checkboxCell setButtonType:NSSwitchButton];
-    [[_frameworksTable tableColumnWithIdentifier:_AKCheckboxesColumnID] setDataCell:checkboxCell];
+    [_frameworksTable tableColumnWithIdentifier:_AKCheckboxesColumnID].dataCell = checkboxCell;
 }
 
 
@@ -74,8 +74,8 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
     [self _updateAppearanceTabFromPrefs];
     [self _updateSearchTabFromPrefs];
     
-    [[_prefsTabView window] center];
-    [[_prefsTabView window] makeKeyAndOrderFront:nil];
+    [_prefsTabView.window center];
+    [_prefsTabView.window makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)applyAppearancePrefs:(id)sender
@@ -99,7 +99,7 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
         {
             // The user toggled a framework.
             NSArray *frameworkNames = [self _namesOfAvailableFrameworks];
-            NSString *clickedFramework = [frameworkNames objectAtIndex:[sender clickedRow]];
+            NSString *clickedFramework = frameworkNames[[sender clickedRow]];
             NSArray *namesOfSelectedFrameworks = [AKPrefUtils selectedFrameworkNamesPref];
             NSMutableArray *selectedFrameworks = [NSMutableArray arrayWithArray:namesOfSelectedFrameworks];
 
@@ -141,14 +141,14 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return [[self _namesOfAvailableFrameworks] count];
+    return [self _namesOfAvailableFrameworks].count;
 }
 
 - (id)tableView:(NSTableView *)aTableView
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
             row:(NSInteger)rowIndex
 {
-    return [[self _namesOfAvailableFrameworks] objectAtIndex:rowIndex];
+    return [self _namesOfAvailableFrameworks][rowIndex];
 }
 
 #pragma mark -
@@ -159,8 +159,8 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
    forTableColumn:(NSTableColumn *)aTableColumn
               row:(int)rowIndex
 {
-    NSString *columnID = [aTableColumn identifier];
-    NSString *fwName = [[self _namesOfAvailableFrameworks] objectAtIndex:rowIndex];
+    NSString *columnID = aTableColumn.identifier;
+    NSString *fwName = [self _namesOfAvailableFrameworks][rowIndex];
 
     if ([columnID isEqualToString:_AKCheckboxesColumnID])
     {
@@ -217,7 +217,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     [_listFontNameChoice selectItemAtIndex:listFontNameIndex];
 
     // The list-font-size pref.
-    [_listFontSizeCombo setIntegerValue:[AKPrefUtils intValueForPref:AKListFontSizePrefName]];
+    _listFontSizeCombo.integerValue = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
 
     // The header-font-name pref.
     NSString *headerFontName = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
@@ -235,7 +235,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     [_headerFontNameChoice selectItemAtIndex:headerFontNameIndex];
 
     // The header-font-size pref.
-    [_headerFontSizeCombo setIntegerValue:[AKPrefUtils intValueForPref:AKHeaderFontSizePrefName]];
+    _headerFontSizeCombo.integerValue = [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
 
     // The doc-magnification pref.
     NSInteger magnificationChoiceTag = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
@@ -256,23 +256,23 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 - (void)_updatePrefsFromAppearanceTab
 {
     // The list-font-name pref.
-    [AKPrefUtils setStringValue:[[_listFontNameChoice selectedItem] title]
+    [AKPrefUtils setStringValue:_listFontNameChoice.selectedItem.title
                         forPref:AKListFontNamePrefName];
 
     // The list-font-size pref.
-    [AKPrefUtils setIntValue:[_listFontSizeCombo intValue]
+    [AKPrefUtils setIntValue:_listFontSizeCombo.intValue
                      forPref:AKListFontSizePrefName];
 
     // The header-font-name pref.
-    [AKPrefUtils setStringValue:[[_headerFontNameChoice selectedItem] title]
+    [AKPrefUtils setStringValue:_headerFontNameChoice.selectedItem.title
                         forPref:AKHeaderFontNamePrefName];
 
     // The header-font-size pref.
-    [AKPrefUtils setIntValue:[_headerFontSizeCombo intValue]
+    [AKPrefUtils setIntValue:_headerFontSizeCombo.intValue
                      forPref:AKHeaderFontSizePrefName];
 
     // The doc-magnification pref.
-    [AKPrefUtils setIntValue:[_magnificationChoice selectedTag]
+    [AKPrefUtils setIntValue:_magnificationChoice.selectedTag
                      forPref:AKDocMagnificationPrefName];
 
     // The small-contextual-menus pref.
@@ -283,19 +283,19 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
     BOOL shouldSearchInNewWindow = [AKPrefUtils shouldSearchInNewWindow];
     
-    [_searchInNewWindowCheckbox setState:(shouldSearchInNewWindow ? NSOnState : NSOffState)];
+    _searchInNewWindowCheckbox.state = (shouldSearchInNewWindow ? NSOnState : NSOffState);
 }
 
 - (void)_updatePrefsFromSearchTab
 {
-    BOOL shouldSearchInNewWindow = ([_searchInNewWindowCheckbox state] == NSOnState);
+    BOOL shouldSearchInNewWindow = (_searchInNewWindowCheckbox.state == NSOnState);
     
     [AKPrefUtils setShouldSearchInNewWindow:shouldSearchInNewWindow];
 }
 
 - (NSArray *)_namesOfAvailableFrameworks
 {
-    return [[[NSApp delegate] appDatabase] namesOfAvailableFrameworks];
+    return [[NSApp.delegate appDatabase] namesOfAvailableFrameworks];
 }
 
 @end

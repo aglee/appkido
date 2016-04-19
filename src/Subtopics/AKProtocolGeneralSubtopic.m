@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)subtopicForProtocolNode:(AKProtocolNode *)protocolNode
++ (instancetype)subtopicForProtocolNode:(AKProtocolNode *)protocolNode
 {
     return [[self alloc] initWithProtocolNode:protocolNode];
 }
@@ -24,7 +24,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithProtocolNode:(AKProtocolNode *)protocolNode
+- (instancetype)initWithProtocolNode:(AKProtocolNode *)protocolNode
 {
     if ((self = [super init]))
     {
@@ -34,7 +34,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;

@@ -73,7 +73,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithDatabase:(AKDatabase *)database
+- (instancetype)initWithDatabase:(AKDatabase *)database
 {
     if ((self = [super initWithWindowNibName:@"AKWindow"]))
     {
@@ -88,7 +88,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -107,7 +107,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     return ((_windowHistoryIndex < 0)
             ? nil
-            : [_windowHistory objectAtIndex:_windowHistoryIndex]);
+            : _windowHistory[_windowHistoryIndex]);
 }
 
 #pragma mark -
@@ -118,8 +118,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKDocLocator *selectedDocLocator = [self currentDocLocator];
 
     [self _selectTopic:obj
-          subtopicName:[selectedDocLocator subtopicName]
-               docName:[selectedDocLocator docName]
+          subtopicName:selectedDocLocator.subtopicName
+               docName:selectedDocLocator.docName
           addToHistory:YES];
 }
 
@@ -127,9 +127,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     AKDocLocator *selectedDocLocator = [self currentDocLocator];
 
-    [self _selectTopic:[selectedDocLocator topicToDisplay]
+    [self _selectTopic:selectedDocLocator.topicToDisplay
           subtopicName:subtopicName
-               docName:[selectedDocLocator docName]
+               docName:selectedDocLocator.docName
           addToHistory:YES];
 }
 
@@ -137,17 +137,17 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     AKDocLocator *selectedDocLocator = [self currentDocLocator];
 
-    [self _selectTopic:[selectedDocLocator topicToDisplay]
-          subtopicName:[selectedDocLocator subtopicName]
+    [self _selectTopic:selectedDocLocator.topicToDisplay
+          subtopicName:selectedDocLocator.subtopicName
                docName:docName
           addToHistory:YES];
 }
 
 - (void)selectDocWithDocLocator:(AKDocLocator *)docLocator
 {
-    [self _selectTopic:[docLocator topicToDisplay]
-          subtopicName:[docLocator subtopicName]
-               docName:[docLocator docName]
+    [self _selectTopic:docLocator.topicToDisplay
+          subtopicName:docLocator.subtopicName
+               docName:docLocator.docName
           addToHistory:YES];
 }
 
@@ -156,12 +156,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Interpret the link URL as relative to the current doc URL.
     NSString *currentDocFilePath = [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
     NSURL *currentDocFileURL = [NSURL fileURLWithPath:currentDocFilePath];
-    NSURL *destinationURL = [NSURL URLWithString:[linkURL relativeString] relativeToURL:currentDocFileURL];
+    NSURL *destinationURL = [NSURL URLWithString:linkURL.relativeString relativeToURL:currentDocFileURL];
 
     // If we have a file: URL, try to derive a doc locator from it.
     AKDocLocator *destinationDocLocator = nil;
     
-    if ([destinationURL isFileURL])
+    if (destinationURL.fileURL)
     {
         AKLinkResolver *linkResolver = [AKLinkResolver linkResolverWithDatabase:_database];
         destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
@@ -190,8 +190,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)openQuicklistDrawer
 {
-    if (([_quicklistDrawer state] != NSDrawerOpenState)
-        && ([_quicklistDrawer state] != NSDrawerOpeningState))
+    if ((_quicklistDrawer.state != NSDrawerOpenState)
+        && (_quicklistDrawer.state != NSDrawerOpeningState))
     {
         [_quicklistDrawer openOnEdge:NSMinXEdge];
     }
@@ -208,8 +208,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     [self putWindowLayoutInto:windowLayout];
 
-    [savedWindowState setSavedWindowLayout:windowLayout];
-    [savedWindowState setSavedDocLocator:[self currentDocLocator]];
+    savedWindowState.savedWindowLayout = windowLayout;
+    savedWindowState.savedDocLocator = [self currentDocLocator];
 }
 
 - (NSView *)docView
@@ -226,7 +226,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // in the same doc. We do a Find Next so the doc view will highlight it.
     // Example: NSXMLParserInvalidConditionalSectionError -- it's in the middle
     // of the page, so we need this kludge to scroll the web view down.
-    if ([[[self currentDocLocator] topicToDisplay] isKindOfClass:[AKGlobalsTopic class]])
+    if ([[self currentDocLocator].topicToDisplay isKindOfClass:[AKGlobalsTopic class]])
     {
         [self performSelector:@selector(_popQuizKludge) withObject:nil afterDelay:0];
     }
@@ -235,7 +235,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)_popQuizKludge
 {
     [[AKFindPanelController sharedInstance] findNextFindString:nil];
-    [[[_quicklistDrawer contentView] window] makeFirstResponder:[_quicklistController quicklistTable]];
+    [_quicklistDrawer.contentView.window makeFirstResponder:_quicklistController.quicklistTable];
 }
 
 #pragma mark -
@@ -256,7 +256,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         // Remember the height of the topic browser so we can restore it if its
         // visibility gets toggled back.
-        _browserHeightWhenVisible = [_topicBrowserContainerView frame].size.height;
+        _browserHeightWhenVisible = _topicBrowserContainerView.frame.size.height;
 
         // Collapse the topic browser.
         [self _setTopSubviewHeight:0
@@ -264,11 +264,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                            animate:YES];
 
         // If the browser had focus, select the next view in the tab chain.
-        id firstResponder = [[self window] firstResponder];
+        id firstResponder = self.window.firstResponder;
         if ([firstResponder isKindOfClass:[NSView class]]
             && [(NSView *)firstResponder isDescendantOf:_topicBrowserContainerView])
         {
-            (void)[AKTabChain stepThroughTabChainInWindow:[self window] forward:YES];
+            (void)[AKTabChain stepThroughTabChainInWindow:self.window forward:YES];
         }
     }
     else
@@ -282,7 +282,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)toggleQuicklistDrawer:(id)sender
 {
-    NSInteger state = [_quicklistDrawer state];
+    NSInteger state = _quicklistDrawer.state;
 
     if ((state == NSDrawerClosedState) || (state == NSDrawerClosingState))
     {
@@ -307,7 +307,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)goForwardInHistory:(id)sender
 {
-    if (_windowHistoryIndex < ((int)[_windowHistory count] - 1))
+    if (_windowHistoryIndex < ((int)_windowHistory.count - 1))
     {
         [self _goToHistoryItemAtIndex:(_windowHistoryIndex + 1)];
     }
@@ -352,7 +352,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Figure out what class that means to jump to.
     for (i = 0; i < numberOfSuperlevels; i++)
     {
-        classNode = [classNode parentClass];
+        classNode = classNode.parentClass;
     }
 
     // Do the jump.
@@ -363,7 +363,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *frameworkName = [[sender menu] title];
+        NSString *frameworkName = [sender menu].title;
 
         [self selectTopic:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName
                                                                inDatabase:_database]];
@@ -375,7 +375,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *frameworkName = [[sender menu] title];
+        NSString *frameworkName = [sender menu].title;
 
         [self selectTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName
                                                                  inDatabase:_database]];
@@ -387,7 +387,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *frameworkName = [[sender menu] title];
+        NSString *frameworkName = [sender menu].title;
 
         [self selectTopic:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName
                                                          inDatabase:_database]];
@@ -399,7 +399,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ([sender isKindOfClass:[NSMenuItem class]])
     {
-        NSString *frameworkName = [[sender menu] title];
+        NSString *frameworkName = [sender menu].title;
 
         [self selectTopic:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName
                                                        inDatabase:_database]];
@@ -436,7 +436,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
 
         [pasteboard declareTypes:@[NSStringPboardType] owner:nil];
-        [pasteboard setString:[docURL absoluteString] forType:NSStringPboardType];
+        [pasteboard setString:docURL.absoluteString forType:NSStringPboardType];
     }
 }
 
@@ -472,7 +472,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         return;
     }
 
-    NSString *containingDirPath = [docPath stringByDeletingLastPathComponent];
+    NSString *containingDirPath = docPath.stringByDeletingLastPathComponent;
     [[NSWorkspace sharedWorkspace] selectFile:docPath
                      inFileViewerRootedAtPath:containingDirPath];
 }
@@ -499,14 +499,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     NSLog(@"       DocViewController -- %@", [_docViewController ak_bareDescription]);
     NSLog(@"     QuicklistController -- %@", [_quicklistController ak_bareDescription]);
     NSLog(@"----");
-    NSLog(@"         window -- %@", [[self window] ak_bareDescription]);
-    NSLog(@"  topic browser -- %@", [[_topicBrowserController topicBrowser] ak_bareDescription]);
-    NSLog(@"  subtopic list -- %@", [[_subtopicListController subtopicsTable] ak_bareDescription]);
-    NSLog(@"       doc list -- %@", [[_docListController docListTable] ak_bareDescription]);
-    NSLog(@"       web view -- %@", [[_docViewController webView] ak_bareDescription]);
-    NSLog(@"      text view -- %@", [[_docViewController textView] ak_bareDescription]);
-    NSLog(@"   search field -- %@", [[_quicklistController searchField] ak_bareDescription]);
-    NSLog(@"      quicklist -- %@", [[_quicklistController quicklistTable] ak_bareDescription]);
+    NSLog(@"         window -- %@", [self.window ak_bareDescription]);
+    NSLog(@"  topic browser -- %@", [_topicBrowserController.topicBrowser ak_bareDescription]);
+    NSLog(@"  subtopic list -- %@", [_subtopicListController.subtopicsTable ak_bareDescription]);
+    NSLog(@"       doc list -- %@", [_docListController.docListTable ak_bareDescription]);
+    NSLog(@"       web view -- %@", [_docViewController.webView ak_bareDescription]);
+    NSLog(@"      text view -- %@", [_docViewController.textView ak_bareDescription]);
+    NSLog(@"   search field -- %@", [_quicklistController.searchField ak_bareDescription]);
+    NSLog(@"      quicklist -- %@", [_quicklistController.quicklistTable ak_bareDescription]);
     NSLog(@"END FUN FACTS about %@\n\n", self);
 }
 
@@ -517,20 +517,20 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     NSMutableArray *tabChain = [NSMutableArray array];
 
-    [tabChain addObject:[_topicBrowserController topicBrowser]];
+    [tabChain addObject:_topicBrowserController.topicBrowser];
 
-    if ([NSApp isFullKeyboardAccessEnabled])
+    if (NSApp.fullKeyboardAccessEnabled)
     {
         [tabChain addObject:_superclassButton];
         [tabChain addObject:_backButton];
         [tabChain addObject:_forwardButton];
     }
 
-    [tabChain addObject:[_subtopicListController subtopicsTable]];
-    [tabChain addObject:[_docListController docListTable]];
+    [tabChain addObject:_subtopicListController.subtopicsTable];
+    [tabChain addObject:_docListController.docListTable];
     [tabChain addObject:[_docViewController docView]];
 
-    if ([_quicklistDrawer state] == NSDrawerOpenState)
+    if (_quicklistDrawer.state == NSDrawerOpenState)
     {
         [self _addDrawerControlsToTabChain:tabChain];
     }
@@ -558,20 +558,20 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Apply the specified window frame.
-    [[self window] setFrame:[windowLayout windowFrame] display:NO];
+    [self.window setFrame:windowLayout.windowFrame display:NO];
 
     // Restore the visibility of the toolbar.
-    [[[self window] toolbar] setVisible:[windowLayout toolbarIsVisible]];
+    self.window.toolbar.visible = windowLayout.toolbarIsVisible;
 
     // Figure out the browser height indicated by windowLayout. If an explicit
     // height is given, use that. Otherwise, if the (now obsolete) fraction is
     // given, use the fraction to calculate the height. Otherwise, use the
     // default height.
-    _browserHeightWhenVisible = [windowLayout browserHeight];
+    _browserHeightWhenVisible = windowLayout.browserHeight;
 
     if (_browserHeightWhenVisible <= 0)
     {
-        _browserHeightWhenVisible = [self _heightByTakingFraction:[windowLayout browserFraction]
+        _browserHeightWhenVisible = [self _heightByTakingFraction:windowLayout.browserFraction
                                                       ofSplitView:_topLevelSplitView];
 
         if (_browserHeightWhenVisible <= 0)
@@ -582,7 +582,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Apply the indicated height to the topic browser.
     if ([self _topicBrowserIsVisible]
-        && [windowLayout browserIsVisible])
+        && windowLayout.browserIsVisible)
     {
         [self _setTopSubviewHeight:_browserHeightWhenVisible
                forTwoPaneSplitView:_topLevelSplitView
@@ -596,13 +596,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Restore the state of the bottom two thirds.
-    [self _setTopSubviewHeight:[windowLayout middleViewHeight]
+    [self _setTopSubviewHeight:windowLayout.middleViewHeight
            forTwoPaneSplitView:_bottomTwoThirdsSplitView
                        animate:NO];
 
-    if ([windowLayout subtopicListWidth])
+    if (windowLayout.subtopicListWidth)
     {
-        [self _setLeftSubviewWidth:[windowLayout subtopicListWidth]
+        [self _setLeftSubviewWidth:windowLayout.subtopicListWidth
                forTwoPaneSplitView:_middleThirdSplitView
                            animate:NO];
     }
@@ -612,10 +612,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_docViewController takeWindowLayoutFrom:windowLayout];
 
     // Restore the state of the Quicklist drawer.
-    NSSize drawerContentSize = [_quicklistDrawer contentSize];
+    NSSize drawerContentSize = _quicklistDrawer.contentSize;
 
-    drawerContentSize.width = [windowLayout quicklistDrawerWidth];
-    [_quicklistDrawer setContentSize:drawerContentSize];
+    drawerContentSize.width = windowLayout.quicklistDrawerWidth;
+    _quicklistDrawer.contentSize = drawerContentSize;
 
     // Restore the internal state of the Quicklist.
     [_quicklistController takeWindowLayoutFrom:windowLayout];
@@ -629,28 +629,28 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Remember the current window frame.
-    [windowLayout setWindowFrame:[[self window] frame]];
+    windowLayout.windowFrame = self.window.frame;
 
     // Remember the visibility of the toolbar.
-    [windowLayout setToolbarIsVisible:[[[self window] toolbar] isVisible]];
+    windowLayout.toolbarIsVisible = self.window.toolbar.visible;
 
     // Remember the state of the inner split view.
-    [windowLayout setMiddleViewHeight:([_middleView frame].size.height)];
-    [windowLayout setSubtopicListWidth:([_subtopicListContainerView frame].size.width)];
+    windowLayout.middleViewHeight = (_middleView.frame.size.height);
+    windowLayout.subtopicListWidth = (_subtopicListContainerView.frame.size.width);
 
     // Remember the state of the topic browser.
-    [windowLayout setBrowserIsVisible:[self _topicBrowserIsVisible]];
-    [windowLayout setBrowserFraction:[self _fractionByComparingHeight:_browserHeightWhenVisible
-                                                  toHeightOfSplitView:_topLevelSplitView]];
-    [windowLayout setBrowserHeight:_browserHeightWhenVisible];
+    windowLayout.browserIsVisible = [self _topicBrowserIsVisible];
+    windowLayout.browserFraction = [self _fractionByComparingHeight:_browserHeightWhenVisible
+                                                  toHeightOfSplitView:_topLevelSplitView];
+    windowLayout.browserHeight = _browserHeightWhenVisible;
     [_topicBrowserController putWindowLayoutInto:windowLayout];
 
     // Remember the state of the Quicklist drawer.
-    NSInteger state = [_quicklistDrawer state];
+    NSInteger state = _quicklistDrawer.state;
     BOOL drawerIsOpen = (state == NSDrawerOpenState) || (state == NSDrawerOpeningState);
 
-    [windowLayout setQuicklistDrawerIsOpen:drawerIsOpen];
-    [windowLayout setQuicklistDrawerWidth:([_quicklistDrawer contentSize].width)];
+    windowLayout.quicklistDrawerIsOpen = drawerIsOpen;
+    windowLayout.quicklistDrawerWidth = (_quicklistDrawer.contentSize.width);
 
     // Remember the internal state of the Quicklist.
     [_quicklistController putWindowLayoutInto:windowLayout];
@@ -669,7 +669,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
     else if (itemAction == @selector(goForwardInHistory:))
     {
-        return (_windowHistoryIndex < ((int)[_windowHistory count] - 1));
+        return (_windowHistoryIndex < ((int)_windowHistory.count - 1));
     }
     else if ((itemAction == @selector(goToHistoryItemInBackMenu:))
              || (itemAction == @selector(goToHistoryItemInForwardMenu:)))
@@ -730,7 +730,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     {
         if ([anItem isKindOfClass:[NSMenuItem class]])
         {
-            NSInteger state = [_quicklistDrawer state];
+            NSInteger state = _quicklistDrawer.state;
 
             if ((state == NSDrawerClosedState)
                 || (state == NSDrawerClosingState))
@@ -781,7 +781,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)windowDidLoad
 {
-    _defaultBrowserHeight = NSHeight([_topicBrowserContainerView frame]);
+    _defaultBrowserHeight = NSHeight(_topicBrowserContainerView.frame);
 
     // Load our view controllers and plug their views into the UI. Do this
     // early, because a number of things we do next assume the view controllers
@@ -798,9 +798,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // 11 is the size Cocoa uses for small menus.
     NSFont *smallMenuFont = [NSFont menuFontOfSize:11];
 
-    [_superclassesMenu setFont:smallMenuFont];
-    [_backMenu setFont:smallMenuFont];
-    [_forwardMenu setFont:smallMenuFont];
+    _superclassesMenu.font = smallMenuFont;
+    _backMenu.font = smallMenuFont;
+    _forwardMenu.font = smallMenuFont;
 
     // Select NSObject in the topic browser.
     _windowHistoryIndex = -1;
@@ -810,7 +810,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self selectTopic:[AKClassTopic topicWithClassNode:classNode]];
 
     // Start with the topic browser having focus.
-    [[self window] makeFirstResponder:[_topicBrowserController topicBrowser]];
+    [self.window makeFirstResponder:_topicBrowserController.topicBrowser];
 }
 
 #pragma mark -
@@ -820,7 +820,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     // As it happens, we want the first subview of all our split views to stay
     // fixed-sized.
-    return (subview != [[splitView subviews] objectAtIndex:0]);
+    return (subview != splitView.subviews[0]);
 }
 
 #pragma mark -
@@ -834,7 +834,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 // front when it becomes key
 - (void)windowDidBecomeKey:(NSNotification *)aNotification
 {
-    [(NSWindow *)[aNotification object] orderFront:nil];
+    [(NSWindow *)aNotification.object orderFront:nil];
 }
 
 // [agl] Not sure why this is here.  The app delegate listens for
@@ -869,14 +869,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                                         containerView:_docContainerView];
     _quicklistController = [self _vcWithClass:[AKQuicklistViewController class]
                                        nibName:@"QuicklistView"
-                                 containerView:[_quicklistDrawer contentView]];
+                                 containerView:_quicklistDrawer.contentView];
 
     // Load the window with initial data.
-    AKBrowser *topicBrowser = [_topicBrowserController topicBrowser];
+    AKBrowser *topicBrowser = _topicBrowserController.topicBrowser;
     
     [topicBrowser loadColumnZero];
-    [[self window] setInitialFirstResponder:topicBrowser];
-    (void)[[self window] makeFirstResponder:topicBrowser];
+    self.window.initialFirstResponder = topicBrowser;
+    (void)[self.window makeFirstResponder:topicBrowser];
 }
 
 - (void)_setUpToolbar
@@ -886,13 +886,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Set up toolbar properties.
     [toolbar setAllowsUserCustomization:YES];
     [toolbar setAutosavesConfiguration:YES];
-    [toolbar setDisplayMode:NSToolbarDisplayModeIconAndLabel];
+    toolbar.displayMode = NSToolbarDisplayModeIconAndLabel;
 
     // We are the delegate.
-    [toolbar setDelegate:self];
+    toolbar.delegate = self;
 
     // Attach the toolbar to the browser window.
-    [[self window] setToolbar:toolbar];
+    self.window.toolbar = toolbar;
 }
 
 - (id)_vcWithClass:(Class)vcClass
@@ -902,15 +902,15 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     id vc = [[vcClass alloc] initWithNibName:nibName windowController:self];
     
     // Stuff the view controller's view into the container view.
-    [[vc view] setFrame:[containerView bounds]];
-    [[vc view] setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [vc view].frame = containerView.bounds;
+    [vc view].autoresizingMask = (NSViewWidthSizable | NSViewHeightSizable);
 
     [containerView addSubview:[vc view]];
 
     // Patch the view controller into the responder chain after self.
     // [agl] do I need to unpatch on dealloc?
-    NSResponder *nextResponder = [self nextResponder];
-    [self setNextResponder:vc];
+    NSResponder *nextResponder = self.nextResponder;
+    self.nextResponder = vc;
     [vc setNextResponder:nextResponder];
 
     return vc;
@@ -920,7 +920,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     return [NSString stringWithFormat:(@"Go to superclass (%@)"
                                        @"\n(Control-click or right-click for menu)"),
-            [[[self _currentTopic] parentClassOfTopic] nodeName]];
+            [[self _currentTopic] parentClassOfTopic].nodeName];
 }
 
 - (void)_refreshNavigationButtons
@@ -935,14 +935,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKClassNode *parentClass = [[self _currentTopic] parentClassOfTopic];
 
     // Enable or disable the Superclass button as appropriate.
-    [_superclassButton setEnabled:(parentClass != nil)];
-    if ([_superclassButton isEnabled])
+    _superclassButton.enabled = (parentClass != nil);
+    if (_superclassButton.enabled)
     {
-        [_superclassButton setToolTip:[self _tooltipForSelectSuperclass]];
+        _superclassButton.toolTip = [self _tooltipForSelectSuperclass];
     }
 
     // Empty the Superclass button's contextual menu.
-    while ([_superclassesMenu numberOfItems] > 0)
+    while (_superclassesMenu.numberOfItems > 0)
     {
         [_superclassesMenu removeItemAtIndex:0];
     }
@@ -951,11 +951,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKClassNode *ancestorNode = parentClass;
     while (ancestorNode != nil)
     {
-        [_superclassesMenu addItemWithTitle:[ancestorNode nodeName]
+        [_superclassesMenu addItemWithTitle:ancestorNode.nodeName
                                      action:@selector(selectAncestorClass:)
                               keyEquivalent:@""];
 
-        ancestorNode = [ancestorNode parentClass];
+        ancestorNode = ancestorNode.parentClass;
     }
 }
 
@@ -964,10 +964,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     NSInteger i;
 
     // Enable or disable the Back button as appropriate.
-    [_backButton setEnabled:(_windowHistoryIndex > 0)];
+    _backButton.enabled = (_windowHistoryIndex > 0);
 
     // Empty the Back button's contextual menu.
-    while ([_backMenu numberOfItems] > 0)
+    while (_backMenu.numberOfItems > 0)
     {
         [_backMenu removeItemAtIndex:0];
     }
@@ -975,7 +975,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Reconstruct the Back button's contextual menu.
     for (i = _windowHistoryIndex - 1; i >= 0; i--)
     {
-        AKDocLocator *historyItem = [_windowHistory objectAtIndex:i];
+        AKDocLocator *historyItem = _windowHistory[i];
         NSString *menuItemName = [historyItem stringToDisplayInLists];
 
         if (menuItemName)
@@ -989,14 +989,14 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_refreshForwardButton
 {
-    NSInteger historySize = (int)[_windowHistory count];
+    NSInteger historySize = (int)_windowHistory.count;
     NSInteger i;
 
     // Enable or disable the Forward button as appropriate.
-    [_forwardButton setEnabled:(_windowHistoryIndex < historySize - 1)];
+    _forwardButton.enabled = (_windowHistoryIndex < historySize - 1);
 
     // Empty the Forward button's contextual menu.
-    while ([_forwardMenu numberOfItems] > 0)
+    while (_forwardMenu.numberOfItems > 0)
     {
         [_forwardMenu removeItemAtIndex:0];
     }
@@ -1004,7 +1004,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Reconstruct the Forward button's contextual menu.
     for (i = _windowHistoryIndex + 1; i < historySize; i++)
     {
-        AKDocLocator *historyItem = [_windowHistory objectAtIndex:i];
+        AKDocLocator *historyItem = _windowHistory[i];
         NSString *menuItemName = [historyItem stringToDisplayInLists];
 
         [_forwardMenu addItemWithTitle:menuItemName
@@ -1031,13 +1031,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_topicBrowserController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
     [_subtopicListController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 
-    [_docListController setSubtopic:[_subtopicListController selectedSubtopic]];
+    _docListController.subtopic = [_subtopicListController selectedSubtopic];
     [_docListController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 
     [_docViewController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 
-    [_topicDescriptionField setStringValue:[topic stringToDisplayInDescriptionField]];
-    [_docCommentField setStringValue:[_docListController docComment]];
+    _topicDescriptionField.stringValue = [topic stringToDisplayInDescriptionField];
+    _docCommentField.stringValue = [_docListController docComment];
 
     if (shouldAddToHistory)
     {
@@ -1048,17 +1048,17 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 // All the history navigation methods come through here.
 - (void)_goToHistoryItemAtIndex:(NSInteger)historyIndex
 {
-    if ((historyIndex < 0) || (historyIndex >= (NSInteger)[_windowHistory count]))
+    if ((historyIndex < 0) || (historyIndex >= (NSInteger)_windowHistory.count))
     {
         return;
     }
 
     // Navigate to the specified history item.
-    AKDocLocator *historyItem = [_windowHistory objectAtIndex:historyIndex];
+    AKDocLocator *historyItem = _windowHistory[historyIndex];
 
-    [self _selectTopic:[historyItem topicToDisplay]
-          subtopicName:[historyItem subtopicName]
-               docName:[historyItem docName]
+    [self _selectTopic:historyItem.topicToDisplay
+          subtopicName:historyItem.subtopicName
+               docName:historyItem.docName
           addToHistory:NO];
 
     // Update our marker index into the history array.
@@ -1069,7 +1069,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Update miscellaneous parts of the UI that reflect our current
     // position in history.
     [self _refreshNavigationButtons];
-    [[self window] setTitle:[historyItem stringToDisplayInLists]];
+    self.window.title = [historyItem stringToDisplayInLists];
 }
 
 - (void)_addHistoryItem:(AKDocLocator *)newHistoryItem
@@ -1083,7 +1083,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Trim history beyond our max memory.
-    while ((int)[_windowHistory count] > maxHistory - 1)
+    while ((int)_windowHistory.count > maxHistory - 1)
     {
         [_windowHistory removeObjectAtIndex:0];
         if (_windowHistoryIndex >= 0)
@@ -1096,7 +1096,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Remember -count returns an *unsigned* int!
     if (_windowHistoryIndex >= 0)
     {
-        while ((int)[_windowHistory count] > _windowHistoryIndex + 1)
+        while ((int)_windowHistory.count > _windowHistoryIndex + 1)
         {
             [_windowHistory removeLastObject];
         }
@@ -1104,7 +1104,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Add the current navigation state to the navigation history.
     [_windowHistory addObject:newHistoryItem];
-    _windowHistoryIndex = [_windowHistory count] - 1;
+    _windowHistoryIndex = _windowHistory.count - 1;
     DIGSLogDebug(@"added history item [%@][%@][%@] at index %ld",
                  [[newHistoryItem topicToDisplay] pathInTopicBrowser],
                  [newHistoryItem subtopicName],
@@ -1113,7 +1113,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
     // Any time the history changes, we want to do the following UI updates.
     [self _refreshNavigationButtons];
-    [[self window] setTitle:[newHistoryItem stringToDisplayInLists]];
+    self.window.title = [newHistoryItem stringToDisplayInLists];
 }
 
 - (NSString *)_currentDocPath
@@ -1130,12 +1130,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
         return nil;
     }
 
-    return [[[NSURL fileURLWithPath:docPath] absoluteURL] standardizedURL];
+    return [NSURL fileURLWithPath:docPath].absoluteURL.standardizedURL;
 }
 
 - (AKTopic *)_currentTopic
 {
-    return [[self currentDocLocator] topicToDisplay];
+    return [self currentDocLocator].topicToDisplay;
 }
 
 - (void)_showBrowser
@@ -1148,7 +1148,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (BOOL)_topicBrowserIsVisible
 {
-    return ([_topicBrowserContainerView frame].size.height > 0);
+    return (_topicBrowserContainerView.frame.size.height > 0);
 }
 
 // Assumes the split view has two subviews, one above the other.
@@ -1156,29 +1156,29 @@ static NSString *_AKToolbarID = @"AKToolbarID";
          forTwoPaneSplitView:(NSSplitView *)splitView
                      animate:(BOOL)shouldAnimate
 {
-    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
-    NSRect frameOne = [viewOne frame];
-    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
-    NSRect frameTwo = [viewTwo frame];
+    NSView *viewOne = splitView.subviews[0];
+    NSRect frameOne = viewOne.frame;
+    NSView *viewTwo = splitView.subviews[1];
+    NSRect frameTwo = viewTwo.frame;
 
     frameOne.size.height = newHeight;
-    frameTwo.size.height = ([splitView bounds].size.height
-                            - [splitView dividerThickness]
+    frameTwo.size.height = (splitView.bounds.size.height
+                            - splitView.dividerThickness
                             - newHeight);
     if (shouldAnimate)
     {
         [NSAnimationContext beginGrouping];
-        [[NSAnimationContext currentContext] setDuration:0.1];
+        [NSAnimationContext currentContext].duration = 0.1;
         {{
-            [[viewOne animator] setFrame:frameOne];
-            [[viewTwo animator] setFrame:frameTwo];
+            [viewOne animator].frame = frameOne;
+            [viewTwo animator].frame = frameTwo;
         }}
         [NSAnimationContext endGrouping];
     }
     else
     {
-        [viewOne setFrame:frameOne];
-        [viewTwo setFrame:frameTwo];
+        viewOne.frame = frameOne;
+        viewTwo.frame = frameTwo;
     }
 }
 
@@ -1187,71 +1187,71 @@ static NSString *_AKToolbarID = @"AKToolbarID";
          forTwoPaneSplitView:(NSSplitView *)splitView
                      animate:(BOOL)shouldAnimate
 {
-    NSView *viewOne = [[splitView subviews] objectAtIndex:0];
-    NSRect frameOne = [viewOne frame];
-    NSView *viewTwo = [[splitView subviews] objectAtIndex:1];
-    NSRect frameTwo = [viewTwo frame];
+    NSView *viewOne = splitView.subviews[0];
+    NSRect frameOne = viewOne.frame;
+    NSView *viewTwo = splitView.subviews[1];
+    NSRect frameTwo = viewTwo.frame;
 
     frameOne.size.width = newWidth;
-    frameTwo.size.width = ([splitView bounds].size.width
-                           - [splitView dividerThickness]
+    frameTwo.size.width = (splitView.bounds.size.width
+                           - splitView.dividerThickness
                            - newWidth);
     if (shouldAnimate)
     {
         [NSAnimationContext beginGrouping];
-        [[NSAnimationContext currentContext] setDuration:0.1];
+        [NSAnimationContext currentContext].duration = 0.1;
         {{
-            [[viewOne animator] setFrame:frameOne];
-            [[viewTwo animator] setFrame:frameTwo];
+            [viewOne animator].frame = frameOne;
+            [viewTwo animator].frame = frameTwo;
         }}
         [NSAnimationContext endGrouping];
     }
     else
     {
-        [viewOne setFrame:frameOne];
-        [viewTwo setFrame:frameTwo];
+        viewOne.frame = frameOne;
+        viewTwo.frame = frameTwo;
     }
 }
 
 - (CGFloat)_fractionByComparingHeight:(CGFloat)height toHeightOfSplitView:(NSSplitView *)splitView
 {
-    NSInteger numberOfDividers = [[splitView subviews] count] - 1;
-    CGFloat totalHeightOfSubviews = ([splitView frame].size.height
-                                     - numberOfDividers*[splitView dividerThickness]);
+    NSInteger numberOfDividers = splitView.subviews.count - 1;
+    CGFloat totalHeightOfSubviews = (splitView.frame.size.height
+                                     - numberOfDividers*splitView.dividerThickness);
     return height / totalHeightOfSubviews;
 }
 
 - (CGFloat)_heightByTakingFraction:(CGFloat)fraction ofSplitView:(NSSplitView *)splitView
 {
-    NSInteger numberOfDividers = [[splitView subviews] count] - 1;
-    CGFloat totalHeightOfSubviews = ([splitView frame].size.height
-                                     - numberOfDividers*[splitView dividerThickness]);
+    NSInteger numberOfDividers = splitView.subviews.count - 1;
+    CGFloat totalHeightOfSubviews = (splitView.frame.size.height
+                                     - numberOfDividers*splitView.dividerThickness);
     return round(fraction * totalHeightOfSubviews);
 }
 
 
 - (void)_addDrawerControlsToTabChain:(NSMutableArray *)tabChain
 {
-    if ([NSApp isFullKeyboardAccessEnabled])
+    if (NSApp.fullKeyboardAccessEnabled)
     {
-        [tabChain addObject:[_quicklistController quicklistRadio1]];
-        [tabChain addObject:[_quicklistController quicklistRadio2]];
-        [tabChain addObject:[_quicklistController frameworkPopup]];
-        [tabChain addObject:[_quicklistController quicklistRadio3]];
+        [tabChain addObject:_quicklistController.quicklistRadio1];
+        [tabChain addObject:_quicklistController.quicklistRadio2];
+        [tabChain addObject:_quicklistController.frameworkPopup];
+        [tabChain addObject:_quicklistController.quicklistRadio3];
     }
 
-    [tabChain addObject:[_quicklistController searchField]];
+    [tabChain addObject:_quicklistController.searchField];
 
-    if ([NSApp isFullKeyboardAccessEnabled])
+    if (NSApp.fullKeyboardAccessEnabled)
     {
-        [tabChain addObject:[_quicklistController searchOptionsPopup]];
+        [tabChain addObject:_quicklistController.searchOptionsPopup];
     }
 
-    [tabChain addObject:[_quicklistController quicklistTable]];
+    [tabChain addObject:_quicklistController.quicklistTable];
 
-    if ([NSApp isFullKeyboardAccessEnabled])
+    if (NSApp.fullKeyboardAccessEnabled)
     {
-        [tabChain addObject:[_quicklistController removeFavoriteButton]];
+        [tabChain addObject:_quicklistController.removeFavoriteButton];
     }
 }
 

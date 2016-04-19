@@ -34,7 +34,7 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
+- (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
     self = [super initWithNibName:@"DocView" windowController:windowController];
     if (self)
@@ -52,7 +52,7 @@
 {
     WebPreferences *webPrefs = [WebPreferences standardPreferences];
     [webPrefs setAutosaves:NO];
-    [_webView setPreferences:webPrefs];
+    _webView.preferences = webPrefs;
 
     [self applyUserPreferences];
 }
@@ -75,7 +75,7 @@
         return;
     }
 
-    [self setDocLocator:whereTo];
+    self.docLocator = whereTo;
     [self _updateDocDisplay];
 }
 
@@ -131,21 +131,21 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
           frame:(WebFrame *)frame
 decisionListener:(id <WebPolicyDecisionListener>)listener
 {
-    NSNumber *navType = [actionInformation objectForKey:WebActionNavigationTypeKey];
+    NSNumber *navType = actionInformation[WebActionNavigationTypeKey];
     BOOL isLinkClicked = ((navType != nil)
-                          && ([navType intValue] == WebNavigationTypeLinkClicked));
+                          && (navType.intValue == WebNavigationTypeLinkClicked));
 
     if (isLinkClicked)
     {
-        NSEvent *currentEvent = [NSApp currentEvent];
-        AKWindowController *wc = (([currentEvent modifierFlags] & NSCommandKeyMask)
+        NSEvent *currentEvent = NSApp.currentEvent;
+        AKWindowController *wc = ((currentEvent.modifierFlags & NSCommandKeyMask)
                                   ? [[AKAppDelegate appDelegate] controllerForNewWindow]
-                                  : [self owningWindowController]);
+                                  : self.owningWindowController);
 
         // Use a delayed perform to avoid mucking with the WebView's
         // display while it's in the middle of processing a UI event.
         // Note that the return value of -followLinkURL: will be lost.
-        [wc performSelector:@selector(followLinkURL:) withObject:[request URL] afterDelay:0];
+        [wc performSelector:@selector(followLinkURL:) withObject:request.URL afterDelay:0];
     }
     else
     {
@@ -160,11 +160,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 contextMenuItemsForElement:(NSDictionary *)element
     defaultMenuItems:(NSArray *)defaultMenuItems
 {
-    NSURL *linkURL = [element objectForKey:WebElementLinkURLKey];
+    NSURL *linkURL = element[WebElementLinkURLKey];
     NSMutableArray *newMenuItems = [NSMutableArray array];
 
     // Don't have a contextual menu if there is nothing in the doc view.
-    if ([[self owningWindowController] currentDocLocator] == nil)
+    if ([self.owningWindowController currentDocLocator] == nil)
     {
         return newMenuItems;
     }
@@ -173,16 +173,16 @@ contextMenuItemsForElement:(NSDictionary *)element
     NSMenuItem *speechMenuItem = nil;
     for (NSMenuItem *menuItem in defaultMenuItems)
     {
-        NSInteger tag = [menuItem tag];
+        NSInteger tag = menuItem.tag;
 
         if (tag == WebMenuItemTagOpenLinkInNewWindow)
         {
             // Change this menu item so instead of opening the link
             // in a new *web* browser window, it opens a new *AppKiDo*
             // browser window.
-            [menuItem setAction:@selector(openLinkInNewWindow:)];
+            menuItem.action = @selector(openLinkInNewWindow:);
             [menuItem setTarget:nil];  // will go to first responder
-            [menuItem setRepresentedObject:linkURL];
+            menuItem.representedObject = linkURL;
 
             [newMenuItems addObject:menuItem];
         }
@@ -202,7 +202,7 @@ contextMenuItemsForElement:(NSDictionary *)element
     }
 
     // Separate system-provided menu items from application-specific ones.
-    if ([newMenuItems count] > 0)
+    if (newMenuItems.count > 0)
     {
         [newMenuItems addObject:[NSMenuItem separatorItem]];
     }
@@ -244,7 +244,7 @@ contextMenuItemsForElement:(NSDictionary *)element
 
 - (BOOL)_isShowingWebView
 {
-    NSView *viewSelectedInTabView = [[_tabView selectedTabViewItem] view];
+    NSView *viewSelectedInTabView = _tabView.selectedTabViewItem.view;
 
     return [_webView isDescendantOf:viewSelectedInTabView];
 }
@@ -276,7 +276,7 @@ contextMenuItemsForElement:(NSDictionary *)element
         // hand cursor over links.  Note: you'd think we should
         // invalidate the cursor rects for textView, but no, for some
         // reason it doesn't work unless we do it for scrollView.
-        [[[self view] window] invalidateCursorRectsForView:[_textView enclosingScrollView]];
+        [self.view.window invalidateCursorRectsForView:_textView.enclosingScrollView];
     }
 }
 
@@ -318,7 +318,7 @@ contextMenuItemsForElement:(NSDictionary *)element
     }
 
     [_textView setRichText:NO];
-    [_textView setFont:plainTextFont];
+    _textView.font = plainTextFont;
 
 // Workaround for appkit bug (?) causing the last-used indentation
 // level to stick to the text view even if I clear its contents and
@@ -326,7 +326,7 @@ contextMenuItemsForElement:(NSDictionary *)element
 // [agl] -- but, now it causes assert error?
 //    [[_textView layoutManager] replaceTextStorage:[[NSTextStorage alloc] initWithString:@""]];
 
-    [_textView setString:docString];
+    _textView.string = docString;
     [_textView scrollRangeToVisible:NSMakeRange(0, 0)];
 }
 
@@ -361,7 +361,7 @@ contextMenuItemsForElement:(NSDictionary *)element
     // Apply the user's magnification preference.
     float multiplier = ((float)_docMagnifier) / 100.0f;
 
-    [_webView setTextSizeMultiplier:multiplier];
+    _webView.textSizeMultiplier = multiplier;
 
     // Display the HTML in _webView.
     NSString *htmlString = @"";
@@ -373,12 +373,12 @@ contextMenuItemsForElement:(NSDictionary *)element
 
     if (htmlFilePath)
     {
-        [[_webView mainFrame] loadHTMLString:htmlString
+        [_webView.mainFrame loadHTMLString:htmlString
                                      baseURL:[NSURL fileURLWithPath:htmlFilePath]];
     }
     else
     {
-        [[_webView mainFrame] loadHTMLString:htmlString baseURL:nil];
+        [_webView.mainFrame loadHTMLString:htmlString baseURL:nil];
     }
 }
 

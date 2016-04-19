@@ -20,7 +20,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithDatabase:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super initWithDatabase:database frameworkName:frameworkName]))
     {
@@ -49,8 +49,8 @@
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {
-    if ([[self targetDatabase] classDocumentedInHTMLFile:filePath]
-        || [[self targetDatabase] protocolDocumentedInHTMLFile:filePath])
+    if ([self.targetDatabase classDocumentedInHTMLFile:filePath]
+        || [self.targetDatabase protocolDocumentedInHTMLFile:filePath])
     {
         // Don't process the file if it's already been processed as a
         // behavior doc.  This is to catch the case where the docset index
@@ -88,18 +88,18 @@
 {
     // Get the globals group node corresponding to this major section.
     // Create it if necessary.
-    AKGroupNode *groupNode = [[self targetDatabase] globalsGroupNamed:groupName
-                                               inFrameworkNamed:[self targetFrameworkName]];
+    AKGroupNode *groupNode = [self.targetDatabase globalsGroupNamed:groupName
+                                               inFrameworkNamed:self.targetFrameworkName];
     if (!groupNode)
     {
         groupNode = [AKGroupNode nodeWithNodeName:groupName
-                                         database:[self targetDatabase]
-                                    frameworkName:[self targetFrameworkName]];
+                                         database:self.targetDatabase
+                                    frameworkName:self.targetFrameworkName];
         // [agl] FIXME -- There is a slight flaw in this reasoning: the
         // nodes in a globals group may come from multiple files, so it's
         // not quite right to assign the group a single doc file section.
-        [groupNode setNodeDocumentation:groupSection];
-        [[self targetDatabase] addGlobalsGroup:groupNode];
+        groupNode.nodeDocumentation = groupSection;
+        [self.targetDatabase addGlobalsGroup:groupNode];
     }
 
     // Iterate through child sections.  Each child section corresponds
@@ -109,7 +109,7 @@
         // Create a globals node and add it to the group.
         AKGlobalsNode *globalsNode = [self _globalsNodeFromFileSection:childSection];
 
-        [globalsNode setNodeDocumentation:childSection];
+        globalsNode.nodeDocumentation = childSection;
         [groupNode addSubnode:globalsNode];
     }
 }
@@ -119,11 +119,11 @@
     // See if the file we're parsing is a behavior doc.  Relies on the
     // assumption that if so, the doc was already parsed as such and is
     // therefore known to the database.
-    id behaviorNode = [[self targetDatabase] classDocumentedInHTMLFile:[fileSection filePath]];
+    id behaviorNode = [self.targetDatabase classDocumentedInHTMLFile:[fileSection filePath]];
 
     if (behaviorNode == nil)
     {
-        behaviorNode = [[self targetDatabase] protocolDocumentedInHTMLFile:[fileSection filePath]];
+        behaviorNode = [self.targetDatabase protocolDocumentedInHTMLFile:[fileSection filePath]];
     }
 
     // Create a node.
@@ -145,8 +145,8 @@
     }
 
     AKGlobalsNode *globalsNode = [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
-                                                                 database:[self targetDatabase]
-                                                            frameworkName:[self targetFrameworkName]];
+                                                                 database:self.targetDatabase
+                                                            frameworkName:self.targetFrameworkName];
 
     // Add any individual names we find in the minor section.
     for (NSString *nameOfGlobal in [self _parseNamesOfGlobalsInFileSection:fileSection])
@@ -214,7 +214,7 @@
                     // We are in the middle of an "enumName = enumValue"
                     // expression.  The previous token, the one before
                     // the equals sign, was the enum name.
-                    [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
+                    [namesOfGlobals addObject:@(_prevToken)];
                     sawEqualsSign = YES;
                 }
                 else if (strcmp(_token, ",") == 0)
@@ -228,7 +228,7 @@
                     }
                     else
                     {
-                        [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
+                        [namesOfGlobals addObject:@(_prevToken)];
                     }
                 }
                 else if (strcmp(_token, "}") == 0)
@@ -237,7 +237,7 @@
                     // have been any tokens since the most recent comma.
                     if (!sawEqualsSign && !(strcmp(_prevToken, ",") == 0))
                     {
-                        [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
+                        [namesOfGlobals addObject:@(_prevToken)];
                     }
                     break;
                 }
@@ -259,7 +259,7 @@
             {
                 if (strcmp(_token, ";") == 0)
                 {
-                    [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
+                    [namesOfGlobals addObject:@(_prevToken)];
                     break;
                 }
             }
@@ -268,7 +268,7 @@
                  && (strcmp(_prevToken, "#") == 0))
         {
             (void)[self _privatelyParseNonMarkupToken];
-            [namesOfGlobals addObject:[NSString stringWithUTF8String:_token]];
+            [namesOfGlobals addObject:@(_token)];
         }
         else if (strcmp(_token, ";") == 0)
         {
@@ -281,7 +281,7 @@
                 // Rule out, for example, HTML entities like "&#8220;".
                 if (!isdigit(firstChar))
                 {
-                    [namesOfGlobals addObject:[NSString stringWithUTF8String:_prevToken]];
+                    [namesOfGlobals addObject:@(_prevToken)];
                 }
             }
 

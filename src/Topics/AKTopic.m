@@ -138,7 +138,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
         return nil;
     }
 
-    NSString *topicClassName = [prefDict objectForKey:AKTopicClassNamePrefKey];
+    NSString *topicClassName = prefDict[AKTopicClassNamePrefKey];
 
     if (topicClassName == nil)
     {
@@ -204,7 +204,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: browserPath=%@>", [self className], [self pathInTopicBrowser]];
+    return [NSString stringWithFormat:@"<%@: browserPath=%@>", self.className, [self pathInTopicBrowser]];
 }
 
 @end

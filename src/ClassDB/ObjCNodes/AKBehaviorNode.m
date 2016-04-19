@@ -20,7 +20,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
@@ -48,7 +48,7 @@
 
 - (void)addImplementedProtocol:(AKProtocolNode *)protocolNode
 {
-    if ([_protocolNodeNames containsObject:[protocolNode nodeName]])
+    if ([_protocolNodeNames containsObject:protocolNode.nodeName])
     {
         // I've seen this happen when a .h contains two declarations of a
         // protocol in different #if branches. Example: NSURL.
@@ -58,7 +58,7 @@
     else
     {
         [_protocolNodes addObject:protocolNode];
-        [_protocolNodeNames addObject:[protocolNode nodeName]];
+        [_protocolNodeNames addObject:protocolNode.nodeName];
     }
 }
 

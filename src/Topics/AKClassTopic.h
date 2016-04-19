@@ -18,12 +18,12 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)topicWithClassNode:(AKClassNode *)classNode;
++ (instancetype)topicWithClassNode:(AKClassNode *)classNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithClassNode:(AKClassNode *)classNode;
+- (instancetype)initWithClassNode:(AKClassNode *)classNode NS_DESIGNATED_INITIALIZER;
 
 @end

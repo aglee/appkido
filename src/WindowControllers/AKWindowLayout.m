@@ -32,7 +32,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init]))
     {
@@ -63,29 +63,29 @@
 
     AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
 
-    [windowLayout setWindowFrame:NSRectFromString([prefDict objectForKey:AKWindowFramePrefKey])];
-    [windowLayout setToolbarIsVisible:[[prefDict objectForKey:AKToolbarIsVisiblePrefKey] boolValue]];
-    [windowLayout setMiddleViewHeight:[[prefDict objectForKey:AKMiddleViewHeightPrefKey] floatValue]];
-    [windowLayout setSubtopicListWidth:[[prefDict objectForKey:AKSubtopicListWidthPrefKey] floatValue]];
-    [windowLayout setBrowserIsVisible:[[prefDict objectForKey:AKBrowserIsVisiblePrefKey] boolValue]];
-    [windowLayout setBrowserFraction:[[prefDict objectForKey:AKBrowserFractionPrefKey] floatValue]];
-    [windowLayout setBrowserHeight:[[prefDict objectForKey:AKBrowserHeightPrefKey] floatValue]];
-    [windowLayout setNumberOfBrowserColumns:[[prefDict objectForKey:AKNumberOfBrowserColumnsPrefKey] intValue]];
-    [windowLayout setQuicklistDrawerIsOpen:[[prefDict objectForKey:AKQuicklistDrawerIsOpenPrefKey] boolValue]];
-    [windowLayout setQuicklistDrawerWidth:[[prefDict objectForKey:AKQuicklistDrawerWidthPrefKey] floatValue]];
-    [windowLayout setQuicklistMode:[[prefDict objectForKey:AKQuicklistModePrefKey] intValue]];
+    windowLayout.windowFrame = NSRectFromString(prefDict[AKWindowFramePrefKey]);
+    windowLayout.toolbarIsVisible = [prefDict[AKToolbarIsVisiblePrefKey] boolValue];
+    windowLayout.middleViewHeight = [prefDict[AKMiddleViewHeightPrefKey] floatValue];
+    windowLayout.subtopicListWidth = [prefDict[AKSubtopicListWidthPrefKey] floatValue];
+    windowLayout.browserIsVisible = [prefDict[AKBrowserIsVisiblePrefKey] boolValue];
+    windowLayout.browserFraction = [prefDict[AKBrowserFractionPrefKey] floatValue];
+    windowLayout.browserHeight = [prefDict[AKBrowserHeightPrefKey] floatValue];
+    windowLayout.numberOfBrowserColumns = [prefDict[AKNumberOfBrowserColumnsPrefKey] intValue];
+    windowLayout.quicklistDrawerIsOpen = [prefDict[AKQuicklistDrawerIsOpenPrefKey] boolValue];
+    windowLayout.quicklistDrawerWidth = [prefDict[AKQuicklistDrawerWidthPrefKey] floatValue];
+    windowLayout.quicklistMode = [prefDict[AKQuicklistModePrefKey] intValue];
 
-    NSString *frameworkSelection = [prefDict objectForKey:AKFrameworkPopupSelectionPrefKey];
+    NSString *frameworkSelection = prefDict[AKFrameworkPopupSelectionPrefKey];
     if (frameworkSelection != nil)
     {
-        [windowLayout setFrameworkPopupSelection:frameworkSelection];
+        windowLayout.frameworkPopupSelection = frameworkSelection;
     }
 
-    [windowLayout setSearchIncludesClasses:[[prefDict objectForKey:AKIncludeClassesAndProtocolsPrefKey] boolValue]];
-    [windowLayout setSearchIncludesMembers:[[prefDict objectForKey:AKIncludeMethodsPrefKey] boolValue]];
-    [windowLayout setSearchIncludesFunctions:[[prefDict objectForKey:AKIncludeFunctionsPrefKey] boolValue]];
-    [windowLayout setSearchIncludesGlobals:[[prefDict objectForKey:AKIncludeGlobalsPrefKey] boolValue]];
-    [windowLayout setSearchIgnoresCase:[[prefDict objectForKey:AKIgnoreCasePrefKey] boolValue]];
+    windowLayout.searchIncludesClasses = [prefDict[AKIncludeClassesAndProtocolsPrefKey] boolValue];
+    windowLayout.searchIncludesMembers = [prefDict[AKIncludeMethodsPrefKey] boolValue];
+    windowLayout.searchIncludesFunctions = [prefDict[AKIncludeFunctionsPrefKey] boolValue];
+    windowLayout.searchIncludesGlobals = [prefDict[AKIncludeGlobalsPrefKey] boolValue];
+    windowLayout.searchIgnoresCase = [prefDict[AKIgnoreCasePrefKey] boolValue];
 
     return windowLayout;
 }
@@ -94,28 +94,28 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict setObject:NSStringFromRect(_windowFrame) forKey:AKWindowFramePrefKey];
-    [prefDict setObject:@(_toolbarIsVisible) forKey:AKToolbarIsVisiblePrefKey];
-    [prefDict setObject:@(_middleViewHeight) forKey:AKMiddleViewHeightPrefKey];
-    [prefDict setObject:@(_subtopicListWidth) forKey:AKSubtopicListWidthPrefKey];
-    [prefDict setObject:@(_browserIsVisible) forKey:AKBrowserIsVisiblePrefKey];
-    [prefDict setObject:@(_browserFraction) forKey:AKBrowserFractionPrefKey];
-    [prefDict setObject:@(_browserHeight) forKey:AKBrowserHeightPrefKey];
-    [prefDict setObject:@(_numberOfBrowserColumns) forKey:AKNumberOfBrowserColumnsPrefKey];
-    [prefDict setObject:@(_quicklistDrawerIsOpen) forKey:AKQuicklistDrawerIsOpenPrefKey];
-    [prefDict setObject:@(_quicklistDrawerWidth) forKey:AKQuicklistDrawerWidthPrefKey];
-    [prefDict setObject:@(_quicklistMode) forKey:AKQuicklistModePrefKey];
+    prefDict[AKWindowFramePrefKey] = NSStringFromRect(_windowFrame);
+    prefDict[AKToolbarIsVisiblePrefKey] = @(_toolbarIsVisible);
+    prefDict[AKMiddleViewHeightPrefKey] = @(_middleViewHeight);
+    prefDict[AKSubtopicListWidthPrefKey] = @(_subtopicListWidth);
+    prefDict[AKBrowserIsVisiblePrefKey] = @(_browserIsVisible);
+    prefDict[AKBrowserFractionPrefKey] = @(_browserFraction);
+    prefDict[AKBrowserHeightPrefKey] = @(_browserHeight);
+    prefDict[AKNumberOfBrowserColumnsPrefKey] = @(_numberOfBrowserColumns);
+    prefDict[AKQuicklistDrawerIsOpenPrefKey] = @(_quicklistDrawerIsOpen);
+    prefDict[AKQuicklistDrawerWidthPrefKey] = @(_quicklistDrawerWidth);
+    prefDict[AKQuicklistModePrefKey] = @(_quicklistMode);
 
     if (_frameworkPopupSelection)
     {
-        [prefDict setObject:_frameworkPopupSelection forKey:AKFrameworkPopupSelectionPrefKey];
+        prefDict[AKFrameworkPopupSelectionPrefKey] = _frameworkPopupSelection;
     }
 
-    [prefDict setObject:@(_searchIncludesClasses) forKey:AKIncludeClassesAndProtocolsPrefKey];
-    [prefDict setObject:@(_searchIncludesMembers) forKey:AKIncludeMethodsPrefKey];
-    [prefDict setObject:@(_searchIncludesFunctions) forKey:AKIncludeFunctionsPrefKey];
-    [prefDict setObject:@(_searchIncludesGlobals) forKey:AKIncludeGlobalsPrefKey];
-    [prefDict setObject:@(_searchIgnoresCase) forKey:AKIgnoreCasePrefKey];
+    prefDict[AKIncludeClassesAndProtocolsPrefKey] = @(_searchIncludesClasses);
+    prefDict[AKIncludeMethodsPrefKey] = @(_searchIncludesMembers);
+    prefDict[AKIncludeFunctionsPrefKey] = @(_searchIncludesFunctions);
+    prefDict[AKIncludeGlobalsPrefKey] = @(_searchIncludesGlobals);
+    prefDict[AKIgnoreCasePrefKey] = @(_searchIgnoresCase);
 
     return prefDict;
 }

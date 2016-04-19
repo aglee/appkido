@@ -30,12 +30,12 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithString:(NSString *)string;
+- (instancetype)initWithString:(NSString *)string NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Parsing
 
 + (NSString *)extractMethodNameFromString:(NSString *)string;
-- (NSString *)extractMethodName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *extractMethodName;
 
 @end

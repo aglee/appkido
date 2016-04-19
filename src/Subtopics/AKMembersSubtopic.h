@@ -21,15 +21,15 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initIncludingAncestors:(BOOL)includeAncestors;
+- (instancetype)initIncludingAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (BOOL)includesAncestors;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL includesAncestors;
 
 /*! Subclasses must override this. */
-- (AKBehaviorNode *)behaviorNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorNode *behaviorNode;
 
 /*!
  * Subclass must override this.  Returns method nodes for a single node -- no

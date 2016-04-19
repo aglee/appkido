@@ -12,7 +12,7 @@
 @interface FMDatabasePool()
 
 - (void)pushDatabaseBackInPool:(FMDatabase*)db;
-- (FMDatabase*)db;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) FMDatabase *db;
 
 @end
 
@@ -23,17 +23,17 @@
 @synthesize maximumNumberOfDatabasesToCreate=_maximumNumberOfDatabasesToCreate;
 
 
-+ (id)databasePoolWithPath:(NSString*)aPath {
++ (instancetype)databasePoolWithPath:(NSString*)aPath {
     return FMDBReturnAutoreleased([[self alloc] initWithPath:aPath]);
 }
 
-- (id)initWithPath:(NSString*)aPath {
+- (instancetype)initWithPath:(NSString*)aPath {
     
     self = [super init];
     
     if (self != nil) {
         _path               = [aPath copy];
-        _lockQueue          = dispatch_queue_create([[NSString stringWithFormat:@"fmdb.%@", self] UTF8String], NULL);
+        _lockQueue          = dispatch_queue_create([NSString stringWithFormat:@"fmdb.%@", self].UTF8String, NULL);
         _databaseInPool     = FMDBReturnRetained([NSMutableArray array]);
         _databaseOutPool    = FMDBReturnRetained([NSMutableArray array]);
     }
@@ -85,7 +85,7 @@
     __block FMDatabase *db;
     
     [self executeLocked:^() {
-        db = [_databaseInPool lastObject];
+        db = _databaseInPool.lastObject;
         
         if (db) {
             [_databaseOutPool addObject:db];
@@ -94,7 +94,7 @@
         else {
             
             if (_maximumNumberOfDatabasesToCreate) {
-                NSUInteger currentCount = [_databaseOutPool count] + [_databaseInPool count];
+                NSUInteger currentCount = _databaseOutPool.count + _databaseInPool.count;
                 
                 if (currentCount >= _maximumNumberOfDatabasesToCreate) {
                     NSLog(@"Maximum number of databases (%ld) has already been reached!", (long)currentCount);
@@ -132,7 +132,7 @@
     __block NSUInteger count;
     
     [self executeLocked:^() {
-        count = [_databaseInPool count];
+        count = _databaseInPool.count;
     }];
     
     return count;
@@ -143,7 +143,7 @@
     __block NSUInteger count;
     
     [self executeLocked:^() {
-        count = [_databaseOutPool count];
+        count = _databaseOutPool.count;
     }];
     
     return count;
@@ -153,7 +153,7 @@
     __block NSUInteger count;
     
     [self executeLocked:^() {
-        count = [_databaseOutPool count] + [_databaseInPool count];
+        count = _databaseOutPool.count + _databaseInPool.count;
     }];
     
     return count;

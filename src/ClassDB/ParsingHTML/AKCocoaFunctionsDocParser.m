@@ -33,7 +33,7 @@
     NSDictionary *groupNamesByFunctionName = [self _mapFunctionNamesToGroupNames];
     NSString *defaultGroupName = nil;
 
-    if ([groupNamesByFunctionName count] == 0)
+    if (groupNamesByFunctionName.count == 0)
     {
         defaultGroupName = [@"Functions - " stringByAppendingString:[_rootSectionOfCurrentFile sectionName]];
     }
@@ -43,7 +43,7 @@
     for (AKFileSection *functionSection in [functionsSection childSections])
     {
         NSString *functionName = [functionSection sectionName];
-        NSString *groupName = defaultGroupName ?: [groupNamesByFunctionName objectForKey:functionName];
+        NSString *groupName = defaultGroupName ?: groupNamesByFunctionName[functionName];
 
         if (groupName == nil)
         {
@@ -52,19 +52,19 @@
         else
         {
             AKFunctionNode *functionNode = [AKFunctionNode nodeWithNodeName:functionName
-                                                                   database:[self targetDatabase]
-                                                              frameworkName:[self targetFrameworkName]];
-            [functionNode setNodeDocumentation:functionSection];
+                                                                   database:self.targetDatabase
+                                                              frameworkName:self.targetFrameworkName];
+            functionNode.nodeDocumentation = functionSection;
 
-            AKGroupNode *groupNode = [[self targetDatabase] functionsGroupNamed:groupName
-                                                               inFrameworkNamed:[self targetFrameworkName]];
+            AKGroupNode *groupNode = [self.targetDatabase functionsGroupNamed:groupName
+                                                               inFrameworkNamed:self.targetFrameworkName];
             if (!groupNode)
             {
                 groupNode = [AKGroupNode nodeWithNodeName:groupName
-                                                 database:[self targetDatabase]
-                                            frameworkName:[self targetFrameworkName]];
-                [groupNode setNodeDocumentation:functionSection];
-                [[self targetDatabase] addFunctionsGroup:groupNode];
+                                                 database:self.targetDatabase
+                                            frameworkName:self.targetFrameworkName];
+                groupNode.nodeDocumentation = functionSection;
+                [self.targetDatabase addFunctionsGroup:groupNode];
             }
 
             [groupNode addSubnode:functionNode];
@@ -123,9 +123,8 @@
                         }
                         else
                         {
-                            NSString *funcName = [NSString stringWithUTF8String:_token];
-                            [groupNamesByFunctionName setObject:[functionGroupSection sectionName]
-                                                         forKey:funcName];
+                            NSString *funcName = @(_token);
+                            groupNamesByFunctionName[funcName] = [functionGroupSection sectionName];
                         }
                     }
                 }

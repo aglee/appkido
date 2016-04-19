@@ -23,11 +23,10 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (BOOL)isClassMethod;
+@property (NS_NONATOMIC_IOSONLY, getter=isClassMethod, readonly) BOOL classMethod;
 
-- (BOOL)isDelegateMethod;
+@property (NS_NONATOMIC_IOSONLY, getter=isDelegateMethod, readonly) BOOL delegateMethod;
 
-- (NSArray *)argumentTypes;
-- (void)setArgumentTypes:(NSArray *)argTypes;
+@property (NS_NONATOMIC_IOSONLY, copy) NSArray *argumentTypes;
 
 @end

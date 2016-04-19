@@ -28,7 +28,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
+- (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
     if ((self = [super init]))
     {
@@ -134,7 +134,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
     NSString *sTwo = nil;
 
     // Get first shot at sOne.
-    NSString *docNameOne = [locOne docName];
+    NSString *docNameOne = locOne.docName;
     NSString *subtopicNameOne = nil;
     NSString *topicNameOne = nil;
 
@@ -144,7 +144,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
     }
     else
     {
-        subtopicNameOne = [locOne subtopicName];
+        subtopicNameOne = locOne.subtopicName;
 
         if (subtopicNameOne != nil)
         {
@@ -152,13 +152,13 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
         }
         else
         {
-            topicNameOne = [[locOne topicToDisplay] sortName];
+            topicNameOne = [locOne.topicToDisplay sortName];
             sOne = topicNameOne;
         }
     }
 
     // Get first shot at sTwo.
-    NSString *docNameTwo = [locTwo docName];
+    NSString *docNameTwo = locTwo.docName;
     NSString *subtopicNameTwo = nil;
     NSString *topicNameTwo = nil;
 
@@ -168,7 +168,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
     }
     else
     {
-        subtopicNameTwo = [locTwo subtopicName];
+        subtopicNameTwo = locTwo.subtopicName;
 
         if (subtopicNameTwo != nil)
         {
@@ -176,7 +176,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
         }
         else
         {
-            topicNameTwo = [[locTwo topicToDisplay] sortName];
+            topicNameTwo = [locTwo.topicToDisplay sortName];
             sTwo = topicNameTwo;
         }
     }
@@ -207,12 +207,12 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
     // namely their respective topic names.
     if (topicNameOne == nil)
     {
-        topicNameOne = [[locOne topicToDisplay] sortName];
+        topicNameOne = [locOne.topicToDisplay sortName];
     }
 
     if (topicNameTwo == nil)
     {
-        topicNameTwo = [[locTwo topicToDisplay] sortName];
+        topicNameTwo = [locTwo.topicToDisplay sortName];
     }
 
     return [topicNameOne caseInsensitiveCompare:topicNameTwo];
@@ -233,9 +233,9 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
         return nil;
     }
 
-    id topicPref = [prefDict objectForKey:AKTopicPrefKey];
-    NSString *subtopicName = [prefDict objectForKey:AKSubtopicPrefKey];
-    NSString *docName = [prefDict objectForKey:AKDocNamePrefKey];
+    id topicPref = prefDict[AKTopicPrefKey];
+    NSString *subtopicName = prefDict[AKSubtopicPrefKey];
+    NSString *docName = prefDict[AKDocNamePrefKey];
 
     AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
 
@@ -248,17 +248,17 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 
     if (_topic)
     {
-        [prefDict setObject:[_topic asPrefDictionary] forKey:AKTopicPrefKey];
+        prefDict[AKTopicPrefKey] = [_topic asPrefDictionary];
     }
 
     if (_subtopicName)
     {
-        [prefDict setObject:_subtopicName forKey:AKSubtopicPrefKey];
+        prefDict[AKSubtopicPrefKey] = _subtopicName;
     }
 
     if (_docName)
     {
-        [prefDict setObject:_docName forKey:AKDocNamePrefKey];
+        prefDict[AKDocNamePrefKey] = _docName;
     }
 
     return prefDict;
@@ -334,7 +334,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
-            [self className],
+            self.className,
             [_topic pathInTopicBrowser],
             _subtopicName,
             _docName];

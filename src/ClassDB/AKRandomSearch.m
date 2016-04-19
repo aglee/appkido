@@ -27,7 +27,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)randomSearchWithDatabase:(AKDatabase *)db
++ (instancetype)randomSearchWithDatabase:(AKDatabase *)db
 {
     AKRandomSearch *randomSearch = [[self alloc] initWithDatabase:db];
 
@@ -39,7 +39,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDatabase:(AKDatabase *)db
+- (instancetype)initWithDatabase:(AKDatabase *)db
 {
     if ((self = [super init]))
     {
@@ -49,7 +49,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -73,9 +73,9 @@
     [self _addGlobalsToSymbolArray:allSymbols];
 
     // Make a random selection.
-    NSUInteger randomArrayIndex = (arc4random() % [allSymbols count]);
+    NSUInteger randomArrayIndex = (arc4random() % allSymbols.count);
 
-    [self setSelectedAPISymbol:[allSymbols objectAtIndex:randomArrayIndex]];
+    self.selectedAPISymbol = allSymbols[randomArrayIndex];
 }
 
 #pragma mark -
@@ -85,7 +85,7 @@
 {
     for (AKDatabaseNode *node in nodesToAdd)
     {
-        [apiSymbols addObject:[node nodeName]];
+        [apiSymbols addObject:node.nodeName];
     }
 }
 

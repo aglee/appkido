@@ -19,8 +19,8 @@
 
 @property (atomic, strong) NSString *path;
 
-+ (id)databaseQueueWithPath:(NSString*)aPath;
-- (id)initWithPath:(NSString*)aPath;
++ (instancetype)databaseQueueWithPath:(NSString*)aPath;
+- (instancetype)initWithPath:(NSString*)aPath NS_DESIGNATED_INITIALIZER;
 - (void)close;
 
 - (void)inDatabase:(void (^)(FMDatabase *db))block;

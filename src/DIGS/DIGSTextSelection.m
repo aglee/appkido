@@ -24,7 +24,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init]))
     {
@@ -49,11 +49,11 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     }
 
     // Remember the scroll position, both as a rect and as a character range.
-    NSTextContainer *textContainer = [textView textContainer];
-    NSLayoutManager *layoutManager = [textContainer layoutManager];
+    NSTextContainer *textContainer = textView.textContainer;
+    NSLayoutManager *layoutManager = textContainer.layoutManager;
     NSRange glyphRange = [layoutManager glyphRangeForBoundingRect:_visibleRect
                                                   inTextContainer:textContainer];
-    _visibleRect = [textView visibleRect];
+    _visibleRect = textView.visibleRect;
     _visibleCharsRange = [layoutManager characterRangeForGlyphRange:glyphRange
                                                    actualGlyphRange:nil];
 
@@ -61,7 +61,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     _selectedCharsRange = [textView selectedRange];
 
     // Remember the text view's typing attributes.
-    [self setTypingAttributes:[textView typingAttributes]];
+    self.typingAttributes = textView.typingAttributes;
 }
 
 - (void)applySelectionToTextView:(NSTextView *)textView
@@ -75,7 +75,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     // the same as when we took the snapshot, we can reset the scroll position
     // with pixel-accuracy.  Otherwise, we settle for accuracy to within about a
     // character.
-    if (NSEqualSizes(_visibleRect.size, [textView visibleRect].size))
+    if (NSEqualSizes(_visibleRect.size, textView.visibleRect.size))
     {
         [textView scrollRangeToVisible:_visibleCharsRange];
         [textView scrollRectToVisible:_visibleRect];
@@ -89,7 +89,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     [textView setSelectedRange:_selectedCharsRange];
 
     // Apply the remembered typing attributes.
-    [textView setTypingAttributes:_typingAttributes];
+    textView.typingAttributes = _typingAttributes;
 }
 
 #pragma mark -
@@ -103,23 +103,23 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     }
 
     DIGSTextSelection *selectionState = [[self alloc] init];
-    NSString *visibleRectString = [prefDict objectForKey:_DIGS_VISIBLE_RECT_PREF_KEY];
-    NSString *visibleRangeString = [prefDict objectForKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
-    NSString *selectedRangeString = [prefDict objectForKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
+    NSString *visibleRectString = prefDict[_DIGS_VISIBLE_RECT_PREF_KEY];
+    NSString *visibleRangeString = prefDict[_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
+    NSString *selectedRangeString = prefDict[_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
 
     if (visibleRectString)
     {
-        [selectionState setVisibleRect:NSRectFromString(visibleRectString)];
+        selectionState.visibleRect = NSRectFromString(visibleRectString);
     }
 
     if (visibleRangeString)
     {
-        [selectionState setVisibleCharsRange:NSRangeFromString(visibleRangeString)];
+        selectionState.visibleCharsRange = NSRangeFromString(visibleRangeString);
     }
 
     if (selectedRangeString)
     {
-        [selectionState setSelectedCharsRange:NSRangeFromString(selectedRangeString)];
+        selectionState.selectedCharsRange = NSRangeFromString(selectedRangeString);
     }
 
     return selectionState;
@@ -129,12 +129,9 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict setObject:NSStringFromRect(_visibleRect)
-                 forKey:_DIGS_VISIBLE_RECT_PREF_KEY];
-    [prefDict setObject:NSStringFromRange(_visibleCharsRange)
-                 forKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
-    [prefDict setObject:NSStringFromRange(_selectedCharsRange)
-                 forKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];
+    prefDict[_DIGS_VISIBLE_RECT_PREF_KEY] = NSStringFromRect(_visibleRect);
+    prefDict[_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY] = NSStringFromRange(_visibleCharsRange);
+    prefDict[_DIGS_SELECTED_CHARS_RANGE_PREF_KEY] = NSStringFromRange(_selectedCharsRange);
 
     return prefDict;
 }
@@ -142,7 +139,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 #pragma mark -
 #pragma mark NSCoding methods
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (instancetype)initWithCoder:(NSCoder *)decoder
 {
     [decoder decodeValueOfObjCType:@encode(NSRect) at:&_visibleRect];
     [decoder decodeValueOfObjCType:@encode(NSRange) at:&_visibleCharsRange];

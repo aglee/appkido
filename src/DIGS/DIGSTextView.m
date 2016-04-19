@@ -13,7 +13,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFrame:(NSRect)frameRect
+- (instancetype)initWithFrame:(NSRect)frameRect
 {
     if ((self = [super initWithFrame:frameRect]))
     {
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (instancetype)initWithCoder:(NSCoder *)decoder
 {
     if ((self = [super initWithCoder:decoder]))
     {
@@ -83,9 +83,9 @@
 // This logic was copied from <http://cocoa.mamasam.com/COCOADEV/2001/12/2/20937.php>.
 - (void)_setCursorRectsForLinks
 {
-     NSTextStorage *attrString = [self textStorage];
+     NSTextStorage *attrString = self.textStorage;
      NSUInteger loc = 0;
-     NSUInteger end = [attrString length];
+     NSUInteger end = attrString.length;
 
      while (loc < end)
      {
@@ -96,8 +96,8 @@
                                            inRange:NSMakeRange(loc, end - loc)];
          if (attributeValue != nil)
          {
-             NSRect linkRect = [[self layoutManager] boundingRectForGlyphRange:linkRange
-                                                               inTextContainer:[self textContainer]];
+             NSRect linkRect = [self.layoutManager boundingRectForGlyphRange:linkRange
+                                                               inTextContainer:self.textContainer];
             [self addCursorRect:linkRect cursor:_linkCursor];
             loc = NSMaxRange(linkRange);
          }

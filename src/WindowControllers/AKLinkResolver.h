@@ -24,13 +24,13 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)linkResolverWithDatabase:(AKDatabase *)database;
++ (instancetype)linkResolverWithDatabase:(AKDatabase *)database;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithDatabase:(AKDatabase *)database;
+- (instancetype)initWithDatabase:(AKDatabase *)database NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Resolving links

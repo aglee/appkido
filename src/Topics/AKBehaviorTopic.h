@@ -22,7 +22,7 @@
 #pragma mark Getters and setters
 
 /*! Subclasses must override. */
-- (NSString *)behaviorName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *behaviorName;
 
 #pragma mark -
 #pragma mark Subtopics

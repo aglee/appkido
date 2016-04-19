@@ -27,9 +27,9 @@
 + (BOOL)runDevToolsSetupPanel
 {
     AKDevToolsPanelController *wc = [[self alloc] initWithWindowNibName:@"DevToolsPanel"];
-    NSInteger result = [[NSApplication sharedApplication] runModalForWindow:[wc window]];
+    NSInteger result = [[NSApplication sharedApplication] runModalForWindow:wc.window];
 
-    [[wc window] orderOut:self];  // [agl] needed?
+    [wc.window orderOut:self];  // [agl] needed?
 
 	return (result == NSRunStoppedResponse);
 }
@@ -57,15 +57,15 @@
     // Plug the dev tools view into the window.
     _devToolsViewController = [[AKDevToolsViewController alloc] initWithNibName:@"DevToolsView"
                                                                          bundle:nil];
-    NSView *realDevToolsView = [_devToolsViewController view];
+    NSView *realDevToolsView = _devToolsViewController.view;
     
-    [realDevToolsView setFrame:[_devToolsView frame]];
-    [realDevToolsView setAutoresizingMask:[_devToolsView autoresizingMask]];
-    [[_devToolsView superview] replaceSubview:_devToolsView with:realDevToolsView];
-    [self setDevToolsView:realDevToolsView];
+    realDevToolsView.frame = _devToolsView.frame;
+    realDevToolsView.autoresizingMask = _devToolsView.autoresizingMask;
+    [_devToolsView.superview replaceSubview:_devToolsView with:realDevToolsView];
+    self.devToolsView = realDevToolsView;
 
     // Tell the dev tools view controller where the OK button is.
-    [_devToolsViewController setOkButton:_okButton];
+    _devToolsViewController.okButton = _okButton;
 }
 
 @end

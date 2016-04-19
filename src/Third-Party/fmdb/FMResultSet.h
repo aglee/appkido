@@ -29,16 +29,16 @@
 @property (atomic, strong) NSMutableDictionary *columnNameToIndexMap;
 @property (atomic, strong) FMStatement *statement;
 
-+ (id)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB;
++ (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB;
 
 - (void)close;
 
 - (void)setParentDB:(FMDatabase *)newDb;
 
-- (BOOL)next;
-- (BOOL)hasAnotherRow;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL next;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasAnotherRow;
 
-- (int)columnCount;
+@property (NS_NONATOMIC_IOSONLY, readonly) int columnCount;
 
 - (int)columnIndexForName:(NSString*)columnName;
 - (NSString*)columnNameForIndex:(int)columnIdx;
@@ -70,8 +70,8 @@
 - (NSData*)dataForColumn:(NSString*)columnName;
 - (NSData*)dataForColumnIndex:(int)columnIdx;
 
-- (const unsigned char *)UTF8StringForColumnIndex:(int)columnIdx;
-- (const unsigned char *)UTF8StringForColumnName:(NSString*)columnName;
+- (const unsigned char *)UTF8StringForColumnIndex:(int)columnIdx NS_RETURNS_INNER_POINTER;
+- (const unsigned char *)UTF8StringForColumnName:(NSString*)columnName NS_RETURNS_INNER_POINTER;
 
 // returns one of NSNumber, NSString, NSData, or NSNull
 - (id)objectForColumnName:(NSString*)columnName;
@@ -90,7 +90,7 @@ If you don't, you're going to be in a world of hurt when you try and use the dat
 
 
 /* Returns a dictionary of the row results mapped to case sensitive keys of the column names. */
-- (NSDictionary*)resultDictionary;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *resultDictionary;
  
 /* Please use resultDictionary instead.  Also, beware that resultDictionary is case sensitive! */
 - (NSDictionary*)resultDict  __attribute__ ((deprecated));

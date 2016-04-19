@@ -20,7 +20,7 @@
 		aString = @"*** nil ***";
 	}
 
-	[super setTitle:aString];
+	super.title = aString;
 }
 
 /** Intercept cmd-L as equivalent to sh-cmd-F

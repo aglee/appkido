@@ -24,7 +24,7 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)linkResolverWithDatabase:(AKDatabase *)database
++ (instancetype)linkResolverWithDatabase:(AKDatabase *)database
 {
     return [[self alloc] initWithDatabase:database];
 }
@@ -32,7 +32,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDatabase:(AKDatabase *)database
+- (instancetype)initWithDatabase:(AKDatabase *)database
 {
     if ((self = [super init]))
     {
@@ -42,7 +42,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -73,23 +73,23 @@
 // class. Better yet, we could make AKSearchQuery more efficient in general.
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
 {
-    NSURL *normalizedLinkURL = [[linkURL absoluteURL] standardizedURL];
-    NSString *filePath = [normalizedLinkURL path];
-    NSString *linkAnchor = [normalizedLinkURL fragment];
-    NSString *tokenNameOrDocTitle = [linkAnchor lastPathComponent];
+    NSURL *normalizedLinkURL = linkURL.absoluteURL.standardizedURL;
+    NSString *filePath = normalizedLinkURL.path;
+    NSString *linkAnchor = normalizedLinkURL.fragment;
+    NSString *tokenNameOrDocTitle = linkAnchor.lastPathComponent;
 
     AKSearchQuery *searchQuery = [[AKSearchQuery alloc] initWithDatabase:_database];
     
-    [searchQuery setSearchString:tokenNameOrDocTitle];
+    searchQuery.searchString = tokenNameOrDocTitle;
     [searchQuery includeEverythingInSearch];
     [searchQuery setIgnoresCase:YES];
-    [searchQuery setSearchComparison:AKSearchForExactMatch];
+    searchQuery.searchComparison = AKSearchForExactMatch;
 
-    if ([[searchQuery queryResults] count] == 0)
+    if ([searchQuery queryResults].count == 0)
     {
         tokenNameOrDocTitle = [tokenNameOrDocTitle stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-        [searchQuery setSearchComparison:AKSearchForPrefix];
-        [searchQuery setSearchString:tokenNameOrDocTitle];
+        searchQuery.searchComparison = AKSearchForPrefix;
+        searchQuery.searchString = tokenNameOrDocTitle;
     }
 
     for (AKDocLocator *docLocator in [searchQuery queryResults])
@@ -98,7 +98,7 @@
 
         if (docSection == nil)
         {
-            docSection = [[[docLocator topicToDisplay] topicNode] nodeDocumentation];
+            docSection = [docLocator.topicToDisplay topicNode].nodeDocumentation;
         }
 
         if ([[docSection filePath] isEqualToString:filePath])

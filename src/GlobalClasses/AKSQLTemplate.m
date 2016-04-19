@@ -40,7 +40,7 @@
         s_sqlTemplatesByName = [[NSMutableDictionary alloc] init];
     }
     
-    NSString *sqlTemplate = [s_sqlTemplatesByName objectForKey:templateName];
+    NSString *sqlTemplate = s_sqlTemplatesByName[templateName];
     
     if (sqlTemplate == nil)
     {
@@ -52,7 +52,7 @@
             
             if (sqlTemplate)
             {
-                [s_sqlTemplatesByName setObject:sqlTemplate forKey:templateName];
+                s_sqlTemplatesByName[templateName] = sqlTemplate;
             }
         }
     }

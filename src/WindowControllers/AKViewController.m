@@ -14,7 +14,7 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithNibName:nibName windowController:(AKWindowController *)windowController
+- (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
     self = [super initWithNibName:nibName bundle:nil];
     if (self)

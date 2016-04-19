@@ -33,7 +33,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
+- (instancetype)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
 {
     if ((self = [super init]))
     {
@@ -44,7 +44,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -69,25 +69,25 @@
 {
     NSMutableArray *columnValues = [NSMutableArray array];
 
-    if ([[_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    if ([_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName].count > 0)
     {
         [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:_topicFrameworkName
                                                                inDatabase:_topicDatabase]];
     }
 
-    if ([[_topicDatabase globalsGroupsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    if ([_topicDatabase globalsGroupsForFrameworkNamed:_topicFrameworkName].count > 0)
     {
         [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:_topicFrameworkName
                                                              inDatabase:_topicDatabase]];
     }
 
-    if ([[_topicDatabase formalProtocolsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    if ([_topicDatabase formalProtocolsForFrameworkNamed:_topicFrameworkName].count > 0)
     {
         [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
                                                                      inDatabase:_topicDatabase]];
     }
 
-    if ([[_topicDatabase informalProtocolsForFrameworkNamed:_topicFrameworkName] count] > 0)
+    if ([_topicDatabase informalProtocolsForFrameworkNamed:_topicFrameworkName].count > 0)
     {
         [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
                                                                        inDatabase:_topicDatabase]];
@@ -107,7 +107,7 @@
     }
 
     // Get the framework name.
-    NSString *fwName = [prefDict objectForKey:AKFrameworkNamePrefKey];
+    NSString *fwName = prefDict[AKFrameworkNamePrefKey];
 
     if ([fwName isEqualToString:@"ApplicationKit"])
     {
@@ -121,7 +121,7 @@
         return nil;
     }
 
-    AKDatabase *db = [[NSApp delegate] appDatabase];
+    AKDatabase *db = [NSApp.delegate appDatabase];
     if (![db hasFrameworkWithName:fwName])
     {
         DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);
@@ -136,8 +136,8 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
-    [prefDict setObject:_topicFrameworkName forKey:AKFrameworkNamePrefKey];
+    prefDict[AKTopicClassNamePrefKey] = self.className;
+    prefDict[AKFrameworkNamePrefKey] = _topicFrameworkName;
 
     return prefDict;
 }

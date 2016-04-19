@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithFileSection:(AKFileSection *)fileSection
+- (instancetype)initWithFileSection:(AKFileSection *)fileSection
        extraFrameworkName:(NSString *)frameworkName
 {
     if ((self = [super initWithFileSection:fileSection]))
@@ -27,7 +27,7 @@
     return self;
 }
 
-- (id)initWithFileSection:(AKFileSection *)fileSection
+- (instancetype)initWithFileSection:(AKFileSection *)fileSection
 {
     return [self initWithFileSection:fileSection extraFrameworkName:nil];
 }

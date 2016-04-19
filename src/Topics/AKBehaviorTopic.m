@@ -31,15 +31,15 @@
 {
     NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    [prefDict setObject:[self className] forKey:AKTopicClassNamePrefKey];
-    [prefDict setObject:[self behaviorName] forKey:AKBehaviorNamePrefKey];
+    prefDict[AKTopicClassNamePrefKey] = self.className;
+    prefDict[AKBehaviorNamePrefKey] = [self behaviorName];
 
     return prefDict;
 }
 
 - (NSInteger)numberOfSubtopics
 {
-    return [[self _subtopics] count];
+    return [self _subtopics].count;
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
@@ -49,7 +49,7 @@
         return nil;
     }
 
-    return [[self _subtopics] objectAtIndex:subtopicIndex];
+    return [self _subtopics][subtopicIndex];
 }
 
 #pragma mark -

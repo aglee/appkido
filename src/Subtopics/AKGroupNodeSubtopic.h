@@ -24,6 +24,6 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (id)initWithGroupNode:(AKGroupNode *)groupNode;
+- (instancetype)initWithGroupNode:(AKGroupNode *)groupNode NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -175,56 +175,39 @@
 {
     NSMutableDictionary *defaultPrefsDictionary = [NSMutableDictionary dictionary];
 
-    [defaultPrefsDictionary setObject:@(DIGS_VERBOSITY_WARNING)
-                               forKey:(id)DIGSLogVerbosityUserDefault];
+    defaultPrefsDictionary[(id)DIGSLogVerbosityUserDefault] = @(DIGS_VERBOSITY_WARNING);
 
-    [defaultPrefsDictionary setObject:[self _defaultDevToolsPath]
-                               forKey:AKDevToolsPathPrefName];
+    defaultPrefsDictionary[AKDevToolsPathPrefName] = [self _defaultDevToolsPath];
 
-    [defaultPrefsDictionary setObject:@NO
-                               forKey:AKSearchInNewWindowPrefName];
+    defaultPrefsDictionary[AKSearchInNewWindowPrefName] = @NO;
 
-    [defaultPrefsDictionary setObject:@20
-                               forKey:AKMaxSearchStringsPrefName];
+    defaultPrefsDictionary[AKMaxSearchStringsPrefName] = @20;
 
-    [defaultPrefsDictionary setObject:@YES
-                               forKey:AKIncludeClassesAndProtocolsPrefKey];
+    defaultPrefsDictionary[AKIncludeClassesAndProtocolsPrefKey] = @YES;
 
-    [defaultPrefsDictionary setObject:@YES
-                               forKey:AKIncludeMethodsPrefKey];
+    defaultPrefsDictionary[AKIncludeMethodsPrefKey] = @YES;
 
-    [defaultPrefsDictionary setObject:@YES
-                               forKey:AKIncludeFunctionsPrefKey];
+    defaultPrefsDictionary[AKIncludeFunctionsPrefKey] = @YES;
 
-    [defaultPrefsDictionary setObject:@YES
-                               forKey:AKIncludeGlobalsPrefKey];
+    defaultPrefsDictionary[AKIncludeGlobalsPrefKey] = @YES;
 
-    [defaultPrefsDictionary setObject:@YES
-                               forKey:AKIgnoreCasePrefKey];
+    defaultPrefsDictionary[AKIgnoreCasePrefKey] = @YES;
 
-    [defaultPrefsDictionary setObject:@"Lucida Grande"
-                               forKey:AKListFontNamePrefName];
+    defaultPrefsDictionary[AKListFontNamePrefName] = @"Lucida Grande";
 
-    [defaultPrefsDictionary setObject:@12
-                               forKey:AKListFontSizePrefName];
+    defaultPrefsDictionary[AKListFontSizePrefName] = @12;
 
-    [defaultPrefsDictionary setObject:@"Monaco"
-                               forKey:AKHeaderFontNamePrefName];
+    defaultPrefsDictionary[AKHeaderFontNamePrefName] = @"Monaco";
 
-    [defaultPrefsDictionary setObject:@10
-                               forKey:AKHeaderFontSizePrefName];
+    defaultPrefsDictionary[AKHeaderFontSizePrefName] = @10;
 
-    [defaultPrefsDictionary setObject:@100
-                               forKey:AKDocMagnificationPrefName];
+    defaultPrefsDictionary[AKDocMagnificationPrefName] = @100;
     
-    [defaultPrefsDictionary setObject:@YES
-                               forKey:AKUseTexturedWindowsPrefName];
+    defaultPrefsDictionary[AKUseTexturedWindowsPrefName] = @YES;
     
-    [defaultPrefsDictionary setObject:@50
-                               forKey:AKMaxHistoryPrefName];
+    defaultPrefsDictionary[AKMaxHistoryPrefName] = @50;
     
-    [defaultPrefsDictionary setObject:@[]
-                               forKey:AKFavoritesPrefName];
+    defaultPrefsDictionary[AKFavoritesPrefName] = @[];
 
 // Don't register a default for the selected-frameworks pref.  We'll set it
 // in -[AKAppDelegate awakeFromNib] if it hasn't been set.  We do it there
@@ -240,7 +223,7 @@
 {
     NSString *xcodeSelectPath = [AKDevToolsUtils pathReturnedByXcodeSelect];
 
-    if ([xcodeSelectPath length] == 0)
+    if (xcodeSelectPath.length == 0)
     {
         // We got nothing from xcode-select, so return a hard-coded default.
         return @"/Applications/Xcode.app/Contents/Developer";

@@ -16,7 +16,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-- (id)initWithFrame:(NSRect)frameRect
+- (instancetype)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
     if (self)
@@ -27,7 +27,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self)
@@ -40,7 +40,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 - (void)awakeFromNib
 {
-    [self resizeSubviewsWithOldSize:[self bounds].size];
+    [self resizeSubviewsWithOldSize:self.bounds.size];
 }
 
 - (void)dealloc
@@ -81,11 +81,11 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 - (void)drawFocusIndicator
 {
-    NSColor *focusRingColor = ([[self window] isKeyWindow]
+    NSColor *focusRingColor = (self.window.keyWindow
                                ? [NSColor keyboardFocusIndicatorColor]
                                : [NSColor darkGrayColor]);
     [focusRingColor set];
-    NSFrameRectWithWidth([self bounds], AKFocusBorderThickness);
+    NSFrameRectWithWidth(self.bounds, AKFocusBorderThickness);
 }
 
 #pragma mark -
@@ -94,21 +94,21 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize
 {
     // Assume we have exactly one subview.
-    NSView *innerView = [[self subviews] lastObject];
+    NSView *innerView = self.subviews.lastObject;
 
     // Inset the inner view slightly within our bounds. This means I don't have
     // to be precise about positioning the inner view in IB, because I know it
     // will be adjusted here.
-    [innerView setFrame:NSInsetRect([self bounds], AKFocusBorderThickness, AKFocusBorderThickness)];
-    [innerView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    innerView.frame = NSInsetRect(self.bounds, AKFocusBorderThickness, AKFocusBorderThickness);
+    innerView.autoresizingMask = (NSViewWidthSizable | NSViewHeightSizable);
 
     // Suppress any focus ring that would normally be drawn by the inner view.
     // [agl] Could someday make this conditional; we don't use the built-in
     // focus ring stuff, but a subclass might want to.
-    [innerView setFocusRingType:NSFocusRingTypeNone];
+    innerView.focusRingType = NSFocusRingTypeNone;
     if ([innerView isKindOfClass:[NSScrollView class]])
     {
-        [[(NSScrollView *)innerView documentView] setFocusRingType:NSFocusRingTypeNone];
+        [((NSScrollView *)innerView).documentView setFocusRingType:NSFocusRingTypeNone];
     }
 }
 
@@ -128,7 +128,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSView *firstResponder = (NSView *)[[self window] firstResponder];
+    NSView *firstResponder = (NSView *)self.window.firstResponder;
 
     if (![firstResponder isKindOfClass:[NSView class]])
     {
@@ -149,10 +149,10 @@ static const CGFloat AKFocusBorderThickness = 2.0;
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if ((object == [self window]) && [keyPath isEqualToString:@"firstResponder"])
+    if ((object == self.window) && [keyPath isEqualToString:@"firstResponder"])
     {
-        NSView *oldFirstResponder = [change objectForKey:NSKeyValueChangeOldKey];
-        NSView *newFirstResponder = [change objectForKey:NSKeyValueChangeNewKey];
+        NSView *oldFirstResponder = change[NSKeyValueChangeOldKey];
+        NSView *newFirstResponder = change[NSKeyValueChangeNewKey];
 
         if (([oldFirstResponder isKindOfClass:[NSView class]] && [oldFirstResponder isDescendantOf:self])
             || ([newFirstResponder isKindOfClass:[NSView class]] && [newFirstResponder isDescendantOf:self]))
@@ -189,7 +189,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 - (void)_startObservingFirstResponderChanges
 {
-    [[self window] addObserver:self
+    [self.window addObserver:self
                     forKeyPath:@"firstResponder"
                        options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
                        context:NULL];
@@ -197,7 +197,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 - (void)_stopObservingFirstResponderChanges
 {
-    [[self window] removeObserver:self forKeyPath:@"firstResponder"];
+    [self.window removeObserver:self forKeyPath:@"firstResponder"];
 }
 
 // We get this notification when *any* window becomes or resigns key window.
@@ -205,7 +205,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 // given window's drawers.
 - (void)_handleKeyWindowChangedNotification:(NSNotification *)notif
 {
-    if ([self _belongsToWindow:[notif object]])
+    if ([self _belongsToWindow:notif.object])
     {
         [self invalidateFocusIndicator];
     }
@@ -213,14 +213,14 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 - (BOOL)_belongsToWindow:(NSWindow *)window
 {
-    if (window == [self window])
+    if (window == self.window)
     {
         return YES;
     }
 
-    for (NSDrawer *drawer in [window drawers])
+    for (NSDrawer *drawer in window.drawers)
     {
-        if ([self isDescendantOf:[drawer contentView]])
+        if ([self isDescendantOf:drawer.contentView])
         {
             return YES;
         }

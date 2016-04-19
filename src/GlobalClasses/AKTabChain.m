@@ -26,7 +26,7 @@
         return NO;
     }
 
-    return [self stepThroughTabChainInWindow:[NSApp keyWindow]
+    return [self stepThroughTabChainInWindow:NSApp.keyWindow
                                      forward:isGoingForward];
 }
 
@@ -50,14 +50,14 @@
     }
 
     // Try to select the next view in the chain in the given direction.
-    NSInteger lengthOfChain = [tabChain count];
+    NSInteger lengthOfChain = tabChain.count;
 
     for (NSInteger count = 1; count < lengthOfChain; count++)
     {
         NSInteger viewIndex = (isGoingForward
                                ? ((currentIndex + count) % lengthOfChain)
                                : ((currentIndex - count + lengthOfChain) % lengthOfChain));
-        NSView *possibleViewToSelect = [tabChain objectAtIndex:viewIndex];
+        NSView *possibleViewToSelect = tabChain[viewIndex];
 
         if ([self _shouldTryToSelectView:possibleViewToSelect])
         {
@@ -75,12 +75,12 @@
 
 + (NSArray *)unmodifiedTabChainForWindow:(NSWindow *)window
 {
-    if (![[window delegate] respondsToSelector:@selector(tabChainViewsForWindow:)])
+    if (![window.delegate respondsToSelector:@selector(tabChainViewsForWindow:)])
     {
         return nil;
     }
 
-    return [(id <AKTabChainWindowDelegate>)[window delegate] tabChainViewsForWindow:window];
+    return [(id <AKTabChainWindowDelegate>)window.delegate tabChainViewsForWindow:window];
 }
 
 + (NSArray *)modifiedTabChainForWindow:(NSWindow *)window
@@ -93,7 +93,7 @@
     }
 
     // Add toolbar buttons to the tab chain if Full Keyboard Access is on.
-    if ([NSApp isFullKeyboardAccessEnabled] && [[window toolbar] isVisible])
+    if (NSApp.fullKeyboardAccessEnabled && window.toolbar.visible)
     {
         NSMutableArray *extendedTabChain = [NSMutableArray arrayWithArray:tabChain];
 
@@ -109,17 +109,17 @@
 
 + (BOOL)_isTabChainEvent:(NSEvent *)anEvent forward:(BOOL *)forwardFlagPtr
 {
-    if ([anEvent type] != NSKeyDown)
+    if (anEvent.type != NSKeyDown)
     {
         return NO;
     }
 
-    if ([[anEvent characters] length] == 0)
+    if (anEvent.characters.length == 0)
     {
         return NO;
     }
 
-    unichar ch = [[anEvent characters] characterAtIndex:0];
+    unichar ch = [anEvent.characters characterAtIndex:0];
 
     if (ch == '\t')
     {
@@ -134,7 +134,7 @@
     // I figured out empirically that 25 is the character we get when the user
     // hits Shift-Tab. Note: the test for modifier flags is not perfect; it
     // returns true if other modifier keys are down in *addition* to Shift.
-    if ((ch == 25) && ([anEvent modifierFlags] & NSShiftKeyMask))
+    if ((ch == 25) && (anEvent.modifierFlags & NSShiftKeyMask))
     {
         if (forwardFlagPtr)
         {
@@ -151,7 +151,7 @@
             forKeyWindow:(NSWindow *)keyWindow
                  forward:(BOOL)isGoingForward
 {
-    id <AKTabChainWindowDelegate>windowDelegate = (id <AKTabChainWindowDelegate>)[keyWindow delegate];
+    id <AKTabChainWindowDelegate>windowDelegate = (id <AKTabChainWindowDelegate>)keyWindow.delegate;
 
     // Pre-notify the delegate and see if it approves.
     if ([windowDelegate respondsToSelector:@selector(tabChainWindow:willSelectView:forward:)])
@@ -168,7 +168,7 @@
 
     // Try to make the change. Note that [viewToSelect window] may not be
     // keyWindow. It could be in a drawer, for example.
-    BOOL didSelect = [[viewToSelect window] makeFirstResponder:viewToSelect];
+    BOOL didSelect = [viewToSelect.window makeFirstResponder:viewToSelect];
 
     // Post-notify the delegate.
     if ([windowDelegate respondsToSelector:@selector(tabChainWindow:didSelectView:forward:success:)])
@@ -187,26 +187,26 @@
 {
     // If the view is in a drawer, its window may not be visible. If the view is
     // in a swapped-out tab in a tab view, its window may be nil.
-    return ([possibleViewToSelect acceptsFirstResponder]
-            && [possibleViewToSelect frame].size.width > 0
-            && [possibleViewToSelect frame].size.height > 0
-            && [[possibleViewToSelect window] isVisible]);
+    return (possibleViewToSelect.acceptsFirstResponder
+            && possibleViewToSelect.frame.size.width > 0
+            && possibleViewToSelect.frame.size.height > 0
+            && possibleViewToSelect.window.visible);
 }
 
 + (NSInteger)_indexOfSelectedViewForWindow:(NSWindow *)window inTabChain:(NSArray *)tabChain
 {
-    NSView *keyView = (NSView *)[window firstResponder];
+    NSView *keyView = (NSView *)window.firstResponder;
 
     if (![keyView isKindOfClass:[NSView class]])
     {
         return -1;
     }
 
-    NSInteger lengthOfChain = [tabChain count];
+    NSInteger lengthOfChain = tabChain.count;
 
     for (NSInteger viewIndex = 0; viewIndex < lengthOfChain; viewIndex++)
     {
-        if ([keyView isDescendantOf:[tabChain objectAtIndex:viewIndex]])
+        if ([keyView isDescendantOf:tabChain[viewIndex]])
         {
             return viewIndex;
         }
@@ -265,16 +265,16 @@
 + (void)_addToolbarButtonsInWindow:(NSWindow *)window
                         toTabChain:(NSMutableArray *)tabChain
 {
-    NSView *themeFrame = [[window contentView] superview];
-    NSView *toolbarView = [[self _subviewsOf:themeFrame
-                               withClassName:@"NSToolbarView"] lastObject];
-    NSView *toolbarClipView = [[toolbarView subviews] lastObject];
+    NSView *themeFrame = window.contentView.superview;
+    NSView *toolbarView = [self _subviewsOf:themeFrame
+                               withClassName:@"NSToolbarView"].lastObject;
+    NSView *toolbarClipView = toolbarView.subviews.lastObject;
 
-    for (NSView *toolbarItemViewer in [toolbarClipView subviews])
+    for (NSView *toolbarItemViewer in toolbarClipView.subviews)
     {
-        NSButton *toolbarButton = [[self _subviewsOf:toolbarItemViewer
-                                       withClassName:@"NSToolbarButton"] lastObject];
-        if ([toolbarButton isEnabled])
+        NSButton *toolbarButton = [self _subviewsOf:toolbarItemViewer
+                                       withClassName:@"NSToolbarButton"].lastObject;
+        if (toolbarButton.enabled)
         {
             [tabChain addObject:toolbarButton];
         }
@@ -285,9 +285,9 @@
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    for (NSView *subview in [view subviews])
+    for (NSView *subview in view.subviews)
     {
-        if ([[subview className] isEqualToString:viewClassName])
+        if ([subview.className isEqualToString:viewClassName])
         {
             [result addObject:subview];
         }

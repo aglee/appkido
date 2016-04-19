@@ -22,7 +22,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (id)initWithDatabase:(AKDatabase *)database fileURL:(NSURL *)outfileURL;
+- (instancetype)initWithDatabase:(AKDatabase *)database fileURL:(NSURL *)outfileURL;
 {
     if ((self = [super init]))
     {
@@ -35,7 +35,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
     return nil;
@@ -132,7 +132,7 @@
 
 - (void)_exportClass:(AKClassNode *)classNode
 {
-    [_xmlWriter tag:@"class" attributes:@{ @"name": [classNode nodeName] } contentBlock:^{
+    [_xmlWriter tag:@"class" attributes:@{ @"name": classNode.nodeName } contentBlock:^{
         [self _exportMembers:[classNode documentedProperties]
                       ofType:@"properties"
                       xmlTag:@"property"];
@@ -159,8 +159,8 @@
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
-    [attributes setObject:[protocolNode nodeName] forKey:@"name"];
-    [attributes setObject:([protocolNode isInformal] ? @"informal" : @"formal") forKey:@"type"];
+    attributes[@"name"] = protocolNode.nodeName;
+    attributes[@"type"] = (protocolNode.isInformal ? @"informal" : @"formal");
 
     [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
         [self _exportMembers:[protocolNode documentedProperties]
@@ -197,11 +197,11 @@
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
-    [attributes setObject:[memberNode nodeName] forKey:@"name"];
+    attributes[@"name"] = memberNode.nodeName;
 
-    if ([memberNode isDeprecated])
+    if (memberNode.isDeprecated)
     {
-        [attributes setObject:@YES forKey:@"isDeprecated"];
+        attributes[@"isDeprecated"] = @YES;
     }
 
     [_xmlWriter tag:memberTag attributes:attributes];
@@ -215,11 +215,11 @@
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     
-    [attributes setObject:[databaseNode nodeName] forKey:@"name"];
+    attributes[@"name"] = databaseNode.nodeName;
     
-    if ([databaseNode isDeprecated])
+    if (databaseNode.isDeprecated)
     {
-        [attributes setObject:@YES forKey:@"isDeprecated"];
+        attributes[@"isDeprecated"] = @YES;
     }
     
     [_xmlWriter tag:subnodeTag attributes:attributes];
@@ -227,7 +227,7 @@
 
 - (void)_exportGroupNode:(AKGroupNode *)groupNode usingSubnodeTag:(NSString *)subnodeTag
 {
-    [_xmlWriter tag:@"group" attributes:@{ @"name": [groupNode nodeName] } contentBlock:^{
+    [_xmlWriter tag:@"group" attributes:@{ @"name": groupNode.nodeName } contentBlock:^{
         for (AKDatabaseNode *subnode in [AKSortUtils arrayBySortingArray:[groupNode subnodes]])
         {
             [self _exportGroupSubnode:subnode withXMLTag:subnodeTag];
@@ -241,7 +241,7 @@
 - (NSString *)_spreadString:(NSString *)s
 {
     NSMutableString *result = [NSMutableString string];
-    NSInteger numChars = [s length];
+    NSInteger numChars = s.length;
     NSInteger i;
 
     for (i = 0; i < numChars; i++)

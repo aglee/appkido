@@ -27,12 +27,12 @@
 
     // Note that a side effect of calling [wc window] is to force the nib to be
     // loaded, thus ensuring that the [wc symbolNameField] outlet is set.
-    [[wc window] center];
-    [[wc symbolNameField] setSelectable:YES];
+    [wc.window center];
+    [wc.symbolNameField setSelectable:YES];
 
     [wc _chooseRandomAPISymbol];
 
-    (void)[[NSApplication sharedApplication] runModalForWindow:[wc window]];
+    (void)[[NSApplication sharedApplication] runModalForWindow:wc.window];
 }
 
 #pragma mark -
@@ -41,7 +41,7 @@
 - (IBAction)okPopQuiz:(id)sender
 {
     [[NSApplication sharedApplication] stopModal];
-    [[self window] orderOut:self];
+    [self.window orderOut:self];
 
     [self _revealDocsForChosenAPISymbol];
 }
@@ -49,7 +49,7 @@
 - (IBAction)cancelPopQuiz:(id)sender
 {
     [[NSApplication sharedApplication] abortModal];
-    [[self window] orderOut:self];
+    [self.window orderOut:self];
 }
 
 - (IBAction)pickAnother:(id)sender
@@ -65,16 +65,16 @@
     // Choose a random API symbol.
     AKDatabase *db = [[AKAppDelegate appDelegate] appDatabase];
     AKRandomSearch *randomSearch = [AKRandomSearch randomSearchWithDatabase:db];
-    NSString *apiSymbol = [randomSearch selectedAPISymbol];
+    NSString *apiSymbol = randomSearch.selectedAPISymbol;
 
-    [self setChosenAPISymbol:apiSymbol];
+    self.chosenAPISymbol = apiSymbol;
 
     // Display the symbol. We insert zero-width spaces so that if we get a long
     // method name that word-wraps, line breaks will be after the colons. The
     // NSFont docs say U200B is Unicode for ZERO WIDTH SPACE.
     NSString *symbolModifiedForDisplay = [apiSymbol stringByReplacingOccurrencesOfString:@":"
                                                                               withString:@":\u200B"];
-    [[self symbolNameField] setStringValue:symbolModifiedForDisplay];
+    self.symbolNameField.stringValue = symbolModifiedForDisplay;
 }
 
 - (void)_revealDocsForChosenAPISymbol
@@ -86,7 +86,7 @@
         wc = [[AKAppDelegate appDelegate] controllerForNewWindow];
     }
 
-    [wc revealPopQuizSymbol:[self chosenAPISymbol]];
+    [wc revealPopQuizSymbol:self.chosenAPISymbol];
 }
 
 @end

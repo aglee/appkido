@@ -24,7 +24,7 @@ int DIGSPrintf(NSString *format, ...)
     NSString *output = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
     
-    int result = printf("%s", [output UTF8String]);
+    int result = printf("%s", output.UTF8String);
     
     return result;
 }
@@ -38,7 +38,7 @@ int DIGSPrintln(NSString *format, ...)
                                                arguments:args];
     va_end(args);
     
-    int result = printf("%s", [output UTF8String]);
+    int result = printf("%s", output.UTF8String);
     
     return result;
 }
