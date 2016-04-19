@@ -14,7 +14,6 @@
 #import "DIGSFindBuffer.h"
 
 #import "AKAppDelegate.h"
-#import "AKTestDocParserWindowController.h"
 #import "AKWindowController.h"
 
 #import "NSString+AppKiDo.h"
@@ -163,10 +162,6 @@ s_sharedInstance = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPa
     if ([windowDelegate isKindOfClass:[AKWindowController class]])
     {
         return [(AKWindowController *)windowDelegate docView];
-    }
-    else if ([windowDelegate isKindOfClass:[AKTestDocParserWindowController class]])
-    {
-        return [(AKTestDocParserWindowController *)windowDelegate viewToSearch];
     }
                 
     return nil;

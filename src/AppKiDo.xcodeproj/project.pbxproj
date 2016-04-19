@@ -36,9 +36,7 @@
 		65B1097809D7B6C300A8A637 /* AKClassNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55405ED8DC50055715D /* AKClassNode.h */; };
 		65B1097909D7B6C300A8A637 /* AKMethodNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55805ED8DC50055715D /* AKMethodNode.h */; };
 		65B1097A09D7B6C300A8A637 /* AKProtocolNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55C05ED8DC60055715D /* AKProtocolNode.h */; };
-		65B1097B09D7B6C300A8A637 /* AKObjCHeaderParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD56C05ED8DC60055715D /* AKObjCHeaderParser.h */; };
 		65B1097C09D7B6C300A8A637 /* AKAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD5D505ED8FBE0055715D /* AKAppDelegate.h */; };
-		65B1097D09D7B6C300A8A637 /* AKDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CC2AD705EDAF5F006D882D /* AKDocParser.h */; };
 		65B1097E09D7B6C300A8A637 /* AKLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 7370170405FBA7B300C74AA7 /* AKLinkResolver.h */; };
 		65B1097F09D7B6C300A8A637 /* AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976020606A280002E4E83 /* AKDoc.h */; };
 		65B1098009D7B6C300A8A637 /* AKFunctionDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976B90606C1F0002E4E83 /* AKFunctionDoc.h */; };
@@ -54,7 +52,6 @@
 		65B1098B09D7B6C300A8A637 /* AKGlobalsNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362078A0616C02F0007F07A /* AKGlobalsNode.h */; };
 		65B1098C09D7B6C300A8A637 /* AKGroupNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B313A90617441B006C9BA7 /* AKGroupNode.h */; };
 		65B1098D09D7B6C300A8A637 /* AKGroupNodeSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B315450617A3F3006C9BA7 /* AKGroupNodeSubtopic.h */; };
-		65B1098E09D7B6C300A8A637 /* AKCocoaFunctionsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B316320617B04E006C9BA7 /* AKCocoaFunctionsDocParser.h */; };
 		65B1098F09D7B6C300A8A637 /* AKPrefConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */; };
 		65B1099009D7B6C300A8A637 /* AKFrameworkConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B627061B6AF5002C95F1 /* AKFrameworkConstants.h */; };
 		65B1099109D7B6C300A8A637 /* AKHTMLConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B675061B6CC8002C95F1 /* AKHTMLConstants.h */; };
@@ -62,7 +59,6 @@
 		65B1099309D7B6C300A8A637 /* AKFindPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74137066BFAEF00A76FEE /* AKFindPanelController.h */; };
 		65B1099409D7B6C300A8A637 /* AKPrefPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */; };
 		65B1099609D7B6C300A8A637 /* AKDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73EE9E3D06856D120008CBEC /* AKDatabase.h */; };
-		65B1099709D7B6C300A8A637 /* AKParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BACC00068573870016B38E /* AKParser.h */; };
 		65B1099809D7B6C300A8A637 /* AKDatabaseNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 730FCBD00685758B0083160A /* AKDatabaseNode.h */; };
 		65B1099A09D7B6C300A8A637 /* AKBehaviorNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */; };
 		65B1099B09D7B6C300A8A637 /* AKBehaviorTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */; };
@@ -81,9 +77,7 @@
 		65B109AA09D7B6C300A8A637 /* DIGSTextSelection.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9A0810C882001D5F3A /* DIGSTextSelection.h */; };
 		65B109AB09D7B6C300A8A637 /* DIGSTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9C0810C882001D5F3A /* DIGSTextView.h */; };
 		65B109AC09D7B6C300A8A637 /* AKWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9E0810C882001D5F3A /* AKWindow.h */; };
-		65B109AE09D7B6C300A8A637 /* AKTestDocParserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73026980082FD33700D5198D /* AKTestDocParserWindowController.h */; };
 		65B109B109D7B6C300A8A637 /* AKFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323C9C108313881002E8D7D /* AKFileUtils.h */; };
-		65B109B209D7B6C300A8A637 /* AKCocoaBehaviorDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 734115030831B3BD0010896B /* AKCocoaBehaviorDocParser.h */; };
 		65B109B309D7B6C300A8A637 /* AKChildTopicOfFrameworkTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7330D5B6083667540007FBD0 /* AKChildTopicOfFrameworkTopic.h */; };
 		65B109BD09D7B6C300A8A637 /* AKMultiRadioView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */; };
 		65B109BE09D7B6C300A8A637 /* AppKiDo_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 73DA45FD0966583A00BFD67E /* AppKiDo_Prefix.pch */; };
@@ -140,9 +134,7 @@
 		65B109FD09D7B6C300A8A637 /* AKClassNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55505ED8DC50055715D /* AKClassNode.m */; };
 		65B109FE09D7B6C300A8A637 /* AKMethodNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55905ED8DC60055715D /* AKMethodNode.m */; };
 		65B109FF09D7B6C300A8A637 /* AKProtocolNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55D05ED8DC60055715D /* AKProtocolNode.m */; };
-		65B10A0009D7B6C300A8A637 /* AKObjCHeaderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */; };
 		65B10A0109D7B6C300A8A637 /* AKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD5D605ED8FBE0055715D /* AKAppDelegate.m */; };
-		65B10A0209D7B6C300A8A637 /* AKDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CC2AD805EDAF5F006D882D /* AKDocParser.m */; };
 		65B10A0309D7B6C300A8A637 /* AKLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7370170505FBA7B300C74AA7 /* AKLinkResolver.m */; };
 		65B10A0409D7B6C300A8A637 /* AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976030606A280002E4E83 /* AKDoc.m */; };
 		65B10A0509D7B6C300A8A637 /* AKFunctionDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */; };
@@ -158,7 +150,6 @@
 		65B10A1009D7B6C300A8A637 /* AKGlobalsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362078B0616C02F0007F07A /* AKGlobalsNode.m */; };
 		65B10A1109D7B6C300A8A637 /* AKGroupNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B313AA0617441B006C9BA7 /* AKGroupNode.m */; };
 		65B10A1209D7B6C300A8A637 /* AKGroupNodeSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B315460617A3F3006C9BA7 /* AKGroupNodeSubtopic.m */; };
-		65B10A1309D7B6C300A8A637 /* AKCocoaFunctionsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B316330617B04E006C9BA7 /* AKCocoaFunctionsDocParser.m */; };
 		65B10A1409D7B6C300A8A637 /* AKPrefConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B5BD061B6947002C95F1 /* AKPrefConstants.m */; };
 		65B10A1509D7B6C300A8A637 /* AKFrameworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B628061B6AF5002C95F1 /* AKFrameworkConstants.m */; };
 		65B10A1609D7B6C300A8A637 /* AKHTMLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B676061B6CC8002C95F1 /* AKHTMLConstants.m */; };
@@ -166,7 +157,6 @@
 		65B10A1809D7B6C300A8A637 /* AKFindPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C74138066BFAEF00A76FEE /* AKFindPanelController.m */; };
 		65B10A1909D7B6C300A8A637 /* AKPrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */; };
 		65B10A1B09D7B6C300A8A637 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE9E3E06856D120008CBEC /* AKDatabase.m */; };
-		65B10A1D09D7B6C300A8A637 /* AKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BACC01068573870016B38E /* AKParser.m */; };
 		65B10A1E09D7B6C300A8A637 /* AKDatabaseNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 730FCBD10685758B0083160A /* AKDatabaseNode.m */; };
 		65B10A2009D7B6C300A8A637 /* AKBehaviorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */; };
 		65B10A2109D7B6C300A8A637 /* AKBehaviorTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */; };
@@ -185,9 +175,7 @@
 		65B10A3009D7B6C300A8A637 /* DIGSTextSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9B0810C882001D5F3A /* DIGSTextSelection.m */; };
 		65B10A3109D7B6C300A8A637 /* DIGSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9D0810C882001D5F3A /* DIGSTextView.m */; };
 		65B10A3209D7B6C300A8A637 /* AKWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9F0810C882001D5F3A /* AKWindow.m */; };
-		65B10A3309D7B6C300A8A637 /* AKTestDocParserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73026981082FD33700D5198D /* AKTestDocParserWindowController.m */; };
 		65B10A3609D7B6C300A8A637 /* AKFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323C9C208313881002E8D7D /* AKFileUtils.m */; };
-		65B10A3709D7B6C300A8A637 /* AKCocoaBehaviorDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 734115040831B3BD0010896B /* AKCocoaBehaviorDocParser.m */; };
 		65B10A3809D7B6C300A8A637 /* AKChildTopicOfFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7330D5B7083667540007FBD0 /* AKChildTopicOfFrameworkTopic.m */; };
 		65B10A4209D7B6C300A8A637 /* AKMultiRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */; };
 		65B10A4409D7B6C300A8A637 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -395,9 +383,7 @@
 		7399B2D60E632A5C001AE672 /* AKClassNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55405ED8DC50055715D /* AKClassNode.h */; };
 		7399B2D70E632A5C001AE672 /* AKMethodNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55805ED8DC50055715D /* AKMethodNode.h */; };
 		7399B2D80E632A5C001AE672 /* AKProtocolNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD55C05ED8DC60055715D /* AKProtocolNode.h */; };
-		7399B2D90E632A5C001AE672 /* AKObjCHeaderParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD56C05ED8DC60055715D /* AKObjCHeaderParser.h */; };
 		7399B2DA0E632A5C001AE672 /* AKAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 732BD5D505ED8FBE0055715D /* AKAppDelegate.h */; };
-		7399B2DB0E632A5C001AE672 /* AKDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CC2AD705EDAF5F006D882D /* AKDocParser.h */; };
 		7399B2DC0E632A5C001AE672 /* AKLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 7370170405FBA7B300C74AA7 /* AKLinkResolver.h */; };
 		7399B2DD0E632A5C001AE672 /* AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976020606A280002E4E83 /* AKDoc.h */; };
 		7399B2DE0E632A5C001AE672 /* AKFunctionDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 731976B90606C1F0002E4E83 /* AKFunctionDoc.h */; };
@@ -413,7 +399,6 @@
 		7399B2E90E632A5C001AE672 /* AKGlobalsNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362078A0616C02F0007F07A /* AKGlobalsNode.h */; };
 		7399B2EA0E632A5C001AE672 /* AKGroupNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B313A90617441B006C9BA7 /* AKGroupNode.h */; };
 		7399B2EB0E632A5C001AE672 /* AKGroupNodeSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B315450617A3F3006C9BA7 /* AKGroupNodeSubtopic.h */; };
-		7399B2EC0E632A5C001AE672 /* AKCocoaFunctionsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B316320617B04E006C9BA7 /* AKCocoaFunctionsDocParser.h */; };
 		7399B2ED0E632A5C001AE672 /* AKPrefConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */; };
 		7399B2EE0E632A5C001AE672 /* AKFrameworkConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B627061B6AF5002C95F1 /* AKFrameworkConstants.h */; };
 		7399B2EF0E632A5C001AE672 /* AKHTMLConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B675061B6CC8002C95F1 /* AKHTMLConstants.h */; };
@@ -421,7 +406,6 @@
 		7399B2F10E632A5C001AE672 /* AKFindPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74137066BFAEF00A76FEE /* AKFindPanelController.h */; };
 		7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */; };
 		7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73EE9E3D06856D120008CBEC /* AKDatabase.h */; };
-		7399B2F50E632A5C001AE672 /* AKParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BACC00068573870016B38E /* AKParser.h */; };
 		7399B2F60E632A5C001AE672 /* AKDatabaseNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 730FCBD00685758B0083160A /* AKDatabaseNode.h */; };
 		7399B2F70E632A5C001AE672 /* AKBehaviorNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */; };
 		7399B2F80E632A5C001AE672 /* AKBehaviorTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */; };
@@ -440,9 +424,7 @@
 		7399B3050E632A5C001AE672 /* DIGSTextSelection.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9A0810C882001D5F3A /* DIGSTextSelection.h */; };
 		7399B3060E632A5C001AE672 /* DIGSTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9C0810C882001D5F3A /* DIGSTextView.h */; };
 		7399B3070E632A5C001AE672 /* AKWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B2D9E0810C882001D5F3A /* AKWindow.h */; };
-		7399B3080E632A5C001AE672 /* AKTestDocParserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73026980082FD33700D5198D /* AKTestDocParserWindowController.h */; };
 		7399B3090E632A5C001AE672 /* AKFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7323C9C108313881002E8D7D /* AKFileUtils.h */; };
-		7399B30A0E632A5C001AE672 /* AKCocoaBehaviorDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 734115030831B3BD0010896B /* AKCocoaBehaviorDocParser.h */; };
 		7399B30B0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7330D5B6083667540007FBD0 /* AKChildTopicOfFrameworkTopic.h */; };
 		7399B30C0E632A5C001AE672 /* AKMultiRadioView.h in Headers */ = {isa = PBXBuildFile; fileRef = 73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */; };
 		7399B30D0E632A5C001AE672 /* AppKiDo_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 73DA45FD0966583A00BFD67E /* AppKiDo_Prefix.pch */; };
@@ -453,8 +435,6 @@
 		7399B3130E632A5C001AE672 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D237050D4561C300EF7503 /* FMResultSet.h */; };
 		7399B3140E632A5C001AE672 /* AKDevToolsUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D239CA0D4ABBA000EF7503 /* AKDevToolsUtils.h */; };
 		7399B3150E632A5C001AE672 /* DIGSPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23ACE0D4C45B500EF7503 /* DIGSPrefUtils.h */; };
-		7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */; };
-		7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */; };
 		7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */; };
 		7399B31B0E632A5C001AE672 /* AKDevToolsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsViewController.h */; };
 		7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7368B9AD0E0EFB2200AFEA2D /* AKCollectionOfNodes.h */; };
@@ -518,9 +498,7 @@
 		7399B3690E632A5C001AE672 /* AKClassNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55505ED8DC50055715D /* AKClassNode.m */; };
 		7399B36A0E632A5C001AE672 /* AKMethodNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55905ED8DC60055715D /* AKMethodNode.m */; };
 		7399B36B0E632A5C001AE672 /* AKProtocolNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD55D05ED8DC60055715D /* AKProtocolNode.m */; };
-		7399B36C0E632A5C001AE672 /* AKObjCHeaderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */; };
 		7399B36D0E632A5C001AE672 /* AKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732BD5D605ED8FBE0055715D /* AKAppDelegate.m */; };
-		7399B36E0E632A5C001AE672 /* AKDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CC2AD805EDAF5F006D882D /* AKDocParser.m */; };
 		7399B36F0E632A5C001AE672 /* AKLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7370170505FBA7B300C74AA7 /* AKLinkResolver.m */; };
 		7399B3700E632A5C001AE672 /* AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976030606A280002E4E83 /* AKDoc.m */; };
 		7399B3710E632A5C001AE672 /* AKFunctionDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */; };
@@ -536,7 +514,6 @@
 		7399B37C0E632A5C001AE672 /* AKGlobalsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362078B0616C02F0007F07A /* AKGlobalsNode.m */; };
 		7399B37D0E632A5C001AE672 /* AKGroupNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B313AA0617441B006C9BA7 /* AKGroupNode.m */; };
 		7399B37E0E632A5C001AE672 /* AKGroupNodeSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B315460617A3F3006C9BA7 /* AKGroupNodeSubtopic.m */; };
-		7399B37F0E632A5C001AE672 /* AKCocoaFunctionsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B316330617B04E006C9BA7 /* AKCocoaFunctionsDocParser.m */; };
 		7399B3800E632A5C001AE672 /* AKPrefConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B5BD061B6947002C95F1 /* AKPrefConstants.m */; };
 		7399B3810E632A5C001AE672 /* AKFrameworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B628061B6AF5002C95F1 /* AKFrameworkConstants.m */; };
 		7399B3820E632A5C001AE672 /* AKHTMLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B676061B6CC8002C95F1 /* AKHTMLConstants.m */; };
@@ -544,7 +521,6 @@
 		7399B3840E632A5C001AE672 /* AKFindPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C74138066BFAEF00A76FEE /* AKFindPanelController.m */; };
 		7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */; };
 		7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE9E3E06856D120008CBEC /* AKDatabase.m */; };
-		7399B3880E632A5C001AE672 /* AKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BACC01068573870016B38E /* AKParser.m */; };
 		7399B3890E632A5C001AE672 /* AKDatabaseNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 730FCBD10685758B0083160A /* AKDatabaseNode.m */; };
 		7399B38A0E632A5C001AE672 /* AKBehaviorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */; };
 		7399B38B0E632A5C001AE672 /* AKBehaviorTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */; };
@@ -563,9 +539,7 @@
 		7399B3980E632A5C001AE672 /* DIGSTextSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9B0810C882001D5F3A /* DIGSTextSelection.m */; };
 		7399B3990E632A5C001AE672 /* DIGSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9D0810C882001D5F3A /* DIGSTextView.m */; };
 		7399B39A0E632A5C001AE672 /* AKWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B2D9F0810C882001D5F3A /* AKWindow.m */; };
-		7399B39B0E632A5C001AE672 /* AKTestDocParserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73026981082FD33700D5198D /* AKTestDocParserWindowController.m */; };
 		7399B39C0E632A5C001AE672 /* AKFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7323C9C208313881002E8D7D /* AKFileUtils.m */; };
-		7399B39D0E632A5C001AE672 /* AKCocoaBehaviorDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 734115040831B3BD0010896B /* AKCocoaBehaviorDocParser.m */; };
 		7399B39E0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7330D5B7083667540007FBD0 /* AKChildTopicOfFrameworkTopic.m */; };
 		7399B39F0E632A5C001AE672 /* AKMultiRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB2B8D0848FF08005E1A4F /* AKMultiRadioView.m */; };
 		7399B3A10E632A5C001AE672 /* AKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359EB2C0BADB68100574728 /* AKApplication.m */; };
@@ -575,8 +549,6 @@
 		7399B3A50E632A5C001AE672 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D237060D4561C300EF7503 /* FMResultSet.m */; };
 		7399B3A60E632A5C001AE672 /* AKDevToolsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D239CB0D4ABBA000EF7503 /* AKDevToolsUtils.m */; };
 		7399B3A70E632A5C001AE672 /* DIGSPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23ACF0D4C45B500EF7503 /* DIGSPrefUtils.m */; };
-		7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */; };
-		7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */; };
 		7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
 		7399B3AD0E632A5C001AE672 /* AKDevToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsViewController.m */; };
 		7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfNodes.m */; };
@@ -652,10 +624,6 @@
 		73D239CD0D4ABBA000EF7503 /* AKDevToolsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D239CB0D4ABBA000EF7503 /* AKDevToolsUtils.m */; };
 		73D23AD00D4C45B500EF7503 /* DIGSPrefUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23ACE0D4C45B500EF7503 /* DIGSPrefUtils.h */; };
 		73D23AD10D4C45B500EF7503 /* DIGSPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23ACF0D4C45B500EF7503 /* DIGSPrefUtils.m */; };
-		73D23C0F0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */; };
-		73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */; };
-		73D23C880D4CCE2800EF7503 /* AKDocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */; };
-		73D23C890D4CCE2800EF7503 /* AKDocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */; };
 		73D59E8515B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */; };
 		73D59E8615B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */; };
 		73D59E8715B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */; };
@@ -747,8 +715,6 @@
 		730030AA0498501500A80007 /* AKTableView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKTableView.m; path = CustomViews/AKTableView.m; sourceTree = "<group>"; };
 		730030DD0498501500A80007 /* AKSortable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSortable.h; sourceTree = "<group>"; };
 		7300310C0498501500A80007 /* AKWindowController+Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "AKWindowController+Toolbar.m"; sourceTree = "<group>"; };
-		73026980082FD33700D5198D /* AKTestDocParserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTestDocParserWindowController.h; sourceTree = "<group>"; };
-		73026981082FD33700D5198D /* AKTestDocParserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTestDocParserWindowController.m; sourceTree = "<group>"; };
 		7302DF980767B65200F9FEC0 /* about-the-code.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "about-the-code.markdown"; sourceTree = "<group>"; };
 		7304030516DF8DAB005E04A1 /* AKButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKButtonCell.h; path = CustomViews/AKButtonCell.h; sourceTree = "<group>"; };
 		7304030616DF8DAB005E04A1 /* AKButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKButtonCell.m; path = CustomViews/AKButtonCell.m; sourceTree = "<group>"; };
@@ -817,8 +783,6 @@
 		732BD55905ED8DC60055715D /* AKMethodNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKMethodNode.m; sourceTree = "<group>"; };
 		732BD55C05ED8DC60055715D /* AKProtocolNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKProtocolNode.h; sourceTree = "<group>"; };
 		732BD55D05ED8DC60055715D /* AKProtocolNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKProtocolNode.m; sourceTree = "<group>"; };
-		732BD56C05ED8DC60055715D /* AKObjCHeaderParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKObjCHeaderParser.h; path = ParsingObjC/AKObjCHeaderParser.h; sourceTree = "<group>"; };
-		732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKObjCHeaderParser.m; path = ParsingObjC/AKObjCHeaderParser.m; sourceTree = "<group>"; };
 		732BD5D505ED8FBE0055715D /* AKAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKAppDelegate.h; sourceTree = "<group>"; };
 		732BD5D605ED8FBE0055715D /* AKAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKAppDelegate.m; sourceTree = "<group>"; };
 		732EE0F7060E10E600B5EDA7 /* AKDocLocator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDocLocator.h; sourceTree = "<group>"; };
@@ -836,8 +800,6 @@
 		733DF5FD14E17FAA007E6313 /* DocPaths2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocPaths2.sql; sourceTree = "<group>"; };
 		733DF5FE14E17FBC007E6313 /* HeaderPaths.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeaderPaths.sql; sourceTree = "<group>"; };
 		733DF63F14E18FAB007E6313 /* DocSetIndexTables.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocSetIndexTables.txt; sourceTree = "<group>"; };
-		734115030831B3BD0010896B /* AKCocoaBehaviorDocParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKCocoaBehaviorDocParser.h; path = ClassDB/ParsingHTML/AKCocoaBehaviorDocParser.h; sourceTree = "<group>"; };
-		734115040831B3BD0010896B /* AKCocoaBehaviorDocParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKCocoaBehaviorDocParser.m; path = ClassDB/ParsingHTML/AKCocoaBehaviorDocParser.m; sourceTree = "<group>"; };
 		734168FA0841F59C0027E6BD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		734879D10E3AB45000A3B12F /* AKPropertiesSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPropertiesSubtopic.h; sourceTree = "<group>"; };
 		734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPropertiesSubtopic.m; sourceTree = "<group>"; };
@@ -1027,8 +989,6 @@
 		73B313AA0617441B006C9BA7 /* AKGroupNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGroupNode.m; sourceTree = "<group>"; };
 		73B315450617A3F3006C9BA7 /* AKGroupNodeSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGroupNodeSubtopic.h; sourceTree = "<group>"; };
 		73B315460617A3F3006C9BA7 /* AKGroupNodeSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGroupNodeSubtopic.m; sourceTree = "<group>"; };
-		73B316320617B04E006C9BA7 /* AKCocoaFunctionsDocParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKCocoaFunctionsDocParser.h; path = ClassDB/ParsingHTML/AKCocoaFunctionsDocParser.h; sourceTree = "<group>"; };
-		73B316330617B04E006C9BA7 /* AKCocoaFunctionsDocParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKCocoaFunctionsDocParser.m; path = ClassDB/ParsingHTML/AKCocoaFunctionsDocParser.m; sourceTree = "<group>"; };
 		73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.sdef; path = AppKiDo.sdef; sourceTree = "<group>"; };
 		73B6B6C50DC1D229004FB7ED /* AKFunctionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFunctionNode.h; sourceTree = "<group>"; };
 		73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFunctionNode.m; sourceTree = "<group>"; };
@@ -1037,8 +997,6 @@
 		73B914930E089D180012C16F /* AKDevToolsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsViewController.h; sourceTree = "<group>"; };
 		73B914940E089D180012C16F /* AKDevToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsViewController.m; sourceTree = "<group>"; };
 		73B9158806133DBF00066E17 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = English; path = English.lproj/Credits.html; sourceTree = "<group>"; };
-		73BACC00068573870016B38E /* AKParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKParser.h; sourceTree = "<group>"; };
-		73BACC01068573870016B38E /* AKParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKParser.m; sourceTree = "<group>"; };
 		73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKIPhoneDevTools.h; path = CocoaFrameworks/AKIPhoneDevTools.h; sourceTree = "<group>"; };
 		73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKIPhoneDevTools.m; path = CocoaFrameworks/AKIPhoneDevTools.m; sourceTree = "<group>"; };
 		73C74137066BFAEF00A76FEE /* AKFindPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFindPanelController.h; sourceTree = "<group>"; };
@@ -1052,8 +1010,6 @@
 		73C96E24049CA60200A87B79 /* AKSavedWindowState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSavedWindowState.m; sourceTree = "<group>"; };
 		73C983F20FE47F6800C4BEBA /* AKMacDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKMacDevTools.h; path = CocoaFrameworks/AKMacDevTools.h; sourceTree = "<group>"; };
 		73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKMacDevTools.m; path = CocoaFrameworks/AKMacDevTools.m; sourceTree = "<group>"; };
-		73CC2AD705EDAF5F006D882D /* AKDocParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKDocParser.h; path = ClassDB/ParsingHTML/AKDocParser.h; sourceTree = "<group>"; };
-		73CC2AD805EDAF5F006D882D /* AKDocParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKDocParser.m; path = ClassDB/ParsingHTML/AKDocParser.m; sourceTree = "<group>"; };
 		73CD36C6066AAB6200011DE5 /* AKFunctionsGroupSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFunctionsGroupSubtopic.h; sourceTree = "<group>"; };
 		73CD36C7066AAB6200011DE5 /* AKFunctionsGroupSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFunctionsGroupSubtopic.m; sourceTree = "<group>"; };
 		73D237010D4561C300EF7503 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -1068,10 +1024,6 @@
 		73D239CB0D4ABBA000EF7503 /* AKDevToolsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsUtils.m; sourceTree = "<group>"; };
 		73D23ACE0D4C45B500EF7503 /* DIGSPrefUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIGSPrefUtils.h; sourceTree = "<group>"; };
 		73D23ACF0D4C45B500EF7503 /* DIGSPrefUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIGSPrefUtils.m; sourceTree = "<group>"; };
-		73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKCocoaGlobalsDocParser.h; path = ClassDB/ParsingHTML/AKCocoaGlobalsDocParser.h; sourceTree = "<group>"; };
-		73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKCocoaGlobalsDocParser.m; path = ClassDB/ParsingHTML/AKCocoaGlobalsDocParser.m; sourceTree = "<group>"; };
-		73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKDocSetIndex.m; path = CocoaFrameworks/AKDocSetIndex.m; sourceTree = "<group>"; };
-		73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDocSetIndex.h; path = CocoaFrameworks/AKDocSetIndex.h; sourceTree = "<group>"; };
 		73D409E104A391D600A80003 /* AKPrefUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefUtils.h; sourceTree = "<group>"; };
 		73D409E204A391D600A80003 /* AKPrefUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPrefUtils.m; sourceTree = "<group>"; };
 		73D409E704A3A04F00A80003 /* AKSortUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSortUtils.h; sourceTree = "<group>"; };
@@ -1317,15 +1269,6 @@
 			path = GlobalClasses;
 			sourceTree = SOURCE_ROOT;
 		};
-		7309924616D7411500212D93 /* parsing header files */ = {
-			isa = PBXGroup;
-			children = (
-				732BD56C05ED8DC60055715D /* AKObjCHeaderParser.h */,
-				732BD56D05ED8DC60055715D /* AKObjCHeaderParser.m */,
-			);
-			name = "parsing header files";
-			sourceTree = "<group>";
-		};
 		730A0FBB16DDB9940004C76C /* singleton nibs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1468,9 +1411,7 @@
 			children = (
 				734AEE3B1CC5E1600064AAA9 /* Data */,
 				739CD2600E4498AC00CFA042 /* dev tools */,
-				734B75E716D14B700027514D /* docsets */,
 				730030820498501500A80007 /* database */,
-				73C8ABF50836B2EE0000E3F7 /* parsers */,
 			);
 			name = "-- MODEL CLASSES --";
 			sourceTree = "<group>";
@@ -1510,7 +1451,6 @@
 				732BD5D405ED8FBE0055715D /* one-time controllers */,
 				73A0230A16DD18C300240111 /* per-window controllers */,
 				734701A804ED644C00A80003 /* saveable window states (models) */,
-				735E298116E0508200E9FBC1 /* debugging */,
 			);
 			name = "-- CONTROLLER CLASSES --";
 			sourceTree = "<group>";
@@ -1675,26 +1615,6 @@
 				73DB1378170E176500F3776A /* QuietLog.m */,
 			);
 			path = DIGS;
-			sourceTree = "<group>";
-		};
-		734B75E716D14B700027514D /* docsets */ = {
-			isa = PBXGroup;
-			children = (
-				73D23C870D4CCE2800EF7503 /* AKDocSetIndex.h */,
-				73D23C860D4CCE2800EF7503 /* AKDocSetIndex.m */,
-			);
-			name = docsets;
-			path = ClassDB;
-			sourceTree = "<group>";
-		};
-		735E298116E0508200E9FBC1 /* debugging */ = {
-			isa = PBXGroup;
-			children = (
-				73026980082FD33700D5198D /* AKTestDocParserWindowController.h */,
-				73026981082FD33700D5198D /* AKTestDocParserWindowController.m */,
-			);
-			name = debugging;
-			path = Debugging;
 			sourceTree = "<group>";
 		};
 		735FA9FD0837CB06009379EB /* child topics of framework topics */ = {
@@ -1904,18 +1824,6 @@
 			path = ObjCNodes;
 			sourceTree = "<group>";
 		};
-		73C8ABF50836B2EE0000E3F7 /* parsers */ = {
-			isa = PBXGroup;
-			children = (
-				73BACC00068573870016B38E /* AKParser.h */,
-				73BACC01068573870016B38E /* AKParser.m */,
-				7309924616D7411500212D93 /* parsing header files */,
-				73D23BF30D4CBF9C00EF7503 /* parsing HTML files */,
-			);
-			name = parsers;
-			path = ClassDB;
-			sourceTree = "<group>";
-		};
 		73C8AC030836B3330000E3F7 /* search */ = {
 			isa = PBXGroup;
 			children = (
@@ -1972,22 +1880,6 @@
 				730F68C415C1500500E0B7B0 /* README.markdown */,
 			);
 			path = fmdb;
-			sourceTree = "<group>";
-		};
-		73D23BF30D4CBF9C00EF7503 /* parsing HTML files */ = {
-			isa = PBXGroup;
-			children = (
-				73CC2AD705EDAF5F006D882D /* AKDocParser.h */,
-				73CC2AD805EDAF5F006D882D /* AKDocParser.m */,
-				734115030831B3BD0010896B /* AKCocoaBehaviorDocParser.h */,
-				734115040831B3BD0010896B /* AKCocoaBehaviorDocParser.m */,
-				73B316320617B04E006C9BA7 /* AKCocoaFunctionsDocParser.h */,
-				73B316330617B04E006C9BA7 /* AKCocoaFunctionsDocParser.m */,
-				73D23C0D0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h */,
-				73D23C0E0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m */,
-			);
-			name = "parsing HTML files";
-			path = ..;
 			sourceTree = "<group>";
 		};
 		73E86F440E3976FA002AFB76 /* C nodes */ = {
@@ -2102,9 +1994,7 @@
 				734AEEAB1CC5E1600064AAA9 /* _DSANode.h in Headers */,
 				65B1097909D7B6C300A8A637 /* AKMethodNode.h in Headers */,
 				65B1097A09D7B6C300A8A637 /* AKProtocolNode.h in Headers */,
-				65B1097B09D7B6C300A8A637 /* AKObjCHeaderParser.h in Headers */,
 				65B1097C09D7B6C300A8A637 /* AKAppDelegate.h in Headers */,
-				65B1097D09D7B6C300A8A637 /* AKDocParser.h in Headers */,
 				65B1097E09D7B6C300A8A637 /* AKLinkResolver.h in Headers */,
 				65B1097F09D7B6C300A8A637 /* AKDoc.h in Headers */,
 				65B1098009D7B6C300A8A637 /* AKFunctionDoc.h in Headers */,
@@ -2123,7 +2013,6 @@
 				734AEE9D1CC5E1600064AAA9 /* TokenMetainformation.h in Headers */,
 				734AEE851CC5E1600064AAA9 /* Container.h in Headers */,
 				65B1098D09D7B6C300A8A637 /* AKGroupNodeSubtopic.h in Headers */,
-				65B1098E09D7B6C300A8A637 /* AKCocoaFunctionsDocParser.h in Headers */,
 				65B1098F09D7B6C300A8A637 /* AKPrefConstants.h in Headers */,
 				65B1099009D7B6C300A8A637 /* AKFrameworkConstants.h in Headers */,
 				65B1099109D7B6C300A8A637 /* AKHTMLConstants.h in Headers */,
@@ -2134,7 +2023,6 @@
 				734AEEB91CC5E1600064AAA9 /* _TokenGroup.h in Headers */,
 				734AEEA11CC5E1600064AAA9 /* _APILanguage.h in Headers */,
 				734AEE871CC5E1600064AAA9 /* DocSet.h in Headers */,
-				65B1099709D7B6C300A8A637 /* AKParser.h in Headers */,
 				65B1099809D7B6C300A8A637 /* AKDatabaseNode.h in Headers */,
 				65B1099A09D7B6C300A8A637 /* AKBehaviorNode.h in Headers */,
 				65B1099B09D7B6C300A8A637 /* AKBehaviorTopic.h in Headers */,
@@ -2154,9 +2042,7 @@
 				65B109AA09D7B6C300A8A637 /* DIGSTextSelection.h in Headers */,
 				65B109AB09D7B6C300A8A637 /* DIGSTextView.h in Headers */,
 				65B109AC09D7B6C300A8A637 /* AKWindow.h in Headers */,
-				65B109AE09D7B6C300A8A637 /* AKTestDocParserWindowController.h in Headers */,
 				65B109B109D7B6C300A8A637 /* AKFileUtils.h in Headers */,
-				65B109B209D7B6C300A8A637 /* AKCocoaBehaviorDocParser.h in Headers */,
 				65B109B309D7B6C300A8A637 /* AKChildTopicOfFrameworkTopic.h in Headers */,
 				65B109BD09D7B6C300A8A637 /* AKMultiRadioView.h in Headers */,
 				65B109BE09D7B6C300A8A637 /* AppKiDo_Prefix.pch in Headers */,
@@ -2168,9 +2054,7 @@
 				73D2370C0D4561C300EF7503 /* FMResultSet.h in Headers */,
 				73D239CC0D4ABBA000EF7503 /* AKDevToolsUtils.h in Headers */,
 				73D23AD00D4C45B500EF7503 /* DIGSPrefUtils.h in Headers */,
-				73D23C0F0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h in Headers */,
 				734AEEAD1CC5E1600064AAA9 /* _DSANodeURL.h in Headers */,
-				73D23C890D4CCE2800EF7503 /* AKDocSetIndex.h in Headers */,
 				734AEE931CC5E1600064AAA9 /* FilePath.h in Headers */,
 				73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */,
 				734AEE9F1CC5E1600064AAA9 /* TokenType.h in Headers */,
@@ -2273,9 +2157,7 @@
 				7399B2D60E632A5C001AE672 /* AKClassNode.h in Headers */,
 				7399B2D70E632A5C001AE672 /* AKMethodNode.h in Headers */,
 				7399B2D80E632A5C001AE672 /* AKProtocolNode.h in Headers */,
-				7399B2D90E632A5C001AE672 /* AKObjCHeaderParser.h in Headers */,
 				7399B2DA0E632A5C001AE672 /* AKAppDelegate.h in Headers */,
-				7399B2DB0E632A5C001AE672 /* AKDocParser.h in Headers */,
 				7399B2DC0E632A5C001AE672 /* AKLinkResolver.h in Headers */,
 				7399B2DD0E632A5C001AE672 /* AKDoc.h in Headers */,
 				7399B2DE0E632A5C001AE672 /* AKFunctionDoc.h in Headers */,
@@ -2291,7 +2173,6 @@
 				7399B2E90E632A5C001AE672 /* AKGlobalsNode.h in Headers */,
 				7399B2EA0E632A5C001AE672 /* AKGroupNode.h in Headers */,
 				7399B2EB0E632A5C001AE672 /* AKGroupNodeSubtopic.h in Headers */,
-				7399B2EC0E632A5C001AE672 /* AKCocoaFunctionsDocParser.h in Headers */,
 				7399B2ED0E632A5C001AE672 /* AKPrefConstants.h in Headers */,
 				7399B2EE0E632A5C001AE672 /* AKFrameworkConstants.h in Headers */,
 				7399B2EF0E632A5C001AE672 /* AKHTMLConstants.h in Headers */,
@@ -2299,7 +2180,6 @@
 				7399B2F10E632A5C001AE672 /* AKFindPanelController.h in Headers */,
 				7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */,
 				7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */,
-				7399B2F50E632A5C001AE672 /* AKParser.h in Headers */,
 				7399B2F60E632A5C001AE672 /* AKDatabaseNode.h in Headers */,
 				7399B2F70E632A5C001AE672 /* AKBehaviorNode.h in Headers */,
 				7399B2F80E632A5C001AE672 /* AKBehaviorTopic.h in Headers */,
@@ -2318,9 +2198,7 @@
 				7399B3050E632A5C001AE672 /* DIGSTextSelection.h in Headers */,
 				7399B3060E632A5C001AE672 /* DIGSTextView.h in Headers */,
 				7399B3070E632A5C001AE672 /* AKWindow.h in Headers */,
-				7399B3080E632A5C001AE672 /* AKTestDocParserWindowController.h in Headers */,
 				7399B3090E632A5C001AE672 /* AKFileUtils.h in Headers */,
-				7399B30A0E632A5C001AE672 /* AKCocoaBehaviorDocParser.h in Headers */,
 				7399B30B0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.h in Headers */,
 				7399B30C0E632A5C001AE672 /* AKMultiRadioView.h in Headers */,
 				7399B30D0E632A5C001AE672 /* AppKiDo_Prefix.pch in Headers */,
@@ -2331,8 +2209,6 @@
 				7399B3130E632A5C001AE672 /* FMResultSet.h in Headers */,
 				7399B3140E632A5C001AE672 /* AKDevToolsUtils.h in Headers */,
 				7399B3150E632A5C001AE672 /* DIGSPrefUtils.h in Headers */,
-				7399B3160E632A5C001AE672 /* AKCocoaGlobalsDocParser.h in Headers */,
-				7399B3170E632A5C001AE672 /* AKDocSetIndex.h in Headers */,
 				7399B3190E632A5C001AE672 /* AKFunctionNode.h in Headers */,
 				7399B31B0E632A5C001AE672 /* AKDevToolsViewController.h in Headers */,
 				7399B31C0E632A5C001AE672 /* AKCollectionOfNodes.h in Headers */,
@@ -2606,10 +2482,8 @@
 				734AEEA61CC5E1600064AAA9 /* _DocSet.m in Sources */,
 				65B109FE09D7B6C300A8A637 /* AKMethodNode.m in Sources */,
 				65B109FF09D7B6C300A8A637 /* AKProtocolNode.m in Sources */,
-				65B10A0009D7B6C300A8A637 /* AKObjCHeaderParser.m in Sources */,
 				734AEEBC1CC5E1600064AAA9 /* _TokenMetainformation.m in Sources */,
 				65B10A0109D7B6C300A8A637 /* AKAppDelegate.m in Sources */,
-				65B10A0209D7B6C300A8A637 /* AKDocParser.m in Sources */,
 				65B10A0309D7B6C300A8A637 /* AKLinkResolver.m in Sources */,
 				65B10A0409D7B6C300A8A637 /* AKDoc.m in Sources */,
 				65B10A0509D7B6C300A8A637 /* AKFunctionDoc.m in Sources */,
@@ -2629,7 +2503,6 @@
 				65B10A1209D7B6C300A8A637 /* AKGroupNodeSubtopic.m in Sources */,
 				734AEE941CC5E1600064AAA9 /* FilePath.m in Sources */,
 				734AEEBE1CC5E1600064AAA9 /* _TokenType.m in Sources */,
-				65B10A1309D7B6C300A8A637 /* AKCocoaFunctionsDocParser.m in Sources */,
 				65B10A1409D7B6C300A8A637 /* AKPrefConstants.m in Sources */,
 				65B10A1509D7B6C300A8A637 /* AKFrameworkConstants.m in Sources */,
 				65B10A1609D7B6C300A8A637 /* AKHTMLConstants.m in Sources */,
@@ -2637,7 +2510,6 @@
 				65B10A1809D7B6C300A8A637 /* AKFindPanelController.m in Sources */,
 				65B10A1909D7B6C300A8A637 /* AKPrefPanelController.m in Sources */,
 				65B10A1B09D7B6C300A8A637 /* AKDatabase.m in Sources */,
-				65B10A1D09D7B6C300A8A637 /* AKParser.m in Sources */,
 				65B10A1E09D7B6C300A8A637 /* AKDatabaseNode.m in Sources */,
 				65B10A2009D7B6C300A8A637 /* AKBehaviorNode.m in Sources */,
 				734AEEB81CC5E1600064AAA9 /* _OrderedSubnode.m in Sources */,
@@ -2664,9 +2536,7 @@
 				65B10A3009D7B6C300A8A637 /* DIGSTextSelection.m in Sources */,
 				65B10A3109D7B6C300A8A637 /* DIGSTextView.m in Sources */,
 				65B10A3209D7B6C300A8A637 /* AKWindow.m in Sources */,
-				65B10A3309D7B6C300A8A637 /* AKTestDocParserWindowController.m in Sources */,
 				65B10A3609D7B6C300A8A637 /* AKFileUtils.m in Sources */,
-				65B10A3709D7B6C300A8A637 /* AKCocoaBehaviorDocParser.m in Sources */,
 				65B10A3809D7B6C300A8A637 /* AKChildTopicOfFrameworkTopic.m in Sources */,
 				65B10A4209D7B6C300A8A637 /* AKMultiRadioView.m in Sources */,
 				7359EB2E0BADB68100574728 /* AKApplication.m in Sources */,
@@ -2678,8 +2548,6 @@
 				73D239CD0D4ABBA000EF7503 /* AKDevToolsUtils.m in Sources */,
 				734AEE841CC5E1600064AAA9 /* APILanguage.m in Sources */,
 				73D23AD10D4C45B500EF7503 /* DIGSPrefUtils.m in Sources */,
-				73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */,
-				73D23C880D4CCE2800EF7503 /* AKDocSetIndex.m in Sources */,
 				73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */,
 				73B914960E089D180012C16F /* AKDevToolsViewController.m in Sources */,
 				734AEEBA1CC5E1600064AAA9 /* _TokenGroup.m in Sources */,
@@ -2770,9 +2638,7 @@
 				7399B3690E632A5C001AE672 /* AKClassNode.m in Sources */,
 				7399B36A0E632A5C001AE672 /* AKMethodNode.m in Sources */,
 				7399B36B0E632A5C001AE672 /* AKProtocolNode.m in Sources */,
-				7399B36C0E632A5C001AE672 /* AKObjCHeaderParser.m in Sources */,
 				7399B36D0E632A5C001AE672 /* AKAppDelegate.m in Sources */,
-				7399B36E0E632A5C001AE672 /* AKDocParser.m in Sources */,
 				7399B36F0E632A5C001AE672 /* AKLinkResolver.m in Sources */,
 				7399B3700E632A5C001AE672 /* AKDoc.m in Sources */,
 				7399B3710E632A5C001AE672 /* AKFunctionDoc.m in Sources */,
@@ -2788,7 +2654,6 @@
 				7399B37C0E632A5C001AE672 /* AKGlobalsNode.m in Sources */,
 				7399B37D0E632A5C001AE672 /* AKGroupNode.m in Sources */,
 				7399B37E0E632A5C001AE672 /* AKGroupNodeSubtopic.m in Sources */,
-				7399B37F0E632A5C001AE672 /* AKCocoaFunctionsDocParser.m in Sources */,
 				7399B3800E632A5C001AE672 /* AKPrefConstants.m in Sources */,
 				7399B3810E632A5C001AE672 /* AKFrameworkConstants.m in Sources */,
 				7399B3820E632A5C001AE672 /* AKHTMLConstants.m in Sources */,
@@ -2796,7 +2661,6 @@
 				7399B3840E632A5C001AE672 /* AKFindPanelController.m in Sources */,
 				7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */,
 				7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */,
-				7399B3880E632A5C001AE672 /* AKParser.m in Sources */,
 				7399B3890E632A5C001AE672 /* AKDatabaseNode.m in Sources */,
 				7399B38A0E632A5C001AE672 /* AKBehaviorNode.m in Sources */,
 				7399B38B0E632A5C001AE672 /* AKBehaviorTopic.m in Sources */,
@@ -2815,9 +2679,7 @@
 				7399B3980E632A5C001AE672 /* DIGSTextSelection.m in Sources */,
 				7399B3990E632A5C001AE672 /* DIGSTextView.m in Sources */,
 				7399B39A0E632A5C001AE672 /* AKWindow.m in Sources */,
-				7399B39B0E632A5C001AE672 /* AKTestDocParserWindowController.m in Sources */,
 				7399B39C0E632A5C001AE672 /* AKFileUtils.m in Sources */,
-				7399B39D0E632A5C001AE672 /* AKCocoaBehaviorDocParser.m in Sources */,
 				7399B39E0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.m in Sources */,
 				7399B39F0E632A5C001AE672 /* AKMultiRadioView.m in Sources */,
 				7399B3A10E632A5C001AE672 /* AKApplication.m in Sources */,
@@ -2827,8 +2689,6 @@
 				7399B3A50E632A5C001AE672 /* FMResultSet.m in Sources */,
 				7399B3A60E632A5C001AE672 /* AKDevToolsUtils.m in Sources */,
 				7399B3A70E632A5C001AE672 /* DIGSPrefUtils.m in Sources */,
-				7399B3A80E632A5C001AE672 /* AKCocoaGlobalsDocParser.m in Sources */,
-				7399B3A90E632A5C001AE672 /* AKDocSetIndex.m in Sources */,
 				7399B3AB0E632A5C001AE672 /* AKFunctionNode.m in Sources */,
 				7399B3AD0E632A5C001AE672 /* AKDevToolsViewController.m in Sources */,
 				7399B3AE0E632A5C001AE672 /* AKCollectionOfNodes.m in Sources */,

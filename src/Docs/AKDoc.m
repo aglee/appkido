@@ -11,7 +11,6 @@
 
 #import "DIGSLog.h"
 
-#import "AKDocParser.h"
 #import "AKFileSection.h"
 
 @implementation AKDoc
@@ -137,10 +136,6 @@
     // ===== KLUDGE #4: get rid of trailing <hr> =====
 
     [self _kludgeFour:sourceData];
-
-    // ===== KLUDGE #5: see +[AKDocParser kludgeHTMLForTiger] =====
-
-    sourceData = [self _kludgeFive:sourceData];
 
     // We're done kludging.
     return sourceData;
@@ -314,11 +309,6 @@
             sourceData.length = (sourceData.length + 1);
         }
     }
-}
-
-- (NSMutableData *)_kludgeFive:(NSData *)sourceData
-{
-    return [AKDocParser kludgeHTMLForTiger:sourceData];
 }
 
 @end

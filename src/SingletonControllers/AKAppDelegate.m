@@ -20,7 +20,6 @@
 #import "AKDebugging.h"
 #import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
-#import "AKDocSetIndex.h"
 #import "AKFindPanelController.h"
 #import "AKPopQuizWindowController.h"
 #import "AKPrefPanelController.h"
@@ -30,7 +29,6 @@
 #import "AKSavedWindowState.h"
 #import "AKServicesProvider.h"
 #import "AKSplashWindowController.h"
-#import "AKTestDocParserWindowController.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
@@ -456,7 +454,9 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	// Create the AKDatabase instance or bust.
-    _appDatabase = [self _instantiateDatabase];
+    NSString *docSetBundlePath = [@"~/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.OSX.docset/" stringByExpandingTildeInPath];  //[agl] DEBUGGING
+    DocSetIndex *docSetIndex = [[DocSetIndex alloc] initWithDocSetPath:docSetBundlePath];
+    _appDatabase = [[AKDatabase alloc] initWithDocSetIndex:docSetIndex];
     if (_appDatabase == nil)
     {
         [NSApp terminate:nil];
@@ -502,60 +502,22 @@ static NSTimeInterval g_checkpointTime = 0.0;
     // Keep trying to create a database instance until we succeed or the user cancels.
 	while (1)
 	{
-        NSMutableArray *errorStrings = [NSMutableArray array];
-        AKDatabase *dbToReturn = [AKDatabase databaseWithErrorStrings:errorStrings];
-        
-        if (dbToReturn)
-        {
-            return dbToReturn;
-        }
-
-        // If we couldn't make a database instance, have the user re-specify the
-        // Dev Tools info, and try again. Note that runDevToolsSetupPanel may
-        // modify values for devToolsPathPref and sdkVersionPref (that's what
-        // it's for).
-        NSString *alertText = [NSString stringWithFormat:(@"Try re-entering info about your Dev Tools setup.\n\n"
-                                                          @"The gory details:\n\n%@"),
-                               [errorStrings componentsJoinedByString:@"\n"]];
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Problem loading docs and/or SDK info"
-                                         defaultButton:@"OK"
-                                       alternateButton:nil
-                                           otherButton:nil
-                             informativeTextWithFormat:@"%@", alertText];
-        [alert runModal];
-
-        [AKPrefUtils setSDKVersionPref:nil];
-
-        if (![AKDevToolsPanelController runDevToolsSetupPanel])
-        {
-            return nil;
-        }
     }
 }
 
 - (void)_populateDatabase
 {
-    NSArray *frameworkNames = [AKPrefUtils selectedFrameworkNamesPref];
-
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AKFoundationOnly"])
-    {
-        // Undocumented debug mode makes testing easier during development.
-        // defaults write com.digitalspokes.appkido AKFoundationOnly YES  # or NO
-        // defaults write com.appkido.appkidoforiphone AKFoundationOnly YES  # or NO
-        frameworkNames = @[@"Foundation"];
-    }
-
 #if MEASURE_PARSE_SPEED
     [self _timeParseStart];
 #endif //MEASURE_PARSE_SPEED
-    for (NSString *fwName in frameworkNames)
-    {
-        [_appDatabase loadTokensForFrameworkWithName:fwName];
 
-        [_splashWindowController.splashMessage2Field performSelectorOnMainThread:@selector(setStringValue:)
-                                                                        withObject:fwName
-                                                                     waitUntilDone:NO];
-    }
+
+    QLog(@"%@", @"Calling loadTokens...");
+    [self.appDatabase loadTokens];
+    QLog(@"%@", @"...Finished loadTokens.");
+
+
+
 #if MEASURE_PARSE_SPEED
     [self _timeParseEnd];
 #endif //MEASURE_PARSE_SPEED

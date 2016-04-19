@@ -10,7 +10,6 @@
 
 #import "AKAppDelegate.h"
 #import "AKTabChain.h"
-#import "AKTestDocParserWindowController.h"
 #import "AKWindow.h"
 #import "AKWindowController.h"
 
@@ -87,7 +86,7 @@
 
 - (IBAction)testParser:(id)sender
 {
-    [AKTestDocParserWindowController openNewParserWindow];
+    QLog(@"%s is now a no-op", __PRETTY_FUNCTION__);
 }
 
 - (IBAction)printFirstResponder:(id)sender

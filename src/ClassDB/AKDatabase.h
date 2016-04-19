@@ -6,10 +6,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "DocSetIndex.h"
+#import "DocSetModel.h"
 
 @class AKClassNode;
 @class AKDatabaseNode;
-@class AKDocSetIndex;
 @class AKFunctionNode;
 @class AKGlobalsNode;
 @class AKGroupNode;
@@ -34,14 +35,6 @@
 @interface AKDatabase : NSObject
 {
 @private
-    AKDocSetIndex *_docSetIndex;
-
-    // Frameworks.
-    // Note: there are constants in AKFrameworkConstants.h for the names of some
-    // frameworks that need to be treated specially.
-    NSMutableArray *_frameworkNames;
-    NSMutableArray *_namesOfAvailableFrameworks;
-
     // Classes.
     NSMutableDictionary *_classNodesByName;  // @{CLASS_NAME: AKClassNode}
 
@@ -61,48 +54,7 @@
     NSMutableDictionary *_protocolNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolNode}
 }
 
-#pragma mark -
-#pragma mark Factory methods
-
-/*!
- * On failure, returns nil with the reasons added to errorStrings.  A docset that hasn't
- * been downloaded counts as a failure.
- */
-+ (instancetype)databaseWithErrorStrings:(NSMutableArray *)errorStrings;
-
-///*! On failure, returns nil with the reasons added to errorStrings. */
-//+ (id)databaseForMacPlatformWithErrorStrings:(NSMutableArray *)errorStrings;
-//
-///*! On failure, returns nil with the reasons added to errorStrings. */
-//+ (id)databaseForIPhonePlatformWithErrorStrings:(NSMutableArray *)errorStrings;
-
-#pragma mark -
-#pragma mark Init/awake/dealloc
-
-/*! Designated initializer. */
-- (instancetype)initWithDocSetIndex:(AKDocSetIndex *)docSetIndex NS_DESIGNATED_INITIALIZER;
-
-#pragma mark -
-#pragma mark Populating the database
-
-/*!
- * Adds database nodes for all API tokens in the specified framework.  Gets this
- * information by querying the docset.
- */
-- (void)loadTokensForFrameworkWithName:(NSString *)fwName;
-
-///*!
-// * For each given framework names, queries the docSetIndex for all API tokens in
-// * the that framework. Adds database nodes accordingly. Sends a delegate message
-// * for each framework loaded.
-// *
-// * If frameworkNames is nil, all "essential" frameworks are loaded. The meaning
-// * "essential" depends on the platform the database is for.
-// */
-//- (void)loadTokensForFrameworksWithNames:(NSArray *)frameworkNames;
-
-#pragma mark -
-#pragma mark Getters and setters -- frameworks
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) DocSetIndex *docSetIndex;
 
 /*! Names of all frameworks that have been loaded, in no guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *frameworkNames;
@@ -110,22 +62,41 @@
 /*! Same as -frameworkNames, but sorted alphabetically. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedFrameworkNames;
 
-- (BOOL)hasFrameworkWithName:(NSString *)frameworkName;
+/*! * Class without parent class. Array of AKClassNode. No guaranteed order. */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *rootClasses;
 
-/*! Names of all frameworks we can offer for the user to load. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesOfAvailableFrameworks;
+/*! Array of AKClassNode. No guaranteed order. */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allClasses;
+
+/*! Array of AKProtocolNode. No guaranteed order. */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allProtocols;
+
+#pragma mark -
+#pragma mark Init/awake/dealloc
+
+- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex NS_DESIGNATED_INITIALIZER;
+
+#pragma mark -
+#pragma mark Populating the database
+
+- (void)loadTokens;
+
+///*!
+// * Adds database nodes for all API tokens in the specified framework.  Gets this
+// * information by querying the docset.
+// */
+//- (void)loadTokensForFrameworkWithName:(NSString *)fwName;
+
+#pragma mark -
+#pragma mark Getters and setters -- frameworks
+
+- (BOOL)hasFrameworkWithName:(NSString *)frameworkName;
 
 #pragma mark -
 #pragma mark Getters and setters -- classes
 
 /*! Array of AKClassNode. Matches any of the class's owning frameworks. */
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
-
-/*! * Class without parent class. Array of AKClassNode. No guaranteed order. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *rootClasses;
-
-/*! Array of AKClassNode. No guaranteed order. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allClasses;
 
 - (AKClassNode *)classWithName:(NSString *)className;
 
@@ -140,9 +111,6 @@
 
 /*! Array of AKProtocolNode. No guaranteed order. */
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
-
-/*! Array of AKProtocolNode. No guaranteed order. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allProtocols;
 
 - (AKProtocolNode *)protocolWithName:(NSString *)name;
 

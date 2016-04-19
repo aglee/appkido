@@ -33,7 +33,6 @@
 #import "AKSubtopicListViewController.h"
 #import "AKTabChain.h"
 #import "AKTableView.h"
-#import "AKTestDocParserWindowController.h"
 #import "AKTopicBrowserViewController.h"
 #import "AKWindow.h"
 #import "AKWindowLayout.h"
@@ -482,12 +481,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)openParseDebugWindow:(id)sender
 {
-    NSString *docPath = [self _currentDocPath];
-
-    if (docPath)
-    {
-        [[AKTestDocParserWindowController openNewParserWindow] parseFileAtPath:docPath];
-    }
+    QLog(@"%s is now a no-op", __PRETTY_FUNCTION__);
 }
 
 - (IBAction)printFunFacts:(id)sender
