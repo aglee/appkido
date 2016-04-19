@@ -47,7 +47,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithFrameworkNamed:nil inDatabase:nil];
 }
 
 

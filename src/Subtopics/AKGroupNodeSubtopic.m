@@ -29,7 +29,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithGroupNode:nil];
 }
 
 

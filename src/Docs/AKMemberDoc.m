@@ -36,7 +36,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithMemberNode:nil inheritedByBehavior:nil];
 }
 
 

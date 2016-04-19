@@ -72,6 +72,12 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return self;
 }
 
+- (instancetype)init
+{
+    DIGSLogError_NondesignatedInitializer();
+    return [self initWithPath:nil];
+}
+
 
 #pragma mark -
 #pragma mark Dev Tools paths

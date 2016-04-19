@@ -42,7 +42,7 @@
 - (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithClassNode:nil includeAncestors:NO];
 }
 
 

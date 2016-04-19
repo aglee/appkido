@@ -119,8 +119,8 @@
 #pragma mark -
 #pragma mark Init/dealloc/awake
 
-/*! Designated initializer. */
-- (instancetype)initWithDatabase:(AKDatabase *)database NS_DESIGNATED_INITIALIZER;
+/*! Designated initializer though not marked as such.  Too much hassle avoiding compiler warnings in this case. */
+- (instancetype)initWithDatabase:(AKDatabase *)database /*NS_DESIGNATED_INITIALIZER*/;
 
 #pragma mark -
 #pragma mark Getters and setters

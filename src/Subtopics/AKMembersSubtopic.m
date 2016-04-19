@@ -29,6 +29,12 @@
     return self;
 }
 
+- (instancetype)init
+{
+    DIGSLogError_NondesignatedInitializer();
+    return [self initIncludingAncestors:NO];
+}
+
 #pragma mark -
 #pragma mark Getters and setters
 

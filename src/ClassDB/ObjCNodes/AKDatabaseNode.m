@@ -39,7 +39,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithNodeName:nil database:nil frameworkName:nil];
 }
 
 

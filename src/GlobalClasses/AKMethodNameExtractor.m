@@ -32,10 +32,15 @@
     return self;
 }
 
+- (instancetype)init
+{
+    DIGSLogError_NondesignatedInitializer();
+    return [self initWithString:nil];
+}
+
 - (void)dealloc
 {
     free(_buffer);
-
 }
 
 #pragma mark -

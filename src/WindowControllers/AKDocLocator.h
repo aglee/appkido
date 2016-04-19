@@ -49,16 +49,12 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (id)withTopic:(AKTopic *)topic
-   subtopicName:(NSString *)subtopicName
-        docName:(NSString *)docName;
++ (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithTopic:(AKTopic *)topic
-       subtopicName:(NSString *)subtopicName
-            docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Sorting

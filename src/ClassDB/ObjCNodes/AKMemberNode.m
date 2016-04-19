@@ -18,10 +18,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
-        owningBehavior:(AKBehaviorNode *)behaviorNode
+- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorNode *)behaviorNode
 {
     if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
@@ -31,10 +28,10 @@
     return self;
 }
 
-- (instancetype)initWithNodeName:(NSString *)nodeName frameworkName:(NSString *)frameworkName
+- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithNodeName:nil database:nil frameworkName:nil owningBehavior:nil];
 }
 
 @end

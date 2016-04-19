@@ -76,14 +76,12 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithFile:nil];
 }
 
 - (void)dealloc
 {
     [s_fileSectionCache unlikeFileAtPath:_filePath];
-
-
 }
 
 #pragma mark -

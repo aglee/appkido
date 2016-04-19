@@ -34,13 +34,17 @@
 	return self;
 }
 
+- (instancetype)init
+{
+    DIGSLogError_NondesignatedInitializer();
+    return [self initWithCommandPath:nil arguments:nil];
+}
+
 - (void)dealloc
 {
 	// We call this in dealloc because besides ensuring the task is stopped, it
 	// disconnects weak references.
 	[self _stopTask];
-    
-
 }
 
 - (BOOL)runTask

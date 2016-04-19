@@ -38,7 +38,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithDatabase:nil fileURL:nil];
 }
 
 

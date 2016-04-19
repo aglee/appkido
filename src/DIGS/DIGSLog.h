@@ -223,7 +223,6 @@ do {\
 #define DIGSLogError_NondesignatedInitializer()\
 do {\
     {\
-        (void)[super init];\
         if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
             DIGSLogError(\
                 @"%@ -- '%@' is not the designated initializer",\

@@ -40,6 +40,12 @@
     return self;
 }
 
+- (instancetype)init
+{
+    DIGSLogError_NondesignatedInitializer();
+    return [self initWithTopic:nil subtopicName:nil docName:nil];
+}
+
 
 #pragma mark -
 #pragma mark Getters and setters

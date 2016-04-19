@@ -87,10 +87,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return self;
 }
 
-- (instancetype)init
+- (instancetype)initWithCoder:(NSCoder *)coder
 {
     DIGSLogError_NondesignatedInitializer();
-    return nil;
+    return [self initWithDatabase:nil];
 }
 
 

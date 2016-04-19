@@ -25,6 +25,18 @@
     return self;
 }
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    DIGSLogError_NondesignatedInitializer();
+    return [self initWithNibName:nil windowController:nil];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    DIGSLogError_NondesignatedInitializer();
+    return [self initWithNibName:nil windowController:nil];
+}
+
 #pragma mark -
 #pragma mark Getters and setters
 
