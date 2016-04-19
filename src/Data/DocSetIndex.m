@@ -70,7 +70,7 @@
 	_persistentStoreCoordinator = coordinator;
 
 	if (error) {
-		QLog(@"[%s] [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
+		QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
 		return nil;
 	}
 
@@ -138,7 +138,7 @@
 				}
 
 				if (errorMessage) {
-					QLog(@"[%s] [ERROR] %@", __PRETTY_FUNCTION__, errorMessage);  //TODO: Throw an exception.
+					QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, errorMessage);  //TODO: Throw an exception.
 					return nil;
 				}
 
@@ -157,7 +157,7 @@
 		fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 	}];
 	if (fetchedObjects == nil) {
-		QLog(@"[%s] [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
+		QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
 		return nil;
 	}
 	return fetchedObjects;
@@ -178,9 +178,19 @@
     // Construct the fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
     NSEntityDescription *entityDescription = self.managedObjectModel.entitiesByName[entityName];
+    if (entityDescription == nil) {
+        QLog(@"%s [ERROR] Invalid entity name '%@'", __PRETTY_FUNCTION__, entityName);  //TODO: Throw an exception.
+        return nil;
+    }
 
+    NSPropertyDescription *propertyDescription = entityDescription.propertiesByName[attributeName];
+    if (propertyDescription == nil) {
+        QLog(@"%s [ERROR] Invalid attribute name '%@'", __PRETTY_FUNCTION__, attributeName);  //TODO: Throw an exception.
+        return nil;
+    }
+
+    fetchRequest.propertiesToFetch = @[propertyDescription];
     fetchRequest.resultType = NSDictionaryResultType;
-    fetchRequest.propertiesToFetch = @[entityDescription.propertiesByName[attributeName]];
     fetchRequest.returnsDistinctResults = YES;
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"%K != NULL", attributeName];
 
@@ -191,7 +201,7 @@
         fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     }];
     if (fetchedObjects == nil) {
-        QLog(@"[%s] [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
+        QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
         return nil;
     }
 
