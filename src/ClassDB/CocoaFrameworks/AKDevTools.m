@@ -202,7 +202,15 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 {
 	for (NSString *docSetVersion in _installedDocSetPathsBySDKVersion)
 	{
-		if ([[AKSDKVersion versionFromString:docSetVersion] coversVersion:[AKSDKVersion versionFromString:sdkVersion]])
+        //[agl] DEBUGGING
+        if ([docSetVersion hasPrefix:sdkVersion])
+        {
+            return docSetVersion;
+        }
+
+
+
+        if ([[AKSDKVersion versionFromString:docSetVersion] coversVersion:[AKSDKVersion versionFromString:sdkVersion]])
 		{
 			return docSetVersion;
 		}
