@@ -430,7 +430,6 @@
     {
         if ([fwNames containsObject:essentialFrameworkName])
         {
-//ARC            [[essentialFrameworkName retain] autorelease];  // Prevent premature dealloc.
             [fwNames removeObject:essentialFrameworkName];
             [fwNames insertObject:essentialFrameworkName atIndex:0];
         }

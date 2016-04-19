@@ -24,7 +24,6 @@
 @interface AKClassNode : AKBehaviorNode
 {
 @private
-//ARC    AKClassNode *_parentClass;
     __unsafe_unretained AKClassNode *_parentClass;
 
     // Elements are strings.

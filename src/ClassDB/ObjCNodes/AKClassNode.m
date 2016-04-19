@@ -283,7 +283,6 @@
     // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
     if (frameworkName)
     {
-//ARC        [[frameworkName retain] autorelease];  // [agl] Avoid premature dealloc.
         [_namesOfAllOwningFrameworks removeObject:frameworkName];
         [_namesOfAllOwningFrameworks insertObject:frameworkName atIndex:0];
     }

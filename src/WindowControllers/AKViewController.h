@@ -17,7 +17,6 @@
 @interface AKViewController : NSViewController <AKUIController>
 {
 @private
-//ARC    AKWindowController *_owningWindowController;  // weak reference
     __unsafe_unretained AKWindowController *_owningWindowController;  // weak reference
 }
 

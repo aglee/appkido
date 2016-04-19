@@ -766,7 +766,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
         // quicklist selected and a non-zero number of search results.  Maybe I
         // have a memory bug in the Search stuff.  Anyway, it'll be moot when I
         // go to ARC.
-//ARC        [[windowDelegate retain] autorelease];
         [_windowControllers removeObjectIdenticalTo:windowDelegate];
     }
 }

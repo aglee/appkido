@@ -260,7 +260,6 @@ enum
     [[self owningWindowController] openQuicklistDrawer];
 
     // Put the search string at the top of the list of past search strings.
-//ARC    [[searchString retain] autorelease];  // Avoid premature dealloc.
     [_pastSearchStrings removeObject:searchString];
     [_pastSearchStrings insertObject:searchString atIndex:0];
 
