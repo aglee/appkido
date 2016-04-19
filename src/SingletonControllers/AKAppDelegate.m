@@ -497,14 +497,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #pragma mark -
 #pragma mark Private methods -- steps during launch
 
-- (AKDatabase *)_instantiateDatabase
-{
-    // Keep trying to create a database instance until we succeed or the user cancels.
-	while (1)
-	{
-    }
-}
-
 - (void)_populateDatabase
 {
 #if MEASURE_PARSE_SPEED

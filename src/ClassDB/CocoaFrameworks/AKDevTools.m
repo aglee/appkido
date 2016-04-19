@@ -60,7 +60,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 {
     if ((self = [super init]))
     {
-        _devToolsPath = [devToolsPath copy];
+        _devToolsPath = devToolsPath;
         _installedDocSetPathsBySDKVersion = [[NSMutableDictionary alloc] init];
         _installedSDKPathsBySDKVersion = [[NSMutableDictionary alloc] init];
 

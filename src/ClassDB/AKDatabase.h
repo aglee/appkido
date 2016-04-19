@@ -38,9 +38,6 @@
     // Frameworks.
     NSArray *_frameworkNames;
 
-    // Classes.
-    NSMutableDictionary *_classNodesByName;  // @{CLASS_NAME: AKClassNode}
-
     // Protocol.
     NSMutableDictionary *_protocolNodesByName;  // @{PROTOCOL_NAME -> @[AKProtocolNode]
 
@@ -96,9 +93,6 @@
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
 
 - (AKClassNode *)classWithName:(NSString *)className;
-
-/*! Does nothing if we already contain a class with that name. */
-- (void)addClassNode:(AKClassNode *)classNode;
 
 #pragma mark -
 #pragma mark Getters and setters -- protocols

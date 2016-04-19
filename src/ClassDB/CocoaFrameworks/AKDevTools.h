@@ -81,6 +81,23 @@
     NSMutableDictionary *_installedSDKPathsBySDKVersion;
 }
 
+/*!
+ * For Xcode before 4.3, this is typically but not necessarily /Developer. For
+ * Xcode 4.3+, this is typically but not necessarily
+ * /Applications/Xcode.app/Contents/Developer.
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *devToolsPath;
+
+/*!
+ * Subclasses must override.  Returns the directory in which we look for
+ * SDKs (special directories whose names end in .sdk).
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sdkSearchPath;
+
+/*! Returns a sorted array of strings in order of version number. */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sdkVersionsThatAreCoveredByDocSets;
+
+
 #pragma mark -
 #pragma mark Factory methods
 
@@ -106,13 +123,6 @@
  */
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath errorStrings:(NSMutableArray *)errorStrings;
 
-/*!
- * For Xcode before 4.3, this is typically but not necessarily /Developer. For
- * Xcode 4.3+, this is typically but not necessarily
- * /Applications/Xcode.app/Contents/Developer.
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *devToolsPath;
-
 
 #pragma mark -
 #pragma mark Docset paths
@@ -128,15 +138,6 @@
 
 #pragma mark -
 #pragma mark SDK paths
-
-/*!
- * Subclasses must override.  Returns the directory in which we look for
- * SDKs (special directories whose names end in .sdk).
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sdkSearchPath;
-
-/*! Returns a sorted array of strings in order of version number. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sdkVersionsThatAreCoveredByDocSets;
 
 /*!
  * Returns latest version we know of if sdkVersion is nil.  Note that sdkVersion could

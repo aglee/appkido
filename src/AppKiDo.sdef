@@ -17,6 +17,7 @@
 				description="the document(s) or window(s) to close."/>
 		</command>
 
+        <!-- [agl] FIXME:
 		<command name="quit" code="aevtquit" description="Quit the application.">
 			<cocoa class="NSQuitCommand"/>
 			<parameter name="saving" code="savo" type="save options" optional="yes"
@@ -24,6 +25,7 @@
 				<cocoa key="SaveOptions"/>
 			</parameter>
 		</command>
+         -->
 
 		<command name="exists" code="coredoex" description="Verify if an object exists.">
 			<cocoa class="NSExistsCommand"/>
@@ -42,9 +44,11 @@
 			</property>
 			<property name="version" code="vers" type="text" access="r"
 				description="The version of the application."/>
+            <!-- [agl] FIXME:
 			<element type="document">
 				<cocoa key="orderedDocuments"/>
 			</element>
+             -->
 			<element type="window" access="r">
 				<cocoa key="orderedWindows"/>
 			</element>

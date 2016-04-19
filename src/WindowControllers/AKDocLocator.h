@@ -39,9 +39,12 @@
     AKDoc *_cachedDoc;
 }
 
-@property (nonatomic, readonly, strong) AKTopic *topicToDisplay;
-@property (nonatomic, copy) NSString *subtopicName;
-@property (nonatomic, copy) NSString *docName;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKTopic *topicToDisplay;
+@property (NS_NONATOMIC_IOSONLY, copy) NSString *subtopicName;
+@property (NS_NONATOMIC_IOSONLY, copy) NSString *docName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDoc *docToDisplay;
+
 
 #pragma mark -
 #pragma mark Factory methods
@@ -56,13 +59,6 @@
 - (instancetype)initWithTopic:(AKTopic *)topic
        subtopicName:(NSString *)subtopicName
             docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
-
-#pragma mark -
-#pragma mark Getters and setters
-
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
-
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDoc *docToDisplay;
 
 #pragma mark -
 #pragma mark Sorting

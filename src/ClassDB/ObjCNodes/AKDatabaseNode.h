@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "DocSetModel.h"
 #import "AKSortable.h"
 
 @class AKDatabase;
@@ -31,18 +31,16 @@
 {
 @private
     NSString *_nodeName;
-    __unsafe_unretained AKDatabase *_owningDatabase;
     NSString *_nameOfOwningFramework;
     AKFileSection *_nodeDocumentation;
     BOOL _isDeprecated;
 }
 
-/*! The meaning of a node's nodeName depends on the type of node. */
+@property (nonatomic, strong) DSAToken *docSetToken;
 @property (nonatomic, readonly, copy) NSString *nodeName;
+@property (nonatomic, weak) AKDatabase *owningDatabase;
 
-@property (nonatomic, unsafe_unretained) AKDatabase *owningDatabase;
-
-/*! Most nodes belong to exactly one framework. The exception is AKClassNode. */
+/*! Most nodes belong to exactly one framework. The exception is AKClassNode, because it can have categories that belong to other frameworks. */
 @property (nonatomic, copy) NSString *nameOfOwningFramework;
 
 /*! Documentation for the API construct the node represents. Possibly nil. */
@@ -53,16 +51,12 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)nodeWithNodeName:(NSString *)nodeName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName;
++ (instancetype)nodeWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (instancetype)initWithNodeName:(NSString *)nodeName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
 
 @end

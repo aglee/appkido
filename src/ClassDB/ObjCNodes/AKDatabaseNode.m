@@ -11,30 +11,18 @@
 
 @implementation AKDatabaseNode
 
-@synthesize nodeName = _nodeName;
-@synthesize owningDatabase = _owningDatabase;
-@synthesize nameOfOwningFramework = _nameOfOwningFramework;
-@synthesize nodeDocumentation = _nodeDocumentation;
-@synthesize isDeprecated = _isDeprecated;
-
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)nodeWithNodeName:(NSString *)nodeName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
++ (instancetype)nodeWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
-    return [[self alloc] initWithNodeName:nodeName
-                                  database:database
-                             frameworkName:frameworkName];
+    return [[self alloc] initWithNodeName:nodeName database:database frameworkName:frameworkName];
 }
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
+- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super init]))
     {

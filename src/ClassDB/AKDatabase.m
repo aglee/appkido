@@ -20,6 +20,12 @@
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
 
+
+@interface AKDatabase ()
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *classNodesByName;  // @{CLASS_NAME: AKClassNode}
+@end
+
+
 @implementation AKDatabase
 
 #pragma mark -
@@ -30,9 +36,7 @@
     if ((self = [super init]))
     {
         _docSetIndex = docSetIndex;
-
         _frameworkNames = [_docSetIndex frameworkNames];
-
         _classNodesByName = [[NSMutableDictionary alloc] init];
 
         _protocolNodesByName = [[NSMutableDictionary alloc] init];
@@ -61,6 +65,68 @@
 #pragma mark Populating the database
 
 - (void)loadTokens
+{
+    [self _loadClassTokens];
+}
+
+- (void)_loadClassTokens
+{
+    NSArray *classTokens = [self.docSetIndex fetchEntity:@"Token" sort:nil where:@"language.fullName = 'Objective-C' and tokenType.typeName = 'cl'"];
+    for (DSAToken *token in classTokens) {
+        NSString *className = token.tokenName;
+
+        QLog(@"adding class %@", className);
+
+        NSString *frameworkName = token.metainformation.declaredIn.frameworkName;
+
+        AKClassNode *classNode = [self _getOrAddClassNodeWithName:className frameworkName:frameworkName];
+
+        if (classNode) {
+            classNode.docSetToken = token;
+            [self _setParentNodeOfClassNode:classNode];
+            [self _setProtocolNodesOfClassNode:classNode];
+        }
+    }
+}
+
+- (AKClassNode *)_getOrAddClassNodeWithName:(NSString *)className frameworkName:(NSString *)frameworkName
+{
+    if (frameworkName.length == 0) {
+        return nil;  //[agl] KLUDGE
+    }
+
+    AKClassNode *classNode = self.classNodesByName[className];
+
+    if (classNode == nil) {
+        classNode = [[AKClassNode alloc] initWithNodeName:className database:self frameworkName:frameworkName];
+        self.classNodesByName[className] = classNode;
+    } else {
+        classNode.nameOfOwningFramework = frameworkName;
+    }
+
+    return classNode;
+}
+
+- (void)_setParentNodeOfClassNode:(AKClassNode *)classNode
+{
+    if (classNode.docSetToken.superclassContainers.count > 1) {
+        QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classNode.nodeName);
+    }
+
+    Container *container = classNode.docSetToken.superclassContainers.anyObject;
+
+    if (container) {
+        AKClassNode *parentNode = [self _getOrAddClassNodeWithName:container.containerName frameworkName:classNode.nameOfOwningFramework];
+        if (classNode.parentClass) {
+            QLog(@"%s [ODD] Class node %@ already has parent node %@", __PRETTY_FUNCTION__, classNode.parentClass.nodeName);
+        }
+        [parentNode addChildClass:classNode];
+    } else {
+        QLog(@"ROOT CLASS %@", classNode.nodeName);
+    }
+}
+
+- (void)_setProtocolNodesOfClassNode:(AKClassNode *)classNode
 {
 
 }
@@ -113,26 +179,12 @@
 
 - (NSArray *)allClasses
 {
-    return _classNodesByName.allValues;
+    return self.classNodesByName.allValues;
 }
 
 - (AKClassNode *)classWithName:(NSString *)className
 {
-    return _classNodesByName[className];
-}
-
-- (void)addClassNode:(AKClassNode *)classNode
-{
-    // Do nothing if we already have a class with the same name.
-    NSString *className = classNode.nodeName;
-    if (_classNodesByName[className])
-    {
-        DIGSLogDebug3(@"Trying to add class [%@] again", className);
-        return;
-    }
-
-    // Add the class to our lookup by class name.
-    _classNodesByName[className] = classNode;
+    return self.classNodesByName[className];
 }
 
 #pragma mark -

@@ -6,9 +6,7 @@
 //
 
 #import "AKClassNode.h"
-
 #import "DIGSLog.h"
-
 #import "AKCategoryNode.h"
 #import "AKCollectionOfNodes.h"
 #import "AKDatabase.h"
@@ -16,30 +14,26 @@
 #import "AKMethodNode.h"
 #import "AKNotificationNode.h"
 #import "AKProtocolNode.h"
-
 #import "NSString+AppKiDo.h"
 
+
 @interface AKClassNode ()
-@property (nonatomic, unsafe_unretained) AKClassNode *parentClass;
+@property (NS_NONATOMIC_IOSONLY, readwrite, weak) AKClassNode *parentClass;
 @end
 
-@implementation AKClassNode
 
-@synthesize parentClass = _parentClass;
+@implementation AKClassNode
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
+- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
         _namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 
-        if (frameworkName)
-        {
+        if (frameworkName) {
             [_namesOfAllOwningFrameworks addObject:frameworkName];
         }
 
@@ -76,12 +70,7 @@
         return;
     }
 
-    // Handle case where node already has a parent.  This will be a
-    // no-op if the node has no parent.
     [node.parentClass removeChildClass:node];
-
-    // Set new parent-child connections.
-    // [agl] Note that this creates an object cycle.
     node.parentClass = self;
     [_childClassNodes addObject:node];
 }

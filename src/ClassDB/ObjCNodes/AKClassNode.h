@@ -24,8 +24,6 @@
 @interface AKClassNode : AKBehaviorNode
 {
 @private
-    __unsafe_unretained AKClassNode *_parentClass;
-
     // Elements are strings.
     NSMutableArray *_namesOfAllOwningFrameworks;
 
@@ -48,26 +46,13 @@
     AKCollectionOfNodes *_indexOfNotifications;
 }
 
-@property (nonatomic, readonly, unsafe_unretained) AKClassNode *parentClass;
-
-#pragma mark -
-#pragma mark Getters and setters -- general
-
-- (AKClassNode *)parentClass;
-
-// Handles case of node having existing parent.
-- (void)addChildClass:(AKClassNode *)node;
-- (void)removeChildClass:(AKClassNode *)node;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassNode *parentClass;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childClasses;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSSet *descendantClasses;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasChildClasses;
-
-- (void)addCategory:(AKCategoryNode *)node;
-- (AKCategoryNode *)categoryNamed:(NSString *)catName;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allCategories;
-
-#pragma mark -
-#pragma mark Getters and setters -- multiple owning frameworks
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedDelegateMethods;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedNotifications;
 
 /*!
  * Names of all frameworks the class belongs to. The first element of the
@@ -76,6 +61,18 @@
  * was discovered that the class belongs to the framework.
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesOfAllOwningFrameworks;
+
+#pragma mark -
+#pragma mark Getters and setters -- general
+
+- (void)addChildClass:(AKClassNode *)node;
+- (void)removeChildClass:(AKClassNode *)node;
+
+- (void)addCategory:(AKCategoryNode *)node;
+- (AKCategoryNode *)categoryNamed:(NSString *)catName;
+
+#pragma mark -
+#pragma mark Getters and setters -- multiple owning frameworks
 
 - (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName;
 
@@ -93,9 +90,6 @@
 #pragma mark -
 #pragma mark Getters and setters -- delegate methods
 
-/*! Returns only methods that are in this class's documentation. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedDelegateMethods;
-
 - (AKMethodNode *)delegateMethodWithName:(NSString *)methodName;
 
 /*! Does nothing if a delegate method with the same name already exists. */
@@ -103,9 +97,6 @@
 
 #pragma mark -
 #pragma mark Getters and setters -- notifications
-
-/*! Returns only methods that are in this class's documentation. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedNotifications;
 
 - (AKNotificationNode *)notificationWithName:(NSString *)notificationName;
 
