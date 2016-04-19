@@ -71,7 +71,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-// [agl] Old note to self says that classes can have multiple header paths. Example?
+//TODO: Old note to self says that classes can have multiple header paths. I suspect I was thinking of protocols. Check whether I'm handling this.
 
 @property (NS_NONATOMIC_IOSONLY, getter=isClassNode, readonly) BOOL classNode;
 

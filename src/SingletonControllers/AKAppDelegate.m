@@ -35,7 +35,6 @@
 
 #import "NSString+AppKiDo.h"
 
-// [agl] working on parse performance
 #define MEASURE_PARSE_SPEED 1
 
 #pragma mark -
@@ -72,7 +71,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-// [agl] working on performance
 #if MEASURE_PARSE_SPEED
 static NSTimeInterval g_startTime = 0.0;
 static NSTimeInterval g_checkpointTime = 0.0;
@@ -130,8 +128,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 #pragma mark -
 #pragma mark Navigation
 
-// [agl] what about using [NSView +focusView]?
-- (NSTextView *)selectedTextView
+- (NSTextView *)selectedTextView  //TODO: What about using [NSView +focusView]?
 {
     id obj = NSApp.keyWindow.firstResponder;
 
@@ -454,7 +451,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	// Create the AKDatabase instance or bust.
-    NSString *docSetBundlePath = [@"~/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.OSX.docset/" stringByExpandingTildeInPath];  //[agl] DEBUGGING
+    NSString *docSetBundlePath = [@"~/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.OSX.docset/" stringByExpandingTildeInPath];  //FIXME: REMOVE DEBUGGING
     DocSetIndex *docSetIndex = [[DocSetIndex alloc] initWithDocSetPath:docSetBundlePath];
     _appDatabase = [[AKDatabase alloc] initWithDocSetIndex:docSetIndex];
     if (_appDatabase == nil)
@@ -544,7 +541,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     NSApp.nextResponder = [AKFindPanelController sharedInstance];
 
     // Force the DIGSFindBuffer to initialize.
-    // [agl] ??? Why not in DIGSFindBuffer's +initialize?
+    //TODO: ??? Why not in DIGSFindBuffer's +initialize?
     (void)[DIGSFindBuffer sharedInstance];
 
     // Reopen windows from the previous session.

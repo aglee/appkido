@@ -66,7 +66,7 @@
 // "String Encodings"; the link's anchor is
 // //apple_ref/doc/constant_group/String_Encodings.
 //
-// [agl] The implementation uses AKSearchQuery to search for the API symbol.
+//TODO: The implementation uses AKSearchQuery to search for the API symbol.
 // Right now it searches the whole database and then searches the search results
 // for a node whose file path matches the link's path. We can probably narrow
 // down the search query by noticing for example that "c_ref" means NSZone is a

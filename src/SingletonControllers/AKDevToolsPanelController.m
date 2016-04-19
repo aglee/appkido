@@ -29,7 +29,7 @@
     AKDevToolsPanelController *wc = [[self alloc] initWithWindowNibName:@"DevToolsPanel"];
     NSInteger result = [[NSApplication sharedApplication] runModalForWindow:wc.window];
 
-    [wc.window orderOut:self];  // [agl] needed?
+    [wc.window orderOut:self];  //TODO: Is this needed?
 
 	return (result == NSRunStoppedResponse);
 }

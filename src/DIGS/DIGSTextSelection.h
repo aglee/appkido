@@ -8,7 +8,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AKPrefDictionary.h"
 
-// [agl] Currently not used and not tested in a very long time.
+//TODO: Currently not used and not tested in a very long time.  Remove?  Revive?
 
 /*!
  * Remembers the selection range and scroll position of an NSTextView. To take a

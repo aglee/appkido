@@ -149,8 +149,6 @@
 	}
 
 	// Do the fetch.
-//	fetchRequest.returnsObjectsAsFaults = NO;  //[agl] DEBUGGING
-//	fetchRequest.fetchLimit = 50;  //[agl] DEBUGGING
 	__block NSError *error;
 	__block NSArray *fetchedObjects;
 	[self.managedObjectContext performBlockAndWait:^{

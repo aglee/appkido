@@ -11,8 +11,7 @@
 
 - (BOOL)isInformal
 {
-    // ([agl] Is this a reliable test for informal protocols?)
-    return (self.headerFileWhereDeclared == nil);
+    return (self.headerFileWhereDeclared == nil); //TODO: Is this a reliable test for informal protocols?  Some might be declared, just as categories, say, on NSObject.
 }
 
 @end

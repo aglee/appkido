@@ -17,7 +17,8 @@
 
 @implementation AKDevTools
 
-// Used for sorting SDK version strings. [agl] Why didn't I use AKSDKVersion to do the comparing?
+// Used for sorting SDK version strings.
+//TODO: Why didn't I use AKSDKVersion to do the comparing?
 static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVersionString, void *ignoredContext)
 {
     NSArray *leftComponents = [(NSString *)leftVersionString componentsSeparatedByString:@"."];
@@ -194,7 +195,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 {
 	for (NSString *docSetVersion in _installedDocSetPathsBySDKVersion)
 	{
-        //[agl] DEBUGGING
+        //FIXME: REMOVE DEBUGGING
         if ([docSetVersion hasPrefix:sdkVersion])
         {
             return docSetVersion;

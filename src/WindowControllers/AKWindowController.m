@@ -782,7 +782,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // have been loaded.
     [self _setUpViewControllers];
 
-    // Add our toolbar. [agl] Is it worth doing this in the nib now that we can?
+    // Add our toolbar.
+    //TODO: Is it worth doing this in the nib now that we can?
     [self _setUpToolbar];
 
     // Apply display preferences specified in the defaults database.
@@ -820,7 +821,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 #pragma mark -
 #pragma mark NSWindow delegate methods
 
-// FIXME [agl] this is a workaround to either a bug or something I don't
+//FIXME: This is a workaround to either a bug or something I don't
 // understand; when the prefs panel is dismissed, the AppKiDo window below
 // it doesn't come front (despite becoming key) if there was an intervening
 // window from another app; weird because if change the prefs panel to an
@@ -831,7 +832,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [(NSWindow *)aNotification.object orderFront:nil];
 }
 
-// [agl] Not sure why this is here.  The app delegate listens for
+//TODO: Not sure why this is here.  The app delegate listens for
 // NSWindowWillCloseNotification and removes the window controller from its
 // array of window controllers.  No need to do that *and* implement
 // windowWillClose: -- right?
@@ -889,9 +890,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     self.window.toolbar = toolbar;
 }
 
-- (id)_vcWithClass:(Class)vcClass
-           nibName:(NSString *)nibName
-     containerView:(NSView *)containerView
+- (id)_vcWithClass:(Class)vcClass nibName:(NSString *)nibName containerView:(NSView *)containerView
 {
     id vc = [[vcClass alloc] initWithNibName:nibName windowController:self];
     
@@ -902,7 +901,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [containerView addSubview:[vc view]];
 
     // Patch the view controller into the responder chain after self.
-    // [agl] do I need to unpatch on dealloc?
+    //TODO: Do I need to unpatch on dealloc?  Do I even need to patch at all any more, now that VC's are patched in by AppKit?
     NSResponder *nextResponder = self.nextResponder;
     self.nextResponder = vc;
     [vc setNextResponder:nextResponder];

@@ -92,7 +92,7 @@
 - (AKClassNode *)_getOrAddClassNodeWithName:(NSString *)className frameworkName:(NSString *)frameworkName
 {
     if (frameworkName.length == 0) {
-        return nil;  //[agl] KLUDGE
+        return nil;  //FIXME: This causes a bunch of stuff to be unfindable.
     }
 
     AKClassNode *classNode = self.classNodesByName[className];
@@ -128,7 +128,7 @@
 
 - (void)_setProtocolNodesOfClassNode:(AKClassNode *)classNode
 {
-
+    //FIXME: Fill this in.
 }
 
 #pragma mark -

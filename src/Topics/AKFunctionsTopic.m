@@ -33,7 +33,7 @@
         return nil;
     }
 
-    // [agl] Do we care about the cost of computing this every time?
+    //TODO: Do we care about the cost of computing this every time?
     NSArray *groupNodes = [AKSortUtils arrayBySortingArray:
                 [self.topicDatabase functionsGroupsForFrameworkNamed:self.topicFrameworkName]];
 

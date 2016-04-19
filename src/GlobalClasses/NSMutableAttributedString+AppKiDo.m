@@ -29,7 +29,7 @@
                                      inRange:selectedRange];
         foundFont = attributes[NSFontAttributeName];
 
-        if (foundFont != nil) // [agl] FIXME-PURISM: can this equal nil?
+        if (foundFont != nil)
         {
             float newSize;
 
@@ -46,8 +46,7 @@
         charIndex = NSMaxRange (foundRange);
     } while (charIndex < NSMaxRange(selectedRange));
 
-    // [agl] FIXME-PURISM: needed?
-    [self fixFontAttributeInRange:selectedRange];
+    [self fixFontAttributeInRange:selectedRange];  //TODO: Needed?  Old note to self says "FIXME-PURISM".  Dunno what that means.
 }
 
 - (void)ak_magnifyUsingPercentMultiplier:(int)percent

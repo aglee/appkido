@@ -60,8 +60,8 @@
 
     if (subs.count != 2)
     {
-        // FIXME [agl] also make sure both views completely contained
-        // FIXME [agl] also make sure views don't overlap
+        //TODO: Make sure both views are completely contained.
+        //TODO: Make sure views don't overlap.
         [NSException raise:@"a DIGSMarginView must have exactly 2 subviews"
                     format:@"a DIGSMarginView must have exactly 2 subviews"];
         return;

@@ -19,6 +19,6 @@
  * Modifies the size of the receiver's text by a factor of magPercent percent. A
  * value of 100 leaves the string unchanged.
  */
-- (void)ak_magnifyUsingPercentMultiplier:(int)magPercent;  // [agl] why'd I make magPercent an int?
+- (void)ak_magnifyUsingPercentMultiplier:(int)magPercent;  //TODO: Why did I make magPercent an int?
 
 @end

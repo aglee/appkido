@@ -195,7 +195,7 @@ contextMenuItemsForElement:(NSDictionary *)element
         {
             [newMenuItems addObject:menuItem];
         }
-        else if (tag == 2015)  // [agl] The "Speech" item. There's no constant for this. Figured it out empirically.
+        else if (tag == 2015)  //TODO: The "Speech" item. There's no constant for this. Figured it out empirically.
         {
             speechMenuItem = menuItem;
         }
@@ -323,7 +323,7 @@ contextMenuItemsForElement:(NSDictionary *)element
 // Workaround for appkit bug (?) causing the last-used indentation
 // level to stick to the text view even if I clear its contents and
 // remove all its attributes.
-// [agl] -- but, now it causes assert error?
+//TODO: But now it causes assert error?
 //    [[_textView layoutManager] replaceTextStorage:[[NSTextStorage alloc] initWithString:@""]];
 
     _textView.string = docString;
@@ -347,7 +347,7 @@ contextMenuItemsForElement:(NSDictionary *)element
 //        [self replaceSubview:currentSubview with:_webView];
 //
 //        // Splice _webView into the key view loop.
-//        // [agl] TODO -- the wasKey stuff doesn't work
+//        //TODO: -- the wasKey stuff doesn't work
 //        [_originalPreviousKeyView setNextKeyView:_webView];
 //        [_webView setNextKeyView:_originalNextKeyView];
 //        if (wasKey)

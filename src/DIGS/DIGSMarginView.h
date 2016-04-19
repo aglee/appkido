@@ -7,9 +7,9 @@
 
 #import <AppKit/AppKit.h>
 
-// FIXME [agl] NB does not handle replacing of subviews
-// FIXME [agl] NB does not handle altering of its own coord system
-// FIXME [agl] NB assumes non-flipped coords
+//TODO: Mention does not handle replacing of subviews.
+//TODO: Mention does not handle altering of its own coord system.
+//TODO: Mention assumes non-flipped coords.
 
 /*!
  * @class       DIGSMarginView

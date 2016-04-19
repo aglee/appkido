@@ -11,7 +11,7 @@
 
 @class AKDatabase;
 
-// [agl] TODO Should consider using NSXMLDocument for this.
+//TODO: Consider using NSXMLDocument for this?  Does that make sense?
 
 /*!
  * Exports an AKDatabase to an XML file.

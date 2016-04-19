@@ -53,7 +53,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 #pragma mark -
 #pragma mark Focus ring
 
-// [agl] maybe someday make these public methods so subclasses can customize
+//TODO: maybe someday make these public methods so subclasses can customize
 
 //- (void)invalidateFocusIndicator
 //{
@@ -103,7 +103,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     innerView.autoresizingMask = (NSViewWidthSizable | NSViewHeightSizable);
 
     // Suppress any focus ring that would normally be drawn by the inner view.
-    // [agl] Could someday make this conditional; we don't use the built-in
+    //TODO: Could someday make this conditional; we don't use the built-in
     // focus ring stuff, but a subclass might want to.
     innerView.focusRingType = NSFocusRingTypeNone;
     if ([innerView isKindOfClass:[NSScrollView class]])

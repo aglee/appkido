@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-// [agl] convenience method to auto-generate tab chain array
+//TODO: convenience method to auto-generate tab chain array
 
-// [agl] event tap so don't have to hack NSApplication?
+//TODO: maybe use event tap so don't have to hack NSApplication?
 
-// [agl] Write the class comment!
+//TODO: Write the class comment!
 
-// [agl] some way to auto-add buttons etc. when Full Keyboard Access instead of making delegate be aware and have outlets to every button?
+//TODO: some way to auto-add buttons etc. when Full Keyboard Access instead of making delegate be aware and have outlets to every button?
 
-// [agl] auto-skip buttons etc. if Full Keyboard Access off, so delegate doesn't have to be aware?
+//TODO: auto-skip buttons etc. if Full Keyboard Access off, so delegate doesn't have to be aware?
 
-// [agl] argh, one thing I didn't think of: tabbing to select links -- setTabToLinks:
+//TODO: argh, one thing I didn't think of: tabbing to select links -- setTabToLinks:
 
 @interface AKTabChain : NSObject
 

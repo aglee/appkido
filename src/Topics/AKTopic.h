@@ -40,8 +40,7 @@ extern NSString *AKGlobalsTopicName;
 #pragma mark -
 #pragma mark Getters and setters
 
-// [agl] KLUDGE
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassNode *parentClassOfTopic;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassNode *parentClassOfTopic;  //TODO: KLUDGE
 
 /*!
  * Returns nil by default.  Subclasses return a node, if one is relevant.

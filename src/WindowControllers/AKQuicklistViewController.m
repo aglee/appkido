@@ -334,7 +334,7 @@ enum
     {
         NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
 
-        if (![favoritesList isEqual:_docLocators])  // [agl] review
+        if (![favoritesList isEqual:_docLocators])  //TODO: Old note to self says "review".
         {
             [self _reloadQuicklistTable];
         }

@@ -14,7 +14,7 @@
  * retain/release for deciding when to purge resources.
  *
  * Moved this over from AKFileSection, where I thought I saw a bunch of
- * gibberish code before I understood my intent. [agl] look at NSCache
+ * gibberish code before I understood my intent. //TODO: look at NSCache
  */
 @interface AKFileSectionCache : NSObject
 {
@@ -37,7 +37,7 @@
  * Likes the file and returns its contents. Calls to this must be balanced
  * by calls to unlikeFileAtPath:.
  */
-- (NSData *)likeFileAtPath:(NSString *)filePath;  // [agl] NSError** might be good
+- (NSData *)likeFileAtPath:(NSString *)filePath;  //TODO: Use NSError**?
 
 /*!
  * Decrements the file's "like" count. When the count goes to 0 the file is

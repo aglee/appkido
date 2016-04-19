@@ -83,7 +83,7 @@
         else if (_docName == nil)
         {
             _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
-                                    _subtopicName,  // [agl] displayed string?
+                                    _subtopicName,  //TODO: displayed string?
                                     kLeftDoubleAngle,
                                     topicName];
         }

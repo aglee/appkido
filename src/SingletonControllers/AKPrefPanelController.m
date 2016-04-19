@@ -58,7 +58,8 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 
     devToolsTabViewItem.view = _devToolsViewController.view;
 
-    // Tweak the Frameworks table. [agl] Can't I do this in IB?
+    // Tweak the Frameworks table.
+    //TODO: Can't I do this in IB?
     NSButtonCell *checkboxCell = [[NSButtonCell alloc] initTextCell:@""];
 
     [checkboxCell setButtonType:NSSwitchButton];
@@ -247,8 +248,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     }
     [_magnificationChoice selectItemAtIndex:magnificationIndex];
 
-    // The small-contextual-menus pref.
-    // [agl] fill in small-contextual-menus pref
+    // The small-contextual-menus pref.  //TODO: fill in small-contextual-menus pref
 }
 
 // Update the user preference settings in NSUserDefaults based on control
@@ -275,8 +275,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     [AKPrefUtils setIntValue:_magnificationChoice.selectedTag
                      forPref:AKDocMagnificationPrefName];
 
-    // The small-contextual-menus pref.
-    // [agl] fill in small-contextual-menus pref
+    // The small-contextual-menus pref.  //TODO: Fill this in.
 }
 
 - (void)_updateSearchTabFromPrefs

@@ -111,9 +111,9 @@
 
 /*!
  * If a text view is first responder, scrolls it to show the selected text, if
- * any. [agl] Doesn't seem to be used anywhere.
+ * any.
  */
-- (IBAction)scrollToTextSelection:(id)sender;
+- (IBAction)scrollToTextSelection:(id)sender;  //TODO: Doesn't seem to be used anywhere.  Remove?
 
 /*! Prompts for a file name and exports the contents of the database as XML. */
 - (IBAction)exportDatabase:(id)sender;

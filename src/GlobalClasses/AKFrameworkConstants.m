@@ -27,10 +27,10 @@ NSArray *_AKNamesOfEssentialFrameworks()
         s_namesOfEssentialFrameworks = @[
                                         AKFoundationFrameworkName,
 #if APPKIDO_FOR_IPHONE
-                                        @"CoreGraphics",  // [agl] KLUDGE -- to get CGPoint etc.
+                                        @"CoreGraphics",  //TODO: KLUDGE -- to get CGPoint etc.
                                         AKUIKitFrameworkName,
 #else
-                                        @"ApplicationServices",  // [agl] KLUDGE -- to get CGPoint etc.
+                                        @"ApplicationServices",  //TODO: KLUDGE -- to get CGPoint etc.
                                         AKAppKitFrameworkName,
                                         AKCoreDataFrameworkName,
                                         AKCoreImageFrameworkName,

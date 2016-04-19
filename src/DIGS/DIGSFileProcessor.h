@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-// [agl] behavior is applied to files, not dirnames; what about links?
+//TODO: Behavior is applied to files, not dirnames; what about links?
 
 /*!
  * Abstract class for iterating through files.
@@ -41,7 +41,7 @@
  * path is a file, we will process that file. If it's a directory, we will
  * process the directory's contents, perhaps recursively.
  *
- * Default is the empty string. [agl] maybe nil would be better
+ * Default is the empty string.  //TODO: Maybe nil would be better.
  */
 - (NSString *)basePath;
 

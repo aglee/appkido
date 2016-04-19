@@ -8,10 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-// [agl] Maybe make the focus ring thickness and color settable properties.
+//TODO: Maybe make the focus ring thickness and color settable properties.
 
-// [agl] If drawing performance becomes a problem (e.g., for a complex custom
-// view), there are various ways this class could be optimized.
+//TODO: If drawing performance becomes a problem (e.g., for a complex custom
+// view), there are various ways this class could be optimized.  [EDIT: And now I wish I written them down.]
 
 /*!
  * Draws a focus ring if any descendant view is first responder. Automatically

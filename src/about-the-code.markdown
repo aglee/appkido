@@ -102,7 +102,7 @@ Etc.
 
 *[TODO: this section is a dumping area for things it occurs to me are worth mentioning somewhere]*
 
-"[agl]", "REMOVE", "KLUDGE", etc.
+"{REMOVE }DEBUGGING", "KLUDGE", etc.
 
 Coding conventions
 

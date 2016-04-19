@@ -17,7 +17,7 @@
 				description="the document(s) or window(s) to close."/>
 		</command>
 
-        <!-- [agl] FIXME:
+        <!-- //FIXME: This was causing an exception.
 		<command name="quit" code="aevtquit" description="Quit the application.">
 			<cocoa class="NSQuitCommand"/>
 			<parameter name="saving" code="savo" type="save options" optional="yes"
@@ -44,7 +44,7 @@
 			</property>
 			<property name="version" code="vers" type="text" access="r"
 				description="The version of the application."/>
-            <!-- [agl] FIXME:
+            <!-- //FIXME: This was causing an exception.
 			<element type="document">
 				<cocoa key="orderedDocuments"/>
 			</element>

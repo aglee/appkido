@@ -25,8 +25,7 @@
 {
     if ((self = [super init]))
     {
-        // [agl] TODO handle case where basePath is nil
-        _basePath = [basePath copy];
+        _basePath = [basePath copy];  //TODO: Handle case where basePath is nil.
     }
     
     return self;

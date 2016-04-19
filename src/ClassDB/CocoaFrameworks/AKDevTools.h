@@ -66,7 +66,7 @@
  * plain directories under "/Developer/ADC Reference Library". As of Feb 2013
  * AppKiDo no longer supports this documentation structure.
  *
- * [agl] Explain how AppKiDo docset can "cover" an SDK with a slightly different SDK version.
+ * TODO: Explain how AppKiDo docset can "cover" an SDK with a slightly different SDK version.
  */
 @interface AKDevTools : NSObject
 {

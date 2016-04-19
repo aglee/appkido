@@ -85,10 +85,10 @@
         return;
     }
 
-// [agl] handle case where inherited -foo is selected, change to superclass,
+//TODO: handle case where inherited -foo is selected, change to superclass,
 // so doc for -foo is same -- should NOT change the text view
 
-// [agl] make Class Description interchangeable with Protocol Description
+//TODO: make Class Description interchangeable with Protocol Description
 
     // Reload the doc list table.
     [_docListTable reloadData];

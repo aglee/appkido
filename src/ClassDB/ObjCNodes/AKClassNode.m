@@ -60,7 +60,7 @@
 
 - (void)addChildClass:(AKClassNode *)node
 {
-    // [agl] We check for parent != child to avoid circularity.  This
+    // We check for parent != child to avoid circularity.  This
     // doesn't protect against the general case of a cycle, but it does
     // work around the typo in the Tiger docs where the superclass of
     // NSAnimation was given as NSAnimation.
@@ -239,7 +239,7 @@
 
     // If it's neither an instance method nor a class method, but it looks
     // like it might be a delegate method, assume it is one.
-    // [agl] FIXME -- This assumption is false for [NSTypesetter lineFragmentRectForProposedRect:remainingRect:].
+    //TODO: Old note to self says this assumption is false for [NSTypesetter lineFragmentRectForProposedRect:remainingRect:].  Check on this.
     if (methodNode == nil)
     {
         if ([methodName ak_contains:@":"])
@@ -305,7 +305,7 @@
     }
 
     // Look for instance method names of the form setFooDelegate:.
-    // [agl] To be really thorough, check for fooDelegate properties.
+    //TODO: To be really thorough, check for fooDelegate properties.
     for (AKMethodNode *methodNode in [self instanceMethodNodes])
     {
         NSString *methodName = methodNode.nodeName;
@@ -314,7 +314,7 @@
             && [methodName hasSuffix:@"Delegate:"]
             && ![methodName isEqualToString:@"setDelegate:"])
         {
-            // [agl] FIXME Can't I just look for protocol FooDelegate?
+            //TODO: Can't I just look for protocol FooDelegate?
             NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
                                          substringFromIndex:3].uppercaseString;
             

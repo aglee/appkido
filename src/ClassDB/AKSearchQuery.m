@@ -391,8 +391,8 @@
             {
                 BOOL matchFound = NO;
 
-// [agl] ak_stripHTML is too expensive -- bogging down the search
-// [agl] I don't think we actually need to strip any HTML -- no node seems to contain & or <
+//TODO: ak_stripHTML is too expensive -- bogging down the search
+//TODO: I don't think we actually need to strip any HTML -- no node seems to contain & or <
 //                if ([self _matchesString:[[subnode nodeName] ak_stripHTML]])
                 if ([self _matchesNode:subnode])
                 {
