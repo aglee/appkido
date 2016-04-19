@@ -31,7 +31,8 @@
 {
 @private
     NSString *_nodeName;
-    AKDatabase *_owningDatabase;
+//ARC    AKDatabase *_owningDatabase;
+    __unsafe_unretained AKDatabase *_owningDatabase;
     NSString *_nameOfOwningFramework;
     AKFileSection *_nodeDocumentation;
     BOOL _isDeprecated;

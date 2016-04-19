@@ -17,7 +17,8 @@
 @interface AKMemberNode : AKDatabaseNode
 {
 @private
-    AKBehaviorNode *_owningBehavior;
+//ARC    AKBehaviorNode *_owningBehavior;
+    __unsafe_unretained AKBehaviorNode *_owningBehavior;
 }
 
 @property (nonatomic, readonly, unsafe_unretained) AKBehaviorNode *owningBehavior;

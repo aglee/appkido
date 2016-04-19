@@ -6,6 +6,7 @@
  */
 
 #import "AKWindowController.h"
+#import <WebKit/WebKit.h>  //ARC
 
 #import "DIGSLog.h"
 
