@@ -216,10 +216,14 @@ do {\
  * @discussion  Call this in the implementation of an initializer that
  *              should never be called because it is not the designated
  *              initializer.
+ *
+ *              Calls [super init] to avoid compiler warning about "Convenience
+ *              initializer missing a 'self' call to another initializer".
  */
 #define DIGSLogError_NondesignatedInitializer()\
 do {\
     {\
+        (void)[super init];\
         if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
             DIGSLogError(\
                 @"%@ -- '%@' is not the designated initializer",\

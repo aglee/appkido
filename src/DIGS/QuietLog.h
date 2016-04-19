@@ -17,6 +17,7 @@ extern void QuietLog (NSString *format, ...);
 #define QLOG_SHOULD_BE_QUIET 1
 #if QLOG_SHOULD_BE_QUIET
 #define QLog QuietLog
+#define NSLog QuietLog
 #else
 #define QLog NSLog
 #endif
