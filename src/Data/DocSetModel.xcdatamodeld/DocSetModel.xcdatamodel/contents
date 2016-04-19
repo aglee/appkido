@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="APILanguage" representedClassName="APILanguage" syncable="YES">
+        <attribute name="fullName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="nodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Node" inverseName="apiLanguages" inverseEntity="Node" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Container" representedClassName="Container" syncable="YES">
+        <attribute name="containerName" attributeType="String" syncable="YES"/>
+        <relationship name="adoptedBy" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Token" inverseName="protocolContainers" inverseEntity="Token" indexed="YES" syncable="YES"/>
+        <relationship name="subclassedBy" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Token" inverseName="superclassContainers" inverseEntity="Token" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="DistributionVersion" representedClassName="DSADistributionVersion" syncable="YES">
+        <attribute name="architectureFlags" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="distributionName" attributeType="String" syncable="YES"/>
+        <attribute name="versionString" attributeType="String" syncable="YES"/>
+        <relationship name="deprecatedInInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TokenMetainformation" inverseName="deprecatedInVersions" inverseEntity="TokenMetainformation" indexed="YES" syncable="YES"/>
+        <relationship name="introducedInInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TokenMetainformation" inverseName="introducedInVersions" inverseEntity="TokenMetainformation" indexed="YES" syncable="YES"/>
+        <relationship name="removedAfterInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TokenMetainformation" inverseName="removedAfterVersions" inverseEntity="TokenMetainformation" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="DocSet" representedClassName="DocSet" syncable="YES">
+        <attribute name="configurationVersion" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="DocSetModelVersion" value="11"/>
+            </userInfo>
+        </attribute>
+        <relationship name="rootNode" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" indexed="YES" syncable="YES">
+            <userInfo>
+                <entry key="DocSetModelVersion" value="10"/>
+            </userInfo>
+        </relationship>
+        <userInfo>
+            <entry key="DocSetModelVersion" value="14"/>
+        </userInfo>
+    </entity>
+    <entity name="DownloadableFile" representedClassName="DownloadableFile" syncable="YES">
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="url" attributeType="String" syncable="YES"/>
+        <relationship name="node" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="FilePath" representedClassName="FilePath" syncable="YES">
+        <attribute name="path" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Header" representedClassName="Header" syncable="YES">
+        <attribute name="frameworkName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="headerPath" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Node" representedClassName="DSANode" syncable="YES">
+        <attribute name="installDomain" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="kDocumentType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="kID" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="kIsSearchable" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="kName" attributeType="String" syncable="YES"/>
+        <attribute name="kNodeType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="kSubnodeCount" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="apiLanguages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="APILanguage" inverseName="nodes" inverseEntity="APILanguage" indexed="YES" syncable="YES"/>
+        <relationship name="orderedSelfs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OrderedSubnode" inverseName="node" inverseEntity="OrderedSubnode" indexed="YES" syncable="YES"/>
+        <relationship name="orderedSubnodes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OrderedSubnode" inverseName="parent" inverseEntity="OrderedSubnode" indexed="YES" syncable="YES"/>
+        <relationship name="primaryParent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" indexed="YES" syncable="YES"/>
+        <relationship name="relatedDocsInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TokenMetainformation" inverseName="relatedDocuments" inverseEntity="TokenMetainformation" indexed="YES" syncable="YES"/>
+        <relationship name="relatedNodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Node" inverseName="relatedNodesInverse" inverseEntity="Node" indexed="YES" syncable="YES"/>
+        <relationship name="relatedNodesInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Node" inverseName="relatedNodes" inverseEntity="Node" indexed="YES" syncable="YES"/>
+        <relationship name="relatedSCInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TokenMetainformation" inverseName="relatedSampleCode" inverseEntity="TokenMetainformation" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="NodeURL" representedClassName="DSANodeURL" syncable="YES">
+        <attribute name="anchor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="baseURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="checksum" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="node" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="NodeUUID" representedClassName="NodeUUID" syncable="YES">
+        <attribute name="uuid" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="node" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="OrderedSubnode" representedClassName="OrderedSubnode" syncable="YES">
+        <attribute name="order" attributeType="Integer 16" syncable="YES"/>
+        <relationship name="node" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="orderedSelfs" inverseEntity="Node" indexed="YES" syncable="YES"/>
+        <relationship name="parent" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="orderedSubnodes" inverseEntity="Node" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Parameter" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="parameterName" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ReturnValue" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Token" representedClassName="DSAToken" syncable="YES">
+        <attribute name="alphaSortOrder" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="firstLowercaseUTF8Byte" attributeType="Integer 16" indexed="YES" syncable="YES"/>
+        <attribute name="tokenName" attributeType="String" defaultValueString="UNKNOWN" indexed="YES" syncable="YES"/>
+        <attribute name="tokenUSR" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="container" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Container" indexed="YES" syncable="YES"/>
+        <relationship name="language" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="APILanguage" indexed="YES" syncable="YES"/>
+        <relationship name="metainformation" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="TokenMetainformation" inverseName="token" inverseEntity="TokenMetainformation" indexed="YES" syncable="YES"/>
+        <relationship name="parentNode" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" indexed="YES" syncable="YES"/>
+        <relationship name="protocolContainers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Container" inverseName="adoptedBy" inverseEntity="Container" indexed="YES" syncable="YES"/>
+        <relationship name="relatedGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TokenGroup" inverseName="tokens" inverseEntity="TokenGroup" indexed="YES" syncable="YES"/>
+        <relationship name="relatedTokensInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TokenMetainformation" inverseName="relatedTokens" inverseEntity="TokenMetainformation" indexed="YES" syncable="YES"/>
+        <relationship name="superclassContainers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Container" inverseName="subclassedBy" inverseEntity="Container" indexed="YES" syncable="YES"/>
+        <relationship name="tokenType" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="TokenType" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="TokenGroup" representedClassName="TokenGroup" syncable="YES">
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tokens" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Token" inverseName="relatedGroups" inverseEntity="Token" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="TokenMetainformation" representedClassName="TokenMetainformation" syncable="YES">
+        <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="anchor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="declaration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deprecationSummary" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="declaredIn" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Header" indexed="YES" syncable="YES"/>
+        <relationship name="deprecatedInVersions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DistributionVersion" inverseName="deprecatedInInverse" inverseEntity="DistributionVersion" indexed="YES" syncable="YES"/>
+        <relationship name="file" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="FilePath" indexed="YES" syncable="YES"/>
+        <relationship name="introducedInVersions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DistributionVersion" inverseName="introducedInInverse" inverseEntity="DistributionVersion" indexed="YES" syncable="YES"/>
+        <relationship name="parameters" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Parameter" indexed="YES" syncable="YES"/>
+        <relationship name="relatedDocuments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Node" inverseName="relatedDocsInverse" inverseEntity="Node" indexed="YES" syncable="YES"/>
+        <relationship name="relatedSampleCode" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Node" inverseName="relatedSCInverse" inverseEntity="Node" indexed="YES" syncable="YES"/>
+        <relationship name="relatedTokens" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Token" inverseName="relatedTokensInverse" inverseEntity="Token" indexed="YES" syncable="YES"/>
+        <relationship name="removedAfterVersions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DistributionVersion" inverseName="removedAfterInverse" inverseEntity="DistributionVersion" indexed="YES" syncable="YES"/>
+        <relationship name="returnValue" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="ReturnValue" indexed="YES" syncable="YES"/>
+        <relationship name="token" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Token" inverseName="metainformation" inverseEntity="Token" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="TokenType" representedClassName="TokenType" syncable="YES">
+        <attribute name="typeName" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="APILanguage" positionX="-8784" positionY="-784" width="128" height="73"/>
+        <element name="Container" positionX="-8352" positionY="-783" width="128" height="88"/>
+        <element name="DistributionVersion" positionX="-8606" positionY="-225" width="128" height="135"/>
+        <element name="DocSet" positionX="-9234" positionY="-773" width="128" height="73"/>
+        <element name="DownloadableFile" positionX="-9234" positionY="-414" width="128" height="88"/>
+        <element name="FilePath" positionX="-8919" positionY="-220" width="128" height="58"/>
+        <element name="Header" positionX="-8768" positionY="-225" width="128" height="73"/>
+        <element name="Node" positionX="-9045" positionY="-828" width="128" height="270"/>
+        <element name="NodeURL" positionX="-9236" positionY="-567" width="128" height="135"/>
+        <element name="NodeUUID" positionX="-9234" positionY="-667" width="128" height="73"/>
+        <element name="OrderedSubnode" positionX="-9234" positionY="-297" width="128" height="88"/>
+        <element name="Parameter" positionX="-8453" positionY="-225" width="128" height="88"/>
+        <element name="ReturnValue" positionX="-8298" positionY="-225" width="128" height="58"/>
+        <element name="Token" positionX="-8543" positionY="-832" width="128" height="238"/>
+        <element name="TokenGroup" positionX="-8352" positionY="-685" width="128" height="73"/>
+        <element name="TokenMetainformation" positionX="-8505" positionY="-538" width="128" height="268"/>
+        <element name="TokenType" positionX="-8352" positionY="-598" width="128" height="58"/>
+    </elements>
+</model>

@@ -260,6 +260,70 @@
 		734879D40E3AB45000A3B12F /* AKPropertiesSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */; };
 		734879FC0E3AB59800A3B12F /* AKPropertyDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 734879FA0E3AB59800A3B12F /* AKPropertyDoc.h */; };
 		734879FD0E3AB59800A3B12F /* AKPropertyDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 734879FB0E3AB59800A3B12F /* AKPropertyDoc.m */; };
+		734AEE801CC5E1600064AAA9 /* DocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE3C1CC5E1600064AAA9 /* DocSetIndex.h */; };
+		734AEE811CC5E1600064AAA9 /* DocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE3D1CC5E1600064AAA9 /* DocSetIndex.m */; };
+		734AEE821CC5E1600064AAA9 /* DocSetModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE3F1CC5E1600064AAA9 /* DocSetModel.h */; };
+		734AEE831CC5E1600064AAA9 /* APILanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE411CC5E1600064AAA9 /* APILanguage.h */; };
+		734AEE841CC5E1600064AAA9 /* APILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE421CC5E1600064AAA9 /* APILanguage.m */; };
+		734AEE851CC5E1600064AAA9 /* Container.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE431CC5E1600064AAA9 /* Container.h */; };
+		734AEE861CC5E1600064AAA9 /* Container.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE441CC5E1600064AAA9 /* Container.m */; };
+		734AEE871CC5E1600064AAA9 /* DocSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE451CC5E1600064AAA9 /* DocSet.h */; };
+		734AEE881CC5E1600064AAA9 /* DocSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE461CC5E1600064AAA9 /* DocSet.m */; };
+		734AEE891CC5E1600064AAA9 /* DownloadableFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE471CC5E1600064AAA9 /* DownloadableFile.h */; };
+		734AEE8A1CC5E1600064AAA9 /* DownloadableFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE481CC5E1600064AAA9 /* DownloadableFile.m */; };
+		734AEE8B1CC5E1600064AAA9 /* DSADistributionVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE491CC5E1600064AAA9 /* DSADistributionVersion.h */; };
+		734AEE8C1CC5E1600064AAA9 /* DSADistributionVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE4A1CC5E1600064AAA9 /* DSADistributionVersion.m */; };
+		734AEE8D1CC5E1600064AAA9 /* DSANode.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE4B1CC5E1600064AAA9 /* DSANode.h */; };
+		734AEE8E1CC5E1600064AAA9 /* DSANode.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE4C1CC5E1600064AAA9 /* DSANode.m */; };
+		734AEE8F1CC5E1600064AAA9 /* DSANodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE4D1CC5E1600064AAA9 /* DSANodeURL.h */; };
+		734AEE901CC5E1600064AAA9 /* DSANodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE4E1CC5E1600064AAA9 /* DSANodeURL.m */; };
+		734AEE911CC5E1600064AAA9 /* DSAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE4F1CC5E1600064AAA9 /* DSAToken.h */; };
+		734AEE921CC5E1600064AAA9 /* DSAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE501CC5E1600064AAA9 /* DSAToken.m */; };
+		734AEE931CC5E1600064AAA9 /* FilePath.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE511CC5E1600064AAA9 /* FilePath.h */; };
+		734AEE941CC5E1600064AAA9 /* FilePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE521CC5E1600064AAA9 /* FilePath.m */; };
+		734AEE951CC5E1600064AAA9 /* Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE531CC5E1600064AAA9 /* Header.h */; };
+		734AEE961CC5E1600064AAA9 /* Header.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE541CC5E1600064AAA9 /* Header.m */; };
+		734AEE971CC5E1600064AAA9 /* NodeUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE551CC5E1600064AAA9 /* NodeUUID.h */; };
+		734AEE981CC5E1600064AAA9 /* NodeUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE561CC5E1600064AAA9 /* NodeUUID.m */; };
+		734AEE991CC5E1600064AAA9 /* OrderedSubnode.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE571CC5E1600064AAA9 /* OrderedSubnode.h */; };
+		734AEE9A1CC5E1600064AAA9 /* OrderedSubnode.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE581CC5E1600064AAA9 /* OrderedSubnode.m */; };
+		734AEE9B1CC5E1600064AAA9 /* TokenGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE591CC5E1600064AAA9 /* TokenGroup.h */; };
+		734AEE9C1CC5E1600064AAA9 /* TokenGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE5A1CC5E1600064AAA9 /* TokenGroup.m */; };
+		734AEE9D1CC5E1600064AAA9 /* TokenMetainformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE5B1CC5E1600064AAA9 /* TokenMetainformation.h */; };
+		734AEE9E1CC5E1600064AAA9 /* TokenMetainformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE5C1CC5E1600064AAA9 /* TokenMetainformation.m */; };
+		734AEE9F1CC5E1600064AAA9 /* TokenType.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE5D1CC5E1600064AAA9 /* TokenType.h */; };
+		734AEEA01CC5E1600064AAA9 /* TokenType.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE5E1CC5E1600064AAA9 /* TokenType.m */; };
+		734AEEA11CC5E1600064AAA9 /* _APILanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE601CC5E1600064AAA9 /* _APILanguage.h */; };
+		734AEEA21CC5E1600064AAA9 /* _APILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE611CC5E1600064AAA9 /* _APILanguage.m */; };
+		734AEEA31CC5E1600064AAA9 /* _Container.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE621CC5E1600064AAA9 /* _Container.h */; };
+		734AEEA41CC5E1600064AAA9 /* _Container.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE631CC5E1600064AAA9 /* _Container.m */; };
+		734AEEA51CC5E1600064AAA9 /* _DocSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE641CC5E1600064AAA9 /* _DocSet.h */; };
+		734AEEA61CC5E1600064AAA9 /* _DocSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE651CC5E1600064AAA9 /* _DocSet.m */; };
+		734AEEA71CC5E1600064AAA9 /* _DownloadableFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE661CC5E1600064AAA9 /* _DownloadableFile.h */; };
+		734AEEA81CC5E1600064AAA9 /* _DownloadableFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE671CC5E1600064AAA9 /* _DownloadableFile.m */; };
+		734AEEA91CC5E1600064AAA9 /* _DSADistributionVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE681CC5E1600064AAA9 /* _DSADistributionVersion.h */; };
+		734AEEAA1CC5E1600064AAA9 /* _DSADistributionVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE691CC5E1600064AAA9 /* _DSADistributionVersion.m */; };
+		734AEEAB1CC5E1600064AAA9 /* _DSANode.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE6A1CC5E1600064AAA9 /* _DSANode.h */; };
+		734AEEAC1CC5E1600064AAA9 /* _DSANode.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE6B1CC5E1600064AAA9 /* _DSANode.m */; };
+		734AEEAD1CC5E1600064AAA9 /* _DSANodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE6C1CC5E1600064AAA9 /* _DSANodeURL.h */; };
+		734AEEAE1CC5E1600064AAA9 /* _DSANodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE6D1CC5E1600064AAA9 /* _DSANodeURL.m */; };
+		734AEEAF1CC5E1600064AAA9 /* _DSAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE6E1CC5E1600064AAA9 /* _DSAToken.h */; };
+		734AEEB01CC5E1600064AAA9 /* _DSAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE6F1CC5E1600064AAA9 /* _DSAToken.m */; };
+		734AEEB11CC5E1600064AAA9 /* _FilePath.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE701CC5E1600064AAA9 /* _FilePath.h */; };
+		734AEEB21CC5E1600064AAA9 /* _FilePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE711CC5E1600064AAA9 /* _FilePath.m */; };
+		734AEEB31CC5E1600064AAA9 /* _Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE721CC5E1600064AAA9 /* _Header.h */; };
+		734AEEB41CC5E1600064AAA9 /* _Header.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE731CC5E1600064AAA9 /* _Header.m */; };
+		734AEEB51CC5E1600064AAA9 /* _NodeUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE741CC5E1600064AAA9 /* _NodeUUID.h */; };
+		734AEEB61CC5E1600064AAA9 /* _NodeUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE751CC5E1600064AAA9 /* _NodeUUID.m */; };
+		734AEEB71CC5E1600064AAA9 /* _OrderedSubnode.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE761CC5E1600064AAA9 /* _OrderedSubnode.h */; };
+		734AEEB81CC5E1600064AAA9 /* _OrderedSubnode.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE771CC5E1600064AAA9 /* _OrderedSubnode.m */; };
+		734AEEB91CC5E1600064AAA9 /* _TokenGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE781CC5E1600064AAA9 /* _TokenGroup.h */; };
+		734AEEBA1CC5E1600064AAA9 /* _TokenGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE791CC5E1600064AAA9 /* _TokenGroup.m */; };
+		734AEEBB1CC5E1600064AAA9 /* _TokenMetainformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE7A1CC5E1600064AAA9 /* _TokenMetainformation.h */; };
+		734AEEBC1CC5E1600064AAA9 /* _TokenMetainformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE7B1CC5E1600064AAA9 /* _TokenMetainformation.m */; };
+		734AEEBD1CC5E1600064AAA9 /* _TokenType.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE7C1CC5E1600064AAA9 /* _TokenType.h */; };
+		734AEEBE1CC5E1600064AAA9 /* _TokenType.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE7D1CC5E1600064AAA9 /* _TokenType.m */; };
+		734AEEBF1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE7E1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld */; };
 		734B75D516D062060027514D /* AKSplashWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B75D216D062060027514D /* AKSplashWindowController.h */; };
 		734B75D616D062060027514D /* AKSplashWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 734B75D216D062060027514D /* AKSplashWindowController.h */; };
 		734B75D716D062060027514D /* AKSplashWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B75D316D062060027514D /* AKSplashWindowController.m */; };
@@ -779,6 +843,70 @@
 		734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPropertiesSubtopic.m; sourceTree = "<group>"; };
 		734879FA0E3AB59800A3B12F /* AKPropertyDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPropertyDoc.h; sourceTree = "<group>"; };
 		734879FB0E3AB59800A3B12F /* AKPropertyDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPropertyDoc.m; sourceTree = "<group>"; };
+		734AEE3C1CC5E1600064AAA9 /* DocSetIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocSetIndex.h; sourceTree = "<group>"; };
+		734AEE3D1CC5E1600064AAA9 /* DocSetIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocSetIndex.m; sourceTree = "<group>"; };
+		734AEE3F1CC5E1600064AAA9 /* DocSetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocSetModel.h; sourceTree = "<group>"; };
+		734AEE411CC5E1600064AAA9 /* APILanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APILanguage.h; sourceTree = "<group>"; };
+		734AEE421CC5E1600064AAA9 /* APILanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APILanguage.m; sourceTree = "<group>"; };
+		734AEE431CC5E1600064AAA9 /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
+		734AEE441CC5E1600064AAA9 /* Container.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Container.m; sourceTree = "<group>"; };
+		734AEE451CC5E1600064AAA9 /* DocSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocSet.h; sourceTree = "<group>"; };
+		734AEE461CC5E1600064AAA9 /* DocSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocSet.m; sourceTree = "<group>"; };
+		734AEE471CC5E1600064AAA9 /* DownloadableFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadableFile.h; sourceTree = "<group>"; };
+		734AEE481CC5E1600064AAA9 /* DownloadableFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadableFile.m; sourceTree = "<group>"; };
+		734AEE491CC5E1600064AAA9 /* DSADistributionVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSADistributionVersion.h; sourceTree = "<group>"; };
+		734AEE4A1CC5E1600064AAA9 /* DSADistributionVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSADistributionVersion.m; sourceTree = "<group>"; };
+		734AEE4B1CC5E1600064AAA9 /* DSANode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSANode.h; sourceTree = "<group>"; };
+		734AEE4C1CC5E1600064AAA9 /* DSANode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSANode.m; sourceTree = "<group>"; };
+		734AEE4D1CC5E1600064AAA9 /* DSANodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSANodeURL.h; sourceTree = "<group>"; };
+		734AEE4E1CC5E1600064AAA9 /* DSANodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSANodeURL.m; sourceTree = "<group>"; };
+		734AEE4F1CC5E1600064AAA9 /* DSAToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSAToken.h; sourceTree = "<group>"; };
+		734AEE501CC5E1600064AAA9 /* DSAToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSAToken.m; sourceTree = "<group>"; };
+		734AEE511CC5E1600064AAA9 /* FilePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePath.h; sourceTree = "<group>"; };
+		734AEE521CC5E1600064AAA9 /* FilePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePath.m; sourceTree = "<group>"; };
+		734AEE531CC5E1600064AAA9 /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		734AEE541CC5E1600064AAA9 /* Header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Header.m; sourceTree = "<group>"; };
+		734AEE551CC5E1600064AAA9 /* NodeUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeUUID.h; sourceTree = "<group>"; };
+		734AEE561CC5E1600064AAA9 /* NodeUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeUUID.m; sourceTree = "<group>"; };
+		734AEE571CC5E1600064AAA9 /* OrderedSubnode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedSubnode.h; sourceTree = "<group>"; };
+		734AEE581CC5E1600064AAA9 /* OrderedSubnode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedSubnode.m; sourceTree = "<group>"; };
+		734AEE591CC5E1600064AAA9 /* TokenGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenGroup.h; sourceTree = "<group>"; };
+		734AEE5A1CC5E1600064AAA9 /* TokenGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenGroup.m; sourceTree = "<group>"; };
+		734AEE5B1CC5E1600064AAA9 /* TokenMetainformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenMetainformation.h; sourceTree = "<group>"; };
+		734AEE5C1CC5E1600064AAA9 /* TokenMetainformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenMetainformation.m; sourceTree = "<group>"; };
+		734AEE5D1CC5E1600064AAA9 /* TokenType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenType.h; sourceTree = "<group>"; };
+		734AEE5E1CC5E1600064AAA9 /* TokenType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenType.m; sourceTree = "<group>"; };
+		734AEE601CC5E1600064AAA9 /* _APILanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _APILanguage.h; sourceTree = "<group>"; };
+		734AEE611CC5E1600064AAA9 /* _APILanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _APILanguage.m; sourceTree = "<group>"; };
+		734AEE621CC5E1600064AAA9 /* _Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Container.h; sourceTree = "<group>"; };
+		734AEE631CC5E1600064AAA9 /* _Container.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Container.m; sourceTree = "<group>"; };
+		734AEE641CC5E1600064AAA9 /* _DocSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DocSet.h; sourceTree = "<group>"; };
+		734AEE651CC5E1600064AAA9 /* _DocSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DocSet.m; sourceTree = "<group>"; };
+		734AEE661CC5E1600064AAA9 /* _DownloadableFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DownloadableFile.h; sourceTree = "<group>"; };
+		734AEE671CC5E1600064AAA9 /* _DownloadableFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DownloadableFile.m; sourceTree = "<group>"; };
+		734AEE681CC5E1600064AAA9 /* _DSADistributionVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DSADistributionVersion.h; sourceTree = "<group>"; };
+		734AEE691CC5E1600064AAA9 /* _DSADistributionVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DSADistributionVersion.m; sourceTree = "<group>"; };
+		734AEE6A1CC5E1600064AAA9 /* _DSANode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DSANode.h; sourceTree = "<group>"; };
+		734AEE6B1CC5E1600064AAA9 /* _DSANode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DSANode.m; sourceTree = "<group>"; };
+		734AEE6C1CC5E1600064AAA9 /* _DSANodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DSANodeURL.h; sourceTree = "<group>"; };
+		734AEE6D1CC5E1600064AAA9 /* _DSANodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DSANodeURL.m; sourceTree = "<group>"; };
+		734AEE6E1CC5E1600064AAA9 /* _DSAToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DSAToken.h; sourceTree = "<group>"; };
+		734AEE6F1CC5E1600064AAA9 /* _DSAToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DSAToken.m; sourceTree = "<group>"; };
+		734AEE701CC5E1600064AAA9 /* _FilePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FilePath.h; sourceTree = "<group>"; };
+		734AEE711CC5E1600064AAA9 /* _FilePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FilePath.m; sourceTree = "<group>"; };
+		734AEE721CC5E1600064AAA9 /* _Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Header.h; sourceTree = "<group>"; };
+		734AEE731CC5E1600064AAA9 /* _Header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Header.m; sourceTree = "<group>"; };
+		734AEE741CC5E1600064AAA9 /* _NodeUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _NodeUUID.h; sourceTree = "<group>"; };
+		734AEE751CC5E1600064AAA9 /* _NodeUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _NodeUUID.m; sourceTree = "<group>"; };
+		734AEE761CC5E1600064AAA9 /* _OrderedSubnode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OrderedSubnode.h; sourceTree = "<group>"; };
+		734AEE771CC5E1600064AAA9 /* _OrderedSubnode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OrderedSubnode.m; sourceTree = "<group>"; };
+		734AEE781CC5E1600064AAA9 /* _TokenGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TokenGroup.h; sourceTree = "<group>"; };
+		734AEE791CC5E1600064AAA9 /* _TokenGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _TokenGroup.m; sourceTree = "<group>"; };
+		734AEE7A1CC5E1600064AAA9 /* _TokenMetainformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TokenMetainformation.h; sourceTree = "<group>"; };
+		734AEE7B1CC5E1600064AAA9 /* _TokenMetainformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _TokenMetainformation.m; sourceTree = "<group>"; };
+		734AEE7C1CC5E1600064AAA9 /* _TokenType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TokenType.h; sourceTree = "<group>"; };
+		734AEE7D1CC5E1600064AAA9 /* _TokenType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _TokenType.m; sourceTree = "<group>"; };
+		734AEE7F1CC5E1600064AAA9 /* DocSetModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DocSetModel.xcdatamodel; sourceTree = "<group>"; };
 		734B2D900810C882001D5F3A /* DIGSFileProcessor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DIGSFileProcessor.h; sourceTree = "<group>"; };
 		734B2D910810C882001D5F3A /* DIGSFileProcessor.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DIGSFileProcessor.m; sourceTree = "<group>"; };
 		734B2D920810C882001D5F3A /* DIGSFindBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DIGSFindBuffer.h; sourceTree = "<group>"; };
@@ -1338,6 +1466,7 @@
 		732BD5FB05ED90900055715D /* -- MODEL CLASSES -- */ = {
 			isa = PBXGroup;
 			children = (
+				734AEE3B1CC5E1600064AAA9 /* Data */,
 				739CD2600E4498AC00CFA042 /* dev tools */,
 				734B75E716D14B700027514D /* docsets */,
 				730030820498501500A80007 /* database */,
@@ -1423,6 +1552,101 @@
 			);
 			name = "saveable window states (models)";
 			path = WindowControllers;
+			sourceTree = "<group>";
+		};
+		734AEE3B1CC5E1600064AAA9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				734AEE3C1CC5E1600064AAA9 /* DocSetIndex.h */,
+				734AEE3D1CC5E1600064AAA9 /* DocSetIndex.m */,
+				734AEE3E1CC5E1600064AAA9 /* DocSetModel */,
+				734AEE7E1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		734AEE3E1CC5E1600064AAA9 /* DocSetModel */ = {
+			isa = PBXGroup;
+			children = (
+				734AEE3F1CC5E1600064AAA9 /* DocSetModel.h */,
+				734AEE401CC5E1600064AAA9 /* Human */,
+				734AEE5F1CC5E1600064AAA9 /* Machine */,
+			);
+			path = DocSetModel;
+			sourceTree = "<group>";
+		};
+		734AEE401CC5E1600064AAA9 /* Human */ = {
+			isa = PBXGroup;
+			children = (
+				734AEE411CC5E1600064AAA9 /* APILanguage.h */,
+				734AEE421CC5E1600064AAA9 /* APILanguage.m */,
+				734AEE431CC5E1600064AAA9 /* Container.h */,
+				734AEE441CC5E1600064AAA9 /* Container.m */,
+				734AEE451CC5E1600064AAA9 /* DocSet.h */,
+				734AEE461CC5E1600064AAA9 /* DocSet.m */,
+				734AEE471CC5E1600064AAA9 /* DownloadableFile.h */,
+				734AEE481CC5E1600064AAA9 /* DownloadableFile.m */,
+				734AEE491CC5E1600064AAA9 /* DSADistributionVersion.h */,
+				734AEE4A1CC5E1600064AAA9 /* DSADistributionVersion.m */,
+				734AEE4B1CC5E1600064AAA9 /* DSANode.h */,
+				734AEE4C1CC5E1600064AAA9 /* DSANode.m */,
+				734AEE4D1CC5E1600064AAA9 /* DSANodeURL.h */,
+				734AEE4E1CC5E1600064AAA9 /* DSANodeURL.m */,
+				734AEE4F1CC5E1600064AAA9 /* DSAToken.h */,
+				734AEE501CC5E1600064AAA9 /* DSAToken.m */,
+				734AEE511CC5E1600064AAA9 /* FilePath.h */,
+				734AEE521CC5E1600064AAA9 /* FilePath.m */,
+				734AEE531CC5E1600064AAA9 /* Header.h */,
+				734AEE541CC5E1600064AAA9 /* Header.m */,
+				734AEE551CC5E1600064AAA9 /* NodeUUID.h */,
+				734AEE561CC5E1600064AAA9 /* NodeUUID.m */,
+				734AEE571CC5E1600064AAA9 /* OrderedSubnode.h */,
+				734AEE581CC5E1600064AAA9 /* OrderedSubnode.m */,
+				734AEE591CC5E1600064AAA9 /* TokenGroup.h */,
+				734AEE5A1CC5E1600064AAA9 /* TokenGroup.m */,
+				734AEE5B1CC5E1600064AAA9 /* TokenMetainformation.h */,
+				734AEE5C1CC5E1600064AAA9 /* TokenMetainformation.m */,
+				734AEE5D1CC5E1600064AAA9 /* TokenType.h */,
+				734AEE5E1CC5E1600064AAA9 /* TokenType.m */,
+			);
+			path = Human;
+			sourceTree = "<group>";
+		};
+		734AEE5F1CC5E1600064AAA9 /* Machine */ = {
+			isa = PBXGroup;
+			children = (
+				734AEE601CC5E1600064AAA9 /* _APILanguage.h */,
+				734AEE611CC5E1600064AAA9 /* _APILanguage.m */,
+				734AEE621CC5E1600064AAA9 /* _Container.h */,
+				734AEE631CC5E1600064AAA9 /* _Container.m */,
+				734AEE641CC5E1600064AAA9 /* _DocSet.h */,
+				734AEE651CC5E1600064AAA9 /* _DocSet.m */,
+				734AEE661CC5E1600064AAA9 /* _DownloadableFile.h */,
+				734AEE671CC5E1600064AAA9 /* _DownloadableFile.m */,
+				734AEE681CC5E1600064AAA9 /* _DSADistributionVersion.h */,
+				734AEE691CC5E1600064AAA9 /* _DSADistributionVersion.m */,
+				734AEE6A1CC5E1600064AAA9 /* _DSANode.h */,
+				734AEE6B1CC5E1600064AAA9 /* _DSANode.m */,
+				734AEE6C1CC5E1600064AAA9 /* _DSANodeURL.h */,
+				734AEE6D1CC5E1600064AAA9 /* _DSANodeURL.m */,
+				734AEE6E1CC5E1600064AAA9 /* _DSAToken.h */,
+				734AEE6F1CC5E1600064AAA9 /* _DSAToken.m */,
+				734AEE701CC5E1600064AAA9 /* _FilePath.h */,
+				734AEE711CC5E1600064AAA9 /* _FilePath.m */,
+				734AEE721CC5E1600064AAA9 /* _Header.h */,
+				734AEE731CC5E1600064AAA9 /* _Header.m */,
+				734AEE741CC5E1600064AAA9 /* _NodeUUID.h */,
+				734AEE751CC5E1600064AAA9 /* _NodeUUID.m */,
+				734AEE761CC5E1600064AAA9 /* _OrderedSubnode.h */,
+				734AEE771CC5E1600064AAA9 /* _OrderedSubnode.m */,
+				734AEE781CC5E1600064AAA9 /* _TokenGroup.h */,
+				734AEE791CC5E1600064AAA9 /* _TokenGroup.m */,
+				734AEE7A1CC5E1600064AAA9 /* _TokenMetainformation.h */,
+				734AEE7B1CC5E1600064AAA9 /* _TokenMetainformation.m */,
+				734AEE7C1CC5E1600064AAA9 /* _TokenType.h */,
+				734AEE7D1CC5E1600064AAA9 /* _TokenType.m */,
+			);
+			path = Machine;
 			sourceTree = "<group>";
 		};
 		734B2D8D0810C882001D5F3A /* DIGS */ = {
@@ -1852,8 +2076,11 @@
 				65B1096309D7B6C300A8A637 /* AKSortUtils.h in Headers */,
 				65B1096409D7B6C300A8A637 /* NSString+AppKiDo.h in Headers */,
 				65B1096509D7B6C300A8A637 /* AKColoredBox.h in Headers */,
+				734AEEB71CC5E1600064AAA9 /* _OrderedSubnode.h in Headers */,
+				734AEE951CC5E1600064AAA9 /* Header.h in Headers */,
 				65B1096709D7B6C300A8A637 /* NSView+AppKiDo.h in Headers */,
 				65B1096809D7B6C300A8A637 /* AKClassMethodsSubtopic.h in Headers */,
+				734AEE9B1CC5E1600064AAA9 /* TokenGroup.h in Headers */,
 				65B1096909D7B6C300A8A637 /* AKDelegateMethodsSubtopic.h in Headers */,
 				65B1096A09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.h in Headers */,
 				65B1096B09D7B6C300A8A637 /* AKMembersSubtopic.h in Headers */,
@@ -1869,7 +2096,10 @@
 				65B1097509D7B6C300A8A637 /* AKTopic.h in Headers */,
 				65B1097609D7B6C300A8A637 /* AKGlobalsTopic.h in Headers */,
 				65B1097709D7B6C300A8A637 /* AKCategoryNode.h in Headers */,
+				734AEE8F1CC5E1600064AAA9 /* DSANodeURL.h in Headers */,
+				734AEEB11CC5E1600064AAA9 /* _FilePath.h in Headers */,
 				65B1097809D7B6C300A8A637 /* AKClassNode.h in Headers */,
+				734AEEAB1CC5E1600064AAA9 /* _DSANode.h in Headers */,
 				65B1097909D7B6C300A8A637 /* AKMethodNode.h in Headers */,
 				65B1097A09D7B6C300A8A637 /* AKProtocolNode.h in Headers */,
 				65B1097B09D7B6C300A8A637 /* AKObjCHeaderParser.h in Headers */,
@@ -1878,6 +2108,7 @@
 				65B1097E09D7B6C300A8A637 /* AKLinkResolver.h in Headers */,
 				65B1097F09D7B6C300A8A637 /* AKDoc.h in Headers */,
 				65B1098009D7B6C300A8A637 /* AKFunctionDoc.h in Headers */,
+				734AEE8D1CC5E1600064AAA9 /* DSANode.h in Headers */,
 				65B1098109D7B6C300A8A637 /* AKMemberDoc.h in Headers */,
 				65B1098209D7B6C300A8A637 /* AKHeaderFileDoc.h in Headers */,
 				65B1098309D7B6C300A8A637 /* AKInheritanceDoc.h in Headers */,
@@ -1889,6 +2120,8 @@
 				65B1098A09D7B6C300A8A637 /* AKSearchQuery.h in Headers */,
 				65B1098B09D7B6C300A8A637 /* AKGlobalsNode.h in Headers */,
 				65B1098C09D7B6C300A8A637 /* AKGroupNode.h in Headers */,
+				734AEE9D1CC5E1600064AAA9 /* TokenMetainformation.h in Headers */,
+				734AEE851CC5E1600064AAA9 /* Container.h in Headers */,
 				65B1098D09D7B6C300A8A637 /* AKGroupNodeSubtopic.h in Headers */,
 				65B1098E09D7B6C300A8A637 /* AKCocoaFunctionsDocParser.h in Headers */,
 				65B1098F09D7B6C300A8A637 /* AKPrefConstants.h in Headers */,
@@ -1898,6 +2131,9 @@
 				65B1099309D7B6C300A8A637 /* AKFindPanelController.h in Headers */,
 				65B1099409D7B6C300A8A637 /* AKPrefPanelController.h in Headers */,
 				65B1099609D7B6C300A8A637 /* AKDatabase.h in Headers */,
+				734AEEB91CC5E1600064AAA9 /* _TokenGroup.h in Headers */,
+				734AEEA11CC5E1600064AAA9 /* _APILanguage.h in Headers */,
+				734AEE871CC5E1600064AAA9 /* DocSet.h in Headers */,
 				65B1099709D7B6C300A8A637 /* AKParser.h in Headers */,
 				65B1099809D7B6C300A8A637 /* AKDatabaseNode.h in Headers */,
 				65B1099A09D7B6C300A8A637 /* AKBehaviorNode.h in Headers */,
@@ -1912,6 +2148,7 @@
 				65B109A509D7B6C300A8A637 /* DIGSFileProcessor.h in Headers */,
 				65B109A609D7B6C300A8A637 /* DIGSFindBuffer.h in Headers */,
 				65B109A709D7B6C300A8A637 /* DIGSLog.h in Headers */,
+				734AEE911CC5E1600064AAA9 /* DSAToken.h in Headers */,
 				65B109A809D7B6C300A8A637 /* DIGSMarginView.h in Headers */,
 				65B109A909D7B6C300A8A637 /* DIGSMatchingBackgroundView.h in Headers */,
 				65B109AA09D7B6C300A8A637 /* DIGSTextSelection.h in Headers */,
@@ -1925,22 +2162,33 @@
 				65B109BE09D7B6C300A8A637 /* AppKiDo_Prefix.pch in Headers */,
 				7359EB2D0BADB68100574728 /* AKApplication.h in Headers */,
 				7395580F0D29CA83008105BD /* AKDatabaseXMLExporter.h in Headers */,
+				734AEE891CC5E1600064AAA9 /* DownloadableFile.h in Headers */,
 				73D237080D4561C300EF7503 /* FMDatabase.h in Headers */,
 				73D2370A0D4561C300EF7503 /* FMDatabaseAdditions.h in Headers */,
 				73D2370C0D4561C300EF7503 /* FMResultSet.h in Headers */,
 				73D239CC0D4ABBA000EF7503 /* AKDevToolsUtils.h in Headers */,
 				73D23AD00D4C45B500EF7503 /* DIGSPrefUtils.h in Headers */,
 				73D23C0F0D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.h in Headers */,
+				734AEEAD1CC5E1600064AAA9 /* _DSANodeURL.h in Headers */,
 				73D23C890D4CCE2800EF7503 /* AKDocSetIndex.h in Headers */,
+				734AEE931CC5E1600064AAA9 /* FilePath.h in Headers */,
 				73B6B6C70DC1D229004FB7ED /* AKFunctionNode.h in Headers */,
+				734AEE9F1CC5E1600064AAA9 /* TokenType.h in Headers */,
 				73B914950E089D180012C16F /* AKDevToolsViewController.h in Headers */,
+				734AEE8B1CC5E1600064AAA9 /* DSADistributionVersion.h in Headers */,
 				7368B9AF0E0EFB2200AFEA2D /* AKCollectionOfNodes.h in Headers */,
+				734AEEA31CC5E1600064AAA9 /* _Container.h in Headers */,
+				734AEEAF1CC5E1600064AAA9 /* _DSAToken.h in Headers */,
 				73E86F3D0E396A71002AFB76 /* AKPropertyNode.h in Headers */,
 				73E86F420E3974E1002AFB76 /* AKMemberNode.h in Headers */,
+				734AEEA91CC5E1600064AAA9 /* _DSADistributionVersion.h in Headers */,
 				73E86F4A0E397760002AFB76 /* AKNotificationNode.h in Headers */,
 				734879D30E3AB45000A3B12F /* AKPropertiesSubtopic.h in Headers */,
 				734879FC0E3AB59800A3B12F /* AKPropertyDoc.h in Headers */,
 				739E1C800E4F453900119B06 /* AKDevToolsPanelController.h in Headers */,
+				734AEEA51CC5E1600064AAA9 /* _DocSet.h in Headers */,
+				734AEEBB1CC5E1600064AAA9 /* _TokenMetainformation.h in Headers */,
+				734AEE801CC5E1600064AAA9 /* DocSetIndex.h in Headers */,
 				7399AFBC0E621E27001AE672 /* AKNodeDoc.h in Headers */,
 				73C735A70F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */,
 				73C983FE0FE4815E00C4BEBA /* AKMacDevTools.h in Headers */,
@@ -1948,21 +2196,28 @@
 				737405C91195B28D000BD282 /* AKSDKVersion.h in Headers */,
 				F28A5B2D13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */,
 				733DF5EB14E17700007E6313 /* AKSQLTemplate.h in Headers */,
+				734AEEA71CC5E1600064AAA9 /* _DownloadableFile.h in Headers */,
+				734AEEB31CC5E1600064AAA9 /* _Header.h in Headers */,
 				738D41B915B07D7F008950F6 /* AKAboutWindowController.h in Headers */,
 				738D41BD15B07EC6008950F6 /* AKAppVersion.h in Headers */,
+				734AEE831CC5E1600064AAA9 /* APILanguage.h in Headers */,
 				73D59E8515B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */,
 				73D59E8B15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
 				730F68BF15C1478300E0B7B0 /* FMDatabasePool.h in Headers */,
 				730F68C115C1478300E0B7B0 /* FMDatabaseQueue.h in Headers */,
 				735D9F7716CC5DAC00B72158 /* ALSimpleTask.h in Headers */,
 				734B75D516D062060027514D /* AKSplashWindowController.h in Headers */,
+				734AEEBD1CC5E1600064AAA9 /* _TokenType.h in Headers */,
 				7320C13616DBAB3600797F95 /* AKFileSectionCache.h in Headers */,
 				7320C17916DCF9FC00797F95 /* AKSubtopicListViewController.h in Headers */,
+				734AEEB51CC5E1600064AAA9 /* _NodeUUID.h in Headers */,
 				7320C17D16DCF9FC00797F95 /* AKTopicBrowserViewController.h in Headers */,
 				7320C18116DCF9FC00797F95 /* AKViewController.h in Headers */,
+				734AEE821CC5E1600064AAA9 /* DocSetModel.h in Headers */,
 				7320C18516DCF9FC00797F95 /* AKWindowController.h in Headers */,
 				73A0231216DD1CDB00240111 /* AKDocListViewController.h in Headers */,
 				73A0231816DD1D6300240111 /* AKDocViewController.h in Headers */,
+				734AEE971CC5E1600064AAA9 /* NodeUUID.h in Headers */,
 				73A0231D16DD1EE400240111 /* AKUIController.h in Headers */,
 				73A0232116DD214C00240111 /* AKQuicklistViewController.h in Headers */,
 				7304030716DF8DAB005E04A1 /* AKButtonCell.h in Headers */,
@@ -1977,6 +2232,7 @@
 				73A4ACDB16F35815004E6A1C /* AKTabChain.h in Headers */,
 				73A4ACE016F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
 				737F1DED17021C8A00D560C7 /* AKPopQuizWindowController.h in Headers */,
+				734AEE991CC5E1600064AAA9 /* OrderedSubnode.h in Headers */,
 				73DB1379170E176500F3776A /* QuietLog.h in Headers */,
 				73DB1380170E731400F3776A /* AKGlobalsGroupSubtopic.h in Headers */,
 				73DB1386170E75FC00F3776A /* AKGlobalsDoc.h in Headers */,
@@ -2316,20 +2572,27 @@
 				65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */,
 				65B109E309D7B6C300A8A637 /* AKWindowController+Toolbar.m in Sources */,
 				65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */,
+				734AEEBF1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld in Sources */,
 				65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */,
 				65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */,
 				65B109E809D7B6C300A8A637 /* AKSortUtils.m in Sources */,
+				734AEEAA1CC5E1600064AAA9 /* _DSADistributionVersion.m in Sources */,
 				65B109E909D7B6C300A8A637 /* NSString+AppKiDo.m in Sources */,
+				734AEEB01CC5E1600064AAA9 /* _DSAToken.m in Sources */,
 				65B109EA09D7B6C300A8A637 /* AKColoredBox.m in Sources */,
+				734AEEB41CC5E1600064AAA9 /* _Header.m in Sources */,
 				65B109EC09D7B6C300A8A637 /* NSView+AppKiDo.m in Sources */,
 				65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */,
 				65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */,
 				65B109EF09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.m in Sources */,
 				65B109F009D7B6C300A8A637 /* AKMembersSubtopic.m in Sources */,
 				65B109F109D7B6C300A8A637 /* AKNotificationsSubtopic.m in Sources */,
+				734AEE861CC5E1600064AAA9 /* Container.m in Sources */,
+				734AEE9E1CC5E1600064AAA9 /* TokenMetainformation.m in Sources */,
 				65B109F209D7B6C300A8A637 /* AKSubtopic.m in Sources */,
 				65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */,
 				65B109F409D7B6C300A8A637 /* AKFormalProtocolsTopic.m in Sources */,
+				734AEEA81CC5E1600064AAA9 /* _DownloadableFile.m in Sources */,
 				65B109F509D7B6C300A8A637 /* AKFrameworkTopic.m in Sources */,
 				65B109F609D7B6C300A8A637 /* AKFunctionsTopic.m in Sources */,
 				65B109F709D7B6C300A8A637 /* AKInformalProtocolsTopic.m in Sources */,
@@ -2337,18 +2600,23 @@
 				65B109F909D7B6C300A8A637 /* AKProtocolTopic.m in Sources */,
 				65B109FA09D7B6C300A8A637 /* AKTopic.m in Sources */,
 				65B109FB09D7B6C300A8A637 /* AKGlobalsTopic.m in Sources */,
+				734AEE8E1CC5E1600064AAA9 /* DSANode.m in Sources */,
 				65B109FC09D7B6C300A8A637 /* AKCategoryNode.m in Sources */,
 				65B109FD09D7B6C300A8A637 /* AKClassNode.m in Sources */,
+				734AEEA61CC5E1600064AAA9 /* _DocSet.m in Sources */,
 				65B109FE09D7B6C300A8A637 /* AKMethodNode.m in Sources */,
 				65B109FF09D7B6C300A8A637 /* AKProtocolNode.m in Sources */,
 				65B10A0009D7B6C300A8A637 /* AKObjCHeaderParser.m in Sources */,
+				734AEEBC1CC5E1600064AAA9 /* _TokenMetainformation.m in Sources */,
 				65B10A0109D7B6C300A8A637 /* AKAppDelegate.m in Sources */,
 				65B10A0209D7B6C300A8A637 /* AKDocParser.m in Sources */,
 				65B10A0309D7B6C300A8A637 /* AKLinkResolver.m in Sources */,
 				65B10A0409D7B6C300A8A637 /* AKDoc.m in Sources */,
 				65B10A0509D7B6C300A8A637 /* AKFunctionDoc.m in Sources */,
 				65B10A0609D7B6C300A8A637 /* AKMemberDoc.m in Sources */,
+				734AEEAE1CC5E1600064AAA9 /* _DSANodeURL.m in Sources */,
 				65B10A0709D7B6C300A8A637 /* AKHeaderFileDoc.m in Sources */,
+				734AEE9A1CC5E1600064AAA9 /* OrderedSubnode.m in Sources */,
 				65B10A0809D7B6C300A8A637 /* AKInheritanceDoc.m in Sources */,
 				65B10A0909D7B6C300A8A637 /* AKDocLocator.m in Sources */,
 				65B10A0B09D7B6C300A8A637 /* AKClassMethodDoc.m in Sources */,
@@ -2359,6 +2627,8 @@
 				65B10A1009D7B6C300A8A637 /* AKGlobalsNode.m in Sources */,
 				65B10A1109D7B6C300A8A637 /* AKGroupNode.m in Sources */,
 				65B10A1209D7B6C300A8A637 /* AKGroupNodeSubtopic.m in Sources */,
+				734AEE941CC5E1600064AAA9 /* FilePath.m in Sources */,
+				734AEEBE1CC5E1600064AAA9 /* _TokenType.m in Sources */,
 				65B10A1309D7B6C300A8A637 /* AKCocoaFunctionsDocParser.m in Sources */,
 				65B10A1409D7B6C300A8A637 /* AKPrefConstants.m in Sources */,
 				65B10A1509D7B6C300A8A637 /* AKFrameworkConstants.m in Sources */,
@@ -2370,19 +2640,27 @@
 				65B10A1D09D7B6C300A8A637 /* AKParser.m in Sources */,
 				65B10A1E09D7B6C300A8A637 /* AKDatabaseNode.m in Sources */,
 				65B10A2009D7B6C300A8A637 /* AKBehaviorNode.m in Sources */,
+				734AEEB81CC5E1600064AAA9 /* _OrderedSubnode.m in Sources */,
 				65B10A2109D7B6C300A8A637 /* AKBehaviorTopic.m in Sources */,
 				65B10A2209D7B6C300A8A637 /* AKBehaviorGeneralSubtopic.m in Sources */,
+				734AEE961CC5E1600064AAA9 /* Header.m in Sources */,
 				65B10A2309D7B6C300A8A637 /* AKRealMethodsSubtopic.m in Sources */,
 				65B10A2409D7B6C300A8A637 /* AKPseudoMethodsSubtopic.m in Sources */,
 				65B10A2509D7B6C300A8A637 /* AKClassGeneralSubtopic.m in Sources */,
 				65B10A2609D7B6C300A8A637 /* AKProtocolGeneralSubtopic.m in Sources */,
+				734AEEAC1CC5E1600064AAA9 /* _DSANode.m in Sources */,
 				65B10A2709D7B6C300A8A637 /* AKFileSection.m in Sources */,
 				65B10A2809D7B6C300A8A637 /* AKFileSectionDoc.m in Sources */,
 				65B10A2B09D7B6C300A8A637 /* DIGSFileProcessor.m in Sources */,
+				734AEE8C1CC5E1600064AAA9 /* DSADistributionVersion.m in Sources */,
+				734AEEA01CC5E1600064AAA9 /* TokenType.m in Sources */,
+				734AEEA21CC5E1600064AAA9 /* _APILanguage.m in Sources */,
 				65B10A2C09D7B6C300A8A637 /* DIGSFindBuffer.m in Sources */,
+				734AEEB21CC5E1600064AAA9 /* _FilePath.m in Sources */,
 				65B10A2D09D7B6C300A8A637 /* DIGSLog.m in Sources */,
 				65B10A2E09D7B6C300A8A637 /* DIGSMarginView.m in Sources */,
 				65B10A2F09D7B6C300A8A637 /* DIGSMatchingBackgroundView.m in Sources */,
+				734AEEA41CC5E1600064AAA9 /* _Container.m in Sources */,
 				65B10A3009D7B6C300A8A637 /* DIGSTextSelection.m in Sources */,
 				65B10A3109D7B6C300A8A637 /* DIGSTextView.m in Sources */,
 				65B10A3209D7B6C300A8A637 /* AKWindow.m in Sources */,
@@ -2394,20 +2672,26 @@
 				7359EB2E0BADB68100574728 /* AKApplication.m in Sources */,
 				739558100D29CA83008105BD /* AKDatabaseXMLExporter.m in Sources */,
 				73D237090D4561C300EF7503 /* FMDatabase.m in Sources */,
+				734AEE8A1CC5E1600064AAA9 /* DownloadableFile.m in Sources */,
 				73D2370B0D4561C300EF7503 /* FMDatabaseAdditions.m in Sources */,
 				73D2370D0D4561C300EF7503 /* FMResultSet.m in Sources */,
 				73D239CD0D4ABBA000EF7503 /* AKDevToolsUtils.m in Sources */,
+				734AEE841CC5E1600064AAA9 /* APILanguage.m in Sources */,
 				73D23AD10D4C45B500EF7503 /* DIGSPrefUtils.m in Sources */,
 				73D23C100D4CC5C000EF7503 /* AKCocoaGlobalsDocParser.m in Sources */,
 				73D23C880D4CCE2800EF7503 /* AKDocSetIndex.m in Sources */,
 				73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */,
 				73B914960E089D180012C16F /* AKDevToolsViewController.m in Sources */,
+				734AEEBA1CC5E1600064AAA9 /* _TokenGroup.m in Sources */,
 				7368B9B00E0EFB2200AFEA2D /* AKCollectionOfNodes.m in Sources */,
 				73E86F3E0E396A71002AFB76 /* AKPropertyNode.m in Sources */,
+				734AEEB61CC5E1600064AAA9 /* _NodeUUID.m in Sources */,
+				734AEE9C1CC5E1600064AAA9 /* TokenGroup.m in Sources */,
 				73E86F430E3974E1002AFB76 /* AKMemberNode.m in Sources */,
 				73E86F4B0E397760002AFB76 /* AKNotificationNode.m in Sources */,
 				734879D40E3AB45000A3B12F /* AKPropertiesSubtopic.m in Sources */,
 				734879FD0E3AB59800A3B12F /* AKPropertyDoc.m in Sources */,
+				734AEE901CC5E1600064AAA9 /* DSANodeURL.m in Sources */,
 				739E1C810E4F453900119B06 /* AKDevToolsPanelController.m in Sources */,
 				7399AFBD0E621E27001AE672 /* AKNodeDoc.m in Sources */,
 				73C735A80F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */,
@@ -2434,10 +2718,13 @@
 				73A0232316DD214C00240111 /* AKQuicklistViewController.m in Sources */,
 				7304030916DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 				735E298616E050E600E9FBC1 /* AKDebugging.m in Sources */,
+				734AEE921CC5E1600064AAA9 /* DSAToken.m in Sources */,
 				73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
 				73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 				73F8F9B516EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */,
+				734AEE981CC5E1600064AAA9 /* NodeUUID.m in Sources */,
+				734AEE811CC5E1600064AAA9 /* DocSetIndex.m in Sources */,
 				73A4ACD716F25D81004E6A1C /* AKRandomSearch.m in Sources */,
 				73A4ACDD16F35815004E6A1C /* AKTabChain.m in Sources */,
 				737F1DEF17021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */,
@@ -2445,6 +2732,7 @@
 				73DB1382170E731400F3776A /* AKGlobalsGroupSubtopic.m in Sources */,
 				73DB1388170E75FC00F3776A /* AKGlobalsDoc.m in Sources */,
 				73F3BC8617CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m in Sources */,
+				734AEE881CC5E1600064AAA9 /* DocSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2900,6 +3188,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		734AEE7E1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				734AEE7F1CC5E1600064AAA9 /* DocSetModel.xcdatamodel */,
+			);
+			currentVersion = 734AEE7F1CC5E1600064AAA9 /* DocSetModel.xcdatamodel */;
+			path = DocSetModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }
