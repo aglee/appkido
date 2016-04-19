@@ -34,17 +34,11 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_subtopics release];
-
-    [super dealloc];
-}
 
 - (void)awakeFromNib
 {
     // Use a custom cell for the subtopics table.
-    NSBrowserCell *browserCell = [[[NSBrowserCell alloc] initTextCell:@""] autorelease];
+    NSBrowserCell *browserCell = [[NSBrowserCell alloc] initTextCell:@""];
     [browserCell setLeaf:NO];
     [browserCell setLoaded:YES];
     [[[_subtopicsTable tableColumns] objectAtIndex:0] setDataCell:browserCell];
@@ -88,9 +82,9 @@
 - (IBAction)selectHeaderFile:(id)sender
 {
     AKDocLocator *oldDocLocator = [[self owningWindowController] currentDocLocator];
-    AKDocLocator *newDocLocator = [[[AKDocLocator alloc] initWithTopic:[oldDocLocator topicToDisplay]
+    AKDocLocator *newDocLocator = [[AKDocLocator alloc] initWithTopic:[oldDocLocator topicToDisplay]
                                                           subtopicName:AKGeneralSubtopicName
-                                                               docName:AKHeaderFileDocName] autorelease];
+                                                               docName:AKHeaderFileDocName];
     [[self owningWindowController] selectDocWithDocLocator:newDocLocator];
 }
 

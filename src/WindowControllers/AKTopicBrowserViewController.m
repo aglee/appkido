@@ -44,12 +44,6 @@ static const NSInteger AKMinBrowserColumns = 2;
     return self;
 }
 
-- (void)dealloc
-{
-    [_topicListsForBrowserColumns release];
-
-    [super dealloc];
-}
 
 - (void)awakeFromNib
 {

@@ -14,12 +14,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_subtopics release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters

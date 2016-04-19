@@ -17,7 +17,7 @@
     FMDatabase          *_db;
 }
 
-@property (atomic, retain) NSString *path;
+@property (atomic, strong) NSString *path;
 
 + (id)databaseQueueWithPath:(NSString*)aPath;
 - (id)initWithPath:(NSString*)aPath;

@@ -41,7 +41,7 @@ in the main.m file.
     NSUInteger          _maximumNumberOfDatabasesToCreate;
 }
 
-@property (atomic, retain) NSString *path;
+@property (atomic, strong) NSString *path;
 @property (atomic, assign) id delegate;
 @property (atomic, assign) NSUInteger maximumNumberOfDatabasesToCreate;
 

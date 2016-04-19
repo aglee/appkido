@@ -40,12 +40,7 @@
 	// disconnects weak references.
 	[self _stopTask];
     
-    [_commandPath release];
-    [_commandArguments release];
-    [_task release];
-    [_taskOutputData release];
 
-    [super dealloc];
 }
 
 - (BOOL)runTask
@@ -108,13 +103,13 @@
 
 - (NSData *)outputData
 {
-	return [[_taskOutputData copy] autorelease];
+	return [_taskOutputData copy];
 }
 
 - (NSString *)outputString
 {
-	return [[[NSString alloc] initWithData:_taskOutputData
-                                  encoding:NSUTF8StringEncoding] autorelease];
+	return [[NSString alloc] initWithData:_taskOutputData
+                                  encoding:NSUTF8StringEncoding];
 }
 
 - (int)exitStatus

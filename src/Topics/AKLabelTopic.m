@@ -24,7 +24,7 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
-    AKLabelTopic *topic = [[[self alloc] init] autorelease];
+    AKLabelTopic *topic = [[self alloc] init];
 
     [topic setLabel:label];
 
@@ -34,12 +34,6 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_label release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKTopic methods

@@ -27,7 +27,7 @@
 
 + (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database] autorelease];
+    return [[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database];
 }
 
 #pragma mark -
@@ -37,7 +37,7 @@
 {
     if ((self = [super init]))
     {
-        _topicDatabase = [aDatabase retain];
+        _topicDatabase = aDatabase;
         _topicFrameworkName = [frameworkName copy];
     }
 
@@ -50,13 +50,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_topicDatabase release];
-    [_topicFrameworkName release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKTopic methods

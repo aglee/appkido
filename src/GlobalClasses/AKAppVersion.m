@@ -73,7 +73,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     }    
     
     // Construct and return an instance with the parts we have.
-    AKAppVersion *appVersion = [[[AKAppVersion alloc] init] autorelease];
+    AKAppVersion *appVersion = [[AKAppVersion alloc] init];
     
     [appVersion setMajor:majorNumber];
     [appVersion setMinor:minorNumber];

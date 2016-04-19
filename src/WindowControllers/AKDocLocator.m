@@ -22,7 +22,7 @@
 
 + (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
-    return [[[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName] autorelease];
+    return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
 }
 
 #pragma mark -
@@ -32,7 +32,7 @@
 {
     if ((self = [super init]))
     {
-        _topic = [topic retain];
+        _topic = topic;
         _subtopicName = [subtopicName copy];
         _docName = [docName copy];
     }
@@ -40,17 +40,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_topic release];
-    [_subtopicName release];
-    [_docName release];
-    [_cachedDisplayString release];
-    [_cachedSortName release];
-    [_cachedDoc release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -62,7 +51,6 @@
         [self _clearCachedObjects];
     }
 
-    [_subtopicName autorelease];
     _subtopicName = [subtopicName copy];
 }
 
@@ -73,7 +61,6 @@
         [self _clearCachedObjects];
     }
 
-    [_docName autorelease];
     _docName = [docName copy];
 }
 
@@ -91,7 +78,7 @@
 
         if (_subtopicName == nil)
         {
-            _cachedDisplayString = [topicName retain];
+            _cachedDisplayString = topicName;
         }
         else if (_docName == nil)
         {
@@ -119,7 +106,7 @@
     {
         AKSubtopic *subtopic = [_topic subtopicWithName:_subtopicName];
 
-        _cachedDoc = [[subtopic docWithName:_docName] retain];
+        _cachedDoc = [subtopic docWithName:_docName];
     }
 
     return _cachedDoc;
@@ -288,7 +275,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 
         if (_subtopicName == nil)
         {
-            _cachedSortName = [topicName retain];
+            _cachedSortName = topicName;
         }
         else
         {
@@ -358,13 +345,10 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 
 - (void)_clearCachedObjects
 {
-    [_cachedDisplayString release];
     _cachedDisplayString = nil;
 
-    [_cachedSortName release];
     _cachedSortName = nil;
 
-    [_cachedDoc release];
     _cachedDoc = nil;
 }
 

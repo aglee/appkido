@@ -61,13 +61,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_docSetPath release];
-    [_basePathForHeaders release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -86,7 +79,7 @@
 #if APPKIDO_FOR_IPHONE
         s_selectableFrameworkNames = [[self _allFrameworkNames] retain];
 #else
-        s_selectableFrameworkNames = [[self _objectiveCFrameworkNames] retain];
+        s_selectableFrameworkNames = [self _objectiveCFrameworkNames];
 
         [s_selectableFrameworkNames removeObject:@"Carbon"];  // [agl] KLUDGE -- why is carbon returned by the query??
         [s_selectableFrameworkNames addObject:@"ApplicationServices"];  // [agl] KLUDGE -- to get CGPoint etc.

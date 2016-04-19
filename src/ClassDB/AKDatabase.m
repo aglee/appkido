@@ -56,7 +56,7 @@
     }
 
     // Use that to instantiate AKDatabase.
-    AKDatabase *dbToReturn = [[[self alloc] initWithDocSetIndex:docSetIndex] autorelease];
+    AKDatabase *dbToReturn = [[self alloc] initWithDocSetIndex:docSetIndex];
 
     // Query the sqlite database for the location of the NSObject class doc, and see if that
     // file exists.  If not, the reason is probably that the user has to download the docs.
@@ -111,7 +111,7 @@
 {
     if ((self = [super init]))
     {
-        _docSetIndex = [docSetIndex retain];
+        _docSetIndex = docSetIndex;
 
         _frameworkNames = [[NSMutableArray alloc] init];
         _namesOfAvailableFrameworks = [[docSetIndex selectableFrameworkNames] copy];
@@ -139,28 +139,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_docSetIndex release];
-
-    [_frameworkNames release];
-    [_namesOfAvailableFrameworks release];
-
-    [_classNodesByName release];
-
-    [_protocolNodesByName release];
-
-    [_functionsGroupListsByFramework release];
-    [_functionsGroupsByFrameworkAndGroup release];
-
-    [_globalsGroupListsByFramework release];
-    [_globalsGroupsByFrameworkAndGroup release];
-    
-    [_classNodesByHTMLPath release];
-    [_protocolNodesByHTMLPath release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Populating the database
@@ -548,8 +526,8 @@
 
     DIGSLogDebug(@"%@ -- docSetPath is [%@]", NSStringFromSelector(_cmd), docSetPath);
 
-    return [[[AKDocSetIndex alloc] initWithDocSetPath:docSetPath
-                                   basePathForHeaders:basePathForHeaders] autorelease];
+    return [[AKDocSetIndex alloc] initWithDocSetPath:docSetPath
+                                   basePathForHeaders:basePathForHeaders];
 }
 
 // Adds a framework if we haven't seen it before.  We call this each time

@@ -20,12 +20,12 @@
     AKDevToolsViewController *_devToolsViewController;
 
     // IBOutlets.
-    NSView *_devToolsView;  // A placeholder in the nib; the real view is swapped in after the nib is loaded.
-    NSButton *_okButton;  // We connect this to _devToolsViewController.
+    NSView *__weak _devToolsView;  // A placeholder in the nib; the real view is swapped in after the nib is loaded.
+    NSButton *__weak _okButton;  // We connect this to _devToolsViewController.
 }
 
-@property (nonatomic, assign) IBOutlet NSView *devToolsView;
-@property (nonatomic, assign) IBOutlet NSButton *okButton;
+@property (nonatomic, weak) IBOutlet NSView *devToolsView;
+@property (nonatomic, weak) IBOutlet NSButton *okButton;
 
 #pragma mark -
 #pragma mark Running the panel

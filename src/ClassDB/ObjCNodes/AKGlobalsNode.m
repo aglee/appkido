@@ -26,12 +26,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_namesOfGlobals release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters

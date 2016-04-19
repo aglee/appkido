@@ -27,7 +27,7 @@
 #import "NSString+AppKiDo.h"
 
 @interface AKSearchQuery ()
-@property (nonatomic, retain) NSArray *searchResults;
+@property (nonatomic, strong) NSArray *searchResults;
 @end
 
 @implementation AKSearchQuery
@@ -49,7 +49,7 @@
 {
     if ((self = [super init]))
     {
-        _database = [db retain];
+        _database = db;
 
         _searchString = nil;
 
@@ -72,14 +72,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-    [_searchString release];
-    [_searchResults release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -97,7 +89,6 @@
     }
 
     // Set the ivar.
-    [_searchString autorelease];
     _searchString = [s copy];
 
     // Update other ivars.
@@ -346,7 +337,7 @@
         && [_searchString length] > 3)
     {
         // Kludge to temporarily set _searchString to "XYZ".
-        NSString *savedSearchString = [[_searchString retain] autorelease];
+        NSString *savedSearchString = _searchString;
         _searchString = [_searchString substringFromIndex:3];
         {{
             [self _searchNodes:[behaviorNode documentedProperties]

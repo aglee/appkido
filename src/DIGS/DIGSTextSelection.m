@@ -37,12 +37,6 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     return self;
 }
 
-- (void)dealloc
-{
-    [_typingAttributes release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Interacting with text views
@@ -108,7 +102,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
         return nil;
     }
 
-    DIGSTextSelection *selectionState = [[[self alloc] init] autorelease];
+    DIGSTextSelection *selectionState = [[self alloc] init];
     NSString *visibleRectString = [prefDict objectForKey:_DIGS_VISIBLE_RECT_PREF_KEY];
     NSString *visibleRangeString = [prefDict objectForKey:_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY];
     NSString *selectedRangeString = [prefDict objectForKey:_DIGS_SELECTED_CHARS_RANGE_PREF_KEY];

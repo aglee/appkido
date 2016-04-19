@@ -50,7 +50,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 
 + (id)devToolsWithPath:(NSString *)devToolsPath
 {
-    return [[[self alloc] initWithPath:devToolsPath] autorelease];
+    return [[self alloc] initWithPath:devToolsPath];
 }
 
 #pragma mark -
@@ -71,14 +71,6 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return self;
 }
 
-- (void)dealloc
-{
-    [_devToolsPath release];
-    [_installedDocSetPathsBySDKVersion release];
-    [_installedSDKPathsBySDKVersion release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Dev Tools paths

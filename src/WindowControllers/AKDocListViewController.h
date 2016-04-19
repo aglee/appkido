@@ -24,11 +24,11 @@
     AKSubtopic *_subtopic;
 
     // IBOutlets.
-    AKTableView *_docListTable;
+    AKTableView *__weak _docListTable;
 }
 
-@property (nonatomic, retain) AKSubtopic *subtopic;
-@property (nonatomic, assign) IBOutlet AKTableView *docListTable;
+@property (nonatomic, strong) AKSubtopic *subtopic;
+@property (nonatomic, weak) IBOutlet AKTableView *docListTable;
 
 #pragma mark -
 #pragma mark Getters and setters

@@ -27,8 +27,8 @@
         return;
     }
 
-    AKParser *parser = [[[self alloc] initWithDatabase:database
-                                         frameworkName:frameworkName] autorelease];
+    AKParser *parser = [[self alloc] initWithDatabase:database
+                                         frameworkName:frameworkName];
     [parser processDirectory:dirPath recursively:YES];
 }
 
@@ -40,8 +40,8 @@
     for (NSString *subpath in subpaths)
     {
         NSString *fullPath = [baseDir stringByAppendingPathComponent:subpath];
-        AKParser *parser = [[[self alloc] initWithDatabase:database
-                                             frameworkName:frameworkName] autorelease];
+        AKParser *parser = [[self alloc] initWithDatabase:database
+                                             frameworkName:frameworkName];
         [parser processFile:fullPath];
     }
 }
@@ -53,7 +53,7 @@
 {
     if ((self = [super init]))
     {
-        _targetDatabase = [database retain];
+        _targetDatabase = database;
         _targetFrameworkName = [frameworkName copy];
     }
 
@@ -66,13 +66,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_targetDatabase release];
-    [_targetFrameworkName release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Parsing
@@ -94,7 +87,7 @@
 - (void)processCurrentFile
 {
     // Set up.
-    NSMutableData *fileContents = [[self loadDataToBeParsed] retain];
+    NSMutableData *fileContents = [self loadDataToBeParsed];
 
     if (fileContents)
     {
@@ -116,7 +109,6 @@
     _dataStart = NULL;
     _current = NULL;
     _dataEnd = NULL;
-    [fileContents release];
 }
 
 @end

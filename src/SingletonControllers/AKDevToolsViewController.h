@@ -24,18 +24,18 @@
     NSString *_selectedXcodeAppPath;
 
     // IBOutlets.
-    NSTextField *_xcodeAppPathField;
-    NSButton *_locateXcodeButton;
-    NSPopUpButton *_sdkVersionsPopUpButton;
-    NSTextField *_explanationField;
-    NSButton *_okButton;  // Present only in the Dev Tools Panel.
+    NSTextField *__weak _xcodeAppPathField;
+    NSButton *__weak _locateXcodeButton;
+    NSPopUpButton *__weak _sdkVersionsPopUpButton;
+    NSTextField *__weak _explanationField;
+    NSButton *__weak _okButton;  // Present only in the Dev Tools Panel.
 }
 
-@property (nonatomic, assign) IBOutlet NSTextField *xcodeAppPathField;
-@property (nonatomic, assign) IBOutlet NSButton *locateXcodeButton;
-@property (nonatomic, assign) IBOutlet NSPopUpButton *sdkVersionsPopUpButton;
-@property (nonatomic, assign) IBOutlet NSTextField *explanationField;
-@property (nonatomic, assign) IBOutlet NSButton *okButton;
+@property (nonatomic, weak) IBOutlet NSTextField *xcodeAppPathField;
+@property (nonatomic, weak) IBOutlet NSButton *locateXcodeButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *sdkVersionsPopUpButton;
+@property (nonatomic, weak) IBOutlet NSTextField *explanationField;
+@property (nonatomic, weak) IBOutlet NSButton *okButton;
 
 #pragma mark -
 #pragma mark Action methods

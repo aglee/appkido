@@ -29,7 +29,7 @@
 
 + (id)randomSearchWithDatabase:(AKDatabase *)db
 {
-    AKRandomSearch *randomSearch = [[[self alloc] initWithDatabase:db] autorelease];
+    AKRandomSearch *randomSearch = [[self alloc] initWithDatabase:db];
 
     [randomSearch makeRandomSelection];
 
@@ -43,7 +43,7 @@
 {
     if ((self = [super init]))
     {
-        _database = [db retain];
+        _database = db;
     }
 
     return self;
@@ -55,13 +55,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-    [_selectedAPISymbol release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Random selection

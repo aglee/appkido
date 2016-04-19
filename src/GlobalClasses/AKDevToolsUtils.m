@@ -66,8 +66,8 @@
 
     // Note: passing either -print-path or --print-path works when calling xcode-select
     // from a shell, but only --print-path works when using NSTask.
-	ALSimpleTask *tw = [[[ALSimpleTask alloc] initWithCommandPath:@"/usr/bin/xcode-select"
-                                                        arguments:@[ @"--print-path" ]] autorelease];
+	ALSimpleTask *tw = [[ALSimpleTask alloc] initWithCommandPath:@"/usr/bin/xcode-select"
+                                                        arguments:@[ @"--print-path" ]];
 	if (![tw runTask])
 	{
 		NSLog(@"Failed to launch xcode-select. Reason: %@.", [tw outputString]);

@@ -59,18 +59,12 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
     [devToolsTabViewItem setView:[_devToolsViewController view]];
 
     // Tweak the Frameworks table. [agl] Can't I do this in IB?
-    NSButtonCell *checkboxCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
+    NSButtonCell *checkboxCell = [[NSButtonCell alloc] initTextCell:@""];
 
     [checkboxCell setButtonType:NSSwitchButton];
     [[_frameworksTable tableColumnWithIdentifier:_AKCheckboxesColumnID] setDataCell:checkboxCell];
 }
 
-- (void)dealloc
-{
-    [_devToolsViewController release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Action methods

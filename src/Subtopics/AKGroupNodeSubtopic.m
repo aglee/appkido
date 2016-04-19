@@ -20,7 +20,7 @@
 {
     if ((self = [super init]))
     {
-        _groupNode = [groupNode retain];
+        _groupNode = groupNode;
     }
 
     return self;
@@ -32,12 +32,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_groupNode release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKSubtopic methods

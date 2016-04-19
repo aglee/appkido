@@ -50,10 +50,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [_findString release];
-    [_delegatePointerValues release];
 
-    [super dealloc];
 }
 
 #pragma mark -
@@ -100,7 +97,6 @@
         return;
     }
 
-    [_findString autorelease];
     _findString = [newFindString copy];
 
     if (flag)
@@ -136,7 +132,7 @@
 
 - (void)_handleAppDidActivateNotification:(NSNotification *)notif
 {
-    NSString *oldFindString = [[_findString retain] autorelease];
+    NSString *oldFindString = _findString;
 
     [self _loadFindStringFromPasteboard];  // May release the old find string.
     if (![_findString isEqualToString:oldFindString])

@@ -56,7 +56,7 @@ enum
 };
 
 @interface AKQuicklistViewController ()
-@property (nonatomic, retain) NSArray *docLocators;
+@property (nonatomic, strong) NSArray *docLocators;
 @end
 
 @implementation AKQuicklistViewController
@@ -110,11 +110,7 @@ enum
 {
     [[DIGSFindBuffer sharedInstance] removeDelegate:self];
 
-    [_docLocators release];
-    [_searchQuery release];
-    [_pastSearchStrings release];
     
-    [super dealloc];
 }
 
 - (void)awakeFromNib
@@ -610,7 +606,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:
                                @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable", @"NSMapTable", @"NSPointerArray"]];
-        s_collectionClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_collectionClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_collectionClasses;
@@ -628,7 +624,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
 #endif
 
-        s_windowOrViewControllerClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_windowOrViewControllerClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_windowOrViewControllerClasses;
@@ -653,7 +649,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
 
-        s_viewClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_viewClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_viewClasses;
@@ -671,7 +667,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
 #endif
 
-        s_cellOrLayerClasses = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_cellOrLayerClasses = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_cellOrLayerClasses;
@@ -747,7 +743,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         }
 
         NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDelegates = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_classesWithDelegates;
@@ -807,7 +803,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         }
 
         NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDataSources = [[self _sortedDocLocatorsForClasses:classNodes] retain];
+        s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classNodes];
     }
 
     return s_classesWithDataSources;
@@ -829,7 +825,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             }
         }
 
-        s_dataSourceProtocols = [[self _sortedDocLocatorsForProtocols:protocolNodes] retain];
+        s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolNodes];
     }
 
     return s_dataSourceProtocols;

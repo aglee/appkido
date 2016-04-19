@@ -329,11 +329,10 @@
         
         if (memberNode == nil)
         {
-            memberNode = [[[memberNodeClass alloc] initWithNodeName:memberName
+            memberNode = [[memberNodeClass alloc] initWithNodeName:memberName
                                                            database:[self targetDatabase]
                                                       frameworkName:[self targetFrameworkName]
-                                                     owningBehavior:behaviorNode]
-                          autorelease];
+                                                     owningBehavior:behaviorNode];
             addMemberNode(behaviorNode, memberNode);
         }
 

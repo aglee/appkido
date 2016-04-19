@@ -32,12 +32,6 @@
     return [self initWithFileSection:fileSection extraFrameworkName:nil];
 }
 
-- (void)dealloc
-{
-    [_extraFrameworkName release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Doc name

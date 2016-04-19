@@ -39,12 +39,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_subtopic release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters

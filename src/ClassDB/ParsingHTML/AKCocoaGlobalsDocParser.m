@@ -144,10 +144,9 @@
                            [fileSection sectionName], [behaviorNode nodeName]];
     }
 
-    AKGlobalsNode *globalsNode = [[[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
+    AKGlobalsNode *globalsNode = [[AKGlobalsNode alloc] initWithNodeName:globalsNodeName
                                                                  database:[self targetDatabase]
-                                                            frameworkName:[self targetFrameworkName]]
-                                  autorelease];
+                                                            frameworkName:[self targetFrameworkName]];
 
     // Add any individual names we find in the minor section.
     for (NSString *nameOfGlobal in [self _parseNamesOfGlobalsInFileSection:fileSection])
@@ -176,8 +175,7 @@
 - (NSString *)_modifyGlobalsNodeName:(NSString *)globalsNodeName
 {
     NSString *docTitle = [[self rootSectionOfCurrentFile] sectionName];
-    NSMutableArray *titleComponents = [[[docTitle componentsSeparatedByString:@" "] mutableCopy]
-                                       autorelease];
+    NSMutableArray *titleComponents = [[docTitle componentsSeparatedByString:@" "] mutableCopy];
 
     [titleComponents removeObject:@"Reference"];
     docTitle = [titleComponents componentsJoinedByString:@" "];

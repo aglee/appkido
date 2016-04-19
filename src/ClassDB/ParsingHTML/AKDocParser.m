@@ -28,13 +28,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_sectionStack release];
-    [_rootSectionOfCurrentFile release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Parsing
@@ -197,23 +190,21 @@
     // Perform the first kludge.
     @autoreleasepool
     {
-        afterFirstKludge = [[[self class] _kludgeDivTagsToH3:originalData] retain];
+        afterFirstKludge = [[self class] _kludgeDivTagsToH3:originalData];
     }
-    [originalData release];
     originalData = nil;
 
     // Perform the second kludge.
     @autoreleasepool
     {
-        afterSecondKludge = [[[self class] _kludgeSpanTagsToH1:afterFirstKludge] retain];
+        afterSecondKludge = [[self class] _kludgeSpanTagsToH1:afterFirstKludge];
     }
-    [afterFirstKludge release];
     afterFirstKludge = nil;
 
     // Remove the NULL terminator, which was copied by the kludge.
     [afterSecondKludge setLength:([afterSecondKludge length] - 1)];
 
-    return [afterSecondKludge autorelease];
+    return afterSecondKludge;
 }
 
 - (void)parseCurrentFile
@@ -221,7 +212,7 @@
     @autoreleasepool
     {
         // Parse the file, to extract the hierarchy of sections therein.
-        _rootSectionOfCurrentFile = [[self _parseRootSection] retain];
+        _rootSectionOfCurrentFile = [self _parseRootSection];
 
         // Apply the parse results to the database.
         if (_rootSectionOfCurrentFile != nil)
@@ -404,7 +395,7 @@
         [parentSection addChildSection:childSection];
     }
 
-    [siblings release];  // release here
+      // release here
 }
 
 // on entry, _current points to the opening angle bracket of an <hX> tag;
@@ -599,9 +590,9 @@
 
     if (trimmedTitleStart)
     {
-        result = [[[NSString alloc] initWithBytes:titleBuf
+        result = [[NSString alloc] initWithBytes:titleBuf
                                            length:(trimmedTitleEnd - trimmedTitleStart + 1)
-                                         encoding:NSUTF8StringEncoding] autorelease];
+                                         encoding:NSUTF8StringEncoding];
     }
     else
     {

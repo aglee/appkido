@@ -21,8 +21,8 @@
 + (id)subtopicForClassNode:(AKClassNode *)classNode
     includeAncestors:(BOOL)includeAncestors
 {
-    return [[[self alloc] initWithClassNode:classNode
-                           includeAncestors:includeAncestors] autorelease];
+    return [[self alloc] initWithClassNode:classNode
+                           includeAncestors:includeAncestors];
 }
 
 #pragma mark -
@@ -33,7 +33,7 @@
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _classNode = [classNode retain];
+        _classNode = classNode;
     }
 
     return self;
@@ -45,12 +45,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_classNode release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters

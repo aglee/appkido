@@ -33,7 +33,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 
 + (AKFileSection *)withFile:(NSString *)filePath
 {
-    AKFileSection *fileSection = [[[self alloc] initWithFile:filePath] autorelease];
+    AKFileSection *fileSection = [[self alloc] initWithFile:filePath];
 
     [fileSection setSectionName:[filePath lastPathComponent]];
     [fileSection setSectionOffset:0];
@@ -45,7 +45,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 + (AKFileSection *)withEntireFile:(NSString *)filePath
 {
     // Find out the file size.
-    NSFileWrapper *fileWrapper = [[[NSFileWrapper alloc] initWithPath:filePath] autorelease];
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithPath:filePath];
     NSDictionary *fileAttributes = [fileWrapper fileAttributes];
     int fileSize = [[fileAttributes objectForKey:NSFileSize] intValue];
 
@@ -83,12 +83,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 {
     [s_fileSectionCache unlikeFileAtPath:_filePath];
 
-    [_filePath release];
-    [_fileContents release];
-    [_sectionName release];
-    [_childSections release];
 
-    [super dealloc];
 }
 
 #pragma mark -
@@ -103,7 +98,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 {
     if ((_fileContents == nil) && (_filePath != nil))
     {
-        _fileContents = [[s_fileSectionCache likeFileAtPath:_filePath] retain];
+        _fileContents = [s_fileSectionCache likeFileAtPath:_filePath];
     }
 
     return _fileContents;
@@ -116,7 +111,6 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 
 - (void)setSectionName:(NSString *)name
 {
-    [_sectionName autorelease];
     _sectionName = [name copy];
 }
 
@@ -158,7 +152,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
 
 - (NSArray *)childSections
 {
-    return [[_childSections copy] autorelease];
+    return [_childSections copy];
 }
 
 - (NSInteger)numberOfChildSections
@@ -241,8 +235,8 @@ static AKFileSectionCache *s_fileSectionCache = nil;
    for (AKFileSection *childSection in _childSections)
    {
 		NSData *data = [childSection sectionData];
-		NSString *d = [[[NSString alloc] initWithData:data
-                                             encoding:NSUTF8StringEncoding] autorelease];
+		NSString *d = [[NSString alloc] initWithData:data
+                                             encoding:NSUTF8StringEncoding];
 		NSRange rr = [d rangeOfString:name];
 		if (rr.location != NSNotFound)
         {

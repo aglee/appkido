@@ -21,7 +21,7 @@
 #import "AKWindowController.h"
 
 @interface AKDocViewController ()
-@property (nonatomic, retain) AKDocLocator *docLocator;
+@property (nonatomic, strong) AKDocLocator *docLocator;
 @end
 
 @implementation AKDocViewController
@@ -47,13 +47,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_docLocator release];
-    [_headerFontName release];
-
-    [super dealloc];
-}
 
 - (void)awakeFromNib
 {
@@ -112,7 +105,6 @@
             headerFontChanged = YES;
 
             // Standard setter pattern.
-            [_headerFontName autorelease];
             _headerFontName = [headerFontNamePref copy];
         }
 
@@ -321,8 +313,8 @@ contextMenuItemsForElement:(NSDictionary *)element
     
     if (textData)
     {
-        docString = [[[NSString alloc] initWithData:textData
-                                           encoding:NSUTF8StringEncoding] autorelease];
+        docString = [[NSString alloc] initWithData:textData
+                                           encoding:NSUTF8StringEncoding];
     }
 
     [_textView setRichText:NO];
@@ -375,8 +367,8 @@ contextMenuItemsForElement:(NSDictionary *)element
     NSString *htmlString = @"";
     if (htmlData)
     {
-        htmlString = [[[NSString alloc] initWithData:htmlData
-                                            encoding:NSUTF8StringEncoding] autorelease];
+        htmlString = [[NSString alloc] initWithData:htmlData
+                                            encoding:NSUTF8StringEncoding];
     }
 
     if (htmlFilePath)
@@ -396,9 +388,9 @@ contextMenuItemsForElement:(NSDictionary *)element
                       toArray:(NSMutableArray *)menuItems
 {
     // Leave the target nil so actions will go to first responder.
-    NSMenuItem *menuItem = [[[NSMenuItem alloc] initWithTitle:menuItemTitle
+    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:menuItemTitle
                                                        action:menuItemAction
-                                                keyEquivalent:@""] autorelease];
+                                                keyEquivalent:@""];
     [menuItems addObject:menuItem];
 }
 

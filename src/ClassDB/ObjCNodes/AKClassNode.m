@@ -57,14 +57,8 @@
 
 - (void)dealloc
 {
-    [_namesOfAllOwningFrameworks release];
-    [_nodeDocumentationByFrameworkName release];
-    [_childClassNodes release];
-    [_categoryNodes release];
     _indexOfDelegateMethods = nil;
-    [_indexOfNotifications release];
 
-    [super dealloc];
 }
 
 #pragma mark -
@@ -194,7 +188,7 @@
 
 - (NSArray *)documentedDelegateMethods
 {
-    NSMutableArray *methodList = [[[_indexOfDelegateMethods nodesWithDocumentation] mutableCopy] autorelease];
+    NSMutableArray *methodList = [[_indexOfDelegateMethods nodesWithDocumentation] mutableCopy];
 
     // Handle classes like WebView that have different *kinds* of delegates.
     [self _addExtraDelegateMethodsTo:methodList];
@@ -261,11 +255,10 @@
     {
         if ([methodName ak_contains:@":"])
         {
-            methodNode = [[[AKMethodNode alloc] initWithNodeName:methodName
+            methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
                                                         database:[self owningDatabase]
                                                    frameworkName:frameworkName
-                                                  owningBehavior:self]
-                          autorelease];
+                                                  owningBehavior:self];
             [methodNode setIsDeprecated:YES];
             [self addDelegateMethod:methodNode];
         }

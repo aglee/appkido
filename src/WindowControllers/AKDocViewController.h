@@ -20,14 +20,14 @@
     NSInteger _docMagnifier;
 
     // IBOutlets.
-    NSTabView *_tabView;  // Two tabs, one containing _webView and the other _textView.
-    WebView *_webView;
-    NSTextView *_textView;
+    NSTabView *__weak _tabView;  // Two tabs, one containing _webView and the other _textView.
+    WebView *__weak _webView;
+    NSTextView *__unsafe_unretained _textView;
 }
 
-@property (nonatomic, assign) IBOutlet NSTabView *tabView;
-@property (nonatomic, assign) IBOutlet WebView *webView;
-@property (nonatomic, assign) IBOutlet NSTextView *textView;
+@property (nonatomic, weak) IBOutlet NSTabView *tabView;
+@property (nonatomic, weak) IBOutlet WebView *webView;
+@property (nonatomic, unsafe_unretained) IBOutlet NSTextView *textView;
 
 #pragma mark -
 #pragma mark Navigation

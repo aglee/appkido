@@ -21,7 +21,7 @@
 {
     if ((self = [super init]))
     {
-        _databaseNode = [databaseNode retain];
+        _databaseNode = databaseNode;
     }
 
     return self;
@@ -33,12 +33,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_databaseNode release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKDoc methods

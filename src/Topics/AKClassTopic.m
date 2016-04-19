@@ -27,7 +27,7 @@
 
 + (id)topicWithClassNode:(AKClassNode *)classNode
 {
-    return [[[self alloc] initWithClassNode:classNode] autorelease];
+    return [[self alloc] initWithClassNode:classNode];
 }
 
 #pragma mark -
@@ -37,7 +37,7 @@
 {
     if ((self = [super init]))
     {
-        _classNode = [classNode retain];
+        _classNode = classNode;
     }
 
     return self;
@@ -49,12 +49,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_classNode release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKTopic methods

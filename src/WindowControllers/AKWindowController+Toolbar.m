@@ -27,7 +27,7 @@ static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
      itemForItemIdentifier:(NSString *)itemIdentifier
  willBeInsertedIntoToolbar:(BOOL)flag
 {
-    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+    NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     
     if ([itemIdentifier isEqualToString:_AKQuicklistToolID])
     {

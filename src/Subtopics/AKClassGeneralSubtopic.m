@@ -21,7 +21,7 @@
 
 + (id)subtopicForClassNode:(AKClassNode *)classNode
 {
-    return [[[self alloc] initWithClassNode:classNode] autorelease];
+    return [[self alloc] initWithClassNode:classNode];
 }
 
 #pragma mark -
@@ -31,7 +31,7 @@
 {
     if ((self = [super init]))
     {
-        _classNode = [classNode retain];
+        _classNode = classNode;
     }
 
     return self;
@@ -43,12 +43,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_classNode release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKSubtopic methods
@@ -103,9 +97,8 @@
         for (AKFileSection *majorSection in [self pertinentChildSectionsOf:extraRootSection])
         {
             NSString *sectionName = [majorSection sectionName];
-            AKBehaviorGeneralDoc *sectionDoc = [[[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection
-                                                                               extraFrameworkName:extraFrameworkName]
-                                                autorelease];
+            AKBehaviorGeneralDoc *sectionDoc = [[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection
+                                                                               extraFrameworkName:extraFrameworkName];
             NSInteger docIndex = [self indexOfDocWithName:sectionName];
 
             if (docIndex < 0)

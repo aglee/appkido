@@ -111,9 +111,9 @@
 
     NSString *xmlString = [NSString stringWithFormat:@"<foo>%@</foo>", self];
     NSError *xmlError = nil;
-    NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:xmlString
+    NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlString
                                                               options:0
-                                                                error:&xmlError] autorelease];
+                                                                error:&xmlError];
     if (xmlDoc == nil)
     {
         DIGSLogError(@"Error str%@", xmlError);

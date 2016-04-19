@@ -45,11 +45,11 @@
     NSMutableArray *_favoritesList;
 
     // IB outlets.
-    NSMenuItem *_firstGoMenuDivider;
+    NSMenuItem *__weak _firstGoMenuDivider;
 }
 
 /*! We insert menu items after this item in the "Go" menu. */
-@property (nonatomic, assign) IBOutlet NSMenuItem *firstGoMenuDivider;
+@property (nonatomic, weak) IBOutlet NSMenuItem *firstGoMenuDivider;
 
 #pragma mark -
 #pragma mark Shared instance

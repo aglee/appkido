@@ -37,13 +37,6 @@
     return [self initWithBasePath:@""];
 }
 
-- (void)dealloc
-{
-    [_basePath release];
-    [_currentPath release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Processing files

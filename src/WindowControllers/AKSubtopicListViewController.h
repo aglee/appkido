@@ -23,10 +23,10 @@
     NSMutableArray *_subtopics;
 
     // IBOutlets.
-    AKTableView *_subtopicsTable;
+    AKTableView *__weak _subtopicsTable;
 }
 
-@property (nonatomic, assign) IBOutlet AKTableView *subtopicsTable;
+@property (nonatomic, weak) IBOutlet AKTableView *subtopicsTable;
 
 #pragma mark -
 #pragma mark Getters and setters

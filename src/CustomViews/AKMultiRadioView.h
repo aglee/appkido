@@ -38,10 +38,10 @@
 @interface AKMultiRadioView : NSView
 {
 @private
-    id <AKMultiRadioViewDelegate> _delegate;
+    id <AKMultiRadioViewDelegate> __unsafe_unretained _delegate;
 }
 
-@property (nonatomic, assign) IBOutlet id <AKMultiRadioViewDelegate> delegate;
+@property (nonatomic, unsafe_unretained) IBOutlet id <AKMultiRadioViewDelegate> delegate;
 
 #pragma mark -
 #pragma mark Getters and setters

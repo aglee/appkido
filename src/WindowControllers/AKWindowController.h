@@ -58,63 +58,63 @@
     AKQuicklistViewController *_quicklistController;
 
     // IBOutlets.
-    NSSplitView *_topLevelSplitView;
-    NSSplitView *_bottomTwoThirdsSplitView;
-    NSView *_middleView;
-    NSSplitView *_middleThirdSplitView;
+    NSSplitView *__weak _topLevelSplitView;
+    NSSplitView *__weak _bottomTwoThirdsSplitView;
+    NSView *__weak _middleView;
+    NSSplitView *__weak _middleThirdSplitView;
 
-    NSView *_topicBrowserContainerView;
-    NSView *_subtopicListContainerView;
-    NSView *_docListContainerView;
-    NSView *_docContainerView;
+    NSView *__weak _topicBrowserContainerView;
+    NSView *__weak _subtopicListContainerView;
+    NSView *__weak _docListContainerView;
+    NSView *__weak _docContainerView;
     
-    NSTextField *_topicDescriptionField;
-    NSTextField *_docCommentField;
+    NSTextField *__weak _topicDescriptionField;
+    NSTextField *__weak _docCommentField;
 
-    NSButton *_backButton;
-    NSButton *_forwardButton;
-    NSButton *_superclassButton;
+    NSButton *__weak _backButton;
+    NSButton *__weak _forwardButton;
+    NSButton *__weak _superclassButton;
 
-    NSMenu *_backMenu;
-    NSMenu *_forwardMenu;
-    NSMenu *_superclassesMenu;
+    NSMenu *__weak _backMenu;
+    NSMenu *__weak _forwardMenu;
+    NSMenu *__weak _superclassesMenu;
 
-    NSDrawer *_quicklistDrawer;
+    NSDrawer *__weak _quicklistDrawer;
 }
 
 /*! Top pane contains the topic browser, bottom pane contains bottomTwoThirdsSplitView. */
-@property (nonatomic, assign) IBOutlet NSSplitView *topLevelSplitView;
+@property (nonatomic, weak) IBOutlet NSSplitView *topLevelSplitView;
 
 /*! Top pane contains the "middle third", bottom pane contains the doc view. */
-@property (nonatomic, assign) IBOutlet NSSplitView *bottomTwoThirdsSplitView;
+@property (nonatomic, weak) IBOutlet NSSplitView *bottomTwoThirdsSplitView;
 
 /*! Contains topicDescriptionField and middleThirdSplitView. */
-@property (nonatomic, assign) IBOutlet NSView *middleView;
+@property (nonatomic, weak) IBOutlet NSView *middleView;
 
 /*! The "middle third" contains the subtopic list and doc list, side by side. */
-@property (nonatomic, assign) IBOutlet NSSplitView *middleThirdSplitView;
+@property (nonatomic, weak) IBOutlet NSSplitView *middleThirdSplitView;
 
 // These container views will have views stuffed inside them. Those views will
 // be loaded by various view controllers.
-@property (nonatomic, assign) IBOutlet NSView *topicBrowserContainerView;
-@property (nonatomic, assign) IBOutlet NSView *subtopicListContainerView;
-@property (nonatomic, assign) IBOutlet NSView *docListContainerView;
-@property (nonatomic, assign) IBOutlet NSView *docContainerView;
+@property (nonatomic, weak) IBOutlet NSView *topicBrowserContainerView;
+@property (nonatomic, weak) IBOutlet NSView *subtopicListContainerView;
+@property (nonatomic, weak) IBOutlet NSView *docListContainerView;
+@property (nonatomic, weak) IBOutlet NSView *docContainerView;
 
 // These things are in the "middle third".
-@property (nonatomic, assign) IBOutlet NSTextField *topicDescriptionField;
-@property (nonatomic, assign) IBOutlet NSButton *backButton;
-@property (nonatomic, assign) IBOutlet NSButton *forwardButton;
-@property (nonatomic, assign) IBOutlet NSButton *superclassButton;
-@property (nonatomic, assign) IBOutlet NSMenu *backMenu;
-@property (nonatomic, assign) IBOutlet NSMenu *forwardMenu;
-@property (nonatomic, assign) IBOutlet NSMenu *superclassesMenu;
+@property (nonatomic, weak) IBOutlet NSTextField *topicDescriptionField;
+@property (nonatomic, weak) IBOutlet NSButton *backButton;
+@property (nonatomic, weak) IBOutlet NSButton *forwardButton;
+@property (nonatomic, weak) IBOutlet NSButton *superclassButton;
+@property (nonatomic, weak) IBOutlet NSMenu *backMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *forwardMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *superclassesMenu;
 
 /*! At the bottom of the window. May display info about the selected doc. */
-@property (nonatomic, assign) IBOutlet NSTextField *docCommentField;
+@property (nonatomic, weak) IBOutlet NSTextField *docCommentField;
 
 /*! On the left side of the window. */
-@property (nonatomic, assign) IBOutlet NSDrawer *quicklistDrawer;
+@property (nonatomic, weak) IBOutlet NSDrawer *quicklistDrawer;
 
 #pragma mark -
 #pragma mark Init/dealloc/awake

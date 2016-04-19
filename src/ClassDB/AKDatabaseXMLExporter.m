@@ -26,7 +26,7 @@
 {
     if ((self = [super init]))
     {
-        _database = [database retain];
+        _database = database;
         _xmlWriter = [[TCMXMLWriter alloc] initWithOptions:(TCMXMLWriterOptionOrderedAttributes
                                                             | TCMXMLWriterOptionPrettyPrinted)
                                                    fileURL:outfileURL];
@@ -41,13 +41,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-    [_xmlWriter release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark The main export method

@@ -88,14 +88,13 @@
 
     for (AKFileSection *majorSection in [self pertinentChildSectionsOf:rootSection])
     {
-        [docList addObject:[[[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection] autorelease]];
+        [docList addObject:[[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection]];
     }
 
     // Add the "Inheritance" option as the first item.
     // If the user selects this, we will display the selected node's
     // root file section for the given node.
-    AKInheritanceDoc *inheritanceDoc = [[[AKInheritanceDoc alloc] initWithFileSection:rootSection]
-                                        autorelease];
+    AKInheritanceDoc *inheritanceDoc = [[AKInheritanceDoc alloc] initWithFileSection:rootSection];
     [docList insertObject:inheritanceDoc atIndex:0];
 
     // If a subsection named "XXX Description" or "Overview" is present, move
@@ -107,7 +106,7 @@
 
     for (i = 0; i < numDocs; i++)
     {
-        AKDoc *doc = [[[docList objectAtIndex:i] retain] autorelease];  // Avoid premature dealloc.
+        AKDoc *doc = [docList objectAtIndex:i];  // Avoid premature dealloc.
         NSString *docName = [doc docName];
 
         if ([docName isEqualToString:descriptionSectionName]
@@ -129,8 +128,7 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:headerFilePath])
     {
         AKFileSection *headerFileSection = [AKFileSection withEntireFile:headerFilePath];
-        AKHeaderFileDoc *headerFileDoc = [[[AKHeaderFileDoc alloc] initWithFileSection:headerFileSection]
-                                          autorelease];
+        AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithFileSection:headerFileSection];
         [docList addObject:headerFileDoc];
     }
 }

@@ -30,12 +30,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_argumentTypes release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters

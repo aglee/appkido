@@ -23,7 +23,7 @@
 
 + (void)showPopQuiz
 {
-    AKPopQuizWindowController *wc = [[[self alloc] initWithWindowNibName:@"PopQuiz"] autorelease];
+    AKPopQuizWindowController *wc = [[self alloc] initWithWindowNibName:@"PopQuiz"];
 
     // Note that a side effect of calling [wc window] is to force the nib to be
     // loaded, thus ensuring that the [wc symbolNameField] outlet is set.

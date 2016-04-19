@@ -22,14 +22,14 @@
     BOOL _lastFindWasSuccessful;
 
     // IBOutlets.
-    NSTextField *_findTextField;
-    NSButton *_findNextButton;
-    NSTextField *_statusTextField;
+    NSTextField *__weak _findTextField;
+    NSButton *__weak _findNextButton;
+    NSTextField *__weak _statusTextField;
 }
 
-@property (nonatomic, assign) IBOutlet NSTextField *findTextField;
-@property (nonatomic, assign) IBOutlet NSButton *findNextButton;
-@property (nonatomic, assign) IBOutlet NSTextField *statusTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *findTextField;
+@property (nonatomic, weak) IBOutlet NSButton *findNextButton;
+@property (nonatomic, weak) IBOutlet NSTextField *statusTextField;
 
 #pragma mark -
 #pragma mark Factory methods

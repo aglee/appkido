@@ -22,10 +22,10 @@
     NSMutableArray *_topicListsForBrowserColumns;
 
     // IBOutlets.
-    AKBrowser *_topicBrowser;
+    AKBrowser *__weak _topicBrowser;
 }
 
-@property (nonatomic, assign) IBOutlet AKBrowser *topicBrowser;
+@property (nonatomic, weak) IBOutlet AKBrowser *topicBrowser;
 
 #pragma mark -
 #pragma mark Action methods

@@ -28,7 +28,7 @@
 
 + (id)topicWithProtocolNode:(AKProtocolNode *)protocolNode
 {
-    return [[[self alloc] initWithProtocolNode:protocolNode] autorelease];
+    return [[self alloc] initWithProtocolNode:protocolNode];
 }
 
 #pragma mark -
@@ -38,7 +38,7 @@
 {
     if ((self = [super init]))
     {
-        _protocolNode = [protocolNode retain];
+        _protocolNode = protocolNode;
     }
 
     return self;
@@ -50,12 +50,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_protocolNode retain];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKTopic methods

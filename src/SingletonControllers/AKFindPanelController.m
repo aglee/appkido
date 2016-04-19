@@ -59,7 +59,6 @@ s_sharedInstance = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPa
 {
     [[DIGSFindBuffer sharedInstance] removeDelegate:self];
 
-    [super dealloc];
 }
 
 #pragma mark -

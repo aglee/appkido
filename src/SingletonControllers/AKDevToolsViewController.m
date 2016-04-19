@@ -45,12 +45,6 @@
     [self _updateUIToReflectPrefs];
 }
 
-- (void)dealloc
-{
-    [_selectedXcodeAppPath release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters

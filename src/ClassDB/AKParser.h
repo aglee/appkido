@@ -41,7 +41,7 @@
     const char *_dataEnd;
 }
 
-@property (nonatomic, readonly, retain) AKDatabase *targetDatabase;
+@property (nonatomic, readonly, strong) AKDatabase *targetDatabase;
 @property (nonatomic, readonly, copy) NSString *targetFrameworkName;
 
 #pragma mark -

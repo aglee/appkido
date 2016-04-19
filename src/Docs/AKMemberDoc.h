@@ -17,8 +17,8 @@
     AKBehaviorNode *_behaviorNode;
 }
 
-@property (nonatomic, readonly, retain) AKMemberNode *memberNode;
-@property (nonatomic, readonly, retain) AKBehaviorNode *behaviorNode;
+@property (nonatomic, readonly, strong) AKMemberNode *memberNode;
+@property (nonatomic, readonly, strong) AKBehaviorNode *behaviorNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

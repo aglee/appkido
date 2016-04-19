@@ -26,7 +26,7 @@
 
 + (id)linkResolverWithDatabase:(AKDatabase *)database
 {
-    return [[[self alloc] initWithDatabase:database] autorelease];
+    return [[self alloc] initWithDatabase:database];
 }
 
 #pragma mark -
@@ -36,7 +36,7 @@
 {
     if ((self = [super init]))
     {
-        _database = [database retain];
+        _database = database;
     }
 
     return self;
@@ -48,12 +48,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Resolving links
@@ -84,7 +78,7 @@
     NSString *linkAnchor = [normalizedLinkURL fragment];
     NSString *tokenNameOrDocTitle = [linkAnchor lastPathComponent];
 
-    AKSearchQuery *searchQuery = [[[AKSearchQuery alloc] initWithDatabase:_database] autorelease];
+    AKSearchQuery *searchQuery = [[AKSearchQuery alloc] initWithDatabase:_database];
     
     [searchQuery setSearchString:tokenNameOrDocTitle];
     [searchQuery includeEverythingInSearch];

@@ -77,7 +77,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     if ((self = [super initWithWindowNibName:@"AKWindow"]))
     {
-        _database = [database retain];
+        _database = database;
 
         NSInteger maxHistory = [AKPrefUtils intValueForPref:AKMaxHistoryPrefName];
 
@@ -94,20 +94,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return nil;
 }
 
-- (void)dealloc
-{
-    [_database release];
-    
-    [_windowHistory release];
-
-    [_topicBrowserController release];
-    [_subtopicListController release];
-    [_docListController release];
-    [_docViewController release];
-    [_quicklistController release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters
@@ -218,7 +204,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState
 {
-    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
+    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
 
     [self putWindowLayoutInto:windowLayout];
 
@@ -257,7 +243,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)rememberWindowLayout:(id)sender
 {
-    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
+    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
     [self putWindowLayoutInto:windowLayout];
 
     NSDictionary *prefDictionary = [windowLayout asPrefDictionary];
@@ -869,21 +855,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)_setUpViewControllers
 {
     // Populate our various container views.
-    _topicBrowserController = [[self _vcWithClass:[AKTopicBrowserViewController class]
+    _topicBrowserController = [self _vcWithClass:[AKTopicBrowserViewController class]
                                           nibName:@"TopicBrowserView"
-                                    containerView:_topicBrowserContainerView] retain];
-    _subtopicListController = [[self _vcWithClass:[AKSubtopicListViewController class]
+                                    containerView:_topicBrowserContainerView];
+    _subtopicListController = [self _vcWithClass:[AKSubtopicListViewController class]
                                           nibName:@"SubtopicListView"
-                                    containerView:_subtopicListContainerView] retain];
-    _docListController = [[self _vcWithClass:[AKDocListViewController class]
+                                    containerView:_subtopicListContainerView];
+    _docListController = [self _vcWithClass:[AKDocListViewController class]
                                      nibName:@"DocListView"
-                               containerView:_docListContainerView] retain];
-    _docViewController = [[self _vcWithClass:[AKDocViewController class]
+                               containerView:_docListContainerView];
+    _docViewController = [self _vcWithClass:[AKDocViewController class]
                                               nibName:@"DocView"
-                                        containerView:_docContainerView] retain];
-    _quicklistController = [[self _vcWithClass:[AKQuicklistViewController class]
+                                        containerView:_docContainerView];
+    _quicklistController = [self _vcWithClass:[AKQuicklistViewController class]
                                        nibName:@"QuicklistView"
-                                 containerView:[_quicklistDrawer contentView]] retain];
+                                 containerView:[_quicklistDrawer contentView]];
 
     // Load the window with initial data.
     AKBrowser *topicBrowser = [_topicBrowserController topicBrowser];
@@ -913,7 +899,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
            nibName:(NSString *)nibName
      containerView:(NSView *)containerView
 {
-    id vc = [[[vcClass alloc] initWithNibName:nibName windowController:self] autorelease];
+    id vc = [[vcClass alloc] initWithNibName:nibName windowController:self];
     
     // Stuff the view controller's view into the container view.
     [[vc view] setFrame:[containerView bounds]];

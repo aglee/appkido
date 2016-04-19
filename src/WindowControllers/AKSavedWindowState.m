@@ -20,13 +20,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_savedWindowLayout release];
-    [_savedDocLocator release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKPrefDictionary methods
@@ -38,7 +31,7 @@
         return nil;
     }
 
-    AKSavedWindowState *windowState = [[[self alloc] init] autorelease];
+    AKSavedWindowState *windowState = [[self alloc] init];
 
     // Get the window layout.
     NSDictionary *windowLayoutPrefDict = [prefDict objectForKey:AKWindowLayoutPrefKey];

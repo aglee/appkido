@@ -31,12 +31,6 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_docList release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters

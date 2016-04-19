@@ -18,7 +18,7 @@
     AKGroupNode *_groupNode;
 }
 
-@property (nonatomic, readonly, retain) AKGroupNode *groupNode;
+@property (nonatomic, readonly, strong) AKGroupNode *groupNode;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

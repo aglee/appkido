@@ -15,7 +15,7 @@
 
 + (id)versionFromString:(NSString *)versionString
 {
-	id version = [[[self alloc] init] autorelease];
+	id version = [[self alloc] init];
 	NSArray *versionParts = [versionString componentsSeparatedByString:@"."];
 	
 	if ([versionParts count] > 0)

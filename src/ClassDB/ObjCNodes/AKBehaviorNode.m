@@ -37,17 +37,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_headerFileWhereDeclared release];
-    [_protocolNodes release];
-    [_protocolNodeNames release];
-    [_indexOfProperties release];
-    [_indexOfClassMethods release];
-    [_indexOfInstanceMethods release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters -- general

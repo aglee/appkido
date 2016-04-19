@@ -71,9 +71,8 @@
     for (NSString *methodName in sortedMethodNames)
     {
         AKMethodNode *methodNode = [methodNodesByName objectForKey:methodName];
-        AKMemberDoc *methodDoc = [[[methodClass alloc] initWithMemberNode:methodNode
-                                                      inheritedByBehavior:[self behaviorNode]]
-                                  autorelease];
+        AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberNode:methodNode
+                                                      inheritedByBehavior:[self behaviorNode]];
         [docList addObject:methodDoc];
     }
 }

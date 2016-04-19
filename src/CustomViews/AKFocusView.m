@@ -48,7 +48,6 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     [self _stopObservingKeyWindowChanges];
     [self _stopObservingFirstResponderChanges];
 
-    [super dealloc];
 }
 
 #pragma mark -

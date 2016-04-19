@@ -20,19 +20,13 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (void)dealloc
-{
-    [_devToolsViewController release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Running the panel
 
 + (BOOL)runDevToolsSetupPanel
 {
-    AKDevToolsPanelController *wc = [[[self alloc] initWithWindowNibName:@"DevToolsPanel"] autorelease];
+    AKDevToolsPanelController *wc = [[self alloc] initWithWindowNibName:@"DevToolsPanel"];
     NSInteger result = [[NSApplication sharedApplication] runModalForWindow:[wc window]];
 
     [[wc window] orderOut:self];  // [agl] needed?

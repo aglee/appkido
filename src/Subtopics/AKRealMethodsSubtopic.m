@@ -21,8 +21,8 @@
 + (id)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
              includeAncestors:(BOOL)includeAncestors
 {
-    return [[[self alloc] initWithBehaviorNode:behaviorNode
-                              includeAncestors:includeAncestors] autorelease];
+    return [[self alloc] initWithBehaviorNode:behaviorNode
+                              includeAncestors:includeAncestors];
 }
 
 #pragma mark -
@@ -33,7 +33,7 @@
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _behaviorNode = [behaviorNode retain];
+        _behaviorNode = behaviorNode;
     }
 
     return self;
@@ -45,12 +45,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_behaviorNode release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods

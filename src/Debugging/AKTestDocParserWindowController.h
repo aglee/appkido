@@ -14,20 +14,20 @@
     AKFileSection *_rootSection;  // Root section of parse result.
 
     // IBOutlets.
-    NSTextField *_filePathField;
-    NSTabView *_tabView;
-    NSTextView *_parseResultTextView;
-    NSBrowser *_parseResultBrowser;
-    NSTextView *_fileSectionTextView;
-    NSTextField *_fileSectionInfoField;
+    NSTextField *__weak _filePathField;
+    NSTabView *__weak _tabView;
+    NSTextView *__unsafe_unretained _parseResultTextView;
+    NSBrowser *__weak _parseResultBrowser;
+    NSTextView *__unsafe_unretained _fileSectionTextView;
+    NSTextField *__weak _fileSectionInfoField;
 }
 
-@property (nonatomic, assign) IBOutlet NSTextField *filePathField;
-@property (nonatomic, assign) IBOutlet NSTabView *tabView;
-@property (nonatomic, assign) IBOutlet NSTextView *parseResultTextView;
-@property (nonatomic, assign) IBOutlet NSBrowser *parseResultBrowser;
-@property (nonatomic, assign) IBOutlet NSTextView *fileSectionTextView;
-@property (nonatomic, assign) IBOutlet NSTextField *fileSectionInfoField;
+@property (nonatomic, weak) IBOutlet NSTextField *filePathField;
+@property (nonatomic, weak) IBOutlet NSTabView *tabView;
+@property (nonatomic, unsafe_unretained) IBOutlet NSTextView *parseResultTextView;
+@property (nonatomic, weak) IBOutlet NSBrowser *parseResultBrowser;
+@property (nonatomic, unsafe_unretained) IBOutlet NSTextView *fileSectionTextView;
+@property (nonatomic, weak) IBOutlet NSTextField *fileSectionInfoField;
 
 #pragma mark -
 #pragma mark Factory methods

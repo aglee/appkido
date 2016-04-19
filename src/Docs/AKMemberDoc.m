@@ -26,8 +26,8 @@
 {
     if ((self = [super init]))
     {
-        _memberNode = [memberNode retain];
-        _behaviorNode = [behaviorNode retain];
+        _memberNode = memberNode;
+        _behaviorNode = behaviorNode;
     }
 
     return self;
@@ -39,13 +39,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_memberNode release];
-    [_behaviorNode release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Manipulating node names

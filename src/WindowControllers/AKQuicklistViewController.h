@@ -34,41 +34,41 @@
     NSMutableArray *_pastSearchStrings;
 
     // IBOutlets.
-    AKMultiRadioView *_quicklistModeRadio;
-    NSMatrix *_quicklistRadio1;
-    NSMatrix *_quicklistRadio2;
-    NSMatrix *_quicklistRadio3;
+    AKMultiRadioView *__weak _quicklistModeRadio;
+    NSMatrix *__weak _quicklistRadio1;
+    NSMatrix *__weak _quicklistRadio2;
+    NSMatrix *__weak _quicklistRadio3;
 
-    NSPopUpButton *_frameworkPopup;
+    NSPopUpButton *__weak _frameworkPopup;
 
-    NSTextField *_searchField;
-    NSPopUpButton *_searchOptionsPopup;
-    NSMenuItem *_includeClassesItem;
-    NSMenuItem *_includeMethodsItem;
-    NSMenuItem *_includeFunctionsItem;
-    NSMenuItem *_includeGlobalsItem;
-    NSMenuItem *_ignoreCaseItem;
-    NSMenuItem *_searchOptionsDividerItem;
+    NSTextField *__weak _searchField;
+    NSPopUpButton *__weak _searchOptionsPopup;
+    NSMenuItem *__weak _includeClassesItem;
+    NSMenuItem *__weak _includeMethodsItem;
+    NSMenuItem *__weak _includeFunctionsItem;
+    NSMenuItem *__weak _includeGlobalsItem;
+    NSMenuItem *__weak _ignoreCaseItem;
+    NSMenuItem *__weak _searchOptionsDividerItem;
 
-    AKTableView *_quicklistTable;
-    NSButton *_removeFavoriteButton;
+    AKTableView *__weak _quicklistTable;
+    NSButton *__weak _removeFavoriteButton;
 }
 
-@property (nonatomic, assign) IBOutlet AKMultiRadioView *quicklistModeRadio;
-@property (nonatomic, assign) IBOutlet NSMatrix *quicklistRadio1;
-@property (nonatomic, assign) IBOutlet NSMatrix *quicklistRadio2;
-@property (nonatomic, assign) IBOutlet NSMatrix *quicklistRadio3;
-@property (nonatomic, assign) IBOutlet NSPopUpButton *frameworkPopup;
-@property (nonatomic, assign) IBOutlet NSTextField *searchField;
-@property (nonatomic, assign) IBOutlet NSPopUpButton *searchOptionsPopup;
-@property (nonatomic, assign) IBOutlet NSMenuItem *includeClassesItem;
-@property (nonatomic, assign) IBOutlet NSMenuItem *includeMethodsItem;
-@property (nonatomic, assign) IBOutlet NSMenuItem *includeFunctionsItem;
-@property (nonatomic, assign) IBOutlet NSMenuItem *includeGlobalsItem;
-@property (nonatomic, assign) IBOutlet NSMenuItem *ignoreCaseItem;
-@property (nonatomic, assign) IBOutlet NSMenuItem *searchOptionsDividerItem;
-@property (nonatomic, assign) IBOutlet AKTableView *quicklistTable;
-@property (nonatomic, assign) IBOutlet NSButton *removeFavoriteButton;
+@property (nonatomic, weak) IBOutlet AKMultiRadioView *quicklistModeRadio;
+@property (nonatomic, weak) IBOutlet NSMatrix *quicklistRadio1;
+@property (nonatomic, weak) IBOutlet NSMatrix *quicklistRadio2;
+@property (nonatomic, weak) IBOutlet NSMatrix *quicklistRadio3;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *frameworkPopup;
+@property (nonatomic, weak) IBOutlet NSTextField *searchField;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *searchOptionsPopup;
+@property (nonatomic, weak) IBOutlet NSMenuItem *includeClassesItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *includeMethodsItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *includeFunctionsItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *includeGlobalsItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *ignoreCaseItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *searchOptionsDividerItem;
+@property (nonatomic, weak) IBOutlet AKTableView *quicklistTable;
+@property (nonatomic, weak) IBOutlet NSButton *removeFavoriteButton;
 
 #pragma mark -
 #pragma mark Navigation

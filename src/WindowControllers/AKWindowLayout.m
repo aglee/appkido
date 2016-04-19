@@ -50,12 +50,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_frameworkPopupSelection release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKPrefDictionary methods
@@ -67,7 +61,7 @@
         return nil;
     }
 
-    AKWindowLayout *windowLayout = [[[AKWindowLayout alloc] init] autorelease];
+    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
 
     [windowLayout setWindowFrame:NSRectFromString([prefDict objectForKey:AKWindowFramePrefKey])];
     [windowLayout setToolbarIsVisible:[[prefDict objectForKey:AKToolbarIsVisiblePrefKey] boolValue]];

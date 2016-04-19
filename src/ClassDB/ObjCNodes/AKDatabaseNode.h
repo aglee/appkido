@@ -47,7 +47,7 @@
 @property (nonatomic, copy) NSString *nameOfOwningFramework;
 
 /*! Documentation for the API construct the node represents. Possibly nil. */
-@property (nonatomic, retain) AKFileSection *nodeDocumentation;
+@property (nonatomic, strong) AKFileSection *nodeDocumentation;
 
 @property (nonatomic, assign) BOOL isDeprecated;
 

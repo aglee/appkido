@@ -38,7 +38,7 @@
 
             //  Get a font of that size, and stick it in
             foundFont = [[NSFontManager sharedFontManager] convertFont:foundFont toSize:newSize];
-            newAttributes = [[attributes mutableCopy] autorelease];
+            newAttributes = [attributes mutableCopy];
             [newAttributes setObject:foundFont forKey:NSFontAttributeName];
             [self setAttributes:newAttributes range:foundRange];
         }

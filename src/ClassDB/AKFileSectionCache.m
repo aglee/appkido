@@ -25,13 +25,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_fileCache release];
-    [_fileCacheCounts release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Accessing the cache
@@ -54,7 +47,7 @@
     else
     {
         // The file wasn't in the cache. Add it with a "like" count of 1.
-        fileContents = [[[NSData alloc] initWithContentsOfFile:filePath] autorelease];
+        fileContents = [[NSData alloc] initWithContentsOfFile:filePath];
 
         if (fileContents)
         {

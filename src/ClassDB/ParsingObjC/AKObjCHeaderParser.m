@@ -406,11 +406,10 @@ static BOOL isPunctuation(char c)
 
             if (methodNode == nil)
             {
-                methodNode = [[[AKMethodNode alloc] initWithNodeName:methodName
+                methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
                                                             database:[self targetDatabase]
                                                        frameworkName:[self targetFrameworkName]
-                                                      owningBehavior:behaviorNode]
-                              autorelease];
+                                                      owningBehavior:behaviorNode];
                 addMemberNode(behaviorNode, methodNode);
             }
 

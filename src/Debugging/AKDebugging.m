@@ -52,7 +52,7 @@
     [debugMenuItem setEnabled:YES];
 
     // Create the submenu that will be under the "Debug" top-level menu item.
-    NSMenu *debugSubmenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
+    NSMenu *debugSubmenu = [[NSMenu alloc] initWithTitle:@"Debug"];
 
     [debugSubmenu setAutoenablesItems:NO];
 

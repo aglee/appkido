@@ -24,7 +24,7 @@
 {
     for (AKDatabaseNode *subnode in [AKSortUtils arrayBySortingArray:[[self groupNode] subnodes]])
     {
-        AKDoc *newDoc = [[[AKGlobalsDoc alloc] initWithNode:subnode] autorelease];
+        AKDoc *newDoc = [[AKGlobalsDoc alloc] initWithNode:subnode];
 
         [docList addObject:newDoc];
     }

@@ -24,9 +24,9 @@
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
-    return [[[self alloc] initWithNodeName:nodeName
+    return [[self alloc] initWithNodeName:nodeName
                                   database:database
-                             frameworkName:frameworkName] autorelease];
+                             frameworkName:frameworkName];
 }
 
 #pragma mark -
@@ -54,14 +54,6 @@
     return nil;
 }
 
-- (void)dealloc
-{
-    [_nodeName release];
-    [_nameOfOwningFramework release];
-    [_nodeDocumentation release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark AKSortable methods

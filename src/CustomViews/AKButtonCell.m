@@ -23,8 +23,8 @@
 // This function performs initialization common to them all.
 static void _common_init(AKButtonCell *self)
 {
-    self->_enabledTextColor = [[NSColor redColor] retain];  //[AKButtonCellEnabledTextColor retain];
-    self->_disabledTextColor = [AKButtonCellDisabledTextColor retain];
+    self->_enabledTextColor = [NSColor redColor];  //[AKButtonCellEnabledTextColor retain];
+    self->_disabledTextColor = AKButtonCellDisabledTextColor;
 }
 
 - (id)initImageCell:(NSImage *)anImage
@@ -60,21 +60,12 @@ static void _common_init(AKButtonCell *self)
     return self;
 }
 
-- (void)dealloc
-{
-    [_enabledTextColor release];
-    [_disabledTextColor release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Getters and setters
 
 - (void)setEnabledTextColor:(NSColor *)enabledTextColor
 {
-    [enabledTextColor retain];
-    [_enabledTextColor release];
     _enabledTextColor = enabledTextColor;
 
     [[self controlView] setNeedsDisplay:YES];
@@ -82,8 +73,6 @@ static void _common_init(AKButtonCell *self)
 
 - (void)setDisabledTextColor:(NSColor *)disabledTextColor
 {
-    [disabledTextColor retain];
-    [_disabledTextColor release];
     _disabledTextColor = disabledTextColor;
 
     [[self controlView] setNeedsDisplay:YES];
@@ -97,7 +86,7 @@ static void _common_init(AKButtonCell *self)
 // to this method. This override replaces the gray with a different color.
 - (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
 {
-    NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     [style setAlignment:[self alignment]];
 
     NSColor *textColor = ([self isEnabled]
@@ -109,8 +98,8 @@ static void _common_init(AKButtonCell *self)
                                       NSParagraphStyleAttributeName: style,
                                       });
 
-    title = [[[NSAttributedString alloc] initWithString:[title string]
-                                             attributes:textAttributes] autorelease];
+    title = [[NSAttributedString alloc] initWithString:[title string]
+                                             attributes:textAttributes];
     
     return [super drawTitle:title withFrame:frame inView:controlView];
 }

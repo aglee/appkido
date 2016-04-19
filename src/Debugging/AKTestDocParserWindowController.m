@@ -11,7 +11,7 @@
 #import "AKFileSection.h"
 
 @interface AKTestDocParserWindowController ()
-@property (nonatomic, retain) AKFileSection *rootSection;
+@property (nonatomic, strong) AKFileSection *rootSection;
 @end
 
 @implementation AKTestDocParserWindowController
@@ -40,7 +40,7 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 + (id)openNewParserWindow
 {
     AKTestDocParserWindowController *wc;
-    wc = [[[self alloc] initWithWindowNibName:@"TestDocParser"] autorelease];
+    wc = [[self alloc] initWithWindowNibName:@"TestDocParser"];
 
     [wc showWindow:nil];
 
@@ -61,12 +61,6 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
     return self;
 }
 
-- (void)dealloc
-{
-    [_rootSection release];
-
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Parsing
@@ -75,7 +69,7 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
 {
     [_filePathField setStringValue:filePath];
 
-    AKDocParser *dp = [[[AKDocParser alloc] initWithDatabase:nil frameworkName:nil] autorelease];
+    AKDocParser *dp = [[AKDocParser alloc] initWithDatabase:nil frameworkName:nil];
 
     [dp processFile:filePath];
 
@@ -141,8 +135,8 @@ static NSMutableArray *_testDocParserWindowControllers = nil;
     NSIndexPath *selectionIndexPath = [_parseResultBrowser selectionIndexPath];
     AKFileSection *fileSection = [_parseResultBrowser itemAtIndexPath:selectionIndexPath];
     NSData *sectionData = [fileSection sectionData];
-    NSString *sectionString = [[[NSString alloc] initWithData:sectionData
-                                                     encoding:NSUTF8StringEncoding] autorelease];
+    NSString *sectionString = [[NSString alloc] initWithData:sectionData
+                                                     encoding:NSUTF8StringEncoding];
     [_fileSectionTextView setString:sectionString];
     [_fileSectionInfoField setStringValue:[NSString stringWithFormat:@"%ld-%ld, %ld chars",
                                            (long)[fileSection sectionOffset],
