@@ -27,4 +27,8 @@
 
 - (NSArray *)fetchEntity:(NSString *)entityName sort:(NSArray *)sortSpecifiers where:(NSString *)format, ...;
 
+- (NSArray *)fetchDistinctAttributesWithName:(NSString *)attributeName ofEntity:(NSString *)entityName;
+
+- (NSArray *)frameworkNames;
+
 @end

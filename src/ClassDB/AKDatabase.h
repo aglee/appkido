@@ -35,6 +35,9 @@
 @interface AKDatabase : NSObject
 {
 @private
+    // Frameworks.
+    NSArray *_frameworkNames;
+
     // Classes.
     NSMutableDictionary *_classNodesByName;  // @{CLASS_NAME: AKClassNode}
 
@@ -59,10 +62,10 @@
 /*! Names of all frameworks that have been loaded, in no guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *frameworkNames;
 
-/*! Same as -frameworkNames, but sorted alphabetically. */
+/*! Same as .frameworkNames, but sorted alphabetically. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedFrameworkNames;
 
-/*! * Class without parent class. Array of AKClassNode. No guaranteed order. */
+/*! Array of AKClassNode. No guaranteed order. Each element represents a class that does not have a superclass. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *rootClasses;
 
 /*! Array of AKClassNode. No guaranteed order. */
@@ -80,12 +83,6 @@
 #pragma mark Populating the database
 
 - (void)loadTokens;
-
-///*!
-// * Adds database nodes for all API tokens in the specified framework.  Gets this
-// * information by querying the docset.
-// */
-//- (void)loadTokensForFrameworkWithName:(NSString *)fwName;
 
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
@@ -115,7 +112,7 @@
 - (AKProtocolNode *)protocolWithName:(NSString *)name;
 
 /*! Does nothing if we already contain a protocol with that name. */
-- (void)addProtocolNode:(AKProtocolNode *)classNode;
+- (void)addProtocolNode:(AKProtocolNode *)protocolNode;
 
 #pragma mark -
 #pragma mark Getters and setters -- functions

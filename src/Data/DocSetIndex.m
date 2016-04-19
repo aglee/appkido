@@ -173,4 +173,34 @@
 	return fetchedObjects;
 }
 
+- (NSArray *)fetchDistinctAttributesWithName:(NSString *)attributeName ofEntity:(NSString *)entityName
+{
+    // Construct the fetch request.
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    NSEntityDescription *entityDescription = self.managedObjectModel.entitiesByName[entityName];
+
+    fetchRequest.resultType = NSDictionaryResultType;
+    fetchRequest.propertiesToFetch = @[entityDescription.propertiesByName[attributeName]];
+    fetchRequest.returnsDistinctResults = YES;
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"%K != NULL", attributeName];
+
+    // Do the fetch.
+    __block NSError *error;
+    __block NSArray *fetchedObjects;
+    [self.managedObjectContext performBlockAndWait:^{
+        fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }];
+    if (fetchedObjects == nil) {
+        QLog(@"[%s] [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
+        return nil;
+    }
+
+    return [fetchedObjects valueForKey:attributeName];
+}
+
+- (NSArray *)frameworkNames
+{
+    return [self fetchDistinctAttributesWithName:@"frameworkName" ofEntity:@"Header"];
+}
+
 @end

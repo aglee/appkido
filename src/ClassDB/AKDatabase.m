@@ -31,6 +31,8 @@
     {
         _docSetIndex = docSetIndex;
 
+        _frameworkNames = [_docSetIndex frameworkNames];
+
         _classNodesByName = [[NSMutableDictionary alloc] init];
 
         _protocolNodesByName = [[NSMutableDictionary alloc] init];
@@ -65,11 +67,6 @@
 
 #pragma mark -
 #pragma mark Getters and setters -- frameworks
-
-- (NSArray *)frameworkNames
-{
-    return nil;
-}
 
 - (NSArray *)sortedFrameworkNames
 {
