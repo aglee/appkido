@@ -39,7 +39,11 @@
         [pointersToVisitedObjects addObject:objWrapper];
 
         // Have we reached the end of the chain?
+        //disable warning:"PerformSelector may cause a leak because its selector is unknown"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         obj = [obj performSelector:nextObjectSelector];
+#pragma clang diagnostic pop
         if (obj == nil)
         {
             NSLog(@"END %@ sequence -- sequence ends with nil", selectorName);
