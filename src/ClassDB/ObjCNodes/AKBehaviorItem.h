@@ -5,7 +5,7 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKDocSetTokenItem.h"
+#import "AKTokenItem.h"
 
 @class AKBehaviorItem;
 @class AKCollectionOfItems;
@@ -40,7 +40,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
  * owning class's declaration. Or we may encounter a protocol in a class's list
  * of protocols before we've encountered its @protocol declaration.
  */
-@interface AKBehaviorItem : AKDocSetTokenItem
+@interface AKBehaviorItem : AKTokenItem
 {
 @private
     NSString *_headerFileWhereDeclared;

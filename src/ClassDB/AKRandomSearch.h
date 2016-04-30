@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class AKDatabase;
-@class AKDocSetTokenItem;
+@class AKTokenItem;
 
 /*!
  * Used by the Pop Quiz feature. Selects a random API symbol from the database.

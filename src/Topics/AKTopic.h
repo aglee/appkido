@@ -10,7 +10,7 @@
 #import "AKPrefUtils.h"
 
 @class AKClassItem;
-@class AKDocSetTokenItem;
+@class AKTokenItem;
 @class AKSubtopic;
 
 /*!
@@ -46,7 +46,7 @@ extern NSString *AKGlobalsTopicName;
  * Returns nil by default.  Subclasses return a node, if one is relevant.
  * Specifically, AKBehaviorTopics return AKBehaviorItems.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDocSetTokenItem *topicNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKTokenItem *topicNode;
 
 #pragma mark -
 #pragma mark Names for various display contexts

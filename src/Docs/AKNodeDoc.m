@@ -8,7 +8,7 @@
 
 #import "AKNodeDoc.h"
 
-#import "AKDocSetTokenItem.h"
+#import "AKTokenItem.h"
 
 @implementation AKNodeDoc
 
@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNode:(AKDocSetTokenItem *)tokenItem
+- (instancetype)initWithNode:(AKTokenItem *)tokenItem
 {
     if ((self = [super init]))
     {

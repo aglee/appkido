@@ -1,5 +1,5 @@
 //
-// AKDocSetTokenItem.h
+// AKTokenItem.h
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -15,7 +15,7 @@
 /*!
  * Base class for entries in an AKDatabase.
  *
- * An AKDocSetTokenItem, or just "node," contains information about a Cocoa API
+ * An AKTokenItem, or just "node," contains information about a Cocoa API
  * construct. Subclasses represent different types of constructs such as
  * frameworks, classes, and methods. Not all nodes are programming language
  * constructs.
@@ -27,7 +27,7 @@
  * A node may have documentation associated with it in the form of an
  * AKFileSection that contains HTML.
  */
-@interface AKDocSetTokenItem : NSObject <AKSortable>
+@interface AKTokenItem : NSObject <AKSortable>
 {
 @private
     NSString *_nodeName;

@@ -30,7 +30,7 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (void)addSubitem:(AKDocSetTokenItem *)item
+- (void)addSubitem:(AKTokenItem *)item
 {
     [_subitems addObject:item];
 }
@@ -45,9 +45,9 @@
     return _subitems;
 }
 
-- (AKDocSetTokenItem *)subitemWithName:(NSString *)nodeName
+- (AKTokenItem *)subitemWithName:(NSString *)nodeName
 {
-    for (AKDocSetTokenItem *subitem in _subitems)
+    for (AKTokenItem *subitem in _subitems)
     {
         if ([subitem.nodeName isEqualToString:nodeName])
         {

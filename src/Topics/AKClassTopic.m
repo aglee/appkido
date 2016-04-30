@@ -113,7 +113,7 @@
     return _classItem.nodeName;
 }
 
-- (AKDocSetTokenItem *)topicNode
+- (AKTokenItem *)topicNode
 {
     return _classItem;
 }

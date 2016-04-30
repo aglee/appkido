@@ -1,15 +1,15 @@
 //
-// AKDocSetTokenItem.m
+// AKTokenItem.m
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKDocSetTokenItem.h"
+#import "AKTokenItem.h"
 
 #import "DIGSLog.h"
 
-@implementation AKDocSetTokenItem
+@implementation AKTokenItem
 
 #pragma mark -
 #pragma mark Factory methods

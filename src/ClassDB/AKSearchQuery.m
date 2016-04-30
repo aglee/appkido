@@ -262,7 +262,7 @@
     }
 }
 
-- (BOOL)_matchesNode:(AKDocSetTokenItem *)node
+- (BOOL)_matchesNode:(AKTokenItem *)node
 {
     return [self _matchesString:node.nodeName];
 }
@@ -365,7 +365,7 @@
     {
         for (AKGroupItem *groupItem in [_database functionsGroupsForFrameworkNamed:fwName])
         {
-            for (AKDocSetTokenItem *subitem in [groupItem subitems])
+            for (AKTokenItem *subitem in [groupItem subitems])
             {
                 if ([self _matchesNode:subitem])
                 {
@@ -427,7 +427,7 @@
          underSubtopic:(NSString *)subtopicName
      ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
-    for (AKDocSetTokenItem *node in nodeArray)
+    for (AKTokenItem *node in nodeArray)
     {
         if ([self _matchesNode:node])
         {

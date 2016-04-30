@@ -211,7 +211,7 @@
 #pragma mark -
 #pragma mark Private methods -- exporting group nodes
 
-- (void)_exportGroupSubitem:(AKDocSetTokenItem *)tokenItem withXMLTag:(NSString *)subitemTag
+- (void)_exportGroupSubitem:(AKTokenItem *)tokenItem withXMLTag:(NSString *)subitemTag
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     
@@ -228,7 +228,7 @@
 - (void)_exportGroupItem:(AKGroupItem *)groupItem usingsubitemTag:(NSString *)subitemTag
 {
     [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.nodeName } contentBlock:^{
-        for (AKDocSetTokenItem *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
+        for (AKTokenItem *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
         {
             [self _exportGroupSubitem:subitem withXMLTag:subitemTag];
         }

@@ -9,7 +9,7 @@
 #import "AKCollectionOfItems.h"
 
 #import "DIGSLog.h"
-#import "AKDocSetTokenItem.h"
+#import "AKTokenItem.h"
 
 @implementation AKCollectionOfItems
 
@@ -40,7 +40,7 @@
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    for (AKDocSetTokenItem *tokenItem in _nodeList)
+    for (AKTokenItem *tokenItem in _nodeList)
     {
         if (tokenItem.nodeDocumentation)
         {
@@ -51,12 +51,12 @@
     return result;
 }
 
-- (AKDocSetTokenItem *)nodeWithName:(NSString *)nodeName
+- (AKTokenItem *)nodeWithName:(NSString *)nodeName
 {
     return _nodesByName[nodeName];
 }
 
-- (void)addNode:(AKDocSetTokenItem *)tokenItem
+- (void)addNode:(AKTokenItem *)tokenItem
 {
     NSString *nodeName = tokenItem.nodeName;
 

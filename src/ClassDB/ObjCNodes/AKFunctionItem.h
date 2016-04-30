@@ -6,10 +6,10 @@
 //  Copyright 2008 Andy Lee. All rights reserved.
 //
 
-#import "AKDocSetTokenItem.h"
+#import "AKTokenItem.h"
 
 /*!
  * Represents a C function.
  */
-@interface AKFunctionItem : AKDocSetTokenItem
+@interface AKFunctionItem : AKTokenItem
 @end

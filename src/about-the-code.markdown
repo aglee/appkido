@@ -7,7 +7,7 @@ The classes in AppKiDo mostly fall into Cocoa's Model-View-Controller categories
 
 Model classes: "nodes"
 ----------------------
-The fundamental model object in AppKiDo is an AKDocSetTokenItem, or simply "**node**". AKDocSetTokenItem is an abstract base class that represents a Cocoa API construct. It's called that because it's conceptually similar to the nodes in the parse tree that a compiler generates.
+The fundamental model object in AppKiDo is an AKTokenItem, or simply "**node**". AKTokenItem is an abstract base class that represents a Cocoa API construct. It's called that because it's conceptually similar to the nodes in the parse tree that a compiler generates.
 
 Here are the API constructs represented in AppKiDo, and their corresponding node classes:
 

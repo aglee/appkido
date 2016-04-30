@@ -10,7 +10,7 @@
 #import "DIGSLog.h"
 
 #import "AKDatabase.h"
-#import "AKDocSetTokenItem.h"
+#import "AKTokenItem.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"
 #import "AKFileSection.h"
