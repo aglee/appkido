@@ -79,13 +79,13 @@
         [self _exportGroupNodes:[_database functionsGroupsForFrameworkNamed:fwName]
                       inSection:@"functions"
                     ofFramework:fwName
-                     subnodeTag:@"function"];
+                     subitemTag:@"function"];
 
         // Export globals.
         [self _exportGroupNodes:[_database globalsGroupsForFrameworkNamed:fwName]
                       inSection:@"globals"
                     ofFramework:fwName
-                     subnodeTag:@"global"];
+                     subitemTag:@"global"];
     }];
 }
 
@@ -115,13 +115,13 @@
 - (void)_exportGroupNodes:(NSArray *)groupNodes
                 inSection:(NSString *)frameworkSection
               ofFramework:(NSString *)fwName
-               subnodeTag:(NSString *)subnodeTag
+               subitemTag:(NSString *)subitemTag
 {
     [self _writeDividerWithString:fwName string:frameworkSection];
     [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
         for (AKGroupNode *groupNode in [AKSortUtils arrayBySortingArray:groupNodes])
         {
-            [self _exportGroupNode:groupNode usingSubnodeTag:subnodeTag];
+            [self _exportGroupNode:groupNode usingsubitemTag:subitemTag];
         }
     }];
 }
@@ -211,7 +211,7 @@
 #pragma mark -
 #pragma mark Private methods -- exporting group nodes
 
-- (void)_exportGroupSubnode:(AKDocSetTokenItem *)tokenItem withXMLTag:(NSString *)subnodeTag
+- (void)_exportGroupSubitem:(AKDocSetTokenItem *)tokenItem withXMLTag:(NSString *)subitemTag
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     
@@ -222,15 +222,15 @@
         attributes[@"isDeprecated"] = @YES;
     }
     
-    [_xmlWriter tag:subnodeTag attributes:attributes];
+    [_xmlWriter tag:subitemTag attributes:attributes];
 }
 
-- (void)_exportGroupNode:(AKGroupNode *)groupNode usingSubnodeTag:(NSString *)subnodeTag
+- (void)_exportGroupNode:(AKGroupNode *)groupNode usingsubitemTag:(NSString *)subitemTag
 {
     [_xmlWriter tag:@"group" attributes:@{ @"name": groupNode.nodeName } contentBlock:^{
-        for (AKDocSetTokenItem *subnode in [AKSortUtils arrayBySortingArray:[groupNode subnodes]])
+        for (AKDocSetTokenItem *subitem in [AKSortUtils arrayBySortingArray:[groupNode subitems]])
         {
-            [self _exportGroupSubnode:subnode withXMLTag:subnodeTag];
+            [self _exportGroupSubitem:subitem withXMLTag:subitemTag];
         }
     }];
 }

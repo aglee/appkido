@@ -365,15 +365,15 @@
     {
         for (AKGroupNode *groupNode in [_database functionsGroupsForFrameworkNamed:fwName])
         {
-            for (AKDocSetTokenItem *subnode in [groupNode subnodes])
+            for (AKDocSetTokenItem *subitem in [groupNode subitems])
             {
-                if ([self _matchesNode:subnode])
+                if ([self _matchesNode:subitem])
                 {
                     AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName
                                                                     inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
                                                          subtopicName:groupNode.nodeName
-                                                              docName:subnode.nodeName]];
+                                                              docName:subitem.nodeName]];
                 }
             }
         }
@@ -387,20 +387,20 @@
     {
         for (AKGroupNode *groupNode in [_database globalsGroupsForFrameworkNamed:fwName])
         {
-            for (AKGlobalsNode *subnode in [groupNode subnodes])
+            for (AKGlobalsNode *subitem in [groupNode subitems])
             {
                 BOOL matchFound = NO;
 
 //TODO: ak_stripHTML is too expensive -- bogging down the search
 //TODO: I don't think we actually need to strip any HTML -- no node seems to contain & or <
-//                if ([self _matchesString:[[subnode nodeName] ak_stripHTML]])
-                if ([self _matchesNode:subnode])
+//                if ([self _matchesString:[[subitem nodeName] ak_stripHTML]])
+                if ([self _matchesNode:subitem])
                 {
                     matchFound = YES;
                 }
                 else
                 {
-                    for (NSString *globalName in [subnode namesOfGlobals])
+                    for (NSString *globalName in [subitem namesOfGlobals])
                     {
                         if ([self _matchesString:globalName])
                         {
@@ -416,7 +416,7 @@
                                                                   inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
                                                          subtopicName:groupNode.nodeName
-                                                              docName:subnode.nodeName]];
+                                                              docName:subitem.nodeName]];
                 }
             }
         }

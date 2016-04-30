@@ -20,7 +20,7 @@
 {
     if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
-        _subnodes = [[NSMutableArray alloc] init];
+        _subitems = [[NSMutableArray alloc] init];
     }
 
     return self;
@@ -30,28 +30,28 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (void)addSubnode:(AKDocSetTokenItem *)node
+- (void)addSubitem:(AKDocSetTokenItem *)item
 {
-    [_subnodes addObject:node];
+    [_subitems addObject:item];
 }
 
-- (NSInteger)numberOfSubnodes
+- (NSInteger)numberOfSubitems
 {
-    return _subnodes.count;
+    return _subitems.count;
 }
 
-- (NSArray *)subnodes
+- (NSArray *)subitems
 {
-    return _subnodes;
+    return _subitems;
 }
 
-- (AKDocSetTokenItem *)subnodeWithName:(NSString *)nodeName
+- (AKDocSetTokenItem *)subitemWithName:(NSString *)nodeName
 {
-    for (AKDocSetTokenItem *subnode in _subnodes)
+    for (AKDocSetTokenItem *subitem in _subitems)
     {
-        if ([subnode.nodeName isEqualToString:nodeName])
+        if ([subitem.nodeName isEqualToString:nodeName])
         {
-            return subnode;
+            return subitem;
         }
     }
 

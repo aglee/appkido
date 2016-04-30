@@ -127,7 +127,7 @@
     {
         for (AKGroupNode *groupNode in [_database functionsGroupsForFrameworkNamed:fwName])
         {
-            [self _addNodes:[groupNode subnodes] toSymbolArray:apiSymbols];
+            [self _addNodes:[groupNode subitems] toSymbolArray:apiSymbols];
         }
     }
 }
@@ -138,7 +138,7 @@
     {
         for (AKGroupNode *groupNode in [_database globalsGroupsForFrameworkNamed:fwName])
         {
-            for (AKGlobalsNode *globalsNode in [groupNode subnodes])
+            for (AKGlobalsNode *globalsNode in [groupNode subitems])
             {
                 [apiSymbols addObjectsFromArray:[globalsNode namesOfGlobals]];
             }

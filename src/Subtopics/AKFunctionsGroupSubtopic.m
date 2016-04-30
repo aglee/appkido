@@ -19,8 +19,8 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    // Each subnode of a functions group node represents one function.
-    for (AKDocSetTokenItem *functionNode in [AKSortUtils arrayBySortingArray:[self.groupNode subnodes]])
+    // Each subitem of a functions group item represents one function.
+    for (AKDocSetTokenItem *functionNode in [AKSortUtils arrayBySortingArray:[self.groupNode subitems]])
     {
         AKFileSection *functionSection = functionNode.nodeDocumentation;
 
