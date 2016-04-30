@@ -6,19 +6,16 @@
  */
 
 #import "AKDatabase.h"
-
-#import "DIGSLog.h"
-
 #import "AKFrameworkConstants.h"
 #import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
-
 #import "AKClassNode.h"
 #import "AKProtocolNode.h"
 #import "AKGroupNode.h"
-
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
+#import "DIGSLog.h"
+#import "DocSetQuery.h"
 
 
 @interface AKDatabase ()
@@ -36,11 +33,9 @@
     if ((self = [super init]))
     {
         _docSetIndex = docSetIndex;
-        _frameworkNames = [_docSetIndex frameworkNames];
+		_frameworkNames = [[NSMutableArray alloc] init];
         _classNodesByName = [[NSMutableDictionary alloc] init];
-
         _protocolNodesByName = [[NSMutableDictionary alloc] init];
-
         _functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
         _functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
@@ -64,29 +59,62 @@
 #pragma mark -
 #pragma mark Populating the database
 
-- (void)loadTokens
+- (NSArray *)_arrayWithAllFrameworkNames
 {
-    [self _loadClassTokens];
+	NSError *error;
+	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Header"];
+	query.distinctKeyPathsString = @"frameworkName";
+	query.predicateString = @"frameworkName != NULL";
+	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];
+	fetchedObjects = [fetchedObjects valueForKey:@"frameworkName"];
+	fetchedObjects = [fetchedObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	return fetchedObjects;
 }
 
-- (void)_loadClassTokens
+- (NSArray *)_arrayWithAllTokens
 {
-    NSArray *classTokens = [self.docSetIndex fetchEntity:@"Token" sort:nil where:@"language.fullName = 'Objective-C' and tokenType.typeName = 'cl'"];
-    for (DSAToken *token in classTokens) {
-        NSString *className = token.tokenName;
+	NSError *error;
+    DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Token"];
+	query.predicateString = @"language.fullName = 'Objective-C'";
+    return [query fetchObjectsWithError:&error];
+}
 
-        QLog(@"adding class %@", className);
+- (void)populate
+{
+	_frameworkNames = [self _arrayWithAllFrameworkNames];
 
-        NSString *frameworkName = token.metainformation.declaredIn.frameworkName;
+    NSArray *allTokens = [self _arrayWithAllTokens];
+    for (DSAToken *token in allTokens) {
+        NSString *tokenType = token.tokenType.typeName;
 
-        AKClassNode *classNode = [self _getOrAddClassNodeWithName:className frameworkName:frameworkName];
+        if ([tokenType isEqualToString:@"cl"]) {
+            [self _addClassToken:token];
+        } else if ([tokenType isEqualToString:@"cl"]) {
+            [self _addClassToken:token];
+        } else {
 
-        if (classNode) {
-            classNode.docSetToken = token;
-            [self _setParentNodeOfClassNode:classNode];
-            [self _setProtocolNodesOfClassNode:classNode];
         }
     }
+}
+
+- (void)_addClassToken:(DSAToken *)token
+{
+    NSString *className = token.tokenName;
+    NSString *frameworkName = token.metainformation.declaredIn.frameworkName;
+
+    //FIXME: Handle those broken cases where a category is mislabeled as a class ('cl' when it looks to me like it should be 'cat').
+
+    AKClassNode *classNode = [self _getOrAddClassNodeWithName:className frameworkName:frameworkName];
+
+    if (classNode) {
+        classNode.docSetToken = token;
+        [self _setParentNodeOfClassNode:classNode];
+        [self _setProtocolNodesOfClassNode:classNode];
+    }
+}
+
+- (void)_addProtocolToken:(DSAToken *)token
+{
 }
 
 - (AKClassNode *)_getOrAddClassNodeWithName:(NSString *)className frameworkName:(NSString *)frameworkName
@@ -100,6 +128,7 @@
     if (classNode == nil) {
         classNode = [[AKClassNode alloc] initWithNodeName:className database:self frameworkName:frameworkName];
         self.classNodesByName[className] = classNode;
+        QLog(@"%@ -- added class %@", self.className, className);
     } else {
         classNode.nameOfOwningFramework = frameworkName;
     }

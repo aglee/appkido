@@ -599,6 +599,10 @@
 		73B6B6C80DC1D229004FB7ED /* AKFunctionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionNode.m */; };
 		73B914950E089D180012C16F /* AKDevToolsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B914930E089D180012C16F /* AKDevToolsViewController.h */; };
 		73B914960E089D180012C16F /* AKDevToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B914940E089D180012C16F /* AKDevToolsViewController.m */; };
+		73C511631CD5261600750343 /* DocSetQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C511611CD5261600750343 /* DocSetQuery.h */; };
+		73C511641CD5261600750343 /* DocSetQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C511611CD5261600750343 /* DocSetQuery.h */; };
+		73C511651CD5261600750343 /* DocSetQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C511621CD5261600750343 /* DocSetQuery.m */; };
+		73C511661CD5261600750343 /* DocSetQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C511621CD5261600750343 /* DocSetQuery.m */; };
 		73C735A70F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
 		73C735A80F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */; };
 		73C735A90F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
@@ -997,6 +1001,8 @@
 		73B914930E089D180012C16F /* AKDevToolsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsViewController.h; sourceTree = "<group>"; };
 		73B914940E089D180012C16F /* AKDevToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsViewController.m; sourceTree = "<group>"; };
 		73B9158806133DBF00066E17 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = English; path = English.lproj/Credits.html; sourceTree = "<group>"; };
+		73C511611CD5261600750343 /* DocSetQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocSetQuery.h; sourceTree = "<group>"; };
+		73C511621CD5261600750343 /* DocSetQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocSetQuery.m; sourceTree = "<group>"; };
 		73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKIPhoneDevTools.h; path = CocoaFrameworks/AKIPhoneDevTools.h; sourceTree = "<group>"; };
 		73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKIPhoneDevTools.m; path = CocoaFrameworks/AKIPhoneDevTools.m; sourceTree = "<group>"; };
 		73C74137066BFAEF00A76FEE /* AKFindPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFindPanelController.h; sourceTree = "<group>"; };
@@ -1050,7 +1056,7 @@
 		73E86F480E397760002AFB76 /* AKNotificationNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNotificationNode.h; sourceTree = "<group>"; };
 		73E86F490E397760002AFB76 /* AKNotificationNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNotificationNode.m; sourceTree = "<group>"; };
 		73EE9E3D06856D120008CBEC /* AKDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabase.h; sourceTree = "<group>"; };
-		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; };
+		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; usesTabs = 1; };
 		73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocPathForClass.sql; sourceTree = "<group>"; };
 		73F3BC8217CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBehaviorGeneralDoc.h; sourceTree = "<group>"; };
 		73F3BC8317CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorGeneralDoc.m; sourceTree = "<group>"; };
@@ -1497,10 +1503,12 @@
 		734AEE3B1CC5E1600064AAA9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				734AEE7E1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld */,
+				734AEE3E1CC5E1600064AAA9 /* DocSetModel */,
 				734AEE3C1CC5E1600064AAA9 /* DocSetIndex.h */,
 				734AEE3D1CC5E1600064AAA9 /* DocSetIndex.m */,
-				734AEE3E1CC5E1600064AAA9 /* DocSetModel */,
-				734AEE7E1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld */,
+				73C511611CD5261600750343 /* DocSetQuery.h */,
+				73C511621CD5261600750343 /* DocSetQuery.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -2119,6 +2127,7 @@
 				734AEE991CC5E1600064AAA9 /* OrderedSubnode.h in Headers */,
 				73DB1379170E176500F3776A /* QuietLog.h in Headers */,
 				73DB1380170E731400F3776A /* AKGlobalsGroupSubtopic.h in Headers */,
+				73C511631CD5261600750343 /* DocSetQuery.h in Headers */,
 				73DB1386170E75FC00F3776A /* AKGlobalsDoc.h in Headers */,
 				73F3BC8417CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h in Headers */,
 			);
@@ -2246,6 +2255,7 @@
 				7304030D16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h in Headers */,
 				735E298516E050E600E9FBC1 /* AKDebugging.h in Headers */,
 				7332E8D716E8141300A3764B /* AKPrefDictionary.h in Headers */,
+				73C511641CD5261600750343 /* DocSetQuery.h in Headers */,
 				73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
 				73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 				73F8F9B416EE99A3001650D7 /* AKFocusView.h in Headers */,
@@ -2589,6 +2599,7 @@
 				734AEE921CC5E1600064AAA9 /* DSAToken.m in Sources */,
 				73F8F99516ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
 				73F8F9A316ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
+				73C511651CD5261600750343 /* DocSetQuery.m in Sources */,
 				73F8F9B516EE99A3001650D7 /* AKFocusView.m in Sources */,
 				73F8F9C116EED364001650D7 /* AKBorderHidingView.m in Sources */,
 				734AEE981CC5E1600064AAA9 /* NodeUUID.m in Sources */,
@@ -2734,6 +2745,7 @@
 				73DB1383170E731400F3776A /* AKGlobalsGroupSubtopic.m in Sources */,
 				73DB1389170E75FC00F3776A /* AKGlobalsDoc.m in Sources */,
 				73F3BC8717CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m in Sources */,
+				73C511661CD5261600750343 /* DocSetQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

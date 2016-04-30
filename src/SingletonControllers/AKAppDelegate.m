@@ -502,7 +502,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 
     QLog(@"%@", @"Calling loadTokens...");
-    [self.appDatabase loadTokens];
+    [self.appDatabase populate];
     QLog(@"%@", @"...Finished loadTokens.");
 
 

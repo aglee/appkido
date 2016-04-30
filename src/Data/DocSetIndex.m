@@ -8,6 +8,7 @@
 
 #import "DocSetIndex.h"
 #import "QuietLog.h"
+#import "DocSetQuery.h"
 
 @interface DocSetIndex ()
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -24,9 +25,13 @@
 
 - (instancetype)initWithDocSetPath:(NSString *)docSetPath
 {
+    if (docSetPath == nil) {
+        [NSException raise:NSInvalidArgumentException format:@"docSetPath can't be nil."];
+    }
+
 	self = [super init];
 	if (self) {
-		_docSetPath = docSetPath;
+		_docSetPath = docSetPath;  //TODO: Fail if doesn't look like a docset bundle.
 	}
 	return self;
 }
@@ -59,7 +64,7 @@
 	NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
 	NSString *pathToPersistentStoreFile = [self.docSetPath stringByAppendingPathComponent:@"Contents/Resources/docSet.dsidx"];
 	NSURL *storeFileURL = [NSURL fileURLWithPath:pathToPersistentStoreFile];
-	NSError *error;
+	NSError *error = nil;
 	if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType
 								   configuration:nil
 											 URL:storeFileURL
@@ -70,7 +75,7 @@
 	_persistentStoreCoordinator = coordinator;
 
 	if (error) {
-		QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
+		QLog(@"[%s] [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
 		return nil;
 	}
 
@@ -93,122 +98,57 @@
 	return _managedObjectContext;
 }
 
-#pragma mark - Fetch requests
+#pragma mark - Queries
 
-- (NSArray *)fetchEntity:(NSString *)entityName sort:(NSArray *)sortSpecifiers predicateFormat:(NSString *)format va_args:(va_list)argList
+- (DocSetQuery *)queryWithEntityName:(NSString *)entityName
 {
-	if (entityName == nil) {
-		return nil;
-	}
-
-	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
-
-	// Was a predicate specified?
-	if (format.length > 0) {
-		fetchRequest.predicate = [NSPredicate predicateWithFormat:format arguments:argList];
-	}
-
-	// Was a sort order specified?
-	if (sortSpecifiers.count > 0) {
-		NSMutableArray *sortDescriptors = [NSMutableArray array];
-		for (NSString *spec in sortSpecifiers) {
-			NSString *errorMessage = nil;
-			NSMutableArray *components = [[spec componentsSeparatedByString:@" "] mutableCopy];
-
-			[components removeObject:@""];
-			if (components.count == 0) {
-				errorMessage = [NSString stringWithFormat:@"Sort specifier is empty."];
-			} else {
-				BOOL ascending = YES;
-
-				if (components.count == 1) {
-					ascending = YES;
-				} else if (components.count == 2) {
-					NSString *direction = [components[1] uppercaseString];
-
-					if ([direction isEqualToString:@"ASC"]) {
-						ascending = YES;
-					} else if ([direction isEqualToString:@"DESC"]) {
-						ascending = NO;
-					} else {
-						errorMessage = [NSString stringWithFormat:@"'%@' is not a valid sort direction.", direction];
-					}
-				} else {
-					errorMessage = [NSString stringWithFormat:@"Too many terms in the sort specifier '%@'.", spec];
-				}
-
-				if (errorMessage) {
-					QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, errorMessage);  //TODO: Throw an exception.
-					return nil;
-				}
-
-				[sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:components[0] ascending:ascending]];
-			}
-		}
-		fetchRequest.sortDescriptors = sortDescriptors;
-	}
-
-	// Do the fetch.
-	__block NSError *error;
-	__block NSArray *fetchedObjects;
-	[self.managedObjectContext performBlockAndWait:^{
-		fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-	}];
-	if (fetchedObjects == nil) {
-		QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
-		return nil;
-	}
-	return fetchedObjects;
+    return [DocSetQuery queryWithDocSetIndex:self entityName:entityName];
 }
 
-- (NSArray *)fetchEntity:(NSString *)entityName sort:(NSArray *)sortSpecifiers where:(NSString *)format, ...
+- (NSURL *)documentationURLForObject:(id)obj
 {
-	va_list argList;
-	va_start(argList, format);
-	NSArray *fetchedObjects = [self fetchEntity:entityName sort:sortSpecifiers predicateFormat:format va_args:argList];
-	va_end(argList);
+	if ([obj isKindOfClass:[DSAToken class]]) {
+		return [self _documentationURLForToken:(DSAToken *)obj];
+	} else if ([obj isKindOfClass:[DSANodeURL class]]) {
+		return [self _documentationURLForNodeURL:(DSANodeURL *)obj];
+	}
 
-	return fetchedObjects;
+	return nil;
 }
 
-- (NSArray *)fetchDistinctAttributesWithName:(NSString *)attributeName ofEntity:(NSString *)entityName
+#pragma mark - Private methods
+
+- (NSString *)_documentsDirPath
 {
-    // Construct the fetch request.
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
-    NSEntityDescription *entityDescription = self.managedObjectModel.entitiesByName[entityName];
-    if (entityDescription == nil) {
-        QLog(@"%s [ERROR] Invalid entity name '%@'", __PRETTY_FUNCTION__, entityName);  //TODO: Throw an exception.
-        return nil;
-    }
-
-    NSPropertyDescription *propertyDescription = entityDescription.propertiesByName[attributeName];
-    if (propertyDescription == nil) {
-        QLog(@"%s [ERROR] Invalid attribute name '%@'", __PRETTY_FUNCTION__, attributeName);  //TODO: Throw an exception.
-        return nil;
-    }
-
-    fetchRequest.propertiesToFetch = @[propertyDescription];
-    fetchRequest.resultType = NSDictionaryResultType;
-    fetchRequest.returnsDistinctResults = YES;
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"%K != NULL", attributeName];
-
-    // Do the fetch.
-    __block NSError *error;
-    __block NSArray *fetchedObjects;
-    [self.managedObjectContext performBlockAndWait:^{
-        fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    }];
-    if (fetchedObjects == nil) {
-        QLog(@"%s [ERROR] %@", __PRETTY_FUNCTION__, error);  //TODO: Throw an exception.
-        return nil;
-    }
-
-    return [fetchedObjects valueForKey:attributeName];
+	return [self.docSetPath stringByAppendingPathComponent:@"Contents/Resources/Documents"];
 }
 
-- (NSArray *)frameworkNames
+- (NSURL *)_documentationURLForToken:(DSAToken *)token
 {
-    return [self fetchDistinctAttributesWithName:@"frameworkName" ofEntity:@"Header"];
+	NSString *pathString = [self _documentsDirPath];
+	pathString = [pathString stringByAppendingPathComponent:token.metainformation.file.path];
+	NSURL *url = [NSURL fileURLWithPath:pathString];
+	if (token.metainformation.anchor) {
+		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+		urlComponents.fragment = token.metainformation.anchor;
+		url = [urlComponents URL];
+	}
+
+	return url;
+}
+
+- (NSURL *)_documentationURLForNodeURL:(DSANodeURL *)nodeURLInfo
+{
+	NSString *pathString = [self _documentsDirPath];  //TODO: Handle fallback to online URL if local docset has not been installed.
+	pathString = [pathString stringByAppendingPathComponent:nodeURLInfo.path];
+	NSURL *url = [NSURL fileURLWithPath:pathString];;
+	if (nodeURLInfo.anchor) {
+		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+		urlComponents.fragment = nodeURLInfo.anchor;
+		url = [urlComponents URL];
+	}
+
+	return url;
 }
 
 @end

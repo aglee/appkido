@@ -79,7 +79,8 @@
 #pragma mark -
 #pragma mark Populating the database
 
-- (void)loadTokens;
+/*! Populates the database using contents of the DocSetIndex. */
+- (void)populate;
 
 #pragma mark -
 #pragma mark Getters and setters -- frameworks

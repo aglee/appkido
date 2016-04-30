@@ -9,6 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "DocSetModel.h"
 
+@class DocSetQuery;
+
+/*!
+    Has convenience methods for various kinds of Core Data queries.
+ */
 @interface DocSetIndex : NSObject
 
 @property (readonly, copy, nonatomic) NSString *docSetPath;
@@ -17,18 +22,13 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! docSetPath should be a path to a .docset bundle. */
+/*! docSetPath must be a path to a .docset bundle. */
 - (instancetype)initWithDocSetPath:(NSString *)docSetPath NS_DESIGNATED_INITIALIZER;
 
-#pragma mark - Fetch requests
+#pragma mark - Queries
 
-/*! sortSpecifiers must contain strings of the form "keyPath" or "keyPath asc" or "keyPath desc", with a space between the keyPath and the sort direction.  Spaces are the only acceptable whitespace.  Extra spaces are ignored.  The "asc"/"desc" is case-insensitive.  sortSpecifiers can be nil. */
-- (NSArray *)fetchEntity:(NSString *)entityName sort:(NSArray *)sortSpecifiers predicateFormat:(NSString *)format va_args:(va_list)argList;
+- (DocSetQuery *)queryWithEntityName:(NSString *)entityName;
 
-- (NSArray *)fetchEntity:(NSString *)entityName sort:(NSArray *)sortSpecifiers where:(NSString *)format, ...;
-
-- (NSArray *)fetchDistinctAttributesWithName:(NSString *)attributeName ofEntity:(NSString *)entityName;
-
-- (NSArray *)frameworkNames;
+- (NSURL *)documentationURLForObject:(id)obj;
 
 @end
