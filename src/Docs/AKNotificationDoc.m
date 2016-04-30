@@ -8,7 +8,7 @@
 #import "AKNotificationDoc.h"
 
 #import "AKBehaviorItem.h"
-#import "AKMethodNode.h"
+#import "AKMethodItem.h"
 
 @implementation AKNotificationDoc
 
@@ -25,10 +25,10 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = self.memberNode.nameOfOwningFramework;
+    NSString *methodFrameworkName = self.memberItem.nameOfOwningFramework;
     NSString *behaviorFrameworkName = self.behaviorItem.nameOfOwningFramework;
     BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-    AKBehaviorItem *ownerOfMethod = self.memberNode.owningBehavior;
+    AKBehaviorItem *ownerOfMethod = self.memberItem.owningBehavior;
 
     if (self.behaviorItem == ownerOfMethod)
     {

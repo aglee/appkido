@@ -11,7 +11,7 @@
 
 #import "AKHTMLConstants.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKFileSection.h"
 #import "AKBehaviorGeneralDoc.h"
 #import "AKHeaderFileDoc.h"

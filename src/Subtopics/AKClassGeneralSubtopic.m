@@ -10,7 +10,7 @@
 #import "DIGSLog.h"
 
 #import "AKBehaviorGeneralDoc.h"
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKFileSection.h"
 #import "AKHTMLConstants.h"
 
@@ -19,19 +19,19 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)subtopicForClassNode:(AKClassNode *)classNode
++ (instancetype)subtopicForClassItem:(AKClassItem *)classItem
 {
-    return [[self alloc] initWithClassNode:classNode];
+    return [[self alloc] initWithClassItem:classItem];
 }
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithClassNode:(AKClassNode *)classNode
+- (instancetype)initWithClassItem:(AKClassItem *)classItem
 {
     if ((self = [super init]))
     {
-        _classNode = classNode;
+        _classItem = classItem;
     }
 
     return self;
@@ -40,7 +40,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithClassNode:nil];
+    return [self initWithClassItem:nil];
 }
 
 
@@ -54,9 +54,9 @@
 
     // If we're looking at a class that spans multiple frameworks, add
     // doc names for those frameworks.
-    NSString *classFrameworkName = _classNode.nameOfOwningFramework;
+    NSString *classFrameworkName = _classItem.nameOfOwningFramework;
 
-    for (NSString *extraFrameworkName in [_classNode namesOfAllOwningFrameworks])
+    for (NSString *extraFrameworkName in [_classItem namesOfAllOwningFrameworks])
     {
         if (![classFrameworkName isEqualToString:extraFrameworkName])
         {
@@ -70,7 +70,7 @@
 
 - (AKBehaviorItem *)behaviorItem
 {
-    return _classNode;
+    return _classItem;
 }
 
 - (NSString *)htmlNameOfDescriptionSection
@@ -89,7 +89,7 @@
 - (void)_addDocsForExtraFramework:extraFrameworkName
                            toList:(NSMutableArray *)docList
 {
-    AKFileSection *extraRootSection = [_classNode documentationAssociatedWithFrameworkNamed:extraFrameworkName];
+    AKFileSection *extraRootSection = [_classItem documentationAssociatedWithFrameworkNamed:extraFrameworkName];
 
     if (extraRootSection)
     {

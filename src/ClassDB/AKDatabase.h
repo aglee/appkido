@@ -9,11 +9,11 @@
 #import "DocSetIndex.h"
 #import "DocSetModel.h"
 
-@class AKClassNode;
+@class AKClassItem;
 @class AKDocSetTokenItem;
-@class AKFunctionNode;
-@class AKGlobalsNode;
-@class AKGroupNode;
+@class AKFunctionItem;
+@class AKGlobalsItem;
+@class AKGroupItem;
 @class AKProtocolItem;
 
 /*!
@@ -42,15 +42,15 @@
     NSMutableDictionary *_protocolItemsByName;  // @{PROTOCOL_NAME -> @[AKProtocolItem]
 
     // Functions.
-    NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
-    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
+    NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupItem]}
+    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupItem}}
 
     // Globals.
-    NSMutableDictionary *_globalsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
-    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupNode}}
+    NSMutableDictionary *_globalsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupItem]}
+    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupItem}}
 
     // Hyperlink support.
-    NSMutableDictionary *_classNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassNode}
+    NSMutableDictionary *_classItemsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassItem}
     NSMutableDictionary *_protocolItemsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolItem}
 }
 
@@ -62,10 +62,10 @@
 /*! Same as .frameworkNames, but sorted alphabetically. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedFrameworkNames;
 
-/*! Array of AKClassNode. No guaranteed order. Each element represents a class that does not have a superclass. */
+/*! Array of AKClassItem. No guaranteed order. Each element represents a class that does not have a superclass. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *rootClasses;
 
-/*! Array of AKClassNode. No guaranteed order. */
+/*! Array of AKClassItem. No guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allClasses;
 
 /*! Array of AKProtocolItem. No guaranteed order. */
@@ -90,10 +90,10 @@
 #pragma mark -
 #pragma mark Getters and setters -- classes
 
-/*! Array of AKClassNode. Matches any of the class's owning frameworks. */
+/*! Array of AKClassItem. Matches any of the class's owning frameworks. */
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
 
-- (AKClassNode *)classWithName:(NSString *)className;
+- (AKClassItem *)classWithName:(NSString *)className;
 
 #pragma mark -
 #pragma mark Getters and setters -- protocols
@@ -113,23 +113,23 @@
 #pragma mark Getters and setters -- functions
 
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName;
-- (AKGroupNode *)functionsGroupNamed:(NSString *)groupName
+- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName
                     inFrameworkNamed:(NSString *)frameworkName;
-- (void)addFunctionsGroup:(AKGroupNode *)functionsGroup;
+- (void)addFunctionsGroup:(AKGroupItem *)functionsGroup;
 
 #pragma mark -
 #pragma mark Getters and setters -- globals
 
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName;
-- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName
+- (AKGroupItem *)globalsGroupNamed:(NSString *)groupName
                   inFrameworkNamed:(NSString *)frameworkName;
-- (void)addGlobalsGroup:(AKGroupNode *)globalsGroup;
+- (void)addGlobalsGroup:(AKGroupItem *)globalsGroup;
 
 #pragma mark -
 #pragma mark Methods that help AKCocoaGlobalsDocParser
 
-- (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
-- (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
+- (AKClassItem *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
+- (void)rememberThatClass:(AKClassItem *)classItem isDocumentedInHTMLFile:(NSString *)htmlFilePath;
 
 - (AKProtocolItem *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberThatProtocol:(AKProtocolItem *)protocolItem isDocumentedInHTMLFile:(NSString *)htmlFilePath;

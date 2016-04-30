@@ -21,7 +21,7 @@
  * constructs.
  *
  * Nodes cannot normally change their owning frameworks.  The exception is an
- * AKClassNode, which can belong to multiple frameworks and has a setter for
+ * AKClassItem, which can belong to multiple frameworks and has a setter for
  * indicating which of them is primary.
  *
  * A node may have documentation associated with it in the form of an
@@ -40,7 +40,7 @@
 @property (nonatomic, readonly, copy) NSString *nodeName;
 @property (nonatomic, weak) AKDatabase *owningDatabase;
 
-/*! Most nodes belong to exactly one framework. The exception is AKClassNode, because it can have categories that belong to other frameworks. */
+/*! Most nodes belong to exactly one framework. The exception is AKClassItem, because it can have categories that belong to other frameworks. */
 @property (nonatomic, copy) NSString *nameOfOwningFramework;
 
 /*! Documentation for the API construct the node represents. Possibly nil. */

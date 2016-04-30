@@ -35,7 +35,7 @@
  * Subclass must override this.  Returns method nodes for a single node -- no
  * superclasses or protocols included.
  */
-- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem;
+- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem;
 
 /*! Subclasses must override this. */
 + (id)memberDocClass;

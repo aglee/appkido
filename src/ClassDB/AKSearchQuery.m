@@ -9,16 +9,16 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
 #import "AKFileSection.h"
 #import "AKFunctionsTopic.h"
-#import "AKGlobalsNode.h"
+#import "AKGlobalsItem.h"
 #import "AKGlobalsTopic.h"
-#import "AKGroupNode.h"
-#import "AKMethodNode.h"
+#import "AKGroupItem.h"
+#import "AKMethodItem.h"
 #import "AKProtocolItem.h"
 #import "AKProtocolTopic.h"
 #import "AKSortUtils.h"
@@ -269,11 +269,11 @@
 
 - (void)_searchClassNames
 {
-    for (AKClassNode *classNode in [_database allClasses])
+    for (AKClassItem *classItem in [_database allClasses])
     {
-        if ([self _matchesNode:classNode])
+        if ([self _matchesNode:classItem])
         {
-            AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
+            AKClassTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
             [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
@@ -295,18 +295,18 @@
 
 - (void)_searchNamesOfClassMembers
 {
-    for (AKClassNode *classNode in [_database allClasses])
+    for (AKClassItem *classItem in [_database allClasses])
     {
-        AKClassTopic *topic = [AKClassTopic topicWithClassNode:classNode];
+        AKClassTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
         // Search members common to all behaviors.
         [self _searchMembersUnderBehaviorTopic:topic];
 
         // Search members specific to classes.
-        [self _searchNodes:[classNode documentedDelegateMethods]
+        [self _searchNodes:[classItem documentedDelegateMethods]
              underSubtopic:AKDelegateMethodsSubtopicName
            ofBehaviorTopic:topic];
-        [self _searchNodes:[classNode documentedNotifications]
+        [self _searchNodes:[classItem documentedNotifications]
              underSubtopic:AKNotificationsSubtopicName
            ofBehaviorTopic:topic];
     }
@@ -363,16 +363,16 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupNode *groupNode in [_database functionsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database functionsGroupsForFrameworkNamed:fwName])
         {
-            for (AKDocSetTokenItem *subitem in [groupNode subitems])
+            for (AKDocSetTokenItem *subitem in [groupItem subitems])
             {
                 if ([self _matchesNode:subitem])
                 {
                     AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName
                                                                     inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:groupNode.nodeName
+                                                         subtopicName:groupItem.nodeName
                                                               docName:subitem.nodeName]];
                 }
             }
@@ -385,9 +385,9 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupNode *groupNode in [_database globalsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database globalsGroupsForFrameworkNamed:fwName])
         {
-            for (AKGlobalsNode *subitem in [groupNode subitems])
+            for (AKGlobalsItem *subitem in [groupItem subitems])
             {
                 BOOL matchFound = NO;
 
@@ -415,7 +415,7 @@
                     AKTopic *topic = [AKGlobalsTopic topicWithFrameworkNamed:fwName
                                                                   inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:groupNode.nodeName
+                                                         subtopicName:groupItem.nodeName
                                                               docName:subitem.nodeName]];
                 }
             }

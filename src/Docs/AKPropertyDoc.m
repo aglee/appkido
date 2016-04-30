@@ -9,7 +9,7 @@
 #import "AKPropertyDoc.h"
 
 #import "AKBehaviorItem.h"
-#import "AKMethodNode.h"
+#import "AKMethodItem.h"
 
 @implementation AKPropertyDoc
 
@@ -26,10 +26,10 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = self.memberNode.nameOfOwningFramework;
+    NSString *methodFrameworkName = self.memberItem.nameOfOwningFramework;
     NSString *behaviorFrameworkName = self.behaviorItem.nameOfOwningFramework;
     BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-    AKBehaviorItem *ownerOfMethod = self.memberNode.owningBehavior;
+    AKBehaviorItem *ownerOfMethod = self.memberItem.owningBehavior;
 
     if (self.behaviorItem == ownerOfMethod)
     {
@@ -49,7 +49,7 @@
         // We inherited this property from an ancestor class or protocol.
         if (methodIsInSameFramework)
         {
-            if ([ownerOfMethod isClassNode])
+            if ([ownerOfMethod isClassItem])
             {
                 return [NSString stringWithFormat:@"This property is inherited from class %@.",
                         ownerOfMethod.nodeName];
@@ -61,7 +61,7 @@
         }
         else
         {
-            if ([ownerOfMethod isClassNode])
+            if ([ownerOfMethod isClassItem])
             {
                 return [NSString stringWithFormat:@"This property is inherited from %@ class %@.",
                         methodFrameworkName, ownerOfMethod.nodeName];

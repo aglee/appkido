@@ -1,15 +1,15 @@
 /*
- * AKGlobalsNode.m
+ * AKGlobalsItem.m
  *
  * Created by Andy Lee on Sun Mar 28 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKGlobalsNode.h"
+#import "AKGlobalsItem.h"
 
 #import "AKFileSection.h"
 
-@implementation AKGlobalsNode
+@implementation AKGlobalsItem
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

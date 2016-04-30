@@ -8,23 +8,23 @@
 #import "AKDoc.h"
 
 @class AKBehaviorItem;
-@class AKMemberNode;
+@class AKMemberItem;
 
 @interface AKMemberDoc : AKDoc
 {
 @private
-    AKMemberNode *_memberNode;
+    AKMemberItem *_memberItem;
     AKBehaviorItem *_behaviorItem;
 }
 
-@property (nonatomic, readonly, strong) AKMemberNode *memberNode;
+@property (nonatomic, readonly, strong) AKMemberItem *memberItem;
 @property (nonatomic, readonly, strong) AKBehaviorItem *behaviorItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 // Designated initializer
-- (instancetype)initWithMemberNode:(AKMemberNode *)memberNode
+- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem
      inheritedByBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -

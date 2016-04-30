@@ -9,8 +9,8 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassNode.h"
-#import "AKMethodNode.h"
+#import "AKClassItem.h"
+#import "AKMethodItem.h"
 #import "AKMemberDoc.h"
 
 @implementation AKPseudoMethodsSubtopic
@@ -18,22 +18,22 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)subtopicForClassNode:(AKClassNode *)classNode
++ (instancetype)subtopicForClassItem:(AKClassItem *)classItem
     includeAncestors:(BOOL)includeAncestors
 {
-    return [[self alloc] initWithClassNode:classNode
+    return [[self alloc] initWithClassItem:classItem
                            includeAncestors:includeAncestors];
 }
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithClassNode:(AKClassNode *)classNode
+- (instancetype)initWithClassItem:(AKClassItem *)classItem
        includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _classNode = classNode;
+        _classItem = classItem;
     }
 
     return self;
@@ -42,16 +42,16 @@
 - (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithClassNode:nil includeAncestors:NO];
+    return [self initWithClassItem:nil includeAncestors:NO];
 }
 
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKClassNode *)classNode
+- (AKClassItem *)classItem
 {
-    return _classNode;
+    return _classItem;
 }
 
 #pragma mark -
@@ -59,7 +59,7 @@
 
 - (AKBehaviorItem *)behaviorItem
 {
-    return _classNode;
+    return _classItem;
 }
 
 @end

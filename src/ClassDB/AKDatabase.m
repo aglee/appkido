@@ -9,9 +9,9 @@
 #import "AKFrameworkConstants.h"
 #import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKProtocolItem.h"
-#import "AKGroupNode.h"
+#import "AKGroupItem.h"
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
 #import "DIGSLog.h"
@@ -19,7 +19,7 @@
 
 
 @interface AKDatabase ()
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *classNodesByName;  // @{CLASS_NAME: AKClassNode}
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *classItemsByName;  // @{CLASS_NAME: AKClassItem}
 @end
 
 
@@ -34,7 +34,7 @@
     {
         _docSetIndex = docSetIndex;
 		_frameworkNames = [[NSMutableArray alloc] init];
-        _classNodesByName = [[NSMutableDictionary alloc] init];
+        _classItemsByName = [[NSMutableDictionary alloc] init];
         _protocolItemsByName = [[NSMutableDictionary alloc] init];
         _functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
         _functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
@@ -42,7 +42,7 @@
         _globalsGroupListsByFramework = [[NSMutableDictionary alloc] init];
         _globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
-        _classNodesByHTMLPath = [[NSMutableDictionary alloc] init];
+        _classItemsByHTMLPath = [[NSMutableDictionary alloc] init];
         _protocolItemsByHTMLPath = [[NSMutableDictionary alloc] init];
     }
 
@@ -104,12 +104,12 @@
 
     //FIXME: Handle those broken cases where a category is mislabeled as a class ('cl' when it looks to me like it should be 'cat').
 
-    AKClassNode *classNode = [self _getOrAddClassNodeWithName:className frameworkName:frameworkName];
+    AKClassItem *classItem = [self _getOrAddClassItemWithName:className frameworkName:frameworkName];
 
-    if (classNode) {
-        classNode.docSetToken = token;
-        [self _setParentNodeOfClassNode:classNode];
-        [self _setProtocolItemsOfClassNode:classNode];
+    if (classItem) {
+        classItem.docSetToken = token;
+        [self _setParentNodeOfClassItem:classItem];
+        [self _setProtocolItemsOfClassItem:classItem];
     }
 }
 
@@ -117,45 +117,45 @@
 {
 }
 
-- (AKClassNode *)_getOrAddClassNodeWithName:(NSString *)className frameworkName:(NSString *)frameworkName
+- (AKClassItem *)_getOrAddClassItemWithName:(NSString *)className frameworkName:(NSString *)frameworkName
 {
     if (frameworkName.length == 0) {
         return nil;  //FIXME: This causes a bunch of stuff to be unfindable.
     }
 
-    AKClassNode *classNode = self.classNodesByName[className];
+    AKClassItem *classItem = self.classItemsByName[className];
 
-    if (classNode == nil) {
-        classNode = [[AKClassNode alloc] initWithNodeName:className database:self frameworkName:frameworkName];
-        self.classNodesByName[className] = classNode;
+    if (classItem == nil) {
+        classItem = [[AKClassItem alloc] initWithNodeName:className database:self frameworkName:frameworkName];
+        self.classItemsByName[className] = classItem;
         QLog(@"%@ -- added class %@", self.className, className);
     } else {
-        classNode.nameOfOwningFramework = frameworkName;
+        classItem.nameOfOwningFramework = frameworkName;
     }
 
-    return classNode;
+    return classItem;
 }
 
-- (void)_setParentNodeOfClassNode:(AKClassNode *)classNode
+- (void)_setParentNodeOfClassItem:(AKClassItem *)classItem
 {
-    if (classNode.docSetToken.superclassContainers.count > 1) {
-        QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classNode.nodeName);
+    if (classItem.docSetToken.superclassContainers.count > 1) {
+        QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.nodeName);
     }
 
-    Container *container = classNode.docSetToken.superclassContainers.anyObject;
+    Container *container = classItem.docSetToken.superclassContainers.anyObject;
 
     if (container) {
-        AKClassNode *parentNode = [self _getOrAddClassNodeWithName:container.containerName frameworkName:classNode.nameOfOwningFramework];
-        if (classNode.parentClass) {
-            QLog(@"%s [ODD] Class node %@ already has parent node %@", __PRETTY_FUNCTION__, classNode.parentClass.nodeName);
+        AKClassItem *parentNode = [self _getOrAddClassItemWithName:container.containerName frameworkName:classItem.nameOfOwningFramework];
+        if (classItem.parentClass) {
+            QLog(@"%s [ODD] Class node %@ already has parent node %@", __PRETTY_FUNCTION__, classItem.parentClass.nodeName);
         }
-        [parentNode addChildClass:classNode];
+        [parentNode addChildClass:classItem];
     } else {
-        QLog(@"ROOT CLASS %@", classNode.nodeName);
+        QLog(@"ROOT CLASS %@", classItem.nodeName);
     }
 }
 
-- (void)_setProtocolItemsOfClassNode:(AKClassNode *)classNode
+- (void)_setProtocolItemsOfClassItem:(AKClassItem *)classItem
 {
     //FIXME: Fill this in.
 }
@@ -178,28 +178,28 @@
 
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName
 {
-    NSMutableArray *classNodes = [NSMutableArray array];
+    NSMutableArray *classItems = [NSMutableArray array];
 
-    for (AKClassNode *classNode in [self allClasses])
+    for (AKClassItem *classItem in [self allClasses])
     {
-        if ([classNode.nameOfOwningFramework isEqualToString:frameworkName])
+        if ([classItem.nameOfOwningFramework isEqualToString:frameworkName])
         {
-            [classNodes addObject:classNode];
+            [classItems addObject:classItem];
         }
     }
 
-    return classNodes;
+    return classItems;
 }
 
 - (NSArray *)rootClasses
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    for (AKClassNode *classNode in [self allClasses])
+    for (AKClassItem *classItem in [self allClasses])
     {
-        if (classNode.parentClass == nil)
+        if (classItem.parentClass == nil)
         {
-            [result addObject:classNode];
+            [result addObject:classItem];
         }
     }
 
@@ -208,12 +208,12 @@
 
 - (NSArray *)allClasses
 {
-    return self.classNodesByName.allValues;
+    return self.classItemsByName.allValues;
 }
 
-- (AKClassNode *)classWithName:(NSString *)className
+- (AKClassItem *)classWithName:(NSString *)className
 {
-    return self.classNodesByName[className];
+    return self.classItemsByName[className];
 }
 
 #pragma mark -
@@ -261,14 +261,14 @@
     return _functionsGroupListsByFramework[frameworkName];
 }
 
-- (AKGroupNode *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
+- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
 {
     return _functionsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
 
-- (void)addFunctionsGroup:(AKGroupNode *)groupNode
+- (void)addFunctionsGroup:(AKGroupItem *)groupItem
 {
-    NSString *frameworkName = groupNode.nameOfOwningFramework;
+    NSString *frameworkName = groupItem.nameOfOwningFramework;
 
     // See if we have any functions groups in the framework yet.
     NSMutableArray *groupList = nil;
@@ -288,7 +288,7 @@
     }
 
     // Add the functions group if it isn't already in the framework.
-    NSString *groupName = groupNode.nodeName;
+    NSString *groupName = groupItem.nodeName;
 
     if (groupsByName[groupName])
     {
@@ -296,8 +296,8 @@
     }
     else
     {
-        [groupList addObject:groupNode];
-        groupsByName[groupNode.nodeName] = groupNode;
+        [groupList addObject:groupItem];
+        groupsByName[groupItem.nodeName] = groupItem;
     }
 }
 
@@ -309,15 +309,15 @@
     return _globalsGroupListsByFramework[frameworkName];
 }
 
-- (AKGroupNode *)globalsGroupNamed:(NSString *)groupName
+- (AKGroupItem *)globalsGroupNamed:(NSString *)groupName
                   inFrameworkNamed:(NSString *)frameworkName
 {
     return _globalsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
 
-- (void)addGlobalsGroup:(AKGroupNode *)groupNode
+- (void)addGlobalsGroup:(AKGroupItem *)groupItem
 {
-    NSString *frameworkName = groupNode.nameOfOwningFramework;
+    NSString *frameworkName = groupItem.nameOfOwningFramework;
 
     // See if we have any globals groups in the framework yet.
     NSMutableArray *groupList = nil;
@@ -337,7 +337,7 @@
     }
 
     // Add the globals group if it isn't already in the framework.
-    NSString *groupName = groupNode.nodeName;
+    NSString *groupName = groupItem.nodeName;
 
     if (groupsByName[groupName])
     {
@@ -345,23 +345,23 @@
     }
     else
     {
-        [groupList addObject:groupNode];
-        groupsByName[groupNode.nodeName] = groupNode;
+        [groupList addObject:groupItem];
+        groupsByName[groupItem.nodeName] = groupItem;
     }
 }
 
 #pragma mark -
 #pragma mark Methods that help AKCocoaGlobalsDocParser
 
-- (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
+- (AKClassItem *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    return _classNodesByHTMLPath[htmlFilePath];
+    return _classItemsByHTMLPath[htmlFilePath];
 }
 
-- (void)rememberThatClass:(AKClassNode *)classNode
+- (void)rememberThatClass:(AKClassItem *)classItem
    isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    _classNodesByHTMLPath[htmlFilePath] = classNode;
+    _classItemsByHTMLPath[htmlFilePath] = classItem;
 }
 
 - (AKProtocolItem *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath

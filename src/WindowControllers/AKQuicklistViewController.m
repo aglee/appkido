@@ -11,17 +11,17 @@
 #import "DIGSFindBuffer.h"
 
 #import "AKAppDelegate.h"
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
 #import "AKFileSection.h"
 #import "AKFrameworkConstants.h"
 #import "AKHTMLConstants.h"
-#import "AKMethodNode.h"
+#import "AKMethodItem.h"
 #import "AKMultiRadioView.h"
 #import "AKPrefUtils.h"
-#import "AKPropertyNode.h"
+#import "AKPropertyItem.h"
 #import "AKProtocolItem.h"
 #import "AKProtocolTopic.h"
 #import "AKSearchQuery.h"
@@ -603,9 +603,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_collectionClasses)
     {
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:
+        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:
                                @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable", @"NSMapTable", @"NSPointerArray"]];
-        s_collectionClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_collectionClasses = [self _sortedDocLocatorsForClasses:classItems];
     }
 
     return s_collectionClasses;
@@ -618,12 +618,12 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     if (!s_windowOrViewControllerClasses)
     {
 #if APPKIDO_FOR_IPHONE
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"UIViewController"]];
+        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"UIViewController"]];
 #else
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
+        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
 #endif
 
-        s_windowOrViewControllerClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_windowOrViewControllerClasses = [self _sortedDocLocatorsForClasses:classItems];
     }
 
     return s_windowOrViewControllerClasses;
@@ -646,9 +646,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             nameOfRootViewClass = @"NSView";
         }
 
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
+        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
 
-        s_viewClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_viewClasses = [self _sortedDocLocatorsForClasses:classItems];
     }
 
     return s_viewClasses;
@@ -661,12 +661,12 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     if (!s_cellOrLayerClasses)
     {
 #if APPKIDO_FOR_IPHONE
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"CALayer"]];
+        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"CALayer"]];
 #else
-        NSArray *classNodes = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
+        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
 #endif
 
-        s_cellOrLayerClasses = [self _sortedDocLocatorsForClasses:classNodes];
+        s_cellOrLayerClasses = [self _sortedDocLocatorsForClasses:classItems];
     }
 
     return s_cellOrLayerClasses;
@@ -680,16 +680,16 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[self.owningWindowController database] allClasses])
+        for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
         {
             BOOL classHasDelegate = NO;
 
             // See if the class doc contains a "Delegate Methods" section.
-            AKFileSection *delegateMethodsSection = [classNode.nodeDocumentation childSectionWithName:AKDelegateMethodsHTMLSectionName];
+            AKFileSection *delegateMethodsSection = [classItem.nodeDocumentation childSectionWithName:AKDelegateMethodsHTMLSectionName];
 
             if (!delegateMethodsSection)
             {
-                delegateMethodsSection =[classNode.nodeDocumentation childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
+                delegateMethodsSection =[classItem.nodeDocumentation childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
             }
 
             if (delegateMethodsSection)
@@ -700,9 +700,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // If not, see if the class has a method with a name like setFooDelegate:.
             if (!classHasDelegate)
             {
-                for (AKMethodNode *methodNode in [classNode documentedInstanceMethods])
+                for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
                 {
-                    NSString *methodName = methodNode.nodeName;
+                    NSString *methodName = methodItem.nodeName;
 
                     if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"])
                     {
@@ -715,7 +715,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // If not, see if the class has a property named "delegate" or "fooDelegate".
             if (!classHasDelegate)
             {
-                for (AKPropertyNode *propertyNode in [classNode documentedProperties])
+                for (AKPropertyItem *propertyNode in [classItem documentedProperties])
                 {
                     NSString *propertyName = propertyNode.nodeName;
 
@@ -728,7 +728,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             }
 
             // If not, see if there's a protocol named thisClassDelegate.
-            NSString *possibleDelegateProtocolName = [classNode.nodeName stringByAppendingString:@"Delegate"];
+            NSString *possibleDelegateProtocolName = [classItem.nodeName stringByAppendingString:@"Delegate"];
             if ([[self.owningWindowController database] protocolWithName:possibleDelegateProtocolName])
             {
                 classHasDelegate = YES;
@@ -737,12 +737,12 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // We've checked all the ways we can tell if a class has a delegate.
             if (classHasDelegate)
             {
-                [nodeSet addObject:classNode];
+                [nodeSet addObject:classItem];
             }
         }
 
-        NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classNodes];
+        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:nodeSet];
+        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
     }
 
     return s_classesWithDelegates;
@@ -756,14 +756,14 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     {
         NSMutableSet *nodeSet = [NSMutableSet set];
 
-        for (AKClassNode *classNode in [[self.owningWindowController database] allClasses])
+        for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
         {
             BOOL classHasDataSource = NO;
 
             // See if the class has a -setDataSource: method.
-            for (AKMethodNode *methodNode in [classNode documentedInstanceMethods])
+            for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
             {
-                NSString *methodName = methodNode.nodeName;
+                NSString *methodName = methodItem.nodeName;
 
                 if ([methodName isEqualToString:@"setDataSource:"])
                 {
@@ -775,7 +775,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // If not, see if the class has a property named "dataSource".
             if (!classHasDataSource)
             {
-                for (AKPropertyNode *propertyNode in [classNode documentedProperties])
+                for (AKPropertyItem *propertyNode in [classItem documentedProperties])
                 {
                     NSString *propertyName = propertyNode.nodeName;
 
@@ -788,7 +788,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             }
 
             // If not, see if there's a protocol named thisClassDataSource.
-            NSString *possibleDataSourceProtocolName = [classNode.nodeName stringByAppendingString:@"DataSource"];
+            NSString *possibleDataSourceProtocolName = [classItem.nodeName stringByAppendingString:@"DataSource"];
             if ([[self.owningWindowController database] protocolWithName:possibleDataSourceProtocolName])
             {
                 classHasDataSource = YES;
@@ -797,12 +797,12 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // We've checked all the ways we can tell if a class has a datasource.
             if (classHasDataSource)
             {
-                [nodeSet addObject:classNode];
+                [nodeSet addObject:classItem];
             }
         }
 
-        NSArray *classNodes = [self _sortedDescendantsOfClassesInSet:nodeSet];
-        s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classNodes];
+        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:nodeSet];
+        s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classItems];
     }
 
     return s_classesWithDataSources;
@@ -832,23 +832,23 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-    NSArray *classNodes = [[self.owningWindowController database] classesForFrameworkNamed:fwName];
+    NSArray *classItems = [[self.owningWindowController database] classesForFrameworkNamed:fwName];
 
-    return [self _sortedDocLocatorsForClasses:classNodes];
+    return [self _sortedDocLocatorsForClasses:classItems];
 }
 
-- (NSArray *)_sortedDocLocatorsForClasses:(NSArray *)classNodes
+- (NSArray *)_sortedDocLocatorsForClasses:(NSArray *)classItems
 {
     NSMutableArray *quicklistItems = [NSMutableArray array];
 
-    for (AKClassNode *classNode in classNodes)
+    for (AKClassItem *classItem in classItems)
     {
         // Don't list classes that don't have HTML documentation.  They
         // may have cropped up in header files and either not been
         // documented yet or intended for Apple's internal use.
-        if (classNode.nodeDocumentation)
+        if (classItem.nodeDocumentation)
         {
-            AKTopic *topic = [AKClassTopic topicWithClassNode:classNode];
+            AKTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
             [quicklistItems addObject:[AKDocLocator withTopic:topic
                                                  subtopicName:nil
@@ -887,9 +887,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     for (NSString *name in classNames)
     {
-        AKClassNode *classNode = [[self.owningWindowController database] classWithName:name];
+        AKClassItem *classItem = [[self.owningWindowController database] classWithName:name];
 
-        [nodeSet unionSet:[classNode descendantClasses]];
+        [nodeSet unionSet:[classItem descendantClasses]];
     }
 
     return [AKSortUtils arrayBySortingSet:nodeSet];
@@ -900,7 +900,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     NSMutableSet *resultSet = [NSMutableSet setWithCapacity:(nodeSet.count * 2)];
 
     // Add descendant classes of the classes that were found.
-    for (AKClassNode *node in nodeSet)
+    for (AKClassItem *node in nodeSet)
     {
         [resultSet unionSet:[node descendantClasses]];
     }

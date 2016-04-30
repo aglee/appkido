@@ -10,7 +10,7 @@
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
 #import "AKGlobalsGroupSubtopic.h"
-#import "AKGroupNode.h"
+#import "AKGroupItem.h"
 #import "AKDoc.h"
 
 @implementation AKGlobalsTopic
@@ -35,18 +35,18 @@
         return nil;
     }
 
-    NSArray *groupNodes = [AKSortUtils arrayBySortingArray:[self.topicDatabase globalsGroupsForFrameworkNamed:self.topicFrameworkName]];
+    NSArray *groupItems = [AKSortUtils arrayBySortingArray:[self.topicDatabase globalsGroupsForFrameworkNamed:self.topicFrameworkName]];
 
 
-    if ((unsigned)subtopicIndex >= groupNodes.count)
+    if ((unsigned)subtopicIndex >= groupItems.count)
     {
         return nil;
     }
     else
     {
-        AKGroupNode *groupNode = groupNodes[subtopicIndex];
+        AKGroupItem *groupItem = groupItems[subtopicIndex];
 
-        return [[AKGlobalsGroupSubtopic alloc] initWithGroupNode:groupNode];
+        return [[AKGlobalsGroupSubtopic alloc] initWithGroupItem:groupItem];
     }
 }
 

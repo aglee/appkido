@@ -1,17 +1,17 @@
 //
-//  AKMemberNode.m
+//  AKMemberItem.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 7/24/08.
 //  Copyright 2008 Andy Lee. All rights reserved.
 //
 
-#import "AKMemberNode.h"
+#import "AKMemberItem.h"
 
 #import "DIGSLog.h"
 #import "AKBehaviorItem.h"
 
-@implementation AKMemberNode
+@implementation AKMemberItem
 
 @synthesize owningBehavior = _owningBehavior;
 

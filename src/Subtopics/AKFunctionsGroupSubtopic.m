@@ -9,7 +9,7 @@
 
 #import "AKFileSection.h"
 #import "AKFunctionDoc.h"
-#import "AKGroupNode.h"
+#import "AKGroupItem.h"
 #import "AKSortUtils.h"
 
 @implementation AKFunctionsGroupSubtopic
@@ -20,13 +20,13 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Each subitem of a functions group item represents one function.
-    for (AKDocSetTokenItem *functionNode in [AKSortUtils arrayBySortingArray:[self.groupNode subitems]])
+    for (AKDocSetTokenItem *functionItem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
     {
-        AKFileSection *functionSection = functionNode.nodeDocumentation;
+        AKFileSection *functionSection = functionItem.nodeDocumentation;
 
         if (functionSection != nil)
         {
-            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithNode:functionNode];
+            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithNode:functionItem];
             
             [docList addObject:newDoc];
         }

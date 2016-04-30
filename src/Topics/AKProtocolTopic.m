@@ -109,10 +109,10 @@
                      [AKClassMethodsSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:YES],
                      [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:NO],
                      [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:YES],
-                     [AKDelegateMethodsSubtopic subtopicForClassNode:nil includeAncestors:NO],
-                     [AKDelegateMethodsSubtopic subtopicForClassNode:nil includeAncestors:YES],
-                     [AKNotificationsSubtopic subtopicForClassNode:nil includeAncestors:NO],
-                     [AKNotificationsSubtopic subtopicForClassNode:nil includeAncestors:YES],
+                     [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:NO],
+                     [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:YES],
+                     [AKNotificationsSubtopic subtopicForClassItem:nil includeAncestors:NO],
+                     [AKNotificationsSubtopic subtopicForClassItem:nil includeAncestors:YES],
                      ])];
 }
 

@@ -12,7 +12,7 @@
 
 /*!
  * Wrapper around a collection of AKDocSetTokenItems, with a couple of convenience
- * methods.  Unlike an AKGroupNode, an AKCollectionOfItems is not itself a node.
+ * methods.  Unlike an AKGroupItem, an AKCollectionOfItems is not itself a node.
  */
 @interface AKCollectionOfItems : NSObject
 {

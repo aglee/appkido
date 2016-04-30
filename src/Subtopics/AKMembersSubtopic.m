@@ -9,9 +9,9 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKProtocolItem.h"
-#import "AKMethodNode.h"
+#import "AKMethodItem.h"
 #import "AKMemberDoc.h"
 
 @implementation AKMembersSubtopic
@@ -49,7 +49,7 @@
     return nil;
 }
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
+- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {
     DIGSLogError_MissingOverride();
     return nil;
@@ -67,17 +67,17 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Get method nodes for all the methods we want to list.
-    NSDictionary *methodNodesByName = [self _subtopicMethodsByName];
+    NSDictionary *methodItemsByName = [self _subtopicMethodsByName];
 
     // Create an AKMemberDoc instance for each method we want to list.
     Class methodClass = [[self class] memberDocClass];
-    NSArray *sortedMethodNames = [methodNodesByName.allKeys
+    NSArray *sortedMethodNames = [methodItemsByName.allKeys
                                   sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 
     for (NSString *methodName in sortedMethodNames)
     {
-        AKMethodNode *methodNode = methodNodesByName[methodName];
-        AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberNode:methodNode
+        AKMethodItem *methodItem = methodItemsByName[methodName];
+        AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberItem:methodItem
                                                       inheritedByBehavior:[self behaviorItem]];
         [docList addObject:methodDoc];
     }
@@ -102,13 +102,13 @@
     {
         // Add superclasses to the list.  We will check nearest
         // superclasses first.
-        if ([[self behaviorItem] isClassNode])
+        if ([[self behaviorItem] isClassItem])
         {
-            AKClassNode *classNode = (AKClassNode *)[self behaviorItem];
+            AKClassItem *classItem = (AKClassItem *)[self behaviorItem];
 
-            while ((classNode = classNode.parentClass))
+            while ((classItem = classItem.parentClass))
             {
-                [ancestorNodes addObject:classNode];
+                [ancestorNodes addObject:classItem];
             }
         }
 
@@ -130,9 +130,9 @@
 
     for (AKBehaviorItem *ancestorNode in [self _ancestorNodesWeCareAbout])
     {
-        for (AKMethodNode *methodNode in [self memberNodesForBehavior:ancestorNode])
+        for (AKMethodItem *methodItem in [self memberItemsForBehavior:ancestorNode])
         {
-            methodsByName[methodNode.nodeName] = methodNode;
+            methodsByName[methodItem.nodeName] = methodItem;
         }
     }
 

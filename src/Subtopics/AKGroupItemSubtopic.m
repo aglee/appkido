@@ -1,26 +1,26 @@
 /*
- * AKGroupNodeSubtopic.m
+ * AKGroupItemSubtopic.m
  *
  * Created by Andy Lee on Sun Mar 28 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKGroupNodeSubtopic.h"
+#import "AKGroupItemSubtopic.h"
 
-#import "AKGroupNode.h"
+#import "AKGroupItem.h"
 
-@implementation AKGroupNodeSubtopic
+@implementation AKGroupItemSubtopic
 
-@synthesize groupNode = _groupNode;
+@synthesize groupItem = _groupItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithGroupNode:(AKGroupNode *)groupNode
+- (instancetype)initWithGroupItem:(AKGroupItem *)groupItem
 {
     if ((self = [super init]))
     {
-        _groupNode = groupNode;
+        _groupItem = groupItem;
     }
 
     return self;
@@ -29,7 +29,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithGroupNode:nil];
+    return [self initWithGroupItem:nil];
 }
 
 
@@ -38,7 +38,7 @@
 
 - (NSString *)subtopicName
 {
-    return _groupNode.nodeName;
+    return _groupItem.nodeName;
 }
 
 @end

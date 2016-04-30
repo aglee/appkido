@@ -1,5 +1,5 @@
 /*
- * AKGlobalsNode.h
+ * AKGlobalsItem.h
  *
  * Created by Andy Lee on Sun Mar 28 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -14,7 +14,7 @@
  * names of the enums. The owned identifiers are not themselves database nodes;
  * they're just strings.
  */
-@interface AKGlobalsNode : AKDocSetTokenItem
+@interface AKGlobalsItem : AKDocSetTokenItem
 {
 @private
     // Elements are strings.

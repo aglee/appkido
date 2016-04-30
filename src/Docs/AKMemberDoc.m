@@ -11,22 +11,22 @@
 
 #import "AKFrameworkConstants.h"
 #import "AKProtocolItem.h"
-#import "AKMemberNode.h"
+#import "AKMemberItem.h"
 
 @implementation AKMemberDoc
 
-@synthesize memberNode = _memberNode;
+@synthesize memberItem = _memberItem;
 @synthesize behaviorItem = _behaviorItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithMemberNode:(AKMemberNode *)memberNode
+- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem
      inheritedByBehavior:(AKBehaviorItem *)behaviorItem
 {
     if ((self = [super init]))
     {
-        _memberNode = memberNode;
+        _memberItem = memberItem;
         _behaviorItem = behaviorItem;
     }
 
@@ -36,7 +36,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithMemberNode:nil inheritedByBehavior:nil];
+    return [self initWithMemberItem:nil inheritedByBehavior:nil];
 }
 
 
@@ -54,18 +54,18 @@
 
 - (AKFileSection *)fileSection
 {
-    return _memberNode.nodeDocumentation;
+    return _memberItem.nodeDocumentation;
 }
 
 - (NSString *)stringToDisplayInDocList
 {
     NSString *displayString = [[self class] punctuateNodeName:[self docName]];
-    AKBehaviorItem *owningBehavior = _memberNode.owningBehavior;
+    AKBehaviorItem *owningBehavior = _memberItem.owningBehavior;
 
     // Qualify the member name with ancestor or protocol info if any.
     if (_behaviorItem != owningBehavior)
     {
-        if ([owningBehavior isClassNode])
+        if ([owningBehavior isClassItem])
         {
             // We inherited this member from an ancestor class.
             displayString = [NSString stringWithFormat:@"%@ (%@)",
@@ -82,7 +82,7 @@
 
     // If this is a method that is added by a framework that is not the class's
     // main framework, show that.
-    NSString *memberFrameworkName = _memberNode.nameOfOwningFramework;
+    NSString *memberFrameworkName = _memberItem.nameOfOwningFramework;
     BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.nameOfOwningFramework];
 
     if (!memberIsInSameFramework)
@@ -96,7 +96,7 @@
     // assuming the docs are accurate.
     //
     // If we know the method is deprecated, show that.
-    if (_memberNode.isDeprecated)
+    if (_memberItem.isDeprecated)
     {
         displayString = [NSString stringWithFormat:@"%@ (deprecated)", displayString];
     }
@@ -110,9 +110,9 @@
 // override this method.
 - (NSString *)commentString
 {
-    NSString *memberFrameworkName = _memberNode.nameOfOwningFramework;
+    NSString *memberFrameworkName = _memberItem.nameOfOwningFramework;
     BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.nameOfOwningFramework];
-    AKBehaviorItem *owningBehavior = _memberNode.owningBehavior;
+    AKBehaviorItem *owningBehavior = _memberItem.owningBehavior;
 
     if (_behaviorItem == owningBehavior)
     {
@@ -127,7 +127,7 @@
                     memberFrameworkName];
         }
     }
-    else if ([owningBehavior isClassNode])
+    else if ([owningBehavior isClassItem])
     {
         // We inherited this method from an ancestor class.
         if (memberIsInSameFramework)

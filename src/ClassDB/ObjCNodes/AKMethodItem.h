@@ -1,20 +1,20 @@
 //
-// AKMethodNode.h
+// AKMethodItem.h
 //
 // Created by Andy Lee on Thu Jun 27 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKMemberNode.h"
+#import "AKMemberItem.h"
 
 /*!
  * Represents an Objective-C method. Contains the name and signature of the
  * method. Does not distinguish between class and instance methods.
  *
- * An AKMethodNode instance must belong to at most one AKBehaviorItem instance,
+ * An AKMethodItem instance must belong to at most one AKBehaviorItem instance,
  * regardless of how many behaviors declare a method with the same signature.
  */
-@interface AKMethodNode : AKMemberNode
+@interface AKMethodItem : AKMemberItem
 {
 @private
     NSMutableArray *_argumentTypes;

@@ -7,7 +7,7 @@
 
 #import "AKNotificationsSubtopic.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKNotificationDoc.h"
 
 @implementation AKNotificationsSubtopic
@@ -32,11 +32,11 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
+- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {
-    if ([behaviorItem isClassNode])
+    if ([behaviorItem isClassItem])
     {
-        return [(AKClassNode *)behaviorItem documentedNotifications];
+        return [(AKClassItem *)behaviorItem documentedNotifications];
     }
     else
     {

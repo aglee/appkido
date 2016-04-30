@@ -9,8 +9,8 @@
 
 #import "DIGSLog.h"
 #import "AKProtocolItem.h"
-#import "AKPropertyNode.h"
-#import "AKMethodNode.h"
+#import "AKPropertyItem.h"
+#import "AKMethodItem.h"
 #import "AKCollectionOfItems.h"
 
 @implementation AKBehaviorItem
@@ -41,7 +41,7 @@
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-- (BOOL)isClassNode
+- (BOOL)isClassItem
 {
     return NO;
 }
@@ -84,7 +84,7 @@
     return result;
 }
 
-- (NSArray *)instanceMethodNodes
+- (NSArray *)instanceMethodItems
 {
     return [_indexOfInstanceMethods allNodes];
 }
@@ -97,12 +97,12 @@
     return [_indexOfProperties nodesWithDocumentation];
 }
 
-- (AKPropertyNode *)propertyNodeWithName:(NSString *)propertyName
+- (AKPropertyItem *)propertyNodeWithName:(NSString *)propertyName
 {
-    return (AKPropertyNode *)[_indexOfProperties nodeWithName:propertyName];
+    return (AKPropertyItem *)[_indexOfProperties nodeWithName:propertyName];
 }
 
-- (void)addPropertyNode:(AKPropertyNode *)propertyNode
+- (void)addPropertyNode:(AKPropertyItem *)propertyNode
 {
     [_indexOfProperties addNode:propertyNode];
 }
@@ -115,14 +115,14 @@
     return [_indexOfClassMethods nodesWithDocumentation];
 }
 
-- (AKMethodNode *)classMethodWithName:(NSString *)methodName
+- (AKMethodItem *)classMethodWithName:(NSString *)methodName
 {
-    return (AKMethodNode *)[_indexOfClassMethods nodeWithName:methodName];
+    return (AKMethodItem *)[_indexOfClassMethods nodeWithName:methodName];
 }
 
-- (void)addClassMethod:(AKMethodNode *)methodNode
+- (void)addClassMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfClassMethods addNode:methodNode];
+    [_indexOfClassMethods addNode:methodItem];
 }
 
 #pragma mark -
@@ -133,33 +133,33 @@
     return [_indexOfInstanceMethods nodesWithDocumentation];
 }
 
-- (AKMethodNode *)instanceMethodWithName:(NSString *)methodName
+- (AKMethodItem *)instanceMethodWithName:(NSString *)methodName
 {
-    return (AKMethodNode *)[_indexOfInstanceMethods nodeWithName:methodName];
+    return (AKMethodItem *)[_indexOfInstanceMethods nodeWithName:methodName];
 }
 
-- (void)addInstanceMethod:(AKMethodNode *)methodNode
+- (void)addInstanceMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfInstanceMethods addNode:methodNode];
+    [_indexOfInstanceMethods addNode:methodItem];
 }
 
 #pragma mark -
 #pragma mark Getters and setters -- deprecated methods
 
-- (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
+- (AKMethodItem *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
                                         frameworkName:(NSString *)frameworkName
 {
     // Is this an instance method or a class method?  Note this assumes a
     // a method node for the method already exists, presumably because we
     // parsed the header files.
-    AKMethodNode *methodNode = [self classMethodWithName:methodName];
+    AKMethodItem *methodItem = [self classMethodWithName:methodName];
     
-    if (methodNode == nil)
+    if (methodItem == nil)
     {
-        methodNode = [self instanceMethodWithName:methodName];
+        methodItem = [self instanceMethodWithName:methodName];
     }
     
-    if (methodNode == nil)
+    if (methodItem == nil)
     {
         DIGSLogInfo(@"Couldn't find class method or instance method named %@"
                     @" while processing deprecated methods for behavior %@",
@@ -167,10 +167,10 @@
     }
     else
     {
-        [methodNode setIsDeprecated:YES];
+        [methodItem setIsDeprecated:YES];
     }
     
-    return methodNode;
+    return methodItem;
 }
 
 @end

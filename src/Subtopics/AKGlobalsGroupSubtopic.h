@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Andy Lee. All rights reserved.
 //
 
-#import "AKGroupNodeSubtopic.h"
+#import "AKGroupItemSubtopic.h"
 
-@interface AKGlobalsGroupSubtopic : AKGroupNodeSubtopic
+@interface AKGlobalsGroupSubtopic : AKGroupItemSubtopic
 @end

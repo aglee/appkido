@@ -1,5 +1,5 @@
 //
-//  AKMemberNode.h
+//  AKMemberItem.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 7/24/08.
@@ -11,10 +11,11 @@
 @class AKBehaviorItem;
 
 /*!
- * Stretches the concept of "member" slightly.  Used for properties, class
- * methods, instance methods, delegate methods, and notifications.
+ * Represents a member (as in the term "member function") of a behavior.
+ * Stretches the concept of "member" slightly.  Used not only for properties and
+ * methods, but also for bindings, delegate methods and notifications.
  */
-@interface AKMemberNode : AKDocSetTokenItem
+@interface AKMemberItem : AKDocSetTokenItem
 {
 @private
     __unsafe_unretained AKBehaviorItem *_owningBehavior;

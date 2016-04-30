@@ -1,28 +1,28 @@
 //
-// AKClassNode.m
+// AKClassItem.m
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "DIGSLog.h"
-#import "AKCategoryNode.h"
+#import "AKCategoryItem.h"
 #import "AKCollectionOfItems.h"
 #import "AKDatabase.h"
 #import "AKFileSection.h"
-#import "AKMethodNode.h"
-#import "AKNotificationNode.h"
+#import "AKMethodItem.h"
+#import "AKNotificationItem.h"
 #import "AKProtocolItem.h"
 #import "NSString+AppKiDo.h"
 
 
-@interface AKClassNode ()
-@property (NS_NONATOMIC_IOSONLY, readwrite, weak) AKClassNode *parentClass;
+@interface AKClassItem ()
+@property (NS_NONATOMIC_IOSONLY, readwrite, weak) AKClassItem *parentClass;
 @end
 
 
-@implementation AKClassNode
+@implementation AKClassItem
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -39,8 +39,8 @@
 
         _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
-        _childClassNodes = [[NSMutableArray alloc] init];
-        _categoryNodes = [[NSMutableArray alloc] init];
+        _childClassItems = [[NSMutableArray alloc] init];
+        _categoryItems = [[NSMutableArray alloc] init];
 
         _indexOfDelegateMethods = [[AKCollectionOfItems alloc] init];
         _indexOfNotifications = [[AKCollectionOfItems alloc] init];
@@ -58,7 +58,7 @@
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-- (void)addChildClass:(AKClassNode *)node
+- (void)addChildClass:(AKClassItem *)node
 {
     // We check for parent != child to avoid circularity.  This
     // doesn't protect against the general case of a cycle, but it does
@@ -72,23 +72,23 @@
 
     [node.parentClass removeChildClass:node];
     node.parentClass = self;
-    [_childClassNodes addObject:node];
+    [_childClassItems addObject:node];
 }
 
-- (void)removeChildClass:(AKClassNode *)node
+- (void)removeChildClass:(AKClassItem *)node
 {
-    NSInteger i = [_childClassNodes indexOfObject:node];
+    NSInteger i = [_childClassItems indexOfObject:node];
 
     if (i >= 0)
     {
         [node setParentClass:nil];
-        [_childClassNodes removeObjectAtIndex:i];
+        [_childClassItems removeObjectAtIndex:i];
     }
 }
 
 - (NSArray *)childClasses
 {
-    return _childClassNodes;
+    return _childClassItems;
 }
 
 - (NSSet *)descendantClasses
@@ -102,30 +102,30 @@
 
 - (BOOL)hasChildClasses
 {
-    return (_childClassNodes.count > 0);
+    return (_childClassItems.count > 0);
 }
 
-- (AKCategoryNode *)categoryNamed:(NSString *)catName
+- (AKCategoryItem *)categoryNamed:(NSString *)catName
 {
-    for (AKDocSetTokenItem *node in _categoryNodes)
+    for (AKDocSetTokenItem *node in _categoryItems)
     {
         if ([node.nodeName isEqualToString:catName])
         {
-            return (AKCategoryNode *)node;
+            return (AKCategoryItem *)node;
         }
     }
 
     return nil;
 }
 
-- (void)addCategory:(AKCategoryNode *)node
+- (void)addCategory:(AKCategoryItem *)node
 {
-    [_categoryNodes addObject:node];
+    [_categoryItems addObject:node];
 }
 
 - (NSArray *)allCategories
 {
-    NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryNodes];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryItems];
 
     // Get categories from ancestor classes.
     if (_parentClass)
@@ -185,14 +185,14 @@
     return methodList;
 }
 
-- (AKMethodNode *)delegateMethodWithName:(NSString *)methodName
+- (AKMethodItem *)delegateMethodWithName:(NSString *)methodName
 {
-    return (AKMethodNode *)[_indexOfDelegateMethods nodeWithName:methodName];
+    return (AKMethodItem *)[_indexOfDelegateMethods nodeWithName:methodName];
 }
 
-- (void)addDelegateMethod:(AKMethodNode *)methodNode
+- (void)addDelegateMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfDelegateMethods addNode:methodNode];
+    [_indexOfDelegateMethods addNode:methodItem];
 }
 
 #pragma mark -
@@ -203,20 +203,20 @@
     return [_indexOfNotifications nodesWithDocumentation];
 }
 
-- (AKNotificationNode *)notificationWithName:(NSString *)notificationName
+- (AKNotificationItem *)notificationWithName:(NSString *)notificationName
 {
-    return (AKNotificationNode *)[_indexOfNotifications nodeWithName:notificationName];
+    return (AKNotificationItem *)[_indexOfNotifications nodeWithName:notificationName];
 }
 
-- (void)addNotification:(AKNotificationNode *)notificationNode
+- (void)addNotification:(AKNotificationItem *)notificationItem
 {
-    [_indexOfNotifications addNode:notificationNode];
+    [_indexOfNotifications addNode:notificationItem];
 }
 
 #pragma mark -
 #pragma mark AKBehaviorItem methods
 
-- (BOOL)isClassNode
+- (BOOL)isClassItem
 {
     return YES;
 }
@@ -231,25 +231,25 @@
     return result;
 }
 
-- (AKMethodNode *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
+- (AKMethodItem *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
                                         frameworkName:(NSString *)frameworkName
 {
-    AKMethodNode *methodNode = [super addDeprecatedMethodIfAbsentWithName:methodName
+    AKMethodItem *methodItem = [super addDeprecatedMethodIfAbsentWithName:methodName
                                                             frameworkName:frameworkName];
 
     // If it's neither an instance method nor a class method, but it looks
     // like it might be a delegate method, assume it is one.
     //TODO: Old note to self says this assumption is false for [NSTypesetter lineFragmentRectForProposedRect:remainingRect:].  Check on this.
-    if (methodNode == nil)
+    if (methodItem == nil)
     {
         if ([methodName ak_contains:@":"])
         {
-            methodNode = [[AKMethodNode alloc] initWithNodeName:methodName
+            methodItem = [[AKMethodItem alloc] initWithNodeName:methodName
                                                         database:self.owningDatabase
                                                    frameworkName:frameworkName
                                                   owningBehavior:self];
-            [methodNode setIsDeprecated:YES];
-            [self addDelegateMethod:methodNode];
+            [methodItem setIsDeprecated:YES];
+            [self addDelegateMethod:methodItem];
         }
         else
         {
@@ -259,7 +259,7 @@
         }
     }
     
-    return methodNode;
+    return methodItem;
 }
 
 #pragma mark -
@@ -284,7 +284,7 @@
 {
     [descendantNodes addObject:self];
     
-    for (AKClassNode *sub in _childClassNodes)
+    for (AKClassItem *sub in _childClassItems)
     {
         [sub _addDescendantsToSet:descendantNodes];
     }
@@ -306,9 +306,9 @@
 
     // Look for instance method names of the form setFooDelegate:.
     //TODO: To be really thorough, check for fooDelegate properties.
-    for (AKMethodNode *methodNode in [self instanceMethodNodes])
+    for (AKMethodItem *methodItem in [self instanceMethodItems])
     {
-        NSString *methodName = methodNode.nodeName;
+        NSString *methodName = methodItem.nodeName;
 
         if ([methodName hasPrefix:@"set"]
             && [methodName hasSuffix:@"Delegate:"]

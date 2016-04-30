@@ -14,7 +14,7 @@
 
 #import "AKAboutWindowController.h"
 #import "AKAppVersion.h"
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
 #import "AKDebugging.h"
@@ -577,8 +577,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
         // See what information we have for this framework.
         NSArray *formalProtocolItems = [_appDatabase formalProtocolsForFrameworkNamed:fwName];
         NSArray *informalProtocolItems = [_appDatabase informalProtocolsForFrameworkNamed:fwName];
-        NSArray *functionsGroupNodes = [_appDatabase functionsGroupsForFrameworkNamed:fwName];
-        NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFrameworkNamed:fwName];
+        NSArray *functionsGroupItems = [_appDatabase functionsGroupsForFrameworkNamed:fwName];
+        NSArray *globalsGroupItems = [_appDatabase globalsGroupsForFrameworkNamed:fwName];
 
         // Construct the submenu of framework-related topics.
         NSMenu *fwTopicSubmenu = [[NSMenu alloc] initWithTitle:fwName];
@@ -601,7 +601,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [fwTopicSubmenu addItem:subitem];
         }
 
-        if (functionsGroupNodes.count > 0)
+        if (functionsGroupItems.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKFunctionsTopicName
                                                               action:@selector(selectFunctionsTopic:)
@@ -610,7 +610,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [fwTopicSubmenu addItem:subitem];
         }
 
-        if (globalsGroupNodes.count > 0)
+        if (globalsGroupItems.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKGlobalsTopicName
                                                               action:@selector(selectGlobalsTopic:)

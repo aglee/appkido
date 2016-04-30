@@ -11,30 +11,30 @@ The fundamental model object in AppKiDo is an AKDocSetTokenItem, or simply "**no
 
 Here are the API constructs represented in AppKiDo, and their corresponding node classes:
 
-* **Classes and protocols** -- AKClassNode, AKProtocolItem
-    * Classes and protocols are collectively referred to as "behaviors". AKClassNode and AKProtocolItem are subclasses of AKBehaviorItem.
-    * AKBehaviorItem has a third subclass, AKCategoryNode, which is a historical artifact and isn't used in any way the user sees.
+* **Classes and protocols** -- AKClassItem, AKProtocolItem
+    * Classes and protocols are collectively referred to as "behaviors". AKClassItem and AKProtocolItem are subclasses of AKBehaviorItem.
+    * AKBehaviorItem has a third subclass, AKCategoryItem, which is a historical artifact and isn't used in any way the user sees.
     * Examples: NSObject, NSTableDataSource.
-* **Properties** -- AKPropertyNode
-    * Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyNode for such properties. Rather, AKMethodNode is used for their documented getter and setter methods.
+* **Properties** -- AKPropertyItem
+    * Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyItem for such properties. Rather, AKMethodItem is used for their documented getter and setter methods.
     * Examples: NSDraggingSession's draggingLocation, NSTask's terminationHandler.
-* **Methods** -- AKMethodNode, AKNotificationNode
-    * AKMethodNode is used for both instance methods and class methods.
+* **Methods** -- AKMethodItem, AKNotificationItem
+    * AKMethodItem is used for both instance methods and class methods.
     * Delegate methods are treated similarly to instance methods, because they are considered part of the behavior of the class. In particular, they are "inherited" by subclasses of the delegating class.
     * Notifications are treated similarly to methods, even though they aren't methods at all, for the same reason.
     * Examples: -init, +stringWithFormat:, tabView:willSelectTabViewItem:, NSWindowWillCloseNotification.
-* **Functions** -- AKFunctionNode
+* **Functions** -- AKFunctionItem
     * C functions. Also, #define'd macros that look like functions.
     * Examples: NSStringFromSelector(), NSAssert1().
-* **Globals** -- AKGlobalsNode
+* **Globals** -- AKGlobalsItem
     * This is my catchall term for typedefs, enums, and constants.
     * Examples: NSApp, NSRoundedBezelStyle.
-* **Groups** -- AKGroupNode
-    * Since Apple's documentation organizes functions and globals into named groups, AppKiDo has an AKGroupNode class that represents such a group.
+* **Groups** -- AKGroupItem
+    * Since Apple's documentation organizes functions and globals into named groups, AppKiDo has an AKGroupItem class that represents such a group.
     * This is the one type of node that does not correspond to an Objective-C language construct.
     * Examples:
 
-AppKiDo tags each node with a **framework name** such as "Foundation" or "AppKit". Generally, each node belongs to exactly one framework, but there is one exception: AKClassNode. In Cocoa, a class can span multiple frameworks by way of categories. For example, NSString is declared in Foundation but has a category in AppKit. For this reason, AKClassNode can be tagged with multiple framework names, though like every other node it has exactly one primary owning framework.
+AppKiDo tags each node with a **framework name** such as "Foundation" or "AppKit". Generally, each node belongs to exactly one framework, but there is one exception: AKClassItem. In Cocoa, a class can span multiple frameworks by way of categories. For example, NSString is declared in Foundation but has a category in AppKit. For this reason, AKClassItem can be tagged with multiple framework names, though like every other node it has exactly one primary owning framework.
 
 
 Model class: "the database"

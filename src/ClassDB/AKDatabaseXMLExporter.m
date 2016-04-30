@@ -10,10 +10,10 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKDatabase.h"
-#import "AKGroupNode.h"
-#import "AKMemberNode.h"
+#import "AKGroupItem.h"
+#import "AKMemberItem.h"
 #import "AKProtocolItem.h"
 #import "AKSortUtils.h"
 
@@ -65,10 +65,10 @@
     [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
         // Export classes.
         [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
-            NSArray *allClassNodes = [_database classesForFrameworkNamed:fwName];
-            for (AKClassNode *classNode in [AKSortUtils arrayBySortingArray:allClassNodes])
+            NSArray *allClassItems = [_database classesForFrameworkNamed:fwName];
+            for (AKClassItem *classItem in [AKSortUtils arrayBySortingArray:allClassItems])
             {
-                [self _exportClass:classNode];
+                [self _exportClass:classItem];
             }
         }];
 
@@ -76,13 +76,13 @@
         [self _exportProtocolsForFramework:fwName];
 
         // Export functions.
-        [self _exportGroupNodes:[_database functionsGroupsForFrameworkNamed:fwName]
+        [self _exportGroupItems:[_database functionsGroupsForFrameworkNamed:fwName]
                       inSection:@"functions"
                     ofFramework:fwName
                      subitemTag:@"function"];
 
         // Export globals.
-        [self _exportGroupNodes:[_database globalsGroupsForFrameworkNamed:fwName]
+        [self _exportGroupItems:[_database globalsGroupsForFrameworkNamed:fwName]
                       inSection:@"globals"
                     ofFramework:fwName
                      subitemTag:@"global"];
@@ -112,16 +112,16 @@
     }];
 }
 
-- (void)_exportGroupNodes:(NSArray *)groupNodes
+- (void)_exportGroupItems:(NSArray *)groupItems
                 inSection:(NSString *)frameworkSection
               ofFramework:(NSString *)fwName
                subitemTag:(NSString *)subitemTag
 {
     [self _writeDividerWithString:fwName string:frameworkSection];
     [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
-        for (AKGroupNode *groupNode in [AKSortUtils arrayBySortingArray:groupNodes])
+        for (AKGroupItem *groupItem in [AKSortUtils arrayBySortingArray:groupItems])
         {
-            [self _exportGroupNode:groupNode usingsubitemTag:subitemTag];
+            [self _exportGroupItem:groupItem usingsubitemTag:subitemTag];
         }
     }];
 }
@@ -130,26 +130,26 @@
 #pragma mark -
 #pragma mark Private methods -- exporting classes and protocols
 
-- (void)_exportClass:(AKClassNode *)classNode
+- (void)_exportClass:(AKClassItem *)classItem
 {
-    [_xmlWriter tag:@"class" attributes:@{ @"name": classNode.nodeName } contentBlock:^{
-        [self _exportMembers:[classNode documentedProperties]
+    [_xmlWriter tag:@"class" attributes:@{ @"name": classItem.nodeName } contentBlock:^{
+        [self _exportMembers:[classItem documentedProperties]
                       ofType:@"properties"
                       xmlTag:@"property"];
 
-        [self _exportMembers:[classNode documentedClassMethods]
+        [self _exportMembers:[classItem documentedClassMethods]
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classNode documentedInstanceMethods]
+        [self _exportMembers:[classItem documentedInstanceMethods]
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classNode documentedDelegateMethods]
+        [self _exportMembers:[classItem documentedDelegateMethods]
                       ofType:@"delegatemethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classNode documentedNotifications]
+        [self _exportMembers:[classItem documentedNotifications]
                       ofType:@"notifications"
                       xmlTag:@"notification"];
     }];
@@ -181,25 +181,25 @@
 #pragma mark -
 #pragma mark Private methods -- exporting members
 
-- (void)_exportMembers:(NSArray *)memberNodes
+- (void)_exportMembers:(NSArray *)memberItems
                 ofType:(NSString *)membersType
                 xmlTag:(NSString *)memberTag
 {
     [_xmlWriter tag:membersType attributes:nil contentBlock:^{
-        for (AKMemberNode *memberNode in [AKSortUtils arrayBySortingArray:memberNodes])
+        for (AKMemberItem *memberItem in [AKSortUtils arrayBySortingArray:memberItems])
         {
-            [self _exportMember:memberNode withXMLTag:memberTag];
+            [self _exportMember:memberItem withXMLTag:memberTag];
         }
     }];
 }
 
-- (void)_exportMember:(AKMemberNode *)memberNode withXMLTag:(NSString *)memberTag
+- (void)_exportMember:(AKMemberItem *)memberItem withXMLTag:(NSString *)memberTag
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
-    attributes[@"name"] = memberNode.nodeName;
+    attributes[@"name"] = memberItem.nodeName;
 
-    if (memberNode.isDeprecated)
+    if (memberItem.isDeprecated)
     {
         attributes[@"isDeprecated"] = @YES;
     }
@@ -225,10 +225,10 @@
     [_xmlWriter tag:subitemTag attributes:attributes];
 }
 
-- (void)_exportGroupNode:(AKGroupNode *)groupNode usingsubitemTag:(NSString *)subitemTag
+- (void)_exportGroupItem:(AKGroupItem *)groupItem usingsubitemTag:(NSString *)subitemTag
 {
-    [_xmlWriter tag:@"group" attributes:@{ @"name": groupNode.nodeName } contentBlock:^{
-        for (AKDocSetTokenItem *subitem in [AKSortUtils arrayBySortingArray:[groupNode subitems]])
+    [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.nodeName } contentBlock:^{
+        for (AKDocSetTokenItem *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
         {
             [self _exportGroupSubitem:subitem withXMLTag:subitemTag];
         }

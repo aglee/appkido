@@ -34,18 +34,18 @@
     }
 
     //TODO: Do we care about the cost of computing this every time?
-    NSArray *groupNodes = [AKSortUtils arrayBySortingArray:
+    NSArray *groupItems = [AKSortUtils arrayBySortingArray:
                 [self.topicDatabase functionsGroupsForFrameworkNamed:self.topicFrameworkName]];
 
-    if ((unsigned)subtopicIndex >= groupNodes.count)
+    if ((unsigned)subtopicIndex >= groupItems.count)
     {
         return nil;
     }
     else
     {
-        AKGroupNode *groupNode = groupNodes[subtopicIndex];
+        AKGroupItem *groupItem = groupItems[subtopicIndex];
 
-        return [[AKFunctionsGroupSubtopic alloc] initWithGroupNode:groupNode];
+        return [[AKFunctionsGroupSubtopic alloc] initWithGroupItem:groupItem];
     }
 }
 

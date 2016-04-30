@@ -12,7 +12,7 @@
 
 #import "AKAppDelegate.h"
 #import "AKBrowser.h"
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDoc.h"
@@ -326,21 +326,21 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)selectSuperclass:(id)sender
 {
-    AKClassNode *superclassNode = [[self _currentTopic] parentClassOfTopic];
+    AKClassItem *superclassItem = [[self _currentTopic] parentClassOfTopic];
 
-    if (superclassNode)
+    if (superclassItem)
     {
-        [self selectTopic:[AKClassTopic topicWithClassNode:superclassNode]];
+        [self selectTopic:[AKClassTopic topicWithClassItem:superclassItem]];
     }
 }
 
 - (IBAction)selectAncestorClass:(id)sender
 {
-    AKClassNode * classNode = [[self _currentTopic] parentClassOfTopic];
+    AKClassItem * classItem = [[self _currentTopic] parentClassOfTopic];
     NSInteger numberOfSuperlevels;
     NSInteger i;
 
-    if (classNode == nil)
+    if (classItem == nil)
     {
         return;
     }
@@ -351,11 +351,11 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     // Figure out what class that means to jump to.
     for (i = 0; i < numberOfSuperlevels; i++)
     {
-        classNode = classNode.parentClass;
+        classItem = classItem.parentClass;
     }
 
     // Do the jump.
-    [self selectTopic:[AKClassTopic topicWithClassNode:classNode]];
+    [self selectTopic:[AKClassTopic topicWithClassItem:classItem]];
 }
 
 - (IBAction)selectFormalProtocolsTopic:(id)sender
@@ -801,8 +801,8 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     _windowHistoryIndex = -1;
     [_windowHistory removeAllObjects];
 
-    AKClassNode *classNode = [_database classWithName:@"NSObject"];
-    [self selectTopic:[AKClassTopic topicWithClassNode:classNode]];
+    AKClassItem *classItem = [_database classWithName:@"NSObject"];
+    [self selectTopic:[AKClassTopic topicWithClassItem:classItem]];
 
     // Start with the topic browser having focus.
     [self.window makeFirstResponder:_topicBrowserController.topicBrowser];
@@ -925,7 +925,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_refreshSuperclassButton
 {
-    AKClassNode *parentClass = [[self _currentTopic] parentClassOfTopic];
+    AKClassItem *parentClass = [[self _currentTopic] parentClassOfTopic];
 
     // Enable or disable the Superclass button as appropriate.
     _superclassButton.enabled = (parentClass != nil);
@@ -941,7 +941,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 
     // Reconstruct the Superclass button's contextual menu.
-    AKClassNode *ancestorNode = parentClass;
+    AKClassItem *ancestorNode = parentClass;
     while (ancestorNode != nil)
     {
         [_superclassesMenu addItemWithTitle:ancestorNode.nodeName

@@ -8,7 +8,7 @@
 
 #import "AKPropertiesSubtopic.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKPropertyDoc.h"
 
 @implementation AKPropertiesSubtopic
@@ -33,7 +33,7 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
+- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {
     return [behaviorItem documentedProperties];
 }

@@ -10,10 +10,10 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKDatabase.h"
-#import "AKGlobalsNode.h"
-#import "AKGroupNode.h"
+#import "AKGlobalsItem.h"
+#import "AKGroupItem.h"
 #import "AKProtocolItem.h"
 
 @interface AKRandomSearch ()
@@ -96,13 +96,13 @@
 
 - (void)_addClassMembersToSymbolArray:(NSMutableArray *)apiSymbols
 {
-    for (AKClassNode *classNode in [_database allClasses])
+    for (AKClassItem *classItem in [_database allClasses])
     {
-        [self _addNodes:[classNode documentedProperties] toSymbolArray:apiSymbols];
-        [self _addNodes:[classNode documentedClassMethods] toSymbolArray:apiSymbols];
-        [self _addNodes:[classNode documentedInstanceMethods] toSymbolArray:apiSymbols];
-        [self _addNodes:[classNode documentedDelegateMethods] toSymbolArray:apiSymbols];
-        [self _addNodes:[classNode documentedNotifications] toSymbolArray:apiSymbols];
+        [self _addNodes:[classItem documentedProperties] toSymbolArray:apiSymbols];
+        [self _addNodes:[classItem documentedClassMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[classItem documentedInstanceMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[classItem documentedDelegateMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[classItem documentedNotifications] toSymbolArray:apiSymbols];
     }
 }
 
@@ -125,9 +125,9 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupNode *groupNode in [_database functionsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database functionsGroupsForFrameworkNamed:fwName])
         {
-            [self _addNodes:[groupNode subitems] toSymbolArray:apiSymbols];
+            [self _addNodes:[groupItem subitems] toSymbolArray:apiSymbols];
         }
     }
 }
@@ -136,11 +136,11 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupNode *groupNode in [_database globalsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database globalsGroupsForFrameworkNamed:fwName])
         {
-            for (AKGlobalsNode *globalsNode in [groupNode subitems])
+            for (AKGlobalsItem *globalsItem in [groupItem subitems])
             {
-                [apiSymbols addObjectsFromArray:[globalsNode namesOfGlobals]];
+                [apiSymbols addObjectsFromArray:[globalsItem namesOfGlobals]];
             }
         }
     }

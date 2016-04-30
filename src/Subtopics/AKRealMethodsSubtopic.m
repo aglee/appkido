@@ -9,8 +9,8 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassNode.h"
-#import "AKMethodNode.h"
+#import "AKClassItem.h"
+#import "AKMethodItem.h"
 #import "AKMemberDoc.h"
 
 @implementation AKRealMethodsSubtopic

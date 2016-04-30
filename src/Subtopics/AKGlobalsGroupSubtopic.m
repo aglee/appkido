@@ -12,7 +12,7 @@
 
 #import "AKFileSection.h"
 #import "AKGlobalsDoc.h"
-#import "AKGroupNode.h"
+#import "AKGroupItem.h"
 #import "AKSortUtils.h"
 
 @implementation AKGlobalsGroupSubtopic
@@ -22,7 +22,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    for (AKDocSetTokenItem *subitem in [AKSortUtils arrayBySortingArray:[self.groupNode subitems]])
+    for (AKDocSetTokenItem *subitem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
     {
         AKDoc *newDoc = [[AKGlobalsDoc alloc] initWithNode:subitem];
 

@@ -9,7 +9,7 @@
 #import "AKPrefDictionary.h"
 #import "AKPrefUtils.h"
 
-@class AKClassNode;
+@class AKClassItem;
 @class AKDocSetTokenItem;
 @class AKSubtopic;
 
@@ -40,7 +40,7 @@ extern NSString *AKGlobalsTopicName;
 #pragma mark -
 #pragma mark Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassNode *parentClassOfTopic;  //TODO: KLUDGE
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassItem *parentClassOfTopic;  //TODO: KLUDGE
 
 /*!
  * Returns nil by default.  Subclasses return a node, if one is relevant.

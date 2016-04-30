@@ -7,23 +7,23 @@
 
 #import "AKBehaviorGeneralSubtopic.h"
 
-@class AKClassNode;
+@class AKClassItem;
 
 @interface AKClassGeneralSubtopic : AKBehaviorGeneralSubtopic
 {
 @private
-    AKClassNode *_classNode;
+    AKClassItem *_classItem;
 }
 
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)subtopicForClassNode:(AKClassNode *)classNode;
++ (instancetype)subtopicForClassItem:(AKClassItem *)classItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (instancetype)initWithClassNode:(AKClassNode *)classNode NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithClassItem:(AKClassItem *)classItem NS_DESIGNATED_INITIALIZER;
 
 @end

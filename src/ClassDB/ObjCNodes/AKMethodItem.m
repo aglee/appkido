@@ -1,15 +1,15 @@
 //
-// AKMethodNode.m
+// AKMethodItem.m
 //
 // Created by Andy Lee on Thu Jun 27 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKMethodNode.h"
+#import "AKMethodItem.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 
-@implementation AKMethodNode
+@implementation AKMethodItem
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
@@ -36,13 +36,13 @@
 
 - (BOOL)isClassMethod
 {
-    return ([(AKClassNode *)self.owningBehavior classMethodWithName:self.nodeName] != nil);
+    return ([(AKClassItem *)self.owningBehavior classMethodWithName:self.nodeName] != nil);
 }
 
 - (BOOL)isDelegateMethod
 {
-    return ([self.owningBehavior isClassNode]
-            && ([(AKClassNode *)self.owningBehavior delegateMethodWithName:self.nodeName] != nil));
+    return ([self.owningBehavior isClassItem]
+            && ([(AKClassItem *)self.owningBehavior delegateMethodWithName:self.nodeName] != nil));
 }
 
 - (NSArray *)argumentTypes

@@ -1,15 +1,15 @@
 /*
- * AKGroupNode.m
+ * AKGroupItem.m
  *
  * Created by Andy Lee on Sun Mar 28 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKGroupNode.h"
+#import "AKGroupItem.h"
 
 #import "AKSortUtils.h"
 
-@implementation AKGroupNode
+@implementation AKGroupItem
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

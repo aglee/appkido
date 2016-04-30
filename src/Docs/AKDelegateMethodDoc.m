@@ -8,7 +8,7 @@
 #import "AKDelegateMethodDoc.h"
 
 #import "AKBehaviorItem.h"
-#import "AKMethodNode.h"
+#import "AKMethodItem.h"
 
 @implementation AKDelegateMethodDoc
 
@@ -25,10 +25,10 @@
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = self.memberNode.nameOfOwningFramework;
+    NSString *methodFrameworkName = self.memberItem.nameOfOwningFramework;
     NSString *behaviorFrameworkName = self.behaviorItem.nameOfOwningFramework;
     BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-    AKBehaviorItem *ownerOfMethod = self.memberNode.owningBehavior;
+    AKBehaviorItem *ownerOfMethod = self.memberItem.owningBehavior;
 
     if (self.behaviorItem == ownerOfMethod)
     {
@@ -42,7 +42,7 @@
             return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFrameworkName];
         }
     }
-    else if ([ownerOfMethod isClassNode])
+    else if ([ownerOfMethod isClassItem])
     {
         // We inherited this method from an ancestor class.
         if (methodIsInSameFramework)

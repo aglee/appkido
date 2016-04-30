@@ -1,5 +1,5 @@
 //
-// AKClassNode.h
+// AKClassItem.h
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -7,9 +7,9 @@
 
 #import "AKBehaviorItem.h"
 
-@class AKPropertyNode;
-@class AKNotificationNode;
-@class AKCategoryNode;
+@class AKPropertyItem;
+@class AKNotificationItem;
+@class AKCategoryItem;
 @class AKCollectionOfItems;
 
 /*!
@@ -21,7 +21,7 @@
  * We use the terms "parent class" and "child class" rather than "superclass"
  * and "subclass", to avoid confusion.
  */
-@interface AKClassNode : AKBehaviorItem
+@interface AKClassItem : AKBehaviorItem
 {
 @private
     // Elements are strings.
@@ -31,22 +31,22 @@
     // containing documentation for the framework.
     NSMutableDictionary *_nodeDocumentationByFrameworkName;
 
-    // Contains AKClassNodes, one for each child class.
-    NSMutableArray *_childClassNodes;
+    // Contains AKClassItems, one for each child class.
+    NSMutableArray *_childClassItems;
 
-    // Contains AKCategoryNodes, one for each category that extends this class.
-    NSMutableArray *_categoryNodes;
+    // Contains AKCategoryItems, one for each category that extends this class.
+    NSMutableArray *_categoryItems;
 
-    // Contains AKMethodNodes, one for each delegate method that has been
+    // Contains AKMethodItems, one for each delegate method that has been
     // found in the documentation for this class.
     AKCollectionOfItems *_indexOfDelegateMethods;
 
-    // Contains AKNotificationNodes, one for each notification that has been
+    // Contains AKNotificationItems, one for each notification that has been
     // found in the documentation for this class.
     AKCollectionOfItems *_indexOfNotifications;
 }
 
-@property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassNode *parentClass;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassItem *parentClass;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childClasses;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSSet *descendantClasses;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasChildClasses;
@@ -65,11 +65,11 @@
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-- (void)addChildClass:(AKClassNode *)node;
-- (void)removeChildClass:(AKClassNode *)node;
+- (void)addChildClass:(AKClassItem *)node;
+- (void)removeChildClass:(AKClassItem *)node;
 
-- (void)addCategory:(AKCategoryNode *)node;
-- (AKCategoryNode *)categoryNamed:(NSString *)catName;
+- (void)addCategory:(AKCategoryItem *)node;
+- (AKCategoryItem *)categoryNamed:(NSString *)catName;
 
 #pragma mark -
 #pragma mark Getters and setters -- multiple owning frameworks
@@ -90,17 +90,17 @@
 #pragma mark -
 #pragma mark Getters and setters -- delegate methods
 
-- (AKMethodNode *)delegateMethodWithName:(NSString *)methodName;
+- (AKMethodItem *)delegateMethodWithName:(NSString *)methodName;
 
 /*! Does nothing if a delegate method with the same name already exists. */
-- (void)addDelegateMethod:(AKMethodNode *)methodNode;
+- (void)addDelegateMethod:(AKMethodItem *)methodItem;
 
 #pragma mark -
 #pragma mark Getters and setters -- notifications
 
-- (AKNotificationNode *)notificationWithName:(NSString *)notificationName;
+- (AKNotificationItem *)notificationWithName:(NSString *)notificationName;
 
 /*! Does nothing if a notification with the same name already exists. */
-- (void)addNotification:(AKNotificationNode *)notificationNode;
+- (void)addNotification:(AKNotificationItem *)notificationItem;
 
 @end

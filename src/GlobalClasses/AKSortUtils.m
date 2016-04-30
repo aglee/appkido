@@ -7,7 +7,7 @@
 
 #import "AKSortUtils.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 
 @implementation AKSortUtils
 
@@ -20,7 +20,7 @@ compareSortNames(id objectOne, id objectTwo, void *context)
     if (result == NSOrderedSame)
     {
         // Sort class nodes before protocol nodes of the same name.
-        if ([objectOne isKindOfClass:[AKClassNode class]])
+        if ([objectOne isKindOfClass:[AKClassItem class]])
         {
             result = NSOrderedAscending;
         }

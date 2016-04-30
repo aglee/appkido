@@ -10,7 +10,7 @@
 #import "DIGSLog.h"
 
 #import "AKBrowser.h"
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
@@ -300,9 +300,9 @@ static const NSInteger AKMinBrowserColumns = 2;
     // Set up the "classes" section.
     [columnValues addObject:[AKLabelTopic topicWithLabel:AKClassesLabelTopicName]];
 
-    for (AKClassNode *classNode in [AKSortUtils arrayBySortingArray:[db rootClasses]])
+    for (AKClassItem *classItem in [AKSortUtils arrayBySortingArray:[db rootClasses]])
     {
-        [columnValues addObject:[AKClassTopic topicWithClassNode:classNode]];
+        [columnValues addObject:[AKClassTopic topicWithClassItem:classItem]];
     }
 
     // Set up the "other topics" section.

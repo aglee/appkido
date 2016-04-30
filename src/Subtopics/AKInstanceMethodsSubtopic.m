@@ -32,7 +32,7 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
+- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {
     return [behaviorItem documentedInstanceMethods];
 }

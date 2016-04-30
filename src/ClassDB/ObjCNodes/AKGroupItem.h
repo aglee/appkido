@@ -1,5 +1,5 @@
 /*
- * AKGroupNode.h
+ * AKGroupItem.h
  *
  * Created by Andy Lee on Sun Mar 28 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -9,10 +9,10 @@
 
 /*!
  * Wrapper around a collection of AKDocSetTokenItems, called its subitems. An
- * AKGroupNode does not correspond to any programming language construct; it is
+ * AKGroupItem does not correspond to any programming language construct; it is
  * just a way to have named aggregations of items.
  */
-@interface AKGroupNode : AKDocSetTokenItem
+@interface AKGroupItem : AKDocSetTokenItem
 {
 @private
     // Elements are AKDocSetTokenItems.

@@ -7,7 +7,7 @@
 
 #import "AKDelegateMethodsSubtopic.h"
 
-#import "AKClassNode.h"
+#import "AKClassItem.h"
 #import "AKDelegateMethodDoc.h"
 
 @implementation AKDelegateMethodsSubtopic
@@ -32,11 +32,11 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
+- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {
-    if ([behaviorItem isClassNode])
+    if ([behaviorItem isClassItem])
     {
-        return [(AKClassNode *)behaviorItem documentedDelegateMethods];
+        return [(AKClassItem *)behaviorItem documentedDelegateMethods];
     }
     else
     {
