@@ -27,9 +27,9 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
+    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
     {
         _namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 
@@ -58,30 +58,30 @@
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-- (void)addChildClass:(AKClassItem *)node
+- (void)addChildClass:(AKClassItem *)classItem
 {
     // We check for parent != child to avoid circularity.  This
     // doesn't protect against the general case of a cycle, but it does
     // work around the typo in the Tiger docs where the superclass of
     // NSAnimation was given as NSAnimation.
-    if (node == self)
+    if (classItem == self)
     {
-        DIGSLogDebug(@"ignoring attempt to make %@ a subclass of itself", [self nodeName]);
+        DIGSLogDebug(@"ignoring attempt to make %@ a subclass of itself", [self tokenName]);
         return;
     }
 
-    [node.parentClass removeChildClass:node];
-    node.parentClass = self;
-    [_childClassItems addObject:node];
+    [classItem.parentClass removeChildClass:classItem];
+    classItem.parentClass = self;
+    [_childClassItems addObject:classItem];
 }
 
-- (void)removeChildClass:(AKClassItem *)node
+- (void)removeChildClass:(AKClassItem *)classItem
 {
-    NSInteger i = [_childClassItems indexOfObject:node];
+    NSInteger i = [_childClassItems indexOfObject:classItem];
 
     if (i >= 0)
     {
-        [node setParentClass:nil];
+        [classItem setParentClass:nil];
         [_childClassItems removeObjectAtIndex:i];
     }
 }
@@ -107,20 +107,20 @@
 
 - (AKCategoryItem *)categoryNamed:(NSString *)catName
 {
-    for (AKTokenItem *node in _categoryItems)
+    for (AKTokenItem *item in _categoryItems)
     {
-        if ([node.nodeName isEqualToString:catName])
+        if ([item.tokenName isEqualToString:catName])
         {
-            return (AKCategoryItem *)node;
+            return (AKCategoryItem *)item;
         }
     }
 
     return nil;
 }
 
-- (void)addCategory:(AKCategoryItem *)node
+- (void)addCategory:(AKCategoryItem *)categoryItem
 {
-    [_categoryItems addObject:node];
+    [_categoryItems addObject:categoryItem];
 }
 
 - (NSArray *)allCategories
@@ -160,7 +160,7 @@
     if (frameworkName == nil)
     {
         DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
-                       [self nodeName], [fileSection filePath]);
+                       [self tokenName], [fileSection filePath]);
         return;
     }
 
@@ -187,7 +187,7 @@
 
 - (AKMethodItem *)delegateMethodWithName:(NSString *)methodName
 {
-    return (AKMethodItem *)[_indexOfDelegateMethods nodeWithName:methodName];
+    return (AKMethodItem *)[_indexOfDelegateMethods itemWithTokenName:methodName];
 }
 
 - (void)addDelegateMethod:(AKMethodItem *)methodItem
@@ -205,7 +205,7 @@
 
 - (AKNotificationItem *)notificationWithName:(NSString *)notificationName
 {
-    return (AKNotificationItem *)[_indexOfNotifications nodeWithName:notificationName];
+    return (AKNotificationItem *)[_indexOfNotifications itemWithTokenName:notificationName];
 }
 
 - (void)addNotification:(AKNotificationItem *)notificationItem
@@ -244,7 +244,7 @@
     {
         if ([methodName ak_contains:@":"])
         {
-            methodItem = [[AKMethodItem alloc] initWithNodeName:methodName
+            methodItem = [[AKMethodItem alloc] initWithTokenName:methodName
                                                         database:self.owningDatabase
                                                    frameworkName:frameworkName
                                                   owningBehavior:self];
@@ -255,7 +255,7 @@
         {
             DIGSLogInfo(@"Skipping method named %@ because it doesn't look like a delegate method"
                         @" while processing deprecated methods in behavior %@",
-                        methodName, [self nodeName]);
+                        methodName, [self tokenName]);
         }
     }
     
@@ -296,7 +296,7 @@
 {
     // Look for a protocol named ThisClassDelegate.
     AKDatabase *db = self.owningDatabase;
-    NSString *possibleDelegateProtocolName = [self.nodeName stringByAppendingString:@"Delegate"];
+    NSString *possibleDelegateProtocolName = [self.tokenName stringByAppendingString:@"Delegate"];
     AKProtocolItem *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
     
     if (delegateProtocol)
@@ -308,7 +308,7 @@
     //TODO: To be really thorough, check for fooDelegate properties.
     for (AKMethodItem *methodItem in [self instanceMethodItems])
     {
-        NSString *methodName = methodItem.nodeName;
+        NSString *methodName = methodItem.tokenName;
 
         if ([methodName hasPrefix:@"set"]
             && [methodName hasSuffix:@"Delegate:"]
@@ -320,7 +320,7 @@
             
             for (AKProtocolItem *protocolItem in [db allProtocols])
             {
-                NSString *protocolName = protocolItem.nodeName.uppercaseString;
+                NSString *protocolName = protocolItem.tokenName.uppercaseString;
 
                 if ([protocolName hasSuffix:protocolSuffix])
                 {

@@ -126,7 +126,7 @@
     AKClassItem *classItem = self.classItemsByName[className];
 
     if (classItem == nil) {
-        classItem = [[AKClassItem alloc] initWithNodeName:className database:self frameworkName:frameworkName];
+        classItem = [[AKClassItem alloc] initWithTokenName:className database:self frameworkName:frameworkName];
         self.classItemsByName[className] = classItem;
         QLog(@"%@ -- added class %@", self.className, className);
     } else {
@@ -139,7 +139,7 @@
 - (void)_setParentNodeOfClassItem:(AKClassItem *)classItem
 {
     if (classItem.docSetToken.superclassContainers.count > 1) {
-        QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.nodeName);
+        QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.tokenName);
     }
 
     Container *container = classItem.docSetToken.superclassContainers.anyObject;
@@ -147,11 +147,11 @@
     if (container) {
         AKClassItem *parentNode = [self _getOrAddClassItemWithName:container.containerName frameworkName:classItem.nameOfOwningFramework];
         if (classItem.parentClass) {
-            QLog(@"%s [ODD] Class node %@ already has parent node %@", __PRETTY_FUNCTION__, classItem.parentClass.nodeName);
+            QLog(@"%s [ODD] Class node %@ already has parent node %@", __PRETTY_FUNCTION__, classItem.parentClass.tokenName);
         }
         [parentNode addChildClass:classItem];
     } else {
-        QLog(@"ROOT CLASS %@", classItem.nodeName);
+        QLog(@"ROOT CLASS %@", classItem.tokenName);
     }
 }
 
@@ -242,7 +242,7 @@
 - (void)addProtocolItem:(AKProtocolItem *)protocolItem
 {
     // Do nothing if we already have a protocol with the same name.
-    NSString *protocolName = protocolItem.nodeName;
+    NSString *protocolName = protocolItem.tokenName;
     if (_protocolItemsByName[protocolName])
     {
         DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
@@ -288,7 +288,7 @@
     }
 
     // Add the functions group if it isn't already in the framework.
-    NSString *groupName = groupItem.nodeName;
+    NSString *groupName = groupItem.tokenName;
 
     if (groupsByName[groupName])
     {
@@ -297,7 +297,7 @@
     else
     {
         [groupList addObject:groupItem];
-        groupsByName[groupItem.nodeName] = groupItem;
+        groupsByName[groupItem.tokenName] = groupItem;
     }
 }
 
@@ -337,7 +337,7 @@
     }
 
     // Add the globals group if it isn't already in the framework.
-    NSString *groupName = groupItem.nodeName;
+    NSString *groupName = groupItem.tokenName;
 
     if (groupsByName[groupName])
     {
@@ -346,7 +346,7 @@
     else
     {
         [groupList addObject:groupItem];
-        groupsByName[groupItem.nodeName] = groupItem;
+        groupsByName[groupItem.tokenName] = groupItem;
     }
 }
 

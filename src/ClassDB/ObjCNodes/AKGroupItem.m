@@ -14,11 +14,11 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithTokenName:(NSString *)tokenName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
+    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
     {
         _subitems = [[NSMutableArray alloc] init];
     }
@@ -45,11 +45,11 @@
     return _subitems;
 }
 
-- (AKTokenItem *)subitemWithName:(NSString *)nodeName
+- (AKTokenItem *)subitemWithName:(NSString *)tokenName
 {
     for (AKTokenItem *subitem in _subitems)
     {
-        if ([subitem.nodeName isEqualToString:nodeName])
+        if ([subitem.tokenName isEqualToString:tokenName])
         {
             return subitem;
         }

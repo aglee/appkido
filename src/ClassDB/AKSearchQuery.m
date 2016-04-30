@@ -262,16 +262,16 @@
     }
 }
 
-- (BOOL)_matchesNode:(AKTokenItem *)node
+- (BOOL)_matchesItem:(AKTokenItem *)tokenItem
 {
-    return [self _matchesString:node.nodeName];
+    return [self _matchesString:tokenItem.tokenName];
 }
 
 - (void)_searchClassNames
 {
     for (AKClassItem *classItem in [_database allClasses])
     {
-        if ([self _matchesNode:classItem])
+        if ([self _matchesItem:classItem])
         {
             AKClassTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
@@ -284,7 +284,7 @@
 {
     for (AKProtocolItem *protocolItem in [_database allProtocols])
     {
-        if ([self _matchesNode:protocolItem])
+        if ([self _matchesItem:protocolItem])
         {
             AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
 
@@ -303,10 +303,10 @@
         [self _searchMembersUnderBehaviorTopic:topic];
 
         // Search members specific to classes.
-        [self _searchNodes:[classItem documentedDelegateMethods]
+        [self _searchTokenItems:[classItem documentedDelegateMethods]
              underSubtopic:AKDelegateMethodsSubtopicName
            ofBehaviorTopic:topic];
-        [self _searchNodes:[classItem documentedNotifications]
+        [self _searchTokenItems:[classItem documentedNotifications]
              underSubtopic:AKNotificationsSubtopicName
            ofBehaviorTopic:topic];
     }
@@ -324,10 +324,10 @@
 
 - (void)_searchMembersUnderBehaviorTopic:(AKBehaviorTopic *)behaviorTopic
 {
-    AKBehaviorItem *behaviorItem = (AKBehaviorItem *)[behaviorTopic topicNode];
+    AKBehaviorItem *behaviorItem = (AKBehaviorItem *)[behaviorTopic topicItem];
 
     // Search the behavior's properties.
-    [self _searchNodes:[behaviorItem documentedProperties]
+    [self _searchTokenItems:[behaviorItem documentedProperties]
          underSubtopic:AKPropertiesSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
@@ -340,7 +340,7 @@
         NSString *savedSearchString = _searchString;
         _searchString = [_searchString substringFromIndex:3];
         {{
-            [self _searchNodes:[behaviorItem documentedProperties]
+            [self _searchTokenItems:[behaviorItem documentedProperties]
                  underSubtopic:AKPropertiesSubtopicName
                ofBehaviorTopic:behaviorTopic];
         }}
@@ -348,12 +348,12 @@
     }
 
     // Search the behavior's class methods.
-    [self _searchNodes:[behaviorItem documentedClassMethods]
+    [self _searchTokenItems:[behaviorItem documentedClassMethods]
          underSubtopic:AKClassMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
     // Search the behavior's instance methods.
-    [self _searchNodes:[behaviorItem documentedInstanceMethods]
+    [self _searchTokenItems:[behaviorItem documentedInstanceMethods]
          underSubtopic:AKInstanceMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 }
@@ -367,13 +367,13 @@
         {
             for (AKTokenItem *subitem in [groupItem subitems])
             {
-                if ([self _matchesNode:subitem])
+                if ([self _matchesItem:subitem])
                 {
                     AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName
                                                                     inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:groupItem.nodeName
-                                                              docName:subitem.nodeName]];
+                                                         subtopicName:groupItem.tokenName
+                                                              docName:subitem.tokenName]];
                 }
             }
         }
@@ -393,8 +393,8 @@
 
 //TODO: ak_stripHTML is too expensive -- bogging down the search
 //TODO: I don't think we actually need to strip any HTML -- no node seems to contain & or <
-//                if ([self _matchesString:[[subitem nodeName] ak_stripHTML]])
-                if ([self _matchesNode:subitem])
+//                if ([self _matchesString:[[subitem tokenName] ak_stripHTML]])
+                if ([self _matchesItem:subitem])
                 {
                     matchFound = YES;
                 }
@@ -415,25 +415,25 @@
                     AKTopic *topic = [AKGlobalsTopic topicWithFrameworkNamed:fwName
                                                                   inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:groupItem.nodeName
-                                                              docName:subitem.nodeName]];
+                                                         subtopicName:groupItem.tokenName
+                                                              docName:subitem.tokenName]];
                 }
             }
         }
     }
 }
 
-- (void)_searchNodes:(NSArray *)nodeArray
+- (void)_searchTokenItems:(NSArray *)itemArray
          underSubtopic:(NSString *)subtopicName
      ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
-    for (AKTokenItem *node in nodeArray)
+    for (AKTokenItem *item in itemArray)
     {
-        if ([self _matchesNode:node])
+        if ([self _matchesItem:item])
         {
             [_searchResults addObject:[AKDocLocator withTopic:topic
                                                  subtopicName:subtopicName
-                                                      docName:node.nodeName]];
+                                                      docName:item.tokenName]];
         }
     }
 }

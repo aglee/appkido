@@ -30,14 +30,14 @@
 @interface AKTokenItem : NSObject <AKSortable>
 {
 @private
-    NSString *_nodeName;
+    NSString *_tokenName;
     NSString *_nameOfOwningFramework;
     AKFileSection *_nodeDocumentation;
     BOOL _isDeprecated;
 }
 
 @property (nonatomic, strong) DSAToken *docSetToken;
-@property (nonatomic, readonly, copy) NSString *nodeName;
+@property (nonatomic, readonly, copy) NSString *tokenName;
 @property (nonatomic, weak) AKDatabase *owningDatabase;
 
 /*! Most nodes belong to exactly one framework. The exception is AKClassItem, because it can have categories that belong to other frameworks. */
@@ -49,14 +49,9 @@
 @property (nonatomic, assign) BOOL isDeprecated;
 
 #pragma mark -
-#pragma mark Factory methods
-
-+ (instancetype)nodeWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName;
-
-#pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
 
 @end

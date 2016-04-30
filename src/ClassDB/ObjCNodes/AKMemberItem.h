@@ -26,6 +26,6 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
 @end

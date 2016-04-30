@@ -51,23 +51,23 @@
     return result;
 }
 
-- (AKTokenItem *)nodeWithName:(NSString *)nodeName
+- (AKTokenItem *)itemWithTokenName:(NSString *)tokenName
 {
-    return _nodesByName[nodeName];
+    return _nodesByName[tokenName];
 }
 
 - (void)addNode:(AKTokenItem *)tokenItem
 {
-    NSString *nodeName = tokenItem.nodeName;
+    NSString *tokenName = tokenItem.tokenName;
 
-    if (_nodesByName[nodeName])
+    if (_nodesByName[tokenName])
     {
-        DIGSLogWarning(@"ignoring attempt to add node %@ twice", nodeName);
+        DIGSLogWarning(@"ignoring attempt to add node %@ twice", tokenName);
     }
     else
     {
         [_nodeList addObject:tokenItem];
-        _nodesByName[nodeName] = tokenItem;
+        _nodesByName[tokenName] = tokenItem;
     }
 }
 

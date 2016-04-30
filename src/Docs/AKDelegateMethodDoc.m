@@ -15,7 +15,7 @@
 #pragma mark -
 #pragma mark AKMemberDoc methods
 
-+ (NSString *)punctuateNodeName:(NSString *)methodName
++ (NSString *)punctuateTokenName:(NSString *)methodName
 {
     return [@"-" stringByAppendingString:methodName];
 }
@@ -47,13 +47,13 @@
         // We inherited this method from an ancestor class.
         if (methodIsInSameFramework)
         {
-            return [NSString stringWithFormat:@"This delegate method is used by class %@.", ownerOfMethod.nodeName];
+            return [NSString stringWithFormat:@"This delegate method is used by class %@.", ownerOfMethod.tokenName];
         }
         else
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is used by %@ class %@.", methodFrameworkName, ownerOfMethod.nodeName];
+                    @"This delegate method is used by %@ class %@.", methodFrameworkName, ownerOfMethod.tokenName];
         }
     }
     else
@@ -61,13 +61,13 @@
         // This method is declared in a formal protocol.
         if (methodIsInSameFramework)
         {
-            return [NSString stringWithFormat:@"This delegate method is declared in protocol %@.", ownerOfMethod.nodeName];
+            return [NSString stringWithFormat:@"This delegate method is declared in protocol %@.", ownerOfMethod.tokenName];
         }
         else
         {
             return
                 [NSString stringWithFormat:
-                    @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, ownerOfMethod.nodeName];
+                    @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, ownerOfMethod.tokenName];
         }
     }
 }

@@ -65,10 +65,10 @@
 #pragma mark -
 #pragma mark Getters and setters -- general
 
-- (void)addChildClass:(AKClassItem *)node;
-- (void)removeChildClass:(AKClassItem *)node;
+- (void)addChildClass:(AKClassItem *)classItem;
+- (void)removeChildClass:(AKClassItem *)classItem;
 
-- (void)addCategory:(AKCategoryItem *)node;
+- (void)addCategory:(AKCategoryItem *)categoryItem;
 - (AKCategoryItem *)categoryNamed:(NSString *)catName;
 
 #pragma mark -

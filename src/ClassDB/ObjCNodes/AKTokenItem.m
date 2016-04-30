@@ -12,21 +12,13 @@
 @implementation AKTokenItem
 
 #pragma mark -
-#pragma mark Factory methods
-
-+ (instancetype)nodeWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
-{
-    return [[self alloc] initWithNodeName:nodeName database:database frameworkName:frameworkName];
-}
-
-#pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
     if ((self = [super init]))
     {
-        _nodeName = [nodeName copy];
+        _tokenName = [tokenName copy];
         _owningDatabase = database;
         _nameOfOwningFramework = [frameworkName copy];
         _nodeDocumentation = nil;
@@ -39,7 +31,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithNodeName:nil database:nil frameworkName:nil];
+    return [self initWithTokenName:nil database:nil frameworkName:nil];
 }
 
 
@@ -48,7 +40,7 @@
 
 - (NSString *)sortName
 {
-    return _nodeName;
+    return _tokenName;
 }
 
 #pragma mark -
@@ -56,7 +48,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: nodeName=%@>", self.className, _nodeName];
+    return [NSString stringWithFormat:@"<%@: tokenName=%@>", self.className, _tokenName];
 }
 
 @end

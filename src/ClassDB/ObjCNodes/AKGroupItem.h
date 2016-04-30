@@ -29,6 +29,6 @@
 /*! Order of returned nodes is not guaranteed. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *subitems;
 
-- (AKTokenItem *)subitemWithName:(NSString *)nodeName;
+- (AKTokenItem *)subitemWithName:(NSString *)tokenName;
 
 @end

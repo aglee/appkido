@@ -60,13 +60,13 @@
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return _classItem.nodeName;
+    return _classItem.tokenName;
 }
 
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ class %@",
-            _classItem.nameOfOwningFramework, _classItem.nodeName];
+            _classItem.nameOfOwningFramework, _classItem.tokenName];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -76,13 +76,13 @@
         return nil;
     }
 
-    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classItem.nodeName];
+    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classItem.tokenName];
     AKClassItem *superNode = _classItem;
 
     while ((superNode = superNode.parentClass))
     {
         path = [AKTopicBrowserPathSeparator stringByAppendingString:
-                [superNode.nodeName stringByAppendingString:path]];
+                [superNode.tokenName stringByAppendingString:path]];
     }
 
     return path;
@@ -110,10 +110,10 @@
 
 - (NSString *)behaviorName
 {
-    return _classItem.nodeName;
+    return _classItem.tokenName;
 }
 
-- (AKTokenItem *)topicNode
+- (AKTokenItem *)topicItem
 {
     return _classItem;
 }

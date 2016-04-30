@@ -31,7 +31,7 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *nodesWithDocumentation;
 
-- (AKTokenItem *)nodeWithName:(NSString *)nodeName;
+- (AKTokenItem *)itemWithTokenName:(NSString *)tokenName;
 
 - (void)addNode:(AKTokenItem *)datbaseNode;
 

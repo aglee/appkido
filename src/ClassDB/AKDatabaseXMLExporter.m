@@ -132,7 +132,7 @@
 
 - (void)_exportClass:(AKClassItem *)classItem
 {
-    [_xmlWriter tag:@"class" attributes:@{ @"name": classItem.nodeName } contentBlock:^{
+    [_xmlWriter tag:@"class" attributes:@{ @"name": classItem.tokenName } contentBlock:^{
         [self _exportMembers:[classItem documentedProperties]
                       ofType:@"properties"
                       xmlTag:@"property"];
@@ -159,7 +159,7 @@
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
-    attributes[@"name"] = protocolItem.nodeName;
+    attributes[@"name"] = protocolItem.tokenName;
     attributes[@"type"] = (protocolItem.isInformal ? @"informal" : @"formal");
 
     [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
@@ -197,7 +197,7 @@
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
-    attributes[@"name"] = memberItem.nodeName;
+    attributes[@"name"] = memberItem.tokenName;
 
     if (memberItem.isDeprecated)
     {
@@ -215,7 +215,7 @@
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     
-    attributes[@"name"] = tokenItem.nodeName;
+    attributes[@"name"] = tokenItem.tokenName;
     
     if (tokenItem.isDeprecated)
     {
@@ -227,7 +227,7 @@
 
 - (void)_exportGroupItem:(AKGroupItem *)groupItem usingsubitemTag:(NSString *)subitemTag
 {
-    [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.nodeName } contentBlock:^{
+    [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.tokenName } contentBlock:^{
         for (AKTokenItem *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
         {
             [self _exportGroupSubitem:subitem withXMLTag:subitemTag];

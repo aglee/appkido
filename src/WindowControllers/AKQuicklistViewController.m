@@ -702,7 +702,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             {
                 for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
                 {
-                    NSString *methodName = methodItem.nodeName;
+                    NSString *methodName = methodItem.tokenName;
 
                     if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"])
                     {
@@ -717,7 +717,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             {
                 for (AKPropertyItem *propertyNode in [classItem documentedProperties])
                 {
-                    NSString *propertyName = propertyNode.nodeName;
+                    NSString *propertyName = propertyNode.tokenName;
 
                     if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"])
                     {
@@ -728,7 +728,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             }
 
             // If not, see if there's a protocol named thisClassDelegate.
-            NSString *possibleDelegateProtocolName = [classItem.nodeName stringByAppendingString:@"Delegate"];
+            NSString *possibleDelegateProtocolName = [classItem.tokenName stringByAppendingString:@"Delegate"];
             if ([[self.owningWindowController database] protocolWithName:possibleDelegateProtocolName])
             {
                 classHasDelegate = YES;
@@ -763,7 +763,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // See if the class has a -setDataSource: method.
             for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
             {
-                NSString *methodName = methodItem.nodeName;
+                NSString *methodName = methodItem.tokenName;
 
                 if ([methodName isEqualToString:@"setDataSource:"])
                 {
@@ -777,7 +777,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             {
                 for (AKPropertyItem *propertyNode in [classItem documentedProperties])
                 {
-                    NSString *propertyName = propertyNode.nodeName;
+                    NSString *propertyName = propertyNode.tokenName;
 
                     if ([propertyName isEqual:@"dataSource"])
                     {
@@ -788,7 +788,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             }
 
             // If not, see if there's a protocol named thisClassDataSource.
-            NSString *possibleDataSourceProtocolName = [classItem.nodeName stringByAppendingString:@"DataSource"];
+            NSString *possibleDataSourceProtocolName = [classItem.tokenName stringByAppendingString:@"DataSource"];
             if ([[self.owningWindowController database] protocolWithName:possibleDataSourceProtocolName])
             {
                 classHasDataSource = YES;
@@ -818,7 +818,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
         for (AKProtocolItem *protocolItem in [[self.owningWindowController database] allProtocols])
         {
-            if ([protocolItem.nodeName ak_contains:@"DataSource"])
+            if ([protocolItem.tokenName ak_contains:@"DataSource"])
             {
                 [protocolItems addObject:protocolItem];
             }
@@ -895,14 +895,14 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return [AKSortUtils arrayBySortingSet:nodeSet];
 }
 
-- (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)nodeSet
+- (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)setOfClassItems
 {
-    NSMutableSet *resultSet = [NSMutableSet setWithCapacity:(nodeSet.count * 2)];
+    NSMutableSet *resultSet = [NSMutableSet setWithCapacity:(setOfClassItems.count * 2)];
 
     // Add descendant classes of the classes that were found.
-    for (AKClassItem *node in nodeSet)
+    for (AKClassItem *classItem in setOfClassItems)
     {
-        [resultSet unionSet:[node descendantClasses]];
+        [resultSet unionSet:[classItem descendantClasses]];
     }
 
     // Sort the classes we found and return the result.

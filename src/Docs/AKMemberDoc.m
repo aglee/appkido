@@ -43,7 +43,7 @@
 #pragma mark -
 #pragma mark Manipulating node names
 
-+ (NSString *)punctuateNodeName:(NSString *)memberName
++ (NSString *)punctuateTokenName:(NSString *)memberName
 {
     DIGSLogError_MissingOverride();
     return nil;
@@ -59,7 +59,7 @@
 
 - (NSString *)stringToDisplayInDocList
 {
-    NSString *displayString = [[self class] punctuateNodeName:[self docName]];
+    NSString *displayString = [[self class] punctuateTokenName:[self docName]];
     AKBehaviorItem *owningBehavior = _memberItem.owningBehavior;
 
     // Qualify the member name with ancestor or protocol info if any.
@@ -69,14 +69,14 @@
         {
             // We inherited this member from an ancestor class.
             displayString = [NSString stringWithFormat:@"%@ (%@)",
-                             displayString, owningBehavior.nodeName];
+                             displayString, owningBehavior.tokenName];
         }
         else
         {
             // This member is a method we implement in order to conform to
             // a protocol.
             displayString = [NSString stringWithFormat:@"%@ <%@>",
-                             displayString, owningBehavior.nodeName];
+                             displayString, owningBehavior.tokenName];
         }
     }
 
@@ -133,12 +133,12 @@
         if (memberIsInSameFramework)
         {
             return [NSString stringWithFormat:@"This method is inherited from class %@.",
-                    owningBehavior.nodeName];
+                    owningBehavior.tokenName];
         }
         else
         {
             return [NSString stringWithFormat:@"This method is inherited from %@ class %@.",
-                    memberFrameworkName, owningBehavior.nodeName];
+                    memberFrameworkName, owningBehavior.tokenName];
         }
     }
     else
@@ -147,12 +147,12 @@
         if (memberIsInSameFramework)
         {
             return [NSString stringWithFormat:@"This method is declared in protocol <%@>.",
-                    owningBehavior.nodeName];
+                    owningBehavior.tokenName];
         }
         else
         {
             return [NSString stringWithFormat:@"This method is declared in %@ protocol <%@>.",
-                    memberFrameworkName, owningBehavior.nodeName];
+                    memberFrameworkName, owningBehavior.tokenName];
         }
     }
 }

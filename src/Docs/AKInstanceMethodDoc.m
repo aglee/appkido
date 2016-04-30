@@ -12,7 +12,7 @@
 #pragma mark -
 #pragma mark AKMemberDoc methods
 
-+ (NSString *)punctuateNodeName:(NSString *)methodName
++ (NSString *)punctuateTokenName:(NSString *)methodName
 {
     return [@"-" stringByAppendingString:methodName];
 }

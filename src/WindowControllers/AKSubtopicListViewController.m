@@ -231,7 +231,7 @@
     {
         AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
         return ([currentTopic isKindOfClass:[AKBehaviorTopic class]]
-                && (((AKBehaviorItem *)[currentTopic topicNode]).headerFileWhereDeclared != nil));
+                && (((AKBehaviorItem *)[currentTopic topicItem]).headerFileWhereDeclared != nil));
     }
 
     return NO;

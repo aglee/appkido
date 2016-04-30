@@ -6,7 +6,6 @@
  */
 
 #import <Foundation/Foundation.h>
-
 #import "AKSortable.h"
 
 /*!
@@ -16,9 +15,9 @@
 @interface AKSortUtils : NSObject
 
 /*! Sorts the array elements alphabetically by their -sortName. */
-+ (NSArray *)arrayBySortingArray:(NSArray *)nodeArray;
++ (NSArray *)arrayBySortingArray:(NSArray *)anArray;
 
 /*! Sorts the set elements alphabetically by their -sortName. */
-+ (NSArray *)arrayBySortingSet:(NSSet *)nodeSet;
++ (NSArray *)arrayBySortingSet:(NSSet *)aSet;
 
 @end

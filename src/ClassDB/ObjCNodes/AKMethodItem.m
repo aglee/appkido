@@ -14,12 +14,12 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithTokenName:(NSString *)tokenName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
         owningBehavior:(AKBehaviorItem *)behaviorItem
 {
-    if ((self = [super initWithNodeName:nodeName
+    if ((self = [super initWithTokenName:tokenName
                                database:database
                           frameworkName:frameworkName
                          owningBehavior:behaviorItem]))
@@ -36,13 +36,13 @@
 
 - (BOOL)isClassMethod
 {
-    return ([(AKClassItem *)self.owningBehavior classMethodWithName:self.nodeName] != nil);
+    return ([(AKClassItem *)self.owningBehavior classMethodWithName:self.tokenName] != nil);
 }
 
 - (BOOL)isDelegateMethod
 {
     return ([self.owningBehavior isClassItem]
-            && ([(AKClassItem *)self.owningBehavior delegateMethodWithName:self.nodeName] != nil));
+            && ([(AKClassItem *)self.owningBehavior delegateMethodWithName:self.tokenName] != nil));
 }
 
 - (NSArray *)argumentTypes

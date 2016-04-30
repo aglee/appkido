@@ -913,7 +913,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
     return [NSString stringWithFormat:(@"Go to superclass (%@)"
                                        @"\n(Control-click or right-click for menu)"),
-            [[self _currentTopic] parentClassOfTopic].nodeName];
+            [[self _currentTopic] parentClassOfTopic].tokenName];
 }
 
 - (void)_refreshNavigationButtons
@@ -944,7 +944,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     AKClassItem *ancestorNode = parentClass;
     while (ancestorNode != nil)
     {
-        [_superclassesMenu addItemWithTitle:ancestorNode.nodeName
+        [_superclassesMenu addItemWithTitle:ancestorNode.tokenName
                                      action:@selector(selectAncestorClass:)
                               keyEquivalent:@""];
 

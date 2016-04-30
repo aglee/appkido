@@ -20,11 +20,11 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName
+- (instancetype)initWithTokenName:(NSString *)tokenName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
 {
-    if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
+    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
     {
         _protocolItems = [[NSMutableArray alloc] init];
         _protocolItemNames = [[NSMutableSet alloc] init];
@@ -48,17 +48,17 @@
 
 - (void)addImplementedProtocol:(AKProtocolItem *)protocolItem
 {
-    if ([_protocolItemNames containsObject:protocolItem.nodeName])
+    if ([_protocolItemNames containsObject:protocolItem.tokenName])
     {
         // I've seen this happen when a .h contains two declarations of a
         // protocol in different #if branches. Example: NSURL.
         DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
-                     [protocolItem nodeName], [self nodeName]);
+                     [protocolItem tokenName], [self tokenName]);
     }
     else
     {
         [_protocolItems addObject:protocolItem];
-        [_protocolItemNames addObject:protocolItem.nodeName];
+        [_protocolItemNames addObject:protocolItem.tokenName];
     }
 }
 
@@ -99,7 +99,7 @@
 
 - (AKPropertyItem *)propertyNodeWithName:(NSString *)propertyName
 {
-    return (AKPropertyItem *)[_indexOfProperties nodeWithName:propertyName];
+    return (AKPropertyItem *)[_indexOfProperties itemWithTokenName:propertyName];
 }
 
 - (void)addPropertyNode:(AKPropertyItem *)propertyNode
@@ -117,7 +117,7 @@
 
 - (AKMethodItem *)classMethodWithName:(NSString *)methodName
 {
-    return (AKMethodItem *)[_indexOfClassMethods nodeWithName:methodName];
+    return (AKMethodItem *)[_indexOfClassMethods itemWithTokenName:methodName];
 }
 
 - (void)addClassMethod:(AKMethodItem *)methodItem
@@ -135,7 +135,7 @@
 
 - (AKMethodItem *)instanceMethodWithName:(NSString *)methodName
 {
-    return (AKMethodItem *)[_indexOfInstanceMethods nodeWithName:methodName];
+    return (AKMethodItem *)[_indexOfInstanceMethods itemWithTokenName:methodName];
 }
 
 - (void)addInstanceMethod:(AKMethodItem *)methodItem
@@ -163,7 +163,7 @@
     {
         DIGSLogInfo(@"Couldn't find class method or instance method named %@"
                     @" while processing deprecated methods for behavior %@",
-                    methodName, [self nodeName]);
+                    methodName, [self tokenName]);
     }
     else
     {

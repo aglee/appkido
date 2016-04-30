@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark AKMemberDoc methods
 
-+ (NSString *)punctuateNodeName:(NSString *)methodName
++ (NSString *)punctuateTokenName:(NSString *)methodName
 {
     return methodName;
 }
@@ -52,11 +52,11 @@
             if ([ownerOfMethod isClassItem])
             {
                 return [NSString stringWithFormat:@"This property is inherited from class %@.",
-                        ownerOfMethod.nodeName];
+                        ownerOfMethod.tokenName];
             }
             else
             {
-                return [NSString stringWithFormat:@"This property is declared in protocol <%@>.", ownerOfMethod.nodeName];
+                return [NSString stringWithFormat:@"This property is declared in protocol <%@>.", ownerOfMethod.tokenName];
             }
         }
         else
@@ -64,12 +64,12 @@
             if ([ownerOfMethod isClassItem])
             {
                 return [NSString stringWithFormat:@"This property is inherited from %@ class %@.",
-                        methodFrameworkName, ownerOfMethod.nodeName];
+                        methodFrameworkName, ownerOfMethod.tokenName];
             }
             else
             {
                 return [NSString stringWithFormat:@"This property is declared in %@ protocol <%@>.",
-                        methodFrameworkName, ownerOfMethod.nodeName];
+                        methodFrameworkName, ownerOfMethod.tokenName];
             }
         }
     }

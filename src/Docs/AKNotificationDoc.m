@@ -15,7 +15,7 @@
 #pragma mark -
 #pragma mark AKMemberDoc methods
 
-+ (NSString *)punctuateNodeName:(NSString *)methodName
++ (NSString *)punctuateTokenName:(NSString *)methodName
 {
     return methodName;
 }
@@ -49,12 +49,12 @@
         if (methodIsInSameFramework)
         {
             return [NSString stringWithFormat:@"This notification is delivered by class %@.",
-                    ownerOfMethod.nodeName];
+                    ownerOfMethod.tokenName];
         }
         else
         {
             return [NSString stringWithFormat:@"This notification is delivered by %@ class %@.",
-                    methodFrameworkName, ownerOfMethod.nodeName];
+                    methodFrameworkName, ownerOfMethod.tokenName];
         }
     }
 }

@@ -132,7 +132,7 @@
     {
         for (AKMethodItem *methodItem in [self memberItemsForBehavior:ancestorNode])
         {
-            methodsByName[methodItem.nodeName] = methodItem;
+            methodsByName[methodItem.tokenName] = methodItem;
         }
     }
 

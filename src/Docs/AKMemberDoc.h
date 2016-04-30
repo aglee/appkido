@@ -31,7 +31,7 @@
 #pragma mark Manipulating node names
 
 /*! Subclasses must override this. */
-+ (NSString *)punctuateNodeName:(NSString *)memberName;
++ (NSString *)punctuateTokenName:(NSString *)memberName;
 
 #pragma mark -
 #pragma mark AKDoc methods

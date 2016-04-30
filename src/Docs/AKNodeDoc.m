@@ -44,7 +44,7 @@
 
 - (NSString *)docName
 {
-    return _tokenItem.nodeName;
+    return _tokenItem.tokenName;
 }
 
 @end

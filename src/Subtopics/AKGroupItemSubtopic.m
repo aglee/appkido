@@ -38,7 +38,7 @@
 
 - (NSString *)subtopicName
 {
-    return _groupItem.nodeName;
+    return _groupItem.tokenName;
 }
 
 @end
