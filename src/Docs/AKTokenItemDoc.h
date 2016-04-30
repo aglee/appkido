@@ -1,5 +1,5 @@
 //
-//  AKNodeDoc.h
+//  AKTokenItemDoc.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 8/24/08.
@@ -10,7 +10,7 @@
 
 @class AKTokenItem;
 
-@interface AKNodeDoc : AKDoc
+@interface AKTokenItemDoc : AKDoc
 {
 @private
     AKTokenItem *_tokenItem;
