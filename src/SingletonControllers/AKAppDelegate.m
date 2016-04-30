@@ -575,15 +575,15 @@ static NSTimeInterval g_checkpointTime = 0.0;
     for (NSString *fwName in [_appDatabase sortedFrameworkNames])
     {
         // See what information we have for this framework.
-        NSArray *formalProtocolNodes = [_appDatabase formalProtocolsForFrameworkNamed:fwName];
-        NSArray *informalProtocolNodes = [_appDatabase informalProtocolsForFrameworkNamed:fwName];
+        NSArray *formalProtocolItems = [_appDatabase formalProtocolsForFrameworkNamed:fwName];
+        NSArray *informalProtocolItems = [_appDatabase informalProtocolsForFrameworkNamed:fwName];
         NSArray *functionsGroupNodes = [_appDatabase functionsGroupsForFrameworkNamed:fwName];
         NSArray *globalsGroupNodes = [_appDatabase globalsGroupsForFrameworkNamed:fwName];
 
         // Construct the submenu of framework-related topics.
         NSMenu *fwTopicSubmenu = [[NSMenu alloc] initWithTitle:fwName];
 
-        if (formalProtocolNodes.count > 0)
+        if (formalProtocolItems.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKProtocolsTopicName
                                                               action:@selector(selectFormalProtocolsTopic:)
@@ -592,7 +592,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
             [fwTopicSubmenu addItem:subitem];
         }
 
-        if (informalProtocolNodes.count > 0)
+        if (informalProtocolItems.count > 0)
         {
             NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKInformalProtocolsTopicName
                                                               action:@selector(selectInformalProtocolsTopic:)

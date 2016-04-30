@@ -13,7 +13,7 @@
 #import "AKFileSection.h"
 #import "AKMethodNode.h"
 #import "AKNotificationNode.h"
-#import "AKProtocolNode.h"
+#import "AKProtocolItem.h"
 #import "NSString+AppKiDo.h"
 
 
@@ -297,7 +297,7 @@
     // Look for a protocol named ThisClassDelegate.
     AKDatabase *db = self.owningDatabase;
     NSString *possibleDelegateProtocolName = [self.nodeName stringByAppendingString:@"Delegate"];
-    AKProtocolNode *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
+    AKProtocolItem *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
     
     if (delegateProtocol)
     {
@@ -318,13 +318,13 @@
             NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
                                          substringFromIndex:3].uppercaseString;
             
-            for (AKProtocolNode *protocolNode in [db allProtocols])
+            for (AKProtocolItem *protocolItem in [db allProtocols])
             {
-                NSString *protocolName = protocolNode.nodeName.uppercaseString;
+                NSString *protocolName = protocolItem.nodeName.uppercaseString;
 
                 if ([protocolName hasSuffix:protocolSuffix])
                 {
-                    [methodsList addObjectsFromArray:[protocolNode documentedInstanceMethods]];
+                    [methodsList addObjectsFromArray:[protocolItem documentedInstanceMethods]];
                     
                     break;
                 }

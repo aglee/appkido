@@ -8,7 +8,7 @@
 #import "AKBehaviorItem.h"
 
 #import "DIGSLog.h"
-#import "AKProtocolNode.h"
+#import "AKProtocolItem.h"
 #import "AKPropertyNode.h"
 #import "AKMethodNode.h"
 #import "AKCollectionOfNodes.h"
@@ -26,8 +26,8 @@
 {
     if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
-        _protocolNodes = [[NSMutableArray alloc] init];
-        _protocolNodeNames = [[NSMutableSet alloc] init];
+        _protocolItems = [[NSMutableArray alloc] init];
+        _protocolItemNames = [[NSMutableSet alloc] init];
 
         _indexOfProperties = [[AKCollectionOfNodes alloc] init];
         _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
@@ -46,38 +46,38 @@
     return NO;
 }
 
-- (void)addImplementedProtocol:(AKProtocolNode *)protocolNode
+- (void)addImplementedProtocol:(AKProtocolItem *)protocolItem
 {
-    if ([_protocolNodeNames containsObject:protocolNode.nodeName])
+    if ([_protocolItemNames containsObject:protocolItem.nodeName])
     {
         // I've seen this happen when a .h contains two declarations of a
         // protocol in different #if branches. Example: NSURL.
         DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
-                     [protocolNode nodeName], [self nodeName]);
+                     [protocolItem nodeName], [self nodeName]);
     }
     else
     {
-        [_protocolNodes addObject:protocolNode];
-        [_protocolNodeNames addObject:protocolNode.nodeName];
+        [_protocolItems addObject:protocolItem];
+        [_protocolItemNames addObject:protocolItem.nodeName];
     }
 }
 
-- (void)addImplementedProtocols:(NSArray *)protocolNodes
+- (void)addImplementedProtocols:(NSArray *)protocolItems
 {
-    for (AKProtocolNode *protocolNode in protocolNodes)
+    for (AKProtocolItem *protocolItem in protocolItems)
     {
-        [self addImplementedProtocol:protocolNode];
+        [self addImplementedProtocol:protocolItem];
     }
 }
 
 - (NSArray *)implementedProtocols
 {
-    NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolNodes];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolItems];
 
-    for (AKProtocolNode *protocolNode in _protocolNodes)
+    for (AKProtocolItem *protocolItem in _protocolItems)
     {
-        if (protocolNode != self) {
-            [result addObjectsFromArray:[protocolNode implementedProtocols]];
+        if (protocolItem != self) {
+            [result addObjectsFromArray:[protocolItem implementedProtocols]];
         }
     }
 

@@ -14,7 +14,7 @@
 #import "AKDatabase.h"
 #import "AKGlobalsNode.h"
 #import "AKGroupNode.h"
-#import "AKProtocolNode.h"
+#import "AKProtocolItem.h"
 
 @interface AKRandomSearch ()
 @property (nonatomic, readwrite, copy) NSString *selectedAPISymbol;
@@ -113,11 +113,11 @@
 
 - (void)_addProtocolMembersToSymbolArray:(NSMutableArray *)apiSymbols
 {
-    for (AKProtocolNode *protocolNode in [_database allProtocols])
+    for (AKProtocolItem *protocolItem in [_database allProtocols])
     {
-        [self _addNodes:[protocolNode documentedProperties] toSymbolArray:apiSymbols];
-        [self _addNodes:[protocolNode documentedClassMethods] toSymbolArray:apiSymbols];
-        [self _addNodes:[protocolNode documentedInstanceMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[protocolItem documentedProperties] toSymbolArray:apiSymbols];
+        [self _addNodes:[protocolItem documentedClassMethods] toSymbolArray:apiSymbols];
+        [self _addNodes:[protocolItem documentedInstanceMethods] toSymbolArray:apiSymbols];
     }
 }
 

@@ -12,7 +12,7 @@
 @class AKMemberNode;
 @class AKMethodNode;
 @class AKPropertyNode;
-@class AKProtocolNode;
+@class AKProtocolItem;
 
 #pragma mark -
 #pragma mark Blocks as alternatives to performSelector
@@ -30,7 +30,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorItem *behaviorItem, AKMembe
 
 /*!
  * Abstract class. Represents an Objective-C construct that can have methods.
- * The concrete subclasses are AKClassNode, AKProtocolNode, and AKCategoryNode.
+ * The concrete subclasses are AKClassNode, AKProtocolItem, and AKCategoryNode.
  *
  * Note: unlike other database nodes, class and protocols nodes can be
  * initialized with nil as their owning framework name. The reason is that when
@@ -45,11 +45,11 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorItem *behaviorItem, AKMembe
 @private
     NSString *_headerFileWhereDeclared;
 
-    // One AKProtocolNode for each protocol this behavior conforms to.
-    NSMutableArray *_protocolNodes;
+    // One AKProtocolItem for each protocol this behavior conforms to.
+    NSMutableArray *_protocolItems;
 
-    // Indexes the contents of _protocolNodes.
-    NSMutableSet *_protocolNodeNames;
+    // Indexes the contents of _protocolItems.
+    NSMutableSet *_protocolItemNames;
 
     // Contains AKPropertyNodes, each representing a property of this class.
     AKCollectionOfNodes *_indexOfProperties;
@@ -75,11 +75,11 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorItem *behaviorItem, AKMembe
 
 @property (NS_NONATOMIC_IOSONLY, getter=isClassNode, readonly) BOOL classNode;
 
-- (void)addImplementedProtocol:(AKProtocolNode *)protocolNode;
-- (void)addImplementedProtocols:(NSArray *)protocolNodes;
+- (void)addImplementedProtocol:(AKProtocolItem *)protocolItem;
+- (void)addImplementedProtocols:(NSArray *)protocolItems;
 
 /*!
- * Returns zero or more AKProtocolNodes, one for each protocol implemented by
+ * Returns zero or more AKProtocolItems, one for each protocol implemented by
  * the represented behavior. Includes protocols implemented by virtue of
  * inheritance.
  */

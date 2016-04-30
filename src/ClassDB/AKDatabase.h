@@ -14,7 +14,7 @@
 @class AKFunctionNode;
 @class AKGlobalsNode;
 @class AKGroupNode;
-@class AKProtocolNode;
+@class AKProtocolItem;
 
 /*!
  * Contains information about a Cocoa-style Objective-C API: the names of API
@@ -39,7 +39,7 @@
     NSArray *_frameworkNames;
 
     // Protocol.
-    NSMutableDictionary *_protocolNodesByName;  // @{PROTOCOL_NAME -> @[AKProtocolNode]
+    NSMutableDictionary *_protocolItemsByName;  // @{PROTOCOL_NAME -> @[AKProtocolItem]
 
     // Functions.
     NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupNode]}
@@ -51,7 +51,7 @@
 
     // Hyperlink support.
     NSMutableDictionary *_classNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassNode}
-    NSMutableDictionary *_protocolNodesByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolNode}
+    NSMutableDictionary *_protocolItemsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolItem}
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) DocSetIndex *docSetIndex;
@@ -68,7 +68,7 @@
 /*! Array of AKClassNode. No guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allClasses;
 
-/*! Array of AKProtocolNode. No guaranteed order. */
+/*! Array of AKProtocolItem. No guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allProtocols;
 
 #pragma mark -
@@ -98,16 +98,16 @@
 #pragma mark -
 #pragma mark Getters and setters -- protocols
 
-/*! Array of AKProtocolNode. No guaranteed order. */
+/*! Array of AKProtocolItem. No guaranteed order. */
 - (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName;
 
-/*! Array of AKProtocolNode. No guaranteed order. */
+/*! Array of AKProtocolItem. No guaranteed order. */
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
 
-- (AKProtocolNode *)protocolWithName:(NSString *)name;
+- (AKProtocolItem *)protocolWithName:(NSString *)name;
 
 /*! Does nothing if we already contain a protocol with that name. */
-- (void)addProtocolNode:(AKProtocolNode *)protocolNode;
+- (void)addProtocolItem:(AKProtocolItem *)protocolItem;
 
 #pragma mark -
 #pragma mark Getters and setters -- functions
@@ -131,7 +131,7 @@
 - (AKClassNode *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
 - (void)rememberThatClass:(AKClassNode *)classNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
 
-- (AKProtocolNode *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath;
-- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode isDocumentedInHTMLFile:(NSString *)htmlFilePath;
+- (AKProtocolItem *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath;
+- (void)rememberThatProtocol:(AKProtocolItem *)protocolItem isDocumentedInHTMLFile:(NSString *)htmlFilePath;
 
 @end

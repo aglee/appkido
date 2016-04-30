@@ -11,8 +11,8 @@ The fundamental model object in AppKiDo is an AKDocSetTokenItem, or simply "**no
 
 Here are the API constructs represented in AppKiDo, and their corresponding node classes:
 
-* **Classes and protocols** -- AKClassNode, AKProtocolNode
-    * Classes and protocols are collectively referred to as "behaviors". AKClassNode and AKProtocolNode are subclasses of AKBehaviorItem.
+* **Classes and protocols** -- AKClassNode, AKProtocolItem
+    * Classes and protocols are collectively referred to as "behaviors". AKClassNode and AKProtocolItem are subclasses of AKBehaviorItem.
     * AKBehaviorItem has a third subclass, AKCategoryNode, which is a historical artifact and isn't used in any way the user sees.
     * Examples: NSObject, NSTableDataSource.
 * **Properties** -- AKPropertyNode

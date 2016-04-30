@@ -8,7 +8,7 @@
 #import "AKProtocolGeneralSubtopic.h"
 
 #import "DIGSLog.h"
-#import "AKProtocolNode.h"
+#import "AKProtocolItem.h"
 #import "AKHTMLConstants.h"
 
 @implementation AKProtocolGeneralSubtopic
@@ -16,19 +16,19 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)subtopicForProtocolNode:(AKProtocolNode *)protocolNode
++ (instancetype)subtopicForProtocolItem:(AKProtocolItem *)protocolItem
 {
-    return [[self alloc] initWithProtocolNode:protocolNode];
+    return [[self alloc] initWithProtocolItem:protocolItem];
 }
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithProtocolNode:(AKProtocolNode *)protocolNode
+- (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem
 {
     if ((self = [super init]))
     {
-        _protocolNode = protocolNode;
+        _protocolItem = protocolItem;
     }
 
     return self;
@@ -37,7 +37,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithProtocolNode:nil];
+    return [self initWithProtocolItem:nil];
 }
 
 
@@ -46,7 +46,7 @@
 
 - (AKBehaviorItem *)behaviorItem
 {
-    return _protocolNode;
+    return _protocolItem;
 }
 
 - (NSString *)htmlNameOfDescriptionSection

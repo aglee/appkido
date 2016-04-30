@@ -7,23 +7,23 @@
 
 #import "AKBehaviorTopic.h"
 
-@class AKProtocolNode;
+@class AKProtocolItem;
 
 @interface AKProtocolTopic : AKBehaviorTopic
 {
 @private
-    AKProtocolNode *_protocolNode;
+    AKProtocolItem *_protocolItem;
 }
 
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)topicWithProtocolNode:(AKProtocolNode *)protocolNode;
++ (instancetype)topicWithProtocolItem:(AKProtocolItem *)protocolItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (instancetype)initWithProtocolNode:(AKProtocolNode *)protocolNode NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem NS_DESIGNATED_INITIALIZER;
 
 @end

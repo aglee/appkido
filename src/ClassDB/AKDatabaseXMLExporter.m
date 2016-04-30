@@ -14,7 +14,7 @@
 #import "AKDatabase.h"
 #import "AKGroupNode.h"
 #import "AKMemberNode.h"
-#import "AKProtocolNode.h"
+#import "AKProtocolItem.h"
 #import "AKSortUtils.h"
 
 @implementation AKDatabaseXMLExporter
@@ -96,18 +96,18 @@
         [self _writeDividerWithString:fwName string:@"formal protocols"];
 
         NSArray *formalProtocols = [_database formalProtocolsForFrameworkNamed:fwName];
-        for (AKProtocolNode *protocolNode in [AKSortUtils arrayBySortingArray:formalProtocols])
+        for (AKProtocolItem *protocolItem in [AKSortUtils arrayBySortingArray:formalProtocols])
         {
-            [self _exportProtocol:protocolNode];
+            [self _exportProtocol:protocolItem];
         }
 
         // Write informal protocols.
         [self _writeDividerWithString:fwName string:@"informal protocols"];
 
         NSArray *informalProtocols = [_database informalProtocolsForFrameworkNamed:fwName];
-        for (AKProtocolNode *protocolNode in [AKSortUtils arrayBySortingArray:informalProtocols])
+        for (AKProtocolItem *protocolItem in [AKSortUtils arrayBySortingArray:informalProtocols])
         {
-            [self _exportProtocol:protocolNode];
+            [self _exportProtocol:protocolItem];
         }
     }];
 }
@@ -155,23 +155,23 @@
     }];
 }
 
-- (void)_exportProtocol:(AKProtocolNode *)protocolNode
+- (void)_exportProtocol:(AKProtocolItem *)protocolItem
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
-    attributes[@"name"] = protocolNode.nodeName;
-    attributes[@"type"] = (protocolNode.isInformal ? @"informal" : @"formal");
+    attributes[@"name"] = protocolItem.nodeName;
+    attributes[@"type"] = (protocolItem.isInformal ? @"informal" : @"formal");
 
     [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
-        [self _exportMembers:[protocolNode documentedProperties]
+        [self _exportMembers:[protocolItem documentedProperties]
                       ofType:@"properties"
                       xmlTag:@"property"];
 
-        [self _exportMembers:[protocolNode documentedClassMethods]
+        [self _exportMembers:[protocolItem documentedClassMethods]
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[protocolNode documentedInstanceMethods]
+        [self _exportMembers:[protocolItem documentedInstanceMethods]
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
     }];

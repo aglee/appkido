@@ -10,7 +10,7 @@
 #import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
 #import "AKClassNode.h"
-#import "AKProtocolNode.h"
+#import "AKProtocolItem.h"
 #import "AKGroupNode.h"
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
@@ -35,7 +35,7 @@
         _docSetIndex = docSetIndex;
 		_frameworkNames = [[NSMutableArray alloc] init];
         _classNodesByName = [[NSMutableDictionary alloc] init];
-        _protocolNodesByName = [[NSMutableDictionary alloc] init];
+        _protocolItemsByName = [[NSMutableDictionary alloc] init];
         _functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
         _functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
@@ -43,7 +43,7 @@
         _globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
         _classNodesByHTMLPath = [[NSMutableDictionary alloc] init];
-        _protocolNodesByHTMLPath = [[NSMutableDictionary alloc] init];
+        _protocolItemsByHTMLPath = [[NSMutableDictionary alloc] init];
     }
 
     return self;
@@ -109,7 +109,7 @@
     if (classNode) {
         classNode.docSetToken = token;
         [self _setParentNodeOfClassNode:classNode];
-        [self _setProtocolNodesOfClassNode:classNode];
+        [self _setProtocolItemsOfClassNode:classNode];
     }
 }
 
@@ -155,7 +155,7 @@
     }
 }
 
-- (void)_setProtocolNodesOfClassNode:(AKClassNode *)classNode
+- (void)_setProtocolItemsOfClassNode:(AKClassNode *)classNode
 {
     //FIXME: Fill this in.
 }
@@ -231,26 +231,26 @@
 
 - (NSArray *)allProtocols
 {
-    return _protocolNodesByName.allValues;
+    return _protocolItemsByName.allValues;
 }
 
-- (AKProtocolNode *)protocolWithName:(NSString *)name
+- (AKProtocolItem *)protocolWithName:(NSString *)name
 {
-    return _protocolNodesByName[name];
+    return _protocolItemsByName[name];
 }
 
-- (void)addProtocolNode:(AKProtocolNode *)protocolNode
+- (void)addProtocolItem:(AKProtocolItem *)protocolItem
 {
     // Do nothing if we already have a protocol with the same name.
-    NSString *protocolName = protocolNode.nodeName;
-    if (_protocolNodesByName[protocolName])
+    NSString *protocolName = protocolItem.nodeName;
+    if (_protocolItemsByName[protocolName])
     {
         DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
         return;
     }
 
     // Add the protocol to our lookup by protocol name.
-    _protocolNodesByName[protocolName] = protocolNode;
+    _protocolItemsByName[protocolName] = protocolItem;
 }
 
 #pragma mark -
@@ -364,15 +364,15 @@
     _classNodesByHTMLPath[htmlFilePath] = classNode;
 }
 
-- (AKProtocolNode *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath
+- (AKProtocolItem *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    return _protocolNodesByHTMLPath[htmlFilePath];
+    return _protocolItemsByHTMLPath[htmlFilePath];
 }
 
-- (void)rememberThatProtocol:(AKProtocolNode *)protocolNode
+- (void)rememberThatProtocol:(AKProtocolItem *)protocolItem
       isDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
-    _protocolNodesByHTMLPath[htmlFilePath] = protocolNode;
+    _protocolItemsByHTMLPath[htmlFilePath] = protocolItem;
 }
 
 #pragma mark -
@@ -383,12 +383,12 @@
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    for (AKProtocolNode *protocolNode in [self allProtocols])
+    for (AKProtocolItem *protocolItem in [self allProtocols])
     {
-        if ((protocolNode.isInformal == informalFlag)
-            && [protocolNode.nameOfOwningFramework isEqualToString:fwName])
+        if ((protocolItem.isInformal == informalFlag)
+            && [protocolItem.nameOfOwningFramework isEqualToString:fwName])
         {
-            [result addObject:protocolNode];
+            [result addObject:protocolItem];
         }
     }
 

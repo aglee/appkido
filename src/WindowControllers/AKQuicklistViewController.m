@@ -22,7 +22,7 @@
 #import "AKMultiRadioView.h"
 #import "AKPrefUtils.h"
 #import "AKPropertyNode.h"
-#import "AKProtocolNode.h"
+#import "AKProtocolItem.h"
 #import "AKProtocolTopic.h"
 #import "AKSearchQuery.h"
 #import "AKSortUtils.h"
@@ -814,17 +814,17 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_dataSourceProtocols)
     {
-        NSMutableArray *protocolNodes = [NSMutableArray array];
+        NSMutableArray *protocolItems = [NSMutableArray array];
 
-        for (AKProtocolNode *protocolNode in [[self.owningWindowController database] allProtocols])
+        for (AKProtocolItem *protocolItem in [[self.owningWindowController database] allProtocols])
         {
-            if ([protocolNode.nodeName ak_contains:@"DataSource"])
+            if ([protocolItem.nodeName ak_contains:@"DataSource"])
             {
-                [protocolNodes addObject:protocolNode];
+                [protocolItems addObject:protocolItem];
             }
         }
 
-        s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolNodes];
+        s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolItems];
     }
 
     return s_dataSourceProtocols;
@@ -859,18 +859,18 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return [AKSortUtils arrayBySortingArray:quicklistItems];
 }
 
-- (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolNodes
+- (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolItems
 {
     NSMutableArray *quicklistItems = [NSMutableArray array];
 
-    for (AKProtocolNode *protocolNode in protocolNodes)
+    for (AKProtocolItem *protocolItem in protocolItems)
     {
         // Don't list protocols that don't have HTML documentation.  They
         // may have cropped up in header files and either not been
         // documented yet or intended for Apple's internal use.
-        if (protocolNode.nodeDocumentation)
+        if (protocolItem.nodeDocumentation)
         {
-            AKTopic *topic = [AKProtocolTopic topicWithProtocolNode:protocolNode];
+            AKTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
 
             [quicklistItems addObject:[AKDocLocator withTopic:topic
                                                  subtopicName:nil
