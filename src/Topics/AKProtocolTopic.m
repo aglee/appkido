@@ -94,7 +94,7 @@
     return _protocolNode.nodeName;
 }
 
-- (AKDatabaseNode *)topicNode
+- (AKDocSetTokenItem *)topicNode
 {
     return _protocolNode;
 }

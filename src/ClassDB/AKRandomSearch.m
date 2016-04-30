@@ -83,7 +83,7 @@
 
 - (void)_addNodes:(NSArray *)nodesToAdd toSymbolArray:(NSMutableArray *)apiSymbols
 {
-    for (AKDatabaseNode *node in nodesToAdd)
+    for (AKDocSetTokenItem *node in nodesToAdd)
     {
         [apiSymbols addObject:node.nodeName];
     }

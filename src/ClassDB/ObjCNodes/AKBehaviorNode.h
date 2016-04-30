@@ -5,7 +5,7 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKDatabaseNode.h"
+#import "AKDocSetTokenItem.h"
 
 @class AKBehaviorNode;
 @class AKCollectionOfNodes;
@@ -40,7 +40,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * owning class's declaration. Or we may encounter a protocol in a class's list
  * of protocols before we've encountered its @protocol declaration.
  */
-@interface AKBehaviorNode : AKDatabaseNode
+@interface AKBehaviorNode : AKDocSetTokenItem
 {
 @private
     NSString *_headerFileWhereDeclared;

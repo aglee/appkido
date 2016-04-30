@@ -32,7 +32,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-- (AKDatabaseNode *)topicNode
+- (AKDocSetTokenItem *)topicNode
 {
     return nil;
 }

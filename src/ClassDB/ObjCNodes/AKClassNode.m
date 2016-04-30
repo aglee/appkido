@@ -107,7 +107,7 @@
 
 - (AKCategoryNode *)categoryNamed:(NSString *)catName
 {
-    for (AKDatabaseNode *node in _categoryNodes)
+    for (AKDocSetTokenItem *node in _categoryNodes)
     {
         if ([node.nodeName isEqualToString:catName])
         {
@@ -263,7 +263,7 @@
 }
 
 #pragma mark -
-#pragma mark AKDatabaseNode methods
+#pragma mark AKDocSetTokenItem methods
 
 - (void)setNameOfOwningFramework:(NSString *)frameworkName
 {

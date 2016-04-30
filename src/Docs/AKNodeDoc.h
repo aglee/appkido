@@ -8,20 +8,20 @@
 
 #import "AKDoc.h"
 
-@class AKDatabaseNode;
+@class AKDocSetTokenItem;
 
 @interface AKNodeDoc : AKDoc
 {
 @private
-    AKDatabaseNode *_databaseNode;
+    AKDocSetTokenItem *_tokenItem;
 }
 
-@property (nonatomic, readonly) AKDatabaseNode *databaseNode;
+@property (nonatomic, readonly) AKDocSetTokenItem *tokenItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (instancetype)initWithNode:(AKDatabaseNode *)databaseNode NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithNode:(AKDocSetTokenItem *)tokenItem NS_DESIGNATED_INITIALIZER;
 
 @end

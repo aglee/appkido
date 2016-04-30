@@ -8,20 +8,20 @@
 
 #import "AKNodeDoc.h"
 
-#import "AKDatabaseNode.h"
+#import "AKDocSetTokenItem.h"
 
 @implementation AKNodeDoc
 
-@synthesize databaseNode = _databaseNode;
+@synthesize tokenItem = _tokenItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNode:(AKDatabaseNode *)databaseNode
+- (instancetype)initWithNode:(AKDocSetTokenItem *)tokenItem
 {
     if ((self = [super init]))
     {
-        _databaseNode = databaseNode;
+        _tokenItem = tokenItem;
     }
 
     return self;
@@ -39,12 +39,12 @@
 
 - (AKFileSection *)fileSection
 {
-    return _databaseNode.nodeDocumentation;
+    return _tokenItem.nodeDocumentation;
 }
 
 - (NSString *)docName
 {
-    return _databaseNode.nodeName;
+    return _tokenItem.nodeName;
 }
 
 @end

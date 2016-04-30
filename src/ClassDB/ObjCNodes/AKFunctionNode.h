@@ -6,10 +6,10 @@
 //  Copyright 2008 Andy Lee. All rights reserved.
 //
 
-#import "AKDatabaseNode.h"
+#import "AKDocSetTokenItem.h"
 
 /*!
  * Represents a C function.
  */
-@interface AKFunctionNode : AKDatabaseNode
+@interface AKFunctionNode : AKDocSetTokenItem
 @end

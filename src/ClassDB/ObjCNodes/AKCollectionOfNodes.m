@@ -9,7 +9,7 @@
 #import "AKCollectionOfNodes.h"
 
 #import "DIGSLog.h"
-#import "AKDatabaseNode.h"
+#import "AKDocSetTokenItem.h"
 
 @implementation AKCollectionOfNodes
 
@@ -40,25 +40,25 @@
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    for (AKDatabaseNode *databaseNode in _nodeList)
+    for (AKDocSetTokenItem *tokenItem in _nodeList)
     {
-        if (databaseNode.nodeDocumentation)
+        if (tokenItem.nodeDocumentation)
         {
-            [result addObject:databaseNode];
+            [result addObject:tokenItem];
         }
     }
 
     return result;
 }
 
-- (AKDatabaseNode *)nodeWithName:(NSString *)nodeName
+- (AKDocSetTokenItem *)nodeWithName:(NSString *)nodeName
 {
     return _nodesByName[nodeName];
 }
 
-- (void)addNode:(AKDatabaseNode *)databaseNode
+- (void)addNode:(AKDocSetTokenItem *)tokenItem
 {
-    NSString *nodeName = databaseNode.nodeName;
+    NSString *nodeName = tokenItem.nodeName;
 
     if (_nodesByName[nodeName])
     {
@@ -66,8 +66,8 @@
     }
     else
     {
-        [_nodeList addObject:databaseNode];
-        _nodesByName[nodeName] = databaseNode;
+        [_nodeList addObject:tokenItem];
+        _nodesByName[nodeName] = tokenItem;
     }
 }
 

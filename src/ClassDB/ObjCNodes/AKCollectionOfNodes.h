@@ -8,19 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AKDatabaseNode;
+@class AKDocSetTokenItem;
 
 /*!
- * Wrapper around a collection of AKDatabaseNodes, with a couple of convenience
+ * Wrapper around a collection of AKDocSetTokenItems, with a couple of convenience
  * methods.  Unlike an AKGroupNode, an AKCollectionOfNodes is not itself a node.
  */
 @interface AKCollectionOfNodes : NSObject
 {
 @private
-    // Contains all the AKDatabaseNodes that have been added to us.
+    // Contains all the AKDocSetTokenItems that have been added to us.
     NSMutableArray *_nodeList;
 
-    // Keys are node names.  Values are AKDatabaseNodes.
+    // Keys are node names.  Values are AKDocSetTokenItems.
     NSMutableDictionary *_nodesByName;
 }
 
@@ -31,8 +31,8 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *nodesWithDocumentation;
 
-- (AKDatabaseNode *)nodeWithName:(NSString *)nodeName;
+- (AKDocSetTokenItem *)nodeWithName:(NSString *)nodeName;
 
-- (void)addNode:(AKDatabaseNode *)datbaseNode;
+- (void)addNode:(AKDocSetTokenItem *)datbaseNode;
 
 @end

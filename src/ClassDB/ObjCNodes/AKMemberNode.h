@@ -6,7 +6,7 @@
 //  Copyright 2008 Andy Lee. All rights reserved.
 //
 
-#import "AKDatabaseNode.h"
+#import "AKDocSetTokenItem.h"
 
 @class AKBehaviorNode;
 
@@ -14,7 +14,7 @@
  * Stretches the concept of "member" slightly.  Used for properties, class
  * methods, instance methods, delegate methods, and notifications.
  */
-@interface AKMemberNode : AKDatabaseNode
+@interface AKMemberNode : AKDocSetTokenItem
 {
 @private
     __unsafe_unretained AKBehaviorNode *_owningBehavior;

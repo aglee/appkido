@@ -5,30 +5,30 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKDatabaseNode.h"
+#import "AKDocSetTokenItem.h"
 
 /*!
- * Wrapper around a collection of AKDatabaseNodes, called its subnodes. An
+ * Wrapper around a collection of AKDocSetTokenItems, called its subnodes. An
  * AKGroupNode does not correspond to any programming language construct; it is
  * just a way to have named aggregations of nodes.
  */
-@interface AKGroupNode : AKDatabaseNode
+@interface AKGroupNode : AKDocSetTokenItem
 {
 @private
-    // Elements are AKDatabaseNodes.
+    // Elements are AKDocSetTokenItems.
     NSMutableArray *_subnodes;
 }
 
 #pragma mark -
 #pragma mark Getters and setters
 
-- (void)addSubnode:(AKDatabaseNode *)node;
+- (void)addSubnode:(AKDocSetTokenItem *)node;
 
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSubnodes;
 
 /*! Order of returned nodes is not guaranteed. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *subnodes;
 
-- (AKDatabaseNode *)subnodeWithName:(NSString *)nodeName;
+- (AKDocSetTokenItem *)subnodeWithName:(NSString *)nodeName;
 
 @end

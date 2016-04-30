@@ -30,7 +30,7 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (void)addSubnode:(AKDatabaseNode *)node
+- (void)addSubnode:(AKDocSetTokenItem *)node
 {
     [_subnodes addObject:node];
 }
@@ -45,9 +45,9 @@
     return _subnodes;
 }
 
-- (AKDatabaseNode *)subnodeWithName:(NSString *)nodeName
+- (AKDocSetTokenItem *)subnodeWithName:(NSString *)nodeName
 {
-    for (AKDatabaseNode *subnode in _subnodes)
+    for (AKDocSetTokenItem *subnode in _subnodes)
     {
         if ([subnode.nodeName isEqualToString:nodeName])
         {

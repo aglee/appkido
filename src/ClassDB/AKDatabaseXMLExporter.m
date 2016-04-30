@@ -211,13 +211,13 @@
 #pragma mark -
 #pragma mark Private methods -- exporting group nodes
 
-- (void)_exportGroupSubnode:(AKDatabaseNode *)databaseNode withXMLTag:(NSString *)subnodeTag
+- (void)_exportGroupSubnode:(AKDocSetTokenItem *)tokenItem withXMLTag:(NSString *)subnodeTag
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     
-    attributes[@"name"] = databaseNode.nodeName;
+    attributes[@"name"] = tokenItem.nodeName;
     
-    if (databaseNode.isDeprecated)
+    if (tokenItem.isDeprecated)
     {
         attributes[@"isDeprecated"] = @YES;
     }
@@ -228,7 +228,7 @@
 - (void)_exportGroupNode:(AKGroupNode *)groupNode usingSubnodeTag:(NSString *)subnodeTag
 {
     [_xmlWriter tag:@"group" attributes:@{ @"name": groupNode.nodeName } contentBlock:^{
-        for (AKDatabaseNode *subnode in [AKSortUtils arrayBySortingArray:[groupNode subnodes]])
+        for (AKDocSetTokenItem *subnode in [AKSortUtils arrayBySortingArray:[groupNode subnodes]])
         {
             [self _exportGroupSubnode:subnode withXMLTag:subnodeTag];
         }
