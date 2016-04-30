@@ -21,7 +21,7 @@
         _tokenName = [tokenName copy];
         _owningDatabase = database;
         _nameOfOwningFramework = [frameworkName copy];
-        _nodeDocumentation = nil;
+        _tokenItemDocumentation = nil;
         _isDeprecated = NO;
     }
 

@@ -22,11 +22,11 @@
     // Each subitem of a functions group item represents one function.
     for (AKTokenItem *functionItem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
     {
-        AKFileSection *functionSection = functionItem.nodeDocumentation;
+        AKFileSection *functionSection = functionItem.tokenItemDocumentation;
 
         if (functionSection != nil)
         {
-            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithNode:functionItem];
+            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithTokenItem:functionItem];
             
             [docList addObject:newDoc];
         }

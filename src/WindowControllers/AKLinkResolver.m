@@ -98,7 +98,7 @@
 
         if (docSection == nil)
         {
-            docSection = [docLocator.topicToDisplay topicItem].nodeDocumentation;
+            docSection = [docLocator.topicToDisplay topicItem].tokenItemDocumentation;
         }
 
         if ([[docSection filePath] isEqualToString:filePath])

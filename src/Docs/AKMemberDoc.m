@@ -54,7 +54,7 @@
 
 - (AKFileSection *)fileSection
 {
-    return _memberItem.nodeDocumentation;
+    return _memberItem.tokenItemDocumentation;
 }
 
 - (NSString *)stringToDisplayInDocList

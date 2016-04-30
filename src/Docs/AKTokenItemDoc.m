@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNode:(AKTokenItem *)tokenItem
+- (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem
 {
     if ((self = [super init]))
     {
@@ -30,7 +30,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithNode:nil];
+    return [self initWithTokenItem:nil];
 }
 
 
@@ -39,7 +39,7 @@
 
 - (AKFileSection *)fileSection
 {
-    return _tokenItem.nodeDocumentation;
+    return _tokenItem.tokenItemDocumentation;
 }
 
 - (NSString *)docName

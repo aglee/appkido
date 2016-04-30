@@ -678,18 +678,18 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_classesWithDelegates)
     {
-        NSMutableSet *nodeSet = [NSMutableSet set];
+        NSMutableSet *setOfItems = [NSMutableSet set];
 
         for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
         {
             BOOL classHasDelegate = NO;
 
             // See if the class doc contains a "Delegate Methods" section.
-            AKFileSection *delegateMethodsSection = [classItem.nodeDocumentation childSectionWithName:AKDelegateMethodsHTMLSectionName];
+            AKFileSection *delegateMethodsSection = [classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsHTMLSectionName];
 
             if (!delegateMethodsSection)
             {
-                delegateMethodsSection =[classItem.nodeDocumentation childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
+                delegateMethodsSection =[classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
             }
 
             if (delegateMethodsSection)
@@ -737,11 +737,11 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // We've checked all the ways we can tell if a class has a delegate.
             if (classHasDelegate)
             {
-                [nodeSet addObject:classItem];
+                [setOfItems addObject:classItem];
             }
         }
 
-        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:nodeSet];
+        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
         s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
     }
 
@@ -754,7 +754,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     if (!s_classesWithDataSources)
     {
-        NSMutableSet *nodeSet = [NSMutableSet set];
+        NSMutableSet *setOfItems = [NSMutableSet set];
 
         for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
         {
@@ -797,11 +797,11 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // We've checked all the ways we can tell if a class has a datasource.
             if (classHasDataSource)
             {
-                [nodeSet addObject:classItem];
+                [setOfItems addObject:classItem];
             }
         }
 
-        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:nodeSet];
+        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
         s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classItems];
     }
 
@@ -846,7 +846,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         // Don't list classes that don't have HTML documentation.  They
         // may have cropped up in header files and either not been
         // documented yet or intended for Apple's internal use.
-        if (classItem.nodeDocumentation)
+        if (classItem.tokenItemDocumentation)
         {
             AKTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
@@ -868,7 +868,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         // Don't list protocols that don't have HTML documentation.  They
         // may have cropped up in header files and either not been
         // documented yet or intended for Apple's internal use.
-        if (protocolItem.nodeDocumentation)
+        if (protocolItem.tokenItemDocumentation)
         {
             AKTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
 
@@ -883,16 +883,16 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames
 {
-    NSMutableSet *nodeSet = [NSMutableSet setWithCapacity:100];
+    NSMutableSet *setOfItems = [NSMutableSet setWithCapacity:100];
 
     for (NSString *name in classNames)
     {
         AKClassItem *classItem = [[self.owningWindowController database] classWithName:name];
 
-        [nodeSet unionSet:[classItem descendantClasses]];
+        [setOfItems unionSet:[classItem descendantClasses]];
     }
 
-    return [AKSortUtils arrayBySortingSet:nodeSet];
+    return [AKSortUtils arrayBySortingSet:setOfItems];
 }
 
 - (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)setOfClassItems

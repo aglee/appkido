@@ -84,7 +84,7 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Add whichever of the standard sections are available.
-    AKFileSection *rootSection = [self behaviorItem].nodeDocumentation;
+    AKFileSection *rootSection = [self behaviorItem].tokenItemDocumentation;
 
     for (AKFileSection *majorSection in [self pertinentChildSectionsOf:rootSection])
     {

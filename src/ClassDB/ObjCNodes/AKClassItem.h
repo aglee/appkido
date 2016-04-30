@@ -29,7 +29,7 @@
 
     // Keys are names of owning frameworks. Values are the root file sections
     // containing documentation for the framework.
-    NSMutableDictionary *_nodeDocumentationByFrameworkName;
+    NSMutableDictionary *_tokenItemDocumentationByFrameworkName;
 
     // Contains AKClassItems, one for each child class.
     NSMutableArray *_childClassItems;

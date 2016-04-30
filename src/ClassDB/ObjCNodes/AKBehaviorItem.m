@@ -94,17 +94,17 @@
 
 - (NSArray *)documentedProperties
 {
-    return [_indexOfProperties nodesWithDocumentation];
+    return [_indexOfProperties tokenItemsWithDocumentation];
 }
 
-- (AKPropertyItem *)propertyNodeWithName:(NSString *)propertyName
+- (AKPropertyItem *)propertyItemWithName:(NSString *)propertyName
 {
     return (AKPropertyItem *)[_indexOfProperties itemWithTokenName:propertyName];
 }
 
-- (void)addPropertyNode:(AKPropertyItem *)propertyNode
+- (void)addPropertyItem:(AKPropertyItem *)propertyItem
 {
-    [_indexOfProperties addNode:propertyNode];
+    [_indexOfProperties addTokenItem:propertyItem];
 }
 
 #pragma mark -
@@ -112,7 +112,7 @@
 
 - (NSArray *)documentedClassMethods
 {
-    return [_indexOfClassMethods nodesWithDocumentation];
+    return [_indexOfClassMethods tokenItemsWithDocumentation];
 }
 
 - (AKMethodItem *)classMethodWithName:(NSString *)methodName
@@ -122,7 +122,7 @@
 
 - (void)addClassMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfClassMethods addNode:methodItem];
+    [_indexOfClassMethods addTokenItem:methodItem];
 }
 
 #pragma mark -
@@ -130,7 +130,7 @@
 
 - (NSArray *)documentedInstanceMethods
 {
-    return [_indexOfInstanceMethods nodesWithDocumentation];
+    return [_indexOfInstanceMethods tokenItemsWithDocumentation];
 }
 
 - (AKMethodItem *)instanceMethodWithName:(NSString *)methodName
@@ -140,7 +140,7 @@
 
 - (void)addInstanceMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfInstanceMethods addNode:methodItem];
+    [_indexOfInstanceMethods addTokenItem:methodItem];
 }
 
 #pragma mark -

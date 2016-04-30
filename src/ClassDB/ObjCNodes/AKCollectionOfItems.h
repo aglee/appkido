@@ -29,10 +29,10 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allNodes;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *nodesWithDocumentation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *tokenItemsWithDocumentation;
 
 - (AKTokenItem *)itemWithTokenName:(NSString *)tokenName;
 
-- (void)addNode:(AKTokenItem *)datbaseNode;
+- (void)addTokenItem:(AKTokenItem *)tokenItem;
 
 @end

@@ -37,7 +37,7 @@
             [_namesOfAllOwningFrameworks addObject:frameworkName];
         }
 
-        _nodeDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
+        _tokenItemDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
         _childClassItems = [[NSMutableArray alloc] init];
         _categoryItems = [[NSMutableArray alloc] init];
@@ -151,7 +151,7 @@
 
 - (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName
 {
-    return _nodeDocumentationByFrameworkName[frameworkName];
+    return _tokenItemDocumentationByFrameworkName[frameworkName];
 }
 
 - (void)associateDocumentation:(AKFileSection *)fileSection
@@ -169,7 +169,7 @@
         [_namesOfAllOwningFrameworks addObject:frameworkName];
     }
 
-    _nodeDocumentationByFrameworkName[frameworkName] = fileSection;
+    _tokenItemDocumentationByFrameworkName[frameworkName] = fileSection;
 }
 
 #pragma mark -
@@ -177,7 +177,7 @@
 
 - (NSArray *)documentedDelegateMethods
 {
-    NSMutableArray *methodList = [[_indexOfDelegateMethods nodesWithDocumentation] mutableCopy];
+    NSMutableArray *methodList = [[_indexOfDelegateMethods tokenItemsWithDocumentation] mutableCopy];
 
     // Handle classes like WebView that have different *kinds* of delegates.
     [self _addExtraDelegateMethodsTo:methodList];
@@ -192,7 +192,7 @@
 
 - (void)addDelegateMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfDelegateMethods addNode:methodItem];
+    [_indexOfDelegateMethods addTokenItem:methodItem];
 }
 
 #pragma mark -
@@ -200,7 +200,7 @@
 
 - (NSArray *)documentedNotifications
 {
-    return [_indexOfNotifications nodesWithDocumentation];
+    return [_indexOfNotifications tokenItemsWithDocumentation];
 }
 
 - (AKNotificationItem *)notificationWithName:(NSString *)notificationName
@@ -210,7 +210,7 @@
 
 - (void)addNotification:(AKNotificationItem *)notificationItem
 {
-    [_indexOfNotifications addNode:notificationItem];
+    [_indexOfNotifications addTokenItem:notificationItem];
 }
 
 #pragma mark -

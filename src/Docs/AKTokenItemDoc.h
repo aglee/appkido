@@ -22,6 +22,6 @@
 #pragma mark Init/awake/dealloc
 
 /*! Designated initializer. */
-- (instancetype)initWithNode:(AKTokenItem *)tokenItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem NS_DESIGNATED_INITIALIZER;
 
 @end

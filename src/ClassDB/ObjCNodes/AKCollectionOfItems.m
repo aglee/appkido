@@ -36,13 +36,13 @@
     return _nodeList;
 }
 
-- (NSArray *)nodesWithDocumentation
+- (NSArray *)tokenItemsWithDocumentation
 {
     NSMutableArray *result = [NSMutableArray array];
 
     for (AKTokenItem *tokenItem in _nodeList)
     {
-        if (tokenItem.nodeDocumentation)
+        if (tokenItem.tokenItemDocumentation)
         {
             [result addObject:tokenItem];
         }
@@ -56,7 +56,7 @@
     return _nodesByName[tokenName];
 }
 
-- (void)addNode:(AKTokenItem *)tokenItem
+- (void)addTokenItem:(AKTokenItem *)tokenItem
 {
     NSString *tokenName = tokenItem.tokenName;
 

@@ -23,7 +23,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 
 #define blockForGettingMemberItem(xxxWithName) ^id (AKBehaviorItem *behaviorItem, NSString *memberName) { return [(id)behaviorItem xxxWithName:memberName]; }
 
-#define blockForAddingMemberItem(addXXXNode) ^void (AKBehaviorItem *behaviorItem, AKMemberItem *memberItem) { [(id)behaviorItem addXXXNode:(id)memberItem]; }
+#define blockForAddingMemberItem(addXXXItem) ^void (AKBehaviorItem *behaviorItem, AKMemberItem *memberItem) { [(id)behaviorItem addXXXItem:(id)memberItem]; }
 
 
 #pragma mark -
@@ -94,10 +94,10 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 /*! Returns only properties that are in this class's documentation. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedProperties;
 
-- (AKPropertyItem *)propertyNodeWithName:(NSString *)propertyName;
+- (AKPropertyItem *)propertyItemWithName:(NSString *)propertyName;
 
 /*! Does nothing if a property with the same name already exists. */
-- (void)addPropertyNode:(AKPropertyItem *)propertyNode;
+- (void)addPropertyItem:(AKPropertyItem *)propertyItem;
 
 #pragma mark -
 #pragma mark Getters and setters -- class methods

@@ -24,7 +24,7 @@
 {
     for (AKTokenItem *subitem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
     {
-        AKDoc *newDoc = [[AKGlobalsDoc alloc] initWithNode:subitem];
+        AKDoc *newDoc = [[AKGlobalsDoc alloc] initWithTokenItem:subitem];
 
         [docList addObject:newDoc];
     }

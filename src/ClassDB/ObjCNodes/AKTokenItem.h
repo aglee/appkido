@@ -32,7 +32,7 @@
 @private
     NSString *_tokenName;
     NSString *_nameOfOwningFramework;
-    AKFileSection *_nodeDocumentation;
+    AKFileSection *_tokenItemDocumentation;
     BOOL _isDeprecated;
 }
 
@@ -44,7 +44,7 @@
 @property (nonatomic, copy) NSString *nameOfOwningFramework;
 
 /*! Documentation for the API construct the node represents. Possibly nil. */
-@property (nonatomic, strong) AKFileSection *nodeDocumentation;
+@property (nonatomic, strong) AKFileSection *tokenItemDocumentation;
 
 @property (nonatomic, assign) BOOL isDeprecated;
 
