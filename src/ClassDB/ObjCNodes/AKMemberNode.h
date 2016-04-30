@@ -8,7 +8,7 @@
 
 #import "AKDocSetTokenItem.h"
 
-@class AKBehaviorNode;
+@class AKBehaviorItem;
 
 /*!
  * Stretches the concept of "member" slightly.  Used for properties, class
@@ -17,14 +17,14 @@
 @interface AKMemberNode : AKDocSetTokenItem
 {
 @private
-    __unsafe_unretained AKBehaviorNode *_owningBehavior;
+    __unsafe_unretained AKBehaviorItem *_owningBehavior;
 }
 
-@property (nonatomic, readonly, unsafe_unretained) AKBehaviorNode *owningBehavior;
+@property (nonatomic, readonly, unsafe_unretained) AKBehaviorItem *owningBehavior;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorNode *)behaviorNode NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
 @end

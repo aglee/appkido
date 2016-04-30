@@ -44,7 +44,7 @@
 #pragma mark -
 #pragma mark AKBehaviorGeneralSubtopic methods
 
-- (AKBehaviorNode *)behaviorNode
+- (AKBehaviorItem *)behaviorItem
 {
     return _protocolNode;
 }

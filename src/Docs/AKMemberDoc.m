@@ -16,18 +16,18 @@
 @implementation AKMemberDoc
 
 @synthesize memberNode = _memberNode;
-@synthesize behaviorNode = _behaviorNode;
+@synthesize behaviorItem = _behaviorItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 - (instancetype)initWithMemberNode:(AKMemberNode *)memberNode
-     inheritedByBehavior:(AKBehaviorNode *)behaviorNode
+     inheritedByBehavior:(AKBehaviorItem *)behaviorItem
 {
     if ((self = [super init]))
     {
         _memberNode = memberNode;
-        _behaviorNode = behaviorNode;
+        _behaviorItem = behaviorItem;
     }
 
     return self;
@@ -60,10 +60,10 @@
 - (NSString *)stringToDisplayInDocList
 {
     NSString *displayString = [[self class] punctuateNodeName:[self docName]];
-    AKBehaviorNode *owningBehavior = _memberNode.owningBehavior;
+    AKBehaviorItem *owningBehavior = _memberNode.owningBehavior;
 
     // Qualify the member name with ancestor or protocol info if any.
-    if (_behaviorNode != owningBehavior)
+    if (_behaviorItem != owningBehavior)
     {
         if ([owningBehavior isClassNode])
         {
@@ -83,7 +83,7 @@
     // If this is a method that is added by a framework that is not the class's
     // main framework, show that.
     NSString *memberFrameworkName = _memberNode.nameOfOwningFramework;
-    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorNode.nameOfOwningFramework];
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.nameOfOwningFramework];
 
     if (!memberIsInSameFramework)
     {
@@ -111,10 +111,10 @@
 - (NSString *)commentString
 {
     NSString *memberFrameworkName = _memberNode.nameOfOwningFramework;
-    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorNode.nameOfOwningFramework];
-    AKBehaviorNode *owningBehavior = _memberNode.owningBehavior;
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.nameOfOwningFramework];
+    AKBehaviorItem *owningBehavior = _memberNode.owningBehavior;
 
-    if (_behaviorNode == owningBehavior)
+    if (_behaviorItem == owningBehavior)
     {
         // We're the first class/protocol to declare this method.
         if (memberIsInSameFramework)

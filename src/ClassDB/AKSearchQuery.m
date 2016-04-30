@@ -324,10 +324,10 @@
 
 - (void)_searchMembersUnderBehaviorTopic:(AKBehaviorTopic *)behaviorTopic
 {
-    AKBehaviorNode *behaviorNode = (AKBehaviorNode *)[behaviorTopic topicNode];
+    AKBehaviorItem *behaviorItem = (AKBehaviorItem *)[behaviorTopic topicNode];
 
     // Search the behavior's properties.
-    [self _searchNodes:[behaviorNode documentedProperties]
+    [self _searchNodes:[behaviorItem documentedProperties]
          underSubtopic:AKPropertiesSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
@@ -340,7 +340,7 @@
         NSString *savedSearchString = _searchString;
         _searchString = [_searchString substringFromIndex:3];
         {{
-            [self _searchNodes:[behaviorNode documentedProperties]
+            [self _searchNodes:[behaviorItem documentedProperties]
                  underSubtopic:AKPropertiesSubtopicName
                ofBehaviorTopic:behaviorTopic];
         }}
@@ -348,12 +348,12 @@
     }
 
     // Search the behavior's class methods.
-    [self _searchNodes:[behaviorNode documentedClassMethods]
+    [self _searchNodes:[behaviorItem documentedClassMethods]
          underSubtopic:AKClassMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
     // Search the behavior's instance methods.
-    [self _searchNodes:[behaviorNode documentedInstanceMethods]
+    [self _searchNodes:[behaviorItem documentedInstanceMethods]
          underSubtopic:AKInstanceMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 }

@@ -7,7 +7,7 @@
 
 #import "AKClassMethodsSubtopic.h"
 
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 #import "AKClassMethodDoc.h"
 
 @implementation AKClassMethodsSubtopic
@@ -32,9 +32,9 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
+- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
 {
-    return [behaviorNode documentedClassMethods];
+    return [behaviorItem documentedClassMethods];
 }
 
 + (id)memberDocClass

@@ -33,9 +33,9 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
+- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
 {
-    return [behaviorNode documentedProperties];
+    return [behaviorItem documentedProperties];
 }
 
 + (id)memberDocClass

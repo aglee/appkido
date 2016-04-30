@@ -57,7 +57,7 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (AKBehaviorNode *)behaviorNode
+- (AKBehaviorItem *)behaviorItem
 {
     return _classNode;
 }

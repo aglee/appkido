@@ -7,25 +7,25 @@
 
 #import "AKDoc.h"
 
-@class AKBehaviorNode;
+@class AKBehaviorItem;
 @class AKMemberNode;
 
 @interface AKMemberDoc : AKDoc
 {
 @private
     AKMemberNode *_memberNode;
-    AKBehaviorNode *_behaviorNode;
+    AKBehaviorItem *_behaviorItem;
 }
 
 @property (nonatomic, readonly, strong) AKMemberNode *memberNode;
-@property (nonatomic, readonly, strong) AKBehaviorNode *behaviorNode;
+@property (nonatomic, readonly, strong) AKBehaviorItem *behaviorItem;
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
 // Designated initializer
 - (instancetype)initWithMemberNode:(AKMemberNode *)memberNode
-     inheritedByBehavior:(AKBehaviorNode *)behaviorNode NS_DESIGNATED_INITIALIZER;
+     inheritedByBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark Manipulating node names

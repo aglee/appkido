@@ -11,7 +11,7 @@
  * Represents an Objective-C method. Contains the name and signature of the
  * method. Does not distinguish between class and instance methods.
  *
- * An AKMethodNode instance must belong to at most one AKBehaviorNode instance,
+ * An AKMethodNode instance must belong to at most one AKBehaviorItem instance,
  * regardless of how many behaviors declare a method with the same signature.
  */
 @interface AKMethodNode : AKMemberNode

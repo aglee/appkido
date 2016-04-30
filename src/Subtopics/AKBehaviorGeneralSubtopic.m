@@ -22,7 +22,7 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (AKBehaviorNode *)behaviorNode
+- (AKBehaviorItem *)behaviorItem
 {
     DIGSLogError_MissingOverride();
     return nil;
@@ -84,7 +84,7 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Add whichever of the standard sections are available.
-    AKFileSection *rootSection = [self behaviorNode].nodeDocumentation;
+    AKFileSection *rootSection = [self behaviorItem].nodeDocumentation;
 
     for (AKFileSection *majorSection in [self pertinentChildSectionsOf:rootSection])
     {
@@ -123,7 +123,7 @@
     }
 
     // Add the "Header File" doc if appropriate.
-    NSString *headerFilePath = [self behaviorNode].headerFileWhereDeclared;
+    NSString *headerFilePath = [self behaviorItem].headerFileWhereDeclared;
 
     if ([[NSFileManager defaultManager] fileExistsAtPath:headerFilePath])
     {

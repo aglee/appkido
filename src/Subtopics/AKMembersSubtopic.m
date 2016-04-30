@@ -43,13 +43,13 @@
     return _includesAncestors;
 }
 
-- (AKBehaviorNode *)behaviorNode
+- (AKBehaviorItem *)behaviorItem
 {
     DIGSLogError_MissingOverride();
     return nil;
 }
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
+- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
 {
     DIGSLogError_MissingOverride();
     return nil;
@@ -78,7 +78,7 @@
     {
         AKMethodNode *methodNode = methodNodesByName[methodName];
         AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberNode:methodNode
-                                                      inheritedByBehavior:[self behaviorNode]];
+                                                      inheritedByBehavior:[self behaviorItem]];
         [docList addObject:methodDoc];
     }
 }
@@ -90,21 +90,21 @@
 // include in our doc list.
 - (NSArray *)_ancestorNodesWeCareAbout
 {
-    if (![self behaviorNode])
+    if (![self behaviorItem])
     {
         return @[];
     }
 
     // Get a list of all behaviors that declare methods we want to list.
-    NSMutableArray *ancestorNodes = [NSMutableArray arrayWithObject:[self behaviorNode]];
+    NSMutableArray *ancestorNodes = [NSMutableArray arrayWithObject:[self behaviorItem]];
 
     if (_includesAncestors)
     {
         // Add superclasses to the list.  We will check nearest
         // superclasses first.
-        if ([[self behaviorNode] isClassNode])
+        if ([[self behaviorItem] isClassNode])
         {
-            AKClassNode *classNode = (AKClassNode *)[self behaviorNode];
+            AKClassNode *classNode = (AKClassNode *)[self behaviorItem];
 
             while ((classNode = classNode.parentClass))
             {
@@ -114,7 +114,7 @@
 
         // Add protocols we conform to to the list.  They will
         // be the last behaviors we check.
-        [ancestorNodes addObjectsFromArray:[[self behaviorNode] implementedProtocols]];
+        [ancestorNodes addObjectsFromArray:[[self behaviorItem] implementedProtocols]];
     }
 
     return ancestorNodes;
@@ -128,7 +128,7 @@
     // remain in the dictionary.
     NSMutableDictionary *methodsByName = [NSMutableDictionary dictionary];
 
-    for (AKBehaviorNode *ancestorNode in [self _ancestorNodesWeCareAbout])
+    for (AKBehaviorItem *ancestorNode in [self _ancestorNodesWeCareAbout])
     {
         for (AKMethodNode *methodNode in [self memberNodesForBehavior:ancestorNode])
         {

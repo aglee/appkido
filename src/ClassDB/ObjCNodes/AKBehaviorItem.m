@@ -1,11 +1,11 @@
 //
-// AKBehaviorNode.m
+// AKBehaviorItem.m
 //
 // Created by Andy Lee on Sun Jun 30 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 
 #import "DIGSLog.h"
 #import "AKProtocolNode.h"
@@ -13,7 +13,7 @@
 #import "AKMethodNode.h"
 #import "AKCollectionOfNodes.h"
 
-@implementation AKBehaviorNode
+@implementation AKBehaviorItem
 
 @synthesize headerFileWhereDeclared = _headerFileWhereDeclared;
 

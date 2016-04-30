@@ -32,11 +32,11 @@
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode
+- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem
 {
-    if ([behaviorNode isClassNode])
+    if ([behaviorItem isClassNode])
     {
-        return [(AKClassNode *)behaviorNode documentedNotifications];
+        return [(AKClassNode *)behaviorItem documentedNotifications];
     }
     else
     {

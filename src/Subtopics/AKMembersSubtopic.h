@@ -7,7 +7,7 @@
 
 #import "AKSubtopic.h"
 
-@class AKBehaviorNode;
+@class AKBehaviorItem;
 
 @interface AKMembersSubtopic : AKSubtopic
 {
@@ -29,13 +29,13 @@
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL includesAncestors;
 
 /*! Subclasses must override this. */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorNode *behaviorNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
 
 /*!
  * Subclass must override this.  Returns method nodes for a single node -- no
  * superclasses or protocols included.
  */
-- (NSArray *)memberNodesForBehavior:(AKBehaviorNode *)behaviorNode;
+- (NSArray *)memberNodesForBehavior:(AKBehaviorItem *)behaviorItem;
 
 /*! Subclasses must override this. */
 + (id)memberDocClass;

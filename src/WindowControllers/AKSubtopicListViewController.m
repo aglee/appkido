@@ -10,7 +10,7 @@
 #import "AKBehaviorTopic.h"
 #import "AKDocLocator.h"
 #import "AKHeaderFileDoc.h"
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 #import "AKSubtopic.h"
 #import "AKTableView.h"
 #import "AKTopic.h"
@@ -231,7 +231,7 @@
     {
         AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
         return ([currentTopic isKindOfClass:[AKBehaviorTopic class]]
-                && (((AKBehaviorNode *)[currentTopic topicNode]).headerFileWhereDeclared != nil));
+                && (((AKBehaviorItem *)[currentTopic topicNode]).headerFileWhereDeclared != nil));
     }
 
     return NO;

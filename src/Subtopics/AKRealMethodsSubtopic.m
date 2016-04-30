@@ -18,22 +18,22 @@
 #pragma mark -
 #pragma mark Factory methods
 
-+ (instancetype)subtopicForBehaviorNode:(AKBehaviorNode *)behaviorNode
++ (instancetype)subtopicForBehaviorItem:(AKBehaviorItem *)behaviorItem
              includeAncestors:(BOOL)includeAncestors
 {
-    return [[self alloc] initWithBehaviorNode:behaviorNode
+    return [[self alloc] initWithBehaviorItem:behaviorItem
                               includeAncestors:includeAncestors];
 }
 
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithBehaviorNode:(AKBehaviorNode *)behaviorNode
+- (instancetype)initWithBehaviorItem:(AKBehaviorItem *)behaviorItem
           includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _behaviorNode = behaviorNode;
+        _behaviorItem = behaviorItem;
     }
 
     return self;
@@ -42,16 +42,16 @@
 - (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithBehaviorNode:nil includeAncestors:NO];
+    return [self initWithBehaviorItem:nil includeAncestors:NO];
 }
 
 
 #pragma mark -
 #pragma mark AKMembersSubtopic methods
 
-- (AKBehaviorNode *)behaviorNode
+- (AKBehaviorItem *)behaviorItem
 {
-    return _behaviorNode;
+    return _behaviorItem;
 }
 
 @end

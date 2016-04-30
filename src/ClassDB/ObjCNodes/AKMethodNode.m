@@ -17,12 +17,12 @@
 - (instancetype)initWithNodeName:(NSString *)nodeName
               database:(AKDatabase *)database
          frameworkName:(NSString *)frameworkName
-        owningBehavior:(AKBehaviorNode *)behaviorNode
+        owningBehavior:(AKBehaviorItem *)behaviorItem
 {
     if ((self = [super initWithNodeName:nodeName
                                database:database
                           frameworkName:frameworkName
-                         owningBehavior:behaviorNode]))
+                         owningBehavior:behaviorItem]))
     {
         _argumentTypes = [[NSMutableArray alloc] init];
     }

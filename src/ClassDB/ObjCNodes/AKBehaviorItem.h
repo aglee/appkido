@@ -1,5 +1,5 @@
 //
-// AKBehaviorNode.h
+// AKBehaviorItem.h
 //
 // Created by Andy Lee on Sun Jun 30 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -7,7 +7,7 @@
 
 #import "AKDocSetTokenItem.h"
 
-@class AKBehaviorNode;
+@class AKBehaviorItem;
 @class AKCollectionOfNodes;
 @class AKMemberNode;
 @class AKMethodNode;
@@ -17,13 +17,13 @@
 #pragma mark -
 #pragma mark Blocks as alternatives to performSelector
 
-typedef id (^AKBlockForGettingMemberNode)(AKBehaviorNode *behaviorNode, NSString *memberName);
+typedef id (^AKBlockForGettingMemberNode)(AKBehaviorItem *behaviorItem, NSString *memberName);
 
-typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMemberNode *memberNode);
+typedef void (^AKBlockForAddingMemberNode)(AKBehaviorItem *behaviorItem, AKMemberNode *memberNode);
 
-#define blockForGettingMemberNode(xxxWithName) ^id (AKBehaviorNode *behaviorNode, NSString *memberName) { return [(id)behaviorNode xxxWithName:memberName]; }
+#define blockForGettingMemberNode(xxxWithName) ^id (AKBehaviorItem *behaviorItem, NSString *memberName) { return [(id)behaviorItem xxxWithName:memberName]; }
 
-#define blockForAddingMemberNode(addXXXNode) ^void (AKBehaviorNode *behaviorNode, AKMemberNode *memberNode) { [(id)behaviorNode addXXXNode:(id)memberNode]; }
+#define blockForAddingMemberNode(addXXXNode) ^void (AKBehaviorItem *behaviorItem, AKMemberNode *memberNode) { [(id)behaviorItem addXXXNode:(id)memberNode]; }
 
 
 #pragma mark -
@@ -40,7 +40,7 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorNode *behaviorNode, AKMembe
  * owning class's declaration. Or we may encounter a protocol in a class's list
  * of protocols before we've encountered its @protocol declaration.
  */
-@interface AKBehaviorNode : AKDocSetTokenItem
+@interface AKBehaviorItem : AKDocSetTokenItem
 {
 @private
     NSString *_headerFileWhereDeclared;

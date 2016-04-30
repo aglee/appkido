@@ -214,7 +214,7 @@
 }
 
 #pragma mark -
-#pragma mark AKBehaviorNode methods
+#pragma mark AKBehaviorItem methods
 
 - (BOOL)isClassNode
 {

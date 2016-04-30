@@ -5,7 +5,7 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 
 @class AKPropertyNode;
 @class AKNotificationNode;
@@ -21,7 +21,7 @@
  * We use the terms "parent class" and "child class" rather than "superclass"
  * and "subclass", to avoid confusion.
  */
-@interface AKClassNode : AKBehaviorNode
+@interface AKClassNode : AKBehaviorItem
 {
 @private
     // Elements are strings.

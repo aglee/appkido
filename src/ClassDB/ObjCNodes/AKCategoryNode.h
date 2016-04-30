@@ -5,11 +5,11 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 
 /*!
  * Represents an Objective-C category. This class currently isn't complete and
  * isn't used for anything serious.
  */
-@interface AKCategoryNode : AKBehaviorNode
+@interface AKCategoryNode : AKBehaviorItem
 @end

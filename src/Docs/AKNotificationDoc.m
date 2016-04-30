@@ -7,7 +7,7 @@
 
 #import "AKNotificationDoc.h"
 
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 #import "AKMethodNode.h"
 
 @implementation AKNotificationDoc
@@ -26,11 +26,11 @@
 - (NSString *)commentString
 {
     NSString *methodFrameworkName = self.memberNode.nameOfOwningFramework;
-    NSString *behaviorFrameworkName = self.behaviorNode.nameOfOwningFramework;
+    NSString *behaviorFrameworkName = self.behaviorItem.nameOfOwningFramework;
     BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-    AKBehaviorNode *ownerOfMethod = self.memberNode.owningBehavior;
+    AKBehaviorItem *ownerOfMethod = self.memberNode.owningBehavior;
 
-    if (self.behaviorNode == ownerOfMethod)
+    if (self.behaviorItem == ownerOfMethod)
     {
         // We're the first class/protocol to declare this method.
         if (methodIsInSameFramework)

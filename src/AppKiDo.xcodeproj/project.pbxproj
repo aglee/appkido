@@ -60,7 +60,7 @@
 		65B1099409D7B6C300A8A637 /* AKPrefPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */; };
 		65B1099609D7B6C300A8A637 /* AKDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73EE9E3D06856D120008CBEC /* AKDatabase.h */; };
 		65B1099809D7B6C300A8A637 /* AKDocSetTokenItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 730FCBD00685758B0083160A /* AKDocSetTokenItem.h */; };
-		65B1099A09D7B6C300A8A637 /* AKBehaviorNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */; };
+		65B1099A09D7B6C300A8A637 /* AKBehaviorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352076D0687B6D100BC8B33 /* AKBehaviorItem.h */; };
 		65B1099B09D7B6C300A8A637 /* AKBehaviorTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */; };
 		65B1099C09D7B6C300A8A637 /* AKBehaviorGeneralSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A35920688A09B00699C6D /* AKBehaviorGeneralSubtopic.h */; };
 		65B1099D09D7B6C300A8A637 /* AKRealMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A36520688A49900699C6D /* AKRealMethodsSubtopic.h */; };
@@ -158,7 +158,7 @@
 		65B10A1909D7B6C300A8A637 /* AKPrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */; };
 		65B10A1B09D7B6C300A8A637 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE9E3E06856D120008CBEC /* AKDatabase.m */; };
 		65B10A1E09D7B6C300A8A637 /* AKDocSetTokenItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 730FCBD10685758B0083160A /* AKDocSetTokenItem.m */; };
-		65B10A2009D7B6C300A8A637 /* AKBehaviorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */; };
+		65B10A2009D7B6C300A8A637 /* AKBehaviorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352076E0687B6D100BC8B33 /* AKBehaviorItem.m */; };
 		65B10A2109D7B6C300A8A637 /* AKBehaviorTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */; };
 		65B10A2209D7B6C300A8A637 /* AKBehaviorGeneralSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A35930688A09B00699C6D /* AKBehaviorGeneralSubtopic.m */; };
 		65B10A2309D7B6C300A8A637 /* AKRealMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A36530688A49900699C6D /* AKRealMethodsSubtopic.m */; };
@@ -407,7 +407,7 @@
 		7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */; };
 		7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 73EE9E3D06856D120008CBEC /* AKDatabase.h */; };
 		7399B2F60E632A5C001AE672 /* AKDocSetTokenItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 730FCBD00685758B0083160A /* AKDocSetTokenItem.h */; };
-		7399B2F70E632A5C001AE672 /* AKBehaviorNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */; };
+		7399B2F70E632A5C001AE672 /* AKBehaviorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352076D0687B6D100BC8B33 /* AKBehaviorItem.h */; };
 		7399B2F80E632A5C001AE672 /* AKBehaviorTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */; };
 		7399B2F90E632A5C001AE672 /* AKBehaviorGeneralSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A35920688A09B00699C6D /* AKBehaviorGeneralSubtopic.h */; };
 		7399B2FA0E632A5C001AE672 /* AKRealMethodsSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 730A36520688A49900699C6D /* AKRealMethodsSubtopic.h */; };
@@ -522,7 +522,7 @@
 		7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */; };
 		7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE9E3E06856D120008CBEC /* AKDatabase.m */; };
 		7399B3890E632A5C001AE672 /* AKDocSetTokenItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 730FCBD10685758B0083160A /* AKDocSetTokenItem.m */; };
-		7399B38A0E632A5C001AE672 /* AKBehaviorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */; };
+		7399B38A0E632A5C001AE672 /* AKBehaviorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352076E0687B6D100BC8B33 /* AKBehaviorItem.m */; };
 		7399B38B0E632A5C001AE672 /* AKBehaviorTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */; };
 		7399B38C0E632A5C001AE672 /* AKBehaviorGeneralSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A35930688A09B00699C6D /* AKBehaviorGeneralSubtopic.m */; };
 		7399B38D0E632A5C001AE672 /* AKRealMethodsSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 730A36530688A49900699C6D /* AKRealMethodsSubtopic.m */; };
@@ -892,8 +892,8 @@
 		734B75D216D062060027514D /* AKSplashWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSplashWindowController.h; sourceTree = "<group>"; };
 		734B75D316D062060027514D /* AKSplashWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSplashWindowController.m; sourceTree = "<group>"; };
 		734B75D416D062060027514D /* SplashWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashWindow.xib; path = English.lproj/SplashWindow.xib; sourceTree = "<group>"; };
-		7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKBehaviorNode.h; sourceTree = "<group>"; };
-		7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorNode.m; sourceTree = "<group>"; };
+		7352076D0687B6D100BC8B33 /* AKBehaviorItem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKBehaviorItem.h; sourceTree = "<group>"; };
+		7352076E0687B6D100BC8B33 /* AKBehaviorItem.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorItem.m; sourceTree = "<group>"; };
 		7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKBehaviorTopic.h; path = Topics/AKBehaviorTopic.h; sourceTree = SOURCE_ROOT; };
 		7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKBehaviorTopic.m; path = Topics/AKBehaviorTopic.m; sourceTree = SOURCE_ROOT; };
 		7359EB2B0BADB68100574728 /* AKApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKApplication.h; path = ../AKApplication.h; sourceTree = "<group>"; };
@@ -1915,8 +1915,8 @@
 		73E86F460E397729002AFB76 /* behaviors */ = {
 			isa = PBXGroup;
 			children = (
-				7352076D0687B6D100BC8B33 /* AKBehaviorNode.h */,
-				7352076E0687B6D100BC8B33 /* AKBehaviorNode.m */,
+				7352076D0687B6D100BC8B33 /* AKBehaviorItem.h */,
+				7352076E0687B6D100BC8B33 /* AKBehaviorItem.m */,
 				732BD55C05ED8DC60055715D /* AKProtocolNode.h */,
 				732BD55D05ED8DC60055715D /* AKProtocolNode.m */,
 				732BD55405ED8DC50055715D /* AKClassNode.h */,
@@ -2032,7 +2032,7 @@
 				734AEEA11CC5E1600064AAA9 /* _APILanguage.h in Headers */,
 				734AEE871CC5E1600064AAA9 /* DocSet.h in Headers */,
 				65B1099809D7B6C300A8A637 /* AKDocSetTokenItem.h in Headers */,
-				65B1099A09D7B6C300A8A637 /* AKBehaviorNode.h in Headers */,
+				65B1099A09D7B6C300A8A637 /* AKBehaviorItem.h in Headers */,
 				65B1099B09D7B6C300A8A637 /* AKBehaviorTopic.h in Headers */,
 				65B1099C09D7B6C300A8A637 /* AKBehaviorGeneralSubtopic.h in Headers */,
 				65B1099D09D7B6C300A8A637 /* AKRealMethodsSubtopic.h in Headers */,
@@ -2190,7 +2190,7 @@
 				7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */,
 				7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */,
 				7399B2F60E632A5C001AE672 /* AKDocSetTokenItem.h in Headers */,
-				7399B2F70E632A5C001AE672 /* AKBehaviorNode.h in Headers */,
+				7399B2F70E632A5C001AE672 /* AKBehaviorItem.h in Headers */,
 				7399B2F80E632A5C001AE672 /* AKBehaviorTopic.h in Headers */,
 				7399B2F90E632A5C001AE672 /* AKBehaviorGeneralSubtopic.h in Headers */,
 				7399B2FA0E632A5C001AE672 /* AKRealMethodsSubtopic.h in Headers */,
@@ -2521,7 +2521,7 @@
 				65B10A1909D7B6C300A8A637 /* AKPrefPanelController.m in Sources */,
 				65B10A1B09D7B6C300A8A637 /* AKDatabase.m in Sources */,
 				65B10A1E09D7B6C300A8A637 /* AKDocSetTokenItem.m in Sources */,
-				65B10A2009D7B6C300A8A637 /* AKBehaviorNode.m in Sources */,
+				65B10A2009D7B6C300A8A637 /* AKBehaviorItem.m in Sources */,
 				734AEEB81CC5E1600064AAA9 /* _OrderedSubnode.m in Sources */,
 				65B10A2109D7B6C300A8A637 /* AKBehaviorTopic.m in Sources */,
 				65B10A2209D7B6C300A8A637 /* AKBehaviorGeneralSubtopic.m in Sources */,
@@ -2673,7 +2673,7 @@
 				7399B3850E632A5C001AE672 /* AKPrefPanelController.m in Sources */,
 				7399B3870E632A5C001AE672 /* AKDatabase.m in Sources */,
 				7399B3890E632A5C001AE672 /* AKDocSetTokenItem.m in Sources */,
-				7399B38A0E632A5C001AE672 /* AKBehaviorNode.m in Sources */,
+				7399B38A0E632A5C001AE672 /* AKBehaviorItem.m in Sources */,
 				7399B38B0E632A5C001AE672 /* AKBehaviorTopic.m in Sources */,
 				7399B38C0E632A5C001AE672 /* AKBehaviorGeneralSubtopic.m in Sources */,
 				7399B38D0E632A5C001AE672 /* AKRealMethodsSubtopic.m in Sources */,

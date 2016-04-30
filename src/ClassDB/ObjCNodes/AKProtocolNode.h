@@ -5,13 +5,13 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 
 /*!
  * Represents an Objective-C protocol, either formal or informal.  A protocol is
  * assumed to be informal if no header file has been specified for it.
  */
-@interface AKProtocolNode : AKBehaviorNode
+@interface AKProtocolNode : AKBehaviorItem
 
 @property (nonatomic, readonly, assign)  BOOL isInformal;
 

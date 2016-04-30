@@ -9,7 +9,7 @@
 #import "AKMemberNode.h"
 
 #import "DIGSLog.h"
-#import "AKBehaviorNode.h"
+#import "AKBehaviorItem.h"
 
 @implementation AKMemberNode
 
@@ -18,11 +18,11 @@
 #pragma mark -
 #pragma mark Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorNode *)behaviorNode
+- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorItem *)behaviorItem
 {
     if ((self = [super initWithNodeName:nodeName database:database frameworkName:frameworkName]))
     {
-        _owningBehavior = behaviorNode;
+        _owningBehavior = behaviorItem;
     }
 
     return self;

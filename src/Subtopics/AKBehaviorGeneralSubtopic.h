@@ -7,7 +7,7 @@
 
 #import "AKSubtopic.h"
 
-@class AKBehaviorNode;
+@class AKBehaviorItem;
 @class AKFileSection;
 
 /*!
@@ -38,7 +38,7 @@
 #pragma mark Getters and setters
 
 /*! Subclasses must override. */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorNode *behaviorNode;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
 
 /*! For internal use. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *htmlNameOfDescriptionSection;
