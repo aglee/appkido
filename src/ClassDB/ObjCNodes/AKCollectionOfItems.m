@@ -1,17 +1,17 @@
 //
-//  AKCollectionOfNodes.m
+//  AKCollectionOfItems.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 6/22/08.
 //  Copyright 2008 Andy Lee. All rights reserved.
 //
 
-#import "AKCollectionOfNodes.h"
+#import "AKCollectionOfItems.h"
 
 #import "DIGSLog.h"
 #import "AKDocSetTokenItem.h"
 
-@implementation AKCollectionOfNodes
+@implementation AKCollectionOfItems
 
 #pragma mark -
 #pragma mark Init/awake/dealloc

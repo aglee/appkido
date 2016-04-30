@@ -11,7 +11,7 @@
 #import "AKProtocolItem.h"
 #import "AKPropertyNode.h"
 #import "AKMethodNode.h"
-#import "AKCollectionOfNodes.h"
+#import "AKCollectionOfItems.h"
 
 @implementation AKBehaviorItem
 
@@ -29,9 +29,9 @@
         _protocolItems = [[NSMutableArray alloc] init];
         _protocolItemNames = [[NSMutableSet alloc] init];
 
-        _indexOfProperties = [[AKCollectionOfNodes alloc] init];
-        _indexOfClassMethods = [[AKCollectionOfNodes alloc] init];
-        _indexOfInstanceMethods = [[AKCollectionOfNodes alloc] init];
+        _indexOfProperties = [[AKCollectionOfItems alloc] init];
+        _indexOfClassMethods = [[AKCollectionOfItems alloc] init];
+        _indexOfInstanceMethods = [[AKCollectionOfItems alloc] init];
     }
 
     return self;

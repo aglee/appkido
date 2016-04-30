@@ -8,7 +8,7 @@
 #import "AKClassNode.h"
 #import "DIGSLog.h"
 #import "AKCategoryNode.h"
-#import "AKCollectionOfNodes.h"
+#import "AKCollectionOfItems.h"
 #import "AKDatabase.h"
 #import "AKFileSection.h"
 #import "AKMethodNode.h"
@@ -42,8 +42,8 @@
         _childClassNodes = [[NSMutableArray alloc] init];
         _categoryNodes = [[NSMutableArray alloc] init];
 
-        _indexOfDelegateMethods = [[AKCollectionOfNodes alloc] init];
-        _indexOfNotifications = [[AKCollectionOfNodes alloc] init];
+        _indexOfDelegateMethods = [[AKCollectionOfItems alloc] init];
+        _indexOfNotifications = [[AKCollectionOfItems alloc] init];
     }
 
     return self;

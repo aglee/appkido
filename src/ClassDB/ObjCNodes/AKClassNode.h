@@ -10,7 +10,7 @@
 @class AKPropertyNode;
 @class AKNotificationNode;
 @class AKCategoryNode;
-@class AKCollectionOfNodes;
+@class AKCollectionOfItems;
 
 /*!
  * Represents an Objective-C class, which in addition to having methods can have
@@ -39,11 +39,11 @@
 
     // Contains AKMethodNodes, one for each delegate method that has been
     // found in the documentation for this class.
-    AKCollectionOfNodes *_indexOfDelegateMethods;
+    AKCollectionOfItems *_indexOfDelegateMethods;
 
     // Contains AKNotificationNodes, one for each notification that has been
     // found in the documentation for this class.
-    AKCollectionOfNodes *_indexOfNotifications;
+    AKCollectionOfItems *_indexOfNotifications;
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassNode *parentClass;

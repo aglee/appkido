@@ -1,5 +1,5 @@
 //
-//  AKCollectionOfNodes.h
+//  AKCollectionOfItems.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 6/22/08.
@@ -12,9 +12,9 @@
 
 /*!
  * Wrapper around a collection of AKDocSetTokenItems, with a couple of convenience
- * methods.  Unlike an AKGroupNode, an AKCollectionOfNodes is not itself a node.
+ * methods.  Unlike an AKGroupNode, an AKCollectionOfItems is not itself a node.
  */
-@interface AKCollectionOfNodes : NSObject
+@interface AKCollectionOfItems : NSObject
 {
 @private
     // Contains all the AKDocSetTokenItems that have been added to us.

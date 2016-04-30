@@ -8,7 +8,7 @@
 #import "AKDocSetTokenItem.h"
 
 @class AKBehaviorItem;
-@class AKCollectionOfNodes;
+@class AKCollectionOfItems;
 @class AKMemberNode;
 @class AKMethodNode;
 @class AKPropertyNode;
@@ -52,17 +52,17 @@ typedef void (^AKBlockForAddingMemberNode)(AKBehaviorItem *behaviorItem, AKMembe
     NSMutableSet *_protocolItemNames;
 
     // Contains AKPropertyNodes, each representing a property of this class.
-    AKCollectionOfNodes *_indexOfProperties;
+    AKCollectionOfItems *_indexOfProperties;
 
     // Contains AKMethodNodes, one for each class method that has either
     // been found in my .h file or been found in the documentation for my
     // behavior.
-    AKCollectionOfNodes *_indexOfClassMethods;
+    AKCollectionOfItems *_indexOfClassMethods;
 
     // Contains AKMethodNodes, one for each instance method that has either
     // been found in my .h file or been found in the documentation for my
     // behavior.
-    AKCollectionOfNodes *_indexOfInstanceMethods;
+    AKCollectionOfItems *_indexOfInstanceMethods;
 }
 
 /*! Path to the .h file that declares this behavior. */
