@@ -103,7 +103,6 @@
 		65B109D509D7B6C300A8A637 /* search-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306804984FF600A80007 /* search-tool.tiff */; };
 		65B109D609D7B6C300A8A637 /* superclass-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306904984FF600A80007 /* superclass-tool.tiff */; };
 		65B109D709D7B6C300A8A637 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 73B9158706133DBF00066E17 /* Credits.html */; };
-		65B109D909D7B6C300A8A637 /* about-the-code.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* about-the-code.markdown */; };
 		65B109DB09D7B6C300A8A637 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		65B109DC09D7B6C300A8A637 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
 		65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030AA0498501500A80007 /* AKTableView.m */; };
@@ -466,7 +465,6 @@
 		7399B33D0E632A5C001AE672 /* search-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306804984FF600A80007 /* search-tool.tiff */; };
 		7399B33E0E632A5C001AE672 /* superclass-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7300306904984FF600A80007 /* superclass-tool.tiff */; };
 		7399B33F0E632A5C001AE672 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 73B9158706133DBF00066E17 /* Credits.html */; };
-		7399B3410E632A5C001AE672 /* about-the-code.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 7302DF980767B65200F9FEC0 /* about-the-code.markdown */; };
 		7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		7399B3470E632A5C001AE672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		7399B3480E632A5C001AE672 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 730030A80498501500A80007 /* AKBrowser.m */; };
@@ -719,7 +717,6 @@
 		730030AA0498501500A80007 /* AKTableView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKTableView.m; path = CustomViews/AKTableView.m; sourceTree = "<group>"; };
 		730030DD0498501500A80007 /* AKSortable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSortable.h; sourceTree = "<group>"; };
 		7300310C0498501500A80007 /* AKWindowController+Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "AKWindowController+Toolbar.m"; sourceTree = "<group>"; };
-		7302DF980767B65200F9FEC0 /* about-the-code.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "about-the-code.markdown"; sourceTree = "<group>"; };
 		7304030516DF8DAB005E04A1 /* AKButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKButtonCell.h; path = CustomViews/AKButtonCell.h; sourceTree = "<group>"; };
 		7304030616DF8DAB005E04A1 /* AKButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKButtonCell.m; path = CustomViews/AKButtonCell.m; sourceTree = "<group>"; };
 		7304030B16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKMultiRadioViewDelegate.h; path = CustomViews/AKMultiRadioViewDelegate.h; sourceTree = "<group>"; };
@@ -804,6 +801,7 @@
 		733DF5FD14E17FAA007E6313 /* DocPaths2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocPaths2.sql; sourceTree = "<group>"; };
 		733DF5FE14E17FBC007E6313 /* HeaderPaths.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeaderPaths.sql; sourceTree = "<group>"; };
 		733DF63F14E18FAB007E6313 /* DocSetIndexTables.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocSetIndexTables.txt; sourceTree = "<group>"; };
+		733E49641CD58B0100F27735 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		734168FA0841F59C0027E6BD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		734879D10E3AB45000A3B12F /* AKPropertiesSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPropertiesSubtopic.h; sourceTree = "<group>"; };
 		734879D20E3AB45000A3B12F /* AKPropertiesSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPropertiesSubtopic.m; sourceTree = "<group>"; };
@@ -1036,7 +1034,6 @@
 		73D409E804A3A04F00A80003 /* AKSortUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSortUtils.m; sourceTree = "<group>"; };
 		73D409EE04A3A1EB00A80003 /* NSString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AppKiDo.h"; sourceTree = "<group>"; };
 		73D409EF04A3A1EB00A80003 /* NSString+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AppKiDo.m"; sourceTree = "<group>"; };
-		73D57F8A17379ED00078E389 /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMethodNameExtractor.h; sourceTree = "<group>"; };
 		73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMethodNameExtractor.m; sourceTree = "<group>"; };
 		73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKServicesProvider.h; sourceTree = "<group>"; };
@@ -1128,9 +1125,8 @@
 		29B97314FDCFA39411CA2CEA /* HierKnowledge */ = {
 			isa = PBXGroup;
 			children = (
+				733E49641CD58B0100F27735 /* README.md */,
 				73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */,
-				73D57F8A17379ED00078E389 /* README.markdown */,
-				7302DF980767B65200F9FEC0 /* about-the-code.markdown */,
 				733DF63F14E18FAB007E6313 /* DocSetIndexTables.txt */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				73DA45FD0966583A00BFD67E /* AppKiDo_Prefix.pch */,
@@ -2367,7 +2363,6 @@
 				65B109D509D7B6C300A8A637 /* search-tool.tiff in Resources */,
 				65B109D609D7B6C300A8A637 /* superclass-tool.tiff in Resources */,
 				65B109D709D7B6C300A8A637 /* Credits.html in Resources */,
-				65B109D909D7B6C300A8A637 /* about-the-code.markdown in Resources */,
 				73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */,
 				7399B3FB0E638B54001AE672 /* app-icon-iphone.icns in Resources */,
 				73C891DF14E10B7600A54FF6 /* DevToolsPanel.xib in Resources */,
@@ -2420,7 +2415,6 @@
 				7399B33D0E632A5C001AE672 /* search-tool.tiff in Resources */,
 				7399B33E0E632A5C001AE672 /* superclass-tool.tiff in Resources */,
 				7399B33F0E632A5C001AE672 /* Credits.html in Resources */,
-				7399B3410E632A5C001AE672 /* about-the-code.markdown in Resources */,
 				7399B3420E632A5C001AE672 /* AppKiDo.sdef in Resources */,
 				73D07C0A14E11D2E00383E06 /* DevToolsPanel.xib in Resources */,
 				73D07C0B14E11D3300383E06 /* MainMenu.xib in Resources */,
