@@ -37,13 +37,8 @@
 
 - (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entity:(NSString *)entityName
 {
-    if (docSetIndex == nil) {
-        [NSException raise:NSInvalidArgumentException format:@"docSetIndex can't be nil."];
-    }
-    if (entityName == nil) {
-        [NSException raise:NSInvalidArgumentException format:@"entityName can't be nil."];
-    }
-
+    NSParameterAssert(docSetIndex != nil);
+    NSParameterAssert(entityName != nil);
     self = [super init];
     if (self) {
         _docSetIndex = docSetIndex;

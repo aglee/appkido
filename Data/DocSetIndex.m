@@ -25,10 +25,7 @@
 
 - (instancetype)initWithDocSetPath:(NSString *)docSetPath
 {
-    if (docSetPath == nil) {
-        [NSException raise:NSInvalidArgumentException format:@"docSetPath can't be nil."];
-    }
-
+    NSParameterAssert(docSetPath != nil);
 	self = [super init];
 	if (self) {
 		_docSetPath = docSetPath;  //TODO: Fail if doesn't look like a docset bundle.
