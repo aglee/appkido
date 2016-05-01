@@ -37,8 +37,7 @@
 
 #define MEASURE_PARSE_SPEED 1
 
-#pragma mark -
-#pragma mark Forwarding of applescript commands
+#pragma mark - Forwarding of applescript commands
 
 // Thanks to Dominik Wagner for AppleScript support!
 @interface NSApplication (NSAppScriptingAdditions)
@@ -60,16 +59,14 @@
 
 @synthesize firstGoMenuDivider = _firstGoMenuDivider;
 
-#pragma mark -
-#pragma mark Shared instance
+#pragma mark - Shared instance
 
 + (AKAppDelegate *)appDelegate
 {
     return (AKAppDelegate *)NSApp.delegate;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 #if MEASURE_PARSE_SPEED
 static NSTimeInterval g_startTime = 0.0;
@@ -117,16 +114,14 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKDatabase *)appDatabase
 {
     return _appDatabase;
 }
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (NSTextView *)selectedTextView  //TODO: What about using [NSView +focusView]?
 {
@@ -172,8 +167,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return wc;
 }
 
-#pragma mark -
-#pragma mark Search
+#pragma mark - Search
 
 - (void)performExternallyRequestedSearchForString:(NSString *)searchString
 {
@@ -197,8 +191,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [wc searchForString:searchString];
 }
 
-#pragma mark -
-#pragma mark AppleScript support
+#pragma mark - AppleScript support
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand
 {
@@ -206,8 +199,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return nil;
 }
 
-#pragma mark -
-#pragma mark Managing the user's Favorites list
+#pragma mark - Managing the user's Favorites list
 
 - (NSArray *)favoritesList
 {
@@ -253,8 +245,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [self applyUserPreferences];
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)openAboutPanel:(id)sender
 {
@@ -385,8 +376,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [AKPopQuizWindowController showPopQuiz];
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -412,8 +402,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
 }
 
-#pragma mark -
-#pragma mark NSUserInterfaceValidations methods
+#pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
@@ -445,8 +434,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return NO;
 }
 
-#pragma mark -
-#pragma mark NSApplication delegate methods
+#pragma mark - NSApplication delegate methods
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -491,8 +479,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [AKPrefUtils setArrayValue:[self _allWindowsAsPrefArray] forPref:AKSavedWindowStatesPrefName];
 }
 
-#pragma mark -
-#pragma mark Private methods -- steps during launch
+#pragma mark - Private methods -- steps during launch
 
 - (void)_populateDatabase
 {
@@ -662,8 +649,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     }
 }
 
-#pragma mark -
-#pragma mark Private methods -- window management
+#pragma mark - Private methods -- window management
 
 - (NSWindow *)_frontmostBrowserWindow
 {
@@ -746,8 +732,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     return result;
 }
 
-#pragma mark -
-#pragma mark Private methods -- version management
+#pragma mark - Private methods -- version management
 
 // URL of the file from which to get the latest version number.
 #if APPKIDO_FOR_IPHONE
@@ -790,8 +775,7 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     return [AKAppVersion appVersionFromString:latestAppVersionString];
 }
 
-#pragma mark -
-#pragma mark Private methods -- Favorites
+#pragma mark - Private methods -- Favorites
 
 - (void)_getFavoritesFromPrefs
 {

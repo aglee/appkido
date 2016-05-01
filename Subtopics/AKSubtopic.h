@@ -24,8 +24,7 @@
     NSMutableArray *_docList;
 }
 
-#pragma mark -
-#pragma mark AKXyzSubtopicName
+#pragma mark - AKXyzSubtopicName
 
 // Names of subtopics that are listed when the topic is a class or protocol.
 extern NSString *AKGeneralSubtopicName;
@@ -40,16 +39,14 @@ extern NSString *AKAllDelegateMethodsSubtopicName;
 extern NSString *AKNotificationsSubtopicName;
 extern NSString *AKAllNotificationsSubtopicName;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 /*! Subclasses must override. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *subtopicName;
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInSubtopicList;
 
-#pragma mark -
-#pragma mark Docs
+#pragma mark - Docs
 
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDocs;
 

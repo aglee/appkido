@@ -26,8 +26,7 @@
 @synthesize subtopic = _subtopic;
 @synthesize docListTable = _docListTable;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
@@ -40,8 +39,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSString *)docComment
 {
@@ -52,16 +50,14 @@
             : @"");
 }
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (void)focusOnDocListTable
 {
     (void)[_docListTable.window makeFirstResponder:_docListTable];
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)doDocListTableAction:(id)sender
 {
@@ -74,8 +70,7 @@
     [self.owningWindowController selectDocWithName:docName];
 }
 
-#pragma mark -
-#pragma mark AKViewController methods
+#pragma mark - AKViewController methods
 
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
@@ -129,24 +124,21 @@
     }
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
     [_docListTable applyListFontPrefs];
 }
 
-#pragma mark -
-#pragma mark NSUserInterfaceValidations methods
+#pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
     return NO;
 }
 
-#pragma mark -
-#pragma mark NSTableView datasource methods
+#pragma mark - NSTableView datasource methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {

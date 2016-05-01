@@ -70,15 +70,13 @@
 @property (nonatomic, weak) IBOutlet AKTableView *quicklistTable;
 @property (nonatomic, weak) IBOutlet NSButton *removeFavoriteButton;
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (void)searchForString:(NSString *)aString;
 
 - (void)includeEverythingInSearch;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)doQuicklistTableAction:(id)sender;
 

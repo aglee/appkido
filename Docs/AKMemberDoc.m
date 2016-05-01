@@ -18,8 +18,7 @@
 @synthesize memberItem = _memberItem;
 @synthesize behaviorItem = _behaviorItem;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithMemberItem:(AKMemberItem *)memberItem
      inheritedByBehavior:(AKBehaviorItem *)behaviorItem
@@ -40,8 +39,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Manipulating token names
+#pragma mark - Manipulating token names
 
 + (NSString *)punctuateTokenName:(NSString *)memberName
 {
@@ -49,8 +47,7 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark AKDoc methods
+#pragma mark - AKDoc methods
 
 - (AKFileSection *)fileSection
 {

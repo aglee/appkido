@@ -15,21 +15,18 @@
     AKBehaviorItem *_behaviorItem;
 }
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)subtopicForBehaviorItem:(AKBehaviorItem *)behaviorItem
              includeAncestors:(BOOL)includeAncestors;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithBehaviorItem:(AKBehaviorItem *)behaviorItem
           includeAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
 

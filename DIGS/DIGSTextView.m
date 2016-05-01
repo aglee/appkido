@@ -10,8 +10,7 @@
 
 @implementation DIGSTextView
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithFrame:(NSRect)frameRect
 {
@@ -34,8 +33,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSString *)linkCursorImageName
 {
@@ -47,8 +45,7 @@
     return NSMakePoint(6, 0);
 }
 
-#pragma mark -
-#pragma mark NSTextView methods
+#pragma mark - NSTextView methods
 
 - (void)resetCursorRects
 {
@@ -56,8 +53,7 @@
     [self _setCursorRectsForLinks];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // Called by the init methods.
 - (void)_initLinkCursor

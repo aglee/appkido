@@ -26,13 +26,11 @@
 @property (nonatomic, readonly, strong) AKDatabase *topicDatabase;
 @property (nonatomic, readonly, copy) NSString *topicFrameworkName;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase NS_DESIGNATED_INITIALIZER;

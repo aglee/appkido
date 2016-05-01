@@ -19,8 +19,7 @@
 
 @implementation AKBehaviorGeneralSubtopic
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKBehaviorItem *)behaviorItem
 {
@@ -40,8 +39,7 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark Utility methods
+#pragma mark - Utility methods
 
 - (NSArray *)pertinentChildSectionsOf:(AKFileSection *)rootSection
 {
@@ -68,8 +66,7 @@
     return pertinentSections;
 }
 
-#pragma mark -
-#pragma mark AKSubtopic methods
+#pragma mark - AKSubtopic methods
 
 - (NSString *)subtopicName
 {

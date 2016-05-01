@@ -8,8 +8,7 @@
 #import "AKPrefConstants.h"
 
 
-#pragma mark -
-#pragma mark Keys for NSUserDefaults
+#pragma mark - Keys for NSUserDefaults
 
 NSString *AKLayoutForNewWindowsPrefName       = @"AKLayoutForNewWindows";
 NSString *AKSavedWindowStatesPrefName         = @"AKSavedWindowStates";
@@ -35,8 +34,7 @@ NSString *AKSDKVersionPrefName = @"AKSDKVersion";
 
 NSString *AKSearchInNewWindowPrefName         = @"AKSearchInNewWindow";
 
-#pragma mark -
-#pragma mark "PrefKey" = key within a pref that is a dictionary
+#pragma mark - "PrefKey" = key within a pref that is a dictionary
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.

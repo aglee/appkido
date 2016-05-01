@@ -11,8 +11,7 @@
 
 @synthesize owningWindowController = _owningWindowController;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
@@ -37,23 +36,20 @@
     return [self initWithNibName:nil windowController:nil];
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKWindowController *)owningWindowController
 {
     return _owningWindowController;
 }
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -67,8 +63,7 @@
 {
 }
 
-#pragma mark -
-#pragma mark NSUserInterfaceValidations methods
+#pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {

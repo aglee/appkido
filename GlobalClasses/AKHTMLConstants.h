@@ -8,8 +8,7 @@
 #import <Foundation/Foundation.h>
 
 
-#pragma mark -
-#pragma mark AKXyzHTMLSectionName
+#pragma mark - AKXyzHTMLSectionName
 //
 // Names of "major sections" within HTML doc files.  When the topic is a
 // class or protocol and the subtopic is "General", some of these are

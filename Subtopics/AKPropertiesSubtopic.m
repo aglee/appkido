@@ -13,8 +13,7 @@
 
 @implementation AKPropertiesSubtopic
 
-#pragma mark -
-#pragma mark AKSubtopic methods
+#pragma mark - AKSubtopic methods
 
 - (NSString *)subtopicName
 {
@@ -30,8 +29,7 @@
             : [self subtopicName]);
 }
 
-#pragma mark -
-#pragma mark AKMembersSubtopic methods
+#pragma mark - AKMembersSubtopic methods
 
 - (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {

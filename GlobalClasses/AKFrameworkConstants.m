@@ -8,8 +8,7 @@
 #import "AKFrameworkConstants.h"
 
 
-#pragma mark -
-#pragma mark AKXyzFrameworkName
+#pragma mark - AKXyzFrameworkName
 
 NSString *AKFoundationFrameworkName  = @"Foundation";
 NSString *AKAppKitFrameworkName      = @"AppKit";

@@ -34,8 +34,7 @@
  */
 @interface AKBehaviorGeneralSubtopic : AKSubtopic
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 /*! Subclasses must override. */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
@@ -46,8 +45,7 @@
 /*! For internal use. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *altHtmlNameOfDescriptionSection;
 
-#pragma mark -
-#pragma mark Utility methods
+#pragma mark - Utility methods
 
 /*! For internal use. */
 - (NSArray *)pertinentChildSectionsOf:(AKFileSection *)rootSection;

@@ -22,8 +22,7 @@
 
 @interface AKTabChain : NSObject
 
-#pragma mark -
-#pragma mark Event handling
+#pragma mark - Event handling
 
 + (BOOL)handlePossibleTabChainEvent:(NSEvent *)anEvent;
 

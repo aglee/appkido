@@ -14,8 +14,7 @@
 
 @implementation AKServicesProvider
 
-#pragma mark -
-#pragma mark Methods listed in the NSServices section of Info.plist
+#pragma mark - Methods listed in the NSServices section of Info.plist
 
 // "copyWithSelectorAwareness" is what appears in Info.plist. The rest of the
 // method name is implied.

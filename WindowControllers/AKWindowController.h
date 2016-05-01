@@ -116,21 +116,18 @@
 /*! On the left side of the window. */
 @property (nonatomic, weak) IBOutlet NSDrawer *quicklistDrawer;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 /*! Designated initializer though not marked as such.  Too much hassle avoiding compiler warnings in this case. */
 - (instancetype)initWithDatabase:(AKDatabase *)database /*NS_DESIGNATED_INITIALIZER*/;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDatabase *database;
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDocLocator *currentDocLocator;
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 /*! Selects the topic in the topic browser. Updates the rest of the window. */
 - (void)selectTopic:(AKTopic *)obj;
@@ -159,8 +156,7 @@
 
 - (void)revealPopQuizSymbol:(NSString *)apiSymbol;
 
-#pragma mark -
-#pragma mark Action methods -- window layout
+#pragma mark - Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender;
 
@@ -168,8 +164,7 @@
 
 - (IBAction)toggleQuicklistDrawer:(id)sender;
 
-#pragma mark -
-#pragma mark Action methods -- navigation
+#pragma mark - Action methods -- navigation
 
 - (IBAction)goBackInHistory:(id)sender;
 
@@ -207,8 +202,7 @@
 /*! Adds the currently selected topic to the Favorites quicklist. */
 - (IBAction)addTopicToFavorites:(id)sender;
 
-#pragma mark -
-#pragma mark Action methods -- accessing the doc file
+#pragma mark - Action methods -- accessing the doc file
 
 - (IBAction)copyDocFileURL:(id)sender;
 
@@ -218,8 +212,7 @@
 
 - (IBAction)revealDocFileInFinder:(id)sender;
 
-#pragma mark -
-#pragma mark Action methods -- debugging
+#pragma mark - Action methods -- debugging
 
 - (IBAction)openParseDebugWindow:(id)sender;
 

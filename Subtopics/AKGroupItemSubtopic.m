@@ -13,8 +13,7 @@
 
 @synthesize groupItem = _groupItem;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithGroupItem:(AKGroupItem *)groupItem
 {
@@ -33,8 +32,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKSubtopic methods
+#pragma mark - AKSubtopic methods
 
 - (NSString *)subtopicName
 {

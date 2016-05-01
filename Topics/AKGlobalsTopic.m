@@ -15,8 +15,7 @@
 
 @implementation AKGlobalsTopic
 
-#pragma mark -
-#pragma mark AKTopic methods
+#pragma mark - AKTopic methods
 
 - (NSString *)stringToDisplayInTopicBrowser
 {

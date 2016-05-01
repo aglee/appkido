@@ -30,19 +30,16 @@
 @property (nonatomic, strong) AKSubtopic *subtopic;
 @property (nonatomic, weak) IBOutlet AKTableView *docListTable;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *docComment;
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 /*! Makes the doc list table first responder. */
 - (void)focusOnDocListTable;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 /*! Called when the user select an item in the doc list table. */
 - (IBAction)doDocListTableAction:(id)sender;

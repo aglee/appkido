@@ -17,12 +17,10 @@
 @synthesize savedWindowLayout = _savedWindowLayout;
 @synthesize savedDocLocator = _savedDocLocator;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {

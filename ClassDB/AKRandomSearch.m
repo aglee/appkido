@@ -24,8 +24,7 @@
 
 @synthesize selectedAPISymbol = _selectedAPISymbol;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)randomSearchWithDatabase:(AKDatabase *)db
 {
@@ -36,8 +35,7 @@
     return randomSearch;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDatabase:(AKDatabase *)db
 {
@@ -56,8 +54,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Random selection
+#pragma mark - Random selection
 
 - (void)makeRandomSelection
 {
@@ -78,8 +75,7 @@
     self.selectedAPISymbol = allSymbols[randomArrayIndex];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_addTokenItems:(NSArray *)itemsToAdd toSymbolArray:(NSMutableArray *)apiSymbols
 {

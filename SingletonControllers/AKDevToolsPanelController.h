@@ -27,8 +27,7 @@
 @property (nonatomic, weak) IBOutlet NSView *devToolsView;
 @property (nonatomic, weak) IBOutlet NSButton *okButton;
 
-#pragma mark -
-#pragma mark Running the panel
+#pragma mark - Running the panel
 
 /*!
  * Prompts the user to specify an Xcode location and an SDK, and updates user
@@ -36,8 +35,7 @@
  */
 + (BOOL)runDevToolsSetupPanel;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)ok:(id)sender;
 

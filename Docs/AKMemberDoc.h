@@ -20,21 +20,18 @@
 @property (nonatomic, readonly, strong) AKMemberItem *memberItem;
 @property (nonatomic, readonly, strong) AKBehaviorItem *behaviorItem;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 // Designated initializer
 - (instancetype)initWithMemberItem:(AKMemberItem *)memberItem
      inheritedByBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Manipulating token names
+#pragma mark - Manipulating token names
 
 /*! Subclasses must override this. */
 + (NSString *)punctuateTokenName:(NSString *)memberName;
 
-#pragma mark -
-#pragma mark AKDoc methods
+#pragma mark - AKDoc methods
 
 /*!
  * This implementation of -commentString assumes the receiver represents a

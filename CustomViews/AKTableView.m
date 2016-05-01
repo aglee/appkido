@@ -15,8 +15,7 @@
 
 @implementation AKTableView
 
-#pragma mark -
-#pragma mark Preferences
+#pragma mark - Preferences
 
 - (void)applyListFontPrefs
 {
@@ -31,16 +30,14 @@
     [self setNeedsDisplay:YES];
 }
 
-#pragma mark -
-#pragma mark NSView methods
+#pragma mark - NSView methods
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
 {
     return YES;
 }
 
-#pragma mark -
-#pragma mark NSResponder methods
+#pragma mark - NSResponder methods
 
 // NSTableView doesn't trigger actions when you navigate with the keyboard.
 // This override does.

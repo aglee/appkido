@@ -33,8 +33,7 @@
     NSMutableArray *_childSections;
 }
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 /*! Returns a new instance whose range is (0, 0). */
 + (AKFileSection *)withFile:(NSString *)filePath;
@@ -42,14 +41,12 @@
 /*! Returns a new instance whose range is the entire text file. */
 + (AKFileSection *)withEntireFile:(NSString *)filePath;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithFile:(NSString *)filePath NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *filePath;
 
@@ -77,8 +74,7 @@
 - (void)removeChildSectionAtIndex:(NSInteger)childSectionIndex;
 - (AKFileSection *)childSectionContainingString:(NSString *)name; // thanks Gerriet
 
-#pragma mark -
-#pragma mark Debugging
+#pragma mark - Debugging
 
 /*! Returns a string that uses indentation to show the hierarchy of file sections. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *descriptionAsOutline;

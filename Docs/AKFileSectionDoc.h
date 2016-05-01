@@ -13,8 +13,7 @@
     AKFileSection *_fileSection;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithFileSection:(AKFileSection *)fileSection NS_DESIGNATED_INITIALIZER;

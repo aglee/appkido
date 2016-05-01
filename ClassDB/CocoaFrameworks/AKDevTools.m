@@ -46,16 +46,14 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
         return NSOrderedSame;  // all left components equal all right components
 }
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)devToolsWithPath:(NSString *)devToolsPath
 {
     return [[self alloc] initWithPath:devToolsPath];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithPath:(NSString *)devToolsPath
 {
@@ -79,8 +77,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 }
 
 
-#pragma mark -
-#pragma mark Dev Tools paths
+#pragma mark - Dev Tools paths
 
 + (BOOL)devToolsPathIsOldStyle:(NSString *)devToolsPath
 {
@@ -141,8 +138,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return _devToolsPath;
 }
 
-#pragma mark -
-#pragma mark Docset paths
+#pragma mark - Docset paths
 
 - (BOOL)isValidDocSetName:(NSString *)fileName
 {
@@ -159,8 +155,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     //return @"/Users/alee/Xcode2.app/Contents/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleOSX10_8.CoreReference.docset";
 }
 
-#pragma mark -
-#pragma mark SDK paths
+#pragma mark - SDK paths
 
 - (NSString *)sdkSearchPath
 {
@@ -194,8 +189,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
     return _installedSDKPathsBySDKVersion[sdkVersion];
 }
 
-#pragma mark -
-#pragma mark SDK versions
+#pragma mark - SDK versions
 
 - (NSString *)docSetSDKVersionThatCoversSDKVersion:(NSString *)sdkVersion
 {
@@ -219,8 +213,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 	return nil;
 }
 
-#pragma mark -
-#pragma mark Private methods -- called during init
+#pragma mark - Private methods -- called during init
 
 // Locates all docsets in the given directory. Adds entries to _installedDocSetPathsBySDKVersion.
 - (void)_findDocSetsInDirectory:(NSString *)docSetSearchPath

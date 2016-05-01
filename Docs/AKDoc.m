@@ -15,8 +15,7 @@
 
 @implementation AKDoc
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKFileSection *)fileSection
 {
@@ -70,16 +69,14 @@
     return @"";
 }
 
-#pragma mark -
-#pragma mark NSObject methods
+#pragma mark - NSObject methods
 
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@: docName=%@>", self.className, [self docName]];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (NSData *)_rolledUpTextForFileSection:(AKFileSection *)fileSection
 {

@@ -27,14 +27,12 @@
 @property (nonatomic, readonly, copy) NSString *basePath;
 @property (nonatomic, readonly, copy) NSString *currentPath;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithBasePath:(NSString *)basePath NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 /*!
  * Returns the top-level path within which to find files to process. If this
@@ -51,8 +49,7 @@
  */
 - (NSString *)currentPath;
 
-#pragma mark -
-#pragma mark Processing files
+#pragma mark - Processing files
 
 /*! Returns NO if the file should be ignored. The default is YES. */
 - (BOOL)shouldProcessFile:(NSString *)filePath;

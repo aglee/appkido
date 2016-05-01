@@ -68,8 +68,7 @@
 @property (nonatomic, assign) BOOL searchIncludesGlobals;
 @property (nonatomic, assign) BOOL searchIgnoresCase;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSRect)windowFrame;
 - (void)setWindowFrame:(NSRect)frame;

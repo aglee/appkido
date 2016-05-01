@@ -10,8 +10,7 @@
 
 @implementation AKSDKVersion
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)versionFromString:(NSString *)versionString
 {
@@ -36,8 +35,7 @@
 	return version;
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (int)majorNumber
 {
@@ -69,8 +67,7 @@
 	_patchNumber = n;
 }
 
-#pragma mark -
-#pragma mark Comparing versions
+#pragma mark - Comparing versions
 
 - (BOOL)coversVersion:(AKSDKVersion *)otherVersion
 {
@@ -107,8 +104,7 @@
 	return NO;
 }
 
-#pragma mark -
-#pragma mark NSObject methods
+#pragma mark - NSObject methods
 
 - (NSString *)description
 {

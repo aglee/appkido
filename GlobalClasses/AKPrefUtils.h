@@ -15,8 +15,7 @@
  */
 @interface AKPrefUtils : DIGSPrefUtils
 
-#pragma mark -
-#pragma mark AppKiDo preferences
+#pragma mark - AppKiDo preferences
 
 /*! Which frameworks we should display docs for. */
 + (NSArray *)selectedFrameworkNamesPref;
@@ -37,8 +36,7 @@
 + (BOOL)shouldSearchInNewWindow;
 + (void)setShouldSearchInNewWindow:(BOOL)flag;
 
-#pragma mark -
-#pragma mark Clearing groups of preferences
+#pragma mark - Clearing groups of preferences
 
 /*! Resets all user preferences to their default values. */
 + (void)resetAllPrefsToDefaults;

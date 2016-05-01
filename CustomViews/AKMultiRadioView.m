@@ -13,8 +13,7 @@
 
 @synthesize delegate = _delegate;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSInteger)selectedTag
 {
@@ -53,8 +52,7 @@
     return didSelect;
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)doRadioAction:(id)sender
 {
@@ -69,8 +67,7 @@
     [_delegate multiRadioViewDidMakeSelection:self];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (NSArray *)_submatrixes
 {

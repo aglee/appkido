@@ -13,8 +13,7 @@
 
 static const CGFloat AKFocusBorderThickness = 2.0;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithFrame:(NSRect)frameRect
 {
@@ -50,8 +49,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
 
 }
 
-#pragma mark -
-#pragma mark Focus ring
+#pragma mark - Focus ring
 
 //TODO: maybe someday make these public methods so subclasses can customize
 
@@ -88,8 +86,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     NSFrameRectWithWidth(self.bounds, AKFocusBorderThickness);
 }
 
-#pragma mark -
-#pragma mark NSView methods
+#pragma mark - NSView methods
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize
 {
@@ -141,8 +138,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     }
 }
 
-#pragma mark -
-#pragma mark NSKeyValueObserving methods
+#pragma mark - NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -162,8 +158,7 @@ static const CGFloat AKFocusBorderThickness = 2.0;
     }
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_startObservingKeyWindowChanges
 {

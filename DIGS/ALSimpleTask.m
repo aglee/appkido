@@ -121,8 +121,7 @@
     return _taskExitStatus;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // Called when data is available from the task's file handle.
 // [aNotification object] is the file handle.

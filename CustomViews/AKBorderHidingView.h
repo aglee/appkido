@@ -19,8 +19,7 @@
  */
 @interface AKBorderHidingView : NSView
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*!
  * Sets the inner view's frame and autoresizing mask, superseding whatever those

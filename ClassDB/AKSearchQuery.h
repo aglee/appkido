@@ -60,14 +60,12 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 @property (nonatomic, assign) BOOL ignoresCase;
 @property (nonatomic, assign) AKSearchComparison searchComparison;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithDatabase:(AKDatabase *)db NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Searching
+#pragma mark - Searching
 
 /*! Sends all the -setIncludesXXX: messages with YES as the flag. */
 - (void)includeEverythingInSearch;

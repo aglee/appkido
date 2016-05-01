@@ -59,8 +59,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:prefValue forKey:prefName];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 + (id)_valueWhoseClassIs:(Class)cl forPref:(NSString *)prefName
 {

@@ -45,13 +45,11 @@
  */
 @property (nonatomic, copy) NSString *findString;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (DIGSFindBuffer *)sharedInstance;
 
-#pragma mark -
-#pragma mark Delegates
+#pragma mark - Delegates
 
 /*!
  * The same object can be added as a delegate multiple times. Each call to

@@ -13,14 +13,12 @@
 
 @synthesize label = _label;
 
-#pragma mark -
-#pragma mark String constants
+#pragma mark - String constants
 
 NSString *AKClassesLabelTopicName = @":: classes ::";
 NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
@@ -31,12 +29,10 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
     return topic;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 
-#pragma mark -
-#pragma mark AKTopic methods
+#pragma mark - AKTopic methods
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
@@ -58,8 +54,7 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
     return NO;
 }
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -91,8 +86,7 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
     return prefDict;
 }
 
-#pragma mark -
-#pragma mark AKSortable methods
+#pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {

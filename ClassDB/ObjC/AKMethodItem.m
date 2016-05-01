@@ -11,8 +11,7 @@
 
 @implementation AKMethodItem
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTokenName:(NSString *)tokenName
               database:(AKDatabase *)database
@@ -31,8 +30,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (BOOL)isClassMethod
 {

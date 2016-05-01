@@ -24,8 +24,7 @@
 
 @implementation AKClassItem
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
@@ -55,8 +54,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- general
+#pragma mark - Getters and setters -- general
 
 - (void)addChildClass:(AKClassItem *)classItem
 {
@@ -136,8 +134,7 @@
     return result;
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- multiple owning frameworks
+#pragma mark - Getters and setters -- multiple owning frameworks
 
 - (NSArray *)namesOfAllOwningFrameworks
 {
@@ -172,8 +169,7 @@
     _tokenItemDocumentationByFrameworkName[frameworkName] = fileSection;
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- delegate methods
+#pragma mark - Getters and setters -- delegate methods
 
 - (NSArray *)documentedDelegateMethods
 {
@@ -195,8 +191,7 @@
     [_indexOfDelegateMethods addTokenItem:methodItem];
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- notifications
+#pragma mark - Getters and setters -- notifications
 
 - (NSArray *)documentedNotifications
 {
@@ -213,8 +208,7 @@
     [_indexOfNotifications addTokenItem:notificationItem];
 }
 
-#pragma mark -
-#pragma mark AKBehaviorItem methods
+#pragma mark - AKBehaviorItem methods
 
 - (BOOL)isClassItem
 {
@@ -262,8 +256,7 @@
     return methodItem;
 }
 
-#pragma mark -
-#pragma mark AKTokenItem methods
+#pragma mark - AKTokenItem methods
 
 - (void)setNameOfOwningFramework:(NSString *)frameworkName
 {
@@ -277,8 +270,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_addDescendantsToSet:(NSMutableSet *)descendantClassItems
 {

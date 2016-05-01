@@ -26,14 +26,12 @@
 
 @property (nonatomic, readonly, copy) NSString *selectedAPISymbol;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 /*! Sends makeRandomSelection to the new instance before returning it. */
 + (instancetype)randomSearchWithDatabase:(AKDatabase *)db;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*!
  * Designated initializer. You still have to call makeRandomSelection to set
@@ -42,8 +40,7 @@
  */
 - (instancetype)initWithDatabase:(AKDatabase *)db NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Random selection
+#pragma mark - Random selection
 
 - (void)makeRandomSelection;
 

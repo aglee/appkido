@@ -42,8 +42,7 @@
 @dynamic searchComparison;
 @synthesize searchResults = _searchResults;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDatabase:(AKDatabase *)db
 {
@@ -73,8 +72,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSString *)searchString
 {
@@ -180,8 +178,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Searching
+#pragma mark - Searching
 
 - (void)includeEverythingInSearch
 {
@@ -218,8 +215,7 @@
     return _searchResults;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (BOOL)_matchesString:(NSString *)s
 {

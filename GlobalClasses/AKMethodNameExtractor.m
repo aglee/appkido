@@ -11,8 +11,7 @@
 
 @implementation AKMethodNameExtractor
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithString:(NSString *)string
 {
@@ -43,8 +42,7 @@
     free(_buffer);
 }
 
-#pragma mark -
-#pragma mark Parsing
+#pragma mark - Parsing
 
 + (NSString *)extractMethodNameFromString:(NSString *)string
 {
@@ -132,8 +130,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (BOOL)_isValidUnaryMethodName:(NSString *)string
 {

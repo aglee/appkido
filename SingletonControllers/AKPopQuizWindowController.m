@@ -35,8 +35,7 @@
     (void)[[NSApplication sharedApplication] runModalForWindow:wc.window];
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)okPopQuiz:(id)sender
 {
@@ -57,8 +56,7 @@
     [self _chooseRandomAPISymbol];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_chooseRandomAPISymbol
 {

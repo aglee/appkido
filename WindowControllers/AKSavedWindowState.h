@@ -26,8 +26,7 @@
 @property (nonatomic, strong) AKWindowLayout *savedWindowLayout;
 @property (nonatomic, strong) AKDocLocator *savedDocLocator;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKWindowLayout *)savedWindowLayout;
 - (void)setSavedWindowLayout:(AKWindowLayout *)windowLayout;

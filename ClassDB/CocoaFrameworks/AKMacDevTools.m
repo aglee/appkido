@@ -11,8 +11,7 @@
 
 @implementation AKMacDevTools
 
-#pragma mark -
-#pragma mark AKDevTools methods
+#pragma mark - AKDevTools methods
 
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath
 {

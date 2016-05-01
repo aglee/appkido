@@ -9,8 +9,7 @@
 
 @implementation AKWindowController (Toolbar)
 
-#pragma mark -
-#pragma mark Private constants -- toolbar identifiers
+#pragma mark - Private constants -- toolbar identifiers
 
 static NSString *_AKQuicklistToolID    = @"AKQuicklistToolID";
 static NSString *_AKBrowserToolID      = @"AKBrowserToolID";
@@ -20,8 +19,7 @@ static NSString *_AKSuperclassToolID   = @"AKSuperclassToolID";
 static NSString *_AKAddColumnToolID    = @"AKAddColumnToolID";
 static NSString *_AKRemoveColumnToolID = @"AKRemoveColumnToolID";
 
-#pragma mark -
-#pragma mark NSToolbar delegate methods
+#pragma mark - NSToolbar delegate methods
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar
      itemForItemIdentifier:(NSString *)itemIdentifier

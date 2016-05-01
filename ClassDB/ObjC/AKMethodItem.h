@@ -20,8 +20,7 @@
     NSMutableArray *_argumentTypes;
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, getter=isClassMethod, readonly) BOOL classMethod;
 

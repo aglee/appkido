@@ -160,8 +160,7 @@ NSString *AKHomePageURL = @"http://appkido.com/";
     return versionString;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // If nilIsGreatest, then nil is "greater than" anything except itself.
 // Otherwise, nil is "less than" anything except itself.

@@ -64,13 +64,11 @@
 
 @synthesize quicklistDrawer = _quicklistDrawer;
 
-#pragma mark -
-#pragma mark Private constants -- toolbar identifiers
+#pragma mark - Private constants -- toolbar identifiers
 
 static NSString *_AKToolbarID = @"AKToolbarID";
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithDatabase:(AKDatabase *)database
 {
@@ -94,8 +92,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKDatabase *)database
 {
@@ -109,8 +106,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
             : _windowHistory[_windowHistoryIndex]);
 }
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (void)selectTopic:(AKTopic *)obj
 {
@@ -237,8 +233,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_quicklistDrawer.contentView.window makeFirstResponder:_quicklistController.quicklistTable];
 }
 
-#pragma mark -
-#pragma mark Action methods -- window layout
+#pragma mark - Action methods -- window layout
 
 - (IBAction)rememberWindowLayout:(id)sender
 {
@@ -293,8 +288,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-#pragma mark -
-#pragma mark Action methods -- navigation
+#pragma mark - Action methods -- navigation
 
 - (IBAction)goBackInHistory:(id)sender
 {
@@ -423,8 +417,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [[AKAppDelegate appDelegate] addFavorite:docLocator];
 }
 
-#pragma mark -
-#pragma mark Action methods -- accessing the doc file
+#pragma mark - Action methods -- accessing the doc file
 
 - (IBAction)copyDocFileURL:(id)sender
 {
@@ -476,8 +469,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
                      inFileViewerRootedAtPath:containingDirPath];
 }
 
-#pragma mark -
-#pragma mark Action methods -- debugging
+#pragma mark - Action methods -- debugging
 
 - (IBAction)openParseDebugWindow:(id)sender
 {
@@ -504,8 +496,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     NSLog(@"END FUN FACTS about %@\n\n", self);
 }
 
-#pragma mark -
-#pragma mark AKTabChainWindowDelegate methods
+#pragma mark - AKTabChainWindowDelegate methods
 
 - (NSArray *)tabChainViewsForWindow:(NSWindow *)window
 {
@@ -532,8 +523,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return tabChain;
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -650,8 +640,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [_quicklistController putWindowLayoutInto:windowLayout];
 }
 
-#pragma mark -
-#pragma mark NSUserInterfaceValidations methods
+#pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
@@ -770,8 +759,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     }
 }
 
-#pragma mark -
-#pragma mark NSWindowController methods
+#pragma mark - NSWindowController methods
 
 - (void)windowDidLoad
 {
@@ -808,8 +796,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     [self.window makeFirstResponder:_topicBrowserController.topicBrowser];
 }
 
-#pragma mark -
-#pragma mark NSSplitView delegate methods
+#pragma mark - NSSplitView delegate methods
 
 - (BOOL)splitView:(NSSplitView *)splitView shouldAdjustSizeOfSubview:(NSView *)subview
 {
@@ -818,8 +805,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
     return (subview != splitView.subviews[0]);
 }
 
-#pragma mark -
-#pragma mark NSWindow delegate methods
+#pragma mark - NSWindow delegate methods
 
 //FIXME: This is a workaround to either a bug or something I don't
 // understand; when the prefs panel is dismissed, the AppKiDo window below
@@ -844,8 +830,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 //    [self autorelease];
 //}
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_setUpViewControllers
 {

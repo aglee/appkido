@@ -23,8 +23,7 @@
 
 + (void)showPopQuiz;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)okPopQuiz:(id)sender;
 

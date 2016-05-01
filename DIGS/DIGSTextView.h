@@ -17,8 +17,7 @@
     NSCursor *_linkCursor;
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 /*!
  * Returns the name of the image resource that should be used for the cursor

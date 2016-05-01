@@ -20,8 +20,7 @@
 
 @property (nonatomic, readonly, strong) AKGroupItem *groupItem;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithGroupItem:(AKGroupItem *)groupItem NS_DESIGNATED_INITIALIZER;

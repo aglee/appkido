@@ -32,8 +32,7 @@
 
 #import "NSString+AppKiDo.h"
 
-#pragma mark -
-#pragma mark Private constants
+#pragma mark - Private constants
 
 // Pasteboard type used for drag and drop when the quicklist is in
 // Favorites mode.
@@ -79,8 +78,7 @@ enum
 @synthesize quicklistTable = _quicklistTable;
 @synthesize removeFavoriteButton = _removeFavoriteButton;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
@@ -170,8 +168,7 @@ enum
     [self _selectQuicklistMode:[_quicklistModeRadio selectedTag]];
 }
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (void)searchForString:(NSString *)aString
 {
@@ -189,8 +186,7 @@ enum
     [self _updateSearchQuery];
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)doQuicklistTableAction:(id)sender
 {
@@ -325,8 +321,7 @@ enum
     [self doSearch:sender];
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -376,24 +371,21 @@ enum
     windowLayout.searchIgnoresCase = (_ignoreCaseItem.state == NSOnState);
 }
 
-#pragma mark -
-#pragma mark DIGSFindBufferDelegate methods
+#pragma mark - DIGSFindBufferDelegate methods
 
 - (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer
 {
     _searchField.stringValue = findBuffer.findString;
 }
 
-#pragma mark -
-#pragma mark AKMultiRadioViewDelegate methods
+#pragma mark - AKMultiRadioViewDelegate methods
 
 - (void)multiRadioViewDidMakeSelection:(AKMultiRadioView *)mrv
 {
     [self _selectQuicklistMode:[mrv selectedTag]];
 }
 
-#pragma mark -
-#pragma mark NSUserInterfaceValidations methods
+#pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
@@ -409,8 +401,7 @@ enum
     return NO;
 }
 
-#pragma mark -
-#pragma mark NSTableView datasource methods
+#pragma mark - NSTableView datasource methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -424,8 +415,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return [_docLocators[rowIndex] stringToDisplayInLists];
 }
 
-#pragma mark -
-#pragma mark NSTableView delegate methods
+#pragma mark - NSTableView delegate methods
 
 - (BOOL)tableView:(NSTableView*)tableView
        acceptDrop:(id <NSDraggingInfo>)info
@@ -490,8 +480,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return YES;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_selectQuicklistMode:(NSInteger)mode
 {

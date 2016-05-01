@@ -8,8 +8,7 @@
 #import "AKHTMLConstants.h"
 
 
-#pragma mark -
-#pragma mark AKXyzHTMLSectionName
+#pragma mark - AKXyzHTMLSectionName
 
 NSString *AKContentsHTMLSectionName            = @"Contents:";
 NSString *AKClassDescriptionHTMLSectionName    = @"Class Description";

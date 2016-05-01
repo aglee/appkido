@@ -19,8 +19,7 @@
     NSMutableArray *_subitems;
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (void)addSubitem:(AKTokenItem *)item;
 

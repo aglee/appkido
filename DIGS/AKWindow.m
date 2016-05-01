@@ -9,8 +9,7 @@
 
 @implementation AKWindow
 
-#pragma mark -
-#pragma mark NSWindow methods
+#pragma mark - NSWindow methods
 
 // As suggested by Gerriet Denkmann.  Protects against crashing due to nil.
 - (void)setTitle:(NSString *)aString

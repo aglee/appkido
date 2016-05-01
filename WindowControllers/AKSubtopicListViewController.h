@@ -28,13 +28,11 @@
 
 @property (nonatomic, weak) IBOutlet AKTableView *subtopicsTable;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKSubtopic *selectedSubtopic;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)doSubtopicTableAction:(id)sender;
 

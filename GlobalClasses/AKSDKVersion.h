@@ -16,13 +16,11 @@
 	int _patchNumber;
 }
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)versionFromString:(NSString *)versionString;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY) int majorNumber;
 
@@ -30,8 +28,7 @@
 
 @property (NS_NONATOMIC_IOSONLY) int patchNumber;
 
-#pragma mark -
-#pragma mark Comparing versions
+#pragma mark - Comparing versions
 
 - (BOOL)coversVersion:(AKSDKVersion *)otherVersion;
 - (BOOL)isGreaterThanVersion:(AKSDKVersion *)otherVersion;

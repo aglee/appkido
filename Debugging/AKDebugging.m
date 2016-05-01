@@ -17,8 +17,7 @@
 
 @implementation AKDebugging
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKDebugging *)sharedInstance
 {
@@ -32,8 +31,7 @@
     return s_sharedInstance;
 }
 
-#pragma mark -
-#pragma mark Initial setup
+#pragma mark - Initial setup
 
 + (BOOL)userCanDebug
 {
@@ -81,8 +79,7 @@
     [mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)testParser:(id)sender
 {
@@ -151,8 +148,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_printViewSequenceUsingSelector:(SEL)nextViewSelector
 {

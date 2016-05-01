@@ -14,8 +14,7 @@
 
 @implementation AKPrefUtils
 
-#pragma mark -
-#pragma mark Class initialization
+#pragma mark - Class initialization
 
 + (void)initialize
 {
@@ -27,8 +26,7 @@
 //    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
-#pragma mark -
-#pragma mark AppKiDo preferences
+#pragma mark - AppKiDo preferences
 
 + (NSArray *)selectedFrameworkNamesPref
 {
@@ -100,8 +98,7 @@
     [self setBoolValue:flag forPref:AKSearchInNewWindowPrefName];
 }
 
-#pragma mark -
-#pragma mark Clearing groups of preferences
+#pragma mark - Clearing groups of preferences
 
 + (void)resetAllPrefsToDefaults
 {
@@ -158,8 +155,7 @@
     [userPrefs removeObjectForKey:AKIgnoreCasePrefKey];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // Register the default values for all user preferences, i.e., the
 // value to use for each preference unless the user specifies a

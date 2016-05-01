@@ -15,8 +15,7 @@
 
 @synthesize owningBehavior = _owningBehavior;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorItem *)behaviorItem
 {

@@ -46,14 +46,12 @@
     BOOL _isViewTwoFlexible;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Remembers how subviews were laid out when the nib was loaded. */
 - (void)awakeFromNib;
 
-#pragma mark -
-#pragma mark NSView methods
+#pragma mark - NSView methods
 
 /*! Preserves the margins around, and the space between, the two subviews. */
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize;

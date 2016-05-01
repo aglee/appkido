@@ -43,13 +43,11 @@
 @property (nonatomic, weak) IBOutlet NSTableView *frameworksTable;
 @property (nonatomic, weak) IBOutlet NSButton *searchInNewWindowCheckbox;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKPrefPanelController *)sharedInstance;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)openPrefsPanel:(id)sender;
 

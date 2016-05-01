@@ -98,21 +98,18 @@
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sdkVersionsThatAreCoveredByDocSets;
 
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)devToolsWithPath:(NSString *)devToolsPath;
 
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithPath:(NSString *)devToolsPath NS_DESIGNATED_INITIALIZER;
 
 
-#pragma mark -
-#pragma mark Dev Tools paths
+#pragma mark - Dev Tools paths
 
 /*! Used by looksLikeValidDevToolsPath:errorStrings:. */
 + (NSArray *)expectedSubdirsForDevToolsPath:(NSString *)devToolsPath;
@@ -124,8 +121,7 @@
 + (BOOL)looksLikeValidDevToolsPath:(NSString *)devToolsPath errorStrings:(NSMutableArray *)errorStrings;
 
 
-#pragma mark -
-#pragma mark Docset paths
+#pragma mark - Docset paths
 
 /*!
  * Subclasses must override.  Checks whether fileName is a valid docset name for
@@ -136,8 +132,7 @@
 - (NSString *)docSetPathForSDKVersion:(NSString *)docSetSDKVersion;
 
 
-#pragma mark -
-#pragma mark SDK paths
+#pragma mark - SDK paths
 
 /*!
  * Returns latest version we know of if sdkVersion is nil.  Note that sdkVersion could
@@ -146,8 +141,7 @@
 - (NSString *)sdkPathForSDKVersion:(NSString *)sdkVersion;
 
 
-#pragma mark -
-#pragma mark SDK versions
+#pragma mark - SDK versions
 
 - (NSString *)docSetSDKVersionThatCoversSDKVersion:(NSString *)sdkVersion;
 

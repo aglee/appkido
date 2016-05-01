@@ -22,16 +22,14 @@
 @synthesize topicDatabase = _topicDatabase;
 @synthesize topicFrameworkName = _topicFrameworkName;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
     return [[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
 {
@@ -51,8 +49,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKTopic methods
+#pragma mark - AKTopic methods
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
@@ -96,8 +93,7 @@
     return columnValues;
 }
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {

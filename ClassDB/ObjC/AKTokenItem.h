@@ -47,8 +47,7 @@
 
 @property (nonatomic, assign) BOOL isDeprecated;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;

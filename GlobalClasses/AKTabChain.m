@@ -14,8 +14,7 @@
 
 @implementation AKTabChain
 
-#pragma mark -
-#pragma mark Event handling
+#pragma mark - Event handling
 
 + (BOOL)handlePossibleTabChainEvent:(NSEvent *)anEvent
 {
@@ -104,8 +103,7 @@
     return tabChain;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 + (BOOL)_isTabChainEvent:(NSEvent *)anEvent forward:(BOOL *)forwardFlagPtr
 {

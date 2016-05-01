@@ -24,8 +24,7 @@
 @synthesize findNextButton = _findNextButton;
 @synthesize statusTextField = _statusTextField;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (id)sharedInstance
 {
@@ -40,8 +39,7 @@ s_sharedInstance = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPa
     return s_sharedInstance;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
@@ -60,8 +58,7 @@ s_sharedInstance = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPa
 
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)showFindPanel:(id)sender
 {
@@ -136,24 +133,21 @@ s_sharedInstance = [[AKFindPanelController alloc] initWithWindowNibName:@"FindPa
     }
 }
 
-#pragma mark -
-#pragma mark DIGSFindBufferDelegate methods
+#pragma mark - DIGSFindBufferDelegate methods
 
 - (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer
 {
     _findTextField.stringValue = findBuffer.findString;
 }
 
-#pragma mark -
-#pragma mark NSWindowController methods
+#pragma mark - NSWindowController methods
 
 - (void)windowDidLoad
 {
     _findTextField.stringValue = [DIGSFindBuffer sharedInstance].findString;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (NSView *)_viewToSearch
 {

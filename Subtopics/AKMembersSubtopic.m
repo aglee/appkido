@@ -16,8 +16,7 @@
 
 @implementation AKMembersSubtopic
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
@@ -35,8 +34,7 @@
     return [self initIncludingAncestors:NO];
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (BOOL)includesAncestors
 {
@@ -61,8 +59,7 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark AKSubtopic methods
+#pragma mark - AKSubtopic methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
@@ -83,8 +80,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // Get a list of all behaviors that declare methods we want to
 // include in our doc list.

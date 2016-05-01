@@ -7,8 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark -
-#pragma mark "PrefName" = key for NSUserDefaults
+#pragma mark - "PrefName" = key for NSUserDefaults
 
 // Value is a dictionary that can be converted to an AKWindowLayout.
 extern NSString *AKLayoutForNewWindowsPrefName;
@@ -68,8 +67,7 @@ extern NSString *AKSDKVersionPrefName;
 
 extern NSString *AKSearchInNewWindowPrefName;
 
-#pragma mark -
-#pragma mark "PrefKey" = key within a pref that is a dictionary
+#pragma mark - "PrefKey" = key within a pref that is a dictionary
 
 // For storing instances of various AKTopic classes as pref
 // dictionaries.

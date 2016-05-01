@@ -31,13 +31,11 @@
 @property (nonatomic, weak) IBOutlet NSButton *findNextButton;
 @property (nonatomic, weak) IBOutlet NSTextField *statusTextField;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (id)sharedInstance;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)showFindPanel:(id)sender;
 

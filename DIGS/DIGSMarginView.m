@@ -9,8 +9,7 @@
 
 @implementation DIGSMarginView
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (void)awakeFromNib
 {
@@ -20,8 +19,7 @@
     [self _figureOutWhichSubviewIsWhich];
 }
 
-#pragma mark -
-#pragma mark NSView methods
+#pragma mark - NSView methods
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize
 {
@@ -40,8 +38,7 @@
     _viewTwo.frame = newFrameTwo;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // Called by awakeFromNib.
 //

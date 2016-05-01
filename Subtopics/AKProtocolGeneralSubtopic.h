@@ -15,13 +15,11 @@
     AKProtocolItem *_protocolItem;
 }
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)subtopicForProtocolItem:(AKProtocolItem *)protocolItem;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem NS_DESIGNATED_INITIALIZER;

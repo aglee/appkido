@@ -27,8 +27,7 @@
 
 @property (nonatomic, weak) IBOutlet AKBrowser *topicBrowser;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)addBrowserColumn:(id)sender;
 

@@ -16,8 +16,7 @@
 #define AKButtonCellEnabledTextColor [NSColor colorWithCalibratedWhite:0.2 alpha:1.0]
 #define AKButtonCellDisabledTextColor [NSColor colorWithCalibratedWhite:0.6 alpha:1.0]
 
-#pragma mark -
-#pragma mark NSCell methods
+#pragma mark - NSCell methods
 
 // We override all of NSCell's designated initializers, as we should.
 // This function performs initialization common to them all.
@@ -61,8 +60,7 @@ static void _common_init(AKButtonCell *self)
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (void)setEnabledTextColor:(NSColor *)enabledTextColor
 {
@@ -78,8 +76,7 @@ static void _common_init(AKButtonCell *self)
     [self.controlView setNeedsDisplay:YES];
 }
 
-#pragma mark -
-#pragma mark NSButtonCell methods
+#pragma mark - NSButtonCell methods
 
 // Overridden to draw the title in the color of my choice when a button is disabled.
 // Apple's default behavior is to pass an all-gray version of the cell's title

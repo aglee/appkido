@@ -15,8 +15,7 @@
 
 @implementation AKRealMethodsSubtopic
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)subtopicForBehaviorItem:(AKBehaviorItem *)behaviorItem
              includeAncestors:(BOOL)includeAncestors
@@ -25,8 +24,7 @@
                               includeAncestors:includeAncestors];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithBehaviorItem:(AKBehaviorItem *)behaviorItem
           includeAncestors:(BOOL)includeAncestors
@@ -46,8 +44,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKMembersSubtopic methods
+#pragma mark - AKMembersSubtopic methods
 
 - (AKBehaviorItem *)behaviorItem
 {

@@ -30,8 +30,7 @@
 
 static const NSInteger AKMinBrowserColumns = 2;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
@@ -53,8 +52,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     [_topicBrowser selectRow:1 inColumn:0];  // selects "NSObject"
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)addBrowserColumn:(id)sender
 {
@@ -78,8 +76,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     [self.owningWindowController selectTopic:[_topicBrowser.selectedCell representedObject]];
 }
 
-#pragma mark -
-#pragma mark AKViewController methods
+#pragma mark - AKViewController methods
 
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
@@ -131,8 +128,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     }
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -179,8 +175,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     windowLayout.numberOfBrowserColumns = _topicBrowser.maxVisibleColumns;
 }
 
-#pragma mark -
-#pragma mark NSUserInterfaceValidations methods
+#pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
@@ -201,8 +196,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     }
 }
 
-#pragma mark -
-#pragma mark NSBrowser delegate methods
+#pragma mark - NSBrowser delegate methods
 
 - (void)browser:(NSBrowser *)sender createRowsForColumn:(NSInteger)column inMatrix:(NSMatrix *)matrix
 {
@@ -225,8 +219,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     return YES;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (NSInteger)_numberOfRowsInColumn:(NSInteger)column
 {

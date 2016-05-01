@@ -43,15 +43,13 @@
 
 @property (nonatomic, unsafe_unretained) IBOutlet id <AKMultiRadioViewDelegate> delegate;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 /*! Returns -1 if no submatrix has a selected cell. */
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger selectedTag;
 - (BOOL)selectCellWithTag:(NSInteger)tag;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 /*! Messages the delegate. */
 - (IBAction)doRadioAction:(id)sender;

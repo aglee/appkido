@@ -20,8 +20,7 @@
 
 @synthesize subtopicsTable = _subtopicsTable;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
@@ -48,8 +47,7 @@
     [_subtopicsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKSubtopic *)selectedSubtopic
 {
@@ -60,8 +58,7 @@
             : nil);
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)doSubtopicTableAction:(id)sender
 {
@@ -138,8 +135,7 @@
     [self.owningWindowController selectSubtopicWithName:AKAllNotificationsSubtopicName];
 }
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
@@ -197,16 +193,14 @@
     }
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
     [_subtopicsTable applyListFontPrefs];
 }
 
-#pragma mark -
-#pragma mark NSUserInterfaceValidations methods
+#pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
@@ -237,8 +231,7 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark NSTableView datasource methods
+#pragma mark - NSTableView datasource methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -252,8 +245,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return [_subtopics[rowIndex] stringToDisplayInSubtopicList];
 }
 
-#pragma mark -
-#pragma mark NSTableView delegate methods
+#pragma mark - NSTableView delegate methods
 
 - (void)tableView:(NSTableView *)aTableView
   willDisplayCell:(id)aCell

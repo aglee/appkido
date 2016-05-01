@@ -18,8 +18,7 @@
 
 @property (nonatomic, readonly) AKTokenItem *tokenItem;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem NS_DESIGNATED_INITIALIZER;

@@ -9,8 +9,7 @@
 
 @implementation AKClassMethodDoc
 
-#pragma mark -
-#pragma mark AKMemberDoc methods
+#pragma mark - AKMemberDoc methods
 
 + (NSString *)punctuateTokenName:(NSString *)methodName
 {

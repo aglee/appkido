@@ -21,16 +21,14 @@
 
 @synthesize database = _database;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)linkResolverWithDatabase:(AKDatabase *)database
 {
     return [[self alloc] initWithDatabase:database];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDatabase:(AKDatabase *)database
 {
@@ -49,8 +47,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Resolving links
+#pragma mark - Resolving links
 
 // In the Apple dev docs, if a link points to the doc for an API symbol, that
 // symbol is the last path component of the link's anchor. For example, if the

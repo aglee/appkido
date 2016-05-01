@@ -7,8 +7,7 @@
 
 #import "DIGSTextSelection.h"
 
-#pragma mark -
-#pragma mark Private constants
+#pragma mark - Private constants
 
 static NSString *_DIGS_VISIBLE_RECT_PREF_KEY         = @"VisibleRect";
 static NSString *_DIGS_VISIBLE_CHARS_RANGE_PREF_KEY  = @"VisibleCharsRange";
@@ -21,8 +20,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 @synthesize selectedCharsRange = _selectedCharsRange;
 @synthesize typingAttributes = _typingAttributes;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)init
 {
@@ -38,8 +36,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
 }
 
 
-#pragma mark -
-#pragma mark Interacting with text views
+#pragma mark - Interacting with text views
 
 - (void)takeSelectionFromTextView:(NSTextView *)textView
 {
@@ -92,8 +89,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     textView.typingAttributes = _typingAttributes;
 }
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -136,8 +132,7 @@ static NSString *_DIGS_SELECTED_CHARS_RANGE_PREF_KEY = @"SelectedCharsRange";
     return prefDict;
 }
 
-#pragma mark -
-#pragma mark NSCoding methods
+#pragma mark - NSCoding methods
 
 - (instancetype)initWithCoder:(NSCoder *)decoder
 {

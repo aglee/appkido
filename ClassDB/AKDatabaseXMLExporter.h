@@ -27,14 +27,12 @@
     TCMXMLWriter *_xmlWriter;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithDatabase:(AKDatabase *)database fileURL:(NSURL *)outfileURL NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark The main export method
+#pragma mark - The main export method
 
 /*! Exports the database's items and frameworks in XML format. */
 - (void)doExport;

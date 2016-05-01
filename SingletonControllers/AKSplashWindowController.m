@@ -16,8 +16,7 @@
 @synthesize splashMessageField = _splashMessageField;
 @synthesize splashMessage2Field = _splashMessage2Field;
 
-#pragma mark -
-#pragma mark NSWindowController methods
+#pragma mark - NSWindowController methods
 
 - (void)windowDidLoad
 {

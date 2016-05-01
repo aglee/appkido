@@ -9,8 +9,7 @@
 
 @implementation DIGSFindBuffer
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 @dynamic findString;
 
@@ -26,8 +25,7 @@
     return s_sharedInstance;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)init
 {
@@ -53,8 +51,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSString *)findString
 {
@@ -70,8 +67,7 @@
     [self _setFindString:string writeToPasteboard:YES];
 }
 
-#pragma mark -
-#pragma mark Delegates
+#pragma mark - Delegates
 
 - (void)addDelegate:(id <DIGSFindBufferDelegate>)delegate;
 {
@@ -87,8 +83,7 @@
     [_delegatePointerValues removeObject:pointerValue];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_setFindString:(NSString *)newFindString writeToPasteboard:(BOOL)flag
 {

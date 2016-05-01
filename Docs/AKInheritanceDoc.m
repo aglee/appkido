@@ -9,8 +9,7 @@
 
 @implementation AKInheritanceDoc
 
-#pragma mark -
-#pragma mark AKBehaviorGeneralDoc methods
+#pragma mark - AKBehaviorGeneralDoc methods
 
 // The "Inheritance" doc uses the root section of the HTML file.  If we
 // were to include descendant sections, we'd be displaying the whole file.

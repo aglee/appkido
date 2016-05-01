@@ -62,8 +62,7 @@
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesOfAllOwningFrameworks;
 
-#pragma mark -
-#pragma mark Getters and setters -- general
+#pragma mark - Getters and setters -- general
 
 - (void)addChildClass:(AKClassItem *)classItem;
 - (void)removeChildClass:(AKClassItem *)classItem;
@@ -71,8 +70,7 @@
 - (void)addCategory:(AKCategoryItem *)categoryItem;
 - (AKCategoryItem *)categoryNamed:(NSString *)catName;
 
-#pragma mark -
-#pragma mark Getters and setters -- multiple owning frameworks
+#pragma mark - Getters and setters -- multiple owning frameworks
 
 - (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName;
 
@@ -87,16 +85,14 @@
 - (void)associateDocumentation:(AKFileSection *)fileSection
             withFrameworkNamed:(NSString *)frameworkName;
 
-#pragma mark -
-#pragma mark Getters and setters -- delegate methods
+#pragma mark - Getters and setters -- delegate methods
 
 - (AKMethodItem *)delegateMethodWithName:(NSString *)methodName;
 
 /*! Does nothing if a delegate method with the same name already exists. */
 - (void)addDelegateMethod:(AKMethodItem *)methodItem;
 
-#pragma mark -
-#pragma mark Getters and setters -- notifications
+#pragma mark - Getters and setters -- notifications
 
 - (AKNotificationItem *)notificationWithName:(NSString *)notificationName;
 

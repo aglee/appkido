@@ -31,8 +31,7 @@
 @synthesize webView = _webView;
 @synthesize textView = _textView;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
@@ -57,16 +56,14 @@
     [self applyUserPreferences];
 }
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (NSView *)docView
 {
     return ([self _isShowingWebView] ? _webView : _textView);
 }
 
-#pragma mark -
-#pragma mark AKViewController methods
+#pragma mark - AKViewController methods
 
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
 {
@@ -79,8 +76,7 @@
     [self _updateDocDisplay];
 }
 
-#pragma mark -
-#pragma mark AKUIController methods
+#pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
@@ -122,8 +118,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark WebPolicyDelegate methods
+#pragma mark - WebPolicyDelegate methods
 
 - (void)webView:(WebView *)sender
 decidePolicyForNavigationAction:(NSDictionary *)actionInformation
@@ -153,8 +148,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
 }
 
-#pragma mark -
-#pragma mark WebUIDelegate methods
+#pragma mark - WebUIDelegate methods
 
 - (NSArray *)webView:(WebView *)sender
 contextMenuItemsForElement:(NSDictionary *)element
@@ -239,8 +233,7 @@ contextMenuItemsForElement:(NSDictionary *)element
     return newMenuItems;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (BOOL)_isShowingWebView
 {

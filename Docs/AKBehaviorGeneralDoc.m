@@ -13,8 +13,7 @@
 
 @implementation AKBehaviorGeneralDoc
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithFileSection:(AKFileSection *)fileSection extraFrameworkName:(NSString *)frameworkName
 {
@@ -32,16 +31,14 @@
 }
 
 
-#pragma mark -
-#pragma mark Doc name
+#pragma mark - Doc name
 
 - (NSString *)unqualifiedDocName
 {
     return [super docName];
 }
 
-#pragma mark -
-#pragma mark AKDoc methods
+#pragma mark - AKDoc methods
 
 // If we're a doc for something in an extra framework (as opposed to a main
 // framework), qualify the docName with the name of the extra framework.

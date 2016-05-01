@@ -13,16 +13,14 @@
 
 @implementation AKProtocolGeneralSubtopic
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)subtopicForProtocolItem:(AKProtocolItem *)protocolItem
 {
     return [[self alloc] initWithProtocolItem:protocolItem];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem
 {
@@ -41,8 +39,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKBehaviorGeneralSubtopic methods
+#pragma mark - AKBehaviorGeneralSubtopic methods
 
 - (AKBehaviorItem *)behaviorItem
 {

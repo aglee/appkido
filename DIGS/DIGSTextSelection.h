@@ -45,8 +45,7 @@
 @property (nonatomic, assign) NSRange selectedCharsRange;
 @property (nonatomic, copy) NSDictionary *typingAttributes;
 
-#pragma mark -
-#pragma mark Interacting with text views
+#pragma mark - Interacting with text views
 
 /*! Takes a snapshot of the text view's selection range and scroll position. */
 - (void)takeSelectionFromTextView:(NSTextView *)textView;

@@ -37,8 +37,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *explanationField;
 @property (nonatomic, weak) IBOutlet NSButton *okButton;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 /*!
  * Repeatedly displays an open panel sheet until the user either cancels or

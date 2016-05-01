@@ -19,8 +19,7 @@
 
 @implementation AKDatabaseXMLExporter
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDatabase:(AKDatabase *)database fileURL:(NSURL *)outfileURL;
 {
@@ -42,8 +41,7 @@
 }
 
 
-#pragma mark -
-#pragma mark The main export method
+#pragma mark - The main export method
 
 - (void)doExport
 {
@@ -56,8 +54,7 @@
     }];
 }
 
-#pragma mark -
-#pragma mark Private methods -- exporting frameworks
+#pragma mark - Private methods -- exporting frameworks
 
 - (void)_exportFrameworkNamed:(NSString *)fwName
 {
@@ -127,8 +124,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Private methods -- exporting classes and protocols
+#pragma mark - Private methods -- exporting classes and protocols
 
 - (void)_exportClass:(AKClassItem *)classItem
 {
@@ -178,8 +174,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Private methods -- exporting members
+#pragma mark - Private methods -- exporting members
 
 - (void)_exportMembers:(NSArray *)memberItems
                 ofType:(NSString *)membersType
@@ -208,8 +203,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Private methods -- exporting group items
+#pragma mark - Private methods -- exporting group items
 
 - (void)_exportGroupSubitem:(AKTokenItem *)tokenItem withXMLTag:(NSString *)subitemTag
 {
@@ -235,8 +229,7 @@
     }];
 }
 
-#pragma mark -
-#pragma mark Private methods -- low-level utilities
+#pragma mark - Private methods -- low-level utilities
 
 - (NSString *)_spreadString:(NSString *)s
 {

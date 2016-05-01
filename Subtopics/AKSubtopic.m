@@ -13,8 +13,7 @@
 
 @implementation AKSubtopic
 
-#pragma mark -
-#pragma mark AKXyzSubtopicName
+#pragma mark - AKXyzSubtopicName
 
 NSString *AKGeneralSubtopicName            = @"General";
 NSString *AKPropertiesSubtopicName         = @"Properties";
@@ -28,12 +27,10 @@ NSString *AKAllDelegateMethodsSubtopicName = @"ALL Delegate Methods";
 NSString *AKNotificationsSubtopicName      = @"Notifications";
 NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSString *)subtopicName
 {
@@ -46,8 +43,7 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
     return [self subtopicName];
 }
 
-#pragma mark -
-#pragma mark Docs
+#pragma mark - Docs
 
 - (NSInteger)numberOfDocs
 {
@@ -105,8 +101,7 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
     DIGSLogError_MissingOverride();
 }
 
-#pragma mark -
-#pragma mark NSObject methods
+#pragma mark - NSObject methods
 
 - (NSString *)description
 {
@@ -114,8 +109,7 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
             self.className,[self subtopicName]];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_makeSureDocListIsReady
 {

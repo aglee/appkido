@@ -30,8 +30,7 @@
     NSMutableDictionary *_fileCacheCounts;
 }
 
-#pragma mark -
-#pragma mark Accessing the cache
+#pragma mark - Accessing the cache
 
 /*!
  * Likes the file and returns its contents. Calls to this must be balanced

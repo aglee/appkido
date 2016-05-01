@@ -17,16 +17,14 @@
 @synthesize subtopicName = _subtopicName;
 @synthesize docName = _docName;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
     return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
@@ -47,8 +45,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (void)setSubtopicName:(NSString *)subtopicName
 {
@@ -118,8 +115,7 @@
     return _cachedDoc;
 }
 
-#pragma mark -
-#pragma mark Sorting
+#pragma mark - Sorting
 
 // We want this to mirror the logic of -stringToDisplayInLists, which is
 // too expensive to call directly.  That logic is:
@@ -229,8 +225,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
     [array sortUsingFunction:&compareDocLocators context:NULL];
 }
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -270,8 +265,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
     return prefDict;
 }
 
-#pragma mark -
-#pragma mark AKSortable methods
+#pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
@@ -300,8 +294,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
     return _cachedSortName;
 }
 
-#pragma mark -
-#pragma mark NSObject methods
+#pragma mark - NSObject methods
 
 - (BOOL)isEqual:(id)anObject
 {
@@ -346,8 +339,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
             _docName];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_clearCachedObjects
 {

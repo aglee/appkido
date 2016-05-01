@@ -18,8 +18,7 @@
 @synthesize basePath = _basePath;
 @synthesize currentPath = _currentPath;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithBasePath:(NSString *)basePath
 {
@@ -37,8 +36,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Processing files
+#pragma mark - Processing files
 
 - (BOOL)shouldProcessFile:(NSString *)filePath
 {

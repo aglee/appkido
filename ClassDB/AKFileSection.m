@@ -13,23 +13,20 @@
 
 #import "AKFileSectionCache.h"
 
-#pragma mark -
-#pragma mark Static variables
+#pragma mark - Static variables
 
 static AKFileSectionCache *s_fileSectionCache = nil;
 
 @implementation AKFileSection
 
-#pragma mark -
-#pragma mark Class initializer
+#pragma mark - Class initializer
 
 + (void)initialize
 {
     s_fileSectionCache = [[AKFileSectionCache alloc] init];
 }
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKFileSection *)withFile:(NSString *)filePath
 {
@@ -59,8 +56,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
     return fileSection;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithFile:(NSString *)filePath
 {
@@ -84,8 +80,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
     [s_fileSectionCache unlikeFileAtPath:_filePath];
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSString *)filePath
 {
@@ -245,8 +240,7 @@ static AKFileSectionCache *s_fileSectionCache = nil;
    return nil;
 }
 
-#pragma mark -
-#pragma mark Debugging
+#pragma mark - Debugging
 
 - (void)_printTreeWithDepth:(NSUInteger)depth intoString:(NSMutableString *)s
 {
@@ -280,16 +274,14 @@ static AKFileSectionCache *s_fileSectionCache = nil;
     return s;
 }
 
-#pragma mark -
-#pragma mark AKSortable methods
+#pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
     return _sectionName;
 }
 
-#pragma mark -
-#pragma mark NSObject methods
+#pragma mark - NSObject methods
 
 - (NSString *)description
 {

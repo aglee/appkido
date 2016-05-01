@@ -14,8 +14,7 @@
 
 @synthesize tokenItem = _tokenItem;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem
 {
@@ -34,8 +33,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKDoc methods
+#pragma mark - AKDoc methods
 
 - (AKFileSection *)fileSection
 {

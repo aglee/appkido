@@ -24,14 +24,12 @@
 @synthesize frameworksTable = _frameworksTable;
 @synthesize searchInNewWindowCheckbox = _searchInNewWindowCheckbox;
 
-#pragma mark -
-#pragma mark Private constants
+#pragma mark - Private constants
 
 static NSString *_AKCheckboxesColumnID     = @"checkboxes";
 static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKPrefPanelController *)sharedInstance
 {
@@ -45,8 +43,7 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
     return s_sharedInstance;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (void)awakeFromNib
 {
@@ -67,8 +64,7 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
 }
 
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)openPrefsPanel:(id)sender
 {
@@ -137,8 +133,7 @@ static NSString *_AKFrameworkNamesColumnID = @"frameworkNames";
     [self _updatePrefsFromSearchTab];
 }
 
-#pragma mark -
-#pragma mark NSTableView datasource methods
+#pragma mark - NSTableView datasource methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -152,8 +147,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     return [self _namesOfAvailableFrameworks][rowIndex];
 }
 
-#pragma mark -
-#pragma mark NSTableView delegate methods
+#pragma mark - NSTableView delegate methods
 
 - (void)tableView:(NSTableView *)aTableView
   willDisplayCell:(id)aCell
@@ -195,8 +189,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     }
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // Update control settings in the prefs panel based on user preference
 // values given by NSUserDefaults.

@@ -22,13 +22,11 @@
 
 @property (nonatomic, readonly, unsafe_unretained) AKWindowController *owningWindowController;
 
-#pragma mark -
-#pragma mark Init/dealloc/awake
+#pragma mark - Init/dealloc/awake
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 /*! May modify whereTo. */
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo;

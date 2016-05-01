@@ -21,8 +21,7 @@
  */
 @interface AKDoc : NSObject
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 /*!
  * Subclasses must override. Returns a file section containing the text

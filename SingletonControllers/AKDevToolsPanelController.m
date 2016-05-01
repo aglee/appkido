@@ -17,12 +17,10 @@
 @synthesize devToolsView = _devToolsView;
 @synthesize okButton = _okButton;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 
-#pragma mark -
-#pragma mark Running the panel
+#pragma mark - Running the panel
 
 + (BOOL)runDevToolsSetupPanel
 {
@@ -34,8 +32,7 @@
 	return (result == NSRunStoppedResponse);
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)ok:(id)sender
 {
@@ -49,8 +46,7 @@
     [[NSApplication sharedApplication] terminate:self];
 }
 
-#pragma mark -
-#pragma mark NSWindowController methods
+#pragma mark - NSWindowController methods
 
 - (void)windowDidLoad
 {

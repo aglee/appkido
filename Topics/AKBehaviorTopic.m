@@ -11,12 +11,10 @@
 
 @implementation AKBehaviorTopic
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSString *)behaviorName
 {
@@ -24,8 +22,7 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark AKTopic methods
+#pragma mark - AKTopic methods
 
 - (NSDictionary *)asPrefDictionary
 {
@@ -52,24 +49,21 @@
     return [self _subtopics][subtopicIndex];
 }
 
-#pragma mark -
-#pragma mark Subtopics
+#pragma mark - Subtopics
 
 - (void)populateSubtopicsArray:(NSMutableArray *)array
 {
     DIGSLogError_MissingOverride();
 }
 
-#pragma mark -
-#pragma mark AKSortable methods
+#pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
     return [self behaviorName];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (NSArray *)_subtopics
 {

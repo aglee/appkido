@@ -15,8 +15,7 @@
 
 @implementation AKPseudoMethodsSubtopic
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)subtopicForClassItem:(AKClassItem *)classItem
     includeAncestors:(BOOL)includeAncestors
@@ -25,8 +24,7 @@
                            includeAncestors:includeAncestors];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithClassItem:(AKClassItem *)classItem
        includeAncestors:(BOOL)includeAncestors
@@ -46,16 +44,14 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKClassItem *)classItem
 {
     return _classItem;
 }
 
-#pragma mark -
-#pragma mark AKMembersSubtopic methods
+#pragma mark - AKMembersSubtopic methods
 
 - (AKBehaviorItem *)behaviorItem
 {

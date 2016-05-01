@@ -136,8 +136,7 @@
             ?: [self _xcodeAppPathFromOldStyleDevToolsPath:devToolsPath]);
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 // Checks for [xcodeAppPath]/Contents/Developer, which indicates we have a
 // standalone Xcode that contains the Dev Tools.

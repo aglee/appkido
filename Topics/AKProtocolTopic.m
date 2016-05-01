@@ -23,16 +23,14 @@
 
 @implementation AKProtocolTopic
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)topicWithProtocolItem:(AKProtocolItem *)protocolItem
 {
     return [[self alloc] initWithProtocolItem:protocolItem];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem
 {
@@ -51,8 +49,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKTopic methods
+#pragma mark - AKTopic methods
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
@@ -86,8 +83,7 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark AKBehaviorTopic methods
+#pragma mark - AKBehaviorTopic methods
 
 - (NSString *)behaviorName
 {
@@ -116,8 +112,7 @@
                      ])];
 }
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {

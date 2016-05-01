@@ -11,8 +11,7 @@ NSString *AKHeaderFileDocName = @"Header File";
 
 @implementation AKHeaderFileDoc
 
-#pragma mark -
-#pragma mark AKBehaviorGeneralDoc methods
+#pragma mark - AKBehaviorGeneralDoc methods
 
 - (BOOL)docTextIsHTML
 {

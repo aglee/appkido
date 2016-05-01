@@ -18,14 +18,12 @@
     NSMutableArray *_subtopics;
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 /*! Subclasses must override. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *behaviorName;
 
-#pragma mark -
-#pragma mark Subtopics
+#pragma mark - Subtopics
 
 /*! Subclasses must override. For internal use only. */
 - (void)populateSubtopicsArray:(NSMutableArray *)array;

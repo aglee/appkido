@@ -9,8 +9,7 @@
 
 @interface AKTableView : NSTableView
 
-#pragma mark -
-#pragma mark Preferences
+#pragma mark - Preferences
 
 /*! Applies the font indicated by the user's preference settings. */
 - (void)applyListFontPrefs;

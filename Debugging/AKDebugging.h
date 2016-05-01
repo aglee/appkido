@@ -10,20 +10,17 @@
 
 @interface AKDebugging : NSResponder
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKDebugging *)sharedInstance;
 
-#pragma mark -
-#pragma mark Initial setup
+#pragma mark - Initial setup
 
 + (BOOL)userCanDebug;
 
 - (void)addDebugMenu;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 /*! Opens a window in which you can select a doc file and see it parsed. */
 - (IBAction)testParser:(id)sender;

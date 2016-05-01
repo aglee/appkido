@@ -25,8 +25,7 @@
 
 @implementation AKDatabase
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex
 {
@@ -56,8 +55,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Populating the database
+#pragma mark - Populating the database
 
 - (NSArray *)_arrayWithAllFrameworkNames
 {
@@ -160,8 +158,7 @@
     //FIXME: Fill this in.
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- frameworks
+#pragma mark - Getters and setters -- frameworks
 
 - (NSArray *)sortedFrameworkNames
 {
@@ -173,8 +170,7 @@
     return [self.frameworkNames containsObject:frameworkName];
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- classes
+#pragma mark - Getters and setters -- classes
 
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName
 {
@@ -216,8 +212,7 @@
     return self.classItemsByName[className];
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- protocols
+#pragma mark - Getters and setters -- protocols
 
 - (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
@@ -253,8 +248,7 @@
     _protocolItemsByName[protocolName] = protocolItem;
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- functions
+#pragma mark - Getters and setters -- functions
 
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
@@ -301,8 +295,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- globals
+#pragma mark - Getters and setters -- globals
 
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
@@ -350,8 +343,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Methods that help AKCocoaGlobalsDocParser
+#pragma mark - Methods that help AKCocoaGlobalsDocParser
 
 - (AKClassItem *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
 {
@@ -375,8 +367,7 @@
     _protocolItemsByHTMLPath[htmlFilePath] = protocolItem;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName
                            withInformalFlag:(BOOL)informalFlag

@@ -14,8 +14,7 @@
 @class AKPropertyItem;
 @class AKProtocolItem;
 
-#pragma mark -
-#pragma mark Blocks as alternatives to performSelector
+#pragma mark - Blocks as alternatives to performSelector
 
 typedef id (^AKBlockForGettingMemberItem)(AKBehaviorItem *behaviorItem, NSString *memberName);
 
@@ -68,8 +67,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 /*! Path to the .h file that declares this behavior. */
 @property (nonatomic, copy) NSString *headerFileWhereDeclared;
 
-#pragma mark -
-#pragma mark Getters and setters -- general
+#pragma mark - Getters and setters -- general
 
 //TODO: Old note to self says that classes can have multiple header paths. I suspect I was thinking of protocols. Check whether I'm handling this.
 
@@ -88,8 +86,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 /*! Returns zero or more AKMethodItems. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodItems;
 
-#pragma mark -
-#pragma mark Getters and setters -- properties
+#pragma mark - Getters and setters -- properties
 
 /*! Returns only properties that are in this class's documentation. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedProperties;
@@ -99,8 +96,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 /*! Does nothing if a property with the same name already exists. */
 - (void)addPropertyItem:(AKPropertyItem *)propertyItem;
 
-#pragma mark -
-#pragma mark Getters and setters -- class methods
+#pragma mark - Getters and setters -- class methods
 
 /*!
  * Returns AKMethodItems for class methods that have documentation
@@ -113,8 +109,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 /*! Does nothing if a class method with the same name already exists. */
 - (void)addClassMethod:(AKMethodItem *)methodItem;
 
-#pragma mark -
-#pragma mark Getters and setters -- instance methods
+#pragma mark - Getters and setters -- instance methods
 
 /*!
  * Returns AKMethodItems for instance methods that have documentation
@@ -127,8 +122,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 /*! Does nothing if an instance method with the same name already exists. */
 - (void)addInstanceMethod:(AKMethodItem *)methodItem;
 
-#pragma mark -
-#pragma mark Getters and setters -- deprecated methods
+#pragma mark - Getters and setters -- deprecated methods
 
 /*!
  * We have to guess whether it's a class method or instance method,

@@ -26,8 +26,7 @@
  */
 @interface AKTopic : NSObject <AKPrefDictionary, AKSortable>
 
-#pragma mark -
-#pragma mark String constants
+#pragma mark - String constants
 
 extern NSString *AKTopicBrowserPathSeparator;
 
@@ -37,8 +36,7 @@ extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKGlobalsTopicName;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassItem *parentClassOfTopic;  //TODO: KLUDGE
 
@@ -47,8 +45,7 @@ extern NSString *AKGlobalsTopicName;
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKTokenItem *topicItem;
 
-#pragma mark -
-#pragma mark Names for various display contexts
+#pragma mark - Names for various display contexts
 
 /*! Subclasses must override. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInTopicBrowser;
@@ -57,8 +54,7 @@ extern NSString *AKGlobalsTopicName;
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
 
-#pragma mark -
-#pragma mark Populating the topic browser
+#pragma mark - Populating the topic browser
 
 /*! Subclasses must override. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pathInTopicBrowser;
@@ -75,8 +71,7 @@ extern NSString *AKGlobalsTopicName;
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childTopics;
 
-#pragma mark -
-#pragma mark Subtopics
+#pragma mark - Subtopics
 
 /*! Subclasses must override. */
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSubtopics;

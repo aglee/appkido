@@ -11,8 +11,7 @@
 
 @implementation AKTokenItem
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
 {
@@ -35,16 +34,14 @@
 }
 
 
-#pragma mark -
-#pragma mark AKSortable methods
+#pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
     return _tokenName;
 }
 
-#pragma mark -
-#pragma mark NSObject methods
+#pragma mark - NSObject methods
 
 - (NSString *)description
 {

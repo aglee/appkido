@@ -17,8 +17,7 @@
 
 @synthesize headerFileWhereDeclared = _headerFileWhereDeclared;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTokenName:(NSString *)tokenName
               database:(AKDatabase *)database
@@ -38,8 +37,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters -- general
+#pragma mark - Getters and setters -- general
 
 - (BOOL)isClassItem
 {
@@ -89,8 +87,7 @@
     return [_indexOfInstanceMethods allItems];
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- properties
+#pragma mark - Getters and setters -- properties
 
 - (NSArray *)documentedProperties
 {
@@ -107,8 +104,7 @@
     [_indexOfProperties addTokenItem:propertyItem];
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- class methods
+#pragma mark - Getters and setters -- class methods
 
 - (NSArray *)documentedClassMethods
 {
@@ -125,8 +121,7 @@
     [_indexOfClassMethods addTokenItem:methodItem];
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- instance methods
+#pragma mark - Getters and setters -- instance methods
 
 - (NSArray *)documentedInstanceMethods
 {
@@ -143,8 +138,7 @@
     [_indexOfInstanceMethods addTokenItem:methodItem];
 }
 
-#pragma mark -
-#pragma mark Getters and setters -- deprecated methods
+#pragma mark - Getters and setters -- deprecated methods
 
 - (AKMethodItem *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
                                         frameworkName:(NSString *)frameworkName

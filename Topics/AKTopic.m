@@ -14,8 +14,7 @@
 
 @implementation AKTopic
 
-#pragma mark -
-#pragma mark String constants
+#pragma mark - String constants
 
 NSString *AKTopicBrowserPathSeparator = @"/";
 
@@ -24,8 +23,7 @@ NSString *AKInformalProtocolsTopicName = @"Informal Protocols";
 NSString *AKFunctionsTopicName         = @"Functions";
 NSString *AKGlobalsTopicName           = @"Types & Constants";
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (AKClassItem *)parentClassOfTopic
 {
@@ -37,8 +35,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-#pragma mark -
-#pragma mark Names for various display contexts
+#pragma mark - Names for various display contexts
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
@@ -56,8 +53,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return [self stringToDisplayInTopicBrowser];
 }
 
-#pragma mark -
-#pragma mark Populating the topic browser
+#pragma mark - Populating the topic browser
 
 - (NSString *)pathInTopicBrowser
 {
@@ -80,8 +76,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-#pragma mark -
-#pragma mark Subtopics
+#pragma mark - Subtopics
 
 - (NSInteger)numberOfSubtopics
 {
@@ -128,8 +123,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
             : [self subtopicAtIndex:subtopicIndex]);
 }
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -180,16 +174,14 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
     return nil;
 }
 
-#pragma mark -
-#pragma mark AKSortable methods
+#pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
     return [self stringToDisplayInLists];
 }
 
-#pragma mark -
-#pragma mark NSObject methods
+#pragma mark - NSObject methods
 
 - (BOOL)isEqual:(id)anObject
 {

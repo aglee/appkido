@@ -12,16 +12,14 @@
 
 @implementation AKDelegateMethodDoc
 
-#pragma mark -
-#pragma mark AKMemberDoc methods
+#pragma mark - AKMemberDoc methods
 
 + (NSString *)punctuateTokenName:(NSString *)methodName
 {
     return [@"-" stringByAppendingString:methodName];
 }
 
-#pragma mark -
-#pragma mark AKDoc methods
+#pragma mark - AKDoc methods
 
 - (NSString *)commentString
 {

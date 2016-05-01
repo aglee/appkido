@@ -29,8 +29,7 @@
 @property (nonatomic, weak) IBOutlet WebView *webView;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextView *textView;
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 /*! Returns either the web view or the text view. */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *docView;

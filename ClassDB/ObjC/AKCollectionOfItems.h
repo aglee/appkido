@@ -24,8 +24,7 @@
     NSMutableDictionary *_itemsByName;
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allItems;
 

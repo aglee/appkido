@@ -21,19 +21,16 @@
 
 @property (nonatomic, readonly, strong) AKDatabase *database;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)linkResolverWithDatabase:(AKDatabase *)database;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithDatabase:(AKDatabase *)database NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Resolving links
+#pragma mark - Resolving links
 
 /*!
  * Tries to derive a doc locator from the given URL. If we succeed, we can

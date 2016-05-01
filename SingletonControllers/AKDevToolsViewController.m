@@ -22,8 +22,7 @@
 @synthesize explanationField = _explanationField;
 @synthesize okButton = _okButton;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (void)awakeFromNib
 {
@@ -46,8 +45,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (void)setOkButton:(NSButton *)okButton
 {
@@ -56,8 +54,7 @@
     [self _updateUIToReflectPrefs];
 }
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)promptForXcodeLocation:(id)sender
 {
@@ -98,8 +95,7 @@
     [self _updateUIToReflectPrefs];
 }
 
-#pragma mark -
-#pragma mark NSOpenSavePanelDelegate methods
+#pragma mark - NSOpenSavePanelDelegate methods
 
 - (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url
 {
@@ -128,8 +124,7 @@
     return [fm fileExistsAtPath:[path stringByAppendingPathComponent:@"Contents/MacOS/Xcode"]];
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_setSelectedXcodeAppPath:(NSString *)xcodeAppPath
 {

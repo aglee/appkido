@@ -13,8 +13,7 @@
 
 @implementation AKAboutWindowController
 
-#pragma mark -
-#pragma mark NSWindowController methods
+#pragma mark - NSWindowController methods
 
 - (void)windowDidLoad
 {
@@ -40,8 +39,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark WebFrameLoadDelegate methods
+#pragma mark - WebFrameLoadDelegate methods
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
@@ -52,8 +50,7 @@
     [_creditsView ak_removeAllElasticity];
 }
 
-#pragma mark -
-#pragma mark WebPolicyDelegate methods
+#pragma mark - WebPolicyDelegate methods
 
 - (void)webView:(WebView *)sender
 decidePolicyForNavigationAction:(NSDictionary *)actionInformation

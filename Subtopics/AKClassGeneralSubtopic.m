@@ -16,16 +16,14 @@
 
 @implementation AKClassGeneralSubtopic
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)subtopicForClassItem:(AKClassItem *)classItem
 {
     return [[self alloc] initWithClassItem:classItem];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithClassItem:(AKClassItem *)classItem
 {
@@ -44,8 +42,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKSubtopic methods
+#pragma mark - AKSubtopic methods
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
@@ -65,8 +62,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark AKBehaviorGeneralSubtopic methods
+#pragma mark - AKBehaviorGeneralSubtopic methods
 
 - (AKBehaviorItem *)behaviorItem
 {
@@ -83,8 +79,7 @@
     return AKClassDescriptionAlternateHTMLSectionName;
 }
 
-#pragma mark -
-#pragma mark Private methods
+#pragma mark - Private methods
 
 - (void)_addDocsForExtraFramework:extraFrameworkName
                            toList:(NSMutableArray *)docList

@@ -18,14 +18,12 @@
 
 @property (nonatomic, copy) NSString *label;
 
-#pragma mark -
-#pragma mark String constants
+#pragma mark - String constants
 
 extern NSString *AKClassesLabelTopicName;
 extern NSString *AKOtherTopicsLabelTopicName;
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label;
 

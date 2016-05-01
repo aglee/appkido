@@ -29,8 +29,7 @@
 @synthesize searchIncludesGlobals = _searchIncludesGlobals;
 @synthesize searchIgnoresCase = _searchIgnoresCase;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)init
 {
@@ -51,8 +50,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {

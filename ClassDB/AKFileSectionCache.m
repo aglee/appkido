@@ -10,8 +10,7 @@
 
 @implementation AKFileSectionCache
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)init
 {
@@ -26,8 +25,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Accessing the cache
+#pragma mark - Accessing the cache
 
 - (NSData *)likeFileAtPath:(NSString *)filePath
 {

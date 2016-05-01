@@ -17,8 +17,7 @@
     NSString *_extraFrameworkName;
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*!
  * Designated initializer. It's also okay to use initWithFileSection:, which
@@ -33,8 +32,7 @@
 - (instancetype)initWithFileSection:(AKFileSection *)fileSection
        extraFrameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Doc name
+#pragma mark - Doc name
 
 /*!
  * Used to calculate docName and stringToDisplayInDocList by "qualifying" the

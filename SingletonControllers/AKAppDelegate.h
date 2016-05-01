@@ -51,18 +51,15 @@
 /*! We insert menu items after this item in the "Go" menu. */
 @property (nonatomic, weak) IBOutlet NSMenuItem *firstGoMenuDivider;
 
-#pragma mark -
-#pragma mark Shared instance
+#pragma mark - Shared instance
 
 + (AKAppDelegate *)appDelegate;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDatabase *appDatabase;
 
-#pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 /*! If a text view has keyboard focus, returns that text view. */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) NSTextView *selectedTextView;
@@ -73,18 +70,15 @@
 /*! Opens a new browser window.  Returns the newly created window controller. */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKWindowController *controllerForNewWindow;
 
-#pragma mark -
-#pragma mark Search
+#pragma mark - Search
 
 - (void)performExternallyRequestedSearchForString:(NSString *)searchString;
 
-#pragma mark -
-#pragma mark AppleScript support
+#pragma mark - AppleScript support
 
 - (id)handleSearchScriptCommand:(NSScriptCommand *)aCommand;
 
-#pragma mark -
-#pragma mark Managing the user's Favorites list
+#pragma mark - Managing the user's Favorites list
 
 /*! Returns AKDocLocators for the items in the user's Favorites list. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *favoritesList;
@@ -95,8 +89,7 @@
 
 - (void)moveFavoriteFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
 
-#pragma mark -
-#pragma mark Action methods
+#pragma mark - Action methods
 
 - (IBAction)openAboutPanel:(id)sender;
 

@@ -46,18 +46,15 @@
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDoc *docToDisplay;
 
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Sorting
+#pragma mark - Sorting
 
 /*! *Should* be equivalent to using the -sortName mechanism, but faster. */
 + (void)sortArrayOfDocLocators:(NSMutableArray *)array;

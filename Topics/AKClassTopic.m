@@ -22,16 +22,14 @@
 
 @implementation AKClassTopic
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)topicWithClassItem:(AKClassItem *)classItem
 {
     return [[self alloc] initWithClassItem:classItem];
 }
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithClassItem:(AKClassItem *)classItem
 {
@@ -50,8 +48,7 @@
 }
 
 
-#pragma mark -
-#pragma mark AKTopic methods
+#pragma mark - AKTopic methods
 
 - (AKClassItem *)parentClassOfTopic
 {
@@ -105,8 +102,7 @@
     return columnValues;
 }
 
-#pragma mark -
-#pragma mark AKBehaviorTopic methods
+#pragma mark - AKBehaviorTopic methods
 
 - (NSString *)behaviorName
 {
@@ -135,8 +131,7 @@
                      ])];
 }
 
-#pragma mark -
-#pragma mark AKPrefDictionary methods
+#pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {

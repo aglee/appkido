@@ -15,21 +15,18 @@
     AKClassItem *_classItem;
 }
 
-#pragma mark -
-#pragma mark Factory methods
+#pragma mark - Factory methods
 
 + (instancetype)subtopicForClassItem:(AKClassItem *)classItem
           includeAncestors:(BOOL)includeAncestors;
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
 - (instancetype)initWithClassItem:(AKClassItem *)classItem
        includeAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassItem *classItem;
 

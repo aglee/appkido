@@ -13,8 +13,7 @@
 
 @implementation AKCollectionOfItems
 
-#pragma mark -
-#pragma mark Init/awake/dealloc
+#pragma mark - Init/awake/dealloc
 
 - (instancetype)init
 {
@@ -28,8 +27,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 
 - (NSArray *)allItems
 {
