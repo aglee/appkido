@@ -41,16 +41,16 @@ static NSString *_AKQuicklistPasteboardType = @"AKQuicklistPasteboard";
 // selecting the quicklist mode.
 enum
 {
-    _AKFavoritesQuicklistMode = 0,
-    _AKCollectionClassesQuicklistMode = 1,
-    _AKWindowOrViewControllerClassesQuicklistMode = 2,
-    _AKViewClassesQuicklistMode = 3,
-    _AKCellOrLayerClassesQuicklistMode = 4,
-    _AKClassesWithDelegatesQuicklistMode = 5,
-    _AKClassesWithDataSourcesQuicklistMode = 7,
-    _AKDataSourceProtocolsQuicklistMode = 8,
-    _AKAllClassesInFrameworkQuicklistMode = 9,
-    _AKSearchResultsQuicklistMode = 10,
+	_AKFavoritesQuicklistMode = 0,
+	_AKCollectionClassesQuicklistMode = 1,
+	_AKWindowOrViewControllerClassesQuicklistMode = 2,
+	_AKViewClassesQuicklistMode = 3,
+	_AKCellOrLayerClassesQuicklistMode = 4,
+	_AKClassesWithDelegatesQuicklistMode = 5,
+	_AKClassesWithDataSourcesQuicklistMode = 7,
+	_AKDataSourceProtocolsQuicklistMode = 8,
+	_AKAllClassesInFrameworkQuicklistMode = 9,
+	_AKSearchResultsQuicklistMode = 10,
 };
 
 @interface AKQuicklistViewController ()
@@ -81,588 +81,588 @@ enum
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-    self = [super initWithNibName:@"QuicklistView" windowController:windowController];
-    if (self)
-    {
-        _docLocators = [[NSArray alloc] init];
-        _selectedQuicklistMode = -1;
+	self = [super initWithNibName:@"QuicklistView" windowController:windowController];
+	if (self)
+	{
+		_docLocators = [[NSArray alloc] init];
+		_selectedQuicklistMode = -1;
 
-        _indexWithinSearchResults = -1;
-        _searchQuery = [[AKSearchQuery alloc] initWithDatabase:[windowController database]];
-        _pastSearchStrings = [[NSMutableArray alloc] init];
+		_indexWithinSearchResults = -1;
+		_searchQuery = [[AKSearchQuery alloc] initWithDatabase:[windowController database]];
+		_pastSearchStrings = [[NSMutableArray alloc] init];
 
-        [[DIGSFindBuffer sharedInstance] addDelegate:self];
-    }
+		[[DIGSFindBuffer sharedInstance] addDelegate:self];
+	}
 
-    return self;
+	return self;
 }
 
 - (instancetype)initWithDefaultNib
 {
-    DIGSLogError_NondesignatedInitializer();
-    return nil;
+	DIGSLogError_NondesignatedInitializer();
+	return nil;
 }
 
 - (void)dealloc
 {
-    [[DIGSFindBuffer sharedInstance] removeDelegate:self];
+	[[DIGSFindBuffer sharedInstance] removeDelegate:self];
 
-    
+
 }
 
 - (void)awakeFromNib
 {
 #if APPKIDO_FOR_IPHONE
-    // iOS doesn't have window or cell classes, so we substitute view controller
-    // and layer classes when compiling AppKiDo-for-iPhone.
-    NSButtonCell *cell;
+	// iOS doesn't have window or cell classes, so we substitute view controller
+	// and layer classes when compiling AppKiDo-for-iPhone.
+	NSButtonCell *cell;
 
-    cell = [_quicklistRadio1 cellWithTag:_AKWindowOrViewControllerClassesQuicklistMode];
-    [cell setTitle:@"View controller classes"];
+	cell = [_quicklistRadio1 cellWithTag:_AKWindowOrViewControllerClassesQuicklistMode];
+	[cell setTitle:@"View controller classes"];
 
-    cell = [_quicklistRadio1 cellWithTag:_AKCellOrLayerClassesQuicklistMode];
-    [cell setTitle:@"Layer classes"];
+	cell = [_quicklistRadio1 cellWithTag:_AKCellOrLayerClassesQuicklistMode];
+	[cell setTitle:@"Layer classes"];
 #endif
 
-    // Set up _quicklistTable to do drag and drop.
-    [_quicklistTable registerForDraggedTypes:@[_AKQuicklistPasteboardType]];
+	// Set up _quicklistTable to do drag and drop.
+	[_quicklistTable registerForDraggedTypes:@[_AKQuicklistPasteboardType]];
 
-    // Set up the popup menu of frameworks for the "Classes in framework:"
-    // quicklist item.
-    // Note that the IB default for popup buttons is to autoenable items.
-    // We don't want that.
-    [_frameworkPopup setAutoenablesItems:NO];
+	// Set up the popup menu of frameworks for the "Classes in framework:"
+	// quicklist item.
+	// Note that the IB default for popup buttons is to autoenable items.
+	// We don't want that.
+	[_frameworkPopup setAutoenablesItems:NO];
 
-    for (NSString *fwName in [[self.owningWindowController database] sortedFrameworkNames])
-    {
-        [_frameworkPopup addItemWithTitle:fwName];
-    }
+	for (NSString *fwName in [[self.owningWindowController database] sortedFrameworkNames])
+	{
+		[_frameworkPopup addItemWithTitle:fwName];
+	}
 
-    // Initialize the search field to match the system find-pasteboard.
-    _searchField.stringValue = [DIGSFindBuffer sharedInstance].findString;
+	// Initialize the search field to match the system find-pasteboard.
+	_searchField.stringValue = [DIGSFindBuffer sharedInstance].findString;
 
-    // Match the search options popup to the user's preferences.
-    _includeClassesItem.state = ([AKPrefUtils boolValueForPref:AKIncludeClassesAndProtocolsPrefKey]
-                                   ? NSOnState
-                                   : NSOffState);
-    _includeMethodsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey]
-                                   ? NSOnState
-                                   : NSOffState);
-    _includeFunctionsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey]
-                                     ? NSOnState
-                                     : NSOffState);
-    _includeGlobalsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey]
-                                   ? NSOnState
-                                   : NSOffState);
-    _ignoreCaseItem.state = ([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey]
-                               ? NSOnState
-                               : NSOffState);
+	// Match the search options popup to the user's preferences.
+	_includeClassesItem.state = ([AKPrefUtils boolValueForPref:AKIncludeClassesAndProtocolsPrefKey]
+								 ? NSOnState
+								 : NSOffState);
+	_includeMethodsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey]
+								 ? NSOnState
+								 : NSOffState);
+	_includeFunctionsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey]
+								   ? NSOnState
+								   : NSOffState);
+	_includeGlobalsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey]
+								 ? NSOnState
+								 : NSOffState);
+	_ignoreCaseItem.state = ([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey]
+							 ? NSOnState
+							 : NSOffState);
 
-    // We want everything in the search options popup to be enabled.
-    [_searchOptionsPopup setAutoenablesItems:NO];
+	// We want everything in the search options popup to be enabled.
+	[_searchOptionsPopup setAutoenablesItems:NO];
 
-    // Make extra sure _quicklistTable is properly populated.  (In the
-    // case where the user has not set a window-layout pref, it's
-    // possible I overlook this step.)
-    [self _selectQuicklistMode:[_quicklistModeRadio selectedTag]];
+	// Make extra sure _quicklistTable is properly populated.  (In the
+	// case where the user has not set a window-layout pref, it's
+	// possible I overlook this step.)
+	[self _selectQuicklistMode:[_quicklistModeRadio selectedTag]];
 }
 
 #pragma mark - Navigation
 
 - (void)searchForString:(NSString *)aString
 {
-    _searchField.stringValue = aString;
-    [self doSearch:self];
+	_searchField.stringValue = aString;
+	[self doSearch:self];
 }
 
 - (void)includeEverythingInSearch
 {
-    _includeClassesItem.state = NSOnState;
-    _includeMethodsItem.state = NSOnState;
-    _includeFunctionsItem.state = NSOnState;
-    _includeGlobalsItem.state = NSOnState;
+	_includeClassesItem.state = NSOnState;
+	_includeMethodsItem.state = NSOnState;
+	_includeFunctionsItem.state = NSOnState;
+	_includeGlobalsItem.state = NSOnState;
 
-    [self _updateSearchQuery];
+	[self _updateSearchQuery];
 }
 
 #pragma mark - Action methods
 
 - (IBAction)doQuicklistTableAction:(id)sender
 {
-    NSInteger selectedRow = _quicklistTable.selectedRow;
-    AKDocLocator *selectedDocLocator = ((selectedRow < 0)
-                                        ? nil
-                                        : _docLocators[selectedRow]);
+	NSInteger selectedRow = _quicklistTable.selectedRow;
+	AKDocLocator *selectedDocLocator = ((selectedRow < 0)
+										? nil
+										: _docLocators[selectedRow]);
 
-    // If we are in search mode, remember the selected object's position in
-    // the search results list, so we can do Find Previous and Find Next.
-    if (_selectedQuicklistMode == _AKSearchResultsQuicklistMode)
-    {
-        if (selectedRow >= 0)
-        {
-            _indexWithinSearchResults = selectedRow;
-        }
-    }
+	// If we are in search mode, remember the selected object's position in
+	// the search results list, so we can do Find Previous and Find Next.
+	if (_selectedQuicklistMode == _AKSearchResultsQuicklistMode)
+	{
+		if (selectedRow >= 0)
+		{
+			_indexWithinSearchResults = selectedRow;
+		}
+	}
 
-    // Handle the cases where there's nothing to do.
-    if (selectedDocLocator == nil)
-    {
-        [_removeFavoriteButton setEnabled:NO];
-    }
-    else
-    {
-        // Update the Favorites-list management buttons.
-        _removeFavoriteButton.enabled = (_selectedQuicklistMode == _AKFavoritesQuicklistMode);
+	// Handle the cases where there's nothing to do.
+	if (selectedDocLocator == nil)
+	{
+		[_removeFavoriteButton setEnabled:NO];
+	}
+	else
+	{
+		// Update the Favorites-list management buttons.
+		_removeFavoriteButton.enabled = (_selectedQuicklistMode == _AKFavoritesQuicklistMode);
 
-        // Tell the main window to navigate to the selected doc.
-        [self.owningWindowController selectDocWithDocLocator:selectedDocLocator];
-    }
+		// Tell the main window to navigate to the selected doc.
+		[self.owningWindowController selectDocWithDocLocator:selectedDocLocator];
+	}
 }
 
 - (IBAction)doFrameworkChoiceAction:(id)sender
 {
-    [self _selectQuicklistMode:-1];  // Forces table to reload.
-    [self _selectQuicklistMode:_AKAllClassesInFrameworkQuicklistMode];
+	[self _selectQuicklistMode:-1];  // Forces table to reload.
+	[self _selectQuicklistMode:_AKAllClassesInFrameworkQuicklistMode];
 }
 
 - (IBAction)removeFavorite:(id)sender
 {
-    NSInteger row = _quicklistTable.selectedRow;
+	NSInteger row = _quicklistTable.selectedRow;
 
-    if (row >= 0)
-    {
-        [[AKAppDelegate appDelegate] removeFavoriteAtIndex:row];
-    }
+	if (row >= 0)
+	{
+		[[AKAppDelegate appDelegate] removeFavoriteAtIndex:row];
+	}
 }
 
 - (IBAction)selectSearchField:(id)sender
 {
-    [self.owningWindowController openQuicklistDrawer];
-    [_searchField selectText:nil];
+	[self.owningWindowController openQuicklistDrawer];
+	[_searchField selectText:nil];
 }
 
 - (IBAction)doSearch:(id)sender
 {
-    // Do nothing if no search string was specified.
-    NSString *searchString = [_searchField.stringValue ak_trimWhitespace];
-    if ((searchString == nil) || [searchString isEqualToString:@""])
-    {
-        _searchField.stringValue = @"";
-        return;
-    }
+	// Do nothing if no search string was specified.
+	NSString *searchString = [_searchField.stringValue ak_trimWhitespace];
+	if ((searchString == nil) || [searchString isEqualToString:@""])
+	{
+		_searchField.stringValue = @"";
+		return;
+	}
 
-    // Make sure the quicklist drawer is open so the user can see the results.
-    [self.owningWindowController openQuicklistDrawer];
+	// Make sure the quicklist drawer is open so the user can see the results.
+	[self.owningWindowController openQuicklistDrawer];
 
-    // Put the search string at the top of the list of past search strings.
-    [_pastSearchStrings removeObject:searchString];
-    [_pastSearchStrings insertObject:searchString atIndex:0];
+	// Put the search string at the top of the list of past search strings.
+	[_pastSearchStrings removeObject:searchString];
+	[_pastSearchStrings insertObject:searchString atIndex:0];
 
-    // Prune the list of past search strings as necessary to keep within limits.
-    NSInteger maxSearchStrings = [AKPrefUtils intValueForPref:AKMaxSearchStringsPrefName];
+	// Prune the list of past search strings as necessary to keep within limits.
+	NSInteger maxSearchStrings = [AKPrefUtils intValueForPref:AKMaxSearchStringsPrefName];
 
-    while ((int)_pastSearchStrings.count > maxSearchStrings)
-    {
-        [_pastSearchStrings removeObjectAtIndex:(_pastSearchStrings.count - 1)];
-    }
+	while ((int)_pastSearchStrings.count > maxSearchStrings)
+	{
+		[_pastSearchStrings removeObjectAtIndex:(_pastSearchStrings.count - 1)];
+	}
 
-    [self _updatePastStringsInSearchOptionsPopup];
+	[self _updatePastStringsInSearchOptionsPopup];
 
-    // Update the system find-pasteboard.
-    [DIGSFindBuffer sharedInstance].findString = searchString;
+	// Update the system find-pasteboard.
+	[DIGSFindBuffer sharedInstance].findString = searchString;
 
-    // Update the search query to use the (possibly new) search string.
-    [self _updateSearchQuery];
+	// Update the search query to use the (possibly new) search string.
+	[self _updateSearchQuery];
 
-    // Change the quicklist mode to search mode.
-    [self _selectQuicklistMode:-1];  // Forces table to reload.
-    [self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
+	// Change the quicklist mode to search mode.
+	[self _selectQuicklistMode:-1];  // Forces table to reload.
+	[self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
 
-    // If no search results were found, reselect the search field so the
-    // user can try again.  Otherwise, select the first search result.
-    NSArray *searchResults = [_searchQuery queryResults];
-    NSInteger numSearchResults = searchResults.count;
-    if (numSearchResults == 0)
-    {
-        _indexWithinSearchResults = -1;
-        [_searchField selectText:nil];
-    }
-    else
-    {
-        [self _selectSearchResultWithPrefix:searchString];
-    }
+	// If no search results were found, reselect the search field so the
+	// user can try again.  Otherwise, select the first search result.
+	NSArray *searchResults = [_searchQuery queryResults];
+	NSInteger numSearchResults = searchResults.count;
+	if (numSearchResults == 0)
+	{
+		_indexWithinSearchResults = -1;
+		[_searchField selectText:nil];
+	}
+	else
+	{
+		[self _selectSearchResultWithPrefix:searchString];
+	}
 }
 
 - (IBAction)doSearchOptionsPopupAction:(id)sender
 {
-    NSMenu *searchMenu = _searchOptionsPopup.menu;
-    NSInteger indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
-    NSInteger selectedIndex = _searchOptionsPopup.indexOfSelectedItem;
-    NSMenuItem *selectedItem = [sender selectedItem];
+	NSMenu *searchMenu = _searchOptionsPopup.menu;
+	NSInteger indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
+	NSInteger selectedIndex = _searchOptionsPopup.indexOfSelectedItem;
+	NSMenuItem *selectedItem = [sender selectedItem];
 
-    // Was the selected menu item before or after the special menu divider?
-    if (selectedIndex < indexOfDivider)
-    {
-        // Items before the divider indicate search flags. They are toggled.
-        NSInteger oldState = selectedItem.state;
+	// Was the selected menu item before or after the special menu divider?
+	if (selectedIndex < indexOfDivider)
+	{
+		// Items before the divider indicate search flags. They are toggled.
+		NSInteger oldState = selectedItem.state;
 
-        selectedItem.state = ((oldState == NSOnState) ? NSOffState : NSOnState);
-    }
-    else
-    {
-        // Items after the divider are previous search strings. Selecting one
-        // puts it in the search field.
-        _searchField.stringValue = selectedItem.title;
-    }
+		selectedItem.state = ((oldState == NSOnState) ? NSOffState : NSOnState);
+	}
+	else
+	{
+		// Items after the divider are previous search strings. Selecting one
+		// puts it in the search field.
+		_searchField.stringValue = selectedItem.title;
+	}
 
-    // Whatever we did changed the search parameters in some way, so re-perform
-    // the search.
-    [self doSearch:sender];
+	// Whatever we did changed the search parameters in some way, so re-perform
+	// the search.
+	[self doSearch:sender];
 }
 
 #pragma mark - AKUIController methods
 
 - (void)applyUserPreferences
 {
-    if (_AKFavoritesQuicklistMode == _selectedQuicklistMode)
-    {
-        NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
+	if (_AKFavoritesQuicklistMode == _selectedQuicklistMode)
+	{
+		NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
 
-        if (![favoritesList isEqual:_docLocators])  //TODO: Old note to self says "review".
-        {
-            [self _reloadQuicklistTable];
-        }
-    }
+		if (![favoritesList isEqual:_docLocators])  //TODO: Old note to self says "review".
+		{
+			[self _reloadQuicklistTable];
+		}
+	}
 
-    [_quicklistTable applyListFontPrefs];
+	[_quicklistTable applyListFontPrefs];
 }
 
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
 {
-    // Restore the selection in the frameworks popup.
-    [_frameworkPopup selectItemWithTitle:windowLayout.frameworkPopupSelection];
+	// Restore the selection in the frameworks popup.
+	[_frameworkPopup selectItemWithTitle:windowLayout.frameworkPopupSelection];
 
-    // Restore the settings in the search options popup.
-    _includeClassesItem.state = (windowLayout.searchIncludesClasses ? NSOnState : NSOffState);
-    _includeMethodsItem.state = (windowLayout.searchIncludesMembers ? NSOnState : NSOffState);
-    _includeFunctionsItem.state = (windowLayout.searchIncludesFunctions ? NSOnState : NSOffState);
-    _includeGlobalsItem.state = (windowLayout.searchIncludesGlobals ? NSOnState : NSOffState);
-    _ignoreCaseItem.state = (windowLayout.searchIgnoresCase ? NSOnState : NSOffState);
+	// Restore the settings in the search options popup.
+	_includeClassesItem.state = (windowLayout.searchIncludesClasses ? NSOnState : NSOffState);
+	_includeMethodsItem.state = (windowLayout.searchIncludesMembers ? NSOnState : NSOffState);
+	_includeFunctionsItem.state = (windowLayout.searchIncludesFunctions ? NSOnState : NSOffState);
+	_includeGlobalsItem.state = (windowLayout.searchIncludesGlobals ? NSOnState : NSOffState);
+	_ignoreCaseItem.state = (windowLayout.searchIgnoresCase ? NSOnState : NSOffState);
 
-    // Restore the quicklist mode -- after the other ducks have been
-    // lined up, so the quicklist table will reload properly.
-    [self _selectQuicklistMode:windowLayout.quicklistMode];
+	// Restore the quicklist mode -- after the other ducks have been
+	// lined up, so the quicklist table will reload properly.
+	[self _selectQuicklistMode:windowLayout.quicklistMode];
 }
 
 - (void)putWindowLayoutInto:(AKWindowLayout *)windowLayout
 {
-    // Remember the quicklist mode.
-    windowLayout.quicklistMode = _selectedQuicklistMode;
+	// Remember the quicklist mode.
+	windowLayout.quicklistMode = _selectedQuicklistMode;
 
-    // Remember the selection in the frameworks popup.
-    windowLayout.frameworkPopupSelection = _frameworkPopup.selectedItem.title;
+	// Remember the selection in the frameworks popup.
+	windowLayout.frameworkPopupSelection = _frameworkPopup.selectedItem.title;
 
-    // Remember the settings in the search options popup.
-    windowLayout.searchIncludesClasses = (_includeClassesItem.state == NSOnState);
-    windowLayout.searchIncludesMembers = (_includeMethodsItem.state == NSOnState);
-    windowLayout.searchIncludesFunctions = (_includeFunctionsItem.state == NSOnState);
-    windowLayout.searchIncludesGlobals = (_includeGlobalsItem.state == NSOnState);
-    windowLayout.searchIgnoresCase = (_ignoreCaseItem.state == NSOnState);
+	// Remember the settings in the search options popup.
+	windowLayout.searchIncludesClasses = (_includeClassesItem.state == NSOnState);
+	windowLayout.searchIncludesMembers = (_includeMethodsItem.state == NSOnState);
+	windowLayout.searchIncludesFunctions = (_includeFunctionsItem.state == NSOnState);
+	windowLayout.searchIncludesGlobals = (_includeGlobalsItem.state == NSOnState);
+	windowLayout.searchIgnoresCase = (_ignoreCaseItem.state == NSOnState);
 }
 
 #pragma mark - DIGSFindBufferDelegate methods
 
 - (void)findBufferDidChange:(DIGSFindBuffer *)findBuffer
 {
-    _searchField.stringValue = findBuffer.findString;
+	_searchField.stringValue = findBuffer.findString;
 }
 
 #pragma mark - AKMultiRadioViewDelegate methods
 
 - (void)multiRadioViewDidMakeSelection:(AKMultiRadioView *)mrv
 {
-    [self _selectQuicklistMode:[mrv selectedTag]];
+	[self _selectQuicklistMode:[mrv selectedTag]];
 }
 
 #pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
-    SEL itemAction = [anItem action];
+	SEL itemAction = [anItem action];
 
-    if ((itemAction == @selector(doSearch:))
-        || (itemAction == @selector(doSearchOptionsPopupAction:))
-        || (itemAction == @selector(selectSearchField:)))
-    {
-        return YES;
-    }
+	if ((itemAction == @selector(doSearch:))
+		|| (itemAction == @selector(doSearchOptionsPopupAction:))
+		|| (itemAction == @selector(selectSearchField:)))
+	{
+		return YES;
+	}
 
-    return NO;
+	return NO;
 }
 
 #pragma mark - NSTableView datasource methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return _docLocators.count;
+	return _docLocators.count;
 }
 
 - (id)tableView:(NSTableView *)aTableView
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
-            row:(NSInteger)rowIndex
+			row:(NSInteger)rowIndex
 {
-    return [_docLocators[rowIndex] stringToDisplayInLists];
+	return [_docLocators[rowIndex] stringToDisplayInLists];
 }
 
 #pragma mark - NSTableView delegate methods
 
 - (BOOL)tableView:(NSTableView*)tableView
-       acceptDrop:(id <NSDraggingInfo>)info
-              row:(int)row
-    dropOperation:(NSTableViewDropOperation)operation
+	   acceptDrop:(id <NSDraggingInfo>)info
+			  row:(int)row
+	dropOperation:(NSTableViewDropOperation)operation
 {
-    if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
-    {
-        return NO;
-    }
+	if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
+	{
+		return NO;
+	}
 
-    if (row < 0)
-    {
-        return NO;
-    }
+	if (row < 0)
+	{
+		return NO;
+	}
 
-    NSPasteboard *pboard = [info draggingPasteboard];
-    NSArray *draggedRows = (NSArray *)[pboard propertyListForType:_AKQuicklistPasteboardType];
+	NSPasteboard *pboard = [info draggingPasteboard];
+	NSArray *draggedRows = (NSArray *)[pboard propertyListForType:_AKQuicklistPasteboardType];
 
-    if (draggedRows.count == 0)
-    {
-        return NO;
-    }
+	if (draggedRows.count == 0)
+	{
+		return NO;
+	}
 
-    int draggedRowIndex = ((NSNumber *)draggedRows[0]).intValue;
+	int draggedRowIndex = ((NSNumber *)draggedRows[0]).intValue;
 
-    if ((draggedRowIndex < 0) || (draggedRowIndex == row))
-    {
-        return NO;
-    }
+	if ((draggedRowIndex < 0) || (draggedRowIndex == row))
+	{
+		return NO;
+	}
 
-    [[AKAppDelegate appDelegate] moveFavoriteFromIndex:draggedRowIndex
-                                                     toIndex:row];
-    return YES;
+	[[AKAppDelegate appDelegate] moveFavoriteFromIndex:draggedRowIndex
+											   toIndex:row];
+	return YES;
 }
 
 - (NSDragOperation)tableView:(NSTableView*)tableView
-                validateDrop:(id <NSDraggingInfo>)info
-                 proposedRow:(int)row
-       proposedDropOperation:(NSTableViewDropOperation)operation
+				validateDrop:(id <NSDraggingInfo>)info
+				 proposedRow:(int)row
+	   proposedDropOperation:(NSTableViewDropOperation)operation
 {
-    if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
-    {
-        return NSDragOperationNone;
-    }
+	if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
+	{
+		return NSDragOperationNone;
+	}
 
-    return operation;
+	return operation;
 }
 
 - (BOOL)tableView:(NSTableView *)tableView
-        writeRows:(NSArray*)rows
-     toPasteboard:(NSPasteboard*)pboard
+		writeRows:(NSArray*)rows
+	 toPasteboard:(NSPasteboard*)pboard
 {
-    if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
-    {
-        return NO;
-    }
+	if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
+	{
+		return NO;
+	}
 
-    [pboard declareTypes:@[_AKQuicklistPasteboardType] owner:self];
-    [pboard setPropertyList:rows forType:_AKQuicklistPasteboardType];
+	[pboard declareTypes:@[_AKQuicklistPasteboardType] owner:self];
+	[pboard setPropertyList:rows forType:_AKQuicklistPasteboardType];
 
-    return YES;
+	return YES;
 }
 
 #pragma mark - Private methods
 
 - (void)_selectQuicklistMode:(NSInteger)mode
 {
-    BOOL modeIsChanging = (mode != _selectedQuicklistMode);
+	BOOL modeIsChanging = (mode != _selectedQuicklistMode);
 
-    _selectedQuicklistMode = mode;
+	_selectedQuicklistMode = mode;
 
-    // Select the corresponding radio button.
-    [_quicklistModeRadio selectCellWithTag:mode];
+	// Select the corresponding radio button.
+	[_quicklistModeRadio selectCellWithTag:mode];
 
-    // Populate the quicklist table according to whatever quicklist
-    // mode is selected.
-    if (modeIsChanging)
-    {
-        [self _reloadQuicklistTable];
-    }
+	// Populate the quicklist table according to whatever quicklist
+	// mode is selected.
+	if (modeIsChanging)
+	{
+		[self _reloadQuicklistTable];
+	}
 }
 
 - (void)_reloadQuicklistTable
 {
-    NSArray *tableValues = nil;
+	NSArray *tableValues = nil;
 
-    switch (_selectedQuicklistMode)
-    {
-        case _AKFavoritesQuicklistMode:
-        {
-            NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
+	switch (_selectedQuicklistMode)
+	{
+		case _AKFavoritesQuicklistMode:
+		{
+			NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
 
-            tableValues = [NSArray arrayWithArray:favoritesList];
-            break;
-        }
+			tableValues = [NSArray arrayWithArray:favoritesList];
+			break;
+		}
 
-        case _AKCollectionClassesQuicklistMode:
-        {
-            tableValues = [self _collectionClasses];
-            break;
-        }
+		case _AKCollectionClassesQuicklistMode:
+		{
+			tableValues = [self _collectionClasses];
+			break;
+		}
 
-        case _AKWindowOrViewControllerClassesQuicklistMode:
-        {
-            tableValues = [self _windowOrViewControllerClasses];
-            break;
-        }
+		case _AKWindowOrViewControllerClassesQuicklistMode:
+		{
+			tableValues = [self _windowOrViewControllerClasses];
+			break;
+		}
 
-        case _AKViewClassesQuicklistMode:
-        {
-            tableValues = [self _viewClasses];
-            break;
-        }
+		case _AKViewClassesQuicklistMode:
+		{
+			tableValues = [self _viewClasses];
+			break;
+		}
 
-        case _AKCellOrLayerClassesQuicklistMode:
-        {
-            tableValues = [self _cellOrLayerClasses];
-            break;
-        }
+		case _AKCellOrLayerClassesQuicklistMode:
+		{
+			tableValues = [self _cellOrLayerClasses];
+			break;
+		}
 
-        case _AKClassesWithDelegatesQuicklistMode:
-        {
-            tableValues = [self _classesWithDelegates];
-            break;
-        }
+		case _AKClassesWithDelegatesQuicklistMode:
+		{
+			tableValues = [self _classesWithDelegates];
+			break;
+		}
 
-        case _AKClassesWithDataSourcesQuicklistMode:
-        {
-            tableValues = [self _classesWithDataSources];
-            break;
-        }
+		case _AKClassesWithDataSourcesQuicklistMode:
+		{
+			tableValues = [self _classesWithDataSources];
+			break;
+		}
 
-        case _AKDataSourceProtocolsQuicklistMode:
-        {
-            tableValues = [self _dataSourceProtocols];
-            break;
-        }
+		case _AKDataSourceProtocolsQuicklistMode:
+		{
+			tableValues = [self _dataSourceProtocols];
+			break;
+		}
 
-        case _AKAllClassesInFrameworkQuicklistMode:
-        {
-            NSString *frameworkName = _frameworkPopup.title;
+		case _AKAllClassesInFrameworkQuicklistMode:
+		{
+			NSString *frameworkName = _frameworkPopup.title;
 
-            tableValues = [self _classesForFramework:frameworkName];
-            break;
-        }
+			tableValues = [self _classesForFramework:frameworkName];
+			break;
+		}
 
-        case _AKSearchResultsQuicklistMode:
-        {
-            [self _updateSearchQuery];
-            tableValues = [_searchQuery queryResults];
-            break;
-        }
+		case _AKSearchResultsQuicklistMode:
+		{
+			[self _updateSearchQuery];
+			tableValues = [_searchQuery queryResults];
+			break;
+		}
 
-        default:
-        {
-            tableValues = @[];
-            break;
-        }
-    }
+		default:
+		{
+			tableValues = @[];
+			break;
+		}
+	}
 
-    // Reload the table with the new values.
-    self.docLocators = tableValues;
-    [_quicklistTable deselectAll:nil];
-    [_quicklistTable reloadData];
+	// Reload the table with the new values.
+	self.docLocators = tableValues;
+	[_quicklistTable deselectAll:nil];
+	[_quicklistTable reloadData];
 
-    // Since there is no no selection, disable the remove-favorite button.
-    [_removeFavoriteButton setEnabled:NO];
+	// Since there is no no selection, disable the remove-favorite button.
+	[_removeFavoriteButton setEnabled:NO];
 }
 
 - (NSArray *)_collectionClasses
 {
-    static NSArray *s_collectionClasses = nil;
+	static NSArray *s_collectionClasses = nil;
 
-    if (!s_collectionClasses)
-    {
-        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:
-                               @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable", @"NSMapTable", @"NSPointerArray"]];
-        s_collectionClasses = [self _sortedDocLocatorsForClasses:classItems];
-    }
+	if (!s_collectionClasses)
+	{
+		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:
+  @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable", @"NSMapTable", @"NSPointerArray"]];
+		s_collectionClasses = [self _sortedDocLocatorsForClasses:classItems];
+	}
 
-    return s_collectionClasses;
+	return s_collectionClasses;
 }
 
 - (NSArray *)_windowOrViewControllerClasses
 {
-    static NSArray *s_windowOrViewControllerClasses = nil;
+	static NSArray *s_windowOrViewControllerClasses = nil;
 
-    if (!s_windowOrViewControllerClasses)
-    {
+	if (!s_windowOrViewControllerClasses)
+	{
 #if APPKIDO_FOR_IPHONE
-        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"UIViewController"]];
+		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"UIViewController"]];
 #else
-        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
+		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
 #endif
 
-        s_windowOrViewControllerClasses = [self _sortedDocLocatorsForClasses:classItems];
-    }
+		s_windowOrViewControllerClasses = [self _sortedDocLocatorsForClasses:classItems];
+	}
 
-    return s_windowOrViewControllerClasses;
+	return s_windowOrViewControllerClasses;
 }
 
 - (NSArray *)_viewClasses
 {
-    static NSArray *s_viewClasses = nil;
+	static NSArray *s_viewClasses = nil;
 
-    if (!s_viewClasses)
-    {
-        NSString *nameOfRootViewClass;
+	if (!s_viewClasses)
+	{
+		NSString *nameOfRootViewClass;
 
-        if ([[self.owningWindowController database] classWithName:@"UIView"] != nil)
-        {
-            nameOfRootViewClass = @"UIView";
-        }
-        else
-        {
-            nameOfRootViewClass = @"NSView";
-        }
+		if ([[self.owningWindowController database] classWithName:@"UIView"] != nil)
+		{
+			nameOfRootViewClass = @"UIView";
+		}
+		else
+		{
+			nameOfRootViewClass = @"NSView";
+		}
 
-        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
+		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
 
-        s_viewClasses = [self _sortedDocLocatorsForClasses:classItems];
-    }
+		s_viewClasses = [self _sortedDocLocatorsForClasses:classItems];
+	}
 
-    return s_viewClasses;
+	return s_viewClasses;
 }
 
 - (NSArray *)_cellOrLayerClasses
 {
-    static NSArray *s_cellOrLayerClasses = nil;
+	static NSArray *s_cellOrLayerClasses = nil;
 
-    if (!s_cellOrLayerClasses)
-    {
+	if (!s_cellOrLayerClasses)
+	{
 #if APPKIDO_FOR_IPHONE
-        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"CALayer"]];
+		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"CALayer"]];
 #else
-        NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
+		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
 #endif
 
-        s_cellOrLayerClasses = [self _sortedDocLocatorsForClasses:classItems];
-    }
+		s_cellOrLayerClasses = [self _sortedDocLocatorsForClasses:classItems];
+	}
 
-    return s_cellOrLayerClasses;
+	return s_cellOrLayerClasses;
 }
 
 - (NSArray *)_classesWithDelegates
 {
-    static NSArray *s_classesWithDelegates = nil;
+	static NSArray *s_classesWithDelegates = nil;
 
 //TODO: Commenting out, come back later.
 //    if (!s_classesWithDelegates)
@@ -734,270 +734,270 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 //        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
 //    }
 
-    return s_classesWithDelegates;
+	return s_classesWithDelegates;
 }
 
 - (NSArray *)_classesWithDataSources
 {
-    static NSArray *s_classesWithDataSources = nil;
+	static NSArray *s_classesWithDataSources = nil;
 
-    if (!s_classesWithDataSources)
-    {
-        NSMutableSet *setOfItems = [NSMutableSet set];
+	if (!s_classesWithDataSources)
+	{
+		NSMutableSet *setOfItems = [NSMutableSet set];
 
-        for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
-        {
-            BOOL classHasDataSource = NO;
+		for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
+		{
+			BOOL classHasDataSource = NO;
 
-            // See if the class has a -setDataSource: method.
-            for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
-            {
-                NSString *methodName = methodItem.tokenName;
+			// See if the class has a -setDataSource: method.
+			for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
+			{
+				NSString *methodName = methodItem.tokenName;
 
-                if ([methodName isEqualToString:@"setDataSource:"])
-                {
-                    classHasDataSource = YES;
-                    break;
-                }
-            }
+				if ([methodName isEqualToString:@"setDataSource:"])
+				{
+					classHasDataSource = YES;
+					break;
+				}
+			}
 
-            // If not, see if the class has a property named "dataSource".
-            if (!classHasDataSource)
-            {
-                for (AKPropertyItem *propertyItem in [classItem documentedProperties])
-                {
-                    NSString *propertyName = propertyItem.tokenName;
+			// If not, see if the class has a property named "dataSource".
+			if (!classHasDataSource)
+			{
+				for (AKPropertyItem *propertyItem in [classItem documentedProperties])
+				{
+					NSString *propertyName = propertyItem.tokenName;
 
-                    if ([propertyName isEqual:@"dataSource"])
-                    {
-                        classHasDataSource = YES;
-                        break;
-                    }
-                }
-            }
+					if ([propertyName isEqual:@"dataSource"])
+					{
+						classHasDataSource = YES;
+						break;
+					}
+				}
+			}
 
-            // If not, see if there's a protocol named thisClassDataSource.
-            NSString *possibleDataSourceProtocolName = [classItem.tokenName stringByAppendingString:@"DataSource"];
-            if ([[self.owningWindowController database] protocolWithName:possibleDataSourceProtocolName])
-            {
-                classHasDataSource = YES;
-            }
+			// If not, see if there's a protocol named thisClassDataSource.
+			NSString *possibleDataSourceProtocolName = [classItem.tokenName stringByAppendingString:@"DataSource"];
+			if ([[self.owningWindowController database] protocolWithName:possibleDataSourceProtocolName])
+			{
+				classHasDataSource = YES;
+			}
 
-            // We've checked all the ways we can tell if a class has a datasource.
-            if (classHasDataSource)
-            {
-                [setOfItems addObject:classItem];
-            }
-        }
+			// We've checked all the ways we can tell if a class has a datasource.
+			if (classHasDataSource)
+			{
+				[setOfItems addObject:classItem];
+			}
+		}
 
-        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
-        s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classItems];
-    }
+		NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
+		s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classItems];
+	}
 
-    return s_classesWithDataSources;
+	return s_classesWithDataSources;
 }
 
 - (NSArray *)_dataSourceProtocols
 {
-    static NSArray *s_dataSourceProtocols = nil;
+	static NSArray *s_dataSourceProtocols = nil;
 
-    if (!s_dataSourceProtocols)
-    {
-        NSMutableArray *protocolItems = [NSMutableArray array];
+	if (!s_dataSourceProtocols)
+	{
+		NSMutableArray *protocolItems = [NSMutableArray array];
 
-        for (AKProtocolItem *protocolItem in [[self.owningWindowController database] allProtocols])
-        {
-            if ([protocolItem.tokenName ak_contains:@"DataSource"])
-            {
-                [protocolItems addObject:protocolItem];
-            }
-        }
+		for (AKProtocolItem *protocolItem in [[self.owningWindowController database] allProtocols])
+		{
+			if ([protocolItem.tokenName ak_contains:@"DataSource"])
+			{
+				[protocolItems addObject:protocolItem];
+			}
+		}
 
-        s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolItems];
-    }
+		s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolItems];
+	}
 
-    return s_dataSourceProtocols;
+	return s_dataSourceProtocols;
 }
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-    NSArray *classItems = [[self.owningWindowController database] classesForFrameworkNamed:fwName];
+	NSArray *classItems = [[self.owningWindowController database] classesForFrameworkNamed:fwName];
 
-    return [self _sortedDocLocatorsForClasses:classItems];
+	return [self _sortedDocLocatorsForClasses:classItems];
 }
 
 - (NSArray *)_sortedDocLocatorsForClasses:(NSArray *)classItems
 {
-    NSMutableArray *quicklistItems = [NSMutableArray array];
+	NSMutableArray *quicklistItems = [NSMutableArray array];
 
-    for (AKClassItem *classItem in classItems)
-    {
+	for (AKClassItem *classItem in classItems)
+	{
 //TODO: Is it safe to assume there is always a doc?
 //        // Don't list classes that don't have HTML documentation.  They
 //        // may have cropped up in header files and either not been
 //        // documented yet or intended for Apple's internal use.
 //        if (classItem.tokenItemDocumentation)
-        {
-            AKTopic *topic = [AKClassTopic topicWithClassItem:classItem];
+		{
+			AKTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
-            [quicklistItems addObject:[AKDocLocator withTopic:topic
-                                                 subtopicName:nil
-                                                      docName:nil]];
-        }
-    }
+			[quicklistItems addObject:[AKDocLocator withTopic:topic
+												 subtopicName:nil
+													  docName:nil]];
+		}
+	}
 
-    return [AKSortUtils arrayBySortingArray:quicklistItems];
+	return [AKSortUtils arrayBySortingArray:quicklistItems];
 }
 
 - (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolItems
 {
-    NSMutableArray *quicklistItems = [NSMutableArray array];
+	NSMutableArray *quicklistItems = [NSMutableArray array];
 
-    for (AKProtocolItem *protocolItem in protocolItems)
-    {
+	for (AKProtocolItem *protocolItem in protocolItems)
+	{
 //TODO: Is it safe to assume there is always a doc?
 //        // Don't list protocols that don't have HTML documentation.  They
 //        // may have cropped up in header files and either not been
 //        // documented yet or intended for Apple's internal use.
 //        if (protocolItem.tokenItemDocumentation)
-        {
-            AKTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
+		{
+			AKTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
 
-            [quicklistItems addObject:[AKDocLocator withTopic:topic
-                                                 subtopicName:nil
-                                                      docName:nil]];
-        }
-    }
+			[quicklistItems addObject:[AKDocLocator withTopic:topic
+												 subtopicName:nil
+													  docName:nil]];
+		}
+	}
 
-    return [AKSortUtils arrayBySortingArray:quicklistItems];
+	return [AKSortUtils arrayBySortingArray:quicklistItems];
 }
 
 - (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames
 {
-    NSMutableSet *setOfItems = [NSMutableSet setWithCapacity:100];
+	NSMutableSet *setOfItems = [NSMutableSet setWithCapacity:100];
 
-    for (NSString *name in classNames)
-    {
-        AKClassItem *classItem = [[self.owningWindowController database] classWithName:name];
+	for (NSString *name in classNames)
+	{
+		AKClassItem *classItem = [[self.owningWindowController database] classWithName:name];
 
-        [setOfItems unionSet:[classItem descendantClasses]];
-    }
+		[setOfItems unionSet:[classItem descendantClasses]];
+	}
 
-    return [AKSortUtils arrayBySortingSet:setOfItems];
+	return [AKSortUtils arrayBySortingSet:setOfItems];
 }
 
 - (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)setOfClassItems
 {
-    NSMutableSet *resultSet = [NSMutableSet setWithCapacity:(setOfClassItems.count * 2)];
+	NSMutableSet *resultSet = [NSMutableSet setWithCapacity:(setOfClassItems.count * 2)];
 
-    // Add descendant classes of the classes that were found.
-    for (AKClassItem *classItem in setOfClassItems)
-    {
-        [resultSet unionSet:[classItem descendantClasses]];
-    }
+	// Add descendant classes of the classes that were found.
+	for (AKClassItem *classItem in setOfClassItems)
+	{
+		[resultSet unionSet:[classItem descendantClasses]];
+	}
 
-    // Sort the classes we found and return the result.
-    return [AKSortUtils arrayBySortingSet:resultSet];
+	// Sort the classes we found and return the result.
+	return [AKSortUtils arrayBySortingSet:resultSet];
 }
 
 - (void)_selectSearchResultAtIndex:(NSInteger)resultIndex
 {
-    // Change the quicklist mode to search mode.
-    [self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
+	// Change the quicklist mode to search mode.
+	[self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
 
-    // Can't jump if there are no search results.
-    if ([_searchQuery queryResults].count == 0)
-    {
-        _indexWithinSearchResults = -1;
-        return;
-    }
+	// Can't jump if there are no search results.
+	if ([_searchQuery queryResults].count == 0)
+	{
+		_indexWithinSearchResults = -1;
+		return;
+	}
 
-    // Reset our remembered index into the array of search results.
-    if (resultIndex < 0)
-    {
-        resultIndex = [_searchQuery queryResults].count - 1;
-    }
-    else if ((unsigned)resultIndex > [_searchQuery queryResults].count - 1)
-    {
-        resultIndex = 0;
-    }
-    _indexWithinSearchResults = resultIndex;
+	// Reset our remembered index into the array of search results.
+	if (resultIndex < 0)
+	{
+		resultIndex = [_searchQuery queryResults].count - 1;
+	}
+	else if ((unsigned)resultIndex > [_searchQuery queryResults].count - 1)
+	{
+		resultIndex = 0;
+	}
+	_indexWithinSearchResults = resultIndex;
 
-    // Jump to the search result at the new position.
-    [_quicklistTable deselectAll:nil];
-    [_quicklistTable scrollRowToVisible:_indexWithinSearchResults];
-    [_quicklistTable selectRowIndexes:[NSIndexSet indexSetWithIndex:_indexWithinSearchResults]
-                 byExtendingSelection:NO];
+	// Jump to the search result at the new position.
+	[_quicklistTable deselectAll:nil];
+	[_quicklistTable scrollRowToVisible:_indexWithinSearchResults];
+	[_quicklistTable selectRowIndexes:[NSIndexSet indexSetWithIndex:_indexWithinSearchResults]
+				 byExtendingSelection:NO];
 
-    // Give the quicklist table focus and tell the owning window to navigate to
-    // the selected search result.
-    (void)[_quicklistTable.window makeFirstResponder:_quicklistTable];
-    [_quicklistTable.window makeKeyAndOrderFront:nil];
-    [self doQuicklistTableAction:nil];
+	// Give the quicklist table focus and tell the owning window to navigate to
+	// the selected search result.
+	(void)[_quicklistTable.window makeFirstResponder:_quicklistTable];
+	[_quicklistTable.window makeKeyAndOrderFront:nil];
+	[self doQuicklistTableAction:nil];
 }
 
 - (void)_selectSearchResultWithPrefix:(NSString *)searchString
 {
 	NSString *lowercaseSearchString = searchString.lowercaseString;
-    NSInteger searchResultIndex = 0;
-    NSArray *searchResults = [_searchQuery queryResults];
-    NSInteger numSearchResults = searchResults.count;
-    NSInteger i;
+	NSInteger searchResultIndex = 0;
+	NSArray *searchResults = [_searchQuery queryResults];
+	NSInteger numSearchResults = searchResults.count;
+	NSInteger i;
 
-    for (i = 0; i < numSearchResults; i++)
-    {
-        AKDocLocator *docLocator = searchResults[i];
+	for (i = 0; i < numSearchResults; i++)
+	{
+		AKDocLocator *docLocator = searchResults[i];
 
-        if ([[docLocator sortName].lowercaseString hasPrefix:lowercaseSearchString])
-        {
-            searchResultIndex = i;
-            break;
-        }
-    }
+		if ([[docLocator sortName].lowercaseString hasPrefix:lowercaseSearchString])
+		{
+			searchResultIndex = i;
+			break;
+		}
+	}
 
-    [self _selectSearchResultAtIndex:searchResultIndex];
+	[self _selectSearchResultAtIndex:searchResultIndex];
 }
 
 - (void)_updatePastStringsInSearchOptionsPopup
 {
-    NSMenu *searchMenu = _searchOptionsPopup.menu;
-    NSInteger indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
-    NSInteger numMenuItems = searchMenu.numberOfItems;
-    NSInteger i;
-
-    // Remove the existing list of past search strings.
-    for (i = indexOfDivider + 1; i < numMenuItems; i++)
-    {
-        [searchMenu removeItemAtIndex:(indexOfDivider + 1)];
-    }
-
-    // Add the new list.
-    for (NSString *searchString in _pastSearchStrings)
-    {
-        [_searchOptionsPopup addItemWithTitle:searchString];
-    }
+	NSMenu *searchMenu = _searchOptionsPopup.menu;
+	NSInteger indexOfDivider = [searchMenu indexOfItem:_searchOptionsDividerItem];
+	NSInteger numMenuItems = searchMenu.numberOfItems;
+	NSInteger i;
+	
+	// Remove the existing list of past search strings.
+	for (i = indexOfDivider + 1; i < numMenuItems; i++)
+	{
+		[searchMenu removeItemAtIndex:(indexOfDivider + 1)];
+	}
+	
+	// Add the new list.
+	for (NSString *searchString in _pastSearchStrings)
+	{
+		[_searchOptionsPopup addItemWithTitle:searchString];
+	}
 }
 
 - (void)_updateSearchQuery
 {
-    NSString *searchString = [_searchField.stringValue ak_trimWhitespace];
-
-    if ([searchString hasSuffix:@"*"])
-    {
-        _searchQuery.searchString = [searchString substringToIndex:(searchString.length - 1)];
-        _searchQuery.searchComparison = AKSearchForPrefix;
-    }
-    else
-    {
-        _searchQuery.searchString = searchString;
-        _searchQuery.searchComparison = AKSearchForSubstring;
-    }
-
-    _searchQuery.includesClassesAndProtocols = (_includeClassesItem.state == NSOnState);
-    _searchQuery.includesMembers = (_includeMethodsItem.state == NSOnState);
-    _searchQuery.includesFunctions = (_includeFunctionsItem.state == NSOnState);
-    _searchQuery.includesGlobals = (_includeGlobalsItem.state == NSOnState);
-    _searchQuery.ignoresCase = (_ignoreCaseItem.state == NSOnState);
+	NSString *searchString = [_searchField.stringValue ak_trimWhitespace];
+	
+	if ([searchString hasSuffix:@"*"])
+	{
+		_searchQuery.searchString = [searchString substringToIndex:(searchString.length - 1)];
+		_searchQuery.searchComparison = AKSearchForPrefix;
+	}
+	else
+	{
+		_searchQuery.searchString = searchString;
+		_searchQuery.searchComparison = AKSearchForSubstring;
+	}
+	
+	_searchQuery.includesClassesAndProtocols = (_includeClassesItem.state == NSOnState);
+	_searchQuery.includesMembers = (_includeMethodsItem.state == NSOnState);
+	_searchQuery.includesFunctions = (_includeFunctionsItem.state == NSOnState);
+	_searchQuery.includesGlobals = (_includeGlobalsItem.state == NSOnState);
+	_searchQuery.ignoresCase = (_ignoreCaseItem.state == NSOnState);
 }
 
 @end

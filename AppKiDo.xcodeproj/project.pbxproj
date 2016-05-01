@@ -968,7 +968,7 @@
 		73A0231716DD1D6200240111 /* AKDocViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocViewController.m; sourceTree = "<group>"; };
 		73A0231C16DD1EE400240111 /* AKUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKUIController.h; sourceTree = "<group>"; };
 		73A0231F16DD214C00240111 /* AKQuicklistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKQuicklistViewController.h; sourceTree = "<group>"; };
-		73A0232016DD214C00240111 /* AKQuicklistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKQuicklistViewController.m; sourceTree = "<group>"; };
+		73A0232016DD214C00240111 /* AKQuicklistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKQuicklistViewController.m; sourceTree = "<group>"; usesTabs = 1; };
 		73A0232B16DD259800240111 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/QuicklistView.xib; sourceTree = "<group>"; };
 		73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefConstants.h; sourceTree = "<group>"; };
 		73A1B5BD061B6947002C95F1 /* AKPrefConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPrefConstants.m; sourceTree = "<group>"; };
