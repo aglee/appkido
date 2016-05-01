@@ -41,7 +41,7 @@
 
 
 #pragma mark -
-#pragma mark Manipulating node names
+#pragma mark Manipulating token names
 
 + (NSString *)punctuateTokenName:(NSString *)memberName
 {

@@ -92,8 +92,8 @@
     }
 
     // Add the "Inheritance" option as the first item.
-    // If the user selects this, we will display the selected node's
-    // root file section for the given node.
+    // If the user selects this, we will display the selected item's
+    // root file section for the given item.
     AKInheritanceDoc *inheritanceDoc = [[AKInheritanceDoc alloc] initWithFileSection:rootSection];
     [docList insertObject:inheritanceDoc atIndex:0];
 

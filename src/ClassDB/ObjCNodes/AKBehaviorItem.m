@@ -86,7 +86,7 @@
 
 - (NSArray *)instanceMethodItems
 {
-    return [_indexOfInstanceMethods allNodes];
+    return [_indexOfInstanceMethods allItems];
 }
 
 #pragma mark -
@@ -150,7 +150,7 @@
                                         frameworkName:(NSString *)frameworkName
 {
     // Is this an instance method or a class method?  Note this assumes a
-    // a method node for the method already exists, presumably because we
+    // a method item for the method already exists, presumably because we
     // parsed the header files.
     AKMethodItem *methodItem = [self classMethodWithName:methodName];
     

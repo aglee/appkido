@@ -62,7 +62,7 @@
 - (void)makeRandomSelection
 {
     // Construct an array containing all the API symbols we want to choose from,
-    // and a parallel array containing corresponding database nodes.
+    // and a parallel array containing corresponding database items.
     NSMutableArray *allSymbols = [NSMutableArray array];
 
     [self _addClassesToSymbolArray:allSymbols];

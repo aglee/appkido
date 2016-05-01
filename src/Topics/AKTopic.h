@@ -43,8 +43,7 @@ extern NSString *AKGlobalsTopicName;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassItem *parentClassOfTopic;  //TODO: KLUDGE
 
 /*!
- * Returns nil by default.  Subclasses return a node, if one is relevant.
- * Specifically, AKBehaviorTopics return AKBehaviorItems.
+ * Returns nil if the topic is not associated with a token item.
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKTokenItem *topicItem;
 

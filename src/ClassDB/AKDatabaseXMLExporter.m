@@ -209,7 +209,7 @@
 
 
 #pragma mark -
-#pragma mark Private methods -- exporting group nodes
+#pragma mark Private methods -- exporting group items
 
 - (void)_exportGroupSubitem:(AKTokenItem *)tokenItem withXMLTag:(NSString *)subitemTag
 {

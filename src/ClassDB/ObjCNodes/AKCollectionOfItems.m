@@ -20,8 +20,8 @@
 {
     if ((self = [super init]))
     {
-        _nodeList = [[NSMutableArray alloc] init];
-        _nodesByName = [[NSMutableDictionary alloc] init];
+        _itemList = [[NSMutableArray alloc] init];
+        _itemsByName = [[NSMutableDictionary alloc] init];
     }
 
     return self;
@@ -31,16 +31,16 @@
 #pragma mark -
 #pragma mark Getters and setters
 
-- (NSArray *)allNodes
+- (NSArray *)allItems
 {
-    return _nodeList;
+    return _itemList;
 }
 
 - (NSArray *)tokenItemsWithDocumentation
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    for (AKTokenItem *tokenItem in _nodeList)
+    for (AKTokenItem *tokenItem in _itemList)
     {
         if (tokenItem.tokenItemDocumentation)
         {
@@ -53,21 +53,21 @@
 
 - (AKTokenItem *)itemWithTokenName:(NSString *)tokenName
 {
-    return _nodesByName[tokenName];
+    return _itemsByName[tokenName];
 }
 
 - (void)addTokenItem:(AKTokenItem *)tokenItem
 {
     NSString *tokenName = tokenItem.tokenName;
 
-    if (_nodesByName[tokenName])
+    if (_itemsByName[tokenName])
     {
-        DIGSLogWarning(@"ignoring attempt to add node %@ twice", tokenName);
+        DIGSLogWarning(@"ignoring attempt to add token %@ twice", tokenName);
     }
     else
     {
-        [_nodeList addObject:tokenItem];
-        _nodesByName[tokenName] = tokenItem;
+        [_itemList addObject:tokenItem];
+        _itemsByName[tokenName] = tokenItem;
     }
 }
 

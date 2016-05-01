@@ -19,7 +19,8 @@ compareSortNames(id objectOne, id objectTwo, void *context)
 
     if (result == NSOrderedSame)
     {
-        // Sort class nodes before protocol nodes of the same name.
+        // When a class and a protocol have the same name, order the class
+        // before the protocol.
         if ([objectOne isKindOfClass:[AKClassItem class]])
         {
             result = NSOrderedAscending;

@@ -5,11 +5,11 @@ This is an introduction to the implementation internals of AppKiDo. It's as much
 The classes in AppKiDo mostly fall into Cocoa's Model-View-Controller categories, plus utility classes and some navigation classes that are part view, part model. Since the custom views in AppKiDo are pretty lightweight and straightforward, this document will focus mostly on the model and controller classes.
 
 
-Model classes: "nodes"
-----------------------
-The fundamental model object in AppKiDo is an AKTokenItem, or simply "**node**". AKTokenItem is an abstract base class that represents a Cocoa API construct. It's called that because it's conceptually similar to the nodes in the parse tree that a compiler generates.
+Model classes: token items
+--------------------------
+The fundamental model object in AppKiDo is an AKTokenItem, or simply "token item", or simply "item". AKTokenItem is an abstract base class that represents a Cocoa API construct.  It corresponds to the Token entity in the docset's Core Data store.
 
-Here are the API constructs represented in AppKiDo, and their corresponding node classes:
+Here are the API constructs represented in AppKiDo, and their corresponding item classes:
 
 * **Classes and protocols** -- AKClassItem, AKProtocolItem
     * Classes and protocols are collectively referred to as "behaviors". AKClassItem and AKProtocolItem are subclasses of AKBehaviorItem.
@@ -31,15 +31,15 @@ Here are the API constructs represented in AppKiDo, and their corresponding node
     * Examples: NSApp, NSRoundedBezelStyle.
 * **Groups** -- AKGroupItem
     * Since Apple's documentation organizes functions and globals into named groups, AppKiDo has an AKGroupItem class that represents such a group.
-    * This is the one type of node that does not correspond to an Objective-C language construct.
+    * This is the one type of token item that does not correspond to an Objective-C language construct.
     * Examples:
 
-AppKiDo tags each node with a **framework name** such as "Foundation" or "AppKit". Generally, each node belongs to exactly one framework, but there is one exception: AKClassItem. In Cocoa, a class can span multiple frameworks by way of categories. For example, NSString is declared in Foundation but has a category in AppKit. For this reason, AKClassItem can be tagged with multiple framework names, though like every other node it has exactly one primary owning framework.
+AppKiDo tags each token item with a **framework name** such as "Foundation" or "AppKit". Generally, each token item belongs to exactly one framework, but there is one exception: AKClassItem. In Cocoa, a class can span multiple frameworks by way of categories. For example, NSString is declared in Foundation but has a category in AppKit. For this reason, AKClassItem can be tagged with multiple framework names, though like every other token item it has exactly one primary owning framework.
 
 
 Model class: "the database"
 ---------------------------
-AppKiDo keeps track of all nodes using a big singleton object called "the database". Everything AppKiDo displays comes from the database. The result of a database query is zero or more nodes. The database is an instance of AKDatabase.
+AppKiDo keeps track of all token items using a big singleton object called "the database". Everything AppKiDo displays comes from the database. The result of a database query is zero or more token items. The database is an instance of AKDatabase.
 
 **[TODO: discuss the caching somewhere]**
 
@@ -112,7 +112,7 @@ mention some classes whose class comments are especially worth reading
 
 the "owning" prefix and the "delegate" suffix
 
-talk about AKFileSection, and how we present just the doc for a node as a standalone artifact, not as a section of a larger file even though that's what it is
+talk about documentation nodes
 
 Where is the right place to mention third-party code?
 

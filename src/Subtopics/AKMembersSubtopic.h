@@ -32,7 +32,7 @@
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
 
 /*!
- * Subclass must override this.  Returns method nodes for a single node -- no
+ * Subclass must override this.  Returns method items for just the behavior, no
  * superclasses or protocols included.
  */
 - (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem;

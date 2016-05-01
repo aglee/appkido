@@ -9,9 +9,9 @@
 
 /*!
  * Represents a collection of global identifiers such as enums, constant names,
- * global variable names, and typedefs. For example, the node name might be the
+ * global variable names, and typedefs. For example, the item name might be the
  * name of a typedef'ed enumeration, and the names it contains might be the
- * names of the enums. The owned identifiers are not themselves database nodes;
+ * names of the enums. The owned identifiers are not themselves database items;
  * they're just strings.
  */
 @interface AKGlobalsItem : AKTokenItem

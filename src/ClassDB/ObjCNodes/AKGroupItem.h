@@ -26,7 +26,7 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSubitems;
 
-/*! Order of returned nodes is not guaranteed. */
+/*! Order of returned items is not guaranteed. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *subitems;
 
 - (AKTokenItem *)subitemWithName:(NSString *)tokenName;

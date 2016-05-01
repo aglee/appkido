@@ -14,8 +14,8 @@
 /*!
  * Used by the Pop Quiz feature. Selects a random API symbol from the database.
  * You have to first call makeRandomSelection. Then you can ask for the
- * selected API symbol and its corresponding database node. Note that the symbol
- * is not necessarily the node's tokenName -- it could be a "globals" symbol.
+ * selected API symbol and its corresponding database item. Note that the symbol
+ * is not necessarily the item's tokenName -- it could be a "globals" symbol.
  */
 @interface AKRandomSearch : NSObject
 {

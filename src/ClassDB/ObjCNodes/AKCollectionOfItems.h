@@ -12,22 +12,22 @@
 
 /*!
  * Wrapper around a collection of AKTokenItems, with a couple of convenience
- * methods.  Unlike an AKGroupItem, an AKCollectionOfItems is not itself a node.
+ * methods.  Unlike an AKGroupItem, an AKCollectionOfItems is not itself a item.
  */
 @interface AKCollectionOfItems : NSObject
 {
 @private
     // Contains all the AKTokenItems that have been added to us.
-    NSMutableArray *_nodeList;
+    NSMutableArray *_itemList;
 
-    // Keys are node names.  Values are AKTokenItems.
-    NSMutableDictionary *_nodesByName;
+    // Keys are item names.  Values are AKTokenItems.
+    NSMutableDictionary *_itemsByName;
 }
 
 #pragma mark -
 #pragma mark Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allNodes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allItems;
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *tokenItemsWithDocumentation;
 

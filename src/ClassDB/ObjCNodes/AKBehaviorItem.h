@@ -32,7 +32,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
  * Abstract class. Represents an Objective-C construct that can have methods.
  * The concrete subclasses are AKClassItem, AKProtocolItem, and AKCategoryItem.
  *
- * Note: unlike other database nodes, class and protocols nodes can be
+ * Note: unlike other database items, class and protocol items can be
  * initialized with nil as their owning framework name. The reason is that when
  * we are constructing the database, we may encounter a reference to a class or
  * protocol before it has been declared. For example, we may encounter a

@@ -28,7 +28,7 @@
      inheritedByBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
-#pragma mark Manipulating node names
+#pragma mark Manipulating token names
 
 /*! Subclasses must override this. */
 + (NSString *)punctuateTokenName:(NSString *)memberName;

@@ -23,7 +23,7 @@
  * class NSString is a subclass of NSObject, and is documented in file XYZ."
  *
  * All this information is represented as a graph of AKTokenItem objects.
- * Every query to this database returns a collection of database nodes.
+ * Every query to this database returns a collection of database items.
  *
  * Before querying a database, you need to populate it by calling
  * loadTokensForFrameworksWithNames:. You can set a delegate which will be

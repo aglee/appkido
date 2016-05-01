@@ -89,8 +89,8 @@
 
         if ([tokenType isEqualToString:@"cl"]) {
             [self _addClassToken:token];
-        } else if ([tokenType isEqualToString:@"cl"]) {
-            [self _addClassToken:token];
+        } else if ([tokenType isEqualToString:@"intf"]) {
+            [self _addProtocolToken:token];
         } else {
 
         }
@@ -111,10 +111,6 @@
         [self _setParentNodeOfClassItem:classItem];
         [self _setProtocolItemsOfClassItem:classItem];
     }
-}
-
-- (void)_addProtocolToken:(DSAToken *)token
-{
 }
 
 - (AKClassItem *)_getOrAddClassItemWithName:(NSString *)className frameworkName:(NSString *)frameworkName
@@ -147,12 +143,16 @@
     if (container) {
         AKClassItem *parentNode = [self _getOrAddClassItemWithName:container.containerName frameworkName:classItem.nameOfOwningFramework];
         if (classItem.parentClass) {
-            QLog(@"%s [ODD] Class node %@ already has parent node %@", __PRETTY_FUNCTION__, classItem.parentClass.tokenName);
+            QLog(@"%s [ODD] Class item %@ already has parent item %@", __PRETTY_FUNCTION__, classItem.parentClass.tokenName);
         }
         [parentNode addChildClass:classItem];
     } else {
         QLog(@"ROOT CLASS %@", classItem.tokenName);
     }
+}
+
+- (void)_addProtocolToken:(DSAToken *)token
+{
 }
 
 - (void)_setProtocolItemsOfClassItem:(AKClassItem *)classItem

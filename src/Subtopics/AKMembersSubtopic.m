@@ -66,7 +66,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    // Get method nodes for all the methods we want to list.
+    // Get method items for all the methods we want to list.
     NSDictionary *methodItemsByName = [self _subtopicMethodsByName];
 
     // Create an AKMemberDoc instance for each method we want to list.

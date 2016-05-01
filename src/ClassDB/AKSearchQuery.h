@@ -16,7 +16,7 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 @class AKDatabase;
 
 /*!
- * Searches the nodes in an AKDatabase, subject to a set of search parameters.
+ * Searches the tokens in an AKDatabase, subject to a set of search parameters.
  * Caches search results. Clears the cache whenever a search parameter changes.
  *
  * Does not detect changes to the database, which means the cached search

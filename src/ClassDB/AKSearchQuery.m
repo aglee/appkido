@@ -392,7 +392,7 @@
                 BOOL matchFound = NO;
 
 //TODO: ak_stripHTML is too expensive -- bogging down the search
-//TODO: I don't think we actually need to strip any HTML -- no node seems to contain & or <
+//TODO: I don't think we actually need to strip any HTML -- no token name seems to contain & or <
 //                if ([self _matchesString:[[subitem tokenName] ak_stripHTML]])
                 if ([self _matchesItem:subitem])
                 {
