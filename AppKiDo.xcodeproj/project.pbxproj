@@ -323,6 +323,10 @@
 		734B75D816D062060027514D /* AKSplashWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B75D316D062060027514D /* AKSplashWindowController.m */; };
 		734B75D916D062060027514D /* SplashWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 734B75D416D062060027514D /* SplashWindow.xib */; };
 		734B75DA16D062060027514D /* SplashWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 734B75D416D062060027514D /* SplashWindow.xib */; };
+		7357E6F71CD6B866009A613C /* AKRegexUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7357E6F51CD6B866009A613C /* AKRegexUtils.h */; };
+		7357E6F81CD6B866009A613C /* AKRegexUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7357E6F51CD6B866009A613C /* AKRegexUtils.h */; };
+		7357E6F91CD6B866009A613C /* AKRegexUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7357E6F61CD6B866009A613C /* AKRegexUtils.m */; };
+		7357E6FA1CD6B866009A613C /* AKRegexUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7357E6F61CD6B866009A613C /* AKRegexUtils.m */; };
 		7359EB2D0BADB68100574728 /* AKApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 7359EB2B0BADB68100574728 /* AKApplication.h */; };
 		7359EB2E0BADB68100574728 /* AKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359EB2C0BADB68100574728 /* AKApplication.m */; };
 		735D9F7716CC5DAC00B72158 /* ALSimpleTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */; };
@@ -910,6 +914,8 @@
 		7352076E0687B6D100BC8B33 /* AKBehaviorItem.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKBehaviorItem.m; sourceTree = "<group>"; };
 		7352078E0687BC7B00BC8B33 /* AKBehaviorTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKBehaviorTopic.h; path = Topics/AKBehaviorTopic.h; sourceTree = SOURCE_ROOT; };
 		7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKBehaviorTopic.m; path = Topics/AKBehaviorTopic.m; sourceTree = SOURCE_ROOT; };
+		7357E6F51CD6B866009A613C /* AKRegexUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKRegexUtils.h; sourceTree = "<group>"; };
+		7357E6F61CD6B866009A613C /* AKRegexUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKRegexUtils.m; sourceTree = "<group>"; };
 		7359EB2B0BADB68100574728 /* AKApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKApplication.h; path = ../AKApplication.h; sourceTree = "<group>"; };
 		7359EB2C0BADB68100574728 /* AKApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKApplication.m; path = ../AKApplication.m; sourceTree = "<group>"; };
 		735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSimpleTask.h; sourceTree = "<group>"; };
@@ -1278,6 +1284,8 @@
 				73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */,
 				73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */,
 				730030DD0498501500A80007 /* AKSortable.h */,
+				7357E6F51CD6B866009A613C /* AKRegexUtils.h */,
+				7357E6F61CD6B866009A613C /* AKRegexUtils.m */,
 				73D409E704A3A04F00A80003 /* AKSortUtils.h */,
 				73D409E804A3A04F00A80003 /* AKSortUtils.m */,
 				733DF5E914E17700007E6313 /* AKSQLTemplate.h */,
@@ -2076,6 +2084,7 @@
 				7359EB2D0BADB68100574728 /* AKApplication.h in Headers */,
 				7395580F0D29CA83008105BD /* AKDatabaseXMLExporter.h in Headers */,
 				734AEE891CC5E1600064AAA9 /* DownloadableFile.h in Headers */,
+				7357E6F71CD6B866009A613C /* AKRegexUtils.h in Headers */,
 				73D237080D4561C300EF7503 /* FMDatabase.h in Headers */,
 				73D2370A0D4561C300EF7503 /* FMDatabaseAdditions.h in Headers */,
 				73D2370C0D4561C300EF7503 /* FMResultSet.h in Headers */,
@@ -2223,6 +2232,7 @@
 				7399B3010E632A5C001AE672 /* DIGSFindBuffer.h in Headers */,
 				7399B3020E632A5C001AE672 /* DIGSLog.h in Headers */,
 				7399B3030E632A5C001AE672 /* DIGSMarginView.h in Headers */,
+				7357E6F81CD6B866009A613C /* AKRegexUtils.h in Headers */,
 				7399B3040E632A5C001AE672 /* DIGSMatchingBackgroundView.h in Headers */,
 				7399B3050E632A5C001AE672 /* DIGSTextSelection.h in Headers */,
 				7399B3060E632A5C001AE672 /* DIGSTextView.h in Headers */,
@@ -2518,6 +2528,7 @@
 				734AEE861CC5E1600064AAA9 /* Container.m in Sources */,
 				734AEE9E1CC5E1600064AAA9 /* TokenMetainformation.m in Sources */,
 				65B109F209D7B6C300A8A637 /* AKSubtopic.m in Sources */,
+				7357E6F91CD6B866009A613C /* AKRegexUtils.m in Sources */,
 				65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */,
 				65B109F409D7B6C300A8A637 /* AKFormalProtocolsTopic.m in Sources */,
 				734AEEA81CC5E1600064AAA9 /* _DownloadableFile.m in Sources */,
@@ -2740,6 +2751,7 @@
 				7399B3A30E632A5C001AE672 /* FMDatabase.m in Sources */,
 				7399B3A40E632A5C001AE672 /* FMDatabaseAdditions.m in Sources */,
 				7399B3A50E632A5C001AE672 /* FMResultSet.m in Sources */,
+				7357E6FA1CD6B866009A613C /* AKRegexUtils.m in Sources */,
 				7399B3A60E632A5C001AE672 /* AKDevToolsUtils.m in Sources */,
 				7399B3A70E632A5C001AE672 /* DIGSPrefUtils.m in Sources */,
 				7399B3AB0E632A5C001AE672 /* AKFunctionItem.m in Sources */,
