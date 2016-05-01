@@ -1825,7 +1825,7 @@
 				73E86F440E3976FA002AFB76 /* C token types */,
 			);
 			name = "database items";
-			path = ObjCNodes;
+			path = ObjC;
 			sourceTree = "<group>";
 		};
 		73C8AC030836B3330000E3F7 /* search */ = {

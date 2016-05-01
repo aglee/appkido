@@ -715,9 +715,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // If not, see if the class has a property named "delegate" or "fooDelegate".
             if (!classHasDelegate)
             {
-                for (AKPropertyItem *propertyNode in [classItem documentedProperties])
+                for (AKPropertyItem *propertyItem in [classItem documentedProperties])
                 {
-                    NSString *propertyName = propertyNode.tokenName;
+                    NSString *propertyName = propertyItem.tokenName;
 
                     if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"])
                     {
@@ -775,9 +775,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
             // If not, see if the class has a property named "dataSource".
             if (!classHasDataSource)
             {
-                for (AKPropertyItem *propertyNode in [classItem documentedProperties])
+                for (AKPropertyItem *propertyItem in [classItem documentedProperties])
                 {
-                    NSString *propertyName = propertyNode.tokenName;
+                    NSString *propertyName = propertyItem.tokenName;
 
                     if ([propertyName isEqual:@"dataSource"])
                     {

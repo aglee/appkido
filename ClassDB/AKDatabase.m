@@ -108,7 +108,7 @@
 
     if (classItem) {
         classItem.docSetToken = token;
-        [self _setParentNodeOfClassItem:classItem];
+        [self _setParentOfClassItem:classItem];
         [self _setProtocolItemsOfClassItem:classItem];
     }
 }
@@ -132,7 +132,7 @@
     return classItem;
 }
 
-- (void)_setParentNodeOfClassItem:(AKClassItem *)classItem
+- (void)_setParentOfClassItem:(AKClassItem *)classItem
 {
     if (classItem.docSetToken.superclassContainers.count > 1) {
         QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.tokenName);
@@ -141,11 +141,11 @@
     Container *container = classItem.docSetToken.superclassContainers.anyObject;
 
     if (container) {
-        AKClassItem *parentNode = [self _getOrAddClassItemWithName:container.containerName frameworkName:classItem.nameOfOwningFramework];
+        AKClassItem *parentItem = [self _getOrAddClassItemWithName:container.containerName frameworkName:classItem.nameOfOwningFramework];
         if (classItem.parentClass) {
             QLog(@"%s [ODD] Class item %@ already has parent item %@", __PRETTY_FUNCTION__, classItem.parentClass.tokenName);
         }
-        [parentNode addChildClass:classItem];
+        [parentItem addChildClass:classItem];
     } else {
         QLog(@"ROOT CLASS %@", classItem.tokenName);
     }

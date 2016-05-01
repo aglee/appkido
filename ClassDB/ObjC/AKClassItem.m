@@ -93,11 +93,11 @@
 
 - (NSSet *)descendantClasses
 {
-    NSMutableSet *descendantNodes = [NSMutableSet setWithCapacity:50];
+    NSMutableSet *descendantClassItems = [NSMutableSet setWithCapacity:50];
 
-    [self _addDescendantsToSet:descendantNodes];
+    [self _addDescendantsToSet:descendantClassItems];
 
-    return descendantNodes;
+    return descendantClassItems;
 }
 
 - (BOOL)hasChildClasses
@@ -280,13 +280,13 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (void)_addDescendantsToSet:(NSMutableSet *)descendantNodes
+- (void)_addDescendantsToSet:(NSMutableSet *)descendantClassItems
 {
-    [descendantNodes addObject:self];
+    [descendantClassItems addObject:self];
     
     for (AKClassItem *sub in _childClassItems)
     {
-        [sub _addDescendantsToSet:descendantNodes];
+        [sub _addDescendantsToSet:descendantClassItems];
     }
 }
 

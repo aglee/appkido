@@ -88,7 +88,7 @@
 
 // Get a list of all behaviors that declare methods we want to
 // include in our doc list.
-- (NSArray *)_ancestorNodesWeCareAbout
+- (NSArray *)_ancestorItemsWeCareAbout
 {
     if (![self behaviorItem])
     {
@@ -96,7 +96,7 @@
     }
 
     // Get a list of all behaviors that declare methods we want to list.
-    NSMutableArray *ancestorNodes = [NSMutableArray arrayWithObject:[self behaviorItem]];
+    NSMutableArray *ancestorItems = [NSMutableArray arrayWithObject:[self behaviorItem]];
 
     if (_includesAncestors)
     {
@@ -108,16 +108,16 @@
 
             while ((classItem = classItem.parentClass))
             {
-                [ancestorNodes addObject:classItem];
+                [ancestorItems addObject:classItem];
             }
         }
 
         // Add protocols we conform to to the list.  They will
         // be the last behaviors we check.
-        [ancestorNodes addObjectsFromArray:[[self behaviorItem] implementedProtocols]];
+        [ancestorItems addObjectsFromArray:[[self behaviorItem] implementedProtocols]];
     }
 
-    return ancestorNodes;
+    return ancestorItems;
 }
 
 - (NSDictionary *)_subtopicMethodsByName
@@ -128,9 +128,9 @@
     // remain in the dictionary.
     NSMutableDictionary *methodsByName = [NSMutableDictionary dictionary];
 
-    for (AKBehaviorItem *ancestorNode in [self _ancestorNodesWeCareAbout])
+    for (AKBehaviorItem *ancestorItem in [self _ancestorItemsWeCareAbout])
     {
-        for (AKMethodItem *methodItem in [self memberItemsForBehavior:ancestorNode])
+        for (AKMethodItem *methodItem in [self memberItemsForBehavior:ancestorItem])
         {
             methodsByName[methodItem.tokenName] = methodItem;
         }
