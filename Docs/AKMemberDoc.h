@@ -5,31 +5,27 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKDoc.h"
+#import "AKTokenItemDoc.h"
 
 @class AKBehaviorItem;
 @class AKMemberItem;
 
-@interface AKMemberDoc : AKDoc
-{
-@private
-    AKMemberItem *_memberItem;
-    AKBehaviorItem *_behaviorItem;
-}
+/*!
+ * self.tokenItem is an AKMemberItem.  self.behaviorItem is a behavior that has
+ * that member, either directly or by inheritance.
+ */
+@interface AKMemberDoc : AKTokenItemDoc
 
-@property (nonatomic, readonly, strong) AKMemberItem *memberItem;
 @property (nonatomic, readonly, strong) AKBehaviorItem *behaviorItem;
 
 #pragma mark - Init/awake/dealloc
 
-// Designated initializer
-- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem
-     inheritedByBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem behaviorItem:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Manipulating token names
 
-/*! Subclasses must override this. */
-+ (NSString *)punctuateTokenName:(NSString *)memberName;
+/*! By default returns the token name unchanged. */
++ (NSString *)punctuateTokenName:(NSString *)tokenName;
 
 #pragma mark - AKDoc methods
 

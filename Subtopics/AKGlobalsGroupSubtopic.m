@@ -7,10 +7,7 @@
 //
 
 #import "AKGlobalsGroupSubtopic.h"
-
 #import "DIGSLog.h"
-
-#import "AKFileSection.h"
 #import "AKGlobalsDoc.h"
 #import "AKGroupItem.h"
 #import "AKSortUtils.h"

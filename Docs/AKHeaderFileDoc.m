@@ -13,14 +13,21 @@ NSString *AKHeaderFileDocName = @"Header File";
 
 #pragma mark - AKBehaviorGeneralDoc methods
 
-- (BOOL)docTextIsHTML
-{
-    return NO;
-}
-
 - (NSString *)unqualifiedDocName
 {
-    return AKHeaderFileDocName;
+	return AKHeaderFileDocName;
+}
+
+#pragma mark - AKTokenItemDoc methods
+
+- (NSString *)relativePath
+{
+	return self.tokenItem.token.metainformation.declaredIn.headerPath;
+}
+
+- (BOOL)docTextIsHTML
+{
+	return NO;
 }
 
 @end

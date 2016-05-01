@@ -74,16 +74,17 @@
 
 - (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName;
 
-- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName;
-
-/*!
- * It's possible for a class to belong to multiple frameworks. The usual example
- * I give is NSString, which is declared in Foundation and also has methods in
- * AppKit by way of a category. We keep track of all the frameworks that "own" a
- * class, and all the doc files that are associated with each framework.
- */
-- (void)associateDocumentation:(AKFileSection *)fileSection
-            withFrameworkNamed:(NSString *)frameworkName;
+//TODO: Commenting out, come back later.
+//- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName;
+//
+///*!
+// * It's possible for a class to belong to multiple frameworks. The usual example
+// * I give is NSString, which is declared in Foundation and also has methods in
+// * AppKit by way of a category. We keep track of all the frameworks that "own" a
+// * class, and all the doc files that are associated with each framework.
+// */
+//- (void)associateDocumentation:(AKFileSection *)fileSection
+//            withFrameworkNamed:(NSString *)frameworkName;
 
 #pragma mark - Getters and setters -- delegate methods
 

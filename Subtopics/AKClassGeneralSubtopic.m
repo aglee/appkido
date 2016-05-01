@@ -6,12 +6,9 @@
  */
 
 #import "AKClassGeneralSubtopic.h"
-
 #import "DIGSLog.h"
-
 #import "AKBehaviorGeneralDoc.h"
 #import "AKClassItem.h"
-#import "AKFileSection.h"
 #import "AKHTMLConstants.h"
 
 @implementation AKClassGeneralSubtopic
@@ -84,28 +81,29 @@
 - (void)_addDocsForExtraFramework:extraFrameworkName
                            toList:(NSMutableArray *)docList
 {
-    AKFileSection *extraRootSection = [_classItem documentationAssociatedWithFrameworkNamed:extraFrameworkName];
-
-    if (extraRootSection)
-    {
-        // Add docs that correspond to sections of the file section.
-        for (AKFileSection *majorSection in [self pertinentChildSectionsOf:extraRootSection])
-        {
-            NSString *sectionName = [majorSection sectionName];
-            AKBehaviorGeneralDoc *sectionDoc = [[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection
-                                                                               extraFrameworkName:extraFrameworkName];
-            NSInteger docIndex = [self indexOfDocWithName:sectionName];
-
-            if (docIndex < 0)
-            {
-                [docList addObject:sectionDoc];
-            }
-            else
-            {
-                [docList insertObject:sectionDoc atIndex:(docIndex + 1)];
-            }
-        }
-    }
+//TODO: Commenting out, come back later.
+//    AKFileSection *extraRootSection = [_classItem documentationAssociatedWithFrameworkNamed:extraFrameworkName];
+//
+//    if (extraRootSection)
+//    {
+//        // Add docs that correspond to sections of the file section.
+//        for (AKFileSection *majorSection in [self pertinentChildSectionsOf:extraRootSection])
+//        {
+//            NSString *sectionName = [majorSection sectionName];
+//            AKBehaviorGeneralDoc *sectionDoc = [[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection
+//                                                                               extraFrameworkName:extraFrameworkName];
+//            NSInteger docIndex = [self indexOfDocWithName:sectionName];
+//
+//            if (docIndex < 0)
+//            {
+//                [docList addObject:sectionDoc];
+//            }
+//            else
+//            {
+//                [docList insertObject:sectionDoc atIndex:(docIndex + 1)];
+//            }
+//        }
+//    }
 }
 
 @end

@@ -19,7 +19,6 @@
 #import "AKDocListViewController.h"
 #import "AKDocLocator.h"
 #import "AKDocViewController.h"
-#import "AKFileSection.h"
 #import "AKFindPanelController.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKFunctionsTopic.h"
@@ -148,39 +147,41 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (BOOL)followLinkURL:(NSURL *)linkURL
 {
-    // Interpret the link URL as relative to the current doc URL.
-    NSString *currentDocFilePath = [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
-    NSURL *currentDocFileURL = [NSURL fileURLWithPath:currentDocFilePath];
-    NSURL *destinationURL = [NSURL URLWithString:linkURL.relativeString relativeToURL:currentDocFileURL];
-
-    // If we have a file: URL, try to derive a doc locator from it.
-    AKDocLocator *destinationDocLocator = nil;
-    
-    if (destinationURL.fileURL)
-    {
-        AKLinkResolver *linkResolver = [AKLinkResolver linkResolverWithDatabase:_database];
-        destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
-    }
-
-    // If we derived a doc locator, go to it. Otherwise, try opening the file in
-    // the user's browser.
-    if (destinationDocLocator)
-    {
-        [self selectDocWithDocLocator:destinationDocLocator];
-        [_docListController focusOnDocListTable];
-        [self showWindow:nil];
-        return YES;
-    }
-    else if ([[NSWorkspace sharedWorkspace] openURL:destinationURL])
-    {
-        DIGSLogDebug(@"NSWorkspace opened URL [%@]", destinationURL);
-        return YES;
-    }
-    else
-    {
-        DIGSLogWarning(@"NSWorkspace couldn't open URL [%@]", destinationURL);
-        return NO;
-    }
+    return YES;
+//TODO: Commenting out, come back to this later.
+//    // Interpret the link URL as relative to the current doc URL.
+//    NSString *currentDocFilePath = [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
+//    NSURL *currentDocFileURL = [NSURL fileURLWithPath:currentDocFilePath];
+//    NSURL *destinationURL = [NSURL URLWithString:linkURL.relativeString relativeToURL:currentDocFileURL];
+//
+//    // If we have a file: URL, try to derive a doc locator from it.
+//    AKDocLocator *destinationDocLocator = nil;
+//    
+//    if (destinationURL.fileURL)
+//    {
+//        AKLinkResolver *linkResolver = [AKLinkResolver linkResolverWithDatabase:_database];
+//        destinationDocLocator = [linkResolver docLocatorForURL:destinationURL];
+//    }
+//
+//    // If we derived a doc locator, go to it. Otherwise, try opening the file in
+//    // the user's browser.
+//    if (destinationDocLocator)
+//    {
+//        [self selectDocWithDocLocator:destinationDocLocator];
+//        [_docListController focusOnDocListTable];
+//        [self showWindow:nil];
+//        return YES;
+//    }
+//    else if ([[NSWorkspace sharedWorkspace] openURL:destinationURL])
+//    {
+//        DIGSLogDebug(@"NSWorkspace opened URL [%@]", destinationURL);
+//        return YES;
+//    }
+//    else
+//    {
+//        DIGSLogWarning(@"NSWorkspace couldn't open URL [%@]", destinationURL);
+//        return NO;
+//    }
 }
 
 - (void)openQuicklistDrawer
@@ -1096,7 +1097,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (NSString *)_currentDocPath
 {
-    return [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
+    return nil;
+//TODO: Commenting out, come back later.
+//    return [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
 }
 
 - (NSURL *)_currentDocURL

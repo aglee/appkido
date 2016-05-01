@@ -6,20 +6,16 @@
  */
 
 #import "AKDocListViewController.h"
-
-#import <WebKit/WebKit.h>
-
 #import "DIGSLog.h"
-
 #import "AKAppDelegate.h"
 #import "AKDatabase.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"
-#import "AKFileSection.h"
 #import "AKSubtopic.h"
 #import "AKTableView.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
+#import <WebKit/WebKit.h>
 
 @implementation AKDocListViewController
 

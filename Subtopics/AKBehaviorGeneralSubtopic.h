@@ -8,7 +8,6 @@
 #import "AKSubtopic.h"
 
 @class AKBehaviorItem;
-@class AKFileSection;
 
 /*!
  * The "General" subtopic displayed at the top of the subtopic list when a class

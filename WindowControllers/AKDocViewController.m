@@ -7,18 +7,16 @@
 //
 
 #import "AKDocViewController.h"
-
 #import <WebKit/WebKit.h>
-
 #import "DIGSLog.h"
-
 #import "AKAppDelegate.h"
+#import "AKDatabase.h"
 #import "AKDebugging.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"
-#import "AKFileSection.h"
 #import "AKPrefUtils.h"
 #import "AKWindowController.h"
+#import "DocSetIndex.h"
 
 @interface AKDocViewController ()
 @property (nonatomic, strong) AKDocLocator *docLocator;
@@ -251,26 +249,49 @@ contextMenuItemsForElement:(NSDictionary *)element
 
     //  Figure out what text to display.
     AKDoc *docToDisplay = [_docLocator docToDisplay];
-    AKFileSection *fileSection = [docToDisplay fileSection];
-    NSString *htmlFilePath = [fileSection filePath];
-    NSData *textData = [docToDisplay docTextData];
 
-    // Display the text in either _textView or _webView.  Whichever it
-    // is, swap it in as our subview if necessary.
-    if ([docToDisplay docTextIsHTML])
-    {
-        [self _useWebViewToDisplayHTML:textData fromFile:htmlFilePath];
-    }
-    else
-    {
-        [self _useTextViewToDisplayPlainText:textData];
+    if (docToDisplay.docTextIsHTML) {
+        AKDatabase *db = self.owningWindowController.database;
+        DocSetIndex *docSetIndex = db.docSetIndex;
+        NSString *documentsPath = [docSetIndex.docSetPath stringByAppendingPathComponent:@"Contents/Resources/Documents"];
+        //TODO: Handle fallback http URL.
+        NSURL *docURL = [docToDisplay docURLWithBasePath:documentsPath];
+        QLog(@"+++ docURL: %@", docURL);
 
-        // Make extra sure the cursor rects are updated so we get the
-        // hand cursor over links.  Note: you'd think we should
-        // invalidate the cursor rects for textView, but no, for some
-        // reason it doesn't work unless we do it for scrollView.
-        [self.view.window invalidateCursorRectsForView:_textView.enclosingScrollView];
+        [self.tabView selectTabViewItemWithIdentifier:@"1"];
+        float multiplier = ((float)_docMagnifier) / 100.0f;
+        self.webView.textSizeMultiplier = multiplier;
+
+        NSURLRequest *req = [NSURLRequest requestWithURL:docURL];
+        [self.webView.mainFrame loadRequest:req];
     }
+
+
+
+
+
+    
+//TODO: Commenting out, come back later.
+//    AKFileSection *fileSection = [docToDisplay fileSection];
+//    NSString *htmlFilePath = [fileSection filePath];
+//    NSData *textData = [docToDisplay docTextData];
+//
+//    // Display the text in either _textView or _webView.  Whichever it
+//    // is, swap it in as our subview if necessary.
+//    if ([docToDisplay docTextIsHTML])
+//    {
+//        [self _useWebViewToDisplayHTML:textData fromFile:htmlFilePath];
+//    }
+//    else
+//    {
+//        [self _useTextViewToDisplayPlainText:textData];
+//
+//        // Make extra sure the cursor rects are updated so we get the
+//        // hand cursor over links.  Note: you'd think we should
+//        // invalidate the cursor rects for textView, but no, for some
+//        // reason it doesn't work unless we do it for scrollView.
+//        [self.view.window invalidateCursorRectsForView:_textView.enclosingScrollView];
+//    }
 }
 
 - (void)_useTextViewToDisplayPlainText:(NSData *)textData

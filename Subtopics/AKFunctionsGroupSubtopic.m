@@ -6,8 +6,6 @@
  */
 
 #import "AKFunctionsGroupSubtopic.h"
-
-#import "AKFileSection.h"
 #import "AKFunctionDoc.h"
 #import "AKGroupItem.h"
 #import "AKSortUtils.h"
@@ -21,9 +19,10 @@
     // Each subitem of a functions group item represents one function.
     for (AKTokenItem *functionItem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
     {
-        AKFileSection *functionSection = functionItem.tokenItemDocumentation;
-
-        if (functionSection != nil)
+//TODO: Is it safe to assume there is always a doc?
+//        AKFileSection *functionSection = functionItem.tokenItemDocumentation;
+//
+//        if (functionSection != nil)
         {
             AKDoc *newDoc = [[AKFunctionDoc alloc] initWithTokenItem:functionItem];
             

@@ -6,10 +6,10 @@
  */
 
 #import "AKDocLocator.h"
-
 #import "AKTopic.h"
 #import "AKSubtopic.h"
 #import "AKDoc.h"
+#import "DIGSLog.h"
 
 @implementation AKDocLocator
 
@@ -47,6 +47,11 @@
 
 #pragma mark - Getters and setters
 
+-(NSString *)subtopicName
+{
+    return _subtopicName;
+}
+
 - (void)setSubtopicName:(NSString *)subtopicName
 {
     if (![_subtopicName isEqualToString:subtopicName])
@@ -55,6 +60,11 @@
     }
 
     _subtopicName = [subtopicName copy];
+}
+
+-(NSString *)docName
+{
+    return _docName;
 }
 
 - (void)setDocName:(NSString *)docName

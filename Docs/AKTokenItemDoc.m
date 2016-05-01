@@ -7,42 +7,52 @@
 //
 
 #import "AKTokenItemDoc.h"
-
-#import "AKTokenItem.h"
+#import "DIGSLog.h"
 
 @implementation AKTokenItemDoc
-
-@synthesize tokenItem = _tokenItem;
 
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem
 {
-    if ((self = [super init]))
-    {
-        _tokenItem = tokenItem;
-    }
-
-    return self;
+	self = [super init];
+	if (self) {
+		_tokenItem = tokenItem;
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithTokenItem:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithTokenItem:nil];
 }
-
 
 #pragma mark - AKDoc methods
 
-- (AKFileSection *)fileSection
+- (NSURL *)docURLWithBasePath:(NSString *)basePath
 {
-    return _tokenItem.tokenItemDocumentation;
+	NSString *path = [basePath stringByAppendingPathComponent:self.tokenItem.token.metainformation.file.path];
+	NSString *anchor = self.tokenItem.token.metainformation.anchor;
+	NSURL *url = [NSURL fileURLWithPath:path];
+
+	if (anchor) {
+		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+		urlComponents.fragment = anchor;
+		url = [urlComponents URL];
+	}
+
+	return url;
+}
+
+- (BOOL)docTextIsHTML
+{
+	return YES;
 }
 
 - (NSString *)docName
 {
-    return _tokenItem.tokenName;
+	return _tokenItem.tokenName;
 }
 
 @end

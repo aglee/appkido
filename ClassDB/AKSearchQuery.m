@@ -13,7 +13,6 @@
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
-#import "AKFileSection.h"
 #import "AKFunctionsTopic.h"
 #import "AKGlobalsItem.h"
 #import "AKGlobalsTopic.h"

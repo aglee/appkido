@@ -9,7 +9,6 @@
 #import "AKPrefDictionary.h"
 #import "AKSortable.h"
 
-
 @class AKDoc;
 @class AKTopic;
 
@@ -44,7 +43,6 @@
 @property (NS_NONATOMIC_IOSONLY, copy) NSString *docName;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDoc *docToDisplay;
-
 
 #pragma mark - Factory methods
 

@@ -11,6 +11,8 @@
 
 @implementation AKTokenItem
 
+@dynamic frameworkName;
+
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithToken:(DSAToken *)token

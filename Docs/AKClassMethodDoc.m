@@ -11,9 +11,9 @@
 
 #pragma mark - AKMemberDoc methods
 
-+ (NSString *)punctuateTokenName:(NSString *)methodName
++ (NSString *)punctuateTokenName:(NSString *)tokenName
 {
-    return [@"+" stringByAppendingString:methodName];
+	return [@"+" stringByAppendingString:tokenName];
 }
 
 @end

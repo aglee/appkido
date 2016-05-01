@@ -7,20 +7,19 @@
 //
 
 #import "AKDoc.h"
+#import "DocSetModel.h"
+#import "AKTokenItem.h"
 
-@class AKTokenItem;
-
+/*!
+ * Documentation associated with a token item.  The relativePath is derived from the
+ * token item's DSAToken.
+ */
 @interface AKTokenItemDoc : AKDoc
-{
-@private
-    AKTokenItem *_tokenItem;
-}
 
-@property (nonatomic, readonly) AKTokenItem *tokenItem;
+@property (nonatomic, strong) AKTokenItem *tokenItem;
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem NS_DESIGNATED_INITIALIZER;
 
 @end

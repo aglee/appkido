@@ -13,7 +13,6 @@
 #import "AKTokenItem.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"
-#import "AKFileSection.h"
 #import "AKSearchQuery.h"
 #import "AKTopic.h"
 

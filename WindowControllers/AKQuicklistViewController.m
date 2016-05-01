@@ -15,7 +15,6 @@
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
-#import "AKFileSection.h"
 #import "AKFrameworkConstants.h"
 #import "AKHTMLConstants.h"
 #import "AKMethodItem.h"
@@ -665,74 +664,75 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
     static NSArray *s_classesWithDelegates = nil;
 
-    if (!s_classesWithDelegates)
-    {
-        NSMutableSet *setOfItems = [NSMutableSet set];
-
-        for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
-        {
-            BOOL classHasDelegate = NO;
-
-            // See if the class doc contains a "Delegate Methods" section.
-            AKFileSection *delegateMethodsSection = [classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsHTMLSectionName];
-
-            if (!delegateMethodsSection)
-            {
-                delegateMethodsSection =[classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
-            }
-
-            if (delegateMethodsSection)
-            {
-                classHasDelegate = YES;
-            }
-
-            // If not, see if the class has a method with a name like setFooDelegate:.
-            if (!classHasDelegate)
-            {
-                for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
-                {
-                    NSString *methodName = methodItem.tokenName;
-
-                    if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"])
-                    {
-                        classHasDelegate = YES;
-                        break;
-                    }
-                }
-            }
-
-            // If not, see if the class has a property named "delegate" or "fooDelegate".
-            if (!classHasDelegate)
-            {
-                for (AKPropertyItem *propertyItem in [classItem documentedProperties])
-                {
-                    NSString *propertyName = propertyItem.tokenName;
-
-                    if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"])
-                    {
-                        classHasDelegate = YES;
-                        break;
-                    }
-                }
-            }
-
-            // If not, see if there's a protocol named thisClassDelegate.
-            NSString *possibleDelegateProtocolName = [classItem.tokenName stringByAppendingString:@"Delegate"];
-            if ([[self.owningWindowController database] protocolWithName:possibleDelegateProtocolName])
-            {
-                classHasDelegate = YES;
-            }
-
-            // We've checked all the ways we can tell if a class has a delegate.
-            if (classHasDelegate)
-            {
-                [setOfItems addObject:classItem];
-            }
-        }
-
-        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
-        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
-    }
+//TODO: Commenting out, come back later.
+//    if (!s_classesWithDelegates)
+//    {
+//        NSMutableSet *setOfItems = [NSMutableSet set];
+//
+//        for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
+//        {
+//            BOOL classHasDelegate = NO;
+//
+//            // See if the class doc contains a "Delegate Methods" section.
+//            AKFileSection *delegateMethodsSection = [classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsHTMLSectionName];
+//
+//            if (!delegateMethodsSection)
+//            {
+//                delegateMethodsSection =[classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
+//            }
+//
+//            if (delegateMethodsSection)
+//            {
+//                classHasDelegate = YES;
+//            }
+//
+//            // If not, see if the class has a method with a name like setFooDelegate:.
+//            if (!classHasDelegate)
+//            {
+//                for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
+//                {
+//                    NSString *methodName = methodItem.tokenName;
+//
+//                    if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"])
+//                    {
+//                        classHasDelegate = YES;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            // If not, see if the class has a property named "delegate" or "fooDelegate".
+//            if (!classHasDelegate)
+//            {
+//                for (AKPropertyItem *propertyItem in [classItem documentedProperties])
+//                {
+//                    NSString *propertyName = propertyItem.tokenName;
+//
+//                    if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"])
+//                    {
+//                        classHasDelegate = YES;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            // If not, see if there's a protocol named thisClassDelegate.
+//            NSString *possibleDelegateProtocolName = [classItem.tokenName stringByAppendingString:@"Delegate"];
+//            if ([[self.owningWindowController database] protocolWithName:possibleDelegateProtocolName])
+//            {
+//                classHasDelegate = YES;
+//            }
+//
+//            // We've checked all the ways we can tell if a class has a delegate.
+//            if (classHasDelegate)
+//            {
+//                [setOfItems addObject:classItem];
+//            }
+//        }
+//
+//        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
+//        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
+//    }
 
     return s_classesWithDelegates;
 }
@@ -832,10 +832,11 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     for (AKClassItem *classItem in classItems)
     {
-        // Don't list classes that don't have HTML documentation.  They
-        // may have cropped up in header files and either not been
-        // documented yet or intended for Apple's internal use.
-        if (classItem.tokenItemDocumentation)
+//TODO: Is it safe to assume there is always a doc?
+//        // Don't list classes that don't have HTML documentation.  They
+//        // may have cropped up in header files and either not been
+//        // documented yet or intended for Apple's internal use.
+//        if (classItem.tokenItemDocumentation)
         {
             AKTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
@@ -854,10 +855,11 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
     for (AKProtocolItem *protocolItem in protocolItems)
     {
-        // Don't list protocols that don't have HTML documentation.  They
-        // may have cropped up in header files and either not been
-        // documented yet or intended for Apple's internal use.
-        if (protocolItem.tokenItemDocumentation)
+//TODO: Is it safe to assume there is always a doc?
+//        // Don't list protocols that don't have HTML documentation.  They
+//        // may have cropped up in header files and either not been
+//        // documented yet or intended for Apple's internal use.
+//        if (protocolItem.tokenItemDocumentation)
         {
             AKTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
 

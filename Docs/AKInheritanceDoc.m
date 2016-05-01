@@ -11,16 +11,9 @@
 
 #pragma mark - AKBehaviorGeneralDoc methods
 
-// The "Inheritance" doc uses the root section of the HTML file.  If we
-// were to include descendant sections, we'd be displaying the whole file.
-- (BOOL)docTextShouldIncludeDescendantSections
-{
-    return NO;
-}
-
 - (NSString *)unqualifiedDocName
 {
-    return @"Inheritance";
+	return @"Inheritance";
 }
 
 @end

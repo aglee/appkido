@@ -6,7 +6,6 @@
  */
 
 #import "AKDelegateMethodDoc.h"
-
 #import "AKBehaviorItem.h"
 #import "AKMethodItem.h"
 
@@ -14,60 +13,46 @@
 
 #pragma mark - AKMemberDoc methods
 
-+ (NSString *)punctuateTokenName:(NSString *)methodName
++ (NSString *)punctuateTokenName:(NSString *)tokenName
 {
-    return [@"-" stringByAppendingString:methodName];
+	return [@"-" stringByAppendingString:tokenName];
 }
 
 #pragma mark - AKDoc methods
 
 - (NSString *)commentString
 {
-    NSString *methodFrameworkName = self.memberItem.frameworkName;
-    NSString *behaviorFrameworkName = self.behaviorItem.frameworkName;
-    BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-    AKBehaviorItem *ownerOfMethod = self.memberItem.owningBehavior;
+	NSString *methodFrameworkName = self.tokenItem.frameworkName;
+	NSString *behaviorFrameworkName = self.behaviorItem.frameworkName;
+	BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
+	AKBehaviorItem *ownerOfMethod = ((AKMemberItem *)self.tokenItem).owningBehavior;
 
-    if (self.behaviorItem == ownerOfMethod)
-    {
-        // We're the first class/protocol to declare this method.
-        if (methodIsInSameFramework)
-        {
-            return @"";
-        }
-        else
-        {
-            return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFrameworkName];
-        }
-    }
-    else if ([ownerOfMethod isClassItem])
-    {
-        // We inherited this method from an ancestor class.
-        if (methodIsInSameFramework)
-        {
-            return [NSString stringWithFormat:@"This delegate method is used by class %@.", ownerOfMethod.tokenName];
-        }
-        else
-        {
-            return
-                [NSString stringWithFormat:
-                    @"This delegate method is used by %@ class %@.", methodFrameworkName, ownerOfMethod.tokenName];
-        }
-    }
-    else
-    {
-        // This method is declared in a formal protocol.
-        if (methodIsInSameFramework)
-        {
-            return [NSString stringWithFormat:@"This delegate method is declared in protocol %@.", ownerOfMethod.tokenName];
-        }
-        else
-        {
-            return
-                [NSString stringWithFormat:
-                    @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, ownerOfMethod.tokenName];
-        }
-    }
+	if (self.behaviorItem == ownerOfMethod) {
+		// We're the first class/protocol to declare this method.
+		if (methodIsInSameFramework) {
+			return @"";
+		} else {
+			return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFrameworkName];
+		}
+	} else if ([ownerOfMethod isClassItem]) {
+		// We inherited this method from an ancestor class.
+		if (methodIsInSameFramework) {
+			return [NSString stringWithFormat:@"This delegate method is used by class %@.", ownerOfMethod.tokenName];
+		} else {
+			return
+			[NSString stringWithFormat:
+			 @"This delegate method is used by %@ class %@.", methodFrameworkName, ownerOfMethod.tokenName];
+		}
+	} else {
+		// This method is declared in a formal protocol.
+		if (methodIsInSameFramework) {
+			return [NSString stringWithFormat:@"This delegate method is declared in protocol %@.", ownerOfMethod.tokenName];
+		} else {
+			return
+			[NSString stringWithFormat:
+			 @"This delegate method is declared in %@ protocol %@.", methodFrameworkName, ownerOfMethod.tokenName];
+		}
+	}
 }
 
 @end

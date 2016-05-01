@@ -10,7 +10,6 @@
 #import "AKCategoryItem.h"
 #import "AKCollectionOfItems.h"
 #import "AKDatabase.h"
-#import "AKFileSection.h"
 #import "AKMethodItem.h"
 #import "AKNotificationItem.h"
 #import "AKProtocolItem.h"
@@ -146,28 +145,29 @@
     return [_namesOfAllOwningFrameworks containsObject:frameworkName];
 }
 
-- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName
-{
-    return _tokenItemDocumentationByFrameworkName[frameworkName];
-}
-
-- (void)associateDocumentation:(AKFileSection *)fileSection
-            withFrameworkNamed:(NSString *)frameworkName
-{
-    if (frameworkName == nil)
-    {
-        DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
-                       [self tokenName], [fileSection filePath]);
-        return;
-    }
-
-    if (![_namesOfAllOwningFrameworks containsObject:frameworkName])
-    {
-        [_namesOfAllOwningFrameworks addObject:frameworkName];
-    }
-
-    _tokenItemDocumentationByFrameworkName[frameworkName] = fileSection;
-}
+//TODO: Commenting out, come back later.
+//- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName
+//{
+//    return _tokenItemDocumentationByFrameworkName[frameworkName];
+//}
+//
+//- (void)associateDocumentation:(AKFileSection *)fileSection
+//            withFrameworkNamed:(NSString *)frameworkName
+//{
+//    if (frameworkName == nil)
+//    {
+//        DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
+//                       [self tokenName], [fileSection filePath]);
+//        return;
+//    }
+//
+//    if (![_namesOfAllOwningFrameworks containsObject:frameworkName])
+//    {
+//        [_namesOfAllOwningFrameworks addObject:frameworkName];
+//    }
+//
+//    _tokenItemDocumentationByFrameworkName[frameworkName] = fileSection;
+//}
 
 #pragma mark - Getters and setters -- delegate methods
 

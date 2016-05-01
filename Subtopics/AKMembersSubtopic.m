@@ -75,7 +75,7 @@
     {
         AKMethodItem *methodItem = methodItemsByName[methodName];
         AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberItem:methodItem
-                                                      inheritedByBehavior:[self behaviorItem]];
+                                                      behaviorItem:[self behaviorItem]];
         [docList addObject:methodDoc];
     }
 }
