@@ -63,7 +63,7 @@
                               : @"%@ protocol <%@>");
 
     return [NSString stringWithFormat:stringFormat,
-            _protocolItem.nameOfOwningFramework, _protocolItem.tokenName];
+            _protocolItem.frameworkName, _protocolItem.tokenName];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -73,7 +73,7 @@
                                 : AKProtocolsTopicName);
 
     return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
-            AKTopicBrowserPathSeparator, _protocolItem.nameOfOwningFramework,
+            AKTopicBrowserPathSeparator, _protocolItem.frameworkName,
             AKTopicBrowserPathSeparator, whichProtocols,
             AKTopicBrowserPathSeparator, _protocolItem.tokenName];
 }

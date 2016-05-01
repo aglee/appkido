@@ -63,7 +63,7 @@
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ class %@",
-            _classItem.nameOfOwningFramework, _classItem.tokenName];
+            _classItem.frameworkName, _classItem.tokenName];
 }
 
 - (NSString *)pathInTopicBrowser

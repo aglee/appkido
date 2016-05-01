@@ -51,7 +51,7 @@
 
     // If we're looking at a class that spans multiple frameworks, add
     // doc names for those frameworks.
-    NSString *classFrameworkName = _classItem.nameOfOwningFramework;
+    NSString *classFrameworkName = _classItem.frameworkName;
 
     for (NSString *extraFrameworkName in [_classItem namesOfAllOwningFrameworks])
     {

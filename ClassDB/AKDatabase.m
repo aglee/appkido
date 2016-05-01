@@ -210,7 +210,7 @@
 
     for (AKClassItem *classItem in [self allClasses])
     {
-        if ([classItem.nameOfOwningFramework isEqualToString:frameworkName])
+        if ([classItem.frameworkName isEqualToString:frameworkName])
         {
             [classItems addObject:classItem];
         }
@@ -294,7 +294,7 @@
 
 - (void)addFunctionsGroup:(AKGroupItem *)groupItem
 {
-    NSString *frameworkName = groupItem.nameOfOwningFramework;
+    NSString *frameworkName = groupItem.frameworkName;
 
     // See if we have any functions groups in the framework yet.
     NSMutableArray *groupList = nil;
@@ -342,7 +342,7 @@
 
 - (void)addGlobalsGroup:(AKGroupItem *)groupItem
 {
-    NSString *frameworkName = groupItem.nameOfOwningFramework;
+    NSString *frameworkName = groupItem.frameworkName;
 
     // See if we have any globals groups in the framework yet.
     NSMutableArray *groupList = nil;
@@ -385,7 +385,7 @@
     for (AKProtocolItem *protocolItem in [self allProtocols])
     {
         if ((protocolItem.isInformal == informalFlag)
-            && [protocolItem.nameOfOwningFramework isEqualToString:fwName])
+            && [protocolItem.frameworkName isEqualToString:fwName])
         {
             [result addObject:protocolItem];
         }

@@ -35,7 +35,7 @@
 	return self.token.tokenName ?: self.fallbackTokenName;
 }
 
-- (NSString *)nameOfOwningFramework
+- (NSString *)frameworkName
 {
 	return [self frameworkNameForToken:self.token];
 }

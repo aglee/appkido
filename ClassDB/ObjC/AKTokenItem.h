@@ -32,7 +32,7 @@
 @property (nonatomic, readonly) NSString *tokenName;
 
 /*! Most token items belong to exactly one framework. The exception is AKClassItem, because it can have categories that belong to other frameworks. */
-@property (nonatomic, copy) NSString *nameOfOwningFramework;
+@property (nonatomic, copy) NSString *frameworkName;
 
 @property (nonatomic, assign) BOOL isDeprecated;
 

@@ -79,8 +79,8 @@
 
     // If this is a method that is added by a framework that is not the class's
     // main framework, show that.
-    NSString *memberFrameworkName = _memberItem.nameOfOwningFramework;
-    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.nameOfOwningFramework];
+    NSString *memberFrameworkName = _memberItem.frameworkName;
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.frameworkName];
 
     if (!memberIsInSameFramework)
     {
@@ -107,8 +107,8 @@
 // override this method.
 - (NSString *)commentString
 {
-    NSString *memberFrameworkName = _memberItem.nameOfOwningFramework;
-    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.nameOfOwningFramework];
+    NSString *memberFrameworkName = _memberItem.frameworkName;
+    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:_behaviorItem.frameworkName];
     AKBehaviorItem *owningBehavior = _memberItem.owningBehavior;
 
     if (_behaviorItem == owningBehavior)
