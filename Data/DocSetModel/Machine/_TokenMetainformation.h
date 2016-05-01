@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 @class DSADistributionVersion;
 @class FilePath;
 @class DSADistributionVersion;
-@class NSManagedObject;
+@class Parameter;
 @class DSANode;
 @class DSANode;
 @class DSAToken;
 @class DSADistributionVersion;
-@class NSManagedObject;
+@class ReturnValue;
 @class DSAToken;
 
 @interface TokenMetainformationID : NSManagedObjectID {}
@@ -50,8 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSSet<DSADistributionVersion*> *introducedInVersions;
 - (nullable NSMutableSet<DSADistributionVersion*>*)introducedInVersionsSet;
 
-@property (nonatomic, strong, nullable) NSSet<NSManagedObject*> *parameters;
-- (nullable NSMutableSet<NSManagedObject*>*)parametersSet;
+@property (nonatomic, strong, nullable) NSSet<Parameter*> *parameters;
+- (nullable NSMutableSet<Parameter*>*)parametersSet;
 
 @property (nonatomic, strong, nullable) NSSet<DSANode*> *relatedDocuments;
 - (nullable NSMutableSet<DSANode*>*)relatedDocumentsSet;
@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSSet<DSADistributionVersion*> *removedAfterVersions;
 - (nullable NSMutableSet<DSADistributionVersion*>*)removedAfterVersionsSet;
 
-@property (nonatomic, strong, nullable) NSManagedObject *returnValue;
+@property (nonatomic, strong, nullable) ReturnValue *returnValue;
 
 @property (nonatomic, strong) DSAToken *token;
 
@@ -88,10 +88,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface _TokenMetainformation (ParametersCoreDataGeneratedAccessors)
-- (void)addParameters:(NSSet<NSManagedObject*>*)value_;
-- (void)removeParameters:(NSSet<NSManagedObject*>*)value_;
-- (void)addParametersObject:(NSManagedObject*)value_;
-- (void)removeParametersObject:(NSManagedObject*)value_;
+- (void)addParameters:(NSSet<Parameter*>*)value_;
+- (void)removeParameters:(NSSet<Parameter*>*)value_;
+- (void)addParametersObject:(Parameter*)value_;
+- (void)removeParametersObject:(Parameter*)value_;
 
 @end
 
@@ -153,8 +153,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableSet<DSADistributionVersion*>*)primitiveIntroducedInVersions;
 - (void)setPrimitiveIntroducedInVersions:(NSMutableSet<DSADistributionVersion*>*)value;
 
-- (NSMutableSet<NSManagedObject*>*)primitiveParameters;
-- (void)setPrimitiveParameters:(NSMutableSet<NSManagedObject*>*)value;
+- (NSMutableSet<Parameter*>*)primitiveParameters;
+- (void)setPrimitiveParameters:(NSMutableSet<Parameter*>*)value;
 
 - (NSMutableSet<DSANode*>*)primitiveRelatedDocuments;
 - (void)setPrimitiveRelatedDocuments:(NSMutableSet<DSANode*>*)value;
@@ -168,8 +168,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableSet<DSADistributionVersion*>*)primitiveRemovedAfterVersions;
 - (void)setPrimitiveRemovedAfterVersions:(NSMutableSet<DSADistributionVersion*>*)value;
 
-- (NSManagedObject*)primitiveReturnValue;
-- (void)setPrimitiveReturnValue:(NSManagedObject*)value;
+- (ReturnValue*)primitiveReturnValue;
+- (void)setPrimitiveReturnValue:(ReturnValue*)value;
 
 - (DSAToken*)primitiveToken;
 - (void)setPrimitiveToken:(DSAToken*)value;

@@ -68,10 +68,10 @@
 
 @dynamic parameters;
 
-- (NSMutableSet<NSManagedObject*>*)parametersSet {
+- (NSMutableSet<Parameter*>*)parametersSet {
 	[self willAccessValueForKey:@"parameters"];
 
-	NSMutableSet<NSManagedObject*> *result = (NSMutableSet<NSManagedObject*>*)[self mutableSetValueForKey:@"parameters"];
+	NSMutableSet<Parameter*> *result = (NSMutableSet<Parameter*>*)[self mutableSetValueForKey:@"parameters"];
 
 	[self didAccessValueForKey:@"parameters"];
 	return result;

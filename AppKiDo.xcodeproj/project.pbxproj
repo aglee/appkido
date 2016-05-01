@@ -606,6 +606,22 @@
 		73A4ACDE16F35815004E6A1C /* AKTabChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A4ACDA16F35815004E6A1C /* AKTabChain.m */; };
 		73A4ACE016F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */; };
 		73A4ACE116F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */; };
+		73A7F7FF1CD5AE9A00E8EC85 /* Parameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F7FB1CD5AE9A00E8EC85 /* Parameter.h */; };
+		73A7F8001CD5AE9A00E8EC85 /* Parameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F7FB1CD5AE9A00E8EC85 /* Parameter.h */; };
+		73A7F8011CD5AE9A00E8EC85 /* Parameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F7FC1CD5AE9A00E8EC85 /* Parameter.m */; };
+		73A7F8021CD5AE9A00E8EC85 /* Parameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F7FC1CD5AE9A00E8EC85 /* Parameter.m */; };
+		73A7F8031CD5AE9A00E8EC85 /* ReturnValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F7FD1CD5AE9A00E8EC85 /* ReturnValue.h */; };
+		73A7F8041CD5AE9A00E8EC85 /* ReturnValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F7FD1CD5AE9A00E8EC85 /* ReturnValue.h */; };
+		73A7F8051CD5AE9A00E8EC85 /* ReturnValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F7FE1CD5AE9A00E8EC85 /* ReturnValue.m */; };
+		73A7F8061CD5AE9A00E8EC85 /* ReturnValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F7FE1CD5AE9A00E8EC85 /* ReturnValue.m */; };
+		73A7F80B1CD5AEAF00E8EC85 /* _Parameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F8071CD5AEAF00E8EC85 /* _Parameter.h */; };
+		73A7F80C1CD5AEAF00E8EC85 /* _Parameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F8071CD5AEAF00E8EC85 /* _Parameter.h */; };
+		73A7F80D1CD5AEAF00E8EC85 /* _Parameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F8081CD5AEAF00E8EC85 /* _Parameter.m */; };
+		73A7F80E1CD5AEAF00E8EC85 /* _Parameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F8081CD5AEAF00E8EC85 /* _Parameter.m */; };
+		73A7F80F1CD5AEAF00E8EC85 /* _ReturnValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F8091CD5AEAF00E8EC85 /* _ReturnValue.h */; };
+		73A7F8101CD5AEAF00E8EC85 /* _ReturnValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A7F8091CD5AEAF00E8EC85 /* _ReturnValue.h */; };
+		73A7F8111CD5AEAF00E8EC85 /* _ReturnValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F80A1CD5AEAF00E8EC85 /* _ReturnValue.m */; };
+		73A7F8121CD5AEAF00E8EC85 /* _ReturnValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7F80A1CD5AEAF00E8EC85 /* _ReturnValue.m */; };
 		73B3183009ED63E1009BA8E6 /* AppKiDo.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */; };
 		73B6B6C70DC1D229004FB7ED /* AKFunctionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B6B6C50DC1D229004FB7ED /* AKFunctionItem.h */; };
 		73B6B6C80DC1D229004FB7ED /* AKFunctionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B6B6C60DC1D229004FB7ED /* AKFunctionItem.m */; };
@@ -983,6 +999,14 @@
 		73A4ACD916F35814004E6A1C /* AKTabChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKTabChain.h; path = GlobalClasses/AKTabChain.h; sourceTree = "<group>"; };
 		73A4ACDA16F35815004E6A1C /* AKTabChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKTabChain.m; path = GlobalClasses/AKTabChain.m; sourceTree = "<group>"; };
 		73A4ACDF16F36F5E004E6A1C /* AKTabChainWindowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKTabChainWindowDelegate.h; path = GlobalClasses/AKTabChainWindowDelegate.h; sourceTree = "<group>"; };
+		73A7F7FB1CD5AE9A00E8EC85 /* Parameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parameter.h; sourceTree = "<group>"; };
+		73A7F7FC1CD5AE9A00E8EC85 /* Parameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Parameter.m; sourceTree = "<group>"; };
+		73A7F7FD1CD5AE9A00E8EC85 /* ReturnValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnValue.h; sourceTree = "<group>"; };
+		73A7F7FE1CD5AE9A00E8EC85 /* ReturnValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnValue.m; sourceTree = "<group>"; };
+		73A7F8071CD5AEAF00E8EC85 /* _Parameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Parameter.h; sourceTree = "<group>"; };
+		73A7F8081CD5AEAF00E8EC85 /* _Parameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Parameter.m; sourceTree = "<group>"; };
+		73A7F8091CD5AEAF00E8EC85 /* _ReturnValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ReturnValue.h; sourceTree = "<group>"; };
+		73A7F80A1CD5AEAF00E8EC85 /* _ReturnValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ReturnValue.m; sourceTree = "<group>"; };
 		73A9A7BD15B6D5AC0060E578 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73A9A7C215B6DA110060E578 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73AB2B8C0848FF08005E1A4F /* AKMultiRadioView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AKMultiRadioView.h; path = CustomViews/AKMultiRadioView.h; sourceTree = "<group>"; };
@@ -1066,7 +1090,7 @@
 		73E86F410E3974E1002AFB76 /* AKMemberItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMemberItem.m; sourceTree = "<group>"; };
 		73E86F480E397760002AFB76 /* AKNotificationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNotificationItem.h; sourceTree = "<group>"; };
 		73E86F490E397760002AFB76 /* AKNotificationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNotificationItem.m; sourceTree = "<group>"; };
-		73EE9E3D06856D120008CBEC /* AKDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabase.h; sourceTree = "<group>"; };
+		73EE9E3D06856D120008CBEC /* AKDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabase.h; sourceTree = "<group>"; usesTabs = 1; };
 		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; usesTabs = 1; };
 		73F2F7B517C7D27000AF4B06 /* DocPathForClass.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DocPathForClass.sql; sourceTree = "<group>"; };
 		73F3BC8217CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBehaviorGeneralDoc.h; sourceTree = "<group>"; };
@@ -1560,6 +1584,10 @@
 				734AEE561CC5E1600064AAA9 /* NodeUUID.m */,
 				734AEE571CC5E1600064AAA9 /* OrderedSubnode.h */,
 				734AEE581CC5E1600064AAA9 /* OrderedSubnode.m */,
+				73A7F7FB1CD5AE9A00E8EC85 /* Parameter.h */,
+				73A7F7FC1CD5AE9A00E8EC85 /* Parameter.m */,
+				73A7F7FD1CD5AE9A00E8EC85 /* ReturnValue.h */,
+				73A7F7FE1CD5AE9A00E8EC85 /* ReturnValue.m */,
 				734AEE591CC5E1600064AAA9 /* TokenGroup.h */,
 				734AEE5A1CC5E1600064AAA9 /* TokenGroup.m */,
 				734AEE5B1CC5E1600064AAA9 /* TokenMetainformation.h */,
@@ -1597,6 +1625,10 @@
 				734AEE751CC5E1600064AAA9 /* _NodeUUID.m */,
 				734AEE761CC5E1600064AAA9 /* _OrderedSubnode.h */,
 				734AEE771CC5E1600064AAA9 /* _OrderedSubnode.m */,
+				73A7F8071CD5AEAF00E8EC85 /* _Parameter.h */,
+				73A7F8081CD5AEAF00E8EC85 /* _Parameter.m */,
+				73A7F8091CD5AEAF00E8EC85 /* _ReturnValue.h */,
+				73A7F80A1CD5AEAF00E8EC85 /* _ReturnValue.m */,
 				734AEE781CC5E1600064AAA9 /* _TokenGroup.h */,
 				734AEE791CC5E1600064AAA9 /* _TokenGroup.m */,
 				734AEE7A1CC5E1600064AAA9 /* _TokenMetainformation.h */,
@@ -2002,6 +2034,7 @@
 				65B1097109D7B6C300A8A637 /* AKFunctionsTopic.h in Headers */,
 				65B1097209D7B6C300A8A637 /* AKInformalProtocolsTopic.h in Headers */,
 				65B1097309D7B6C300A8A637 /* AKLabelTopic.h in Headers */,
+				73A7F80F1CD5AEAF00E8EC85 /* _ReturnValue.h in Headers */,
 				65B1097409D7B6C300A8A637 /* AKProtocolTopic.h in Headers */,
 				65B1097509D7B6C300A8A637 /* AKTopic.h in Headers */,
 				65B1097609D7B6C300A8A637 /* AKGlobalsTopic.h in Headers */,
@@ -2037,6 +2070,7 @@
 				65B1099209D7B6C300A8A637 /* AKFunctionsGroupSubtopic.h in Headers */,
 				65B1099309D7B6C300A8A637 /* AKFindPanelController.h in Headers */,
 				65B1099409D7B6C300A8A637 /* AKPrefPanelController.h in Headers */,
+				73A7F80B1CD5AEAF00E8EC85 /* _Parameter.h in Headers */,
 				65B1099609D7B6C300A8A637 /* AKDatabase.h in Headers */,
 				734AEEB91CC5E1600064AAA9 /* _TokenGroup.h in Headers */,
 				734AEEA11CC5E1600064AAA9 /* _APILanguage.h in Headers */,
@@ -2047,6 +2081,7 @@
 				65B1099C09D7B6C300A8A637 /* AKBehaviorGeneralSubtopic.h in Headers */,
 				65B1099D09D7B6C300A8A637 /* AKRealMethodsSubtopic.h in Headers */,
 				65B1099E09D7B6C300A8A637 /* AKPseudoMethodsSubtopic.h in Headers */,
+				73A7F7FF1CD5AE9A00E8EC85 /* Parameter.h in Headers */,
 				65B1099F09D7B6C300A8A637 /* AKClassGeneralSubtopic.h in Headers */,
 				65B109A009D7B6C300A8A637 /* AKProtocolGeneralSubtopic.h in Headers */,
 				65B109A109D7B6C300A8A637 /* AKFileSection.h in Headers */,
@@ -2103,6 +2138,7 @@
 				738D41B915B07D7F008950F6 /* AKAboutWindowController.h in Headers */,
 				738D41BD15B07EC6008950F6 /* AKAppVersion.h in Headers */,
 				734AEE831CC5E1600064AAA9 /* APILanguage.h in Headers */,
+				73A7F8031CD5AE9A00E8EC85 /* ReturnValue.h in Headers */,
 				73D59E8515B3EA4800A1BEAF /* AKMethodNameExtractor.h in Headers */,
 				73D59E8B15B3EC8200A1BEAF /* AKServicesProvider.h in Headers */,
 				730F68BF15C1478300E0B7B0 /* FMDatabasePool.h in Headers */,
@@ -2157,6 +2193,7 @@
 				7399B2C20E632A5C001AE672 /* NSString+AppKiDo.h in Headers */,
 				7399B2C30E632A5C001AE672 /* AKColoredBox.h in Headers */,
 				7399B2C50E632A5C001AE672 /* NSView+AppKiDo.h in Headers */,
+				73A7F80C1CD5AEAF00E8EC85 /* _Parameter.h in Headers */,
 				7399B2C60E632A5C001AE672 /* AKClassMethodsSubtopic.h in Headers */,
 				7399B2C70E632A5C001AE672 /* AKDelegateMethodsSubtopic.h in Headers */,
 				7399B2C80E632A5C001AE672 /* AKInstanceMethodsSubtopic.h in Headers */,
@@ -2190,6 +2227,7 @@
 				7399B2E70E632A5C001AE672 /* AKNotificationDoc.h in Headers */,
 				7399B2E80E632A5C001AE672 /* AKSearchQuery.h in Headers */,
 				7399B2E90E632A5C001AE672 /* AKGlobalsItem.h in Headers */,
+				73A7F8101CD5AEAF00E8EC85 /* _ReturnValue.h in Headers */,
 				7399B2EA0E632A5C001AE672 /* AKGroupItem.h in Headers */,
 				7399B2EB0E632A5C001AE672 /* AKGroupItemSubtopic.h in Headers */,
 				7399B2ED0E632A5C001AE672 /* AKPrefConstants.h in Headers */,
@@ -2199,6 +2237,7 @@
 				7399B2F10E632A5C001AE672 /* AKFindPanelController.h in Headers */,
 				7399B2F20E632A5C001AE672 /* AKPrefPanelController.h in Headers */,
 				7399B2F40E632A5C001AE672 /* AKDatabase.h in Headers */,
+				73A7F8041CD5AE9A00E8EC85 /* ReturnValue.h in Headers */,
 				7399B2F60E632A5C001AE672 /* AKTokenItem.h in Headers */,
 				7399B2F70E632A5C001AE672 /* AKBehaviorItem.h in Headers */,
 				7399B2F80E632A5C001AE672 /* AKBehaviorTopic.h in Headers */,
@@ -2237,6 +2276,7 @@
 				7399B3200E632A5C001AE672 /* AKPropertiesSubtopic.h in Headers */,
 				7399B3210E632A5C001AE672 /* AKPropertyDoc.h in Headers */,
 				7399B3250E632A5C001AE672 /* AKDevToolsPanelController.h in Headers */,
+				73A7F8001CD5AE9A00E8EC85 /* Parameter.h in Headers */,
 				7399B3260E632A5C001AE672 /* AKTokenItemDoc.h in Headers */,
 				73C735A90F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */,
 				73C983F40FE47F6800C4BEBA /* AKMacDevTools.h in Headers */,
@@ -2490,6 +2530,7 @@
 				65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */,
 				734AEEBF1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld in Sources */,
 				65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */,
+				73A7F8011CD5AE9A00E8EC85 /* Parameter.m in Sources */,
 				65B109E709D7B6C300A8A637 /* AKPrefUtils.m in Sources */,
 				65B109E809D7B6C300A8A637 /* AKSortUtils.m in Sources */,
 				734AEEAA1CC5E1600064AAA9 /* _DSADistributionVersion.m in Sources */,
@@ -2500,6 +2541,7 @@
 				65B109EC09D7B6C300A8A637 /* NSView+AppKiDo.m in Sources */,
 				65B109ED09D7B6C300A8A637 /* AKClassMethodsSubtopic.m in Sources */,
 				65B109EE09D7B6C300A8A637 /* AKDelegateMethodsSubtopic.m in Sources */,
+				73A7F8051CD5AE9A00E8EC85 /* ReturnValue.m in Sources */,
 				65B109EF09D7B6C300A8A637 /* AKInstanceMethodsSubtopic.m in Sources */,
 				65B109F009D7B6C300A8A637 /* AKMembersSubtopic.m in Sources */,
 				65B109F109D7B6C300A8A637 /* AKNotificationsSubtopic.m in Sources */,
@@ -2581,6 +2623,7 @@
 				65B10A4209D7B6C300A8A637 /* AKMultiRadioView.m in Sources */,
 				7359EB2E0BADB68100574728 /* AKApplication.m in Sources */,
 				739558100D29CA83008105BD /* AKDatabaseXMLExporter.m in Sources */,
+				73A7F8111CD5AEAF00E8EC85 /* _ReturnValue.m in Sources */,
 				73D237090D4561C300EF7503 /* FMDatabase.m in Sources */,
 				734AEE8A1CC5E1600064AAA9 /* DownloadableFile.m in Sources */,
 				73D2370B0D4561C300EF7503 /* FMDatabaseAdditions.m in Sources */,
@@ -2642,6 +2685,7 @@
 				73DB1388170E75FC00F3776A /* AKGlobalsDoc.m in Sources */,
 				73F3BC8617CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m in Sources */,
 				734AEE881CC5E1600064AAA9 /* DocSet.m in Sources */,
+				73A7F80D1CD5AEAF00E8EC85 /* _Parameter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2678,6 +2722,7 @@
 				7399B3680E632A5C001AE672 /* AKCategoryItem.m in Sources */,
 				7399B3690E632A5C001AE672 /* AKClassItem.m in Sources */,
 				7399B36A0E632A5C001AE672 /* AKMethodItem.m in Sources */,
+				73A7F8121CD5AEAF00E8EC85 /* _ReturnValue.m in Sources */,
 				7399B36B0E632A5C001AE672 /* AKProtocolItem.m in Sources */,
 				7399B36D0E632A5C001AE672 /* AKAppDelegate.m in Sources */,
 				7399B36F0E632A5C001AE672 /* AKLinkResolver.m in Sources */,
@@ -2692,6 +2737,7 @@
 				7399B3790E632A5C001AE672 /* AKDelegateMethodDoc.m in Sources */,
 				7399B37A0E632A5C001AE672 /* AKNotificationDoc.m in Sources */,
 				7399B37B0E632A5C001AE672 /* AKSearchQuery.m in Sources */,
+				73A7F80E1CD5AEAF00E8EC85 /* _Parameter.m in Sources */,
 				7399B37C0E632A5C001AE672 /* AKGlobalsItem.m in Sources */,
 				7399B37D0E632A5C001AE672 /* AKGroupItem.m in Sources */,
 				7399B37E0E632A5C001AE672 /* AKGroupItemSubtopic.m in Sources */,
@@ -2720,6 +2766,7 @@
 				7399B3980E632A5C001AE672 /* DIGSTextSelection.m in Sources */,
 				7399B3990E632A5C001AE672 /* DIGSTextView.m in Sources */,
 				7399B39A0E632A5C001AE672 /* AKWindow.m in Sources */,
+				73A7F8021CD5AE9A00E8EC85 /* Parameter.m in Sources */,
 				7399B39C0E632A5C001AE672 /* AKFileUtils.m in Sources */,
 				7399B39E0E632A5C001AE672 /* AKChildTopicOfFrameworkTopic.m in Sources */,
 				7399B39F0E632A5C001AE672 /* AKMultiRadioView.m in Sources */,
@@ -2748,6 +2795,7 @@
 				733DF5EE14E17700007E6313 /* AKSQLTemplate.m in Sources */,
 				738D41B815B07D7B008950F6 /* AKAboutWindowController.m in Sources */,
 				738D41C015B07EC6008950F6 /* AKAppVersion.m in Sources */,
+				73A7F8061CD5AE9A00E8EC85 /* ReturnValue.m in Sources */,
 				73D59E8815B3EA4800A1BEAF /* AKMethodNameExtractor.m in Sources */,
 				73D59E8E15B3EC8200A1BEAF /* AKServicesProvider.m in Sources */,
 				730F68C715C1502A00E0B7B0 /* FMDatabaseQueue.m in Sources */,

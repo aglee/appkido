@@ -10,6 +10,8 @@
 #import "Header.h"
 #import "NodeUUID.h"
 #import "OrderedSubnode.h"
+#import "Parameter.h"
+#import "ReturnValue.h"
 #import "TokenGroup.h"
 #import "TokenMetainformation.h"
 #import "TokenType.h"

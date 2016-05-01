@@ -78,12 +78,12 @@
         <relationship name="node" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="orderedSelfs" inverseEntity="Node" indexed="YES" syncable="YES"/>
         <relationship name="parent" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="orderedSubnodes" inverseEntity="Node" indexed="YES" syncable="YES"/>
     </entity>
-    <entity name="Parameter" representedClassName="NSManagedObject" syncable="YES">
+    <entity name="Parameter" representedClassName="Parameter" syncable="YES">
         <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="order" attributeType="Integer 16" syncable="YES"/>
         <attribute name="parameterName" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="ReturnValue" representedClassName="NSManagedObject" syncable="YES">
+    <entity name="ReturnValue" representedClassName="ReturnValue" syncable="YES">
         <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Token" representedClassName="DSAToken" syncable="YES">
