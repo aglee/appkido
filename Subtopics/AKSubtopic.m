@@ -26,6 +26,8 @@ NSString *AKDelegateMethodsSubtopicName    = @"Delegate Methods";
 NSString *AKAllDelegateMethodsSubtopicName = @"ALL Delegate Methods";
 NSString *AKNotificationsSubtopicName      = @"Notifications";
 NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
+NSString *AKBindingsSubtopicName           = @"Bindings";
+NSString *AKAllBindingsSubtopicName        = @"ALL Bindings";
 
 #pragma mark - Init/awake/dealloc
 

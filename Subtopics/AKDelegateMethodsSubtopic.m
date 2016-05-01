@@ -6,7 +6,6 @@
  */
 
 #import "AKDelegateMethodsSubtopic.h"
-
 #import "AKClassItem.h"
 #import "AKDelegateMethodDoc.h"
 
@@ -19,13 +18,6 @@
     return ([self includesAncestors]
             ? AKAllDelegateMethodsSubtopicName
             : AKDelegateMethodsSubtopicName);
-}
-
-- (NSString *)stringToDisplayInSubtopicList
-{
-    return ([self includesAncestors]
-            ? [@"       " stringByAppendingString:[self subtopicName]]
-            : [self subtopicName]);
 }
 
 #pragma mark - AKMembersSubtopic methods

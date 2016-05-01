@@ -38,6 +38,8 @@ extern NSString *AKDelegateMethodsSubtopicName;
 extern NSString *AKAllDelegateMethodsSubtopicName;
 extern NSString *AKNotificationsSubtopicName;
 extern NSString *AKAllNotificationsSubtopicName;
+extern NSString *AKBindingsSubtopicName;
+extern NSString *AKAllBindingsSubtopicName;
 
 #pragma mark - Getters and setters
 

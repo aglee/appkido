@@ -31,8 +31,6 @@
 
 #pragma mark - KLUDGES
 
-@property (copy) NSString *fallbackTokenName;
-
 - (NSString *)frameworkNameForToken:(DSAToken *)token;  //TODO: KLUDGE.
 
 @end

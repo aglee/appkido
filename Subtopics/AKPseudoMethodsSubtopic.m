@@ -58,4 +58,13 @@
     return _classItem;
 }
 
+#pragma mark - Subtopic methods
+
+- (NSString *)stringToDisplayInSubtopicList
+{
+    return ([self includesAncestors]
+            ? [@"       " stringByAppendingString:[self subtopicName]]
+            : [self subtopicName]);
+}
+
 @end

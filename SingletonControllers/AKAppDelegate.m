@@ -438,6 +438,8 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    NSLog(@"Logging verbosity is at level %zd", DIGSGetVerbosityLevel());
+    
 	// Create the AKDatabase instance or bust.
     NSString *docSetBundlePath = [@"~/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.OSX.docset/" stringByExpandingTildeInPath];  //FIXME: REMOVE DEBUGGING
     DocSetIndex *docSetIndex = [[DocSetIndex alloc] initWithDocSetPath:docSetBundlePath];

@@ -6,7 +6,6 @@
  */
 
 #import "AKNotificationsSubtopic.h"
-
 #import "AKClassItem.h"
 #import "AKNotificationDoc.h"
 
@@ -19,13 +18,6 @@
     return ([self includesAncestors]
             ? AKAllNotificationsSubtopicName
             : AKNotificationsSubtopicName);
-}
-
-- (NSString *)stringToDisplayInSubtopicList
-{
-    return ([self includesAncestors]
-            ? [@"       " stringByAppendingString:[self subtopicName]]
-            : [self subtopicName]);
 }
 
 #pragma mark - AKMembersSubtopic methods

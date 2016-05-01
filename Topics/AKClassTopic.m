@@ -6,10 +6,9 @@
  */
 
 #import "AKClassTopic.h"
-
 #import "DIGSLog.h"
-
 #import "AKAppDelegate.h"
+#import "AKBindingsSubtopic.h"
 #import "AKClassMethodsSubtopic.h"
 #import "AKClassGeneralSubtopic.h"
 #import "AKClassItem.h"
@@ -46,7 +45,6 @@
     DIGSLogError_NondesignatedInitializer();
     return [self initWithClassItem:nil];
 }
-
 
 #pragma mark - AKTopic methods
 
@@ -128,6 +126,8 @@
                      [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
                      [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
                      [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
+                     [AKBindingsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
+                     [AKBindingsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
                      ])];
 }
 

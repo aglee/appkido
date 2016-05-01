@@ -12,6 +12,13 @@
 
 @implementation AKPropertyDoc
 
+#pragma mark - AKMemberDoc methods
+
++ (NSString *)punctuateTokenName:(NSString *)tokenName
+{
+	return [@"." stringByAppendingString:tokenName];
+}
+
 #pragma mark - AKDoc methods
 
 - (NSString *)commentString

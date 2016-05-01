@@ -7,6 +7,7 @@
 
 #import "AKClassItem.h"
 #import "DIGSLog.h"
+#import "AKBindingItem.h"
 #import "AKCategoryItem.h"
 #import "AKCollectionOfItems.h"
 #import "AKDatabase.h"
@@ -42,6 +43,7 @@
 
         _indexOfDelegateMethods = [[AKCollectionOfItems alloc] init];
         _indexOfNotifications = [[AKCollectionOfItems alloc] init];
+        _indexOfBindings = [[AKCollectionOfItems alloc] init];
     }
 
     return self;
@@ -50,7 +52,6 @@
 - (void)dealloc
 {
     _indexOfDelegateMethods = nil;
-
 }
 
 #pragma mark - Getters and setters -- general
@@ -131,6 +132,21 @@
     }
 
     return result;
+}
+
+- (void)addBindingItem:(AKBindingItem *)bindingItem
+{
+    [_indexOfBindings addTokenItem:bindingItem];
+}
+
+- (AKBindingItem *)bindingItemNamed:(NSString *)bindingName
+{
+    return (AKBindingItem *)[_indexOfBindings itemWithTokenName:bindingName];
+}
+
+- (NSArray *)documentedBindings
+{
+    return [_indexOfBindings tokenItemsWithDocumentation];
 }
 
 #pragma mark - Getters and setters -- multiple owning frameworks
@@ -259,7 +275,12 @@
 
 #pragma mark - AKTokenItem methods
 
-- (void)setMainFrameworkName:(NSString *)frameworkName
+- (NSString *)tokenName
+{
+    return super.tokenName ?: self.fallbackTokenName;
+}
+
+- (void)setMainFrameworkName:(NSString *)frameworkName  //TODO: Fix the multiple-frameworks thing for class items.
 {
     // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
     if (frameworkName)

@@ -34,7 +34,7 @@
 
 - (NSString *)tokenName
 {
-	return self.token.tokenName ?: self.fallbackTokenName;
+	return self.token.tokenName;
 }
 
 - (NSString *)frameworkName

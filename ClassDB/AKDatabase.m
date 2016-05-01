@@ -6,15 +6,19 @@
  */
 
 #import "AKDatabase.h"
+#import "AKBindingItem.h"
+#import "AKCategoryItem.h"
 #import "AKFrameworkConstants.h"
 #import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
 #import "AKClassItem.h"
 #import "AKMethodItem.h"
+#import "AKPropertyItem.h"
 #import "AKProtocolItem.h"
 #import "AKGroupItem.h"
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
+#import "AKRegexUtils.h"
 #import "DIGSLog.h"
 #import "DocSetQuery.h"
 #import "QuietLog.h"
@@ -59,17 +63,6 @@
 
 #pragma mark - Populating the database
 
-//cat = category
-//
-//cl = class
-//clm = class method of a class
-//instm = instance method of a class
-//instp = property of a class
-//
-//intf = protocol
-//intfcm = class method of a protocol
-//intfm = instance method of a protocol
-//intfp = property of a protocol
 - (void)populate
 {
 	self.frameworkNames = [self _arrayWithAllFrameworkNames];
@@ -78,116 +71,39 @@
         NSString *tokenType = token.tokenType.typeName;
 
         if ([tokenType isEqualToString:@"cl"]) {
+			// Class.
             [self _processClassToken:token];
-        } else if ([tokenType isEqualToString:@"intf"]) {
-            [self _processProtocolToken:token];
 		} else if ([tokenType isEqualToString:@"clm"]) {
+			// Class method of a class.
 			[self _processClassClassMethodToken:token];
 		} else if ([tokenType isEqualToString:@"instm"]) {
+			// Instance method of a class.
 			[self _processClassInstanceMethodToken:token];
-        }
+		} else if ([tokenType isEqualToString:@"instp"]) {
+			// Property of a class.
+			[self _processClassPropertyToken:token];
+		} else if ([tokenType isEqualToString:@"binding"]) {
+			// Binding exposed by a class.
+			[self _processClassBindingToken:token];
+		} else if ([tokenType isEqualToString:@"intf"]) {
+			// Protocol.
+			[self _processProtocolToken:token];
+		} else if ([tokenType isEqualToString:@"intfcm"]) {
+			// Class method of a protocol.
+			[self _processProtocolClassMethodToken:token];
+		} else if ([tokenType isEqualToString:@"intfm"]) {
+			// Instance method of a protocol.
+			[self _processProtocolInstanceMethodToken:token];
+		} else if ([tokenType isEqualToString:@"intfp"]) {
+			// Property of a protocol.
+			[self _processProtocolPropertyToken:token];
+		} else if ([tokenType isEqualToString:@"cat"]) {
+			// Category.
+			[self _processCategoryToken:token];
+		} else {
+			QLog(@"+++ %s [ODD] Unexpected token type '%@'", __PRETTY_FUNCTION__, tokenType);
+		}
     }
-
-	AKClassItem *objItem = self.classItemsByName[@"NSString"];
-	QLog(@"+++ %@", objItem);
-}
-
-- (NSArray *)_arrayWithAllFrameworkNames
-{
-	NSError *error;
-	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Header"];
-	query.distinctKeyPathsString = @"frameworkName";
-	query.predicateString = @"frameworkName != NULL";
-	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];  //TODO: Handle error.
-	fetchedObjects = [fetchedObjects valueForKey:@"frameworkName"];
-	fetchedObjects = [fetchedObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-	return fetchedObjects;
-}
-
-- (NSArray *)_arrayWithAllTokens
-{
-	NSError *error;
-	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Token"];
-	query.predicateString = @"language.fullName = 'Objective-C'";
-	return [query fetchObjectsWithError:&error];  //TODO: Handle error.
-}
-
-//FIXME: Handle those broken cases where a category is mislabeled as a class ('cl' when it looks to me like it should be 'cat').
-- (void)_processClassToken:(DSAToken *)token
-{
-	NSParameterAssert(token != nil);
-	AKClassItem *classItem = [self _getOrAddClassItemWithToken:token];
-	if (classItem.parentClass) {
-		QLog(@"+++ classItem %@ already has a parent %@", classItem.tokenName, classItem.parentClass.tokenName);
-	} else {
-		[self _fillInParentClassOfClassItem:classItem];
-	}
-}
-
-- (AKClassItem *)_getOrAddClassItemWithToken:(DSAToken *)token
-{
-	AKClassItem *classItem = self.classItemsByName[token.tokenName];
-	if (classItem == nil) {
-		classItem = [[AKClassItem alloc] initWithToken:token];
-		self.classItemsByName[token.tokenName] = classItem;
-		QLog(@"+++ added class %@", token.tokenName);
-	} else if (classItem.token == nil) {
-		classItem.token = token;
-		QLog(@"+++ filled in the token for class %@", token.tokenName);
-	} else {
-		QLog(@"+++ [ODD] class %@ already has a token", token.tokenName);
-	}
-	return classItem;
-}
-
-- (AKClassItem *)_getOrAddClassItemWithName:(NSString *)className
-{
-	AKClassItem *classItem = self.classItemsByName[className];
-	if (classItem == nil) {
-		classItem = [[AKClassItem alloc] initWithToken:nil];
-		classItem.fallbackTokenName = className;
-		self.classItemsByName[className] = classItem;
-		QLog(@"+++ added class %@, don't have the token yet", className);
-	}
-	return classItem;
-}
-
-- (void)_fillInParentClassOfClassItem:(AKClassItem *)classItem
-{
-    if (classItem.token.superclassContainers.count > 1) {
-        QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.tokenName);
-    }
-    Container *container = classItem.token.superclassContainers.anyObject;
-    if (container) {
-		AKClassItem *parentClassItem = [self _getOrAddClassItemWithName:container.containerName];
-        [parentClassItem addChildClass:classItem];
-    }
-}
-
-- (void)_processProtocolToken:(DSAToken *)token
-{
-	AKProtocolItem *protocolItem = self.protocolItemsByName[token.tokenName];
-	if (protocolItem == nil) {
-		protocolItem = [[AKProtocolItem alloc] initWithToken:token];
-		self.protocolItemsByName[token.tokenName] = protocolItem;
-		QLog(@"%@ -- added protocol %@", self.className, token.tokenName);
-	}
-}
-
-- (void)_processClassClassMethodToken:(DSAToken *)token
-{
-	NSString *className = token.container.containerName;
-	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:classItem];
-	[classItem addClassMethod:methodItem];
-}
-
-- (void)_processClassInstanceMethodToken:(DSAToken *)token
-{
-	NSString *className = token.container.containerName;
-	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:classItem];
-	[classItem addInstanceMethod:methodItem];
 }
 
 #pragma mark - Getters and setters -- frameworks
@@ -375,7 +291,7 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private methods - misc
 
 - (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName
                            withInformalFlag:(BOOL)informalFlag
@@ -392,6 +308,187 @@
     }
 
     return result;
+}
+
+#pragma mark - Private methods - populating the database - misc
+
+- (NSArray *)_arrayWithAllFrameworkNames
+{
+	NSError *error;
+	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Header"];
+	query.distinctKeyPathsString = @"frameworkName";
+	query.predicateString = @"frameworkName != NULL";
+	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];  //TODO: Handle error.
+	fetchedObjects = [fetchedObjects valueForKey:@"frameworkName"];
+	fetchedObjects = [fetchedObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	return fetchedObjects;
+}
+
+- (NSArray *)_arrayWithAllTokens
+{
+	NSError *error;
+	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Token"];
+	query.predicateString = @"language.fullName = 'Objective-C'";
+	return [query fetchObjectsWithError:&error];  //TODO: Handle error.
+}
+
+#pragma mark - Private methods - populating the database - classes and categories
+
+//FIXME: Will have to check, but I *think* I saw "bugs" in the 10.11.4 docset index, where a category is mislabeled as a class ('cl' when it looks to me like it should be 'cat').
+- (void)_processClassToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"cl"]);
+	AKClassItem *classItem = [self _getOrAddClassItemWithToken:token];
+	if (classItem.parentClass) {
+//		QLog(@"+++ classItem %@ already has a parent %@", classItem.tokenName, classItem.parentClass.tokenName);
+	} else {
+		[self _fillInParentClassOfClassItem:classItem];
+	}
+}
+
+- (AKClassItem *)_getOrAddClassItemWithToken:(DSAToken *)token
+{
+	AKClassItem *classItem = self.classItemsByName[token.tokenName];
+	if (classItem == nil) {
+		// Add a new class item.
+		classItem = [[AKClassItem alloc] initWithToken:token];
+		self.classItemsByName[token.tokenName] = classItem;
+//		QLog(@"+++ added class %@", token.tokenName);
+	} else if (classItem.token == nil) {
+		// Looks like this is a class item we created before we had the token
+		// for it.  Now we have the token.
+		classItem.token = token;
+//		QLog(@"+++ filled in the token for class %@", token.tokenName);
+	} else {
+		// We don't expect to encounter the same class twice with the same token.
+		QLog(@"+++ [ODD] class %@ already has a token", token.tokenName);
+	}
+	return classItem;
+}
+
+- (AKClassItem *)_getOrAddClassItemWithName:(NSString *)className
+{
+	AKClassItem *classItem = self.classItemsByName[className];
+	if (classItem == nil) {
+		classItem = [[AKClassItem alloc] initWithToken:nil];
+		classItem.fallbackTokenName = className;
+		self.classItemsByName[className] = classItem;
+//		QLog(@"+++ added class %@, don't have the token yet", className);
+	}
+	return classItem;
+}
+
+- (void)_fillInParentClassOfClassItem:(AKClassItem *)classItem
+{
+	if (classItem.token.superclassContainers.count > 1) {
+		QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.tokenName);
+	}
+	Container *container = classItem.token.superclassContainers.anyObject;
+	if (container) {
+		AKClassItem *parentClassItem = [self _getOrAddClassItemWithName:container.containerName];
+		[parentClassItem addChildClass:classItem];
+//		QLog(@"+++ parent class '%@' => child class '%@'", parentClassItem.tokenName, classItem.tokenName);
+	}
+}
+
+- (void)_processClassClassMethodToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"clm"]);
+	NSString *className = token.container.containerName;
+	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:classItem];
+	[classItem addClassMethod:methodItem];
+}
+
+- (void)_processClassInstanceMethodToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"instm"]);
+	NSString *className = token.container.containerName;
+	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:classItem];
+	[classItem addInstanceMethod:methodItem];
+}
+
+- (void)_processClassPropertyToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"instp"]);
+	NSString *className = token.container.containerName;
+	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
+	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:classItem];
+	[classItem addPropertyItem:propertyItem];
+}
+
+- (void)_processClassBindingToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"binding"]);
+	NSString *className = token.container.containerName;
+	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
+	AKBindingItem *bindingItem = [[AKBindingItem alloc] initWithToken:token owningBehavior:classItem];
+	[classItem addBindingItem:bindingItem];
+//	QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classItem.tokenName);
+}
+
+// It looks like the tokenName for a category token always has the form
+// "ClassName(CategoryName)".
+- (void)_processCategoryToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"cat"]);
+	AKCategoryItem *categoryItem = [[AKCategoryItem alloc] initWithToken:token];
+	NSDictionary *captureGroups = [AKRegexUtils matchPattern:@"(%ident%)\\((?:%ident%)\\)" toEntireString:token.tokenName];
+	NSString *className = captureGroups[@1];
+	if (className) {
+		AKClassItem *owningClassItem = [self _getOrAddClassItemWithName:className];
+		[owningClassItem addCategory:categoryItem];
+//		QLog(@"+++ added category %@ to class %@", categoryItem.tokenName, owningClassItem.tokenName);
+	} else {
+		QLog(@"+++ [ODD] category '%@' has no owner?", categoryItem.tokenName);
+	}
+}
+
+#pragma mark - Private methods - populating the database - protocols
+
+- (void)_processProtocolToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intf"]);
+	(void)[self _getOrAddProtocolItemWithName:token.tokenName];
+}
+
+- (AKProtocolItem *)_getOrAddProtocolItemWithName:(NSString *)protocolName
+{
+	AKProtocolItem *protocolItem = self.protocolItemsByName[protocolName];
+	if (protocolItem == nil) {
+		protocolItem = [[AKProtocolItem alloc] initWithToken:nil];
+		self.protocolItemsByName[protocolName] = protocolItem;
+//		QLog(@"+++ added protocol %@", protocolName);
+	}
+	return protocolItem;
+}
+
+- (void)_processProtocolClassMethodToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intfcm"]);
+	NSString *protocolName = token.container.containerName;
+	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:protocolName];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolItem];
+	[protocolItem addClassMethod:methodItem];
+}
+
+- (void)_processProtocolInstanceMethodToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intfm"]);
+	NSString *protocolName = token.container.containerName;
+	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:protocolName];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolItem];
+	[protocolItem addInstanceMethod:methodItem];
+}
+
+- (void)_processProtocolPropertyToken:(DSAToken *)token
+{
+	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intfp"]);
+	NSString *propertyName = token.container.containerName;
+	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:propertyName];
+	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:protocolItem];
+	[protocolItem addPropertyItem:propertyItem];
 }
 
 @end

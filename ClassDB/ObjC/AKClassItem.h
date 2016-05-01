@@ -7,10 +7,11 @@
 
 #import "AKBehaviorItem.h"
 
-@class AKPropertyItem;
-@class AKNotificationItem;
+@class AKBindingItem;
 @class AKCategoryItem;
 @class AKCollectionOfItems;
+@class AKNotificationItem;
+@class AKPropertyItem;
 
 /*!
  * Represents an Objective-C class, which in addition to having methods can have
@@ -24,26 +25,17 @@
 @interface AKClassItem : AKBehaviorItem
 {
 @private
-    // Elements are strings.
     NSMutableArray *_namesOfAllOwningFrameworks;
 
     // Keys are names of owning frameworks. Values are the root file sections
     // containing documentation for the framework.
     NSMutableDictionary *_tokenItemDocumentationByFrameworkName;
 
-    // Contains AKClassItems, one for each child class.
-    NSMutableArray *_childClassItems;
-
-    // Contains AKCategoryItems, one for each category that extends this class.
-    NSMutableArray *_categoryItems;
-
-    // Contains AKMethodItems, one for each delegate method that has been
-    // found in the documentation for this class.
-    AKCollectionOfItems *_indexOfDelegateMethods;
-
-    // Contains AKNotificationItems, one for each notification that has been
-    // found in the documentation for this class.
-    AKCollectionOfItems *_indexOfNotifications;
+    NSMutableArray *_childClassItems;  // Contains AKClassItems.
+    NSMutableArray *_categoryItems;  // Contains AKCategoryItems.
+    AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodItems.
+    AKCollectionOfItems *_indexOfNotifications;  // Contains AKNotificationItems.
+    AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingItems.
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassItem *parentClass;
@@ -69,6 +61,10 @@
 
 - (void)addCategory:(AKCategoryItem *)categoryItem;
 - (AKCategoryItem *)categoryNamed:(NSString *)catName;
+
+- (void)addBindingItem:(AKBindingItem *)bindingItem;
+- (AKBindingItem *)bindingItemNamed:(NSString *)bindingName;
+- (NSArray *)documentedBindings;
 
 #pragma mark - Getters and setters -- multiple owning frameworks
 
@@ -105,6 +101,10 @@
 
 - (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Fix the multi-frameworkness of class items.
 
+
+#pragma mark - KLUDGES
+
+@property (copy) NSString *fallbackTokenName;
 
 
 @end
