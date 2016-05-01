@@ -40,7 +40,7 @@
     if (docSetIndex == nil) {
         [NSException raise:NSInvalidArgumentException format:@"docSetIndex can't be nil."];
     }
-    if (docSetIndex == nil) {
+    if (entityName == nil) {
         [NSException raise:NSInvalidArgumentException format:@"entityName can't be nil."];
     }
 
