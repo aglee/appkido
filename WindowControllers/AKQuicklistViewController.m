@@ -664,137 +664,88 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
 	static NSArray *s_classesWithDelegates = nil;
 
-//TODO: Commenting out, come back later.
-//    if (!s_classesWithDelegates)
-//    {
-//        NSMutableSet *setOfItems = [NSMutableSet set];
-//
-//        for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
-//        {
-//            BOOL classHasDelegate = NO;
-//
-//            // See if the class doc contains a "Delegate Methods" section.
-//            AKFileSection *delegateMethodsSection = [classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsHTMLSectionName];
-//
-//            if (!delegateMethodsSection)
-//            {
-//                delegateMethodsSection =[classItem.tokenItemDocumentation childSectionWithName:AKDelegateMethodsAlternateHTMLSectionName];
-//            }
-//
-//            if (delegateMethodsSection)
-//            {
-//                classHasDelegate = YES;
-//            }
-//
-//            // If not, see if the class has a method with a name like setFooDelegate:.
-//            if (!classHasDelegate)
-//            {
-//                for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
-//                {
-//                    NSString *methodName = methodItem.tokenName;
-//
-//                    if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"])
-//                    {
-//                        classHasDelegate = YES;
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            // If not, see if the class has a property named "delegate" or "fooDelegate".
-//            if (!classHasDelegate)
-//            {
-//                for (AKPropertyItem *propertyItem in [classItem documentedProperties])
-//                {
-//                    NSString *propertyName = propertyItem.tokenName;
-//
-//                    if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"])
-//                    {
-//                        classHasDelegate = YES;
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            // If not, see if there's a protocol named thisClassDelegate.
-//            NSString *possibleDelegateProtocolName = [classItem.tokenName stringByAppendingString:@"Delegate"];
-//            if ([[self.owningWindowController database] protocolWithName:possibleDelegateProtocolName])
-//            {
-//                classHasDelegate = YES;
-//            }
-//
-//            // We've checked all the ways we can tell if a class has a delegate.
-//            if (classHasDelegate)
-//            {
-//                [setOfItems addObject:classItem];
-//            }
-//        }
-//
-//        NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
-//        s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
-//    }
+	if (!s_classesWithDelegates) {
+		NSMutableSet *setOfItems = [NSMutableSet set];
+		for (AKClassItem *classItem in [[self.owningWindowController database] allClasses]) {
+			if ([self _classHasDelegate:classItem]) {
+				[setOfItems addObject:classItem];
+			}
+		}
+		NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
+		s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
+	}
 
 	return s_classesWithDelegates;
+}
+
+//TODO: Note the method name tests only work with Objective-C.
+- (BOOL)_classHasDelegate:(AKClassItem *)classItem
+{
+	// See if the class has an instance method with a name like setXXXDelegate:.
+	for (AKMethodItem *methodItem in [classItem documentedInstanceMethods]) {
+		NSString *methodName = methodItem.tokenName;
+		if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"]) {
+			return YES;
+		}
+	}
+
+	// See if the class has a property named "delegate" or "xxxDelegate".
+	for (AKPropertyItem *propertyItem in [classItem documentedProperties]) {
+		NSString *propertyName = propertyItem.tokenName;
+		if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"]) {
+			return YES;
+		}
+	}
+
+	// See if there's a protocol named ThisClassDelegate.
+	NSString *delegateProtocolName = [classItem.tokenName stringByAppendingString:@"Delegate"];
+	if ([[self.owningWindowController database] protocolWithName:delegateProtocolName]) {
+		return YES;
+	}
+
+	// If we got this far, we conclude the class has no delegate.
+	return NO;
 }
 
 - (NSArray *)_classesWithDataSources
 {
 	static NSArray *s_classesWithDataSources = nil;
 
-	if (!s_classesWithDataSources)
-	{
+	if (!s_classesWithDataSources) {
 		NSMutableSet *setOfItems = [NSMutableSet set];
-
-		for (AKClassItem *classItem in [[self.owningWindowController database] allClasses])
-		{
-			BOOL classHasDataSource = NO;
-
-			// See if the class has a -setDataSource: method.
-			for (AKMethodItem *methodItem in [classItem documentedInstanceMethods])
-			{
-				NSString *methodName = methodItem.tokenName;
-
-				if ([methodName isEqualToString:@"setDataSource:"])
-				{
-					classHasDataSource = YES;
-					break;
-				}
-			}
-
-			// If not, see if the class has a property named "dataSource".
-			if (!classHasDataSource)
-			{
-				for (AKPropertyItem *propertyItem in [classItem documentedProperties])
-				{
-					NSString *propertyName = propertyItem.tokenName;
-
-					if ([propertyName isEqual:@"dataSource"])
-					{
-						classHasDataSource = YES;
-						break;
-					}
-				}
-			}
-
-			// If not, see if there's a protocol named thisClassDataSource.
-			NSString *possibleDataSourceProtocolName = [classItem.tokenName stringByAppendingString:@"DataSource"];
-			if ([[self.owningWindowController database] protocolWithName:possibleDataSourceProtocolName])
-			{
-				classHasDataSource = YES;
-			}
-
-			// We've checked all the ways we can tell if a class has a datasource.
-			if (classHasDataSource)
-			{
+		for (AKClassItem *classItem in [[self.owningWindowController database] allClasses]) {
+			if ([self _classHasDataSource:classItem]) {
 				[setOfItems addObject:classItem];
 			}
 		}
-
 		NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
 		s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classItems];
 	}
 
 	return s_classesWithDataSources;
+}
+
+- (BOOL)_classHasDataSource:(AKClassItem *)classItem
+{
+	// See if the class has a -setDataSource: method.
+	if ([classItem instanceMethodWithName:@"setDataSource:"]) {
+		return YES;
+	}
+
+	// See if the class has a property named "dataSource".
+	if ([classItem propertyItemWithName:@"dataSource"]) {
+		return YES;
+	}
+
+	// See if there's a protocol named ThisClassDataSource.
+	NSString *dataSourceProtocolName = [classItem.tokenName stringByAppendingString:@"DataSource"];
+	if ([[self.owningWindowController database] protocolWithName:dataSourceProtocolName]) {
+		return YES;
+	}
+
+	// We've checked all the ways we can tell if a class has a datasource.
+	// If we got this far, we conclude the class has no data source.
+	return NO;
 }
 
 - (NSArray *)_dataSourceProtocols
