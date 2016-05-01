@@ -7,9 +7,11 @@
 
 #import "AKClassGeneralSubtopic.h"
 #import "DIGSLog.h"
-#import "AKBehaviorGeneralDoc.h"
 #import "AKClassItem.h"
-#import "AKHTMLConstants.h"
+
+@interface AKClassGeneralSubtopic ()
+@property (strong) AKClassItem *classItem;
+@end
 
 @implementation AKClassGeneralSubtopic
 
@@ -17,93 +19,41 @@
 
 + (instancetype)subtopicForClassItem:(AKClassItem *)classItem
 {
-    return [[self alloc] initWithClassItem:classItem];
+	return [[self alloc] initWithClassItem:classItem];
 }
 
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithClassItem:(AKClassItem *)classItem
 {
-    if ((self = [super init]))
-    {
-        _classItem = classItem;
-    }
-
-    return self;
+	self = [super init];
+	if (self) {
+		_classItem = classItem;
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithClassItem:nil];
-}
-
-
-#pragma mark - AKSubtopic methods
-
-- (void)populateDocList:(NSMutableArray *)docList
-{
-    // Start with the default behavior.
-    [super populateDocList:docList];
-
-    // If we're looking at a class that spans multiple frameworks, add
-    // doc names for those frameworks.
-    NSString *classFrameworkName = _classItem.frameworkName;
-
-    for (NSString *extraFrameworkName in [_classItem namesOfAllOwningFrameworks])
-    {
-        if (![classFrameworkName isEqualToString:extraFrameworkName])
-        {
-            [self _addDocsForExtraFramework:extraFrameworkName toList:docList];
-        }
-    }
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithClassItem:nil];
 }
 
 #pragma mark - AKBehaviorGeneralSubtopic methods
 
 - (AKBehaviorItem *)behaviorItem
 {
-    return _classItem;
+	return _classItem;
 }
 
 - (NSString *)htmlNameOfDescriptionSection
 {
-    return AKClassDescriptionHTMLSectionName;
+	return AKClassDescriptionHTMLSectionName;
 }
 
 - (NSString *)altHtmlNameOfDescriptionSection
 {
-    return AKClassDescriptionAlternateHTMLSectionName;
-}
-
-#pragma mark - Private methods
-
-- (void)_addDocsForExtraFramework:extraFrameworkName
-                           toList:(NSMutableArray *)docList
-{
-//TODO: Commenting out, come back later.
-//    AKFileSection *extraRootSection = [_classItem documentationAssociatedWithFrameworkNamed:extraFrameworkName];
-//
-//    if (extraRootSection)
-//    {
-//        // Add docs that correspond to sections of the file section.
-//        for (AKFileSection *majorSection in [self pertinentChildSectionsOf:extraRootSection])
-//        {
-//            NSString *sectionName = [majorSection sectionName];
-//            AKBehaviorGeneralDoc *sectionDoc = [[AKBehaviorGeneralDoc alloc] initWithFileSection:majorSection
-//                                                                               extraFrameworkName:extraFrameworkName];
-//            NSInteger docIndex = [self indexOfDocWithName:sectionName];
-//
-//            if (docIndex < 0)
-//            {
-//                [docList addObject:sectionDoc];
-//            }
-//            else
-//            {
-//                [docList insertObject:sectionDoc atIndex:(docIndex + 1)];
-//            }
-//        }
-//    }
+	return AKClassDescriptionAlternateHTMLSectionName;
 }
 
 @end

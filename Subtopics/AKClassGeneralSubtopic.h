@@ -10,10 +10,6 @@
 @class AKClassItem;
 
 @interface AKClassGeneralSubtopic : AKBehaviorGeneralSubtopic
-{
-@private
-    AKClassItem *_classItem;
-}
 
 #pragma mark - Factory methods
 

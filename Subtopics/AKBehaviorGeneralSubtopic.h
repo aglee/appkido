@@ -46,7 +46,4 @@
 
 #pragma mark - Utility methods
 
-/*! For internal use. */
-- (NSArray *)pertinentChildSectionsOf:(AKFileSection *)rootSection;
-
 @end
