@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		73A7F7F61CD591F900E8EC85 /* Mogenerator */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 73A7F7F91CD591F900E8EC85 /* Build configuration list for PBXAggregateTarget "Mogenerator" */;
+			buildPhases = (
+				73A7F7FA1CD5920D00E8EC85 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Mogenerator;
+			productName = Mogenerator;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		65B1095709D7B6C300A8A637 /* AKBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A70498501500A80007 /* AKBrowser.h */; };
 		65B1095809D7B6C300A8A637 /* AKTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A90498501500A80007 /* AKTableView.h */; };
@@ -2315,6 +2329,11 @@
 				CLASSPREFIX = "";
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Andy Lee";
+				TargetAttributes = {
+					73A7F7F61CD591F900E8EC85 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
 			};
 			buildConfigurationList = 73DA1ED0089AEA560016F230 /* Build configuration list for PBXProject "AppKiDo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2332,6 +2351,7 @@
 			targets = (
 				65B1095509D7B6C300A8A637 /* AppKiDo */,
 				7399B2B30E632A5C001AE672 /* AppKiDo-for-iPhone */,
+				73A7F7F61CD591F900E8EC85 /* Mogenerator */,
 			);
 		};
 /* End PBXProject section */
@@ -2441,6 +2461,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		73A7F7FA1CD5920D00E8EC85 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mogenerator -m Data/DocSetModel.xcdatamodeld/DocSetModel.xcdatamodel --human-dir Data/DocSetModel/Human --machine-dir Data/DocSetModel/Machine --includeh Data/DocSetModel/DocSetModel.h --template-var arc=true";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		65B109DA09D7B6C300A8A637 /* Sources */ = {
@@ -2937,6 +2973,20 @@
 			};
 			name = Release;
 		};
+		73A7F7F71CD591F900E8EC85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		73A7F7F81CD591F900E8EC85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		73DA1ED1089AEA560016F230 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3043,6 +3093,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		73A7F7F91CD591F900E8EC85 /* Build configuration list for PBXAggregateTarget "Mogenerator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73A7F7F71CD591F900E8EC85 /* Debug */,
+				73A7F7F81CD591F900E8EC85 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		73DA1ED0089AEA560016F230 /* Build configuration list for PBXProject "AppKiDo" */ = {
 			isa = XCConfigurationList;
