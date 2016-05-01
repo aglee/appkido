@@ -70,39 +70,40 @@
 // class. Better yet, we could make AKSearchQuery more efficient in general.
 - (AKDocLocator *)docLocatorForURL:(NSURL *)linkURL
 {
-    NSURL *normalizedLinkURL = linkURL.absoluteURL.standardizedURL;
-    NSString *filePath = normalizedLinkURL.path;
-    NSString *linkAnchor = normalizedLinkURL.fragment;
-    NSString *tokenNameOrDocTitle = linkAnchor.lastPathComponent;
-
-    AKSearchQuery *searchQuery = [[AKSearchQuery alloc] initWithDatabase:_database];
-    
-    searchQuery.searchString = tokenNameOrDocTitle;
-    [searchQuery includeEverythingInSearch];
-    [searchQuery setIgnoresCase:YES];
-    searchQuery.searchComparison = AKSearchForExactMatch;
-
-    if ([searchQuery queryResults].count == 0)
-    {
-        tokenNameOrDocTitle = [tokenNameOrDocTitle stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-        searchQuery.searchComparison = AKSearchForPrefix;
-        searchQuery.searchString = tokenNameOrDocTitle;
-    }
-
-    for (AKDocLocator *docLocator in [searchQuery queryResults])
-    {
-        AKFileSection *docSection = [[docLocator docToDisplay] fileSection];
-
-        if (docSection == nil)
-        {
-            docSection = [docLocator.topicToDisplay topicItem].tokenItemDocumentation;
-        }
-
-        if ([[docSection filePath] isEqualToString:filePath])
-        {
-            return docLocator;
-        }
-    }
+// FIXME: Commenting out for now, come back later.
+//    NSURL *normalizedLinkURL = linkURL.absoluteURL.standardizedURL;
+//    NSString *filePath = normalizedLinkURL.path;
+//    NSString *linkAnchor = normalizedLinkURL.fragment;
+//    NSString *tokenNameOrDocTitle = linkAnchor.lastPathComponent;
+//
+//    AKSearchQuery *searchQuery = [[AKSearchQuery alloc] initWithDatabase:_database];
+//    
+//    searchQuery.searchString = tokenNameOrDocTitle;
+//    [searchQuery includeEverythingInSearch];
+//    [searchQuery setIgnoresCase:YES];
+//    searchQuery.searchComparison = AKSearchForExactMatch;
+//
+//    if ([searchQuery queryResults].count == 0)
+//    {
+//        tokenNameOrDocTitle = [tokenNameOrDocTitle stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+//        searchQuery.searchComparison = AKSearchForPrefix;
+//        searchQuery.searchString = tokenNameOrDocTitle;
+//    }
+//
+//    for (AKDocLocator *docLocator in [searchQuery queryResults])
+//    {
+//        AKFileSection *docSection = [[docLocator docToDisplay] fileSection];
+//
+//        if (docSection == nil)
+//        {
+//            docSection = [docLocator.topicToDisplay topicItem].tokenItemDocumentation;
+//        }
+//
+//        if ([[docSection filePath] isEqualToString:filePath])
+//        {
+//            return docLocator;
+//        }
+//    }
 
     // If we got this far, there was no match.
     return nil;

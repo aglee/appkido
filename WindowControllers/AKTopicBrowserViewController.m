@@ -208,6 +208,10 @@ static const NSInteger AKMinBrowserColumns = 2;
     NSArray *topicList = _topicListsForBrowserColumns[column];
     AKTopic *topic = topicList[row];
 
+    if ([topic stringToDisplayInTopicBrowser] == nil) {
+        NSLog(@"+++ ???");
+    }
+
     [cell setRepresentedObject:topic];
     [cell setTitle:[topic stringToDisplayInTopicBrowser]];
     [cell setEnabled:[topic browserCellShouldBeEnabled]];

@@ -10,16 +10,20 @@
 #import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
 #import "AKClassItem.h"
+#import "AKMethodItem.h"
 #import "AKProtocolItem.h"
 #import "AKGroupItem.h"
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
 #import "DIGSLog.h"
 #import "DocSetQuery.h"
+#import "QuietLog.h"
 
 
 @interface AKDatabase ()
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *classItemsByName;  // @{CLASS_NAME: AKClassItem}
+@property (NS_NONATOMIC_IOSONLY, readwrite, copy) NSArray *frameworkNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *classItemsByName;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *protocolItemsByName;
 @end
 
 
@@ -29,10 +33,10 @@
 
 - (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex
 {
-    if ((self = [super init]))
-    {
+	self = [super init];
+    if (self) {
         _docSetIndex = docSetIndex;
-		_frameworkNames = [[NSMutableArray alloc] init];
+		_frameworkNames = @[];
         _classItemsByName = [[NSMutableDictionary alloc] init];
         _protocolItemsByName = [[NSMutableDictionary alloc] init];
         _functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
@@ -44,7 +48,6 @@
         _classItemsByHTMLPath = [[NSMutableDictionary alloc] init];
         _protocolItemsByHTMLPath = [[NSMutableDictionary alloc] init];
     }
-
     return self;
 }
 
@@ -54,8 +57,40 @@
     return [self initWithDocSetIndex:nil];
 }
 
-
 #pragma mark - Populating the database
+
+//cat = category
+//
+//cl = class
+//clm = class method of a class
+//instm = instance method of a class
+//instp = property of a class
+//
+//intf = protocol
+//intfcm = class method of a protocol
+//intfm = instance method of a protocol
+//intfp = property of a protocol
+- (void)populate
+{
+	self.frameworkNames = [self _arrayWithAllFrameworkNames];
+
+    for (DSAToken *token in [self _arrayWithAllTokens]) {
+        NSString *tokenType = token.tokenType.typeName;
+
+        if ([tokenType isEqualToString:@"cl"]) {
+            [self _processClassToken:token];
+        } else if ([tokenType isEqualToString:@"intf"]) {
+            [self _processProtocolToken:token];
+		} else if ([tokenType isEqualToString:@"clm"]) {
+			[self _processClassClassMethodToken:token];
+		} else if ([tokenType isEqualToString:@"instm"]) {
+			[self _processClassInstanceMethodToken:token];
+        }
+    }
+
+	AKClassItem *objItem = self.classItemsByName[@"NSString"];
+	QLog(@"+++ %@", objItem);
+}
 
 - (NSArray *)_arrayWithAllFrameworkNames
 {
@@ -63,7 +98,7 @@
 	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Header"];
 	query.distinctKeyPathsString = @"frameworkName";
 	query.predicateString = @"frameworkName != NULL";
-	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];
+	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];  //TODO: Handle error.
 	fetchedObjects = [fetchedObjects valueForKey:@"frameworkName"];
 	fetchedObjects = [fetchedObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	return fetchedObjects;
@@ -72,90 +107,87 @@
 - (NSArray *)_arrayWithAllTokens
 {
 	NSError *error;
-    DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Token"];
+	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Token"];
 	query.predicateString = @"language.fullName = 'Objective-C'";
-    return [query fetchObjectsWithError:&error];
+	return [query fetchObjectsWithError:&error];  //TODO: Handle error.
 }
 
-- (void)populate
+//FIXME: Handle those broken cases where a category is mislabeled as a class ('cl' when it looks to me like it should be 'cat').
+- (void)_processClassToken:(DSAToken *)token
 {
-	_frameworkNames = [self _arrayWithAllFrameworkNames];
-
-    NSArray *allTokens = [self _arrayWithAllTokens];
-    for (DSAToken *token in allTokens) {
-        NSString *tokenType = token.tokenType.typeName;
-
-        if ([tokenType isEqualToString:@"cl"]) {
-            [self _addClassToken:token];
-        } else if ([tokenType isEqualToString:@"intf"]) {
-            [self _addProtocolToken:token];
-        } else {
-
-        }
-    }
+	NSParameterAssert(token != nil);
+	AKClassItem *classItem = [self _getOrAddClassItemWithToken:token];
+	if (classItem.parentClass) {
+		QLog(@"+++ classItem %@ already has a parent %@", classItem.tokenName, classItem.parentClass.tokenName);
+	} else {
+		[self _fillInParentClassOfClassItem:classItem];
+	}
 }
 
-- (void)_addClassToken:(DSAToken *)token
+- (AKClassItem *)_getOrAddClassItemWithToken:(DSAToken *)token
 {
-    NSString *className = token.tokenName;
-    NSString *frameworkName = token.metainformation.declaredIn.frameworkName;
-
-    //FIXME: Handle those broken cases where a category is mislabeled as a class ('cl' when it looks to me like it should be 'cat').
-
-    AKClassItem *classItem = [self _getOrAddClassItemWithName:className frameworkName:frameworkName];
-
-    if (classItem) {
-        classItem.docSetToken = token;
-        [self _setParentOfClassItem:classItem];
-        [self _setProtocolItemsOfClassItem:classItem];
-    }
+	AKClassItem *classItem = self.classItemsByName[token.tokenName];
+	if (classItem == nil) {
+		classItem = [[AKClassItem alloc] initWithToken:token];
+		self.classItemsByName[token.tokenName] = classItem;
+		QLog(@"+++ added class %@", token.tokenName);
+	} else if (classItem.token == nil) {
+		classItem.token = token;
+		QLog(@"+++ filled in the token for class %@", token.tokenName);
+	} else {
+		QLog(@"+++ [ODD] class %@ already has a token", token.tokenName);
+	}
+	return classItem;
 }
 
-- (AKClassItem *)_getOrAddClassItemWithName:(NSString *)className frameworkName:(NSString *)frameworkName
+- (AKClassItem *)_getOrAddClassItemWithName:(NSString *)className
 {
-    if (frameworkName.length == 0) {
-        return nil;  //FIXME: This causes a bunch of stuff to be unfindable.
-    }
-
-    AKClassItem *classItem = self.classItemsByName[className];
-
-    if (classItem == nil) {
-        classItem = [[AKClassItem alloc] initWithTokenName:className database:self frameworkName:frameworkName];
-        self.classItemsByName[className] = classItem;
-        QLog(@"%@ -- added class %@", self.className, className);
-    } else {
-        classItem.nameOfOwningFramework = frameworkName;
-    }
-
-    return classItem;
+	AKClassItem *classItem = self.classItemsByName[className];
+	if (classItem == nil) {
+		classItem = [[AKClassItem alloc] initWithToken:nil];
+		classItem.fallbackTokenName = className;
+		self.classItemsByName[className] = classItem;
+		QLog(@"+++ added class %@, don't have the token yet", className);
+	}
+	return classItem;
 }
 
-- (void)_setParentOfClassItem:(AKClassItem *)classItem
+- (void)_fillInParentClassOfClassItem:(AKClassItem *)classItem
 {
-    if (classItem.docSetToken.superclassContainers.count > 1) {
+    if (classItem.token.superclassContainers.count > 1) {
         QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.tokenName);
     }
-
-    Container *container = classItem.docSetToken.superclassContainers.anyObject;
-
+    Container *container = classItem.token.superclassContainers.anyObject;
     if (container) {
-        AKClassItem *parentItem = [self _getOrAddClassItemWithName:container.containerName frameworkName:classItem.nameOfOwningFramework];
-        if (classItem.parentClass) {
-            QLog(@"%s [ODD] Class item %@ already has parent item %@", __PRETTY_FUNCTION__, classItem.parentClass.tokenName);
-        }
-        [parentItem addChildClass:classItem];
-    } else {
-        QLog(@"ROOT CLASS %@", classItem.tokenName);
+		AKClassItem *parentClassItem = [self _getOrAddClassItemWithName:container.containerName];
+        [parentClassItem addChildClass:classItem];
     }
 }
 
-- (void)_addProtocolToken:(DSAToken *)token
+- (void)_processProtocolToken:(DSAToken *)token
 {
+	AKProtocolItem *protocolItem = self.protocolItemsByName[token.tokenName];
+	if (protocolItem == nil) {
+		protocolItem = [[AKProtocolItem alloc] initWithToken:token];
+		self.protocolItemsByName[token.tokenName] = protocolItem;
+		QLog(@"%@ -- added protocol %@", self.className, token.tokenName);
+	}
 }
 
-- (void)_setProtocolItemsOfClassItem:(AKClassItem *)classItem
+- (void)_processClassClassMethodToken:(DSAToken *)token
 {
-    //FIXME: Fill this in.
+	NSString *className = token.container.containerName;
+	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:classItem];
+	[classItem addClassMethod:methodItem];
+}
+
+- (void)_processClassInstanceMethodToken:(DSAToken *)token
+{
+	NSString *className = token.container.containerName;
+	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:classItem];
+	[classItem addInstanceMethod:methodItem];
 }
 
 #pragma mark - Getters and setters -- frameworks
@@ -341,30 +373,6 @@
         [groupList addObject:groupItem];
         groupsByName[groupItem.tokenName] = groupItem;
     }
-}
-
-#pragma mark - Methods that help AKCocoaGlobalsDocParser
-
-- (AKClassItem *)classDocumentedInHTMLFile:(NSString *)htmlFilePath
-{
-    return _classItemsByHTMLPath[htmlFilePath];
-}
-
-- (void)rememberThatClass:(AKClassItem *)classItem
-   isDocumentedInHTMLFile:(NSString *)htmlFilePath
-{
-    _classItemsByHTMLPath[htmlFilePath] = classItem;
-}
-
-- (AKProtocolItem *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath
-{
-    return _protocolItemsByHTMLPath[htmlFilePath];
-}
-
-- (void)rememberThatProtocol:(AKProtocolItem *)protocolItem
-      isDocumentedInHTMLFile:(NSString *)htmlFilePath
-{
-    _protocolItemsByHTMLPath[htmlFilePath] = protocolItem;
 }
 
 #pragma mark - Private methods

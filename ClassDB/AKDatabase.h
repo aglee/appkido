@@ -25,22 +25,16 @@
  * All this information is represented as a graph of AKTokenItem objects.
  * Every query to this database returns a collection of database items.
  *
- * Before querying a database, you need to populate it by calling
- * loadTokensForFrameworksWithNames:. You can set a delegate which will be
- * messaged at various points while the database is being populated.
+ * Before querying a database, you need to populate it by calling -populate.
+ * You can set a delegate which will be messaged at various points while the
+ * database is being populated.
  *
- * An AKDatabase lives entirely in memory. There is currently no option to use a
- * persistent store.
+ * An AKDatabase lives entirely in memory and is currently constructed from
+ * scratch at launch.
  */
 @interface AKDatabase : NSObject
 {
 @private
-    // Frameworks.
-    NSArray *_frameworkNames;
-
-    // Protocol.
-    NSMutableDictionary *_protocolItemsByName;  // @{PROTOCOL_NAME -> @[AKProtocolItem]
-
     // Functions.
     NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupItem]}
     NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupItem}}
@@ -55,20 +49,10 @@
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) DocSetIndex *docSetIndex;
-
-/*! Names of all frameworks that have been loaded, in no guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *frameworkNames;
-
-/*! Same as .frameworkNames, but sorted alphabetically. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedFrameworkNames;
-
-/*! Array of AKClassItem. No guaranteed order. Each element represents a class that does not have a superclass. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *rootClasses;
-
-/*! Array of AKClassItem. No guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allClasses;
-
-/*! Array of AKProtocolItem. No guaranteed order. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allProtocols;
 
 #pragma mark - Init/awake/dealloc
@@ -86,19 +70,13 @@
 
 #pragma mark - Getters and setters -- classes
 
-/*! Array of AKClassItem. Matches any of the class's owning frameworks. */
-- (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName;
-
+- (NSArray<AKClassItem *> *)classesForFrameworkNamed:(NSString *)frameworkName;
 - (AKClassItem *)classWithName:(NSString *)className;
 
 #pragma mark - Getters and setters -- protocols
 
-/*! Array of AKProtocolItem. No guaranteed order. */
-- (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName;
-
-/*! Array of AKProtocolItem. No guaranteed order. */
-- (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
-
+- (NSArray<AKProtocolItem *> *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName;
+- (NSArray<AKProtocolItem *> *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
 - (AKProtocolItem *)protocolWithName:(NSString *)name;
 
 /*! Does nothing if we already contain a protocol with that name. */
@@ -117,13 +95,5 @@
 - (AKGroupItem *)globalsGroupNamed:(NSString *)groupName
                   inFrameworkNamed:(NSString *)frameworkName;
 - (void)addGlobalsGroup:(AKGroupItem *)globalsGroup;
-
-#pragma mark - Methods that help AKCocoaGlobalsDocParser
-
-- (AKClassItem *)classDocumentedInHTMLFile:(NSString *)htmlFilePath;
-- (void)rememberThatClass:(AKClassItem *)classItem isDocumentedInHTMLFile:(NSString *)htmlFilePath;
-
-- (AKProtocolItem *)protocolDocumentedInHTMLFile:(NSString *)htmlFilePath;
-- (void)rememberThatProtocol:(AKProtocolItem *)protocolItem isDocumentedInHTMLFile:(NSString *)htmlFilePath;
 
 @end

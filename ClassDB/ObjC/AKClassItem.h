@@ -99,4 +99,11 @@
 /*! Does nothing if a notification with the same name already exists. */
 - (void)addNotification:(AKNotificationItem *)notificationItem;
 
+
+
+
+- (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Fix the multi-frameworkness of class items.
+
+
+
 @end

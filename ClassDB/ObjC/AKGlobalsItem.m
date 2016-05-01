@@ -7,24 +7,19 @@
 
 #import "AKGlobalsItem.h"
 
-#import "AKFileSection.h"
-
 @implementation AKGlobalsItem
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
+- (instancetype)initWithToken:(DSAToken *)token
 {
-    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
-    {
+    self = [super initWithToken:token];
+    if (self) {
         _namesOfGlobals = [[NSMutableArray alloc] init];
     }
 
     return self;
 }
-
 
 #pragma mark - Getters and setters
 

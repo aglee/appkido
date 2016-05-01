@@ -6,25 +6,20 @@
  */
 
 #import "AKGroupItem.h"
-
 #import "AKSortUtils.h"
 
 @implementation AKGroupItem
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
+- (instancetype)initWithToken:(DSAToken *)token
 {
-    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
-    {
+    self = [super initWithToken:token];
+    if (self) {
         _subitems = [[NSMutableArray alloc] init];
     }
-
     return self;
 }
-
 
 #pragma mark - Getters and setters
 
@@ -52,8 +47,6 @@
             return subitem;
         }
     }
-
-    // If we got this far, the search failed.
     return nil;
 }
 

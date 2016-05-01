@@ -40,7 +40,7 @@
 
     for (AKTokenItem *tokenItem in _itemList)
     {
-        if (tokenItem.tokenItemDocumentation)
+//TODO: Update logic for knowing whether item has documentation.        if (tokenItem.tokenItemDocumentation)
         {
             [result addObject:tokenItem];
         }

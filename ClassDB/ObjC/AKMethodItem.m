@@ -13,22 +13,15 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
-        owningBehavior:(AKBehaviorItem *)behaviorItem
+- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorItem *)behaviorItem
 {
-    if ((self = [super initWithTokenName:tokenName
-                               database:database
-                          frameworkName:frameworkName
-                         owningBehavior:behaviorItem]))
-    {
+    self = [super initWithToken:token owningBehavior:behaviorItem];
+    if (self) {
         _argumentTypes = [[NSMutableArray alloc] init];
     }
 
     return self;
 }
-
 
 #pragma mark - Getters and setters
 

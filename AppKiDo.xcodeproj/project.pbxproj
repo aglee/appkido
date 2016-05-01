@@ -3149,6 +3149,7 @@
 				73A7F7F81CD591F900E8EC85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73DA1ED0089AEA560016F230 /* Build configuration list for PBXProject "AppKiDo" */ = {
 			isa = XCConfigurationList;

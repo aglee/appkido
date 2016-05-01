@@ -13,24 +13,22 @@
 
 @implementation AKMemberItem
 
-@synthesize owningBehavior = _owningBehavior;
-
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorItem *)behaviorItem
+- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorItem *)behaviorItem
 {
-    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
-    {
+    NSParameterAssert(behaviorItem != nil);
+    self = [super initWithToken:token];
+    if (self) {
         _owningBehavior = behaviorItem;
     }
-
     return self;
 }
 
-- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithToken:(DSAToken *)token
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithTokenName:nil database:nil frameworkName:nil owningBehavior:nil];
+    return [self initWithToken:nil owningBehavior:nil];
 }
 
 @end

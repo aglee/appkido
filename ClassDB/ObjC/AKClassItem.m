@@ -26,14 +26,14 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithToken:(DSAToken *)token
 {
-    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
-    {
+    self = [super initWithToken:token];
+    if (self) {
         _namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 
-        if (frameworkName) {
-            [_namesOfAllOwningFrameworks addObject:frameworkName];
+        if ([self frameworkNameForToken:token]) {
+            [_namesOfAllOwningFrameworks addObject:[self frameworkNameForToken:token]];
         }
 
         _tokenItemDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
@@ -231,37 +231,36 @@
     AKMethodItem *methodItem = [super addDeprecatedMethodIfAbsentWithName:methodName
                                                             frameworkName:frameworkName];
 
-    // If it's neither an instance method nor a class method, but it looks
-    // like it might be a delegate method, assume it is one.
-    //TODO: Old note to self says this assumption is false for [NSTypesetter lineFragmentRectForProposedRect:remainingRect:].  Check on this.
-    if (methodItem == nil)
-    {
-        if ([methodName ak_contains:@":"])
-        {
-            methodItem = [[AKMethodItem alloc] initWithTokenName:methodName
-                                                        database:self.owningDatabase
-                                                   frameworkName:frameworkName
-                                                  owningBehavior:self];
-            [methodItem setIsDeprecated:YES];
-            [self addDelegateMethod:methodItem];
-        }
-        else
-        {
-            DIGSLogInfo(@"Skipping method named %@ because it doesn't look like a delegate method"
-                        @" while processing deprecated methods in behavior %@",
-                        methodName, [self tokenName]);
-        }
-    }
-    
+//FIXME:
+//    // If it's neither an instance method nor a class method, but it looks
+//    // like it might be a delegate method, assume it is one.
+//    //TODO: Old note to self says this assumption is false for [NSTypesetter lineFragmentRectForProposedRect:remainingRect:].  Check on this.
+//    if (methodItem == nil)
+//    {
+//        if ([methodName ak_contains:@":"])
+//        {
+//            methodItem = [[AKMethodItem alloc] initWithTokenName:methodName
+//                                                        database:self.owningDatabase
+//                                                   frameworkName:frameworkName
+//                                                  owningBehavior:self];
+//            [methodItem setIsDeprecated:YES];
+//            [self addDelegateMethod:methodItem];
+//        }
+//        else
+//        {
+//            DIGSLogInfo(@"Skipping method named %@ because it doesn't look like a delegate method"
+//                        @" while processing deprecated methods in behavior %@",
+//                        methodName, [self tokenName]);
+//        }
+//    }
+
     return methodItem;
 }
 
 #pragma mark - AKTokenItem methods
 
-- (void)setNameOfOwningFramework:(NSString *)frameworkName
+- (void)setMainFrameworkName:(NSString *)frameworkName
 {
-    super.nameOfOwningFramework = frameworkName;
-
     // Move this framework name to the beginning of _namesOfAllOwningFrameworks.
     if (frameworkName)
     {
@@ -286,43 +285,44 @@
 // Look for instance method names of the form setFooDelegate:.
 - (void)_addExtraDelegateMethodsTo:(NSMutableArray *)methodsList
 {
-    // Look for a protocol named ThisClassDelegate.
-    AKDatabase *db = self.owningDatabase;
-    NSString *possibleDelegateProtocolName = [self.tokenName stringByAppendingString:@"Delegate"];
-    AKProtocolItem *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
-    
-    if (delegateProtocol)
-    {
-        [methodsList addObjectsFromArray:[delegateProtocol documentedInstanceMethods]];
-    }
-
-    // Look for instance method names of the form setFooDelegate:.
-    //TODO: To be really thorough, check for fooDelegate properties.
-    for (AKMethodItem *methodItem in [self instanceMethodItems])
-    {
-        NSString *methodName = methodItem.tokenName;
-
-        if ([methodName hasPrefix:@"set"]
-            && [methodName hasSuffix:@"Delegate:"]
-            && ![methodName isEqualToString:@"setDelegate:"])
-        {
-            //TODO: Can't I just look for protocol FooDelegate?
-            NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
-                                         substringFromIndex:3].uppercaseString;
-            
-            for (AKProtocolItem *protocolItem in [db allProtocols])
-            {
-                NSString *protocolName = protocolItem.tokenName.uppercaseString;
-
-                if ([protocolName hasSuffix:protocolSuffix])
-                {
-                    [methodsList addObjectsFromArray:[protocolItem documentedInstanceMethods]];
-                    
-                    break;
-                }
-            }
-        }
-    }
+//TODO: Commenting out for now, come back to this later.
+//    // Look for a protocol named ThisClassDelegate.
+//    AKDatabase *db = self.owningDatabase;
+//    NSString *possibleDelegateProtocolName = [self.tokenName stringByAppendingString:@"Delegate"];
+//    AKProtocolItem *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
+//    
+//    if (delegateProtocol)
+//    {
+//        [methodsList addObjectsFromArray:[delegateProtocol documentedInstanceMethods]];
+//    }
+//
+//    // Look for instance method names of the form setFooDelegate:.
+//    //TODO: To be really thorough, check for fooDelegate properties.
+//    for (AKMethodItem *methodItem in [self instanceMethodItems])
+//    {
+//        NSString *methodName = methodItem.tokenName;
+//
+//        if ([methodName hasPrefix:@"set"]
+//            && [methodName hasSuffix:@"Delegate:"]
+//            && ![methodName isEqualToString:@"setDelegate:"])
+//        {
+//            //TODO: Can't I just look for protocol FooDelegate?
+//            NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
+//                                         substringFromIndex:3].uppercaseString;
+//            
+//            for (AKProtocolItem *protocolItem in [db allProtocols])
+//            {
+//                NSString *protocolName = protocolItem.tokenName.uppercaseString;
+//
+//                if ([protocolName hasSuffix:protocolSuffix])
+//                {
+//                    [methodsList addObjectsFromArray:[protocolItem documentedInstanceMethods]];
+//                    
+//                    break;
+//                }
+//            }
+//        }
+//    }
 }
 
 @end

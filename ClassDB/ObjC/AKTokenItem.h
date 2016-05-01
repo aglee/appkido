@@ -27,29 +27,25 @@
  * AKFileSection that contains HTML.
  */
 @interface AKTokenItem : NSObject <AKSortable>
-{
-@private
-    NSString *_tokenName;
-    NSString *_nameOfOwningFramework;
-    AKFileSection *_tokenItemDocumentation;
-    BOOL _isDeprecated;
-}
 
-@property (nonatomic, strong) DSAToken *docSetToken;
-@property (nonatomic, readonly, copy) NSString *tokenName;
-@property (nonatomic, weak) AKDatabase *owningDatabase;
+@property (nonatomic, strong) DSAToken *token;
+@property (nonatomic, readonly) NSString *tokenName;
 
 /*! Most token items belong to exactly one framework. The exception is AKClassItem, because it can have categories that belong to other frameworks. */
 @property (nonatomic, copy) NSString *nameOfOwningFramework;
-
-/*! Documentation for the token. Possibly nil. */
-@property (nonatomic, strong) AKFileSection *tokenItemDocumentation;
 
 @property (nonatomic, assign) BOOL isDeprecated;
 
 #pragma mark - Init/awake/dealloc
 
 /*! Designated initializer. */
-- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithToken:(DSAToken *)token NS_DESIGNATED_INITIALIZER;
+
+#pragma mark - KLUDGES
+
+@property (strong) AKFileSection *tokenItemDocumentation;
+@property (copy) NSString *fallbackTokenName;
+
+- (NSString *)frameworkNameForToken:(DSAToken *)token;  //TODO: KLUDGE.
 
 @end

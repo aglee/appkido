@@ -13,39 +13,56 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName
+- (instancetype)initWithToken:(DSAToken *)token
 {
-    if ((self = [super init]))
-    {
-        _tokenName = [tokenName copy];
-        _owningDatabase = database;
-        _nameOfOwningFramework = [frameworkName copy];
-        _tokenItemDocumentation = nil;
-        _isDeprecated = NO;
+    self = [super init];
+    if (self) {
+        _token = token;
     }
-
     return self;
 }
 
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithTokenName:nil database:nil frameworkName:nil];
+    return [self initWithToken:nil];
 }
 
+#pragma mark - Getters and setters
+
+- (NSString *)tokenName
+{
+	return self.token.tokenName ?: self.fallbackTokenName;
+}
+
+- (NSString *)nameOfOwningFramework
+{
+	return [self frameworkNameForToken:self.token];
+}
+
+#pragma mark - KLUDGES
+
+- (NSString *)frameworkNameForToken:(DSAToken *)token
+{
+	NSString *fwName = token.metainformation.declaredIn.frameworkName;
+
+	//TODO: In case this is nil, try to derive framework name from path.
+
+	return fwName;
+}
 
 #pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
-    return _tokenName;
+    return self.tokenName;
 }
 
 #pragma mark - NSObject methods
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: tokenName=%@>", self.className, _tokenName];
+    return [NSString stringWithFormat:@"<%@: tokenName=%@>", self.className, self.tokenName];
 }
 
 @end

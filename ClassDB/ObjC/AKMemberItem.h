@@ -16,15 +16,11 @@
  * methods, but also for bindings, delegate methods and notifications.
  */
 @interface AKMemberItem : AKTokenItem
-{
-@private
-    __unsafe_unretained AKBehaviorItem *_owningBehavior;
-}
 
-@property (nonatomic, readonly, unsafe_unretained) AKBehaviorItem *owningBehavior;
+@property (nonatomic, readonly, weak) AKBehaviorItem *owningBehavior;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName database:(AKDatabase *)database frameworkName:(NSString *)frameworkName owningBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
 
 @end

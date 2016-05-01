@@ -6,7 +6,6 @@
 //
 
 #import "AKBehaviorItem.h"
-
 #import "DIGSLog.h"
 #import "AKProtocolItem.h"
 #import "AKPropertyItem.h"
@@ -19,12 +18,10 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenName:(NSString *)tokenName
-              database:(AKDatabase *)database
-         frameworkName:(NSString *)frameworkName
+- (instancetype)initWithToken:(DSAToken *)token
 {
-    if ((self = [super initWithTokenName:tokenName database:database frameworkName:frameworkName]))
-    {
+    self = [super initWithToken:token];
+    if (self) {
         _protocolItems = [[NSMutableArray alloc] init];
         _protocolItemNames = [[NSMutableSet alloc] init];
 
@@ -32,7 +29,6 @@
         _indexOfClassMethods = [[AKCollectionOfItems alloc] init];
         _indexOfInstanceMethods = [[AKCollectionOfItems alloc] init];
     }
-
     return self;
 }
 
