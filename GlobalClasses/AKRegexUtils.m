@@ -60,10 +60,10 @@
 			captureGroupsByIndex[@(rangeIndex)] = [inputString substringWithRange:captureGroupRange];
 		}
 	}
-	//	QLog(@"parse result: %@", captureGroupsByIndex);
-	[[captureGroupsByIndex.allKeys sortedArrayUsingSelector:@selector(compare:)] enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-		QLog(@"    @%@: [%@]", obj, captureGroupsByIndex[obj]);
-	}];
+//	QLog(@"parse result: %@", captureGroupsByIndex);
+//	[[captureGroupsByIndex.allKeys sortedArrayUsingSelector:@selector(compare:)] enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//		QLog(@"    @%@: [%@]", obj, captureGroupsByIndex[obj]);
+//	}];
 
 	return captureGroupsByIndex;
 }

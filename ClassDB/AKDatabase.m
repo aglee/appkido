@@ -316,7 +316,7 @@
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"cl"]);
 	AKClassItem *classItem = [self _getOrAddClassItemWithToken:token];
 	if (classItem.parentClass) {
-		//		QLog(@"+++ classItem %@ already has a parent %@", classItem.tokenName, classItem.parentClass.tokenName);
+//		QLog(@"+++ classItem %@ already has a parent %@", classItem.tokenName, classItem.parentClass.tokenName);
 	} else {
 		[self _fillInParentClassOfClassItem:classItem];
 	}
@@ -327,7 +327,7 @@
 	AKClassItem *classItem = [self _getOrAddClassItemWithName:token.tokenName];
 	if (classItem.token == nil) {
 		classItem.token = token;
-		QLog(@"+++ class '%@' has token, is in framework '%@'", classItem.tokenName, classItem.frameworkName);
+//		QLog(@"+++ class '%@' has token, is in framework '%@'", classItem.tokenName, classItem.frameworkName);
 	} else {
 		QLog(@"+++ [ODD] class '%@' already has a token", token.tokenName);
 	}
@@ -341,7 +341,7 @@
 		classItem = [[AKClassItem alloc] initWithToken:nil];
 		classItem.fallbackTokenName = className;
 		self.classItemsByName[className] = classItem;
-		QLog(@"+++ class '%@', no token yet", classItem.tokenName);
+//		QLog(@"+++ class '%@', no token yet", classItem.tokenName);
 	}
 	return classItem;
 }
@@ -355,7 +355,7 @@
 	if (container) {
 		AKClassItem *parentClassItem = [self _getOrAddClassItemWithName:container.containerName];
 		[parentClassItem addChildClass:classItem];
-		//		QLog(@"+++ parent class '%@' => child class '%@'", parentClassItem.tokenName, classItem.tokenName);
+//		QLog(@"+++ parent class '%@' => child class '%@'", parentClassItem.tokenName, classItem.tokenName);
 	}
 }
 
@@ -393,7 +393,7 @@
 	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
 	AKBindingItem *bindingItem = [[AKBindingItem alloc] initWithToken:token owningBehavior:classItem];
 	[classItem addBindingItem:bindingItem];
-	//	QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classItem.tokenName);
+//	QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classItem.tokenName);
 }
 
 // It looks like the tokenName for a category token always has the form
@@ -426,7 +426,7 @@
 	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:token.tokenName];
 	if (protocolItem.token == nil) {
 		protocolItem.token = token;
-		QLog(@"+++ protocol '%@' has token, is in framework '%@'", protocolItem.tokenName, protocolItem.frameworkName);
+//		QLog(@"+++ protocol '%@' has token, is in framework '%@'", protocolItem.tokenName, protocolItem.frameworkName);
 	} else {
 		// We don't expect to encounter the same class twice with the same token.
 		QLog(@"+++ [ODD] protocol '%@' already has a token", token.tokenName);
@@ -440,7 +440,7 @@
 	if (protocolItem == nil) {
 		protocolItem = [[AKProtocolItem alloc] initWithToken:nil];
 		self.protocolItemsByName[protocolName] = protocolItem;
-		QLog(@"+++ protocol '%@', no token yet", protocolItem.tokenName);
+//		QLog(@"+++ protocol '%@', no token yet", protocolItem.tokenName);
 	}
 	return protocolItem;
 }
