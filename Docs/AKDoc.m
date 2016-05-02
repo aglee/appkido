@@ -12,6 +12,12 @@
 
 #pragma mark - Getters and setters
 
+- (AKDocContentType)contentType
+{
+	DIGSLogError_MissingOverride();
+	return AKDocHTMLContentType;
+}
+
 - (BOOL)docTextIsHTML
 {
 	DIGSLogError_MissingOverride();

@@ -46,7 +46,10 @@
 {
 	WebPreferences *webPrefs = [WebPreferences standardPreferences];
 	[webPrefs setAutosaves:NO];
-	_webView.preferences = webPrefs;
+	self.webView.preferences = webPrefs;
+
+	// Turn off JavaScript, which interferes by hiding stuff we don't want to hide.
+	self.webView.preferences.javaScriptEnabled = NO;
 
 	[self applyUserPreferences];
 }
@@ -73,8 +76,7 @@
 
 - (void)applyUserPreferences
 {
-	if ([[_docLocator docToDisplay] docTextIsHTML])
-	{
+	if (_docLocator.docToDisplay.contentType == AKDocHTMLContentType) {
 		NSInteger docMagnifierPref = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
 		if (_docMagnifier != docMagnifierPref) {
 			_docMagnifier = docMagnifierPref;
@@ -212,80 +214,65 @@
 - (void)_updateDocDisplay
 {
 	if (_docLocator == nil) {
+		[self _displayEmptyContent];
 		return;
 	}
 
-	//  Figure out what text to display.
-	AKDoc *docToDisplay = [_docLocator docToDisplay];
+	AKDoc *docToDisplay = _docLocator.docToDisplay;
+	DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
+	NSURL *docURL = [docToDisplay docURLWithBaseURL:docSetIndex.documentsBaseURL];
+	QLog(@"+++ docURL: %@", docURL);
 
-	if (docToDisplay.docTextIsHTML) {
-		DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
-		NSURL *docURL = [docToDisplay docURLWithBaseURL:docSetIndex.documentsBaseURL];
-		QLog(@"+++ docURL: %@", docURL);
-
-		[self.tabView selectTabViewItemWithIdentifier:@"1"];
-		float multiplier = ((float)_docMagnifier) / 100.0f;
-		self.webView.textSizeMultiplier = multiplier;
-
-		// Turn off JavaScript, which interferes by hiding stuff we don't want to hide.
-		self.webView.preferences.javaScriptEnabled = NO;
-
-		NSURLRequest *req = [NSURLRequest requestWithURL:docURL];
-		[self.webView.mainFrame loadRequest:req];
+	if (docURL == nil) {
+		[self _displayEmptyContent];
+		return;
 	}
 
+	switch (docToDisplay.contentType) {
+		case AKDocHTMLContentType: {
+			[self _displayHTMLContentAtURL:docURL];
+			break;
+		}
+		case AKDocObjectiveCContentType: {
+			[self _displayObjectiveCContentAtURL:docURL];
+			break;
+		}
+		default: {
+			QLog(@"+++ [ODD] Unexpected AKDoc content type %zd", docToDisplay.contentType);
+			[self _displayEmptyContent];
+		}
+	}
+}
 
+- (void)_displayEmptyContent  //TODO: Fill this in.
+{
+}
 
+- (void)_displayHTMLContentAtURL:(NSURL *)docURL
+{
+	[self.tabView selectTabViewItemWithIdentifier:@"1"];
+	float multiplier = ((float)_docMagnifier) / 100.0f;
+	self.webView.textSizeMultiplier = multiplier;
 
+	NSURLRequest *req = [NSURLRequest requestWithURL:docURL];
+	[self.webView.mainFrame loadRequest:req];
+}
 
+- (void)_displayObjectiveCContentAtURL:(NSURL *)docURL  //TODO: Fill this in.
+{
+	[self.tabView selectTabViewItemWithIdentifier:@"1"];
+	float multiplier = ((float)_docMagnifier) / 100.0f;
+	self.webView.textSizeMultiplier = multiplier;
 
-//TODO: Commenting out, come back later.
-//    AKFileSection *fileSection = [docToDisplay fileSection];
-//    NSString *htmlFilePath = [fileSection filePath];
-//    NSData *textData = [docToDisplay docTextData];
-//
-//    // Display the text in either _textView or _webView.  Whichever it
-//    // is, swap it in as our subview if necessary.
-//    if ([docToDisplay docTextIsHTML])
-//    {
-//        [self _useWebViewToDisplayHTML:textData fromFile:htmlFilePath];
-//    }
-//    else
-//    {
-//        [self _useTextViewToDisplayPlainText:textData];
-//
-//        // Make extra sure the cursor rects are updated so we get the
-//        // hand cursor over links.  Note: you'd think we should
-//        // invalidate the cursor rects for textView, but no, for some
-//        // reason it doesn't work unless we do it for scrollView.
-//        [self.view.window invalidateCursorRectsForView:_textView.enclosingScrollView];
-//    }
+	// Turn off JavaScript, which interferes by hiding stuff we don't want to hide.
+	self.webView.preferences.javaScriptEnabled = NO;
+
+	NSURLRequest *req = [NSURLRequest requestWithURL:docURL];
+	[self.webView.mainFrame loadHTMLString:@"" baseURL:nil];
 }
 
 - (void)_useTextViewToDisplayPlainText:(NSData *)textData
 {
-//    // Make _scrollView our subview if it isn't already.
-//    if (currentSubview != _scrollView)  // implies currentSubview is _webView
-//    {
-//        // Remove _webView from the key view loop.
-//        id firstResponder = [[self window] firstResponder];
-//        BOOL wasKey = ([firstResponder isKindOfClass:[NSView class]]
-//                       && [firstResponder isDescendantOf:_webView]);
-//        [_originalPreviousKeyView setNextKeyView:_originalNextKeyView];
-//
-//        // Swap in _scrollView as our subview.
-//        [_scrollView setFrame:[currentSubview frame]];
-//        [self replaceSubview:currentSubview with:_scrollView];
-//
-//        // Splice textView into the key view loop.
-//        [_originalPreviousKeyView setNextKeyView:textView];
-//        [textView setNextKeyView:_originalNextKeyView];
-//        if (wasKey)
-//        {
-//            [[self window] makeFirstResponder:textView];
-//        }
-//    }
-
 	[_tabView selectTabViewItemWithIdentifier:@"2"];
 
 	NSString *fontName = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
@@ -301,42 +288,12 @@
 	[_textView setRichText:NO];
 	_textView.font = plainTextFont;
 
-// Workaround for appkit bug (?) causing the last-used indentation
-// level to stick to the text view even if I clear its contents and
-// remove all its attributes.
-//TODO: But now it causes assert error?
-//    [[_textView layoutManager] replaceTextStorage:[[NSTextStorage alloc] initWithString:@""]];
-
 	_textView.string = docString;
 	[_textView scrollRangeToVisible:NSMakeRange(0, 0)];
 }
 
 - (void)_useWebViewToDisplayHTML:(NSData *)htmlData fromFile:(NSString *)htmlFilePath
 {
-//    // Make _webView our subview if it isn't already.
-//    NSView *currentSubview = [self _subview];
-//    NSTextView *textView = [_scrollView documentView];
-//
-//    if (currentSubview != _webView)  // implies currentSubview is _scrollView
-//    {
-//        // Remove textView from the key view loop.
-//        BOOL wasKey = ([[self window] firstResponder] == textView);
-//        [_originalPreviousKeyView setNextKeyView:_originalNextKeyView];
-//
-//        // Swap in _webView as our subview.
-//        [_webView setFrame:[currentSubview frame]];
-//        [self replaceSubview:currentSubview with:_webView];
-//
-//        // Splice _webView into the key view loop.
-//        //TODO: -- the wasKey stuff doesn't work
-//        [_originalPreviousKeyView setNextKeyView:_webView];
-//        [_webView setNextKeyView:_originalNextKeyView];
-//        if (wasKey)
-//        {
-//            [[self window] makeFirstResponder:_webView];
-//        }
-//    }
-
 	[_tabView selectTabViewItemWithIdentifier:@"1"];
 
 	// Apply the user's magnification preference.

@@ -7,6 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+	AKDocHTMLContentType,
+	AKDocObjectiveCContentType,
+} AKDocContentType;
+
 /*!
  * Abstract class that encapsulates one of the docs that fall under an
  * AKSubtopic. Depending on the concrete subclass, the doc content might be
@@ -21,7 +26,7 @@
 #pragma mark - Getters and setters
 
 /*! Subclasses must override. */
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL docTextIsHTML;
+@property (readonly) AKDocContentType contentType;
 
 /*!
  * Subclasses must override.

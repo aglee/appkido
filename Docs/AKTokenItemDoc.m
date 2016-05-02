@@ -28,7 +28,7 @@
 	return [self initWithTokenItem:nil];
 }
 
-#pragma mark - AKDoc methods
+#pragma mark - AKTokenItemDoc methods
 
 - (NSURL *)docURLWithBaseURL:(NSURL *)baseURL
 {
@@ -43,9 +43,11 @@
 	return docURL;
 }
 
-- (BOOL)docTextIsHTML
+#pragma mark - AKDoc methods
+
+- (AKDocContentType)contentType
 {
-	return YES;
+	return AKDocHTMLContentType;
 }
 
 - (NSString *)docName

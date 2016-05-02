@@ -11,6 +11,14 @@ NSString *AKHeaderFileDocName = @"Header File";
 
 @implementation AKHeaderFileDoc
 
+#pragma mark - AKTokenItemDoc methods
+
+- (NSURL *)docURLWithBaseURL:(NSURL *)baseURL
+{
+	NSString *relativePath = self.tokenItem.token.metainformation.declaredIn.headerPath;
+	return [baseURL URLByAppendingPathComponent:relativePath];
+}
+
 #pragma mark - AKBehaviorGeneralDoc methods
 
 - (NSString *)unqualifiedDocName
@@ -18,16 +26,11 @@ NSString *AKHeaderFileDocName = @"Header File";
 	return AKHeaderFileDocName;
 }
 
-#pragma mark - AKTokenItemDoc methods
+#pragma mark - AKDoc methods
 
-- (NSString *)relativePath
+- (AKDocContentType)contentType
 {
-	return self.tokenItem.token.metainformation.declaredIn.headerPath;
-}
-
-- (BOOL)docTextIsHTML
-{
-	return NO;
+	return AKDocObjectiveCContentType;
 }
 
 @end
