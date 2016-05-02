@@ -42,8 +42,6 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 @interface AKBehaviorItem : AKTokenItem
 {
 @private
-	NSString *_headerFileWhereDeclared;
-
 	// One AKProtocolItem for each protocol this behavior conforms to.
 	NSMutableArray *_protocolItems;
 

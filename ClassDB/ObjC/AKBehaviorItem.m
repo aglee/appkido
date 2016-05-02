@@ -14,8 +14,6 @@
 
 @implementation AKBehaviorItem
 
-@synthesize headerFileWhereDeclared = _headerFileWhereDeclared;
-
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithToken:(DSAToken *)token
