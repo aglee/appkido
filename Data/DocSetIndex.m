@@ -25,7 +25,7 @@
 
 - (instancetype)initWithDocSetPath:(NSString *)docSetPath
 {
-    NSParameterAssert(docSetPath != nil);
+	NSParameterAssert(docSetPath != nil);
 	self = [super init];
 	if (self) {
 		_docSetPath = docSetPath;  //TODO: Fail if doesn't look like a docset bundle.
@@ -99,7 +99,7 @@
 
 - (DocSetQuery *)queryWithEntityName:(NSString *)entityName
 {
-    return [DocSetQuery queryWithDocSetIndex:self entityName:entityName];
+	return [DocSetQuery queryWithDocSetIndex:self entityName:entityName];
 }
 
 - (NSURL *)documentationURLForObject:(id)obj
@@ -109,7 +109,6 @@
 	} else if ([obj isKindOfClass:[DSANodeURL class]]) {
 		return [self _documentationURLForNodeURL:(DSANodeURL *)obj];
 	}
-
 	return nil;
 }
 
@@ -138,13 +137,14 @@
 {
 	NSString *pathString = [self _documentsDirPath];  //TODO: Handle fallback to online URL if local docset has not been installed.
 	pathString = [pathString stringByAppendingPathComponent:nodeURLInfo.path];
+
 	NSURL *url = [NSURL fileURLWithPath:pathString];;
 	if (nodeURLInfo.anchor) {
 		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
 		urlComponents.fragment = nodeURLInfo.anchor;
 		url = [urlComponents URL];
 	}
-
+	
 	return url;
 }
 

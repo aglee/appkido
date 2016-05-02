@@ -42,26 +42,26 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 @interface AKBehaviorItem : AKTokenItem
 {
 @private
-    NSString *_headerFileWhereDeclared;
+	NSString *_headerFileWhereDeclared;
 
-    // One AKProtocolItem for each protocol this behavior conforms to.
-    NSMutableArray *_protocolItems;
+	// One AKProtocolItem for each protocol this behavior conforms to.
+	NSMutableArray *_protocolItems;
 
-    // Indexes the contents of _protocolItems.
-    NSMutableSet *_protocolItemNames;
+	// Indexes the contents of _protocolItems.
+	NSMutableSet *_protocolItemNames;
 
-    // Contains AKPropertyItems, each representing a property of this class.
-    AKCollectionOfItems *_indexOfProperties;
+	// Contains AKPropertyItems, each representing a property of this class.
+	AKCollectionOfItems *_indexOfProperties;
 
-    // Contains AKMethodItems, one for each class method that has either
-    // been found in my .h file or been found in the documentation for my
-    // behavior.
-    AKCollectionOfItems *_indexOfClassMethods;
+	// Contains AKMethodItems, one for each class method that has either
+	// been found in my .h file or been found in the documentation for my
+	// behavior.
+	AKCollectionOfItems *_indexOfClassMethods;
 
-    // Contains AKMethodItems, one for each instance method that has either
-    // been found in my .h file or been found in the documentation for my
-    // behavior.
-    AKCollectionOfItems *_indexOfInstanceMethods;
+	// Contains AKMethodItems, one for each instance method that has either
+	// been found in my .h file or been found in the documentation for my
+	// behavior.
+	AKCollectionOfItems *_indexOfInstanceMethods;
 }
 
 /*! Path to the .h file that declares this behavior. */
@@ -129,6 +129,6 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
  * because the docs lump all deprecated methods together.
  */
 - (AKMethodItem *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-                                        frameworkName:(NSString *)frameworkName;
+										frameworkName:(NSString *)frameworkName;
 
 @end

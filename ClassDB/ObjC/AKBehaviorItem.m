@@ -20,16 +20,16 @@
 
 - (instancetype)initWithToken:(DSAToken *)token
 {
-    self = [super initWithToken:token];
-    if (self) {
-        _protocolItems = [[NSMutableArray alloc] init];
-        _protocolItemNames = [[NSMutableSet alloc] init];
+	self = [super initWithToken:token];
+	if (self) {
+		_protocolItems = [[NSMutableArray alloc] init];
+		_protocolItemNames = [[NSMutableSet alloc] init];
 
-        _indexOfProperties = [[AKCollectionOfItems alloc] init];
-        _indexOfClassMethods = [[AKCollectionOfItems alloc] init];
-        _indexOfInstanceMethods = [[AKCollectionOfItems alloc] init];
-    }
-    return self;
+		_indexOfProperties = [[AKCollectionOfItems alloc] init];
+		_indexOfClassMethods = [[AKCollectionOfItems alloc] init];
+		_indexOfInstanceMethods = [[AKCollectionOfItems alloc] init];
+	}
+	return self;
 }
 
 
@@ -37,130 +37,119 @@
 
 - (BOOL)isClassItem
 {
-    return NO;
+	return NO;
 }
 
 - (void)addImplementedProtocol:(AKProtocolItem *)protocolItem
 {
-    if ([_protocolItemNames containsObject:protocolItem.tokenName])
-    {
-        // I've seen this happen when a .h contains two declarations of a
-        // protocol in different #if branches. Example: NSURL.
-        DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
-                     [protocolItem tokenName], [self tokenName]);
-    }
-    else
-    {
-        [_protocolItems addObject:protocolItem];
-        [_protocolItemNames addObject:protocolItem.tokenName];
-    }
+	if ([_protocolItemNames containsObject:protocolItem.tokenName]) {
+		// I've seen this happen when a .h contains two declarations of a
+		// protocol in different #if branches. Example: NSURL.
+		DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
+					 [protocolItem tokenName], [self tokenName]);
+	} else {
+		[_protocolItems addObject:protocolItem];
+		[_protocolItemNames addObject:protocolItem.tokenName];
+	}
 }
 
 - (void)addImplementedProtocols:(NSArray *)protocolItems
 {
-    for (AKProtocolItem *protocolItem in protocolItems)
-    {
-        [self addImplementedProtocol:protocolItem];
-    }
+	for (AKProtocolItem *protocolItem in protocolItems) {
+		[self addImplementedProtocol:protocolItem];
+	}
 }
 
 - (NSArray *)implementedProtocols
 {
-    NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolItems];
-
-    for (AKProtocolItem *protocolItem in _protocolItems)
-    {
-        if (protocolItem != self) {
-            [result addObjectsFromArray:[protocolItem implementedProtocols]];
-        }
-    }
-
-    return result;
+	NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolItems];
+	for (AKProtocolItem *protocolItem in _protocolItems) 	{
+		if (protocolItem != self) {
+			[result addObjectsFromArray:[protocolItem implementedProtocols]];
+		}
+	}
+	return result;
 }
 
 - (NSArray *)instanceMethodItems
 {
-    return [_indexOfInstanceMethods allItems];
+	return [_indexOfInstanceMethods allItems];
 }
 
 #pragma mark - Getters and setters -- properties
 
 - (NSArray *)documentedProperties
 {
-    return [_indexOfProperties tokenItemsWithDocumentation];
+	return [_indexOfProperties tokenItemsWithDocumentation];
 }
 
 - (AKPropertyItem *)propertyItemWithName:(NSString *)propertyName
 {
-    return (AKPropertyItem *)[_indexOfProperties itemWithTokenName:propertyName];
+	return (AKPropertyItem *)[_indexOfProperties itemWithTokenName:propertyName];
 }
 
 - (void)addPropertyItem:(AKPropertyItem *)propertyItem
 {
-    [_indexOfProperties addTokenItem:propertyItem];
+	[_indexOfProperties addTokenItem:propertyItem];
 }
 
 #pragma mark - Getters and setters -- class methods
 
 - (NSArray *)documentedClassMethods
 {
-    return [_indexOfClassMethods tokenItemsWithDocumentation];
+	return [_indexOfClassMethods tokenItemsWithDocumentation];
 }
 
 - (AKMethodItem *)classMethodWithName:(NSString *)methodName
 {
-    return (AKMethodItem *)[_indexOfClassMethods itemWithTokenName:methodName];
+	return (AKMethodItem *)[_indexOfClassMethods itemWithTokenName:methodName];
 }
 
 - (void)addClassMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfClassMethods addTokenItem:methodItem];
+	[_indexOfClassMethods addTokenItem:methodItem];
 }
 
 #pragma mark - Getters and setters -- instance methods
 
 - (NSArray *)documentedInstanceMethods
 {
-    return [_indexOfInstanceMethods tokenItemsWithDocumentation];
+	return [_indexOfInstanceMethods tokenItemsWithDocumentation];
 }
 
 - (AKMethodItem *)instanceMethodWithName:(NSString *)methodName
 {
-    return (AKMethodItem *)[_indexOfInstanceMethods itemWithTokenName:methodName];
+	return (AKMethodItem *)[_indexOfInstanceMethods itemWithTokenName:methodName];
 }
 
 - (void)addInstanceMethod:(AKMethodItem *)methodItem
 {
-    [_indexOfInstanceMethods addTokenItem:methodItem];
+	[_indexOfInstanceMethods addTokenItem:methodItem];
 }
 
 #pragma mark - Getters and setters -- deprecated methods
 
 - (AKMethodItem *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-                                        frameworkName:(NSString *)frameworkName
+										frameworkName:(NSString *)frameworkName
 {
-    // Is this an instance method or a class method?  Note this assumes a
-    // a method item for the method already exists, presumably because we
-    // parsed the header files.
-    AKMethodItem *methodItem = [self classMethodWithName:methodName];
-    
-    if (methodItem == nil)
-    {
-        methodItem = [self instanceMethodWithName:methodName];
-    }
-    
-    if (methodItem == nil)
-    {
-        DIGSLogInfo(@"Couldn't find class method or instance method named %@"
-                    @" while processing deprecated methods for behavior %@",
-                    methodName, [self tokenName]);
-    }
-    else
-    {
-        [methodItem setIsDeprecated:YES];
-    }
-    
-    return methodItem;
+	// Is this an instance method or a class method?  Note this assumes a
+	// a method item for the method already exists, presumably because we
+	// parsed the header files.
+	AKMethodItem *methodItem = [self classMethodWithName:methodName];
+
+	if (methodItem == nil) {
+		methodItem = [self instanceMethodWithName:methodName];
+	}
+
+	if (methodItem == nil) {
+		DIGSLogInfo(@"Couldn't find class method or instance method named %@"
+					@" while processing deprecated methods for behavior %@",
+					methodName, [self tokenName]);
+	} else {
+		[methodItem setIsDeprecated:YES];
+	}
+	
+	return methodItem;
 }
 
 @end

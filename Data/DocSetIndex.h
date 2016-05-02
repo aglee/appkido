@@ -12,7 +12,7 @@
 @class DocSetQuery;
 
 /*!
-    Has convenience methods for various kinds of Core Data queries.
+ Has convenience methods for various kinds of Core Data queries.
  */
 @interface DocSetIndex : NSObject
 

@@ -25,17 +25,17 @@
 @interface AKClassItem : AKBehaviorItem
 {
 @private
-    NSMutableArray *_namesOfAllOwningFrameworks;
+	NSMutableArray *_namesOfAllOwningFrameworks;
 
-    // Keys are names of owning frameworks. Values are the root file sections
-    // containing documentation for the framework.
-    NSMutableDictionary *_tokenItemDocumentationByFrameworkName;
+	// Keys are names of owning frameworks. Values are the root file sections
+	// containing documentation for the framework.
+	NSMutableDictionary *_tokenItemDocumentationByFrameworkName;
 
-    NSMutableArray *_childClassItems;  // Contains AKClassItems.
-    NSMutableArray *_categoryItems;  // Contains AKCategoryItems.
-    AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodItems.
-    AKCollectionOfItems *_indexOfNotifications;  // Contains AKNotificationItems.
-    AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingItems.
+	NSMutableArray *_childClassItems;  // Contains AKClassItems.
+	NSMutableArray *_categoryItems;  // Contains AKCategoryItems.
+	AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodItems.
+	AKCollectionOfItems *_indexOfNotifications;  // Contains AKNotificationItems.
+	AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingItems.
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassItem *parentClass;

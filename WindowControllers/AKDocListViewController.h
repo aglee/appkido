@@ -20,11 +20,11 @@
 @interface AKDocListViewController : AKViewController
 {
 @private
-    // The subtopic whose list of docs we should display.
-    AKSubtopic *_subtopic;
+	// The subtopic whose list of docs we should display.
+	AKSubtopic *_subtopic;
 
-    // IBOutlets.
-    AKTableView *__weak _docListTable;
+	// IBOutlets.
+	AKTableView *__weak _docListTable;
 }
 
 @property (nonatomic, strong) AKSubtopic *subtopic;

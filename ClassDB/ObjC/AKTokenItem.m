@@ -17,17 +17,17 @@
 
 - (instancetype)initWithToken:(DSAToken *)token
 {
-    self = [super init];
-    if (self) {
-        _token = token;
-    }
-    return self;
+	self = [super init];
+	if (self) {
+		_token = token;
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithToken:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithToken:nil];
 }
 
 #pragma mark - Getters and setters
@@ -57,14 +57,14 @@
 
 - (NSString *)sortName
 {
-    return self.tokenName;
+	return self.tokenName;
 }
 
 #pragma mark - NSObject methods
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: tokenName=%@>", self.className, self.tokenName];
+	return [NSString stringWithFormat:@"<%@: tokenName=%@>", self.className, self.tokenName];
 }
 
 @end
