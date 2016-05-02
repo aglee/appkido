@@ -219,21 +219,19 @@
 	}
 
 	AKDoc *docToDisplay = _docLocator.docToDisplay;
-	DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
-	NSURL *docURL = [docToDisplay docURLWithBaseURL:docSetIndex.documentsBaseURL];
-	QLog(@"+++ docURL: %@", docURL);
-
-	if (docURL == nil) {
-		[self _displayEmptyContent];
-		return;
-	}
-
 	switch (docToDisplay.contentType) {
 		case AKDocHTMLContentType: {
+			DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
+			NSURL *docURL = [docToDisplay docURLWithBaseURL:docSetIndex.documentsBaseURL];
+			QLog(@"+++ HTML doc URL: %@", docURL);
 			[self _displayHTMLContentAtURL:docURL];
 			break;
 		}
 		case AKDocObjectiveCContentType: {
+			NSString *sdkPath = @"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk";  //TODO: Get the right path.
+			NSURL *baseURL = [NSURL fileURLWithPath:sdkPath];
+			NSURL *docURL = [docToDisplay docURLWithBaseURL:baseURL];
+			QLog(@"+++ Objective-C doc URL: %@", docURL);
 			[self _displayObjectiveCContentAtURL:docURL];
 			break;
 		}
@@ -250,7 +248,12 @@
 
 - (void)_displayHTMLContentAtURL:(NSURL *)docURL
 {
-	[self.tabView selectTabViewItemWithIdentifier:@"1"];
+	if (docURL == nil) {
+		[self _displayEmptyContent];
+		return;
+	}
+
+	[self.tabView selectTabViewItemWithIdentifier:@"WebView"];
 	float multiplier = ((float)_docMagnifier) / 100.0f;
 	self.webView.textSizeMultiplier = multiplier;
 
@@ -258,22 +261,61 @@
 	[self.webView.mainFrame loadRequest:req];
 }
 
-- (void)_displayObjectiveCContentAtURL:(NSURL *)docURL  //TODO: Fill this in.
+- (void)_displayObjectiveCContentAtURL:(NSURL *)docURL
 {
-	[self.tabView selectTabViewItemWithIdentifier:@"1"];
-	float multiplier = ((float)_docMagnifier) / 100.0f;
-	self.webView.textSizeMultiplier = multiplier;
+	if (docURL == nil) {
+		[self _displayEmptyContent];
+		return;
+	}
 
-	// Turn off JavaScript, which interferes by hiding stuff we don't want to hide.
-	self.webView.preferences.javaScriptEnabled = NO;
+	NSError *error;
+	NSString *objc = [[NSString alloc] initWithContentsOfURL:docURL encoding:NSUTF8StringEncoding error:&error];
 
-	NSURLRequest *req = [NSURLRequest requestWithURL:docURL];
-	[self.webView.mainFrame loadHTMLString:@"" baseURL:nil];
+	if (objc == nil) {
+		QLog(@"+++ [ODD] Error loading doc URL %@", docURL);
+		[self _displayEmptyContent];
+		return;
+	}
+
+	NSString *html = [self _wrapHTMLAroundObjC:objc];
+	[self.webView.mainFrame loadHTMLString:html baseURL:nil];
+}
+
+- (NSString *)_templateForWrappingHTMLAroundObjC
+{
+	static dispatch_once_t once;
+	static NSString *s_template;
+	dispatch_once(&once, ^{
+		NSString *resourceName = @"objc";
+		NSString *extension = @"html";
+		NSURL *templateURL = [[NSBundle mainBundle] URLForResource:resourceName withExtension:extension];
+
+		if (templateURL == nil) {
+			QLog(@"+++ [ERROR] Couldn't find ", resourceName, extension);
+		} else {
+			NSError *error;
+			s_template = [[NSString alloc] initWithContentsOfURL:templateURL encoding:NSUTF8StringEncoding error:&error];
+			if (s_template == nil) {
+				QLog(@"+++ [ERROR] Couldn't load HTML template at URL %@ -- %@", templateURL, error);
+			}
+		}
+	});
+
+	return s_template;
+}
+
+- (NSString *)_wrapHTMLAroundObjC:(NSString *)objc
+{
+	NSString *html = [self _templateForWrappingHTMLAroundObjC];
+
+	html = [html stringByReplacingOccurrencesOfString:@"%objc%" withString:objc];
+
+	return html;
 }
 
 - (void)_useTextViewToDisplayPlainText:(NSData *)textData
 {
-	[_tabView selectTabViewItemWithIdentifier:@"2"];
+	[_tabView selectTabViewItemWithIdentifier:@"TextView"];
 
 	NSString *fontName = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
 	NSInteger fontSize = [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
@@ -294,7 +336,7 @@
 
 - (void)_useWebViewToDisplayHTML:(NSData *)htmlData fromFile:(NSString *)htmlFilePath
 {
-	[_tabView selectTabViewItemWithIdentifier:@"1"];
+	[_tabView selectTabViewItemWithIdentifier:@"WebView"];
 
 	// Apply the user's magnification preference.
 	float multiplier = ((float)_docMagnifier) / 100.0f;

@@ -15,7 +15,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="Menu" id="573" userLabel="DocTextMenu">
             <items>
                 <menuItem title="Copy" id="615">
@@ -66,20 +66,22 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="322"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <tabView autoresizesSubviews="NO" type="noTabsNoBorder" id="1508">
+                <tabView type="noTabsNoBorder" id="1508">
                     <rect key="frame" x="20" y="20" width="335" height="282"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <font key="font" metaFont="system"/>
                     <tabViewItems>
-                        <tabViewItem label="Web View" identifier="1" id="1509">
+                        <tabViewItem label="Web View" identifier="WebView" id="1509">
                             <view key="view" id="1512">
                                 <rect key="frame" x="0.0" y="0.0" width="335" height="282"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <webView maintainsBackForwardList="NO" id="1517">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="282"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12"/>
+                                        <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
+                                            <nil key="identifier"/>
+                                        </webPreferences>
                                         <connections>
                                             <outlet property="UIDelegate" destination="-2" id="1525"/>
                                             <outlet property="policyDelegate" destination="-2" id="1526"/>
@@ -88,17 +90,17 @@
                                 </subviews>
                             </view>
                         </tabViewItem>
-                        <tabViewItem label="Text View" identifier="2" id="1510">
+                        <tabViewItem label="Text View" identifier="TextView" id="1510">
                             <view key="view" id="1511">
                                 <rect key="frame" x="0.0" y="0.0" width="335" height="282"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="1513">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="282"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="LrK-uk-oxh">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="282"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" usesFontPanel="YES" verticallyResizable="YES" spellingCorrection="YES" id="1514">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="282"/>

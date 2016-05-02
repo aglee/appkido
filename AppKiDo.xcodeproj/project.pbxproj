@@ -201,6 +201,8 @@
 		7312A76516DD293D00052FEA /* SubtopicListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7312A75C16DD293D00052FEA /* SubtopicListView.xib */; };
 		7312A76616DD293D00052FEA /* TopicBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7312A75E16DD293D00052FEA /* TopicBrowserView.xib */; };
 		7312A76716DD293D00052FEA /* TopicBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7312A75E16DD293D00052FEA /* TopicBrowserView.xib */; };
+		7315E6AE1CD7DA4E004DE0FB /* objc.html in Resources */ = {isa = PBXBuildFile; fileRef = 7315E6AD1CD7DA4E004DE0FB /* objc.html */; };
+		7315E6AF1CD7DA4E004DE0FB /* objc.html in Resources */ = {isa = PBXBuildFile; fileRef = 7315E6AD1CD7DA4E004DE0FB /* objc.html */; };
 		731657930FE48AE70097F3A1 /* AKDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 731657910FE48AE70097F3A1 /* AKDevTools.h */; };
 		731657940FE48AE70097F3A1 /* AKDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 731657920FE48AE70097F3A1 /* AKDevTools.m */; };
 		731657BE0FE48DEC0097F3A1 /* AKDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 731657910FE48AE70097F3A1 /* AKDevTools.h */; };
@@ -738,6 +740,7 @@
 		7312A75B16DD293D00052FEA /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DocView.xib; sourceTree = "<group>"; };
 		7312A75D16DD293D00052FEA /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SubtopicListView.xib; sourceTree = "<group>"; };
 		7312A75F16DD293D00052FEA /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TopicBrowserView.xib; sourceTree = "<group>"; };
+		7315E6AD1CD7DA4E004DE0FB /* objc.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = objc.html; sourceTree = "<group>"; };
 		731657910FE48AE70097F3A1 /* AKDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDevTools.h; path = CocoaFrameworks/AKDevTools.h; sourceTree = "<group>"; };
 		731657920FE48AE70097F3A1 /* AKDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKDevTools.m; path = CocoaFrameworks/AKDevTools.m; sourceTree = "<group>"; };
 		731976020606A280002E4E83 /* AKDoc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDoc.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -1129,6 +1132,7 @@
 				7312A76916DD295300052FEA /* per-window nibs */,
 				730A0FBC16DDB9A40004C76C /* utility nibs */,
 				73B9158706133DBF00066E17 /* Credits.html */,
+				7315E6AD1CD7DA4E004DE0FB /* objc.html */,
 				73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */,
 				733ACAF20498483100A80007 /* app-icon.icns */,
 				7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */,
@@ -2327,6 +2331,7 @@
 				73A0232C16DD259800240111 /* QuicklistView.xib in Resources */,
 				7312A76016DD293D00052FEA /* DocListView.xib in Resources */,
 				7312A76216DD293D00052FEA /* DocView.xib in Resources */,
+				7315E6AE1CD7DA4E004DE0FB /* objc.html in Resources */,
 				7312A76416DD293D00052FEA /* SubtopicListView.xib in Resources */,
 				7312A76616DD293D00052FEA /* TopicBrowserView.xib in Resources */,
 				7332E8DE16E8EFAE00A3764B /* FindPanel.xib in Resources */,
@@ -2373,6 +2378,7 @@
 				7312A76116DD293D00052FEA /* DocListView.xib in Resources */,
 				7312A76316DD293D00052FEA /* DocView.xib in Resources */,
 				7312A76516DD293D00052FEA /* SubtopicListView.xib in Resources */,
+				7315E6AF1CD7DA4E004DE0FB /* objc.html in Resources */,
 				7312A76716DD293D00052FEA /* TopicBrowserView.xib in Resources */,
 				7332E8DF16E8EFAE00A3764B /* FindPanel.xib in Resources */,
 				737F1DEA17021BCD00D560C7 /* PopQuiz.xib in Resources */,
