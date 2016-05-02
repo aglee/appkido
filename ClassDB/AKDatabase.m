@@ -65,7 +65,7 @@
 
 - (void)populate
 {
-	self.frameworkNames = [self _arrayWithAllFrameworkNames];
+	self.frameworkNames = [self _sortedArrayWithAllFrameworkNames];
 
 	for (DSAToken *token in [self _arrayWithAllTokens]) {
 		NSString *tokenType = token.tokenType.typeName;
@@ -110,7 +110,7 @@
 
 - (NSArray *)sortedFrameworkNames
 {
-	return [self.frameworkNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	return self.frameworkNames;
 }
 
 - (BOOL)hasFrameworkWithName:(NSString *)frameworkName
@@ -288,16 +288,16 @@
 
 #pragma mark - Private methods - populating the database - misc
 
-- (NSArray *)_arrayWithAllFrameworkNames
+- (NSArray *)_sortedArrayWithAllFrameworkNames
 {
 	NSError *error;
 	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Header"];
 	query.distinctKeyPathsString = @"frameworkName";
 	query.predicateString = @"frameworkName != NULL";
 	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];  //TODO: Handle error.
-	fetchedObjects = [fetchedObjects valueForKey:@"frameworkName"];
-	fetchedObjects = [fetchedObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-	return fetchedObjects;
+	NSArray *frameworkNames = [fetchedObjects valueForKey:@"frameworkName"];
+	frameworkNames = [frameworkNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	return frameworkNames;
 }
 
 - (NSArray *)_arrayWithAllTokens
