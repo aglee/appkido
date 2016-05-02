@@ -179,9 +179,11 @@
 	[self _addMenuItemWithTitle:@"Open Page in Browser"
 						 action:@selector(openDocFileInBrowser:)
 						toArray:newMenuItems];
-	[self _addMenuItemWithTitle:@"Reveal In Finder"
-						 action:@selector(revealDocFileInFinder:)
-						toArray:newMenuItems];
+	if ([[self _docURL] isFileURL]) {
+		[self _addMenuItemWithTitle:@"Reveal in Finder"
+							 action:@selector(revealDocFileInFinder:)
+							toArray:newMenuItems];
+	}
 	if ([AKDebugging userCanDebug]) {
 		[self _addMenuItemWithTitle:@"Open Parse Window (Debug)"
 							 action:@selector(openParseDebugWindow:)
