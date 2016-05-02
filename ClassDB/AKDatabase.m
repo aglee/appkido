@@ -38,27 +38,27 @@
 - (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex
 {
 	self = [super init];
-    if (self) {
-        _docSetIndex = docSetIndex;
+	if (self) {
+		_docSetIndex = docSetIndex;
 		_frameworkNames = @[];
-        _classItemsByName = [[NSMutableDictionary alloc] init];
-        _protocolItemsByName = [[NSMutableDictionary alloc] init];
-        _functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
-        _functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
+		_classItemsByName = [[NSMutableDictionary alloc] init];
+		_protocolItemsByName = [[NSMutableDictionary alloc] init];
+		_functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
+		_functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
-        _globalsGroupListsByFramework = [[NSMutableDictionary alloc] init];
-        _globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
+		_globalsGroupListsByFramework = [[NSMutableDictionary alloc] init];
+		_globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
-        _classItemsByHTMLPath = [[NSMutableDictionary alloc] init];
-        _protocolItemsByHTMLPath = [[NSMutableDictionary alloc] init];
-    }
-    return self;
+		_classItemsByHTMLPath = [[NSMutableDictionary alloc] init];
+		_protocolItemsByHTMLPath = [[NSMutableDictionary alloc] init];
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithDocSetIndex:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithDocSetIndex:nil];
 }
 
 #pragma mark - Populating the database
@@ -67,12 +67,12 @@
 {
 	self.frameworkNames = [self _arrayWithAllFrameworkNames];
 
-    for (DSAToken *token in [self _arrayWithAllTokens]) {
-        NSString *tokenType = token.tokenType.typeName;
+	for (DSAToken *token in [self _arrayWithAllTokens]) {
+		NSString *tokenType = token.tokenType.typeName;
 
-        if ([tokenType isEqualToString:@"cl"]) {
+		if ([tokenType isEqualToString:@"cl"]) {
 			// Class.
-            [self _importClassToken:token];
+			[self _importClassToken:token];
 		} else if ([tokenType isEqualToString:@"clm"]) {
 			// Class method of a class.
 			[self _importClassClassMethodToken:token];
@@ -103,211 +103,187 @@
 		} else {
 			QLog(@"+++ %s [ODD] Unexpected token type '%@'", __PRETTY_FUNCTION__, tokenType);
 		}
-    }
+	}
 }
 
 #pragma mark - Getters and setters -- frameworks
 
 - (NSArray *)sortedFrameworkNames
 {
-    return [self.frameworkNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	return [self.frameworkNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
 - (BOOL)hasFrameworkWithName:(NSString *)frameworkName
 {
-    return [self.frameworkNames containsObject:frameworkName];
+	return [self.frameworkNames containsObject:frameworkName];
 }
 
 #pragma mark - Getters and setters -- classes
 
 - (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName
 {
-    NSMutableArray *classItems = [NSMutableArray array];
-
-    for (AKClassItem *classItem in [self allClasses])
-    {
-        if ([classItem.frameworkName isEqualToString:frameworkName])
-        {
-            [classItems addObject:classItem];
-        }
-    }
-
-    return classItems;
+	NSMutableArray *classItems = [NSMutableArray array];
+	for (AKClassItem *classItem in [self allClasses]) {
+		if ([classItem.frameworkName isEqualToString:frameworkName]) 	{
+			[classItems addObject:classItem];
+		}
+	}
+	return classItems;
 }
 
 - (NSArray *)rootClasses
 {
-    NSMutableArray *result = [NSMutableArray array];
-
-    for (AKClassItem *classItem in [self allClasses])
-    {
-        if (classItem.parentClass == nil)
-        {
-            [result addObject:classItem];
-        }
-    }
-
-    return result;
+	NSMutableArray *result = [NSMutableArray array];
+	for (AKClassItem *classItem in [self allClasses]) {
+		if (classItem.parentClass == nil) {
+			[result addObject:classItem];
+		}
+	}
+	return result;
 }
 
 - (NSArray *)allClasses
 {
-    return self.classItemsByName.allValues;
+	return self.classItemsByName.allValues;
 }
 
 - (AKClassItem *)classWithName:(NSString *)className
 {
-    return self.classItemsByName[className];
+	return self.classItemsByName[className];
 }
 
 #pragma mark - Getters and setters -- protocols
 
 - (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:NO];
+	return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:NO];
 }
 
 - (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName
 {
-    return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:YES];
+	return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:YES];
 }
 
 - (NSArray *)allProtocols
 {
-    return _protocolItemsByName.allValues;
+	return _protocolItemsByName.allValues;
 }
 
 - (AKProtocolItem *)protocolWithName:(NSString *)name
 {
-    return _protocolItemsByName[name];
+	return _protocolItemsByName[name];
 }
 
 - (void)addProtocolItem:(AKProtocolItem *)protocolItem
 {
-    // Do nothing if we already have a protocol with the same name.
-    NSString *protocolName = protocolItem.tokenName;
-    if (_protocolItemsByName[protocolName])
-    {
-        DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
-        return;
-    }
+	// Do nothing if we already have a protocol with the same name.
+	NSString *protocolName = protocolItem.tokenName;
+	if (_protocolItemsByName[protocolName]) {
+		DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
+		return;
+	}
 
-    // Add the protocol to our lookup by protocol name.
-    _protocolItemsByName[protocolName] = protocolItem;
+	// Add the protocol to our lookup by protocol name.
+	_protocolItemsByName[protocolName] = protocolItem;
 }
 
 #pragma mark - Getters and setters -- functions
 
 - (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return _functionsGroupListsByFramework[frameworkName];
+	return _functionsGroupListsByFramework[frameworkName];
 }
 
 - (AKGroupItem *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
 {
-    return _functionsGroupsByFrameworkAndGroup[frameworkName][groupName];
+	return _functionsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
 
 - (void)addFunctionsGroup:(AKGroupItem *)groupItem
 {
-    NSString *frameworkName = groupItem.frameworkName;
+	NSString *frameworkName = groupItem.frameworkName;
 
-    // See if we have any functions groups in the framework yet.
-    NSMutableArray *groupList = nil;
-    NSMutableDictionary *groupsByName = _functionsGroupsByFrameworkAndGroup[frameworkName];
+	// See if we have any functions groups in the framework yet.
+	NSMutableArray *groupList = nil;
+	NSMutableDictionary *groupsByName = _functionsGroupsByFrameworkAndGroup[frameworkName];
 
-    if (groupsByName)
-    {
-        groupList = _functionsGroupListsByFramework[frameworkName];
-    }
-    else
-    {
-        groupsByName = [NSMutableDictionary dictionary];
-        _functionsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
+	if (groupsByName) {
+		groupList = _functionsGroupListsByFramework[frameworkName];
+	} else {
+		groupsByName = [NSMutableDictionary dictionary];
+		_functionsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
 
-        groupList = [NSMutableArray array];
-        _functionsGroupListsByFramework[frameworkName] = groupList;
-    }
+		groupList = [NSMutableArray array];
+		_functionsGroupListsByFramework[frameworkName] = groupList;
+	}
 
-    // Add the functions group if it isn't already in the framework.
-    NSString *groupName = groupItem.tokenName;
+	// Add the functions group if it isn't already in the framework.
+	NSString *groupName = groupItem.tokenName;
 
-    if (groupsByName[groupName])
-    {
-        DIGSLogWarning(@"Trying to add functions group [%@] again", groupName);
-    }
-    else
-    {
-        [groupList addObject:groupItem];
-        groupsByName[groupItem.tokenName] = groupItem;
-    }
+	if (groupsByName[groupName]) {
+		DIGSLogWarning(@"Trying to add functions group [%@] again", groupName);
+	} else {
+		[groupList addObject:groupItem];
+		groupsByName[groupItem.tokenName] = groupItem;
+	}
 }
 
 #pragma mark - Getters and setters -- globals
 
 - (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName
 {
-    return _globalsGroupListsByFramework[frameworkName];
+	return _globalsGroupListsByFramework[frameworkName];
 }
 
 - (AKGroupItem *)globalsGroupNamed:(NSString *)groupName
-                  inFrameworkNamed:(NSString *)frameworkName
+				  inFrameworkNamed:(NSString *)frameworkName
 {
-    return _globalsGroupsByFrameworkAndGroup[frameworkName][groupName];
+	return _globalsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
 
 - (void)addGlobalsGroup:(AKGroupItem *)groupItem
 {
-    NSString *frameworkName = groupItem.frameworkName;
+	NSString *frameworkName = groupItem.frameworkName;
 
-    // See if we have any globals groups in the framework yet.
-    NSMutableArray *groupList = nil;
-    NSMutableDictionary *groupsByName = _globalsGroupsByFrameworkAndGroup[frameworkName];
+	// See if we have any globals groups in the framework yet.
+	NSMutableArray *groupList = nil;
+	NSMutableDictionary *groupsByName = _globalsGroupsByFrameworkAndGroup[frameworkName];
 
-    if (groupsByName)
-    {
-        groupList = _globalsGroupListsByFramework[frameworkName];
-    }
-    else
-    {
-        groupsByName = [NSMutableDictionary dictionary];
-        _globalsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
+	if (groupsByName) {
+		groupList = _globalsGroupListsByFramework[frameworkName];
+	} else {
+		groupsByName = [NSMutableDictionary dictionary];
+		_globalsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
 
-        groupList = [NSMutableArray array];
-        _globalsGroupListsByFramework[frameworkName] = groupList;
-    }
+		groupList = [NSMutableArray array];
+		_globalsGroupListsByFramework[frameworkName] = groupList;
+	}
 
-    // Add the globals group if it isn't already in the framework.
-    NSString *groupName = groupItem.tokenName;
+	// Add the globals group if it isn't already in the framework.
+	NSString *groupName = groupItem.tokenName;
 
-    if (groupsByName[groupName])
-    {
-        DIGSLogWarning(@"Trying to add globals group [%@] again", groupName);
-    }
-    else
-    {
-        [groupList addObject:groupItem];
-        groupsByName[groupItem.tokenName] = groupItem;
-    }
+	if (groupsByName[groupName]) {
+		DIGSLogWarning(@"Trying to add globals group [%@] again", groupName);
+	} else {
+		[groupList addObject:groupItem];
+		groupsByName[groupItem.tokenName] = groupItem;
+	}
 }
 
 #pragma mark - Private methods - misc
 
 - (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName
-                           withInformalFlag:(BOOL)informalFlag
+						   withInformalFlag:(BOOL)informalFlag
 {
-    NSMutableArray *result = [NSMutableArray array];
+	NSMutableArray *result = [NSMutableArray array];
+	for (AKProtocolItem *protocolItem in [self allProtocols]) {
+		if ((protocolItem.isInformal == informalFlag)
+			&& [protocolItem.frameworkName isEqualToString:fwName]) {
 
-    for (AKProtocolItem *protocolItem in [self allProtocols])
-    {
-        if ((protocolItem.isInformal == informalFlag)
-            && [protocolItem.frameworkName isEqualToString:fwName])
-        {
-            [result addObject:protocolItem];
-        }
-    }
-
-    return result;
+			[result addObject:protocolItem];
+		}
+	}
+	return result;
 }
 
 #pragma mark - Private methods - populating the database - misc
@@ -340,7 +316,7 @@
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"cl"]);
 	AKClassItem *classItem = [self _getOrAddClassItemWithToken:token];
 	if (classItem.parentClass) {
-//		QLog(@"+++ classItem %@ already has a parent %@", classItem.tokenName, classItem.parentClass.tokenName);
+		//		QLog(@"+++ classItem %@ already has a parent %@", classItem.tokenName, classItem.parentClass.tokenName);
 	} else {
 		[self _fillInParentClassOfClassItem:classItem];
 	}
@@ -379,7 +355,7 @@
 	if (container) {
 		AKClassItem *parentClassItem = [self _getOrAddClassItemWithName:container.containerName];
 		[parentClassItem addChildClass:classItem];
-//		QLog(@"+++ parent class '%@' => child class '%@'", parentClassItem.tokenName, classItem.tokenName);
+		//		QLog(@"+++ parent class '%@' => child class '%@'", parentClassItem.tokenName, classItem.tokenName);
 	}
 }
 
@@ -417,7 +393,7 @@
 	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
 	AKBindingItem *bindingItem = [[AKBindingItem alloc] initWithToken:token owningBehavior:classItem];
 	[classItem addBindingItem:bindingItem];
-//	QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classItem.tokenName);
+	//	QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classItem.tokenName);
 }
 
 // It looks like the tokenName for a category token always has the form
