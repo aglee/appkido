@@ -8,6 +8,7 @@
 
 #import "AKTokenItemDoc.h"
 #import "DIGSLog.h"
+#import "DocSetIndex.h"
 
 @implementation AKTokenItemDoc
 
@@ -28,10 +29,18 @@
 	return [self initWithTokenItem:nil];
 }
 
-#pragma mark - AKTokenItemDoc methods
+#pragma mark - AKDoc methods
 
-- (NSURL *)docURLWithBaseURL:(NSURL *)baseURL
+#pragma mark - AKDoc methods
+
+- (NSString *)docName
 {
+	return _tokenItem.tokenName;
+}
+
+- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
+{
+	NSURL *baseURL = docSetIndex.documentsBaseURL;
 	NSString *relativePath = self.tokenItem.token.metainformation.file.path;
 	if (relativePath == nil) {
 		return nil;
@@ -44,18 +53,6 @@
 		docURL = [urlComponents URL];
 	}
 	return docURL;
-}
-
-#pragma mark - AKDoc methods
-
-- (AKDocContentType)contentType
-{
-	return AKDocHTMLContentType;
-}
-
-- (NSString *)docName
-{
-	return _tokenItem.tokenName;
 }
 
 @end

@@ -20,7 +20,7 @@
 	NSInteger _docMagnifier;
 
 	// IBOutlets.
-	NSTabView *__weak _tabView;  // Two tabs, one containing _webView and the other _textView.
+	NSTabView *__weak _tabView;
 	WebView *__weak _webView;
 	NSTextView *__unsafe_unretained _textView;
 }

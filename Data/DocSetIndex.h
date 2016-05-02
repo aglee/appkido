@@ -20,6 +20,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, copy, nonatomic) NSURL *documentsBaseURL;
+@property (readonly, copy, nonatomic) NSURL *headerFilesBaseURL;
 
 #pragma mark - Init/awake/dealloc
 

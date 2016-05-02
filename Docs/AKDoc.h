@@ -7,10 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-	AKDocHTMLContentType,
-	AKDocObjectiveCContentType,
-} AKDocContentType;
+@class DocSetIndex;
 
 /*!
  * Abstract class that encapsulates one of the docs that fall under an
@@ -24,9 +21,6 @@ typedef enum {
 @interface AKDoc : NSObject
 
 #pragma mark - Getters and setters
-
-/*! Subclasses must override. */
-@property (readonly) AKDocContentType contentType;
 
 /*!
  * Subclasses must override.
@@ -48,6 +42,6 @@ typedef enum {
 #pragma mark - URLs
 
 /*! Subclasses must override. */
-- (NSURL *)docURLWithBaseURL:(NSURL *)baseURL;
+- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex;
 
 @end

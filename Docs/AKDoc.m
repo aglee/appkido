@@ -7,22 +7,11 @@
 
 #import "AKDoc.h"
 #import "DIGSLog.h"
+#import "DocSetIndex.h"
 
 @implementation AKDoc
 
 #pragma mark - Getters and setters
-
-- (AKDocContentType)contentType
-{
-	DIGSLogError_MissingOverride();
-	return AKDocHTMLContentType;
-}
-
-- (BOOL)docTextIsHTML
-{
-	DIGSLogError_MissingOverride();
-	return YES;
-}
 
 - (NSString *)docName
 {
@@ -42,7 +31,7 @@
 
 #pragma mark - URLs
 
-- (NSURL *)docURLWithBaseURL:(NSURL *)baseURL
+- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
 {
 	DIGSLogError_MissingOverride();
 	return nil;

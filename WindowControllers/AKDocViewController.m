@@ -76,33 +76,29 @@
 
 - (void)applyUserPreferences
 {
-	if (_docLocator.docToDisplay.contentType == AKDocHTMLContentType) {
-		NSInteger docMagnifierPref = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
-		if (_docMagnifier != docMagnifierPref) {
-			_docMagnifier = docMagnifierPref;
-			[self _updateDocDisplay];
-		}
-	} else {
-		NSString *headerFontNamePref = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-		NSInteger headerFontSizePref = [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
-		BOOL headerFontChanged = NO;
+	BOOL prefsDidChange = NO;
+	NSInteger docMagnifierPref = [AKPrefUtils intValueForPref:AKDocMagnificationPrefName];
+	NSString *headerFontNamePref = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
+	NSInteger headerFontSizePref = [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
 
-		if (![_headerFontName isEqualToString:headerFontNamePref]) {
-			headerFontChanged = YES;
+	if (_docMagnifier != docMagnifierPref) {
+		_docMagnifier = docMagnifierPref;
+		prefsDidChange = YES;
+	}
 
-			// Standard setter pattern.
-			_headerFontName = [headerFontNamePref copy];
-		}
+	if (![_headerFontName isEqualToString:headerFontNamePref]) {
+		prefsDidChange = YES;
+		_headerFontName = [headerFontNamePref copy];
+	}
 
-		if (_headerFontSize != headerFontSizePref) {
-			headerFontChanged = YES;
+	if (_headerFontSize != headerFontSizePref) {
+		prefsDidChange = YES;
 
-			_headerFontSize = headerFontSizePref;
-		}
+		_headerFontSize = headerFontSizePref;
+	}
 
-		if (headerFontChanged) {
-			[self _updateDocDisplay];
-		}
+	if (prefsDidChange) {
+		[self _updateDocDisplay];
 	}
 }
 
@@ -211,34 +207,27 @@
 	return [_webView isDescendantOf:viewSelectedInTabView];
 }
 
+- (NSURL *)_docURL
+{
+	AKDoc *docToDisplay = _docLocator.docToDisplay;
+	if (docToDisplay == nil) {
+		return nil;
+	}
+	DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
+	return [docToDisplay docURLAccordingToDocSetIndex:docSetIndex];
+}
+
 - (void)_updateDocDisplay
 {
-	if (_docLocator == nil) {
-		[self _displayEmptyContent];
-		return;
-	}
+	NSURL *docURL = [self _docURL];
+	QLog(@"+++ Doc URL: %@", docURL);
 
-	AKDoc *docToDisplay = _docLocator.docToDisplay;
-	switch (docToDisplay.contentType) {
-		case AKDocHTMLContentType: {
-			DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
-			NSURL *docURL = [docToDisplay docURLWithBaseURL:docSetIndex.documentsBaseURL];
-			QLog(@"+++ HTML doc URL: %@", docURL);
-			[self _displayHTMLContentAtURL:docURL];
-			break;
-		}
-		case AKDocObjectiveCContentType: {
-			NSString *sdkPath = @"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk";  //TODO: Get the right path.
-			NSURL *baseURL = [NSURL fileURLWithPath:sdkPath];
-			NSURL *docURL = [docToDisplay docURLWithBaseURL:baseURL];
-			QLog(@"+++ Objective-C doc URL: %@", docURL);
-			[self _displayObjectiveCContentAtURL:docURL];
-			break;
-		}
-		default: {
-			QLog(@"+++ [ODD] Unexpected AKDoc content type %zd", docToDisplay.contentType);
-			[self _displayEmptyContent];
-		}
+	if (docURL == nil) {
+		[self _displayEmptyContent];
+	} else if ([docURL.pathExtension isEqualToString:@"h"]) {
+		[self _displayObjectiveCContentAtURL:docURL];
+	} else {
+		[self _displayHTMLContentAtURL:docURL];
 	}
 }
 
@@ -249,11 +238,6 @@
 
 - (void)_displayHTMLContentAtURL:(NSURL *)docURL
 {
-	if (docURL == nil) {
-		[self _displayEmptyContent];
-		return;
-	}
-
 	[self.tabView selectTabViewItemWithIdentifier:@"WebView"];
 	float multiplier = ((float)_docMagnifier) / 100.0f;
 	self.webView.textSizeMultiplier = multiplier;
@@ -264,11 +248,6 @@
 
 - (void)_displayObjectiveCContentAtURL:(NSURL *)docURL
 {
-	if (docURL == nil) {
-		[self _displayEmptyContent];
-		return;
-	}
-
 	NSError *error;
 	NSString *objc = [[NSString alloc] initWithContentsOfURL:docURL encoding:NSUTF8StringEncoding error:&error];
 
@@ -312,50 +291,6 @@
 	html = [html stringByReplacingOccurrencesOfString:@"%objc%" withString:objc];
 
 	return html;
-}
-
-- (void)_useTextViewToDisplayPlainText:(NSData *)textData
-{
-	[_tabView selectTabViewItemWithIdentifier:@"TextView"];
-
-	NSString *fontName = [AKPrefUtils stringValueForPref:AKHeaderFontNamePrefName];
-	NSInteger fontSize = [AKPrefUtils intValueForPref:AKHeaderFontSizePrefName];
-	NSFont *plainTextFont = [NSFont fontWithName:fontName size:fontSize];
-	NSString *docString = @"";
-
-	if (textData) {
-		docString = [[NSString alloc] initWithData:textData
-										  encoding:NSUTF8StringEncoding];
-	}
-
-	[_textView setRichText:NO];
-	_textView.font = plainTextFont;
-
-	_textView.string = docString;
-	[_textView scrollRangeToVisible:NSMakeRange(0, 0)];
-}
-
-- (void)_useWebViewToDisplayHTML:(NSData *)htmlData fromFile:(NSString *)htmlFilePath
-{
-	[_tabView selectTabViewItemWithIdentifier:@"WebView"];
-
-	// Apply the user's magnification preference.
-	float multiplier = ((float)_docMagnifier) / 100.0f;
-
-	_webView.textSizeMultiplier = multiplier;
-
-	// Display the HTML in _webView.
-	NSString *htmlString = @"";
-	if (htmlData) {
-		htmlString = [[NSString alloc] initWithData:htmlData
-										   encoding:NSUTF8StringEncoding];
-	}
-	if (htmlFilePath) {
-		[_webView.mainFrame loadHTMLString:htmlString
-								   baseURL:[NSURL fileURLWithPath:htmlFilePath]];
-	} else {
-		[_webView.mainFrame loadHTMLString:htmlString baseURL:nil];
-	}
 }
 
 // Used for setting up our contextual menu.
