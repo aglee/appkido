@@ -29,8 +29,4 @@
 
 - (instancetype)initWithToken:(DSAToken *)token NS_DESIGNATED_INITIALIZER;
 
-#pragma mark - KLUDGES
-
-- (NSString *)frameworkNameForToken:(DSAToken *)token;  //TODO: KLUDGE.
-
 @end

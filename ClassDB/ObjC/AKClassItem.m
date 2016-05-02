@@ -31,11 +31,6 @@
 	self = [super initWithToken:token];
 	if (self) {
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
-
-		if ([self frameworkNameForToken:token]) {
-			[_namesOfAllOwningFrameworks addObject:[self frameworkNameForToken:token]];
-		}
-
 		_tokenItemDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
 		_childClassItems = [[NSMutableArray alloc] init];

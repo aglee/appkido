@@ -39,18 +39,8 @@
 
 - (NSString *)frameworkName
 {
-	return [self frameworkNameForToken:self.token];
-}
-
-#pragma mark - KLUDGES
-
-- (NSString *)frameworkNameForToken:(DSAToken *)token
-{
-	NSString *fwName = token.metainformation.declaredIn.frameworkName;
-
 	//TODO: In case this is nil, try to derive framework name from path.
-
-	return fwName;
+	return self.token.metainformation.declaredIn.frameworkName;
 }
 
 #pragma mark - AKSortable methods
