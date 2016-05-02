@@ -760,8 +760,8 @@
 		7320C17416DCF9DF00797F95 /* AKTopicBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTopicBrowserViewController.m; sourceTree = "<group>"; };
 		7320C17516DCF9E300797F95 /* AKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewController.h; sourceTree = "<group>"; };
 		7320C17616DCF9E500797F95 /* AKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewController.m; sourceTree = "<group>"; };
-		7320C17716DCF9ED00797F95 /* AKWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowController.h; sourceTree = "<group>"; };
-		7320C17816DCF9F900797F95 /* AKWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowController.m; sourceTree = "<group>"; };
+		7320C17716DCF9ED00797F95 /* AKWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowController.h; sourceTree = "<group>"; usesTabs = 1; };
+		7320C17816DCF9F900797F95 /* AKWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowController.m; sourceTree = "<group>"; usesTabs = 1; };
 		7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+AppKiDo.h"; sourceTree = "<group>"; };
 		7323B6E804DDD45B00CCE8CB /* NSView+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+AppKiDo.m"; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };

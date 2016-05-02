@@ -32,54 +32,54 @@
 @interface AKWindowController : NSWindowController <AKUIController, NSToolbarDelegate>
 {
 @private
-    // The source of all data the window displays.
-    AKDatabase *_database;
+	// The source of all data the window displays.
+	AKDatabase *_database;
 
-    // The window's navigation history. Elements are AKDocLocators. The last
-    // element is the most recent.
-    NSMutableArray *_windowHistory;
+	// The window's navigation history. Elements are AKDocLocators. The last
+	// element is the most recent.
+	NSMutableArray *_windowHistory;
 
-    // The index within _windowHistory of our current navigation state.
-    NSInteger _windowHistoryIndex;
+	// The index within _windowHistory of our current navigation state.
+	NSInteger _windowHistoryIndex;
 
-    // The height of the topic browser when it's not collapsed. Used when the
-    // browser's visibility is toggled.
-    CGFloat _browserHeightWhenVisible;
+	// The height of the topic browser when it's not collapsed. Used when the
+	// browser's visibility is toggled.
+	CGFloat _browserHeightWhenVisible;
 
-    // Default browser height to use when we have neither an explicit height nor
-    // a fraction.
-    CGFloat _defaultBrowserHeight;
-    
-    // View controllers that manage different portions of the window.
-    AKTopicBrowserViewController *_topicBrowserController;
-    AKSubtopicListViewController *_subtopicListController;
-    AKDocListViewController *_docListController;
-    AKDocViewController *_docViewController;
-    AKQuicklistViewController *_quicklistController;
+	// Default browser height to use when we have neither an explicit height nor
+	// a fraction.
+	CGFloat _defaultBrowserHeight;
 
-    // IBOutlets.
-    NSSplitView *__weak _topLevelSplitView;
-    NSSplitView *__weak _bottomTwoThirdsSplitView;
-    NSView *__weak _middleView;
-    NSSplitView *__weak _middleThirdSplitView;
+	// View controllers that manage different portions of the window.
+	AKTopicBrowserViewController *_topicBrowserController;
+	AKSubtopicListViewController *_subtopicListController;
+	AKDocListViewController *_docListController;
+	AKDocViewController *_docViewController;
+	AKQuicklistViewController *_quicklistController;
 
-    NSView *__weak _topicBrowserContainerView;
-    NSView *__weak _subtopicListContainerView;
-    NSView *__weak _docListContainerView;
-    NSView *__weak _docContainerView;
-    
-    NSTextField *__weak _topicDescriptionField;
-    NSTextField *__weak _docCommentField;
+	// IBOutlets.
+	NSSplitView *__weak _topLevelSplitView;
+	NSSplitView *__weak _bottomTwoThirdsSplitView;
+	NSView *__weak _middleView;
+	NSSplitView *__weak _middleThirdSplitView;
 
-    NSButton *__weak _backButton;
-    NSButton *__weak _forwardButton;
-    NSButton *__weak _superclassButton;
+	NSView *__weak _topicBrowserContainerView;
+	NSView *__weak _subtopicListContainerView;
+	NSView *__weak _docListContainerView;
+	NSView *__weak _docContainerView;
 
-    NSMenu *__weak _backMenu;
-    NSMenu *__weak _forwardMenu;
-    NSMenu *__weak _superclassesMenu;
+	NSTextField *__weak _topicDescriptionField;
+	NSTextField *__weak _docCommentField;
 
-    NSDrawer *__weak _quicklistDrawer;
+	NSButton *__weak _backButton;
+	NSButton *__weak _forwardButton;
+	NSButton *__weak _superclassButton;
+
+	NSMenu *__weak _backMenu;
+	NSMenu *__weak _forwardMenu;
+	NSMenu *__weak _superclassesMenu;
+
+	NSDrawer *__weak _quicklistDrawer;
 }
 
 /*! Top pane contains the topic browser, bottom pane contains bottomTwoThirdsSplitView. */
