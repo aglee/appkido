@@ -117,17 +117,17 @@
     [array setArray:(@[
                      [AKClassGeneralSubtopic subtopicForClassItem:_classItem],
                      [AKPropertiesSubtopic subtopicForBehaviorItem:_classItem includeAncestors:NO],
-                     [AKPropertiesSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
+//                     [AKPropertiesSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
                      [AKClassMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:NO],
-                     [AKClassMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
+//                     [AKClassMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
                      [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:NO],
-                     [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
+//                     [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
                      [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
-                     [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
+//                     [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
                      [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
-                     [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
+//                     [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
                      [AKBindingsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
-                     [AKBindingsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
+//                     [AKBindingsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
                      ])];
 }
 
