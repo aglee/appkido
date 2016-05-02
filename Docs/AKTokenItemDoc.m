@@ -33,6 +33,9 @@
 - (NSURL *)docURLWithBaseURL:(NSURL *)baseURL
 {
 	NSString *relativePath = self.tokenItem.token.metainformation.file.path;
+	if (relativePath == nil) {
+		return nil;
+	}
 	NSURL *docURL = [baseURL URLByAppendingPathComponent:relativePath];
 	NSString *anchor = self.tokenItem.token.metainformation.anchor;
 	if (anchor) {
