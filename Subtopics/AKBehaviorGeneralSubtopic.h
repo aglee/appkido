@@ -38,12 +38,4 @@
 /*! Subclasses must override. */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
 
-/*! For internal use. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *htmlNameOfDescriptionSection;
-
-/*! For internal use. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *altHtmlNameOfDescriptionSection;
-
-#pragma mark - Utility methods
-
 @end

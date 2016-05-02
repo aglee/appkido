@@ -46,14 +46,4 @@
 	return _classItem;
 }
 
-- (NSString *)htmlNameOfDescriptionSection
-{
-	return AKClassDescriptionHTMLSectionName;
-}
-
-- (NSString *)altHtmlNameOfDescriptionSection
-{
-	return AKClassDescriptionAlternateHTMLSectionName;
-}
-
 @end

@@ -9,7 +9,6 @@
 
 #import "DIGSLog.h"
 #import "AKProtocolItem.h"
-#import "AKHTMLConstants.h"
 
 @implementation AKProtocolGeneralSubtopic
 
@@ -44,16 +43,6 @@
 - (AKBehaviorItem *)behaviorItem
 {
     return _protocolItem;
-}
-
-- (NSString *)htmlNameOfDescriptionSection
-{
-    return AKProtocolDescriptionHTMLSectionName;
-}
-
-- (NSString *)altHtmlNameOfDescriptionSection
-{
-    return AKProtocolDescriptionAlternateHTMLSectionName;
 }
 
 @end

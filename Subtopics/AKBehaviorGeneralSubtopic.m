@@ -20,18 +20,6 @@
     return nil;
 }
 
-- (NSString *)htmlNameOfDescriptionSection
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
-- (NSString *)altHtmlNameOfDescriptionSection
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
 #pragma mark - AKSubtopic methods
 
 - (NSString *)subtopicName
