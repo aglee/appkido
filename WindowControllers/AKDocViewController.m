@@ -242,8 +242,9 @@
 	}
 }
 
-- (void)_displayEmptyContent  //TODO: Fill this in.
+- (void)_displayEmptyContent
 {
+	[self.tabView selectTabViewItemWithIdentifier:@"Empty"];
 }
 
 - (void)_displayHTMLContentAtURL:(NSURL *)docURL

@@ -4,6 +4,7 @@
         <deployment version="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
         <plugIn identifier="com.apple.WebKitIBPlugin" version="10116"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AKDocViewController">
@@ -128,6 +129,35 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
+                                </subviews>
+                            </view>
+                        </tabViewItem>
+                        <tabViewItem label="Empty" identifier="Empty" id="Jwq-lK-Z9g">
+                            <view key="view" id="dsU-Xw-CHb">
+                                <rect key="frame" x="0.0" y="0.0" width="335" height="282"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <box title="Box" boxType="custom" borderType="none" titlePosition="noTitle" id="kCO-9O-caF">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="282"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <view key="contentView" id="CLJ-W3-ZAq">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="282"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="6DT-38-CX9">
+                                                    <rect key="frame" x="110" y="133" width="114" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Nothing to display" id="Ghz-zH-kfJ">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" white="0.60461701127819545" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                            </subviews>
+                                        </view>
+                                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                        <color key="fillColor" white="0.9179981203007519" alpha="1" colorSpace="calibratedWhite"/>
+                                    </box>
                                 </subviews>
                             </view>
                         </tabViewItem>
