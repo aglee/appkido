@@ -348,20 +348,12 @@
 
 - (AKClassItem *)_getOrAddClassItemWithToken:(DSAToken *)token
 {
-	AKClassItem *classItem = self.classItemsByName[token.tokenName];
-	if (classItem == nil) {
-		// Add a new class item.
-		classItem = [[AKClassItem alloc] initWithToken:token];
-		self.classItemsByName[token.tokenName] = classItem;
-//		QLog(@"+++ added class %@", token.tokenName);
-	} else if (classItem.token == nil) {
-		// Looks like this is a class item we created before we had the token
-		// for it.  Now we have the token.
+	AKClassItem *classItem = [self _getOrAddClassItemWithName:token.tokenName];
+	if (classItem.token == nil) {
 		classItem.token = token;
-//		QLog(@"+++ filled in the token for class %@", token.tokenName);
+		QLog(@"+++ class '%@' has token, is in framework '%@'", classItem.tokenName, classItem.frameworkName);
 	} else {
-		// We don't expect to encounter the same class twice with the same token.
-		QLog(@"+++ [ODD] class %@ already has a token", token.tokenName);
+		QLog(@"+++ [ODD] class '%@' already has a token", token.tokenName);
 	}
 	return classItem;
 }
@@ -373,7 +365,7 @@
 		classItem = [[AKClassItem alloc] initWithToken:nil];
 		classItem.fallbackTokenName = className;
 		self.classItemsByName[className] = classItem;
-//		QLog(@"+++ added class %@, don't have the token yet", className);
+		QLog(@"+++ class '%@', no token yet", classItem.tokenName);
 	}
 	return classItem;
 }
@@ -450,7 +442,20 @@
 - (void)_processProtocolToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intf"]);
-	(void)[self _getOrAddProtocolItemWithName:token.tokenName];
+	(void)[self _getOrAddProtocolItemWithToken:token];
+}
+
+- (AKProtocolItem *)_getOrAddProtocolItemWithToken:(DSAToken *)token
+{
+	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:token.tokenName];
+	if (protocolItem.token == nil) {
+		protocolItem.token = token;
+		QLog(@"+++ protocol '%@' has token, is in framework '%@'", protocolItem.tokenName, protocolItem.frameworkName);
+	} else {
+		// We don't expect to encounter the same class twice with the same token.
+		QLog(@"+++ [ODD] protocol '%@' already has a token", token.tokenName);
+	}
+	return protocolItem;
 }
 
 - (AKProtocolItem *)_getOrAddProtocolItemWithName:(NSString *)protocolName
@@ -459,7 +464,7 @@
 	if (protocolItem == nil) {
 		protocolItem = [[AKProtocolItem alloc] initWithToken:nil];
 		self.protocolItemsByName[protocolName] = protocolItem;
-//		QLog(@"+++ added protocol %@", protocolName);
+		QLog(@"+++ protocol '%@', no token yet", protocolItem.tokenName);
 	}
 	return protocolItem;
 }
