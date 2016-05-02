@@ -72,34 +72,34 @@
 
         if ([tokenType isEqualToString:@"cl"]) {
 			// Class.
-            [self _processClassToken:token];
+            [self _importClassToken:token];
 		} else if ([tokenType isEqualToString:@"clm"]) {
 			// Class method of a class.
-			[self _processClassClassMethodToken:token];
+			[self _importClassClassMethodToken:token];
 		} else if ([tokenType isEqualToString:@"instm"]) {
 			// Instance method of a class.
-			[self _processClassInstanceMethodToken:token];
+			[self _importClassInstanceMethodToken:token];
 		} else if ([tokenType isEqualToString:@"instp"]) {
 			// Property of a class.
-			[self _processClassPropertyToken:token];
+			[self _importClassPropertyToken:token];
 		} else if ([tokenType isEqualToString:@"binding"]) {
 			// Binding exposed by a class.
-			[self _processClassBindingToken:token];
+			[self _importClassBindingToken:token];
 		} else if ([tokenType isEqualToString:@"intf"]) {
 			// Protocol.
-			[self _processProtocolToken:token];
+			[self _importProtocolToken:token];
 		} else if ([tokenType isEqualToString:@"intfcm"]) {
 			// Class method of a protocol.
-			[self _processProtocolClassMethodToken:token];
+			[self _importProtocolClassMethodToken:token];
 		} else if ([tokenType isEqualToString:@"intfm"]) {
 			// Instance method of a protocol.
-			[self _processProtocolInstanceMethodToken:token];
+			[self _importProtocolInstanceMethodToken:token];
 		} else if ([tokenType isEqualToString:@"intfp"]) {
 			// Property of a protocol.
-			[self _processProtocolPropertyToken:token];
+			[self _importProtocolPropertyToken:token];
 		} else if ([tokenType isEqualToString:@"cat"]) {
 			// Category.
-			[self _processCategoryToken:token];
+			[self _importCategoryToken:token];
 		} else {
 			QLog(@"+++ %s [ODD] Unexpected token type '%@'", __PRETTY_FUNCTION__, tokenType);
 		}
@@ -335,7 +335,7 @@
 #pragma mark - Private methods - populating the database - classes and categories
 
 //FIXME: Will have to check, but I *think* I saw "bugs" in the 10.11.4 docset index, where a category is mislabeled as a class ('cl' when it looks to me like it should be 'cat').
-- (void)_processClassToken:(DSAToken *)token
+- (void)_importClassToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"cl"]);
 	AKClassItem *classItem = [self _getOrAddClassItemWithToken:token];
@@ -383,7 +383,7 @@
 	}
 }
 
-- (void)_processClassClassMethodToken:(DSAToken *)token
+- (void)_importClassClassMethodToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"clm"]);
 	NSString *className = token.container.containerName;
@@ -392,7 +392,7 @@
 	[classItem addClassMethod:methodItem];
 }
 
-- (void)_processClassInstanceMethodToken:(DSAToken *)token
+- (void)_importClassInstanceMethodToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"instm"]);
 	NSString *className = token.container.containerName;
@@ -401,7 +401,7 @@
 	[classItem addInstanceMethod:methodItem];
 }
 
-- (void)_processClassPropertyToken:(DSAToken *)token
+- (void)_importClassPropertyToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"instp"]);
 	NSString *className = token.container.containerName;
@@ -410,7 +410,7 @@
 	[classItem addPropertyItem:propertyItem];
 }
 
-- (void)_processClassBindingToken:(DSAToken *)token
+- (void)_importClassBindingToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"binding"]);
 	NSString *className = token.container.containerName;
@@ -422,7 +422,7 @@
 
 // It looks like the tokenName for a category token always has the form
 // "ClassName(CategoryName)".
-- (void)_processCategoryToken:(DSAToken *)token
+- (void)_importCategoryToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"cat"]);
 	AKCategoryItem *categoryItem = [[AKCategoryItem alloc] initWithToken:token];
@@ -439,7 +439,7 @@
 
 #pragma mark - Private methods - populating the database - protocols
 
-- (void)_processProtocolToken:(DSAToken *)token
+- (void)_importProtocolToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intf"]);
 	(void)[self _getOrAddProtocolItemWithToken:token];
@@ -469,7 +469,7 @@
 	return protocolItem;
 }
 
-- (void)_processProtocolClassMethodToken:(DSAToken *)token
+- (void)_importProtocolClassMethodToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intfcm"]);
 	NSString *protocolName = token.container.containerName;
@@ -478,7 +478,7 @@
 	[protocolItem addClassMethod:methodItem];
 }
 
-- (void)_processProtocolInstanceMethodToken:(DSAToken *)token
+- (void)_importProtocolInstanceMethodToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intfm"]);
 	NSString *protocolName = token.container.containerName;
@@ -487,7 +487,7 @@
 	[protocolItem addInstanceMethod:methodItem];
 }
 
-- (void)_processProtocolPropertyToken:(DSAToken *)token
+- (void)_importProtocolPropertyToken:(DSAToken *)token
 {
 	NSParameterAssert([token.tokenType.typeName isEqualToString:@"intfp"]);
 	NSString *propertyName = token.container.containerName;
