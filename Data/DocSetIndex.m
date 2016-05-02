@@ -7,8 +7,8 @@
 //
 
 #import "DocSetIndex.h"
-#import "QuietLog.h"
 #import "DocSetQuery.h"
+#import "QuietLog.h"
 
 @interface DocSetIndex ()
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -42,6 +42,7 @@
 
 - (NSManagedObjectModel *)managedObjectModel
 {
+	// Lazy loading.
 	if (_managedObjectModel) {
 		return _managedObjectModel;
 	}
@@ -54,6 +55,7 @@
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
+	// Lazy loading.
 	if (_persistentStoreCoordinator) {
 		return _persistentStoreCoordinator;
 	}
@@ -81,6 +83,7 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
+	// Lazy loading.
 	if (_managedObjectContext) {
 		return _managedObjectContext;
 	}
@@ -95,57 +98,17 @@
 	return _managedObjectContext;
 }
 
+- (NSURL *)documentsBaseURL  //TODO: Handle the case when we need the fallback URL.
+{
+	NSString *documentsPath = [self.docSetPath stringByAppendingPathComponent:@"Contents/Resources/Documents"];
+	return [NSURL fileURLWithPath:documentsPath];
+}
+
 #pragma mark - Queries
 
 - (DocSetQuery *)queryWithEntityName:(NSString *)entityName
 {
 	return [DocSetQuery queryWithDocSetIndex:self entityName:entityName];
-}
-
-- (NSURL *)documentationURLForObject:(id)obj
-{
-	if ([obj isKindOfClass:[DSAToken class]]) {
-		return [self _documentationURLForToken:(DSAToken *)obj];
-	} else if ([obj isKindOfClass:[DSANodeURL class]]) {
-		return [self _documentationURLForNodeURL:(DSANodeURL *)obj];
-	}
-	return nil;
-}
-
-#pragma mark - Private methods
-
-- (NSString *)_documentsDirPath
-{
-	return [self.docSetPath stringByAppendingPathComponent:@"Contents/Resources/Documents"];
-}
-
-- (NSURL *)_documentationURLForToken:(DSAToken *)token
-{
-	NSString *pathString = [self _documentsDirPath];
-	pathString = [pathString stringByAppendingPathComponent:token.metainformation.file.path];
-	NSURL *url = [NSURL fileURLWithPath:pathString];
-	if (token.metainformation.anchor) {
-		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-		urlComponents.fragment = token.metainformation.anchor;
-		url = [urlComponents URL];
-	}
-
-	return url;
-}
-
-- (NSURL *)_documentationURLForNodeURL:(DSANodeURL *)nodeURLInfo
-{
-	NSString *pathString = [self _documentsDirPath];  //TODO: Handle fallback to online URL if local docset has not been installed.
-	pathString = [pathString stringByAppendingPathComponent:nodeURLInfo.path];
-
-	NSURL *url = [NSURL fileURLWithPath:pathString];;
-	if (nodeURLInfo.anchor) {
-		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-		urlComponents.fragment = nodeURLInfo.anchor;
-		url = [urlComponents URL];
-	}
-	
-	return url;
 }
 
 @end

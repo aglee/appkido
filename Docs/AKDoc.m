@@ -10,12 +10,6 @@
 
 @implementation AKDoc
 
-- (NSURL *)docURLWithBasePath:(NSString *)basePath
-{
-	DIGSLogError_MissingOverride();
-	return nil;
-}
-
 #pragma mark - Getters and setters
 
 - (BOOL)docTextIsHTML
@@ -38,6 +32,14 @@
 - (NSString *)commentString
 {
 	return @"";
+}
+
+#pragma mark - URLs
+
+- (NSURL *)docURLWithBaseURL:(NSURL *)baseURL
+{
+	DIGSLogError_MissingOverride();
+	return nil;
 }
 
 #pragma mark - NSObject methods

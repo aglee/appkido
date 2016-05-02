@@ -19,6 +19,7 @@
 @property (readonly, copy, nonatomic) NSString *docSetPath;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, copy, nonatomic) NSURL *documentsBaseURL;
 
 #pragma mark - Init/awake/dealloc
 
@@ -28,7 +29,5 @@
 #pragma mark - Queries
 
 - (DocSetQuery *)queryWithEntityName:(NSString *)entityName;
-
-- (NSURL *)documentationURLForObject:(id)obj;
 
 @end

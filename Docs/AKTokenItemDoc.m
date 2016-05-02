@@ -30,19 +30,17 @@
 
 #pragma mark - AKDoc methods
 
-- (NSURL *)docURLWithBasePath:(NSString *)basePath
+- (NSURL *)docURLWithBaseURL:(NSURL *)baseURL
 {
-	NSString *path = [basePath stringByAppendingPathComponent:self.tokenItem.token.metainformation.file.path];
+	NSString *relativePath = self.tokenItem.token.metainformation.file.path;
+	NSURL *docURL = [baseURL URLByAppendingPathComponent:relativePath];
 	NSString *anchor = self.tokenItem.token.metainformation.anchor;
-	NSURL *url = [NSURL fileURLWithPath:path];
-
 	if (anchor) {
-		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:docURL resolvingAgainstBaseURL:NO];
 		urlComponents.fragment = anchor;
-		url = [urlComponents URL];
+		docURL = [urlComponents URL];
 	}
-
-	return url;
+	return docURL;
 }
 
 - (BOOL)docTextIsHTML

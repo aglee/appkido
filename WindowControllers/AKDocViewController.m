@@ -219,11 +219,8 @@
 	AKDoc *docToDisplay = [_docLocator docToDisplay];
 
 	if (docToDisplay.docTextIsHTML) {
-		AKDatabase *db = self.owningWindowController.database;
-		DocSetIndex *docSetIndex = db.docSetIndex;
-		NSString *documentsPath = [docSetIndex.docSetPath stringByAppendingPathComponent:@"Contents/Resources/Documents"];
-		//TODO: Handle fallback http URL.
-		NSURL *docURL = [docToDisplay docURLWithBasePath:documentsPath];
+		DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
+		NSURL *docURL = [docToDisplay docURLWithBaseURL:docSetIndex.documentsBaseURL];
 		QLog(@"+++ docURL: %@", docURL);
 
 		[self.tabView selectTabViewItemWithIdentifier:@"1"];

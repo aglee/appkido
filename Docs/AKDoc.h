@@ -40,11 +40,9 @@
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *commentString;
 
-/*!
- * Subclasses must override.
- *
- * Indicates where the doc content is located.
- */
-- (NSURL *)docURLWithBasePath:(NSString *)basePath;
+#pragma mark - URLs
+
+/*! Subclasses must override. */
+- (NSURL *)docURLWithBaseURL:(NSURL *)baseURL;
 
 @end
