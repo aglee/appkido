@@ -262,6 +262,9 @@ contextMenuItemsForElement:(NSDictionary *)element
         float multiplier = ((float)_docMagnifier) / 100.0f;
         self.webView.textSizeMultiplier = multiplier;
 
+        // Turn off JavaScript, which interferes by hiding stuff we don't want to hide.
+        self.webView.preferences.javaScriptEnabled = NO;
+
         NSURLRequest *req = [NSURLRequest requestWithURL:docURL];
         [self.webView.mainFrame loadRequest:req];
     }
