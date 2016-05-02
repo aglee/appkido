@@ -34,4 +34,6 @@
 /*! Returns either the web view or the text view. */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *docView;
 
+- (NSURL *)docURL;
+
 @end

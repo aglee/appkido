@@ -394,7 +394,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)copyDocFileURL:(id)sender
 {
-	NSURL *docURL = [self _currentDocURL];
+	NSURL *docURL = [_docViewController docURL];
 	if (docURL) {
 		NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
 		[pasteboard declareTypes:@[NSStringPboardType] owner:nil];
@@ -404,8 +404,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)copyDocFilePath:(id)sender
 {
-	NSString *docPath = [self _currentDocPath];
-	if (docPath) {
+	NSURL *docURL = [_docViewController docURL];
+	if ([docURL isFileURL]) {
+		NSString *docPath = docURL.path;
 		NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
 		[pasteboard declareTypes:@[NSStringPboardType] owner:nil];
 		[pasteboard setString:docPath forType:NSStringPboardType];
@@ -414,7 +415,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)openDocFileInBrowser:(id)sender
 {
-	NSURL *docURL = [self _currentDocURL];
+	NSURL *docURL = [_docViewController docURL];
 	if (docURL) {
 		[[NSWorkspace sharedWorkspace] openURL:docURL];
 	}
@@ -422,13 +423,15 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)revealDocFileInFinder:(id)sender
 {
-	NSString *docPath = [self _currentDocPath];
-	if (docPath == nil) {
-		return;
+	NSURL *docURL = [_docViewController docURL];
+	if ([docURL isFileURL]) {
+		NSString *docPath = docURL.path;
+		if (docPath) {
+			NSString *containingDirPath = docPath.stringByDeletingLastPathComponent;
+			[[NSWorkspace sharedWorkspace] selectFile:docPath
+							 inFileViewerRootedAtPath:containingDirPath];
+		}
 	}
-	NSString *containingDirPath = docPath.stringByDeletingLastPathComponent;
-	[[NSWorkspace sharedWorkspace] selectFile:docPath
-					 inFileViewerRootedAtPath:containingDirPath];
 }
 
 #pragma mark - Action methods -- debugging
@@ -987,22 +990,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	// Any time the history changes, we want to do the following UI updates.
 	[self _refreshNavigationButtons];
 	self.window.title = [newHistoryItem stringToDisplayInLists];
-}
-
-- (NSString *)_currentDocPath
-{
-	return nil;
-//TODO: Commenting out, come back later.
-//    return [[[[self currentDocLocator] docToDisplay] fileSection] filePath];
-}
-
-- (NSURL *)_currentDocURL
-{
-	NSString *docPath = [self _currentDocPath];
-	if (docPath == nil) {
-		return nil;
-	}
-	return [NSURL fileURLWithPath:docPath].absoluteURL.standardizedURL;
 }
 
 - (AKTopic *)_currentTopic

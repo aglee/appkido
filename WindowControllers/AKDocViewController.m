@@ -61,6 +61,16 @@
 	return ([self _isShowingWebView] ? _webView : _textView);
 }
 
+- (NSURL *)docURL
+{
+	AKDoc *docToDisplay = _docLocator.docToDisplay;
+	if (docToDisplay == nil) {
+		return nil;
+	}
+	DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
+	return [docToDisplay docURLAccordingToDocSetIndex:docSetIndex];
+}
+
 #pragma mark - AKViewController methods
 
 - (void)goFromDocLocator:(AKDocLocator *)whereFrom toDocLocator:(AKDocLocator *)whereTo
@@ -173,13 +183,13 @@
 	[self _addMenuItemWithTitle:@"Copy Page URL"
 						 action:@selector(copyDocFileURL:)
 						toArray:newMenuItems];
-	[self _addMenuItemWithTitle:@"Copy File Path"
-						 action:@selector(copyDocFilePath:)
-						toArray:newMenuItems];
 	[self _addMenuItemWithTitle:@"Open Page in Browser"
 						 action:@selector(openDocFileInBrowser:)
 						toArray:newMenuItems];
-	if ([[self _docURL] isFileURL]) {
+	if ([[self docURL] isFileURL]) {
+		[self _addMenuItemWithTitle:@"Copy File Path"
+							 action:@selector(copyDocFilePath:)
+							toArray:newMenuItems];
 		[self _addMenuItemWithTitle:@"Reveal in Finder"
 							 action:@selector(revealDocFileInFinder:)
 							toArray:newMenuItems];
@@ -209,19 +219,9 @@
 	return [_webView isDescendantOf:viewSelectedInTabView];
 }
 
-- (NSURL *)_docURL
-{
-	AKDoc *docToDisplay = _docLocator.docToDisplay;
-	if (docToDisplay == nil) {
-		return nil;
-	}
-	DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
-	return [docToDisplay docURLAccordingToDocSetIndex:docSetIndex];
-}
-
 - (void)_updateDocDisplay
 {
-	NSURL *docURL = [self _docURL];
+	NSURL *docURL = [self docURL];
 	QLog(@"+++ Doc URL: %@", docURL);
 
 	if (docURL == nil) {
