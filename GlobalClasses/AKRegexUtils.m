@@ -30,7 +30,7 @@
 
 	// Expand %...% placeholders.  Replace %keypath% before replacing %ident%, because the expansion of %keypath% contains "%ident%".
 	pattern = [pattern stringByReplacingOccurrencesOfString:@"%keypath%" withString:@"(?:(?:%ident%(?:\\.%ident%)*)(?:\\.@count)?)"];
-	pattern = [pattern stringByReplacingOccurrencesOfString:@"%ident%" withString:@"(?:[A-Za-z][0-9A-Za-z]*)"];
+	pattern = [pattern stringByReplacingOccurrencesOfString:@"%ident%" withString:@"(?:[_A-Za-z][_0-9A-Za-z]*)"];
 	pattern = [pattern stringByReplacingOccurrencesOfString:@"%lit%" withString:@"(?:(?:[^\"]|(?:\\\"))*)"];
 
 	// Apply the regex to the input string.
@@ -45,10 +45,10 @@
 	NSRange rangeOfEntireString = NSMakeRange(0, inputString.length);
 	NSTextCheckingResult *matchResult = [regex firstMatchInString:inputString options:0 range:rangeOfEntireString];
 	if (matchResult == nil) {
-		QLog(@"%@", @"failed to match regex");
+//		QLog(@"%@", @"failed to match regex");
 		return nil;
 	} else if (!NSEqualRanges(matchResult.range, rangeOfEntireString)) {
-		QLog(@"%@", @"regex did not match entire string");
+//		QLog(@"%@", @"regex did not match entire string");
 		return nil;
 	}
 
