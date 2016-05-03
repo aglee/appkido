@@ -291,6 +291,8 @@
 
 - (NSString *)_wrapHTMLAroundObjC:(NSString *)objc
 {
+	objc = [objc stringByReplacingOccurrencesOfString:@"<" withString:@"&lt;"];
+
 	NSString *html = [self _templateForWrappingHTMLAroundObjC];
 
 	html = [html stringByReplacingOccurrencesOfString:@"%objc%" withString:objc];
