@@ -132,7 +132,7 @@
 
 - (NSArray *)documentedBindings
 {
-	return [_indexOfBindings tokenItemsWithDocumentation];
+	return [_indexOfBindings allItems];
 }
 
 #pragma mark - Getters and setters -- multiple owning frameworks
@@ -175,7 +175,7 @@
 
 - (NSArray *)documentedDelegateMethods
 {
-	NSMutableArray *methodList = [[_indexOfDelegateMethods tokenItemsWithDocumentation] mutableCopy];
+	NSMutableArray *methodList = [[_indexOfDelegateMethods allItems] mutableCopy];
 
 	// Handle classes like WebView that have different *kinds* of delegates.
 	[self _addExtraDelegateMethodsTo:methodList];
@@ -197,7 +197,7 @@
 
 - (NSArray *)documentedNotifications
 {
-	return [_indexOfNotifications tokenItemsWithDocumentation];
+	return [_indexOfNotifications allItems];
 }
 
 - (AKNotificationItem *)notificationWithName:(NSString *)notificationName

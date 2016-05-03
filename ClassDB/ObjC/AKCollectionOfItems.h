@@ -28,8 +28,6 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allItems;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *tokenItemsWithDocumentation;
-
 - (AKTokenItem *)itemWithTokenName:(NSString *)tokenName;
 
 - (void)addTokenItem:(AKTokenItem *)tokenItem;

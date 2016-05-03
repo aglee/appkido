@@ -77,7 +77,7 @@
 
 - (NSArray *)propertyItems
 {
-	return [_indexOfProperties tokenItemsWithDocumentation];
+	return [_indexOfProperties allItems];
 }
 
 - (AKPropertyItem *)propertyItemWithName:(NSString *)propertyName
@@ -94,7 +94,7 @@
 
 - (NSArray *)documentedClassMethods
 {
-	return [_indexOfClassMethods tokenItemsWithDocumentation];
+	return [_indexOfClassMethods allItems];
 }
 
 - (AKMethodItem *)classMethodWithName:(NSString *)methodName

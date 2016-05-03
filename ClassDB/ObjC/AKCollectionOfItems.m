@@ -16,7 +16,8 @@
 
 - (instancetype)init
 {
-	if ((self = [super init])) {
+	self = [super init];
+	if (self) {
 		_itemList = [[NSMutableArray alloc] init];
 		_itemsByName = [[NSMutableDictionary alloc] init];
 	}
@@ -28,18 +29,6 @@
 - (NSArray *)allItems
 {
 	return _itemList;
-}
-
-- (NSArray *)tokenItemsWithDocumentation
-{
-	NSMutableArray *result = [NSMutableArray array];
-	for (AKTokenItem *tokenItem in _itemList) {
-		//TODO: Update logic for knowing whether item has documentation.        if (tokenItem.tokenItemDocumentation)
-		{
-			[result addObject:tokenItem];
-		}
-	}
-	return result;
 }
 
 - (AKTokenItem *)itemWithTokenName:(NSString *)tokenName
