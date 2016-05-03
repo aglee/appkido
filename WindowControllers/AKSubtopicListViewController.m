@@ -15,6 +15,7 @@
 #import "AKTableView.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
+#import "DocSetModel.h"
 
 @implementation AKSubtopicListViewController
 
@@ -225,7 +226,7 @@
     {
         AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
         return ([currentTopic isKindOfClass:[AKBehaviorTopic class]]
-                && (((AKBehaviorItem *)[currentTopic topicItem]).headerFileWhereDeclared != nil));
+                && ([currentTopic topicItem].token.metainformation.declaredIn.headerPath != nil));
     }
 
     return NO;

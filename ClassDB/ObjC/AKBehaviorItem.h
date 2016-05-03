@@ -62,9 +62,6 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 	AKCollectionOfItems *_indexOfInstanceMethods;
 }
 
-/*! Path to the .h file that declares this behavior. */
-@property (nonatomic, copy) NSString *headerFileWhereDeclared;
-
 #pragma mark - Getters and setters -- general
 
 //TODO: Old note to self says that classes can have multiple header paths. I suspect I was thinking of protocols. Check whether I'm handling this.
