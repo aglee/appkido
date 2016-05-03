@@ -241,6 +241,7 @@
 - (void)_displayHTMLContentAtURL:(NSURL *)docURL
 {
 	[self.tabView selectTabViewItemWithIdentifier:@"WebView"];
+
 	float multiplier = ((float)_docMagnifier) / 100.0f;
 	self.webView.textSizeMultiplier = multiplier;
 
@@ -258,6 +259,8 @@
 		[self _displayEmptyContent];
 		return;
 	}
+
+	[self.tabView selectTabViewItemWithIdentifier:@"WebView"];
 
 	NSString *html = [self _wrapHTMLAroundObjC:objc];
 	[self.webView.mainFrame loadHTMLString:html baseURL:nil];
