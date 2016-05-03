@@ -33,7 +33,7 @@
 
 - (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {
-    return [behaviorItem documentedProperties];
+    return [behaviorItem propertyItems];
 }
 
 + (id)memberDocClass

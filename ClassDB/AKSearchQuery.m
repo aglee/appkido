@@ -322,7 +322,7 @@
     AKBehaviorItem *behaviorItem = (AKBehaviorItem *)[behaviorTopic topicItem];
 
     // Search the behavior's properties.
-    [self _searchTokenItems:[behaviorItem documentedProperties]
+    [self _searchTokenItems:[behaviorItem propertyItems]
          underSubtopic:AKPropertiesSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
@@ -335,7 +335,7 @@
         NSString *savedSearchString = _searchString;
         _searchString = [_searchString substringFromIndex:3];
         {{
-            [self _searchTokenItems:[behaviorItem documentedProperties]
+            [self _searchTokenItems:[behaviorItem propertyItems]
                  underSubtopic:AKPropertiesSubtopicName
                ofBehaviorTopic:behaviorTopic];
         }}

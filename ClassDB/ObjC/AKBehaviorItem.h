@@ -64,56 +64,34 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 
 #pragma mark - Getters and setters -- general
 
-//TODO: Old note to self says that classes can have multiple header paths. I suspect I was thinking of protocols. Check whether I'm handling this.
+@property (NS_NONATOMIC_IOSONLY, assign, readonly) BOOL isClassItem;
+/*! Includes protocols implemented by virtue of inheritance. */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *implementedProtocols;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodItems;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *propertyItems;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isClassItem, readonly) BOOL classItem;
+#pragma mark - Getters and setters -- properties
 
 - (void)addImplementedProtocol:(AKProtocolItem *)protocolItem;
 - (void)addImplementedProtocols:(NSArray *)protocolItems;
 
-/*!
- * Returns zero or more AKProtocolItems, one for each protocol implemented by
- * the represented behavior. Includes protocols implemented by virtue of
- * inheritance.
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *implementedProtocols;
-
-/*! Returns zero or more AKMethodItems. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodItems;
-
-#pragma mark - Getters and setters -- properties
-
-/*! Returns only properties that are in this class's documentation. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedProperties;
-
 - (AKPropertyItem *)propertyItemWithName:(NSString *)propertyName;
-
 /*! Does nothing if a property with the same name already exists. */
 - (void)addPropertyItem:(AKPropertyItem *)propertyItem;
 
 #pragma mark - Getters and setters -- class methods
 
-/*!
- * Returns AKMethodItems for class methods that have documentation
- * associated with them.  Does not include inherited methods.
- */
+/*! Does not include inherited methods. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedClassMethods;
-
 - (AKMethodItem *)classMethodWithName:(NSString *)methodName;
-
 /*! Does nothing if a class method with the same name already exists. */
 - (void)addClassMethod:(AKMethodItem *)methodItem;
 
 #pragma mark - Getters and setters -- instance methods
 
-/*!
- * Returns AKMethodItems for instance methods that have documentation
- * associated with them.  Does not include inherited methods.
- */
+/*! Does not include inherited methods. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedInstanceMethods;
-
 - (AKMethodItem *)instanceMethodWithName:(NSString *)methodName;
-
 /*! Does nothing if an instance method with the same name already exists. */
 - (void)addInstanceMethod:(AKMethodItem *)methodItem;
 

@@ -129,7 +129,7 @@
 - (void)_exportClass:(AKClassItem *)classItem
 {
     [_xmlWriter tag:@"class" attributes:@{ @"name": classItem.tokenName } contentBlock:^{
-        [self _exportMembers:[classItem documentedProperties]
+        [self _exportMembers:[classItem propertyItems]
                       ofType:@"properties"
                       xmlTag:@"property"];
 
@@ -159,7 +159,7 @@
     attributes[@"type"] = (protocolItem.isInformal ? @"informal" : @"formal");
 
     [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
-        [self _exportMembers:[protocolItem documentedProperties]
+        [self _exportMembers:[protocolItem propertyItems]
                       ofType:@"properties"
                       xmlTag:@"property"];
 

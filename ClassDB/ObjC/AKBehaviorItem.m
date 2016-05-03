@@ -30,7 +30,6 @@
 	return self;
 }
 
-
 #pragma mark - Getters and setters -- general
 
 - (BOOL)isClassItem
@@ -76,7 +75,7 @@
 
 #pragma mark - Getters and setters -- properties
 
-- (NSArray *)documentedProperties
+- (NSArray *)propertyItems
 {
 	return [_indexOfProperties tokenItemsWithDocumentation];
 }

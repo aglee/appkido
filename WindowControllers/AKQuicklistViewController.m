@@ -689,7 +689,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}
 
 	// See if the class has a property named "delegate" or "xxxDelegate".
-	for (AKPropertyItem *propertyItem in [classItem documentedProperties]) {
+	for (AKPropertyItem *propertyItem in [classItem propertyItems]) {
 		NSString *propertyName = propertyItem.tokenName;
 		if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"]) {
 			return YES;
