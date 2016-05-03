@@ -297,7 +297,7 @@
 //
 //    if (delegateProtocol)
 //    {
-//        [methodsList addObjectsFromArray:[delegateProtocol documentedInstanceMethods]];
+//        [methodsList addObjectsFromArray:[delegateProtocol instanceMethodItems]];
 //    }
 //
 //    // Look for instance method names of the form setFooDelegate:.
@@ -320,7 +320,7 @@
 //
 //                if ([protocolName hasSuffix:protocolSuffix])
 //                {
-//                    [methodsList addObjectsFromArray:[protocolItem documentedInstanceMethods]];
+//                    [methodsList addObjectsFromArray:[protocolItem instanceMethodItems]];
 //                    
 //                    break;
 //                }

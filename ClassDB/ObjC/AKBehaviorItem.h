@@ -89,8 +89,6 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
 
 #pragma mark - Getters and setters -- instance methods
 
-/*! Does not include inherited methods. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedInstanceMethods;
 - (AKMethodItem *)instanceMethodWithName:(NSString *)methodName;
 /*! Does nothing if an instance method with the same name already exists. */
 - (void)addInstanceMethod:(AKMethodItem *)methodItem;

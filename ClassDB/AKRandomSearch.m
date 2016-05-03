@@ -96,7 +96,7 @@
     {
         [self _addTokenItems:[classItem propertyItems] toSymbolArray:apiSymbols];
         [self _addTokenItems:[classItem documentedClassMethods] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[classItem documentedInstanceMethods] toSymbolArray:apiSymbols];
+        [self _addTokenItems:[classItem instanceMethodItems] toSymbolArray:apiSymbols];
         [self _addTokenItems:[classItem documentedDelegateMethods] toSymbolArray:apiSymbols];
         [self _addTokenItems:[classItem documentedNotifications] toSymbolArray:apiSymbols];
     }
@@ -113,7 +113,7 @@
     {
         [self _addTokenItems:[protocolItem propertyItems] toSymbolArray:apiSymbols];
         [self _addTokenItems:[protocolItem documentedClassMethods] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[protocolItem documentedInstanceMethods] toSymbolArray:apiSymbols];
+        [self _addTokenItems:[protocolItem instanceMethodItems] toSymbolArray:apiSymbols];
     }
 }
 

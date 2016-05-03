@@ -348,7 +348,7 @@
        ofBehaviorTopic:behaviorTopic];
 
     // Search the behavior's instance methods.
-    [self _searchTokenItems:[behaviorItem documentedInstanceMethods]
+    [self _searchTokenItems:[behaviorItem instanceMethodItems]
          underSubtopic:AKInstanceMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 }

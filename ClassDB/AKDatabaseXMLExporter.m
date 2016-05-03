@@ -137,7 +137,7 @@
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classItem documentedInstanceMethods]
+        [self _exportMembers:[classItem instanceMethodItems]
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
 
@@ -167,7 +167,7 @@
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[protocolItem documentedInstanceMethods]
+        [self _exportMembers:[protocolItem instanceMethodItems]
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
     }];

@@ -681,7 +681,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 - (BOOL)_classHasDelegate:(AKClassItem *)classItem
 {
 	// See if the class has an instance method with a name like setXXXDelegate:.
-	for (AKMethodItem *methodItem in [classItem documentedInstanceMethods]) {
+	for (AKMethodItem *methodItem in [classItem instanceMethodItems]) {
 		NSString *methodName = methodItem.tokenName;
 		if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"]) {
 			return YES;

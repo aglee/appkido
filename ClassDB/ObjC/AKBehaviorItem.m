@@ -109,11 +109,6 @@
 
 #pragma mark - Getters and setters -- instance methods
 
-- (NSArray *)documentedInstanceMethods
-{
-	return [_indexOfInstanceMethods tokenItemsWithDocumentation];
-}
-
 - (AKMethodItem *)instanceMethodWithName:(NSString *)methodName
 {
 	return (AKMethodItem *)[_indexOfInstanceMethods itemWithTokenName:methodName];
