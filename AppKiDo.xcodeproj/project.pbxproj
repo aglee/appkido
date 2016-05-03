@@ -894,8 +894,8 @@
 		7362064806169C7D0007F07A /* AKSearchQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKSearchQuery.m; path = ClassDB/AKSearchQuery.m; sourceTree = "<group>"; };
 		7362078A0616C02F0007F07A /* AKGlobalsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGlobalsItem.h; sourceTree = "<group>"; };
 		7362078B0616C02F0007F07A /* AKGlobalsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGlobalsItem.m; sourceTree = "<group>"; };
-		7368B9AD0E0EFB2200AFEA2D /* AKCollectionOfItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCollectionOfItems.h; sourceTree = "<group>"; };
-		7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCollectionOfItems.m; sourceTree = "<group>"; };
+		7368B9AD0E0EFB2200AFEA2D /* AKCollectionOfItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCollectionOfItems.h; sourceTree = "<group>"; usesTabs = 1; };
+		7368B9AE0E0EFB2200AFEA2D /* AKCollectionOfItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCollectionOfItems.m; sourceTree = "<group>"; usesTabs = 1; };
 		7370170405FBA7B300C74AA7 /* AKLinkResolver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKLinkResolver.h; sourceTree = "<group>"; };
 		7370170505FBA7B300C74AA7 /* AKLinkResolver.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKLinkResolver.m; sourceTree = "<group>"; };
 		737405C51195B28D000BD282 /* AKSDKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSDKVersion.h; sourceTree = "<group>"; };

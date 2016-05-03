@@ -17,11 +17,11 @@
 @interface AKCollectionOfItems : NSObject
 {
 @private
-    // Contains all the AKTokenItems that have been added to us.
-    NSMutableArray *_itemList;
+	// Contains all the AKTokenItems that have been added to us.
+	NSMutableArray *_itemList;
 
-    // Keys are item names.  Values are AKTokenItems.
-    NSMutableDictionary *_itemsByName;
+	// Keys are item names.  Values are AKTokenItems.
+	NSMutableDictionary *_itemsByName;
 }
 
 #pragma mark - Getters and setters
