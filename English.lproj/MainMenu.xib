@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="AppKiDo" id="56">
@@ -350,6 +350,18 @@
                             <menuItem title="Bring All to Front" id="5">
                                 <connections>
                                     <action selector="arrangeInFront:" target="-1" id="39"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" id="OD0-G1-gBS">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Help" systemMenu="help" id="k17-mP-BGO">
+                        <items>
+                            <menuItem title="Application Help" keyEquivalent="?" id="SG4-M2-e9K">
+                                <connections>
+                                    <action selector="showHelp:" target="-1" id="q9T-QD-Be9"/>
                                 </connections>
                             </menuItem>
                         </items>
