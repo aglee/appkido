@@ -67,67 +67,8 @@
 {
 	self.frameworkNames = [self _sortedArrayWithAllFrameworkNames];
 
-	for (DSAToken *token in [self _arrayWithAllTokens]) {
-		NSString *tokenType = token.tokenType.typeName;
+	[self _importAllTokens];
 
-		if ([tokenType isEqualToString:@"cl"] || [tokenType isEqualToString:@"cat"]) {
-
-			// Class or category.
-			AKBehaviorItem *item = [self _getOrAddClassOrCategoryItemWithName:token.tokenName];
-			if ([item isKindOfClass:[AKClassItem class]]) {
-				AKClassItem *classItem = (AKClassItem *)item;
-				classItem.token = token;
-				if (classItem.parentClass == nil) {
-					[self _fillInParentClassOfClassItem:classItem];
-				}
-			}
-
-		} else if ([tokenType isEqualToString:@"clm"]) {
-
-			// Class method of either a class or a category.
-			[self _importClassMethodToken:token];
-
-		} else if ([tokenType isEqualToString:@"instm"]) {
-
-			// Instance method of either a class or a category.
-			[self _importInstanceMethodToken:token];
-
-		} else if ([tokenType isEqualToString:@"instp"]) {
-
-			// Property of either a class or a category.
-			[self _importPropertyToken:token];
-
-		} else if ([tokenType isEqualToString:@"binding"]) {
-
-			// Binding exposed by a class.
-			[self _importBindingToken:token];
-
-		} else if ([tokenType isEqualToString:@"intf"]) {
-
-			// Protocol.
-			[self _importProtocolToken:token];
-
-		} else if ([tokenType isEqualToString:@"intfcm"]) {
-
-			// Class method of a protocol.
-			[self _importProtocolClassMethodToken:token];
-
-		} else if ([tokenType isEqualToString:@"intfm"]) {
-
-			// Instance method of a protocol.
-			[self _importProtocolInstanceMethodToken:token];
-
-		} else if ([tokenType isEqualToString:@"intfp"]) {
-
-			// Property of a protocol.
-			[self _importProtocolPropertyToken:token];
-
-		} else {
-
-			QLog(@"+++ %s [ODD] Unexpected token type '%@'", __PRETTY_FUNCTION__, tokenType);
-
-		}
-	}
 }
 
 #pragma mark - Getters and setters -- frameworks
@@ -311,6 +252,71 @@
 }
 
 #pragma mark - Private methods - populating the database - misc
+
+- (void)_importAllTokens
+{
+	for (DSAToken *token in [self _arrayWithAllTokens]) {
+		NSString *tokenType = token.tokenType.typeName;
+
+		if ([tokenType isEqualToString:@"cl"] || [tokenType isEqualToString:@"cat"]) {
+
+			// Class or category.
+			AKBehaviorItem *item = [self _getOrAddClassOrCategoryItemWithName:token.tokenName];
+			if ([item isKindOfClass:[AKClassItem class]]) {
+				AKClassItem *classItem = (AKClassItem *)item;
+				classItem.token = token;
+				if (classItem.parentClass == nil) {
+					[self _fillInParentClassOfClassItem:classItem];
+				}
+			}
+
+		} else if ([tokenType isEqualToString:@"clm"]) {
+
+			// Class method of either a class or a category.
+			[self _importClassMethodToken:token];
+
+		} else if ([tokenType isEqualToString:@"instm"]) {
+
+			// Instance method of either a class or a category.
+			[self _importInstanceMethodToken:token];
+
+		} else if ([tokenType isEqualToString:@"instp"]) {
+
+			// Property of either a class or a category.
+			[self _importPropertyToken:token];
+
+		} else if ([tokenType isEqualToString:@"binding"]) {
+
+			// Binding exposed by a class.
+			[self _importBindingToken:token];
+
+		} else if ([tokenType isEqualToString:@"intf"]) {
+
+			// Protocol.
+			[self _importProtocolToken:token];
+
+		} else if ([tokenType isEqualToString:@"intfcm"]) {
+
+			// Class method of a protocol.
+			[self _importProtocolClassMethodToken:token];
+
+		} else if ([tokenType isEqualToString:@"intfm"]) {
+
+			// Instance method of a protocol.
+			[self _importProtocolInstanceMethodToken:token];
+
+		} else if ([tokenType isEqualToString:@"intfp"]) {
+
+			// Property of a protocol.
+			[self _importProtocolPropertyToken:token];
+
+		} else {
+			
+			QLog(@"+++ %s [ODD] Unexpected token type '%@'", __PRETTY_FUNCTION__, tokenType);
+			
+		}
+	}
+}
 
 - (NSArray *)_sortedArrayWithAllFrameworkNames
 {
