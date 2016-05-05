@@ -32,7 +32,7 @@
 
 - (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
 {
-    return [behaviorItem documentedClassMethods];
+    return [behaviorItem classMethodItems];
 }
 
 + (id)memberDocClass

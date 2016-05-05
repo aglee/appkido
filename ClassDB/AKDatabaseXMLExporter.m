@@ -133,7 +133,7 @@
                       ofType:@"properties"
                       xmlTag:@"property"];
 
-        [self _exportMembers:[classItem documentedClassMethods]
+        [self _exportMembers:[classItem classMethodItems]
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
@@ -163,7 +163,7 @@
                       ofType:@"properties"
                       xmlTag:@"property"];
 
-        [self _exportMembers:[protocolItem documentedClassMethods]
+        [self _exportMembers:[protocolItem classMethodItems]
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 

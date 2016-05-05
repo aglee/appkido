@@ -92,7 +92,7 @@
 
 #pragma mark - Getters and setters -- class methods
 
-- (NSArray *)documentedClassMethods
+- (NSArray *)classMethodItems
 {
 	return [_indexOfClassMethods allItems];
 }

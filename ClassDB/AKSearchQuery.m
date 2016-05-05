@@ -343,7 +343,7 @@
     }
 
     // Search the behavior's class methods.
-    [self _searchTokenItems:[behaviorItem documentedClassMethods]
+    [self _searchTokenItems:[behaviorItem classMethodItems]
          underSubtopic:AKClassMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 

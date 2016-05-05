@@ -95,7 +95,7 @@
     for (AKClassItem *classItem in [_database allClasses])
     {
         [self _addTokenItems:[classItem propertyItems] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[classItem documentedClassMethods] toSymbolArray:apiSymbols];
+        [self _addTokenItems:[classItem classMethodItems] toSymbolArray:apiSymbols];
         [self _addTokenItems:[classItem instanceMethodItems] toSymbolArray:apiSymbols];
         [self _addTokenItems:[classItem documentedDelegateMethods] toSymbolArray:apiSymbols];
         [self _addTokenItems:[classItem documentedNotifications] toSymbolArray:apiSymbols];
@@ -112,7 +112,7 @@
     for (AKProtocolItem *protocolItem in [_database allProtocols])
     {
         [self _addTokenItems:[protocolItem propertyItems] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[protocolItem documentedClassMethods] toSymbolArray:apiSymbols];
+        [self _addTokenItems:[protocolItem classMethodItems] toSymbolArray:apiSymbols];
         [self _addTokenItems:[protocolItem instanceMethodItems] toSymbolArray:apiSymbols];
     }
 }
