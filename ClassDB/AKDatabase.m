@@ -69,6 +69,7 @@
 
 	[self _importAllTokens];
 
+	[self _pruneClassItemsWithoutTokens];  //TODO: Does this work?
 }
 
 #pragma mark - Getters and setters -- frameworks
@@ -336,6 +337,17 @@
 	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Token"];
 	query.predicateString = @"language.fullName = 'Objective-C'";
 	return [query fetchObjectsWithError:&error];  //TODO: Handle error.
+}
+
+- (void)_pruneClassItemsWithoutTokens  //TODO: See if there is a better way.
+{
+	for (NSString *className in self.classItemsByName.allKeys) {
+		AKClassItem *classItem = self.classItemsByName[className];
+		if (classItem.token == nil) {
+			QLog(@"+++ class '%@' has no token; removing it", className);
+			self.classItemsByName[className] = nil;
+		}
+	}
 }
 
 #pragma mark - Private methods - populating the database - classes and categories
