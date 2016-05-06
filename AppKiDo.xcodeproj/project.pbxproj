@@ -1391,7 +1391,7 @@
 		732BD5FB05ED90900055715D /* -- MODEL CLASSES -- */ = {
 			isa = PBXGroup;
 			children = (
-				734AEE3B1CC5E1600064AAA9 /* Data */,
+				734AEE3B1CC5E1600064AAA9 /* DocSet Data */,
 				739CD2600E4498AC00CFA042 /* dev tools */,
 				730030820498501500A80007 /* database */,
 			);
@@ -1463,7 +1463,7 @@
 			path = WindowControllers;
 			sourceTree = "<group>";
 		};
-		734AEE3B1CC5E1600064AAA9 /* Data */ = {
+		734AEE3B1CC5E1600064AAA9 /* DocSet Data */ = {
 			isa = PBXGroup;
 			children = (
 				734AEE7E1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld */,
@@ -1471,7 +1471,7 @@
 				734AEE3C1CC5E1600064AAA9 /* DocSetIndex.h */,
 				734AEE3D1CC5E1600064AAA9 /* DocSetIndex.m */,
 			);
-			path = Data;
+			path = "DocSet Data";
 			sourceTree = "<group>";
 		};
 		734AEE3E1CC5E1600064AAA9 /* DocSetModel */ = {
@@ -2400,7 +2400,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mogenerator -m Data/DocSetModel.xcdatamodeld/DocSetModel.xcdatamodel --human-dir Data/DocSetModel/Human --machine-dir Data/DocSetModel/Machine --includeh Data/DocSetModel/DocSetModel.h --template-var arc=true";
+			shellScript = "mogenerator -m \"DocSet Data/DocSetModel.xcdatamodeld/DocSetModel.xcdatamodel\" --human-dir \"DocSet Data/DocSetModel/Human\" --machine-dir \"DocSet Data/DocSetModel/Machine\" --includeh \"DocSet Data/DocSetModel/DocSetModel.h\" --template-var arc=true";
 		};
 /* End PBXShellScriptBuildPhase section */
 
