@@ -1,5 +1,5 @@
 //
-//  DocSetQuery.h
+//  AKDocSetQuery.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 4/29/16.
@@ -12,11 +12,9 @@
 @class DocSetIndex;
 
 /*!
-    You can use this directly but it's more convenient to use the fetchXXX methods in DocSetIndex.
- 
     TODO: Document the convenience syntax ("%ident%" etc.).
  */
-@interface DocSetQuery : NSObject
+@interface AKDocSetQuery : NSObject
 
 @property (strong, readonly) DocSetIndex *docSetIndex;
 @property (copy, readonly) NSString *entityName;
@@ -24,9 +22,9 @@
 @property (copy) NSString *distinctKeyPathsString;
 @property (copy) NSString *predicateString;
 
-#pragma mark - Factory methods
+#pragma mark - Init/awake/dealloc
 
-+ (instancetype)queryWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName;
+- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Querying the DocSetIndex
 

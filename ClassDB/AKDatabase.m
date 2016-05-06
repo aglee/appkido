@@ -20,7 +20,7 @@
 #import "AKIPhoneDevTools.h"
 #import "AKRegexUtils.h"
 #import "DIGSLog.h"
-#import "DocSetQuery.h"
+#import "AKDocSetQuery.h"
 #import "QuietLog.h"
 
 
@@ -319,10 +319,15 @@
 	}
 }
 
+- (AKDocSetQuery *)_docSetQueryWithEntityName:(NSString *)entityName
+{
+	return [[AKDocSetQuery alloc] initWithDocSetIndex:self.docSetIndex entityName:entityName];
+}
+
 - (NSArray *)_sortedArrayWithAllFrameworkNames
 {
 	NSError *error;
-	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Header"];
+	AKDocSetQuery *query = [self _docSetQueryWithEntityName:@"Header"];
 	query.distinctKeyPathsString = @"frameworkName";
 	query.predicateString = @"frameworkName != NULL";
 	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];  //TODO: Handle error.
@@ -334,7 +339,7 @@
 - (NSArray *)_arrayWithAllTokens
 {
 	NSError *error;
-	DocSetQuery *query = [self.docSetIndex queryWithEntityName:@"Token"];
+	AKDocSetQuery *query = [self _docSetQueryWithEntityName:@"Token"];
 	query.predicateString = @"language.fullName = 'Objective-C'";
 	return [query fetchObjectsWithError:&error];  //TODO: Handle error.
 }

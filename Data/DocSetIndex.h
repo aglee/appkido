@@ -9,11 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "DocSetModel.h"
 
-@class DocSetQuery;
-
-/*!
- Has convenience methods for various kinds of Core Data queries.
- */
 @interface DocSetIndex : NSObject
 
 @property (readonly, copy, nonatomic) NSString *docSetPath;
@@ -26,9 +21,5 @@
 
 /*! docSetPath must be a path to a .docset bundle. */
 - (instancetype)initWithDocSetPath:(NSString *)docSetPath NS_DESIGNATED_INITIALIZER;
-
-#pragma mark - Queries
-
-- (DocSetQuery *)queryWithEntityName:(NSString *)entityName;
 
 @end

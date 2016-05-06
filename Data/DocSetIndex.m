@@ -7,7 +7,6 @@
 //
 
 #import "DocSetIndex.h"
-#import "DocSetQuery.h"
 #import "QuietLog.h"
 
 @interface DocSetIndex ()
@@ -63,7 +62,7 @@
 	NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
 	NSString *pathToPersistentStoreFile = [self.docSetPath stringByAppendingPathComponent:@"Contents/Resources/docSet.dsidx"];
 	NSURL *storeFileURL = [NSURL fileURLWithPath:pathToPersistentStoreFile];
-	NSError *error = nil;
+	NSError *error;
 	if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType
 								   configuration:nil
 											 URL:storeFileURL
@@ -108,13 +107,6 @@
 {
 	NSString *sdkPath = @"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk";  //TODO: Get the right path.
 	return [NSURL fileURLWithPath:sdkPath];
-}
-
-#pragma mark - Queries
-
-- (DocSetQuery *)queryWithEntityName:(NSString *)entityName
-{
-	return [DocSetQuery queryWithDocSetIndex:self entityName:entityName];
 }
 
 @end

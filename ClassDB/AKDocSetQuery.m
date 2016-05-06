@@ -1,12 +1,12 @@
 //
-//  DocSetQuery.m
+//  AKDocSetQuery.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 4/29/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "DocSetQuery.h"
+#import "AKDocSetQuery.h"
 #import "AKRegexUtils.h"
 #import "DocSetIndex.h"
 #import "QuietLog.h"
@@ -14,29 +14,18 @@
 
 #define MyErrorDomain @"com.appkido.AppKiDo"
 
-@interface DocSetQuery ()
-
+@interface AKDocSetQuery ()
 @property (strong) DocSetIndex *docSetIndex;
 @property (copy) NSString *entityName;
-
-- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entity:(NSString *)entityName NS_DESIGNATED_INITIALIZER;
-
 @end
 
 #pragma mark -
 
-@implementation DocSetQuery
-
-#pragma mark - Factory methods
-
-+ (instancetype)queryWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName
-{
-    return [[self alloc] initWithDocSetIndex:docSetIndex entity:entityName];
-}
+@implementation AKDocSetQuery
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entity:(NSString *)entityName
+- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName
 {
     NSParameterAssert(docSetIndex != nil);
     NSParameterAssert(entityName != nil);
@@ -50,7 +39,7 @@
 
 - (instancetype)init
 {
-    return [self initWithDocSetIndex:nil entity:nil];
+    return [self initWithDocSetIndex:nil entityName:nil];
 }
 
 #pragma mark - Querying the DocSetIndex
@@ -65,10 +54,12 @@
     return fetchedObjects;
 }
 
+#pragma mark - Private methods - handling fetch commands
+
 - (NSArray *)_fetchObjectsWithError:(NSError **)errorPtr
 {
-	// Try to construct the fetch request.
-	NSFetchRequest *fetchRequest = [self _createFetchRequestWithError:errorPtr];
+    // Try to construct the fetch request.
+    NSFetchRequest *fetchRequest = [self _createFetchRequestWithError:errorPtr];
     if (fetchRequest == nil) {
         return nil;
     }
@@ -86,11 +77,9 @@
         fetchRequest.propertiesToFetch = keyPaths;
     }
 
-	// Try to execute the fetch request.
+    // Try to execute the fetch request.
     return [self _executeFetchRequest:fetchRequest error:errorPtr];
 }
-
-#pragma mark - Private methods - handling fetch commands
 
 - (NSArray *)_executeFetchRequest:(NSFetchRequest *)fetchRequest error:(NSError **)errorPtr
 {
