@@ -29,7 +29,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithDatabase:(AKDatabase *)database fileURL:(NSURL *)outfileURL NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - The main export method

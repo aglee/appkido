@@ -105,7 +105,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithPath:(NSString *)devToolsPath NS_DESIGNATED_INITIALIZER;
 
 

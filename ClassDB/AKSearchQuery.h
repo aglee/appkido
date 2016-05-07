@@ -62,7 +62,6 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithDatabase:(AKDatabase *)db NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Searching

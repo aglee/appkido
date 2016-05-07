@@ -32,7 +32,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase NS_DESIGNATED_INITIALIZER;
 
 @end

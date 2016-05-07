@@ -22,7 +22,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithClassItem:(AKClassItem *)classItem
        includeAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 

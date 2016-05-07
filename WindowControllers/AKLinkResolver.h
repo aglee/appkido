@@ -27,7 +27,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithDatabase:(AKDatabase *)database NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Resolving links

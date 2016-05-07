@@ -22,7 +22,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithGroupItem:(AKGroupItem *)groupItem NS_DESIGNATED_INITIALIZER;
 
 @end

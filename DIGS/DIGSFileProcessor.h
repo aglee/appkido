@@ -29,7 +29,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-/*! Designated initializer. */
 - (instancetype)initWithBasePath:(NSString *)basePath NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Getters and setters
