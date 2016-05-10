@@ -22,6 +22,10 @@
 @property (copy) NSString *distinctKeyPathsString;
 @property (copy) NSString *predicateString;
 
+#pragma mark - Factory methods
+
++ (instancetype)queryWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName;
+
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName NS_DESIGNATED_INITIALIZER;

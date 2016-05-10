@@ -23,6 +23,13 @@
 
 @implementation AKDocSetQuery
 
+#pragma mark - Factory methods
+
++ (instancetype)queryWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName
+{
+    return [[self alloc] initWithDocSetIndex:docSetIndex entityName:entityName];
+}
+
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName
