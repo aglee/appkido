@@ -42,10 +42,6 @@
     // Globals.
     NSMutableDictionary *_globalsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupItem]}
     NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupItem}}
-
-    // Hyperlink support.
-    NSMutableDictionary *_classItemsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKClassItem}
-    NSMutableDictionary *_protocolItemsByHTMLPath;  // @{PATH_TO_HTML_FILE: AKProtocolItem}
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) DocSetIndex *docSetIndex;

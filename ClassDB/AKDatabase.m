@@ -24,9 +24,6 @@
 
 		_globalsGroupListsByFramework = [[NSMutableDictionary alloc] init];
 		_globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
-
-		_classItemsByHTMLPath = [[NSMutableDictionary alloc] init];
-		_protocolItemsByHTMLPath = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
