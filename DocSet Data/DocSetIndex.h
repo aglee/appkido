@@ -12,6 +12,8 @@
 @interface DocSetIndex : NSObject
 
 @property (readonly, copy, nonatomic) NSString *docSetPath;
+@property (readonly, copy, nonatomic) NSString *docSetName;
+@property (readonly, copy, nonatomic) NSString *bundleIdentifier;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, copy, nonatomic) NSURL *documentsBaseURL;

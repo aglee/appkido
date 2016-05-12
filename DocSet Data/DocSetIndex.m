@@ -11,6 +11,7 @@
 
 @interface DocSetIndex ()
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong) NSDictionary *infoPlist;
 @end
 
 @implementation DocSetIndex
@@ -27,7 +28,12 @@
 	NSParameterAssert(docSetPath != nil);
 	self = [super init];
 	if (self) {
-		_docSetPath = docSetPath;  //TODO: Fail if doesn't look like a docset bundle.
+		_docSetPath = docSetPath;
+
+		NSString *plistPath = [docSetPath stringByAppendingPathComponent:@"Contents/Info.plist"];
+		_infoPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+
+		NSAssert(_infoPlist != nil, @"Could not load Info.plist in %@", docSetPath);
 	}
 	return self;
 }
@@ -39,6 +45,16 @@
 
 #pragma mark - Getters and setters
 
+- (NSString *)docSetName
+{
+	return self.infoPlist[(NSString *)kCFBundleNameKey];
+}
+
+- (NSString *)bundleIdentifier
+{
+	return self.infoPlist[(NSString *)kCFBundleIdentifierKey];
+}
+
 - (NSManagedObjectModel *)managedObjectModel
 {
 	// Lazy loading.
@@ -46,8 +62,21 @@
 		return _managedObjectModel;
 	}
 
-	NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DocSetModel" withExtension:@"momd"];
-	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+//	NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DocSetModel" withExtension:@"momd"];
+//	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+	NSString *pathToMOMFile = [self.docSetPath stringByAppendingPathComponent:@"Contents/Resources/docSet.mom"];
+	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:pathToMOMFile]];
+
+	for (NSEntityDescription *entity in _managedObjectModel.entities) {
+		if ([entity.managedObjectClassName isEqualToString:@"NSManagedObject"]) {
+			if (NSClassFromString(entity.name)) {
+				QLog(@"+++ Changing MO class for entity %@ to %@", entity.managedObjectClassName, entity.name);
+				entity.managedObjectClassName = nil;
+			} else {
+				QLog(@"+++ There is no class %@, will stick with %@", entity.name, entity.managedObjectClassName);
+			}
+		}
+	}
 
 	return _managedObjectModel;
 }
@@ -107,6 +136,13 @@
 {
 	NSString *sdkPath = @"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk";  //TODO: Get the right path.
 	return [NSURL fileURLWithPath:sdkPath];
+}
+
+#pragma mark - NSObject methods
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@: %@>", self.className, self.docSetName];
 }
 
 @end
