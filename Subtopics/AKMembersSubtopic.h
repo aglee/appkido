@@ -32,7 +32,7 @@
  * Subclass must override this.  Returns method items for just the behavior, no
  * superclasses or protocols included.
  */
-- (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken;
+- (NSArray *)memberTokensForBehavior:(AKBehaviorToken *)behaviorToken;
 
 /*! Subclasses must override this. */
 + (id)memberDocClass;

@@ -13,7 +13,7 @@
 #import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKGroupItem.h"
-#import "AKMemberItem.h"
+#import "AKMemberToken.h"
 #import "AKProtocolToken.h"
 #import "AKSortUtils.h"
 
@@ -129,15 +129,15 @@
 - (void)_exportClass:(AKClassToken *)classToken
 {
     [_xmlWriter tag:@"class" attributes:@{ @"name": classToken.tokenName } contentBlock:^{
-        [self _exportMembers:[classToken propertyItems]
+        [self _exportMembers:[classToken propertyTokens]
                       ofType:@"properties"
                       xmlTag:@"property"];
 
-        [self _exportMembers:[classToken classMethodItems]
+        [self _exportMembers:[classToken classMethodTokens]
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classToken instanceMethodItems]
+        [self _exportMembers:[classToken instanceMethodTokens]
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
 
@@ -159,15 +159,15 @@
     attributes[@"type"] = (protocolToken.isInformal ? @"informal" : @"formal");
 
     [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
-        [self _exportMembers:[protocolToken propertyItems]
+        [self _exportMembers:[protocolToken propertyTokens]
                       ofType:@"properties"
                       xmlTag:@"property"];
 
-        [self _exportMembers:[protocolToken classMethodItems]
+        [self _exportMembers:[protocolToken classMethodTokens]
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[protocolToken instanceMethodItems]
+        [self _exportMembers:[protocolToken instanceMethodTokens]
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
     }];
@@ -176,25 +176,25 @@
 
 #pragma mark - Private methods -- exporting members
 
-- (void)_exportMembers:(NSArray *)memberItems
+- (void)_exportMembers:(NSArray *)memberTokens
                 ofType:(NSString *)membersType
                 xmlTag:(NSString *)memberTag
 {
     [_xmlWriter tag:membersType attributes:nil contentBlock:^{
-        for (AKMemberItem *memberItem in [AKSortUtils arrayBySortingArray:memberItems])
+        for (AKMemberToken *memberToken in [AKSortUtils arrayBySortingArray:memberTokens])
         {
-            [self _exportMember:memberItem withXMLTag:memberTag];
+            [self _exportMember:memberToken withXMLTag:memberTag];
         }
     }];
 }
 
-- (void)_exportMember:(AKMemberItem *)memberItem withXMLTag:(NSString *)memberTag
+- (void)_exportMember:(AKMemberToken *)memberToken withXMLTag:(NSString *)memberTag
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
-    attributes[@"name"] = memberItem.tokenName;
+    attributes[@"name"] = memberToken.tokenName;
 
-    if (memberItem.isDeprecated)
+    if (memberToken.isDeprecated)
     {
         attributes[@"isDeprecated"] = @YES;
     }

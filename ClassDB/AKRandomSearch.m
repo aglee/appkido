@@ -94,9 +94,9 @@
 {
     for (AKClassToken *classToken in [_database allClasses])
     {
-        [self _addTokens:[classToken propertyItems] toSymbolArray:apiSymbols];
-        [self _addTokens:[classToken classMethodItems] toSymbolArray:apiSymbols];
-        [self _addTokens:[classToken instanceMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken propertyTokens] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken classMethodTokens] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken instanceMethodTokens] toSymbolArray:apiSymbols];
         [self _addTokens:[classToken documentedDelegateMethods] toSymbolArray:apiSymbols];
         [self _addTokens:[classToken documentedNotifications] toSymbolArray:apiSymbols];
     }
@@ -111,9 +111,9 @@
 {
     for (AKProtocolToken *protocolToken in [_database allProtocols])
     {
-        [self _addTokens:[protocolToken propertyItems] toSymbolArray:apiSymbols];
-        [self _addTokens:[protocolToken classMethodItems] toSymbolArray:apiSymbols];
-        [self _addTokens:[protocolToken instanceMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[protocolToken propertyTokens] toSymbolArray:apiSymbols];
+        [self _addTokens:[protocolToken classMethodTokens] toSymbolArray:apiSymbols];
+        [self _addTokens:[protocolToken instanceMethodTokens] toSymbolArray:apiSymbols];
     }
 }
 

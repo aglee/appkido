@@ -17,7 +17,7 @@
 #import "AKGlobalsItem.h"
 #import "AKGlobalsTopic.h"
 #import "AKGroupItem.h"
-#import "AKMethodItem.h"
+#import "AKMethodToken.h"
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 #import "AKSortUtils.h"
@@ -322,7 +322,7 @@
     AKBehaviorToken *behaviorToken = (AKBehaviorToken *)[behaviorTopic topicItem];
 
     // Search the behavior's properties.
-    [self _searchTokens:[behaviorToken propertyItems]
+    [self _searchTokens:[behaviorToken propertyTokens]
          underSubtopic:AKPropertiesSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
@@ -335,7 +335,7 @@
         NSString *savedSearchString = _searchString;
         _searchString = [_searchString substringFromIndex:3];
         {{
-            [self _searchTokens:[behaviorToken propertyItems]
+            [self _searchTokens:[behaviorToken propertyTokens]
                  underSubtopic:AKPropertiesSubtopicName
                ofBehaviorTopic:behaviorTopic];
         }}
@@ -343,12 +343,12 @@
     }
 
     // Search the behavior's class methods.
-    [self _searchTokens:[behaviorToken classMethodItems]
+    [self _searchTokens:[behaviorToken classMethodTokens]
          underSubtopic:AKClassMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
     // Search the behavior's instance methods.
-    [self _searchTokens:[behaviorToken instanceMethodItems]
+    [self _searchTokens:[behaviorToken instanceMethodTokens]
          underSubtopic:AKInstanceMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 }

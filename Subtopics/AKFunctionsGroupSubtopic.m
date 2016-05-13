@@ -17,14 +17,14 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Each subitem of a functions group item represents one function.
-    for (AKToken *functionItem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
+    for (AKToken *functionToken in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
     {
 //TODO: Is it safe to assume there is always a doc?
-//        AKFileSection *functionSection = functionItem.tokenDocumentation;
+//        AKFileSection *functionSection = functionToken.tokenDocumentation;
 //
 //        if (functionSection != nil)
         {
-            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithToken:functionItem];
+            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithToken:functionToken];
             
             [docList addObject:newDoc];
         }

@@ -1,5 +1,5 @@
 //
-//  AKFunctionItem.h
+//  AKFunctionToken.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 4/25/08.
@@ -11,5 +11,5 @@
 /*!
  * Represents a C function.
  */
-@interface AKFunctionItem : AKToken
+@interface AKFunctionToken : AKToken
 @end

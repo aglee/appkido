@@ -9,20 +9,20 @@
 
 @class AKBehaviorToken;
 @class AKCollectionOfItems;
-@class AKMemberItem;
-@class AKMethodItem;
-@class AKPropertyItem;
+@class AKMemberToken;
+@class AKMethodToken;
+@class AKPropertyToken;
 @class AKProtocolToken;
 
 #pragma mark - Blocks as alternatives to performSelector
 
-typedef id (^AKBlockForGettingMemberItem)(AKBehaviorToken *behaviorToken, NSString *memberName);
+typedef id (^AKBlockForGettingMemberToken)(AKBehaviorToken *behaviorToken, NSString *memberName);
 
-typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMemberItem *memberItem);
+typedef void (^AKBlockForAddingMemberToken)(AKBehaviorToken *behaviorToken, AKMemberToken *memberToken);
 
-#define blockForGettingMemberItem(xxxWithName) ^id (AKBehaviorToken *behaviorToken, NSString *memberName) { return [(id)behaviorToken xxxWithName:memberName]; }
+#define blockForGettingMemberToken(xxxWithName) ^id (AKBehaviorToken *behaviorToken, NSString *memberName) { return [(id)behaviorToken xxxWithName:memberName]; }
 
-#define blockForAddingMemberItem(addXXXItem) ^void (AKBehaviorToken *behaviorToken, AKMemberItem *memberItem) { [(id)behaviorToken addXXXItem:(id)memberItem]; }
+#define blockForAddingMemberToken(addXXXItem) ^void (AKBehaviorToken *behaviorToken, AKMemberToken *memberToken) { [(id)behaviorToken addXXXItem:(id)memberToken]; }
 
 
 #pragma mark -
@@ -48,15 +48,15 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMem
 	// Indexes the contents of _protocolTokens.
 	NSMutableSet *_protocolTokenNames;
 
-	// Contains AKPropertyItems, each representing a property of this class.
+	// Contains AKPropertyTokens, each representing a property of this class.
 	AKCollectionOfItems *_indexOfProperties;
 
-	// Contains AKMethodItems, one for each class method that has either
+	// Contains AKMethodTokens, one for each class method that has either
 	// been found in my .h file or been found in the documentation for my
 	// behavior.
 	AKCollectionOfItems *_indexOfClassMethods;
 
-	// Contains AKMethodItems, one for each instance method that has either
+	// Contains AKMethodTokens, one for each instance method that has either
 	// been found in my .h file or been found in the documentation for my
 	// behavior.
 	AKCollectionOfItems *_indexOfInstanceMethods;
@@ -67,31 +67,31 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMem
 @property (NS_NONATOMIC_IOSONLY, assign, readonly) BOOL isClassToken;
 /*! Includes protocols implemented by virtue of inheritance. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *implementedProtocols;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodItems;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *propertyItems;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodTokens;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *propertyTokens;
 
 #pragma mark - Getters and setters -- properties
 
 - (void)addImplementedProtocol:(AKProtocolToken *)protocolToken;
 - (void)addImplementedProtocols:(NSArray *)protocolTokens;
 
-- (AKPropertyItem *)propertyItemWithName:(NSString *)propertyName;
+- (AKPropertyToken *)propertyTokenWithName:(NSString *)propertyName;
 /*! Does nothing if a property with the same name already exists. */
-- (void)addPropertyItem:(AKPropertyItem *)propertyItem;
+- (void)addPropertyToken:(AKPropertyToken *)propertyToken;
 
 #pragma mark - Getters and setters -- class methods
 
 /*! Does not include inherited methods. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *classMethodItems;
-- (AKMethodItem *)classMethodWithName:(NSString *)methodName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *classMethodTokens;
+- (AKMethodToken *)classMethodWithName:(NSString *)methodName;
 /*! Does nothing if a class method with the same name already exists. */
-- (void)addClassMethod:(AKMethodItem *)methodItem;
+- (void)addClassMethod:(AKMethodToken *)methodToken;
 
 #pragma mark - Getters and setters -- instance methods
 
-- (AKMethodItem *)instanceMethodWithName:(NSString *)methodName;
+- (AKMethodToken *)instanceMethodWithName:(NSString *)methodName;
 /*! Does nothing if an instance method with the same name already exists. */
-- (void)addInstanceMethod:(AKMethodItem *)methodItem;
+- (void)addInstanceMethod:(AKMethodToken *)methodToken;
 
 #pragma mark - Getters and setters -- deprecated methods
 
@@ -99,7 +99,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMem
  * We have to guess whether it's a class method or instance method,
  * because the docs lump all deprecated methods together.
  */
-- (AKMethodItem *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
+- (AKMethodToken *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
 										frameworkName:(NSString *)frameworkName;
 
 @end

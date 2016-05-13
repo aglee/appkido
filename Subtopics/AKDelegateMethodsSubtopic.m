@@ -22,7 +22,7 @@
 
 #pragma mark - AKMembersSubtopic methods
 
-- (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken
+- (NSArray *)memberTokensForBehavior:(AKBehaviorToken *)behaviorToken
 {
     if ([behaviorToken isClassToken])
     {

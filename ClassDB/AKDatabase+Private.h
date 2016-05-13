@@ -7,14 +7,14 @@
 //
 
 #import "AKDatabase.h"
-#import "AKBindingItem.h"
+#import "AKBindingToken.h"
 #import "AKCategoryToken.h"
 #import "AKFrameworkConstants.h"
 #import "AKDevToolsUtils.h"
 #import "AKPrefUtils.h"
 #import "AKClassToken.h"
-#import "AKMethodItem.h"
-#import "AKPropertyItem.h"
+#import "AKMethodToken.h"
+#import "AKPropertyToken.h"
 #import "AKProtocolToken.h"
 #import "AKGroupItem.h"
 #import "AKMacDevTools.h"

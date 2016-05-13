@@ -12,8 +12,8 @@
 @class AKDatabase;
 
 /*!
- * Represents a named API construct.  Subclasses represent different types of
- * constructs such as classes, protocols, and methods.
+ * Represents a named API construct, as represented by an underlying DSAToken
+ * in the docset index (tokenMO).
  */
 @interface AKToken : NSObject <AKSortable>
 

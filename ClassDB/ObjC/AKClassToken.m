@@ -7,12 +7,12 @@
 
 #import "AKClassToken.h"
 #import "DIGSLog.h"
-#import "AKBindingItem.h"
+#import "AKBindingToken.h"
 #import "AKCategoryToken.h"
 #import "AKCollectionOfItems.h"
 #import "AKDatabase.h"
-#import "AKMethodItem.h"
-#import "AKNotificationItem.h"
+#import "AKMethodToken.h"
+#import "AKNotificationToken.h"
 #import "AKProtocolToken.h"
 #import "NSString+AppKiDo.h"
 
@@ -120,14 +120,14 @@
 	return result;
 }
 
-- (void)addBindingItem:(AKBindingItem *)bindingItem
+- (void)addBindingToken:(AKBindingToken *)bindingToken
 {
-	[_indexOfBindings addToken:bindingItem];
+	[_indexOfBindings addToken:bindingToken];
 }
 
-- (AKBindingItem *)bindingItemNamed:(NSString *)bindingName
+- (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName
 {
-	return (AKBindingItem *)[_indexOfBindings itemWithTokenName:bindingName];
+	return (AKBindingToken *)[_indexOfBindings itemWithTokenName:bindingName];
 }
 
 - (NSArray *)documentedBindings
@@ -183,14 +183,14 @@
 	return methodList;
 }
 
-- (AKMethodItem *)delegateMethodWithName:(NSString *)methodName
+- (AKMethodToken *)delegateMethodWithName:(NSString *)methodName
 {
-	return (AKMethodItem *)[_indexOfDelegateMethods itemWithTokenName:methodName];
+	return (AKMethodToken *)[_indexOfDelegateMethods itemWithTokenName:methodName];
 }
 
-- (void)addDelegateMethod:(AKMethodItem *)methodItem
+- (void)addDelegateMethod:(AKMethodToken *)methodToken
 {
-	[_indexOfDelegateMethods addToken:methodItem];
+	[_indexOfDelegateMethods addToken:methodToken];
 }
 
 #pragma mark - Getters and setters -- notifications
@@ -200,14 +200,14 @@
 	return [_indexOfNotifications allItems];
 }
 
-- (AKNotificationItem *)notificationWithName:(NSString *)notificationName
+- (AKNotificationToken *)notificationWithName:(NSString *)notificationName
 {
-	return (AKNotificationItem *)[_indexOfNotifications itemWithTokenName:notificationName];
+	return (AKNotificationToken *)[_indexOfNotifications itemWithTokenName:notificationName];
 }
 
-- (void)addNotification:(AKNotificationItem *)notificationItem
+- (void)addNotification:(AKNotificationToken *)notificationToken
 {
-	[_indexOfNotifications addToken:notificationItem];
+	[_indexOfNotifications addToken:notificationToken];
 }
 
 #pragma mark - AKBehaviorToken methods
@@ -227,26 +227,26 @@
 	return result;
 }
 
-- (AKMethodItem *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
+- (AKMethodToken *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
 										frameworkName:(NSString *)frameworkName
 {
-	AKMethodItem *methodItem = [super addDeprecatedMethodIfAbsentWithName:methodName
+	AKMethodToken *methodToken = [super addDeprecatedMethodIfAbsentWithName:methodName
 															frameworkName:frameworkName];
 
 //FIXME:
 //    // If it's neither an instance method nor a class method, but it looks
 //    // like it might be a delegate method, assume it is one.
 //    //TODO: Old note to self says this assumption is false for [NSTypesetter lineFragmentRectForProposedRect:remainingRect:].  Check on this.
-//    if (methodItem == nil)
+//    if (methodToken == nil)
 //    {
 //        if ([methodName ak_contains:@":"])
 //        {
-//            methodItem = [[AKMethodItem alloc] initWithTokenName:methodName
+//            methodToken = [[AKMethodToken alloc] initWithTokenName:methodName
 //                                                        database:self.owningDatabase
 //                                                   frameworkName:frameworkName
 //                                                  owningBehavior:self];
-//            [methodItem setIsDeprecated:YES];
-//            [self addDelegateMethod:methodItem];
+//            [methodToken setIsDeprecated:YES];
+//            [self addDelegateMethod:methodToken];
 //        }
 //        else
 //        {
@@ -256,7 +256,7 @@
 //        }
 //    }
 
-	return methodItem;
+	return methodToken;
 }
 
 #pragma mark - AKToken methods
@@ -297,14 +297,14 @@
 //
 //    if (delegateProtocol)
 //    {
-//        [methodsList addObjectsFromArray:[delegateProtocol instanceMethodItems]];
+//        [methodsList addObjectsFromArray:[delegateProtocol instanceMethodTokens]];
 //    }
 //
 //    // Look for instance method names of the form setFooDelegate:.
 //    //TODO: To be really thorough, check for fooDelegate properties.
-//    for (AKMethodItem *methodItem in [self instanceMethodItems])
+//    for (AKMethodToken *methodToken in [self instanceMethodTokens])
 //    {
-//        NSString *methodName = methodItem.tokenName;
+//        NSString *methodName = methodToken.tokenName;
 //
 //        if ([methodName hasPrefix:@"set"]
 //            && [methodName hasSuffix:@"Delegate:"]
@@ -320,7 +320,7 @@
 //
 //                if ([protocolName hasSuffix:protocolSuffix])
 //                {
-//                    [methodsList addObjectsFromArray:[protocolToken instanceMethodItems]];
+//                    [methodsList addObjectsFromArray:[protocolToken instanceMethodTokens]];
 //                    
 //                    break;
 //                }

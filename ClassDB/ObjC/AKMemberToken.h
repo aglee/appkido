@@ -1,5 +1,5 @@
 //
-//  AKMemberItem.h
+//  AKMemberToken.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 7/24/08.
@@ -15,7 +15,7 @@
  * Stretches the concept of "member" slightly.  Used not only for properties and
  * methods, but also for bindings, delegate methods and notifications.
  */
-@interface AKMemberItem : AKToken
+@interface AKMemberToken : AKToken
 
 @property (nonatomic, readonly, weak) AKBehaviorToken *owningBehavior;
 

@@ -133,8 +133,8 @@
 
 	NSString *containerName = token.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorToken];
-	[behaviorToken addClassMethod:methodItem];
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:behaviorToken];
+	[behaviorToken addClassMethod:methodToken];
 	return YES;
 }
 
@@ -146,9 +146,9 @@
 
 	NSString *containerName = token.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorToken];
-	[behaviorToken addInstanceMethod:methodItem];
-	//QLog(@"+++ added instance method %@ to %@ %@", methodItem.tokenName, [behaviorToken className], containerName);
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:behaviorToken];
+	[behaviorToken addInstanceMethod:methodToken];
+	//QLog(@"+++ added instance method %@ to %@ %@", methodToken.tokenName, [behaviorToken className], containerName);
 	return YES;
 }
 
@@ -160,8 +160,8 @@
 
 	NSString *containerName = token.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:behaviorToken];
-	[behaviorToken addPropertyItem:propertyItem];
+	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithToken:token owningBehavior:behaviorToken];
+	[behaviorToken addPropertyToken:propertyToken];
 	return YES;
 }
 
@@ -173,9 +173,9 @@
 
 	NSString *className = token.container.containerName;
 	AKClassToken *classToken = (AKClassToken *)[self _getOrAddClassOrCategoryTokenWithName:className];
-	AKBindingItem *bindingItem = [[AKBindingItem alloc] initWithToken:token owningBehavior:classToken];
-	[classToken addBindingItem:bindingItem];
-	//QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classToken.tokenName);
+	AKBindingToken *bindingToken = [[AKBindingToken alloc] initWithToken:token owningBehavior:classToken];
+	[classToken addBindingToken:bindingToken];
+	//QLog(@"+++ added binding '%@' to class '%@'", bindingToken.tokenName, classToken.tokenName);
 	return YES;
 }
 
@@ -223,8 +223,8 @@
 
 	NSString *protocolName = token.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolToken];
-	[protocolToken addClassMethod:methodItem];
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:protocolToken];
+	[protocolToken addClassMethod:methodToken];
 	return YES;
 }
 
@@ -236,8 +236,8 @@
 
 	NSString *protocolName = token.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolToken];
-	[protocolToken addInstanceMethod:methodItem];
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:protocolToken];
+	[protocolToken addInstanceMethod:methodToken];
 	return YES;
 }
 
@@ -249,8 +249,8 @@
 
 	NSString *propertyName = token.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:propertyName];
-	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:protocolToken];
-	[protocolToken addPropertyItem:propertyItem];
+	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithToken:token owningBehavior:protocolToken];
+	[protocolToken addPropertyToken:propertyToken];
 	return YES;
 }
 

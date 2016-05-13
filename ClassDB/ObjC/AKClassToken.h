@@ -7,11 +7,11 @@
 
 #import "AKBehaviorToken.h"
 
-@class AKBindingItem;
+@class AKBindingToken;
 @class AKCategoryToken;
 @class AKCollectionOfItems;
-@class AKNotificationItem;
-@class AKPropertyItem;
+@class AKNotificationToken;
+@class AKPropertyToken;
 
 /*!
  * Represents an Objective-C class, which in addition to having methods can have
@@ -33,9 +33,9 @@
 
 	NSMutableArray *_childClassTokens;  // Contains AKClassTokens.
 	NSMutableArray *_categoryTokens;  // Contains AKCategoryTokens.
-	AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodItems.
-	AKCollectionOfItems *_indexOfNotifications;  // Contains AKNotificationItems.
-	AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingItems.
+	AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodTokens.
+	AKCollectionOfItems *_indexOfNotifications;  // Contains AKNotificationTokens.
+	AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingTokens.
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassToken *parentClass;
@@ -62,8 +62,8 @@
 - (void)addCategory:(AKCategoryToken *)categoryToken;
 - (AKCategoryToken *)categoryNamed:(NSString *)catName;
 
-- (void)addBindingItem:(AKBindingItem *)bindingItem;
-- (AKBindingItem *)bindingItemNamed:(NSString *)bindingName;
+- (void)addBindingToken:(AKBindingToken *)bindingToken;
+- (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName;
 - (NSArray *)documentedBindings;
 
 #pragma mark - Getters and setters -- multiple owning frameworks
@@ -84,17 +84,17 @@
 
 #pragma mark - Getters and setters -- delegate methods
 
-- (AKMethodItem *)delegateMethodWithName:(NSString *)methodName;
+- (AKMethodToken *)delegateMethodWithName:(NSString *)methodName;
 
 /*! Does nothing if a delegate method with the same name already exists. */
-- (void)addDelegateMethod:(AKMethodItem *)methodItem;
+- (void)addDelegateMethod:(AKMethodToken *)methodToken;
 
 #pragma mark - Getters and setters -- notifications
 
-- (AKNotificationItem *)notificationWithName:(NSString *)notificationName;
+- (AKNotificationToken *)notificationWithName:(NSString *)notificationName;
 
 /*! Does nothing if a notification with the same name already exists. */
-- (void)addNotification:(AKNotificationItem *)notificationItem;
+- (void)addNotification:(AKNotificationToken *)notificationToken;
 
 
 

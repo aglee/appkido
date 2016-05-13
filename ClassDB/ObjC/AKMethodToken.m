@@ -1,15 +1,15 @@
 //
-// AKMethodItem.m
+// AKMethodToken.m
 //
 // Created by Andy Lee on Thu Jun 27 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKMethodItem.h"
+#import "AKMethodToken.h"
 
 #import "AKClassToken.h"
 
-@implementation AKMethodItem
+@implementation AKMethodToken
 
 #pragma mark - Init/awake/dealloc
 

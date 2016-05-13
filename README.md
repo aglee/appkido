@@ -15,15 +15,15 @@ Here are the API constructs represented in AppKiDo, and their corresponding item
     * Classes and protocols are collectively referred to as "behaviors". AKClassToken and AKProtocolToken are subclasses of AKBehaviorToken.
     * AKBehaviorToken has a third subclass, AKCategoryToken, which is a historical artifact and isn't used in any way the user sees.
     * Examples: NSObject, NSTableDataSource.
-* **Properties** -- AKPropertyItem
-    * Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyItem for such properties. Rather, AKMethodItem is used for their documented getter and setter methods.
+* **Properties** -- AKPropertyToken
+    * Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyToken for such properties. Rather, AKMethodToken is used for their documented getter and setter methods.
     * Examples: NSDraggingSession's draggingLocation, NSTask's terminationHandler.
-* **Methods** -- AKMethodItem, AKNotificationItem
-    * AKMethodItem is used for both instance methods and class methods.
+* **Methods** -- AKMethodToken, AKNotificationToken
+    * AKMethodToken is used for both instance methods and class methods.
     * Delegate methods are treated similarly to instance methods, because they are considered part of the behavior of the class. In particular, they are "inherited" by subclasses of the delegating class.
     * Notifications are treated similarly to methods, even though they aren't methods at all, for the same reason.
     * Examples: -init, +stringWithFormat:, tabView:willSelectTabViewItem:, NSWindowWillCloseNotification.
-* **Functions** -- AKFunctionItem
+* **Functions** -- AKFunctionToken
     * C functions. Also, #define'd macros that look like functions.
     * Examples: NSStringFromSelector(), NSAssert1().
 * **Globals** -- AKGlobalsItem

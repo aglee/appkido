@@ -8,10 +8,10 @@
 #import "AKTokenDoc.h"
 
 @class AKBehaviorToken;
-@class AKMemberItem;
+@class AKMemberToken;
 
 /*!
- * self.token is an AKMemberItem.  self.behaviorToken is a behavior that has
+ * self.token is an AKMemberToken.  self.behaviorToken is a behavior that has
  * that member, either directly or by inheritance.
  */
 @interface AKMemberDoc : AKTokenDoc
@@ -20,7 +20,7 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem behaviorToken:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMemberToken:(AKMemberToken *)memberToken behaviorToken:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Manipulating token names
 

@@ -11,7 +11,7 @@
 
 #import "AKClassToken.h"
 #import "AKProtocolToken.h"
-#import "AKMethodItem.h"
+#import "AKMethodToken.h"
 #import "AKMemberDoc.h"
 
 @implementation AKMembersSubtopic
@@ -47,7 +47,7 @@
     return nil;
 }
 
-- (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken
+- (NSArray *)memberTokensForBehavior:(AKBehaviorToken *)behaviorToken
 {
     DIGSLogError_MissingOverride();
     return nil;
@@ -64,17 +64,17 @@
 - (void)populateDocList:(NSMutableArray *)docList
 {
     // Get method items for all the methods we want to list.
-    NSDictionary *methodItemsByName = [self _subtopicMethodsByName];
+    NSDictionary *methodTokensByName = [self _subtopicMethodsByName];
 
     // Create an AKMemberDoc instance for each method we want to list.
     Class methodClass = [[self class] memberDocClass];
-    NSArray *sortedMethodNames = [methodItemsByName.allKeys
+    NSArray *sortedMethodNames = [methodTokensByName.allKeys
                                   sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 
     for (NSString *methodName in sortedMethodNames)
     {
-        AKMethodItem *methodItem = methodItemsByName[methodName];
-        AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberItem:methodItem
+        AKMethodToken *methodToken = methodTokensByName[methodName];
+        AKMemberDoc *methodDoc = [[methodClass alloc] initWithMemberToken:methodToken
                                                       behaviorToken:[self behaviorToken]];
         [docList addObject:methodDoc];
     }
@@ -126,9 +126,9 @@
 
     for (AKBehaviorToken *ancestorItem in [self _ancestorItemsWeCareAbout])
     {
-        for (AKMethodItem *methodItem in [self memberItemsForBehavior:ancestorItem])
+        for (AKMethodToken *methodToken in [self memberTokensForBehavior:ancestorItem])
         {
-            methodsByName[methodItem.tokenName] = methodItem;
+            methodsByName[methodToken.tokenName] = methodToken;
         }
     }
 

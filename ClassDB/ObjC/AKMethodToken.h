@@ -1,20 +1,20 @@
 //
-// AKMethodItem.h
+// AKMethodToken.h
 //
 // Created by Andy Lee on Thu Jun 27 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKMemberItem.h"
+#import "AKMemberToken.h"
 
 /*!
  * Represents an Objective-C method. Contains the name and signature of the
  * method. Does not distinguish between class and instance methods.
  *
- * An AKMethodItem instance must belong to at most one AKBehaviorToken instance,
+ * An AKMethodToken instance must belong to at most one AKBehaviorToken instance,
  * regardless of how many behaviors declare a method with the same signature.
  */
-@interface AKMethodItem : AKMemberItem
+@interface AKMethodToken : AKMemberToken
 {
 @private
     NSMutableArray *_argumentTypes;

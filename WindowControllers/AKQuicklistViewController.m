@@ -16,10 +16,10 @@
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
 #import "AKFrameworkConstants.h"
-#import "AKMethodItem.h"
+#import "AKMethodToken.h"
 #import "AKMultiRadioView.h"
 #import "AKPrefUtils.h"
-#import "AKPropertyItem.h"
+#import "AKPropertyToken.h"
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 #import "AKSearchQuery.h"
@@ -681,16 +681,16 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 - (BOOL)_classHasDelegate:(AKClassToken *)classToken
 {
 	// See if the class has an instance method with a name like setXXXDelegate:.
-	for (AKMethodItem *methodItem in [classToken instanceMethodItems]) {
-		NSString *methodName = methodItem.tokenName;
+	for (AKMethodToken *methodToken in [classToken instanceMethodTokens]) {
+		NSString *methodName = methodToken.tokenName;
 		if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"]) {
 			return YES;
 		}
 	}
 
 	// See if the class has a property named "delegate" or "xxxDelegate".
-	for (AKPropertyItem *propertyItem in [classToken propertyItems]) {
-		NSString *propertyName = propertyItem.tokenName;
+	for (AKPropertyToken *propertyToken in [classToken propertyTokens]) {
+		NSString *propertyName = propertyToken.tokenName;
 		if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"]) {
 			return YES;
 		}
@@ -732,7 +732,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}
 
 	// See if the class has a property named "dataSource".
-	if ([classToken propertyItemWithName:@"dataSource"]) {
+	if ([classToken propertyTokenWithName:@"dataSource"]) {
 		return YES;
 	}
 

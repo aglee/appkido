@@ -8,7 +8,7 @@
 
 #import "AKPropertyDoc.h"
 #import "AKBehaviorToken.h"
-#import "AKMethodItem.h"
+#import "AKMethodToken.h"
 
 @implementation AKPropertyDoc
 
@@ -26,7 +26,7 @@
 	NSString *methodFrameworkName = self.token.frameworkName;
 	NSString *behaviorFrameworkName = self.behaviorToken.frameworkName;
 	BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-	AKBehaviorToken *ownerOfMethod = ((AKMethodItem *)self.token).owningBehavior;
+	AKBehaviorToken *ownerOfMethod = ((AKMethodToken *)self.token).owningBehavior;
 
 	if (self.behaviorToken == ownerOfMethod) {
 		// We're the first class/protocol to declare this property.

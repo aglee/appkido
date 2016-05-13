@@ -7,7 +7,7 @@
 
 #import "AKNotificationDoc.h"
 #import "AKBehaviorToken.h"
-#import "AKMethodItem.h"
+#import "AKMethodToken.h"
 
 @implementation AKNotificationDoc
 
@@ -18,7 +18,7 @@
 	NSString *methodFrameworkName = self.token.frameworkName;
 	NSString *behaviorFrameworkName = self.behaviorToken.frameworkName;
 	BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-	AKBehaviorToken *ownerOfMethod = ((AKMemberItem *)self.token).owningBehavior;
+	AKBehaviorToken *ownerOfMethod = ((AKMemberToken *)self.token).owningBehavior;
 
 	if (self.behaviorToken == ownerOfMethod) {
 		// We're the first class/protocol to declare this method.

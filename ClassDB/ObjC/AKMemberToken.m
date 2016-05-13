@@ -1,17 +1,17 @@
 //
-//  AKMemberItem.m
+//  AKMemberToken.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 7/24/08.
 //  Copyright 2008 Andy Lee. All rights reserved.
 //
 
-#import "AKMemberItem.h"
+#import "AKMemberToken.h"
 
 #import "DIGSLog.h"
 #import "AKBehaviorToken.h"
 
-@implementation AKMemberItem
+@implementation AKMemberToken
 
 #pragma mark - Init/awake/dealloc
 

@@ -9,15 +9,15 @@
 #import "DIGSLog.h"
 #import "AKFrameworkConstants.h"
 #import "AKProtocolToken.h"
-#import "AKMemberItem.h"
+#import "AKMemberToken.h"
 
 @implementation AKMemberDoc
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem behaviorToken:(AKBehaviorToken *)behaviorToken
+- (instancetype)initWithMemberToken:(AKMemberToken *)memberToken behaviorToken:(AKBehaviorToken *)behaviorToken
 {
-	self = [super initWithToken:memberItem];
+	self = [super initWithToken:memberToken];
 	if (self) {
 		_behaviorToken = behaviorToken;
 	}
@@ -27,7 +27,7 @@
 - (instancetype)initWithToken:(AKToken *)token
 {
 	DIGSLogError_NondesignatedInitializer();
-	return [self initWithMemberItem:nil behaviorToken:nil];
+	return [self initWithMemberToken:nil behaviorToken:nil];
 }
 
 #pragma mark - Manipulating token names
@@ -42,7 +42,7 @@
 - (NSString *)stringToDisplayInDocList
 {
 	NSString *displayString = [[self class] punctuateTokenName:self.token.tokenName];
-	AKBehaviorToken *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
+	AKBehaviorToken *owningBehavior = ((AKMemberToken *)self.token).owningBehavior;
 
 	// Qualify the member name with ancestor or protocol info if any.
 	if (_behaviorToken != owningBehavior) {
@@ -88,7 +88,7 @@
 {
 	NSString *memberFrameworkName = self.token.frameworkName;
 	BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorToken.frameworkName];
-	AKBehaviorToken *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
+	AKBehaviorToken *owningBehavior = ((AKMemberToken *)self.token).owningBehavior;
 
 	if (self.behaviorToken == owningBehavior) {
 		// We're the first class/protocol to declare this method.
