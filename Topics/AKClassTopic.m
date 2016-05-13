@@ -72,12 +72,12 @@
     }
 
     NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classToken.tokenName];
-    AKClassToken *superItem = _classToken;
+    AKClassToken *classToken = _classToken;
 
-    while ((superItem = superItem.parentClass))
+    while ((classToken = classToken.parentClass))
     {
         path = [AKTopicBrowserPathSeparator stringByAppendingString:
-                [superItem.tokenName stringByAppendingString:path]];
+                [classToken.tokenName stringByAppendingString:path]];
     }
 
     return path;
