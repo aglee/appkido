@@ -16,6 +16,8 @@
 
 @dynamic itemNames;
 @dynamic sortedItemNames;
+@dynamic subitems;
+@dynamic sortedSubitems;
 
 #pragma mark - Init/awake/dealloc
 
@@ -38,6 +40,17 @@
 - (NSArray *)sortedItemNames
 {
     return [self.itemsByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+}
+
+- (NSArray *)subitems
+{
+    return self.itemsByName.allValues;
+}
+
+- (NSArray *)sortedSubitems
+{
+    NSSortDescriptor *nameSort = [NSSortDescriptor sortDescriptorWithKey:@"sortName" ascending:YES];
+    return [self.subitems sortedArrayUsingDescriptors:@[nameSort]];
 }
 
 #pragma mark - Managing the items in the group

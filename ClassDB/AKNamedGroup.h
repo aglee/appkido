@@ -12,6 +12,8 @@
 
 @property (copy, readonly) NSArray *itemNames;
 @property (copy, readonly) NSArray *sortedItemNames;
+@property (copy, readonly) NSArray *subitems;
+@property (copy, readonly) NSArray *sortedSubitems;
 
 #pragma mark - Managing the items in the group
 
