@@ -68,10 +68,10 @@
 
 #pragma mark - Getters and setters -- multiple owning frameworks
 
-- (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName;
+- (BOOL)isOwnedByFramework:(NSString *)frameworkName;
 
 //TODO: Commenting out, come back later.
-//- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName;
+//- (AKFileSection *)documentationAssociatedWithFramework:(NSString *)frameworkName;
 //
 ///*!
 // * It's possible for a class to belong to multiple frameworks. The usual example
@@ -80,7 +80,7 @@
 // * class, and all the doc files that are associated with each framework.
 // */
 //- (void)associateDocumentation:(AKFileSection *)fileSection
-//            withFrameworkNamed:(NSString *)frameworkName;
+//            withFramework:(NSString *)frameworkName;
 
 #pragma mark - Getters and setters -- delegate methods
 

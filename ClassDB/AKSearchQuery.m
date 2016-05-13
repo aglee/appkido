@@ -358,13 +358,13 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupItem *groupItem in [_database functionsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
         {
             for (AKTokenItem *subitem in [groupItem subitems])
             {
                 if ([self _matchesItem:subitem])
                 {
-                    AKTopic *topic = [AKFunctionsTopic topicWithFrameworkNamed:fwName
+                    AKTopic *topic = [AKFunctionsTopic topicWithFramework:fwName
                                                                     inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
                                                          subtopicName:groupItem.tokenName
@@ -380,7 +380,7 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupItem *groupItem in [_database globalsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database globalsGroupsForFramework:fwName])
         {
             for (AKGlobalsItem *subitem in [groupItem subitems])
             {
@@ -407,7 +407,7 @@
 
                 if (matchFound)
                 {
-                    AKTopic *topic = [AKGlobalsTopic topicWithFrameworkNamed:fwName
+                    AKTopic *topic = [AKGlobalsTopic topicWithFramework:fwName
                                                                   inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
                                                          subtopicName:groupItem.tokenName

@@ -337,7 +337,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
 		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[AKFormalProtocolsTopic topicWithFrameworkNamed:frameworkName
+		[self selectTopic:[AKFormalProtocolsTopic topicWithFramework:frameworkName
 															   inDatabase:_database]];
 		[self _showBrowser];
 	}
@@ -347,7 +347,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
 		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[AKInformalProtocolsTopic topicWithFrameworkNamed:frameworkName
+		[self selectTopic:[AKInformalProtocolsTopic topicWithFramework:frameworkName
 																 inDatabase:_database]];
 		[self _showBrowser];
 	}
@@ -357,7 +357,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
 		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[AKFunctionsTopic topicWithFrameworkNamed:frameworkName
+		[self selectTopic:[AKFunctionsTopic topicWithFramework:frameworkName
 														 inDatabase:_database]];
 		[self _showBrowser];
 	}
@@ -367,7 +367,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
 		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[AKGlobalsTopic topicWithFrameworkNamed:frameworkName
+		[self selectTopic:[AKGlobalsTopic topicWithFramework:frameworkName
 													   inDatabase:_database]];
 		[self _showBrowser];
 	}

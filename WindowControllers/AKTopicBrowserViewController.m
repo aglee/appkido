@@ -307,7 +307,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
     for (NSString *fwName in [db sortedFrameworkNames])
     {
-        [columnValues addObject:[AKFrameworkTopic topicWithFrameworkNamed:fwName inDatabase:db]];
+        [columnValues addObject:[AKFrameworkTopic topicWithFramework:fwName inDatabase:db]];
     }
 
     [_topicListsForBrowserColumns addObject:columnValues];

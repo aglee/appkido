@@ -142,19 +142,19 @@
 	return _namesOfAllOwningFrameworks;
 }
 
-- (BOOL)isOwnedByFrameworkNamed:(NSString *)frameworkName
+- (BOOL)isOwnedByFramework:(NSString *)frameworkName
 {
 	return [_namesOfAllOwningFrameworks containsObject:frameworkName];
 }
 
 //TODO: Commenting out, come back later.
-//- (AKFileSection *)documentationAssociatedWithFrameworkNamed:(NSString *)frameworkName
+//- (AKFileSection *)documentationAssociatedWithFramework:(NSString *)frameworkName
 //{
 //    return _tokenItemDocumentationByFrameworkName[frameworkName];
 //}
 //
 //- (void)associateDocumentation:(AKFileSection *)fileSection
-//            withFrameworkNamed:(NSString *)frameworkName
+//            withFramework:(NSString *)frameworkName
 //{
 //    if (frameworkName == nil)
 //    {

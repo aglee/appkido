@@ -50,4 +50,16 @@
     return nil;
 }
 
+#pragma mark - AKTokenItem methods
+
+- (NSString *)tokenName
+{
+    return self.groupName;
+}
+
+- (NSString *)frameworkName
+{
+    return self.fallbackFrameworkName;
+}
+
 @end

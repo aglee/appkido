@@ -49,20 +49,20 @@
     [_xmlWriter tag:@"database" attributes:nil contentBlock:^{
         for (NSString *frameworkName in [_database sortedFrameworkNames])
         {
-            [self _exportFrameworkNamed:frameworkName];
+            [self _exportFramework:frameworkName];
         }
     }];
 }
 
 #pragma mark - Private methods -- exporting frameworks
 
-- (void)_exportFrameworkNamed:(NSString *)fwName
+- (void)_exportFramework:(NSString *)fwName
 {
     [self _writeLongDividerWithString:fwName];
     [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
         // Export classes.
         [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
-            NSArray *allClassItems = [_database classesForFrameworkNamed:fwName];
+            NSArray *allClassItems = [_database classesForFramework:fwName];
             for (AKClassItem *classItem in [AKSortUtils arrayBySortingArray:allClassItems])
             {
                 [self _exportClass:classItem];
@@ -73,13 +73,13 @@
         [self _exportProtocolsForFramework:fwName];
 
         // Export functions.
-        [self _exportGroupItems:[_database functionsGroupsForFrameworkNamed:fwName]
+        [self _exportGroupItems:[_database functionsGroupsForFramework:fwName]
                       inSection:@"functions"
                     ofFramework:fwName
                      subitemTag:@"function"];
 
         // Export globals.
-        [self _exportGroupItems:[_database globalsGroupsForFrameworkNamed:fwName]
+        [self _exportGroupItems:[_database globalsGroupsForFramework:fwName]
                       inSection:@"globals"
                     ofFramework:fwName
                      subitemTag:@"global"];
@@ -92,7 +92,7 @@
         // Write formal protocols.
         [self _writeDividerWithString:fwName string:@"formal protocols"];
 
-        NSArray *formalProtocols = [_database formalProtocolsForFrameworkNamed:fwName];
+        NSArray *formalProtocols = [_database formalProtocolsForFramework:fwName];
         for (AKProtocolItem *protocolItem in [AKSortUtils arrayBySortingArray:formalProtocols])
         {
             [self _exportProtocol:protocolItem];
@@ -101,7 +101,7 @@
         // Write informal protocols.
         [self _writeDividerWithString:fwName string:@"informal protocols"];
 
-        NSArray *informalProtocols = [_database informalProtocolsForFrameworkNamed:fwName];
+        NSArray *informalProtocols = [_database informalProtocolsForFramework:fwName];
         for (AKProtocolItem *protocolItem in [AKSortUtils arrayBySortingArray:informalProtocols])
         {
             [self _exportProtocol:protocolItem];

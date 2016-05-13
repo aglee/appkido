@@ -24,14 +24,14 @@
 
 #pragma mark - Factory methods
 
-+ (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database
++ (AKFrameworkTopic *)topicWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)database
 {
-    return [[self alloc] initWithFrameworkNamed:frameworkName inDatabase:database];
+    return [[self alloc] initWithFramework:frameworkName inDatabase:database];
 }
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
+- (instancetype)initWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
 {
     if ((self = [super init]))
     {
@@ -45,7 +45,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithFrameworkNamed:nil inDatabase:nil];
+    return [self initWithFramework:nil inDatabase:nil];
 }
 
 
@@ -66,27 +66,27 @@
 {
     NSMutableArray *columnValues = [NSMutableArray array];
 
-    if ([_topicDatabase functionsGroupsForFrameworkNamed:_topicFrameworkName].count > 0)
+    if ([_topicDatabase functionsGroupsForFramework:_topicFrameworkName].count > 0)
     {
-        [columnValues addObject:[AKFunctionsTopic topicWithFrameworkNamed:_topicFrameworkName
+        [columnValues addObject:[AKFunctionsTopic topicWithFramework:_topicFrameworkName
                                                                inDatabase:_topicDatabase]];
     }
 
-    if ([_topicDatabase globalsGroupsForFrameworkNamed:_topicFrameworkName].count > 0)
+    if ([_topicDatabase globalsGroupsForFramework:_topicFrameworkName].count > 0)
     {
-        [columnValues addObject:[AKGlobalsTopic topicWithFrameworkNamed:_topicFrameworkName
+        [columnValues addObject:[AKGlobalsTopic topicWithFramework:_topicFrameworkName
                                                              inDatabase:_topicDatabase]];
     }
 
-    if ([_topicDatabase formalProtocolsForFrameworkNamed:_topicFrameworkName].count > 0)
+    if ([_topicDatabase formalProtocolsForFramework:_topicFrameworkName].count > 0)
     {
-        [columnValues addObject:[AKFormalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
+        [columnValues addObject:[AKFormalProtocolsTopic topicWithFramework:_topicFrameworkName
                                                                      inDatabase:_topicDatabase]];
     }
 
-    if ([_topicDatabase informalProtocolsForFrameworkNamed:_topicFrameworkName].count > 0)
+    if ([_topicDatabase informalProtocolsForFramework:_topicFrameworkName].count > 0)
     {
-        [columnValues addObject:[AKInformalProtocolsTopic topicWithFrameworkNamed:_topicFrameworkName
+        [columnValues addObject:[AKInformalProtocolsTopic topicWithFramework:_topicFrameworkName
                                                                        inDatabase:_topicDatabase]];
     }
 
@@ -125,7 +125,7 @@
     }
 
     // If we got this far, we have what we need to create an instance.
-    return [self topicWithFrameworkNamed:fwName inDatabase:db];
+    return [self topicWithFramework:fwName inDatabase:db];
 }
 
 - (NSDictionary *)asPrefDictionary

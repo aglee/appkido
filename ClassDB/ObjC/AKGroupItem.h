@@ -19,6 +19,9 @@
     NSMutableArray *_subitems;
 }
 
+@property (copy) NSString *groupName;
+@property (copy) NSString *fallbackFrameworkName;
+
 #pragma mark - Getters and setters
 
 - (void)addSubitem:(AKTokenItem *)item;

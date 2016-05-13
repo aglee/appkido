@@ -28,10 +28,10 @@
 
 #pragma mark - Factory methods
 
-+ (AKFrameworkTopic *)topicWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
++ (AKFrameworkTopic *)topicWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithFrameworkNamed:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -60,7 +60,7 @@
 
 #pragma mark - Getters and setters -- classes
 
-- (NSArray *)classesForFrameworkNamed:(NSString *)frameworkName
+- (NSArray *)classesForFramework:(NSString *)frameworkName
 {
 	NSMutableArray *classItems = [NSMutableArray array];
 	for (AKClassItem *classItem in [self allClasses]) {
@@ -94,14 +94,14 @@
 
 #pragma mark - Getters and setters -- protocols
 
-- (NSArray *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName
+- (NSArray *)formalProtocolsForFramework:(NSString *)frameworkName
 {
-	return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:NO];
+	return [self _allProtocolsForFramework:frameworkName withInformalFlag:NO];
 }
 
-- (NSArray *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName
+- (NSArray *)informalProtocolsForFramework:(NSString *)frameworkName
 {
-	return [self _allProtocolsForFrameworkNamed:frameworkName withInformalFlag:YES];
+	return [self _allProtocolsForFramework:frameworkName withInformalFlag:YES];
 }
 
 - (NSArray *)allProtocols
@@ -129,12 +129,12 @@
 
 #pragma mark - Getters and setters -- functions
 
-- (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName
+- (NSArray *)functionsGroupsForFramework:(NSString *)frameworkName
 {
 	return _functionsGroupListsByFramework[frameworkName];
 }
 
-- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName inFrameworkNamed:(NSString *)frameworkName
+- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName inFramework:(NSString *)frameworkName
 {
 	return _functionsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
@@ -170,13 +170,13 @@
 
 #pragma mark - Getters and setters -- globals
 
-- (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName
+- (NSArray *)globalsGroupsForFramework:(NSString *)frameworkName
 {
 	return _globalsGroupListsByFramework[frameworkName];
 }
 
 - (AKGroupItem *)globalsGroupNamed:(NSString *)groupName
-				  inFrameworkNamed:(NSString *)frameworkName
+				  inFramework:(NSString *)frameworkName
 {
 	return _globalsGroupsByFrameworkAndGroup[frameworkName][groupName];
 }
@@ -212,7 +212,7 @@
 
 #pragma mark - Private methods - misc
 
-- (NSArray *)_allProtocolsForFrameworkNamed:(NSString *)fwName
+- (NSArray *)_allProtocolsForFramework:(NSString *)fwName
 						   withInformalFlag:(BOOL)informalFlag
 {
 	NSMutableArray *result = [NSMutableArray array];

@@ -66,13 +66,13 @@
 
 #pragma mark - Getters and setters -- classes
 
-- (NSArray<AKClassItem *> *)classesForFrameworkNamed:(NSString *)frameworkName;
+- (NSArray<AKClassItem *> *)classesForFramework:(NSString *)frameworkName;
 - (AKClassItem *)classWithName:(NSString *)className;
 
 #pragma mark - Getters and setters -- protocols
 
-- (NSArray<AKProtocolItem *> *)formalProtocolsForFrameworkNamed:(NSString *)frameworkName;
-- (NSArray<AKProtocolItem *> *)informalProtocolsForFrameworkNamed:(NSString *)frameworkName;
+- (NSArray<AKProtocolItem *> *)formalProtocolsForFramework:(NSString *)frameworkName;
+- (NSArray<AKProtocolItem *> *)informalProtocolsForFramework:(NSString *)frameworkName;
 - (AKProtocolItem *)protocolWithName:(NSString *)name;
 
 /*! Does nothing if we already contain a protocol with that name. */
@@ -80,16 +80,14 @@
 
 #pragma mark - Getters and setters -- functions
 
-- (NSArray *)functionsGroupsForFrameworkNamed:(NSString *)frameworkName;
-- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName
-                    inFrameworkNamed:(NSString *)frameworkName;
+- (NSArray *)functionsGroupsForFramework:(NSString *)frameworkName;
+- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName inFramework:(NSString *)frameworkName;
 - (void)addFunctionsGroup:(AKGroupItem *)functionsGroup;
 
 #pragma mark - Getters and setters -- globals
 
-- (NSArray *)globalsGroupsForFrameworkNamed:(NSString *)frameworkName;
-- (AKGroupItem *)globalsGroupNamed:(NSString *)groupName
-                  inFrameworkNamed:(NSString *)frameworkName;
+- (NSArray *)globalsGroupsForFramework:(NSString *)frameworkName;
+- (AKGroupItem *)globalsGroupNamed:(NSString *)groupName inFramework:(NSString *)frameworkName;
 - (void)addGlobalsGroup:(AKGroupItem *)globalsGroup;
 
 @end

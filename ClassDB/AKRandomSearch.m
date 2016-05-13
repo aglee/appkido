@@ -121,7 +121,7 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupItem *groupItem in [_database functionsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
         {
             [self _addTokenItems:[groupItem subitems] toSymbolArray:apiSymbols];
         }
@@ -132,7 +132,7 @@
 {
     for (NSString *fwName in [_database frameworkNames])
     {
-        for (AKGroupItem *groupItem in [_database globalsGroupsForFrameworkNamed:fwName])
+        for (AKGroupItem *groupItem in [_database globalsGroupsForFramework:fwName])
         {
             for (AKGlobalsItem *globalsItem in [groupItem subitems])
             {

@@ -22,7 +22,7 @@
 
 - (NSInteger)numberOfSubtopics
 {
-    return [self.topicDatabase functionsGroupsForFrameworkNamed:self.topicFrameworkName].count;
+    return [self.topicDatabase functionsGroupsForFramework:self.topicFrameworkName].count;
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
@@ -34,7 +34,7 @@
 
     //TODO: Do we care about the cost of computing this every time?
     NSArray *groupItems = [AKSortUtils arrayBySortingArray:
-                [self.topicDatabase functionsGroupsForFrameworkNamed:self.topicFrameworkName]];
+                [self.topicDatabase functionsGroupsForFramework:self.topicFrameworkName]];
 
     if ((unsigned)subtopicIndex >= groupItems.count)
     {

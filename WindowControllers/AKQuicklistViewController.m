@@ -771,7 +771,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-	NSArray *classItems = [[self.owningWindowController database] classesForFrameworkNamed:fwName];
+	NSArray *classItems = [[self.owningWindowController database] classesForFramework:fwName];
 
 	return [self _sortedDocLocatorsForClasses:classItems];
 }

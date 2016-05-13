@@ -40,7 +40,7 @@
 {
 	NSString *tokenName = tokenItem.tokenName;
 	if (_itemsByName[tokenName]) {
-		DIGSLogWarning(@"ignoring attempt to add token %@ twice", tokenName);
+//		DIGSLogWarning(@"ignoring attempt to add token %@ twice", tokenName);
 	} else {
 		[_itemList addObject:tokenItem];
 		_itemsByName[tokenName] = tokenItem;
