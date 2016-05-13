@@ -19,7 +19,7 @@
 	return nil;
 }
 
-- (NSString *)stringToDisplayInDocList
+- (NSString *)displayName
 {
 	return self.docName;
 }

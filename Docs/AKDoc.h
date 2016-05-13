@@ -31,7 +31,7 @@
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *docName;
 
 /*! The string to display in the doc list table.  Defaults to self.docName. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInDocList;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *displayName;
 
 /*!
  * The string to display in the comment field at the bottom of the window.

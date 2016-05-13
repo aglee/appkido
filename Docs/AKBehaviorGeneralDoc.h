@@ -29,7 +29,7 @@
 - (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken extraFrameworkName:(NSString *)frameworkName;
 
 /*!
- * Used to calculate docName and stringToDisplayInDocList by "qualifying" the
+ * Used to calculate docName and displayName by "qualifying" the
  * doc name with the name of the extra framework, if there is one.
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *unqualifiedDocName;

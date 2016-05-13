@@ -52,7 +52,7 @@
 	}
 }
 
-- (NSString *)stringToDisplayInDocList
+- (NSString *)displayName
 {
 	// Trimming whitespace handles the case where there's a newline at the
 	// end of the string after we de-HTMLize it, which causes the rest of the

@@ -11,7 +11,7 @@
 
 #pragma mark - AKDoc methods
 
-- (NSString *)stringToDisplayInDocList
+- (NSString *)displayName
 {
     return [self.token.tokenName stringByAppendingString:@" ( )"];
 }

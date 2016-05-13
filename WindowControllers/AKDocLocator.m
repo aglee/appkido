@@ -103,7 +103,7 @@
         else
         {
             _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
-                                    [[self docToDisplay] stringToDisplayInDocList],
+                                    [[self docToDisplay] displayName],
                                     kLeftDoubleAngle,
                                     topicName];
         }

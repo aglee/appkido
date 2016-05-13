@@ -39,7 +39,7 @@
 
 #pragma mark - AKDoc methods
 
-- (NSString *)stringToDisplayInDocList
+- (NSString *)displayName
 {
 	NSString *displayString = [[self class] punctuateTokenName:self.token.tokenName];
 	AKBehaviorToken *owningBehavior = ((AKMemberToken *)self.token).owningBehavior;
