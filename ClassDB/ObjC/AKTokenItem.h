@@ -20,7 +20,7 @@
  */
 @interface AKTokenItem : NSObject <AKSortable>
 
-@property (nonatomic, strong) DSAToken *token;
+@property (nonatomic, strong) DSAToken *tokenMO;
 @property (nonatomic, readonly) NSString *tokenName;
 @property (nonatomic, readonly) NSString *frameworkName;
 @property (nonatomic, assign) BOOL isDeprecated;

@@ -11,7 +11,7 @@
 
 - (BOOL)isInformal
 {
-	return (self.token.metainformation.declaredIn.headerPath == nil); //TODO: Is this a reliable test for informal protocols?  Some might be declared as categories (e.g. on NSObject), and thus have a headerPath.
+	return (self.tokenMO.metainformation.declaredIn.headerPath == nil); //TODO: Is this a reliable test for informal protocols?  Some might be declared as categories (e.g. on NSObject), and thus have a headerPath.
 }
 
 @end

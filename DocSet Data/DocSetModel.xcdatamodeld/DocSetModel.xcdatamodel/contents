@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="APILanguage" representedClassName="APILanguage" syncable="YES">
         <attribute name="fullName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="nodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Node" inverseName="apiLanguages" inverseEntity="Node" indexed="YES" syncable="YES"/>
@@ -126,22 +126,22 @@
         <attribute name="typeName" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="APILanguage" positionX="-8631" positionY="-1116" width="128" height="73"/>
-        <element name="Container" positionX="-8210" positionY="-1051" width="128" height="88"/>
-        <element name="DistributionVersion" positionX="-8163" positionY="-729" width="128" height="135"/>
-        <element name="DocSet" positionX="-9153" positionY="-1151" width="128" height="73"/>
-        <element name="DownloadableFile" positionX="-9173" positionY="-1053" width="128" height="88"/>
-        <element name="FilePath" positionX="-8570" positionY="-774" width="128" height="58"/>
-        <element name="Header" positionX="-8498" positionY="-864" width="128" height="73"/>
-        <element name="Node" positionX="-9045" positionY="-828" width="128" height="270"/>
-        <element name="NodeURL" positionX="-8937" positionY="-1170" width="128" height="135"/>
-        <element name="NodeUUID" positionX="-8928" positionY="-1009" width="128" height="73"/>
-        <element name="OrderedSubnode" positionX="-9243" positionY="-720" width="128" height="88"/>
-        <element name="Parameter" positionX="-8633" positionY="-684" width="128" height="88"/>
-        <element name="ReturnValue" positionX="-8586" positionY="-553" width="128" height="58"/>
-        <element name="Token" positionX="-8408" positionY="-1156" width="128" height="238"/>
-        <element name="TokenGroup" positionX="-8595" positionY="-982" width="128" height="73"/>
-        <element name="TokenMetainformation" positionX="-8397" positionY="-772" width="128" height="268"/>
-        <element name="TokenType" positionX="-8219" positionY="-927" width="128" height="58"/>
+        <element name="APILanguage" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Container" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="DistributionVersion" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="DocSet" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="DownloadableFile" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="FilePath" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Header" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Node" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="NodeURL" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="NodeUUID" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="OrderedSubnode" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Parameter" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ReturnValue" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Token" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TokenGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TokenMetainformation" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TokenType" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

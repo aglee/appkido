@@ -44,7 +44,7 @@
 
 	AKBehaviorItem *item = [self _getOrAddClassOrCategoryItemWithName:token.tokenName];
 	if (item.isClassItem) {
-		item.token = token;
+		item.tokenMO = token;
 		if (((AKClassItem *)item).parentClass == nil) {
 			[self _fillInParentClassOfClassItem:((AKClassItem *)item)];
 		}
@@ -114,10 +114,10 @@
 		QLog(@"+++ Item for class %@ already has parent class %@", classItem.tokenName, classItem.parentClass.tokenName);
 		return;
 	}
-	if (classItem.token.superclassContainers.count > 1) {
+	if (classItem.tokenMO.superclassContainers.count > 1) {
 		QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.tokenName);
 	}
-	Container *container = classItem.token.superclassContainers.anyObject;
+	Container *container = classItem.tokenMO.superclassContainers.anyObject;
 	if (container) {
 		AKClassItem *parentClassItem = [self _getOrAddClassItemWithName:container.containerName];
 		[parentClassItem addChildClass:classItem];
@@ -194,8 +194,8 @@
 - (AKProtocolItem *)_getOrAddProtocolItemWithToken:(DSAToken *)token
 {
 	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:token.tokenName];
-	if (protocolItem.token == nil) {
-		protocolItem.token = token;
+	if (protocolItem.tokenMO == nil) {
+		protocolItem.tokenMO = token;
 		//QLog(@"+++ protocol '%@' has token, is in framework '%@'", protocolItem.tokenName, protocolItem.frameworkName);
 	} else {
 		// We don't expect to encounter the same class twice with the same token.

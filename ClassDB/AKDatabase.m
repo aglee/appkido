@@ -259,7 +259,7 @@
 {
 	for (NSString *className in self.classItemsByName.allKeys) {
 		AKClassItem *classItem = self.classItemsByName[className];
-		if (classItem.token == nil) {
+		if (classItem.tokenMO == nil) {
 			QLog(@"+++ class '%@' has no token; removing it", className);
 			self.classItemsByName[className] = nil;
 		}

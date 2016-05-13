@@ -41,12 +41,12 @@
 - (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
 {
 	NSURL *baseURL = docSetIndex.documentsBaseURL;
-	NSString *relativePath = self.tokenItem.token.metainformation.file.path;
+	NSString *relativePath = self.tokenItem.tokenMO.metainformation.file.path;
 	if (relativePath == nil) {
 		return nil;
 	}
 	NSURL *docURL = [baseURL URLByAppendingPathComponent:relativePath];
-	NSString *anchor = self.tokenItem.token.metainformation.anchor;
+	NSString *anchor = self.tokenItem.tokenMO.metainformation.anchor;
 	if (anchor) {
 		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:docURL resolvingAgainstBaseURL:NO];
 		urlComponents.fragment = anchor;

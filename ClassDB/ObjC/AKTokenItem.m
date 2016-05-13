@@ -19,7 +19,7 @@
 {
 	self = [super init];
 	if (self) {
-		_token = token;
+		_tokenMO = token;
 	}
 	return self;
 }
@@ -34,13 +34,13 @@
 
 - (NSString *)tokenName
 {
-	return self.token.tokenName;
+	return self.tokenMO.tokenName;
 }
 
 - (NSString *)frameworkName
 {
 	//TODO: In case this is nil, try to derive framework name from path.
-	return self.token.metainformation.declaredIn.frameworkName;
+	return self.tokenMO.metainformation.declaredIn.frameworkName;
 }
 
 #pragma mark - AKSortable methods
