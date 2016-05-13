@@ -1,5 +1,5 @@
 //
-// AKProtocolItem.h
+// AKProtocolToken.h
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -11,7 +11,7 @@
  * Represents an Objective-C protocol, either formal or informal.  A protocol is
  * assumed to be informal if no header file has been specified for it.
  */
-@interface AKProtocolItem : AKBehaviorToken
+@interface AKProtocolToken : AKBehaviorToken
 
 @property (nonatomic, readonly, assign)  BOOL isInformal;
 

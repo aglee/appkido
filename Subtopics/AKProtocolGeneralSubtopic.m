@@ -8,24 +8,24 @@
 #import "AKProtocolGeneralSubtopic.h"
 
 #import "DIGSLog.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 
 @implementation AKProtocolGeneralSubtopic
 
 #pragma mark - Factory methods
 
-+ (instancetype)subtopicForProtocolItem:(AKProtocolItem *)protocolItem
++ (instancetype)subtopicForProtocolToken:(AKProtocolToken *)protocolToken
 {
-    return [[self alloc] initWithProtocolItem:protocolItem];
+    return [[self alloc] initWithProtocolToken:protocolToken];
 }
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem
+- (instancetype)initWithProtocolToken:(AKProtocolToken *)protocolToken
 {
     if ((self = [super init]))
     {
-        _protocolItem = protocolItem;
+        _protocolToken = protocolToken;
     }
 
     return self;
@@ -34,7 +34,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithProtocolItem:nil];
+    return [self initWithProtocolToken:nil];
 }
 
 
@@ -42,7 +42,7 @@
 
 - (AKBehaviorToken *)behaviorToken
 {
-    return _protocolItem;
+    return _protocolToken;
 }
 
 @end

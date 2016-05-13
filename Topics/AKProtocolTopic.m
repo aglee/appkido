@@ -11,7 +11,7 @@
 
 #import "AKFrameworkConstants.h"
 #import "AKDatabase.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 
 #import "AKAppDelegate.h"
 #import "AKProtocolGeneralSubtopic.h"
@@ -25,18 +25,18 @@
 
 #pragma mark - Factory methods
 
-+ (instancetype)topicWithProtocolItem:(AKProtocolItem *)protocolItem
++ (instancetype)topicWithProtocolToken:(AKProtocolToken *)protocolToken
 {
-    return [[self alloc] initWithProtocolItem:protocolItem];
+    return [[self alloc] initWithProtocolToken:protocolToken];
 }
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem
+- (instancetype)initWithProtocolToken:(AKProtocolToken *)protocolToken
 {
     if ((self = [super init]))
     {
-        _protocolItem = protocolItem;
+        _protocolToken = protocolToken;
     }
 
     return self;
@@ -45,7 +45,7 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithProtocolItem:nil];
+    return [self initWithProtocolToken:nil];
 }
 
 
@@ -53,29 +53,29 @@
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return [NSString stringWithFormat:@"<%@>", _protocolItem.tokenName];
+    return [NSString stringWithFormat:@"<%@>", _protocolToken.tokenName];
 }
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-    NSString *stringFormat = (_protocolItem.isInformal
+    NSString *stringFormat = (_protocolToken.isInformal
                               ? @"%@ INFORMAL protocol <%@>"
                               : @"%@ protocol <%@>");
 
     return [NSString stringWithFormat:stringFormat,
-            _protocolItem.frameworkName, _protocolItem.tokenName];
+            _protocolToken.frameworkName, _protocolToken.tokenName];
 }
 
 - (NSString *)pathInTopicBrowser
 {
-    NSString *whichProtocols = (_protocolItem.isInformal
+    NSString *whichProtocols = (_protocolToken.isInformal
                                 ? AKInformalProtocolsTopicName
                                 : AKProtocolsTopicName);
 
     return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
-            AKTopicBrowserPathSeparator, _protocolItem.frameworkName,
+            AKTopicBrowserPathSeparator, _protocolToken.frameworkName,
             AKTopicBrowserPathSeparator, whichProtocols,
-            AKTopicBrowserPathSeparator, _protocolItem.tokenName];
+            AKTopicBrowserPathSeparator, _protocolToken.tokenName];
 }
 
 - (BOOL)browserCellHasChildren
@@ -87,24 +87,24 @@
 
 - (NSString *)behaviorName
 {
-    return _protocolItem.tokenName;
+    return _protocolToken.tokenName;
 }
 
 - (AKToken *)topicItem
 {
-    return _protocolItem;
+    return _protocolToken;
 }
 
 - (void)populateSubtopicsArray:(NSMutableArray *)array
 {
     [array setArray:(@[
-                     [AKProtocolGeneralSubtopic subtopicForProtocolItem:_protocolItem],
-                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:NO],
-//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:YES],
-                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:NO],
-//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:YES],
-                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:NO],
-//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:YES],
+                     [AKProtocolGeneralSubtopic subtopicForProtocolToken:_protocolToken],
+                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:NO],
+//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
+                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:NO],
+//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:NO],
+//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
                      [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:NO],
 //                     [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:YES],
                      [AKNotificationsSubtopic subtopicForClassItem:nil includeAncestors:NO],
@@ -131,15 +131,15 @@
     else
     {
         AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
-        AKProtocolItem *protocolItem = [db protocolWithName:protocolName];
+        AKProtocolToken *protocolToken = [db protocolWithName:protocolName];
 
-        if (!protocolItem)
+        if (!protocolToken)
         {
             DIGSLogInfo(@"couldn't find a protocol in the database named %@", protocolName);
             return nil;
         }
 
-        return [self topicWithProtocolItem:protocolItem];
+        return [self topicWithProtocolToken:protocolToken];
     }
 }
 

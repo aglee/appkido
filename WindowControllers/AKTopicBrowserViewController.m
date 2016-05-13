@@ -17,7 +17,7 @@
 #import "AKFrameworkTopic.h"
 #import "AKLabelTopic.h"
 #import "AKPrefUtils.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 #import "AKSortUtils.h"
 #import "AKSubtopicListViewController.h"
 #import "AKTopic.h"

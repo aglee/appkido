@@ -18,7 +18,7 @@
 #import "AKGlobalsTopic.h"
 #import "AKGroupItem.h"
 #import "AKMethodItem.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 #import "AKSortUtils.h"
 #import "AKSubtopic.h"
@@ -277,11 +277,11 @@
 
 - (void)_searchProtocolNames
 {
-    for (AKProtocolItem *protocolItem in [_database allProtocols])
+    for (AKProtocolToken *protocolToken in [_database allProtocols])
     {
-        if ([self _matchesItem:protocolItem])
+        if ([self _matchesItem:protocolToken])
         {
-            AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
+            AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolToken:protocolToken];
 
             [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
@@ -309,9 +309,9 @@
 
 - (void)_searchNamesOfProtocolMembers
 {
-    for (AKProtocolItem *protocolItem in [_database allProtocols])
+    for (AKProtocolToken *protocolToken in [_database allProtocols])
     {
-        AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
+        AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolToken:protocolToken];
 
         [self _searchMembersUnderBehaviorTopic:topic];
     }

@@ -12,7 +12,7 @@
 @class AKMemberItem;
 @class AKMethodItem;
 @class AKPropertyItem;
-@class AKProtocolItem;
+@class AKProtocolToken;
 
 #pragma mark - Blocks as alternatives to performSelector
 
@@ -42,11 +42,11 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMem
 @interface AKBehaviorToken : AKToken
 {
 @private
-	// One AKProtocolItem for each protocol this behavior conforms to.
-	NSMutableArray *_protocolItems;
+	// One AKProtocolToken for each protocol this behavior conforms to.
+	NSMutableArray *_protocolTokens;
 
-	// Indexes the contents of _protocolItems.
-	NSMutableSet *_protocolItemNames;
+	// Indexes the contents of _protocolTokens.
+	NSMutableSet *_protocolTokenNames;
 
 	// Contains AKPropertyItems, each representing a property of this class.
 	AKCollectionOfItems *_indexOfProperties;
@@ -72,8 +72,8 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMem
 
 #pragma mark - Getters and setters -- properties
 
-- (void)addImplementedProtocol:(AKProtocolItem *)protocolItem;
-- (void)addImplementedProtocols:(NSArray *)protocolItems;
+- (void)addImplementedProtocol:(AKProtocolToken *)protocolToken;
+- (void)addImplementedProtocols:(NSArray *)protocolTokens;
 
 - (AKPropertyItem *)propertyItemWithName:(NSString *)propertyName;
 /*! Does nothing if a property with the same name already exists. */

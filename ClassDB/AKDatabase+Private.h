@@ -15,7 +15,7 @@
 #import "AKClassItem.h"
 #import "AKMethodItem.h"
 #import "AKPropertyItem.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 #import "AKGroupItem.h"
 #import "AKMacDevTools.h"
 #import "AKIPhoneDevTools.h"
@@ -28,7 +28,7 @@
 @interface AKDatabase ()
 @property (NS_NONATOMIC_IOSONLY, readwrite, copy) NSArray *frameworkNames;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *classItemsByName;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *protocolItemsByName;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *protocolTokensByName;
 
 - (AKDocSetQuery *)_queryWithEntityName:(NSString *)entityName;
 - (NSArray *)_arrayWithTokensForLanguage:(NSString *)languageName;

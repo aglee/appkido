@@ -9,7 +9,7 @@
 
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 
 @implementation AKFormalProtocolsTopic
@@ -26,9 +26,9 @@
     NSMutableArray *columnValues = [NSMutableArray array];
     NSArray *formalProtocols = [self.topicDatabase formalProtocolsForFramework:self.topicFrameworkName];
 
-    for (AKProtocolItem *protocolItem in formalProtocols)
+    for (AKProtocolToken *protocolToken in formalProtocols)
     {
-        [columnValues addObject:[AKProtocolTopic topicWithProtocolItem:protocolItem]];
+        [columnValues addObject:[AKProtocolTopic topicWithProtocolToken:protocolToken]];
     }
 
     return [AKSortUtils arrayBySortingArray:columnValues];

@@ -13,7 +13,7 @@
 #import "AKDatabase.h"
 #import "AKMethodItem.h"
 #import "AKNotificationItem.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 #import "NSString+AppKiDo.h"
 
 
@@ -293,7 +293,7 @@
 //    // Look for a protocol named ThisClassDelegate.
 //    AKDatabase *db = self.owningDatabase;
 //    NSString *possibleDelegateProtocolName = [self.tokenName stringByAppendingString:@"Delegate"];
-//    AKProtocolItem *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
+//    AKProtocolToken *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
 //
 //    if (delegateProtocol)
 //    {
@@ -314,13 +314,13 @@
 //            NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
 //                                         substringFromIndex:3].uppercaseString;
 //
-//            for (AKProtocolItem *protocolItem in [db allProtocols])
+//            for (AKProtocolToken *protocolToken in [db allProtocols])
 //            {
-//                NSString *protocolName = protocolItem.tokenName.uppercaseString;
+//                NSString *protocolName = protocolToken.tokenName.uppercaseString;
 //
 //                if ([protocolName hasSuffix:protocolSuffix])
 //                {
-//                    [methodsList addObjectsFromArray:[protocolItem instanceMethodItems]];
+//                    [methodsList addObjectsFromArray:[protocolToken instanceMethodItems]];
 //                    
 //                    break;
 //                }

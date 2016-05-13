@@ -14,7 +14,7 @@
 @class AKFunctionItem;
 @class AKGlobalsItem;
 @class AKGroupItem;
-@class AKProtocolItem;
+@class AKProtocolToken;
 
 /*!
  * Contains information about a Cocoa-style Objective-C API: the names of API
@@ -71,12 +71,12 @@
 
 #pragma mark - Getters and setters -- protocols
 
-- (NSArray<AKProtocolItem *> *)formalProtocolsForFramework:(NSString *)frameworkName;
-- (NSArray<AKProtocolItem *> *)informalProtocolsForFramework:(NSString *)frameworkName;
-- (AKProtocolItem *)protocolWithName:(NSString *)name;
+- (NSArray<AKProtocolToken *> *)formalProtocolsForFramework:(NSString *)frameworkName;
+- (NSArray<AKProtocolToken *> *)informalProtocolsForFramework:(NSString *)frameworkName;
+- (AKProtocolToken *)protocolWithName:(NSString *)name;
 
 /*! Does nothing if we already contain a protocol with that name. */
-- (void)addProtocolItem:(AKProtocolItem *)protocolItem;
+- (void)addProtocolToken:(AKProtocolToken *)protocolToken;
 
 #pragma mark - Getters and setters -- functions
 

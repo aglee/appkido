@@ -20,7 +20,7 @@
 #import "AKMultiRadioView.h"
 #import "AKPrefUtils.h"
 #import "AKPropertyItem.h"
-#import "AKProtocolItem.h"
+#import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 #import "AKSearchQuery.h"
 #import "AKSortUtils.h"
@@ -753,17 +753,17 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	if (!s_dataSourceProtocols)
 	{
-		NSMutableArray *protocolItems = [NSMutableArray array];
+		NSMutableArray *protocolTokens = [NSMutableArray array];
 
-		for (AKProtocolItem *protocolItem in [[self.owningWindowController database] allProtocols])
+		for (AKProtocolToken *protocolToken in [[self.owningWindowController database] allProtocols])
 		{
-			if ([protocolItem.tokenName ak_contains:@"DataSource"])
+			if ([protocolToken.tokenName ak_contains:@"DataSource"])
 			{
-				[protocolItems addObject:protocolItem];
+				[protocolTokens addObject:protocolToken];
 			}
 		}
 
-		s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolItems];
+		s_dataSourceProtocols = [self _sortedDocLocatorsForProtocols:protocolTokens];
 	}
 
 	return s_dataSourceProtocols;
@@ -799,19 +799,19 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	return [AKSortUtils arrayBySortingArray:quicklistItems];
 }
 
-- (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolItems
+- (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolTokens
 {
 	NSMutableArray *quicklistItems = [NSMutableArray array];
 
-	for (AKProtocolItem *protocolItem in protocolItems)
+	for (AKProtocolToken *protocolToken in protocolTokens)
 	{
 //TODO: Is it safe to assume there is always a doc?
 //        // Don't list protocols that don't have HTML documentation.  They
 //        // may have cropped up in header files and either not been
 //        // documented yet or intended for Apple's internal use.
-//        if (protocolItem.tokenDocumentation)
+//        if (protocolToken.tokenDocumentation)
 		{
-			AKTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
+			AKTopic *topic = [AKProtocolTopic topicWithProtocolToken:protocolToken];
 
 			[quicklistItems addObject:[AKDocLocator withTopic:topic
 												 subtopicName:nil

@@ -7,20 +7,20 @@
 
 #import "AKBehaviorGeneralSubtopic.h"
 
-@class AKProtocolItem;
+@class AKProtocolToken;
 
 @interface AKProtocolGeneralSubtopic : AKBehaviorGeneralSubtopic
 {
 @private
-    AKProtocolItem *_protocolItem;
+    AKProtocolToken *_protocolToken;
 }
 
 #pragma mark - Factory methods
 
-+ (instancetype)subtopicForProtocolItem:(AKProtocolItem *)protocolItem;
++ (instancetype)subtopicForProtocolToken:(AKProtocolToken *)protocolToken;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithProtocolItem:(AKProtocolItem *)protocolItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithProtocolToken:(AKProtocolToken *)protocolToken NS_DESIGNATED_INITIALIZER;
 
 @end

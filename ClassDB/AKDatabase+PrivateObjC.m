@@ -187,32 +187,32 @@
 		return NO;
 	}
 
-	(void)[self _getOrAddProtocolItemWithToken:token];
+	(void)[self _getOrAddProtocolTokenWithToken:token];
 	return YES;
 }
 
-- (AKProtocolItem *)_getOrAddProtocolItemWithToken:(DSAToken *)token
+- (AKProtocolToken *)_getOrAddProtocolTokenWithToken:(DSAToken *)token
 {
-	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:token.tokenName];
-	if (protocolItem.tokenMO == nil) {
-		protocolItem.tokenMO = token;
-		//QLog(@"+++ protocol '%@' has token, is in framework '%@'", protocolItem.tokenName, protocolItem.frameworkName);
+	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:token.tokenName];
+	if (protocolToken.tokenMO == nil) {
+		protocolToken.tokenMO = token;
+		//QLog(@"+++ protocol '%@' has token, is in framework '%@'", protocolToken.tokenName, protocolToken.frameworkName);
 	} else {
 		// We don't expect to encounter the same class twice with the same token.
 		QLog(@"+++ [ODD] protocol '%@' already has a token", token.tokenName);
 	}
-	return protocolItem;
+	return protocolToken;
 }
 
-- (AKProtocolItem *)_getOrAddProtocolItemWithName:(NSString *)protocolName
+- (AKProtocolToken *)_getOrAddProtocolTokenWithName:(NSString *)protocolName
 {
-	AKProtocolItem *protocolItem = self.protocolItemsByName[protocolName];
-	if (protocolItem == nil) {
-		protocolItem = [[AKProtocolItem alloc] initWithToken:nil];
-		self.protocolItemsByName[protocolName] = protocolItem;
-		//QLog(@"+++ protocol '%@', no token yet", protocolItem.tokenName);
+	AKProtocolToken *protocolToken = self.protocolTokensByName[protocolName];
+	if (protocolToken == nil) {
+		protocolToken = [[AKProtocolToken alloc] initWithToken:nil];
+		self.protocolTokensByName[protocolName] = protocolToken;
+		//QLog(@"+++ protocol '%@', no token yet", protocolToken.tokenName);
 	}
-	return protocolItem;
+	return protocolToken;
 }
 
 - (BOOL)_maybeImportProtocolClassMethodToken:(DSAToken *)token
@@ -222,9 +222,9 @@
 	}
 
 	NSString *protocolName = token.container.containerName;
-	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:protocolName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolItem];
-	[protocolItem addClassMethod:methodItem];
+	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolToken];
+	[protocolToken addClassMethod:methodItem];
 	return YES;
 }
 
@@ -235,9 +235,9 @@
 	}
 
 	NSString *protocolName = token.container.containerName;
-	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:protocolName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolItem];
-	[protocolItem addInstanceMethod:methodItem];
+	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:protocolToken];
+	[protocolToken addInstanceMethod:methodItem];
 	return YES;
 }
 
@@ -248,9 +248,9 @@
 	}
 
 	NSString *propertyName = token.container.containerName;
-	AKProtocolItem *protocolItem = [self _getOrAddProtocolItemWithName:propertyName];
-	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:protocolItem];
-	[protocolItem addPropertyItem:propertyItem];
+	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:propertyName];
+	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:protocolToken];
+	[protocolToken addPropertyItem:propertyItem];
 	return YES;
 }
 

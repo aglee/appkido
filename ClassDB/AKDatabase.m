@@ -18,7 +18,7 @@
 		_docSetIndex = docSetIndex;
 		_frameworkNames = @[];
 		_classItemsByName = [[NSMutableDictionary alloc] init];
-		_protocolItemsByName = [[NSMutableDictionary alloc] init];
+		_protocolTokensByName = [[NSMutableDictionary alloc] init];
 		_functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
 		_functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
 
@@ -106,25 +106,25 @@
 
 - (NSArray *)allProtocols
 {
-	return _protocolItemsByName.allValues;
+	return _protocolTokensByName.allValues;
 }
 
-- (AKProtocolItem *)protocolWithName:(NSString *)name
+- (AKProtocolToken *)protocolWithName:(NSString *)name
 {
-	return _protocolItemsByName[name];
+	return _protocolTokensByName[name];
 }
 
-- (void)addProtocolItem:(AKProtocolItem *)protocolItem
+- (void)addProtocolToken:(AKProtocolToken *)protocolToken
 {
 	// Do nothing if we already have a protocol with the same name.
-	NSString *protocolName = protocolItem.tokenName;
-	if (_protocolItemsByName[protocolName]) {
+	NSString *protocolName = protocolToken.tokenName;
+	if (_protocolTokensByName[protocolName]) {
 		DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
 		return;
 	}
 
 	// Add the protocol to our lookup by protocol name.
-	_protocolItemsByName[protocolName] = protocolItem;
+	_protocolTokensByName[protocolName] = protocolToken;
 }
 
 #pragma mark - Getters and setters -- functions
@@ -216,11 +216,11 @@
 						   withInformalFlag:(BOOL)informalFlag
 {
 	NSMutableArray *result = [NSMutableArray array];
-	for (AKProtocolItem *protocolItem in [self allProtocols]) {
-		if ((protocolItem.isInformal == informalFlag)
-			&& [protocolItem.frameworkName isEqualToString:fwName]) {
+	for (AKProtocolToken *protocolToken in [self allProtocols]) {
+		if ((protocolToken.isInformal == informalFlag)
+			&& [protocolToken.frameworkName isEqualToString:fwName]) {
 
-			[result addObject:protocolItem];
+			[result addObject:protocolToken];
 		}
 	}
 	return result;
