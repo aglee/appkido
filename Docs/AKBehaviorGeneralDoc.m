@@ -20,16 +20,16 @@
 
 - (instancetype)initWithBehaviorItem:(AKBehaviorItem *)behaviorItem extraFrameworkName:(NSString *)frameworkName
 {
-	self = [super initWithTokenItem:behaviorItem];
+	self = [super initWithToken:behaviorItem];
 	if (self) {
 		_extraFrameworkName = [frameworkName copy];
 	}
 	return self;
 }
 
-- (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem
+- (instancetype)initWithToken:(AKToken *)token
 {
-	return [self initWithBehaviorItem:(AKBehaviorItem *)tokenItem extraFrameworkName:nil];
+	return [self initWithBehaviorItem:(AKBehaviorItem *)token extraFrameworkName:nil];
 }
 
 #pragma mark - Doc name

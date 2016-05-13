@@ -5,7 +5,7 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKTokenItemDoc.h"
+#import "AKTokenDoc.h"
 
 @class AKBehaviorItem;
 
@@ -13,9 +13,9 @@
  * Abstract class that represents one of the docs under the "General" subtopic
  * of a class or protocol topic.
  *
- * self.tokenItem is an AKBehaviorItem.
+ * self.token is an AKBehaviorItem.
  */
-@interface AKBehaviorGeneralDoc : AKTokenItemDoc
+@interface AKBehaviorGeneralDoc : AKTokenDoc
 
 #pragma mark - Init/awake/dealloc
 

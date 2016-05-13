@@ -13,7 +13,7 @@
 
 - (NSString *)stringToDisplayInDocList
 {
-    return [self.tokenItem.tokenName stringByAppendingString:@" ( )"];
+    return [self.token.tokenName stringByAppendingString:@" ( )"];
 }
 
 @end

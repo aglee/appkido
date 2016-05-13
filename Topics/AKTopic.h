@@ -10,7 +10,7 @@
 #import "AKPrefUtils.h"
 
 @class AKClassItem;
-@class AKTokenItem;
+@class AKToken;
 @class AKSubtopic;
 
 /*!
@@ -43,7 +43,7 @@ extern NSString *AKGlobalsTopicName;
 /*!
  * Returns nil if the topic is not associated with a token item.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKTokenItem *topicItem;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKToken *topicItem;
 
 #pragma mark - Names for various display contexts
 

@@ -205,13 +205,13 @@
 
 #pragma mark - Private methods -- exporting group items
 
-- (void)_exportGroupSubitem:(AKTokenItem *)tokenItem withXMLTag:(NSString *)subitemTag
+- (void)_exportGroupSubitem:(AKToken *)token withXMLTag:(NSString *)subitemTag
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     
-    attributes[@"name"] = tokenItem.tokenName;
+    attributes[@"name"] = token.tokenName;
     
-    if (tokenItem.isDeprecated)
+    if (token.isDeprecated)
     {
         attributes[@"isDeprecated"] = @YES;
     }
@@ -222,7 +222,7 @@
 - (void)_exportGroupItem:(AKGroupItem *)groupItem usingsubitemTag:(NSString *)subitemTag
 {
     [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.tokenName } contentBlock:^{
-        for (AKTokenItem *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
+        for (AKToken *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
         {
             [self _exportGroupSubitem:subitem withXMLTag:subitemTag];
         }

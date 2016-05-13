@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Andy Lee. All rights reserved.
 //
 
-#import "AKTokenItemDoc.h"
+#import "AKTokenDoc.h"
 
-@interface AKGlobalsDoc : AKTokenItemDoc
+@interface AKGlobalsDoc : AKTokenDoc
 @end

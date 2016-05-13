@@ -22,10 +22,10 @@
 
 - (NSString *)commentString
 {
-	NSString *methodFrameworkName = self.tokenItem.frameworkName;
+	NSString *methodFrameworkName = self.token.frameworkName;
 	NSString *behaviorFrameworkName = self.behaviorItem.frameworkName;
 	BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-	AKBehaviorItem *ownerOfMethod = ((AKMemberItem *)self.tokenItem).owningBehavior;
+	AKBehaviorItem *ownerOfMethod = ((AKMemberItem *)self.token).owningBehavior;
 
 	if (self.behaviorItem == ownerOfMethod) {
 		// We're the first class/protocol to declare this method.

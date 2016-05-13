@@ -31,7 +31,7 @@
 	self = [super initWithToken:token];
 	if (self) {
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
-		_tokenItemDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
+		_tokenDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
 		_childClassItems = [[NSMutableArray alloc] init];
 		_categoryItems = [[NSMutableArray alloc] init];
@@ -95,7 +95,7 @@
 
 - (AKCategoryItem *)categoryNamed:(NSString *)catName
 {
-	for (AKTokenItem *item in _categoryItems) {
+	for (AKToken *item in _categoryItems) {
 		if ([item.tokenName isEqualToString:catName]) {
 			return (AKCategoryItem *)item;
 		}
@@ -122,7 +122,7 @@
 
 - (void)addBindingItem:(AKBindingItem *)bindingItem
 {
-	[_indexOfBindings addTokenItem:bindingItem];
+	[_indexOfBindings addToken:bindingItem];
 }
 
 - (AKBindingItem *)bindingItemNamed:(NSString *)bindingName
@@ -150,7 +150,7 @@
 //TODO: Commenting out, come back later.
 //- (AKFileSection *)documentationAssociatedWithFramework:(NSString *)frameworkName
 //{
-//    return _tokenItemDocumentationByFrameworkName[frameworkName];
+//    return _tokenDocumentationByFrameworkName[frameworkName];
 //}
 //
 //- (void)associateDocumentation:(AKFileSection *)fileSection
@@ -168,7 +168,7 @@
 //        [_namesOfAllOwningFrameworks addObject:frameworkName];
 //    }
 //
-//    _tokenItemDocumentationByFrameworkName[frameworkName] = fileSection;
+//    _tokenDocumentationByFrameworkName[frameworkName] = fileSection;
 //}
 
 #pragma mark - Getters and setters -- delegate methods
@@ -190,7 +190,7 @@
 
 - (void)addDelegateMethod:(AKMethodItem *)methodItem
 {
-	[_indexOfDelegateMethods addTokenItem:methodItem];
+	[_indexOfDelegateMethods addToken:methodItem];
 }
 
 #pragma mark - Getters and setters -- notifications
@@ -207,7 +207,7 @@
 
 - (void)addNotification:(AKNotificationItem *)notificationItem
 {
-	[_indexOfNotifications addTokenItem:notificationItem];
+	[_indexOfNotifications addToken:notificationItem];
 }
 
 #pragma mark - AKBehaviorItem methods
@@ -259,7 +259,7 @@
 	return methodItem;
 }
 
-#pragma mark - AKTokenItem methods
+#pragma mark - AKToken methods
 
 - (NSString *)tokenName
 {

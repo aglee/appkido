@@ -10,7 +10,7 @@
 #import "DIGSLog.h"
 
 #import "AKDatabase.h"
-#import "AKTokenItem.h"
+#import "AKToken.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"
 #import "AKSearchQuery.h"
@@ -95,7 +95,7 @@
 //
 //        if (docSection == nil)
 //        {
-//            docSection = [docLocator.topicToDisplay topicItem].tokenItemDocumentation;
+//            docSection = [docLocator.topicToDisplay topicItem].tokenDocumentation;
 //        }
 //
 //        if ([[docSection filePath] isEqualToString:filePath])

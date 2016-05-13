@@ -5,16 +5,16 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKTokenItemDoc.h"
+#import "AKTokenDoc.h"
 
 @class AKBehaviorItem;
 @class AKMemberItem;
 
 /*!
- * self.tokenItem is an AKMemberItem.  self.behaviorItem is a behavior that has
+ * self.token is an AKMemberItem.  self.behaviorItem is a behavior that has
  * that member, either directly or by inheritance.
  */
-@interface AKMemberDoc : AKTokenItemDoc
+@interface AKMemberDoc : AKTokenDoc
 
 @property (nonatomic, readonly, strong) AKBehaviorItem *behaviorItem;
 

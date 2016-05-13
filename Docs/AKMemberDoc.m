@@ -17,14 +17,14 @@
 
 - (instancetype)initWithMemberItem:(AKMemberItem *)memberItem behaviorItem:(AKBehaviorItem *)behaviorItem
 {
-	self = [super initWithTokenItem:memberItem];
+	self = [super initWithToken:memberItem];
 	if (self) {
 		_behaviorItem = behaviorItem;
 	}
 	return self;
 }
 
-- (instancetype)initWithTokenItem:(AKTokenItem *)tokenItem
+- (instancetype)initWithToken:(AKToken *)token
 {
 	DIGSLogError_NondesignatedInitializer();
 	return [self initWithMemberItem:nil behaviorItem:nil];
@@ -41,8 +41,8 @@
 
 - (NSString *)stringToDisplayInDocList
 {
-	NSString *displayString = [[self class] punctuateTokenName:self.tokenItem.tokenName];
-	AKBehaviorItem *owningBehavior = ((AKMemberItem *)self.tokenItem).owningBehavior;
+	NSString *displayString = [[self class] punctuateTokenName:self.token.tokenName];
+	AKBehaviorItem *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
 
 	// Qualify the member name with ancestor or protocol info if any.
 	if (_behaviorItem != owningBehavior) {
@@ -60,7 +60,7 @@
 
 	// If this is a method that is added by a framework that is not the class's
 	// main framework, show that.
-	NSString *memberFrameworkName = self.tokenItem.frameworkName;
+	NSString *memberFrameworkName = self.token.frameworkName;
 	BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorItem.frameworkName];
 
 	if (!memberIsInSameFramework) {
@@ -73,7 +73,7 @@
 	// assuming the docs are accurate.
 	//
 	// If we know the method is deprecated, show that.
-	if (self.tokenItem.isDeprecated) {
+	if (self.token.isDeprecated) {
 		displayString = [NSString stringWithFormat:@"%@ (deprecated)", displayString];
 	}
 
@@ -86,9 +86,9 @@
 // override this method.
 - (NSString *)commentString
 {
-	NSString *memberFrameworkName = self.tokenItem.frameworkName;
+	NSString *memberFrameworkName = self.token.frameworkName;
 	BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorItem.frameworkName];
-	AKBehaviorItem *owningBehavior = ((AKMemberItem *)self.tokenItem).owningBehavior;
+	AKBehaviorItem *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
 
 	if (self.behaviorItem == owningBehavior) {
 		// We're the first class/protocol to declare this method.

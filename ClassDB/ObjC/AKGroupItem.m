@@ -23,7 +23,7 @@
 
 #pragma mark - Getters and setters
 
-- (void)addSubitem:(AKTokenItem *)item
+- (void)addSubitem:(AKToken *)item
 {
     [_subitems addObject:item];
 }
@@ -38,9 +38,9 @@
     return _subitems;
 }
 
-- (AKTokenItem *)subitemWithName:(NSString *)tokenName
+- (AKToken *)subitemWithName:(NSString *)tokenName
 {
-    for (AKTokenItem *subitem in _subitems)
+    for (AKToken *subitem in _subitems)
     {
         if ([subitem.tokenName isEqualToString:tokenName])
         {
@@ -50,7 +50,7 @@
     return nil;
 }
 
-#pragma mark - AKTokenItem methods
+#pragma mark - AKToken methods
 
 - (NSString *)tokenName
 {

@@ -87,7 +87,7 @@
 
 - (void)addPropertyItem:(AKPropertyItem *)propertyItem
 {
-	[_indexOfProperties addTokenItem:propertyItem];
+	[_indexOfProperties addToken:propertyItem];
 }
 
 #pragma mark - Getters and setters -- class methods
@@ -104,7 +104,7 @@
 
 - (void)addClassMethod:(AKMethodItem *)methodItem
 {
-	[_indexOfClassMethods addTokenItem:methodItem];
+	[_indexOfClassMethods addToken:methodItem];
 }
 
 #pragma mark - Getters and setters -- instance methods
@@ -116,7 +116,7 @@
 
 - (void)addInstanceMethod:(AKMethodItem *)methodItem
 {
-	[_indexOfInstanceMethods addTokenItem:methodItem];
+	[_indexOfInstanceMethods addToken:methodItem];
 }
 
 #pragma mark - Getters and setters -- deprecated methods

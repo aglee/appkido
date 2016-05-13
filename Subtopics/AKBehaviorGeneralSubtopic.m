@@ -34,7 +34,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithTokenItem:self.behaviorItem];
+    AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithToken:self.behaviorItem];
     [docList addObject:headerFileDoc];
 }
 

@@ -8,19 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AKTokenItem;
+@class AKToken;
 
 /*!
- * Wrapper around a collection of AKTokenItems, with a couple of convenience
+ * Wrapper around a collection of AKTokens, with a couple of convenience
  * methods.  Unlike an AKGroupItem, an AKCollectionOfItems is not itself a item.
  */
 @interface AKCollectionOfItems : NSObject
 {
 @private
-	// Contains all the AKTokenItems that have been added to us.
+	// Contains all the AKTokens that have been added to us.
 	NSMutableArray *_itemList;
 
-	// Keys are item names.  Values are AKTokenItems.
+	// Keys are item names.  Values are AKTokens.
 	NSMutableDictionary *_itemsByName;
 }
 
@@ -28,8 +28,8 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allItems;
 
-- (AKTokenItem *)itemWithTokenName:(NSString *)tokenName;
+- (AKToken *)itemWithTokenName:(NSString *)tokenName;
 
-- (void)addTokenItem:(AKTokenItem *)tokenItem;
+- (void)addToken:(AKToken *)token;
 
 @end

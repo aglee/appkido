@@ -18,9 +18,9 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    for (AKTokenItem *subitem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
+    for (AKToken *subitem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
     {
-        AKDoc *newDoc = [[AKGlobalsDoc alloc] initWithTokenItem:subitem];
+        AKDoc *newDoc = [[AKGlobalsDoc alloc] initWithToken:subitem];
 
         [docList addObject:newDoc];
     }

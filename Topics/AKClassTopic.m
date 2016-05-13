@@ -107,7 +107,7 @@
     return _classItem.tokenName;
 }
 
-- (AKTokenItem *)topicItem
+- (AKToken *)topicItem
 {
     return _classItem;
 }

@@ -77,9 +77,9 @@
 
 #pragma mark - Private methods
 
-- (void)_addTokenItems:(NSArray *)itemsToAdd toSymbolArray:(NSMutableArray *)apiSymbols
+- (void)_addTokens:(NSArray *)itemsToAdd toSymbolArray:(NSMutableArray *)apiSymbols
 {
-    for (AKTokenItem *item in itemsToAdd)
+    for (AKToken *item in itemsToAdd)
     {
         [apiSymbols addObject:item.tokenName];
     }
@@ -87,33 +87,33 @@
 
 - (void)_addClassesToSymbolArray:(NSMutableArray *)apiSymbols
 {
-    [self _addTokenItems:[_database allClasses] toSymbolArray:apiSymbols];
+    [self _addTokens:[_database allClasses] toSymbolArray:apiSymbols];
 }
 
 - (void)_addClassMembersToSymbolArray:(NSMutableArray *)apiSymbols
 {
     for (AKClassItem *classItem in [_database allClasses])
     {
-        [self _addTokenItems:[classItem propertyItems] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[classItem classMethodItems] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[classItem instanceMethodItems] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[classItem documentedDelegateMethods] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[classItem documentedNotifications] toSymbolArray:apiSymbols];
+        [self _addTokens:[classItem propertyItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[classItem classMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[classItem instanceMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[classItem documentedDelegateMethods] toSymbolArray:apiSymbols];
+        [self _addTokens:[classItem documentedNotifications] toSymbolArray:apiSymbols];
     }
 }
 
 - (void)_addProtocolsToSymbolArray:(NSMutableArray *)apiSymbols
 {
-    [self _addTokenItems:[_database allProtocols] toSymbolArray:apiSymbols];
+    [self _addTokens:[_database allProtocols] toSymbolArray:apiSymbols];
 }
 
 - (void)_addProtocolMembersToSymbolArray:(NSMutableArray *)apiSymbols
 {
     for (AKProtocolItem *protocolItem in [_database allProtocols])
     {
-        [self _addTokenItems:[protocolItem propertyItems] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[protocolItem classMethodItems] toSymbolArray:apiSymbols];
-        [self _addTokenItems:[protocolItem instanceMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[protocolItem propertyItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[protocolItem classMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[protocolItem instanceMethodItems] toSymbolArray:apiSymbols];
     }
 }
 
@@ -123,7 +123,7 @@
     {
         for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
         {
-            [self _addTokenItems:[groupItem subitems] toSymbolArray:apiSymbols];
+            [self _addTokens:[groupItem subitems] toSymbolArray:apiSymbols];
         }
     }
 }

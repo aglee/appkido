@@ -5,7 +5,7 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKTokenItem.h"
+#import "AKToken.h"
 
 /*!
  * Represents a collection of global identifiers such as enums, constant names,
@@ -14,7 +14,7 @@
  * names of the enums. The owned identifiers are not themselves database items;
  * they're just strings.
  */
-@interface AKGlobalsItem : AKTokenItem
+@interface AKGlobalsItem : AKToken
 {
 @private
     // Elements are strings.

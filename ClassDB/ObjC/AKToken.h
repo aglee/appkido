@@ -1,5 +1,5 @@
 //
-// AKTokenItem.h
+// AKToken.h
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -12,13 +12,10 @@
 @class AKDatabase;
 
 /*!
- * Base class for entries in an AKDatabase.
- *
- * An AKTokenItem, or just "token item," or just "item," contains information
- * about an API construct. Subclasses represent different types of constructs
- * such as classes, protocols, and methods.
+ * Represents a named API construct.  Subclasses represent different types of
+ * constructs such as classes, protocols, and methods.
  */
-@interface AKTokenItem : NSObject <AKSortable>
+@interface AKToken : NSObject <AKSortable>
 
 @property (nonatomic, strong) DSAToken *tokenMO;
 @property (nonatomic, readonly) NSString *tokenName;

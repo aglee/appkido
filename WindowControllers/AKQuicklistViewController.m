@@ -786,7 +786,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 //        // Don't list classes that don't have HTML documentation.  They
 //        // may have cropped up in header files and either not been
 //        // documented yet or intended for Apple's internal use.
-//        if (classItem.tokenItemDocumentation)
+//        if (classItem.tokenDocumentation)
 		{
 			AKTopic *topic = [AKClassTopic topicWithClassItem:classItem];
 
@@ -809,7 +809,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 //        // Don't list protocols that don't have HTML documentation.  They
 //        // may have cropped up in header files and either not been
 //        // documented yet or intended for Apple's internal use.
-//        if (protocolItem.tokenItemDocumentation)
+//        if (protocolItem.tokenDocumentation)
 		{
 			AKTopic *topic = [AKProtocolTopic topicWithProtocolItem:protocolItem];
 

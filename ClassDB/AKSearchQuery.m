@@ -257,9 +257,9 @@
     }
 }
 
-- (BOOL)_matchesItem:(AKTokenItem *)tokenItem
+- (BOOL)_matchesItem:(AKToken *)token
 {
-    return [self _matchesString:tokenItem.tokenName];
+    return [self _matchesString:token.tokenName];
 }
 
 - (void)_searchClassNames
@@ -298,10 +298,10 @@
         [self _searchMembersUnderBehaviorTopic:topic];
 
         // Search members specific to classes.
-        [self _searchTokenItems:[classItem documentedDelegateMethods]
+        [self _searchTokens:[classItem documentedDelegateMethods]
              underSubtopic:AKDelegateMethodsSubtopicName
            ofBehaviorTopic:topic];
-        [self _searchTokenItems:[classItem documentedNotifications]
+        [self _searchTokens:[classItem documentedNotifications]
              underSubtopic:AKNotificationsSubtopicName
            ofBehaviorTopic:topic];
     }
@@ -322,7 +322,7 @@
     AKBehaviorItem *behaviorItem = (AKBehaviorItem *)[behaviorTopic topicItem];
 
     // Search the behavior's properties.
-    [self _searchTokenItems:[behaviorItem propertyItems]
+    [self _searchTokens:[behaviorItem propertyItems]
          underSubtopic:AKPropertiesSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
@@ -335,7 +335,7 @@
         NSString *savedSearchString = _searchString;
         _searchString = [_searchString substringFromIndex:3];
         {{
-            [self _searchTokenItems:[behaviorItem propertyItems]
+            [self _searchTokens:[behaviorItem propertyItems]
                  underSubtopic:AKPropertiesSubtopicName
                ofBehaviorTopic:behaviorTopic];
         }}
@@ -343,12 +343,12 @@
     }
 
     // Search the behavior's class methods.
-    [self _searchTokenItems:[behaviorItem classMethodItems]
+    [self _searchTokens:[behaviorItem classMethodItems]
          underSubtopic:AKClassMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 
     // Search the behavior's instance methods.
-    [self _searchTokenItems:[behaviorItem instanceMethodItems]
+    [self _searchTokens:[behaviorItem instanceMethodItems]
          underSubtopic:AKInstanceMethodsSubtopicName
        ofBehaviorTopic:behaviorTopic];
 }
@@ -360,7 +360,7 @@
     {
         for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
         {
-            for (AKTokenItem *subitem in [groupItem subitems])
+            for (AKToken *subitem in [groupItem subitems])
             {
                 if ([self _matchesItem:subitem])
                 {
@@ -418,11 +418,11 @@
     }
 }
 
-- (void)_searchTokenItems:(NSArray *)itemArray
+- (void)_searchTokens:(NSArray *)itemArray
          underSubtopic:(NSString *)subtopicName
      ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
-    for (AKTokenItem *item in itemArray)
+    for (AKToken *item in itemArray)
     {
         if ([self _matchesItem:item])
         {

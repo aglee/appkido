@@ -5,7 +5,7 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKTokenItem.h"
+#import "AKToken.h"
 
 @class AKBehaviorItem;
 @class AKCollectionOfItems;
@@ -39,7 +39,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
  * owning class's declaration. Or we may encounter a protocol in a class's list
  * of protocols before we've encountered its @protocol declaration.
  */
-@interface AKBehaviorItem : AKTokenItem
+@interface AKBehaviorItem : AKToken
 {
 @private
 	// One AKProtocolItem for each protocol this behavior conforms to.

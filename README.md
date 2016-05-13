@@ -7,7 +7,7 @@ The classes in AppKiDo mostly fall into Cocoa's Model-View-Controller categories
 
 Model classes: token items
 --------------------------
-The fundamental model object in AppKiDo is an AKTokenItem, or simply "token item", or simply "item". AKTokenItem is an abstract base class that represents a Cocoa API construct.  It corresponds to the Token entity in the docset's Core Data store.
+The fundamental model object in AppKiDo is an AKToken, or simply "token item", or simply "item". AKToken is an abstract base class that represents a Cocoa API construct.  It corresponds to the Token entity in the docset's Core Data store.
 
 Here are the API constructs represented in AppKiDo, and their corresponding item classes:
 

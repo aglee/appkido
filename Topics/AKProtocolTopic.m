@@ -90,7 +90,7 @@
     return _protocolItem.tokenName;
 }
 
-- (AKTokenItem *)topicItem
+- (AKToken *)topicItem
 {
     return _protocolItem;
 }

@@ -8,7 +8,7 @@
 
 #import "AKCollectionOfItems.h"
 #import "DIGSLog.h"
-#import "AKTokenItem.h"
+#import "AKToken.h"
 
 @implementation AKCollectionOfItems
 
@@ -31,19 +31,19 @@
 	return _itemList;
 }
 
-- (AKTokenItem *)itemWithTokenName:(NSString *)tokenName
+- (AKToken *)itemWithTokenName:(NSString *)tokenName
 {
 	return _itemsByName[tokenName];
 }
 
-- (void)addTokenItem:(AKTokenItem *)tokenItem
+- (void)addToken:(AKToken *)token
 {
-	NSString *tokenName = tokenItem.tokenName;
+	NSString *tokenName = token.tokenName;
 	if (_itemsByName[tokenName]) {
 //		DIGSLogWarning(@"ignoring attempt to add token %@ twice", tokenName);
 	} else {
-		[_itemList addObject:tokenItem];
-		_itemsByName[tokenName] = tokenItem;
+		[_itemList addObject:token];
+		_itemsByName[tokenName] = token;
 	}
 }
 
