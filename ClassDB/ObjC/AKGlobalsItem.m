@@ -11,9 +11,9 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
 {
-    self = [super initWithToken:token];
+    self = [super initWithTokenMO:tokenMO];
     if (self) {
         _namesOfGlobals = [[NSMutableArray alloc] init];
     }

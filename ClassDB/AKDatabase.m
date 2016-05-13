@@ -233,7 +233,7 @@
 	return [[AKDocSetQuery alloc] initWithDocSetIndex:self.docSetIndex entityName:entityName];
 }
 
-- (NSArray *)_arrayWithTokensForLanguage:(NSString *)languageName
+- (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName
 {
 	NSError *error;
 	AKDocSetQuery *query = [self _queryWithEntityName:@"Token"];

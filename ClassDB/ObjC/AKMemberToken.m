@@ -7,28 +7,27 @@
 //
 
 #import "AKMemberToken.h"
-
-#import "DIGSLog.h"
 #import "AKBehaviorToken.h"
+#import "DIGSLog.h"
 
 @implementation AKMemberToken
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorToken *)behaviorToken
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO owningBehavior:(AKBehaviorToken *)behaviorToken
 {
     NSParameterAssert(behaviorToken != nil);
-    self = [super initWithToken:token];
+    self = [super initWithTokenMO:tokenMO];
     if (self) {
         _owningBehavior = behaviorToken;
     }
     return self;
 }
 
-- (instancetype)initWithToken:(DSAToken *)token
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithToken:nil owningBehavior:nil];
+    return [self initWithTokenMO:nil owningBehavior:nil];
 }
 
 @end

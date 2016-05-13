@@ -15,11 +15,11 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
 {
 	self = [super init];
 	if (self) {
-		_tokenMO = token;
+		_tokenMO = tokenMO;
 	}
 	return self;
 }
@@ -27,7 +27,7 @@
 - (instancetype)init
 {
 	DIGSLogError_NondesignatedInitializer();
-	return [self initWithToken:nil];
+	return [self initWithTokenMO:nil];
 }
 
 #pragma mark - Getters and setters

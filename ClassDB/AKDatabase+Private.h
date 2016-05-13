@@ -31,7 +31,7 @@
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) NSMutableDictionary *protocolTokensByName;
 
 - (AKDocSetQuery *)_queryWithEntityName:(NSString *)entityName;
-- (NSArray *)_arrayWithTokensForLanguage:(NSString *)languageName;
+- (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName;
 @end
 
 

@@ -12,39 +12,39 @@
 
 - (void)_importObjectiveCTokens
 {
-	for (DSAToken *token in [self _arrayWithTokensForLanguage:@"Objective-C"]) {
-		if (![self _maybeImportObjectiveCToken:token]) {
-			QLog(@"+++ %s [ODD] Could not import token with type '%@'", __PRETTY_FUNCTION__, token.tokenType.typeName);
+	for (DSAToken *tokenMO in [self _arrayWithTokenMOsForLanguage:@"Objective-C"]) {
+		if (![self _maybeImportObjectiveCToken:tokenMO]) {
+			QLog(@"+++ %s [ODD] Could not import token with type '%@'", __PRETTY_FUNCTION__, tokenMO.tokenType.typeName);
 		}
 	}
 }
 
-- (BOOL)_maybeImportObjectiveCToken:(DSAToken *)token
+- (BOOL)_maybeImportObjectiveCToken:(DSAToken *)tokenMO
 {
-	return ([self _maybeImportClassOrCategoryToken:token]
-			|| [self _maybeImportClassMethodToken:token]
-			|| [self _maybeImportInstanceMethodToken:token]
-			|| [self _maybeImportPropertyToken:token]
-			|| [self _maybeImportBindingToken:token]
-			|| [self _maybeImportProtocolToken:token]
-			|| [self _maybeImportProtocolClassMethodToken:token]
-			|| [self _maybeImportProtocolInstanceMethodToken:token]
-			|| [self _maybeImportProtocolPropertyToken:token]);
+	return ([self _maybeImportClassOrCategoryToken:tokenMO]
+			|| [self _maybeImportClassMethodToken:tokenMO]
+			|| [self _maybeImportInstanceMethodToken:tokenMO]
+			|| [self _maybeImportPropertyToken:tokenMO]
+			|| [self _maybeImportBindingToken:tokenMO]
+			|| [self _maybeImportProtocolToken:tokenMO]
+			|| [self _maybeImportProtocolClassMethodToken:tokenMO]
+			|| [self _maybeImportProtocolInstanceMethodToken:tokenMO]
+			|| [self _maybeImportProtocolPropertyToken:tokenMO]);
 }
 
 #pragma mark - Classes and categories
 
-- (BOOL)_maybeImportClassOrCategoryToken:(DSAToken *)token
+- (BOOL)_maybeImportClassOrCategoryToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"cl"]
-		&& ![token.tokenType.typeName isEqualToString:@"cat"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"cl"]
+		&& ![tokenMO.tokenType.typeName isEqualToString:@"cat"]) {
 
 		return NO;
 	}
 
-	AKBehaviorToken *item = [self _getOrAddClassOrCategoryTokenWithName:token.tokenName];
+	AKBehaviorToken *item = [self _getOrAddClassOrCategoryTokenWithName:tokenMO.tokenName];
 	if (item.isClassToken) {
-		item.tokenMO = token;
+		item.tokenMO = tokenMO;
 		if (((AKClassToken *)item).parentClass == nil) {
 			[self _fillInParentClassOfClassToken:((AKClassToken *)item)];
 		}
@@ -89,7 +89,7 @@
 	// Case 3: Both a class name and a category name.
 	AKCategoryToken *categoryToken = [classToken categoryNamed:categoryName];
 	if (categoryToken == nil) {
-		categoryToken = [[AKCategoryToken alloc] initWithToken:nil];
+		categoryToken = [[AKCategoryToken alloc] initWithTokenMO:nil];
 		[classToken addCategory:categoryToken];
 		//QLog(@"+++ added category %@ to class %@", categoryName, className);
 	}
@@ -100,7 +100,7 @@
 {
 	AKClassToken *classToken = self.classTokensByName[className];
 	if (classToken == nil) {
-		classToken = [[AKClassToken alloc] initWithToken:nil];
+		classToken = [[AKClassToken alloc] initWithTokenMO:nil];
 		classToken.fallbackTokenName = className;
 		self.classTokensByName[className] = classToken;
 		//QLog(@"+++ class '%@', no token yet", classToken.tokenName);
@@ -125,55 +125,55 @@
 	}
 }
 
-- (BOOL)_maybeImportClassMethodToken:(DSAToken *)token
+- (BOOL)_maybeImportClassMethodToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"clm"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"clm"]) {
 		return NO;
 	}
 
-	NSString *containerName = token.container.containerName;
+	NSString *containerName = tokenMO.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:behaviorToken];
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithTokenMO:tokenMO owningBehavior:behaviorToken];
 	[behaviorToken addClassMethod:methodToken];
 	return YES;
 }
 
-- (BOOL)_maybeImportInstanceMethodToken:(DSAToken *)token
+- (BOOL)_maybeImportInstanceMethodToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"instm"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"instm"]) {
 		return NO;
 	}
 
-	NSString *containerName = token.container.containerName;
+	NSString *containerName = tokenMO.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:behaviorToken];
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithTokenMO:tokenMO owningBehavior:behaviorToken];
 	[behaviorToken addInstanceMethod:methodToken];
 	//QLog(@"+++ added instance method %@ to %@ %@", methodToken.tokenName, [behaviorToken className], containerName);
 	return YES;
 }
 
-- (BOOL)_maybeImportPropertyToken:(DSAToken *)token
+- (BOOL)_maybeImportPropertyToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"instp"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"instp"]) {
 		return NO;
 	}
 
-	NSString *containerName = token.container.containerName;
+	NSString *containerName = tokenMO.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithToken:token owningBehavior:behaviorToken];
+	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithTokenMO:tokenMO owningBehavior:behaviorToken];
 	[behaviorToken addPropertyToken:propertyToken];
 	return YES;
 }
 
-- (BOOL)_maybeImportBindingToken:(DSAToken *)token
+- (BOOL)_maybeImportBindingToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"binding"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"binding"]) {
 		return NO;
 	}
 
-	NSString *className = token.container.containerName;
+	NSString *className = tokenMO.container.containerName;
 	AKClassToken *classToken = (AKClassToken *)[self _getOrAddClassOrCategoryTokenWithName:className];
-	AKBindingToken *bindingToken = [[AKBindingToken alloc] initWithToken:token owningBehavior:classToken];
+	AKBindingToken *bindingToken = [[AKBindingToken alloc] initWithTokenMO:tokenMO owningBehavior:classToken];
 	[classToken addBindingToken:bindingToken];
 	//QLog(@"+++ added binding '%@' to class '%@'", bindingToken.tokenName, classToken.tokenName);
 	return YES;
@@ -181,25 +181,25 @@
 
 #pragma mark - Protocols
 
-- (BOOL)_maybeImportProtocolToken:(DSAToken *)token
+- (BOOL)_maybeImportProtocolToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"intf"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"intf"]) {
 		return NO;
 	}
 
-	(void)[self _getOrAddProtocolTokenWithToken:token];
+	(void)[self _getOrAddProtocolTokenWithTokenMO:tokenMO];
 	return YES;
 }
 
-- (AKProtocolToken *)_getOrAddProtocolTokenWithToken:(DSAToken *)token
+- (AKProtocolToken *)_getOrAddProtocolTokenWithTokenMO:(DSAToken *)tokenMO
 {
-	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:token.tokenName];
+	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:tokenMO.tokenName];
 	if (protocolToken.tokenMO == nil) {
-		protocolToken.tokenMO = token;
-		//QLog(@"+++ protocol '%@' has token, is in framework '%@'", protocolToken.tokenName, protocolToken.frameworkName);
+		protocolToken.tokenMO = tokenMO;
+		//QLog(@"+++ protocol '%@' has tokenMO, is in framework '%@'", protocolToken.tokenName, protocolToken.frameworkName);
 	} else {
 		// We don't expect to encounter the same class twice with the same token.
-		QLog(@"+++ [ODD] protocol '%@' already has a token", token.tokenName);
+		QLog(@"+++ [ODD] protocol '%@' already has a token", tokenMO.tokenName);
 	}
 	return protocolToken;
 }
@@ -208,48 +208,48 @@
 {
 	AKProtocolToken *protocolToken = self.protocolTokensByName[protocolName];
 	if (protocolToken == nil) {
-		protocolToken = [[AKProtocolToken alloc] initWithToken:nil];
+		protocolToken = [[AKProtocolToken alloc] initWithTokenMO:nil];
 		self.protocolTokensByName[protocolName] = protocolToken;
 		//QLog(@"+++ protocol '%@', no token yet", protocolToken.tokenName);
 	}
 	return protocolToken;
 }
 
-- (BOOL)_maybeImportProtocolClassMethodToken:(DSAToken *)token
+- (BOOL)_maybeImportProtocolClassMethodToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"intfcm"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"intfcm"]) {
 		return NO;
 	}
 
-	NSString *protocolName = token.container.containerName;
+	NSString *protocolName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:protocolToken];
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithTokenMO:tokenMO owningBehavior:protocolToken];
 	[protocolToken addClassMethod:methodToken];
 	return YES;
 }
 
-- (BOOL)_maybeImportProtocolInstanceMethodToken:(DSAToken *)token
+- (BOOL)_maybeImportProtocolInstanceMethodToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"intfm"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"intfm"]) {
 		return NO;
 	}
 
-	NSString *protocolName = token.container.containerName;
+	NSString *protocolName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithToken:token owningBehavior:protocolToken];
+	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithTokenMO:tokenMO owningBehavior:protocolToken];
 	[protocolToken addInstanceMethod:methodToken];
 	return YES;
 }
 
-- (BOOL)_maybeImportProtocolPropertyToken:(DSAToken *)token
+- (BOOL)_maybeImportProtocolPropertyToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"intfp"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"intfp"]) {
 		return NO;
 	}
 
-	NSString *propertyName = token.container.containerName;
+	NSString *propertyName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:propertyName];
-	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithToken:token owningBehavior:protocolToken];
+	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithTokenMO:tokenMO owningBehavior:protocolToken];
 	[protocolToken addPropertyToken:propertyToken];
 	return YES;
 }

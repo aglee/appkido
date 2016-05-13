@@ -26,9 +26,9 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
 {
-	self = [super initWithToken:token];
+	self = [super initWithTokenMO:tokenMO];
 	if (self) {
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 		_tokenDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
@@ -40,7 +40,6 @@
 		_indexOfNotifications = [[AKCollectionOfItems alloc] init];
 		_indexOfBindings = [[AKCollectionOfItems alloc] init];
 	}
-
 	return self;
 }
 

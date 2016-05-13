@@ -16,9 +16,9 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
 {
-	self = [super initWithToken:token];
+	self = [super initWithTokenMO:tokenMO];
 	if (self) {
 		_protocolTokens = [[NSMutableArray alloc] init];
 		_protocolTokenNames = [[NSMutableSet alloc] init];

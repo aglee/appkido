@@ -12,7 +12,7 @@
 
 - (void)_importCTokens
 {
-	for (DSAToken *token in [self _arrayWithTokensForLanguage:@"C"]) {
+	for (DSAToken *token in [self _arrayWithTokenMOsForLanguage:@"C"]) {
 		if (![self _maybeImportCToken:token]) {
 			QLog(@"+++ %s [ODD] Could not import token with type '%@'", __PRETTY_FUNCTION__, token.tokenType.typeName);
 		}

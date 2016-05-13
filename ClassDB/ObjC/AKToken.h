@@ -24,6 +24,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO NS_DESIGNATED_INITIALIZER;
 
 @end
