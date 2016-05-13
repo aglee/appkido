@@ -42,7 +42,7 @@
 		return NO;
 	}
 
-	AKBehaviorItem *item = [self _getOrAddClassOrCategoryItemWithName:token.tokenName];
+	AKBehaviorToken *item = [self _getOrAddClassOrCategoryItemWithName:token.tokenName];
 	if (item.isClassItem) {
 		item.tokenMO = token;
 		if (((AKClassItem *)item).parentClass == nil) {
@@ -58,7 +58,7 @@
 // category names, e.g. "NSObject(NSFontPanelValidationAdditions)".  So rather
 // than trust the token type, this method goes by the token name to decide what
 // kind of token it is.
-- (AKBehaviorItem *)_getOrAddClassOrCategoryItemWithName:(NSString *)name
+- (AKBehaviorToken *)_getOrAddClassOrCategoryItemWithName:(NSString *)name
 {
 	// AFAICT the tokenName for a category token always has the form
 	// "ClassName(CategoryName)" -- except in the case of
@@ -132,9 +132,9 @@
 	}
 
 	NSString *containerName = token.container.containerName;
-	AKBehaviorItem *behaviorItem = [self _getOrAddClassOrCategoryItemWithName:containerName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorItem];
-	[behaviorItem addClassMethod:methodItem];
+	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryItemWithName:containerName];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorToken];
+	[behaviorToken addClassMethod:methodItem];
 	return YES;
 }
 
@@ -145,10 +145,10 @@
 	}
 
 	NSString *containerName = token.container.containerName;
-	AKBehaviorItem *behaviorItem = [self _getOrAddClassOrCategoryItemWithName:containerName];
-	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorItem];
-	[behaviorItem addInstanceMethod:methodItem];
-	//QLog(@"+++ added instance method %@ to %@ %@", methodItem.tokenName, [behaviorItem className], containerName);
+	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryItemWithName:containerName];
+	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorToken];
+	[behaviorToken addInstanceMethod:methodItem];
+	//QLog(@"+++ added instance method %@ to %@ %@", methodItem.tokenName, [behaviorToken className], containerName);
 	return YES;
 }
 
@@ -159,9 +159,9 @@
 	}
 
 	NSString *containerName = token.container.containerName;
-	AKBehaviorItem *behaviorItem = [self _getOrAddClassOrCategoryItemWithName:containerName];
-	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:behaviorItem];
-	[behaviorItem addPropertyItem:propertyItem];
+	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryItemWithName:containerName];
+	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:behaviorToken];
+	[behaviorToken addPropertyItem:propertyItem];
 	return YES;
 }
 

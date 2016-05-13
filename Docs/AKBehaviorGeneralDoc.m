@@ -6,7 +6,7 @@
  */
 
 #import "AKBehaviorGeneralDoc.h"
-#import "AKBehaviorItem.h"
+#import "AKBehaviorToken.h"
 #import "AKFrameworkConstants.h"
 #import "NSString+AppKiDo.h"
 
@@ -18,9 +18,9 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithBehaviorItem:(AKBehaviorItem *)behaviorItem extraFrameworkName:(NSString *)frameworkName
+- (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken extraFrameworkName:(NSString *)frameworkName
 {
-	self = [super initWithToken:behaviorItem];
+	self = [super initWithToken:behaviorToken];
 	if (self) {
 		_extraFrameworkName = [frameworkName copy];
 	}
@@ -29,7 +29,7 @@
 
 - (instancetype)initWithToken:(AKToken *)token
 {
-	return [self initWithBehaviorItem:(AKBehaviorItem *)token extraFrameworkName:nil];
+	return [self initWithBehaviorToken:(AKBehaviorToken *)token extraFrameworkName:nil];
 }
 
 #pragma mark - Doc name

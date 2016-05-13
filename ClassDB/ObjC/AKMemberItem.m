@@ -9,18 +9,18 @@
 #import "AKMemberItem.h"
 
 #import "DIGSLog.h"
-#import "AKBehaviorItem.h"
+#import "AKBehaviorToken.h"
 
 @implementation AKMemberItem
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorItem *)behaviorItem
+- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorToken *)behaviorToken
 {
-    NSParameterAssert(behaviorItem != nil);
+    NSParameterAssert(behaviorToken != nil);
     self = [super initWithToken:token];
     if (self) {
-        _owningBehavior = behaviorItem;
+        _owningBehavior = behaviorToken;
     }
     return self;
 }

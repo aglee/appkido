@@ -6,7 +6,7 @@
  */
 
 #import "AKNotificationDoc.h"
-#import "AKBehaviorItem.h"
+#import "AKBehaviorToken.h"
 #import "AKMethodItem.h"
 
 @implementation AKNotificationDoc
@@ -16,11 +16,11 @@
 - (NSString *)commentString
 {
 	NSString *methodFrameworkName = self.token.frameworkName;
-	NSString *behaviorFrameworkName = self.behaviorItem.frameworkName;
+	NSString *behaviorFrameworkName = self.behaviorToken.frameworkName;
 	BOOL methodIsInSameFramework = [methodFrameworkName isEqualToString:behaviorFrameworkName];
-	AKBehaviorItem *ownerOfMethod = ((AKMemberItem *)self.token).owningBehavior;
+	AKBehaviorToken *ownerOfMethod = ((AKMemberItem *)self.token).owningBehavior;
 
-	if (self.behaviorItem == ownerOfMethod) {
+	if (self.behaviorToken == ownerOfMethod) {
 		// We're the first class/protocol to declare this method.
 		if (methodIsInSameFramework) {
 			return @"";

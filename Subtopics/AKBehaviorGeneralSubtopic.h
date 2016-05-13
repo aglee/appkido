@@ -7,7 +7,7 @@
 
 #import "AKSubtopic.h"
 
-@class AKBehaviorItem;
+@class AKBehaviorToken;
 
 /*!
  * The "General" subtopic displayed at the top of the subtopic list when a class
@@ -36,6 +36,6 @@
 #pragma mark - Getters and setters
 
 /*! Subclasses must override. */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorToken *behaviorToken;
 
 @end

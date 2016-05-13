@@ -5,7 +5,7 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKBehaviorItem.h"
+#import "AKBehaviorToken.h"
 
 @class AKBindingItem;
 @class AKCategoryItem;
@@ -22,7 +22,7 @@
  * We use the terms "parent class" and "child class" rather than "superclass"
  * and "subclass", to avoid confusion.
  */
-@interface AKClassItem : AKBehaviorItem
+@interface AKClassItem : AKBehaviorToken
 {
 @private
 	NSMutableArray *_namesOfAllOwningFrameworks;

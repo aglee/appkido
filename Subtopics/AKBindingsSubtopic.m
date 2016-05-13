@@ -23,11 +23,11 @@
 
 #pragma mark - AKMembersSubtopic methods
 
-- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
+- (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken
 {
-    if ([behaviorItem isClassItem])
+    if ([behaviorToken isClassItem])
     {
-        return [(AKClassItem *)behaviorItem documentedBindings];
+        return [(AKClassItem *)behaviorToken documentedBindings];
     }
     else
     {

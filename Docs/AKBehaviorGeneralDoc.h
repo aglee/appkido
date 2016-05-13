@@ -7,13 +7,13 @@
 
 #import "AKTokenDoc.h"
 
-@class AKBehaviorItem;
+@class AKBehaviorToken;
 
 /*!
  * Abstract class that represents one of the docs under the "General" subtopic
  * of a class or protocol topic.
  *
- * self.token is an AKBehaviorItem.
+ * self.token is an AKBehaviorToken.
  */
 @interface AKBehaviorGeneralDoc : AKTokenDoc
 
@@ -26,7 +26,7 @@
  * protocol, frameworkName should always be nil -- a protocol can only belong to
  * one framework.
  */
-- (instancetype)initWithBehaviorItem:(AKBehaviorItem *)behaviorItem extraFrameworkName:(NSString *)frameworkName;
+- (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken extraFrameworkName:(NSString *)frameworkName;
 
 /*!
  * Used to calculate docName and stringToDisplayInDocList by "qualifying" the

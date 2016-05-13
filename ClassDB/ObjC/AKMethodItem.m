@@ -13,9 +13,9 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorItem *)behaviorItem
+- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorToken *)behaviorToken
 {
-    self = [super initWithToken:token owningBehavior:behaviorItem];
+    self = [super initWithToken:token owningBehavior:behaviorToken];
     if (self) {
         _argumentTypes = [[NSMutableArray alloc] init];
     }

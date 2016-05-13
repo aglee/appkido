@@ -116,12 +116,12 @@
 {
     [array setArray:(@[
                      [AKClassGeneralSubtopic subtopicForClassItem:_classItem],
-                     [AKPropertiesSubtopic subtopicForBehaviorItem:_classItem includeAncestors:NO],
-//                     [AKPropertiesSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
-                     [AKClassMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:NO],
-//                     [AKClassMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
-                     [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:NO],
-//                     [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_classItem includeAncestors:YES],
+                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classItem includeAncestors:NO],
+//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classItem includeAncestors:YES],
+                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:NO],
+//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:YES],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:NO],
+//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:YES],
                      [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
 //                     [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
                      [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],

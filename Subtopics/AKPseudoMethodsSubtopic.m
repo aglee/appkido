@@ -53,7 +53,7 @@
 
 #pragma mark - AKMembersSubtopic methods
 
-- (AKBehaviorItem *)behaviorItem
+- (AKBehaviorToken *)behaviorToken
 {
     return _classItem;
 }

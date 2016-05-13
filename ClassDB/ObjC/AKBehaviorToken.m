@@ -1,18 +1,18 @@
 //
-// AKBehaviorItem.m
+// AKBehaviorToken.m
 //
 // Created by Andy Lee on Sun Jun 30 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKBehaviorItem.h"
+#import "AKBehaviorToken.h"
 #import "DIGSLog.h"
 #import "AKProtocolItem.h"
 #import "AKPropertyItem.h"
 #import "AKMethodItem.h"
 #import "AKCollectionOfItems.h"
 
-@implementation AKBehaviorItem
+@implementation AKBehaviorToken
 
 #pragma mark - Init/awake/dealloc
 

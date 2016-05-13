@@ -99,12 +99,12 @@
 {
     [array setArray:(@[
                      [AKProtocolGeneralSubtopic subtopicForProtocolItem:_protocolItem],
-                     [AKPropertiesSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:NO],
-//                     [AKPropertiesSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:YES],
-                     [AKClassMethodsSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:NO],
-//                     [AKClassMethodsSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:YES],
-                     [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:NO],
-//                     [AKInstanceMethodsSubtopic subtopicForBehaviorItem:_protocolItem includeAncestors:YES],
+                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:NO],
+//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:YES],
+                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:NO],
+//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:YES],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:NO],
+//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolItem includeAncestors:YES],
                      [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:NO],
 //                     [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:YES],
                      [AKNotificationsSubtopic subtopicForClassItem:nil includeAncestors:NO],

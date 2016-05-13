@@ -40,7 +40,7 @@
 
 #pragma mark - AKBehaviorGeneralSubtopic methods
 
-- (AKBehaviorItem *)behaviorItem
+- (AKBehaviorToken *)behaviorToken
 {
     return _protocolItem;
 }

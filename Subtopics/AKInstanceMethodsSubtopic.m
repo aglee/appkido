@@ -7,7 +7,7 @@
 
 #import "AKInstanceMethodsSubtopic.h"
 
-#import "AKBehaviorItem.h"
+#import "AKBehaviorToken.h"
 #import "AKInstanceMethodDoc.h"
 
 @implementation AKInstanceMethodsSubtopic
@@ -30,9 +30,9 @@
 
 #pragma mark - AKMembersSubtopic methods
 
-- (NSArray *)memberItemsForBehavior:(AKBehaviorItem *)behaviorItem
+- (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken
 {
-    return [behaviorItem instanceMethodItems];
+    return [behaviorToken instanceMethodItems];
 }
 
 + (id)memberDocClass

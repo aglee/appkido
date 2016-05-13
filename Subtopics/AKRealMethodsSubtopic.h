@@ -7,26 +7,26 @@
 
 #import "AKMembersSubtopic.h"
 
-@class AKBehaviorItem;
+@class AKBehaviorToken;
 
 @interface AKRealMethodsSubtopic : AKMembersSubtopic
 {
 @private
-    AKBehaviorItem *_behaviorItem;
+    AKBehaviorToken *_behaviorToken;
 }
 
 #pragma mark - Factory methods
 
-+ (instancetype)subtopicForBehaviorItem:(AKBehaviorItem *)behaviorItem
++ (instancetype)subtopicForBehaviorToken:(AKBehaviorToken *)behaviorToken
              includeAncestors:(BOOL)includeAncestors;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithBehaviorItem:(AKBehaviorItem *)behaviorItem
+- (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken
           includeAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorItem *behaviorItem;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorToken *behaviorToken;
 
 @end

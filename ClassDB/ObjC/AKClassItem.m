@@ -210,7 +210,7 @@
 	[_indexOfNotifications addToken:notificationItem];
 }
 
-#pragma mark - AKBehaviorItem methods
+#pragma mark - AKBehaviorToken methods
 
 - (BOOL)isClassItem
 {

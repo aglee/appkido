@@ -15,11 +15,11 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem behaviorItem:(AKBehaviorItem *)behaviorItem
+- (instancetype)initWithMemberItem:(AKMemberItem *)memberItem behaviorToken:(AKBehaviorToken *)behaviorToken
 {
 	self = [super initWithToken:memberItem];
 	if (self) {
-		_behaviorItem = behaviorItem;
+		_behaviorToken = behaviorToken;
 	}
 	return self;
 }
@@ -27,7 +27,7 @@
 - (instancetype)initWithToken:(AKToken *)token
 {
 	DIGSLogError_NondesignatedInitializer();
-	return [self initWithMemberItem:nil behaviorItem:nil];
+	return [self initWithMemberItem:nil behaviorToken:nil];
 }
 
 #pragma mark - Manipulating token names
@@ -42,10 +42,10 @@
 - (NSString *)stringToDisplayInDocList
 {
 	NSString *displayString = [[self class] punctuateTokenName:self.token.tokenName];
-	AKBehaviorItem *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
+	AKBehaviorToken *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
 
 	// Qualify the member name with ancestor or protocol info if any.
-	if (_behaviorItem != owningBehavior) {
+	if (_behaviorToken != owningBehavior) {
 		if ([owningBehavior isClassItem]) {
 			// We inherited this member from an ancestor class.
 			displayString = [NSString stringWithFormat:@"%@ (%@)",
@@ -61,7 +61,7 @@
 	// If this is a method that is added by a framework that is not the class's
 	// main framework, show that.
 	NSString *memberFrameworkName = self.token.frameworkName;
-	BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorItem.frameworkName];
+	BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorToken.frameworkName];
 
 	if (!memberIsInSameFramework) {
 		displayString = [NSString stringWithFormat:@"%@ [%@]",
@@ -87,10 +87,10 @@
 - (NSString *)commentString
 {
 	NSString *memberFrameworkName = self.token.frameworkName;
-	BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorItem.frameworkName];
-	AKBehaviorItem *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
+	BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorToken.frameworkName];
+	AKBehaviorToken *owningBehavior = ((AKMemberItem *)self.token).owningBehavior;
 
-	if (self.behaviorItem == owningBehavior) {
+	if (self.behaviorToken == owningBehavior) {
 		// We're the first class/protocol to declare this method.
 		if (memberIsInSameFramework) {
 			return @"";

@@ -10,7 +10,7 @@
 #import "AKBehaviorTopic.h"
 #import "AKDocLocator.h"
 #import "AKHeaderFileDoc.h"
-#import "AKBehaviorItem.h"
+#import "AKBehaviorToken.h"
 #import "AKSubtopic.h"
 #import "AKTableView.h"
 #import "AKTopic.h"

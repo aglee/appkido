@@ -14,7 +14,7 @@
 
 #pragma mark - Getters and setters
 
-- (AKBehaviorItem *)behaviorItem
+- (AKBehaviorToken *)behaviorToken
 {
     DIGSLogError_MissingOverride();
     return nil;
@@ -34,7 +34,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithToken:self.behaviorItem];
+    AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithToken:self.behaviorToken];
     [docList addObject:headerFileDoc];
 }
 

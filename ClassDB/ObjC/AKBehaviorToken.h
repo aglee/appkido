@@ -1,5 +1,5 @@
 //
-// AKBehaviorItem.h
+// AKBehaviorToken.h
 //
 // Created by Andy Lee on Sun Jun 30 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -7,7 +7,7 @@
 
 #import "AKToken.h"
 
-@class AKBehaviorItem;
+@class AKBehaviorToken;
 @class AKCollectionOfItems;
 @class AKMemberItem;
 @class AKMethodItem;
@@ -16,20 +16,20 @@
 
 #pragma mark - Blocks as alternatives to performSelector
 
-typedef id (^AKBlockForGettingMemberItem)(AKBehaviorItem *behaviorItem, NSString *memberName);
+typedef id (^AKBlockForGettingMemberItem)(AKBehaviorToken *behaviorToken, NSString *memberName);
 
-typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMemberItem *memberItem);
+typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMemberItem *memberItem);
 
-#define blockForGettingMemberItem(xxxWithName) ^id (AKBehaviorItem *behaviorItem, NSString *memberName) { return [(id)behaviorItem xxxWithName:memberName]; }
+#define blockForGettingMemberItem(xxxWithName) ^id (AKBehaviorToken *behaviorToken, NSString *memberName) { return [(id)behaviorToken xxxWithName:memberName]; }
 
-#define blockForAddingMemberItem(addXXXItem) ^void (AKBehaviorItem *behaviorItem, AKMemberItem *memberItem) { [(id)behaviorItem addXXXItem:(id)memberItem]; }
+#define blockForAddingMemberItem(addXXXItem) ^void (AKBehaviorToken *behaviorToken, AKMemberItem *memberItem) { [(id)behaviorToken addXXXItem:(id)memberItem]; }
 
 
 #pragma mark -
 
 /*!
- * Abstract class. Represents an Objective-C construct that can have methods.
- * The concrete subclasses are AKClassItem, AKProtocolItem, and AKCategoryItem.
+ * Abstract class. Represents an API construct that can have methods.  Concrete
+ * subclasses include AKClassToken, AKProtocolToken, and AKCategoryToken.
  *
  * Note: unlike other database items, class and protocol items can be
  * initialized with nil as their owning framework name. The reason is that when
@@ -39,7 +39,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorItem *behaviorItem, AKMembe
  * owning class's declaration. Or we may encounter a protocol in a class's list
  * of protocols before we've encountered its @protocol declaration.
  */
-@interface AKBehaviorItem : AKToken
+@interface AKBehaviorToken : AKToken
 {
 @private
 	// One AKProtocolItem for each protocol this behavior conforms to.

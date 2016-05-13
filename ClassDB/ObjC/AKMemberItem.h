@@ -8,7 +8,7 @@
 
 #import "AKToken.h"
 
-@class AKBehaviorItem;
+@class AKBehaviorToken;
 
 /*!
  * Represents a member (as in the term "member function") of a behavior.
@@ -17,10 +17,10 @@
  */
 @interface AKMemberItem : AKToken
 
-@property (nonatomic, readonly, weak) AKBehaviorItem *owningBehavior;
+@property (nonatomic, readonly, weak) AKBehaviorToken *owningBehavior;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorItem *)behaviorItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithToken:(DSAToken *)token owningBehavior:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
 
 @end
