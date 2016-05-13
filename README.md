@@ -11,9 +11,9 @@ The fundamental model object in AppKiDo is an AKToken, or simply "token item", o
 
 Here are the API constructs represented in AppKiDo, and their corresponding item classes:
 
-* **Classes and protocols** -- AKClassItem, AKProtocolToken
-    * Classes and protocols are collectively referred to as "behaviors". AKClassItem and AKProtocolToken are subclasses of AKBehaviorToken.
-    * AKBehaviorToken has a third subclass, AKCategoryItem, which is a historical artifact and isn't used in any way the user sees.
+* **Classes and protocols** -- AKClassToken, AKProtocolToken
+    * Classes and protocols are collectively referred to as "behaviors". AKClassToken and AKProtocolToken are subclasses of AKBehaviorToken.
+    * AKBehaviorToken has a third subclass, AKCategoryToken, which is a historical artifact and isn't used in any way the user sees.
     * Examples: NSObject, NSTableDataSource.
 * **Properties** -- AKPropertyItem
     * Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyItem for such properties. Rather, AKMethodItem is used for their documented getter and setter methods.
@@ -34,7 +34,7 @@ Here are the API constructs represented in AppKiDo, and their corresponding item
     * This is the one type of token item that does not correspond to an Objective-C language construct.
     * Examples:
 
-AppKiDo tags each token item with a **framework name** such as "Foundation" or "AppKit". Generally, each token item belongs to exactly one framework, but there is one exception: AKClassItem. In Cocoa, a class can span multiple frameworks by way of categories. For example, NSString is declared in Foundation but has a category in AppKit. For this reason, AKClassItem can be tagged with multiple framework names, though like every other token item it has exactly one primary owning framework.
+AppKiDo tags each token item with a **framework name** such as "Foundation" or "AppKit". Generally, each token item belongs to exactly one framework, but there is one exception: AKClassToken. In Cocoa, a class can span multiple frameworks by way of categories. For example, NSString is declared in Foundation but has a category in AppKit. For this reason, AKClassToken can be tagged with multiple framework names, though like every other token item it has exactly one primary owning framework.
 
 
 Model class: "the database"

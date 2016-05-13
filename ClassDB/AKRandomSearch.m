@@ -10,7 +10,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKGlobalsItem.h"
 #import "AKGroupItem.h"
@@ -92,13 +92,13 @@
 
 - (void)_addClassMembersToSymbolArray:(NSMutableArray *)apiSymbols
 {
-    for (AKClassItem *classItem in [_database allClasses])
+    for (AKClassToken *classToken in [_database allClasses])
     {
-        [self _addTokens:[classItem propertyItems] toSymbolArray:apiSymbols];
-        [self _addTokens:[classItem classMethodItems] toSymbolArray:apiSymbols];
-        [self _addTokens:[classItem instanceMethodItems] toSymbolArray:apiSymbols];
-        [self _addTokens:[classItem documentedDelegateMethods] toSymbolArray:apiSymbols];
-        [self _addTokens:[classItem documentedNotifications] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken propertyItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken classMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken instanceMethodItems] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken documentedDelegateMethods] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken documentedNotifications] toSymbolArray:apiSymbols];
     }
 }
 

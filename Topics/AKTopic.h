@@ -9,7 +9,7 @@
 #import "AKPrefDictionary.h"
 #import "AKPrefUtils.h"
 
-@class AKClassItem;
+@class AKClassToken;
 @class AKToken;
 @class AKSubtopic;
 
@@ -38,7 +38,7 @@ extern NSString *AKGlobalsTopicName;
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassItem *parentClassOfTopic;  //TODO: KLUDGE
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassToken *parentClassOfTopic;  //TODO: KLUDGE
 
 /*!
  * Returns nil if the topic is not associated with a token item.

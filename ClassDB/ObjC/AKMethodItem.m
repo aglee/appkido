@@ -7,7 +7,7 @@
 
 #import "AKMethodItem.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 
 @implementation AKMethodItem
 
@@ -27,13 +27,13 @@
 
 - (BOOL)isClassMethod
 {
-    return ([(AKClassItem *)self.owningBehavior classMethodWithName:self.tokenName] != nil);
+    return ([(AKClassToken *)self.owningBehavior classMethodWithName:self.tokenName] != nil);
 }
 
 - (BOOL)isDelegateMethod
 {
-    return ([self.owningBehavior isClassItem]
-            && ([(AKClassItem *)self.owningBehavior delegateMethodWithName:self.tokenName] != nil));
+    return ([self.owningBehavior isClassToken]
+            && ([(AKClassToken *)self.owningBehavior delegateMethodWithName:self.tokenName] != nil));
 }
 
 - (NSArray *)argumentTypes

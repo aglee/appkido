@@ -64,7 +64,7 @@ typedef void (^AKBlockForAddingMemberItem)(AKBehaviorToken *behaviorToken, AKMem
 
 #pragma mark - Getters and setters -- general
 
-@property (NS_NONATOMIC_IOSONLY, assign, readonly) BOOL isClassItem;
+@property (NS_NONATOMIC_IOSONLY, assign, readonly) BOOL isClassToken;
 /*! Includes protocols implemented by virtue of inheritance. */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *implementedProtocols;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodItems;

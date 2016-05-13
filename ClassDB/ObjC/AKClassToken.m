@@ -1,14 +1,14 @@
 //
-// AKClassItem.m
+// AKClassToken.m
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "DIGSLog.h"
 #import "AKBindingItem.h"
-#import "AKCategoryItem.h"
+#import "AKCategoryToken.h"
 #import "AKCollectionOfItems.h"
 #import "AKDatabase.h"
 #import "AKMethodItem.h"
@@ -17,12 +17,12 @@
 #import "NSString+AppKiDo.h"
 
 
-@interface AKClassItem ()
-@property (NS_NONATOMIC_IOSONLY, readwrite, weak) AKClassItem *parentClass;
+@interface AKClassToken ()
+@property (NS_NONATOMIC_IOSONLY, readwrite, weak) AKClassToken *parentClass;
 @end
 
 
-@implementation AKClassItem
+@implementation AKClassToken
 
 #pragma mark - Init/awake/dealloc
 
@@ -33,8 +33,8 @@
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 		_tokenDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
-		_childClassItems = [[NSMutableArray alloc] init];
-		_categoryItems = [[NSMutableArray alloc] init];
+		_childClassTokens = [[NSMutableArray alloc] init];
+		_categoryTokens = [[NSMutableArray alloc] init];
 
 		_indexOfDelegateMethods = [[AKCollectionOfItems alloc] init];
 		_indexOfNotifications = [[AKCollectionOfItems alloc] init];
@@ -51,66 +51,66 @@
 
 #pragma mark - Getters and setters -- general
 
-- (void)addChildClass:(AKClassItem *)classItem
+- (void)addChildClass:(AKClassToken *)classToken
 {
 	// We check for parent != child to avoid circularity.  This
 	// doesn't protect against the general case of a cycle, but it does
 	// work around the typo in the Tiger docs where the superclass of
 	// NSAnimation was given as NSAnimation.
-	if (classItem == self) {
+	if (classToken == self) {
 		DIGSLogDebug(@"ignoring attempt to make %@ a subclass of itself", [self tokenName]);
 		return;
 	}
 
-	[classItem.parentClass removeChildClass:classItem];
-	classItem.parentClass = self;
-	[_childClassItems addObject:classItem];
+	[classToken.parentClass removeChildClass:classToken];
+	classToken.parentClass = self;
+	[_childClassTokens addObject:classToken];
 }
 
-- (void)removeChildClass:(AKClassItem *)classItem
+- (void)removeChildClass:(AKClassToken *)classToken
 {
-	NSInteger i = [_childClassItems indexOfObject:classItem];
+	NSInteger i = [_childClassTokens indexOfObject:classToken];
 	if (i >= 0) {
-		[classItem setParentClass:nil];
-		[_childClassItems removeObjectAtIndex:i];
+		[classToken setParentClass:nil];
+		[_childClassTokens removeObjectAtIndex:i];
 	}
 }
 
 - (NSArray *)childClasses
 {
-	return _childClassItems;
+	return _childClassTokens;
 }
 
 - (NSSet *)descendantClasses
 {
-	NSMutableSet *descendantClassItems = [NSMutableSet setWithCapacity:50];
-	[self _addDescendantsToSet:descendantClassItems];
-	return descendantClassItems;
+	NSMutableSet *descendantClassTokens = [NSMutableSet setWithCapacity:50];
+	[self _addDescendantsToSet:descendantClassTokens];
+	return descendantClassTokens;
 }
 
 - (BOOL)hasChildClasses
 {
-	return (_childClassItems.count > 0);
+	return (_childClassTokens.count > 0);
 }
 
-- (AKCategoryItem *)categoryNamed:(NSString *)catName
+- (AKCategoryToken *)categoryNamed:(NSString *)catName
 {
-	for (AKToken *item in _categoryItems) {
+	for (AKToken *item in _categoryTokens) {
 		if ([item.tokenName isEqualToString:catName]) {
-			return (AKCategoryItem *)item;
+			return (AKCategoryToken *)item;
 		}
 	}
 	return nil;
 }
 
-- (void)addCategory:(AKCategoryItem *)categoryItem
+- (void)addCategory:(AKCategoryToken *)categoryToken
 {
-	[_categoryItems addObject:categoryItem];
+	[_categoryTokens addObject:categoryToken];
 }
 
 - (NSArray *)allCategories
 {
-	NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryItems];
+	NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryTokens];
 
 	// Get categories from ancestor classes.
 	if (_parentClass) {
@@ -212,7 +212,7 @@
 
 #pragma mark - AKBehaviorToken methods
 
-- (BOOL)isClassItem
+- (BOOL)isClassToken
 {
 	return YES;
 }
@@ -277,11 +277,11 @@
 
 #pragma mark - Private methods
 
-- (void)_addDescendantsToSet:(NSMutableSet *)descendantClassItems
+- (void)_addDescendantsToSet:(NSMutableSet *)descendantClassTokens
 {
-	[descendantClassItems addObject:self];
-	for (AKClassItem *sub in _childClassItems) {
-		[sub _addDescendantsToSet:descendantClassItems];
+	[descendantClassTokens addObject:self];
+	for (AKClassToken *sub in _childClassTokens) {
+		[sub _addDescendantsToSet:descendantClassTokens];
 	}
 }
 

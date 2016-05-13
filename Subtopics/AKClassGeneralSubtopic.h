@@ -7,16 +7,16 @@
 
 #import "AKBehaviorGeneralSubtopic.h"
 
-@class AKClassItem;
+@class AKClassToken;
 
 @interface AKClassGeneralSubtopic : AKBehaviorGeneralSubtopic
 
 #pragma mark - Factory methods
 
-+ (instancetype)subtopicForClassItem:(AKClassItem *)classItem;
++ (instancetype)subtopicForClassToken:(AKClassToken *)classToken;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithClassItem:(AKClassItem *)classItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithClassToken:(AKClassToken *)classToken NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "AKPropertiesSubtopic.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKPropertyDoc.h"
 
 @implementation AKPropertiesSubtopic

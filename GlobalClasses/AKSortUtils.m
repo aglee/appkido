@@ -7,7 +7,7 @@
 
 #import "AKSortUtils.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 
 @implementation AKSortUtils
 
@@ -21,7 +21,7 @@ compareSortNames(id objectOne, id objectTwo, void *context)
     {
         // When a class and a protocol have the same name, order the class
         // before the protocol.
-        if ([objectOne isKindOfClass:[AKClassItem class]])
+        if ([objectOne isKindOfClass:[AKClassToken class]])
         {
             result = NSOrderedAscending;
         }

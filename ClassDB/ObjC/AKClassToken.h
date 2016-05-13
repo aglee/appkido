@@ -1,5 +1,5 @@
 //
-// AKClassItem.h
+// AKClassToken.h
 //
 // Created by Andy Lee on Wed Jun 26 2002.
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -8,7 +8,7 @@
 #import "AKBehaviorToken.h"
 
 @class AKBindingItem;
-@class AKCategoryItem;
+@class AKCategoryToken;
 @class AKCollectionOfItems;
 @class AKNotificationItem;
 @class AKPropertyItem;
@@ -22,7 +22,7 @@
  * We use the terms "parent class" and "child class" rather than "superclass"
  * and "subclass", to avoid confusion.
  */
-@interface AKClassItem : AKBehaviorToken
+@interface AKClassToken : AKBehaviorToken
 {
 @private
 	NSMutableArray *_namesOfAllOwningFrameworks;
@@ -31,14 +31,14 @@
 	// containing documentation for the framework.
 	NSMutableDictionary *_tokenDocumentationByFrameworkName;
 
-	NSMutableArray *_childClassItems;  // Contains AKClassItems.
-	NSMutableArray *_categoryItems;  // Contains AKCategoryItems.
+	NSMutableArray *_childClassTokens;  // Contains AKClassTokens.
+	NSMutableArray *_categoryTokens;  // Contains AKCategoryTokens.
 	AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodItems.
 	AKCollectionOfItems *_indexOfNotifications;  // Contains AKNotificationItems.
 	AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingItems.
 }
 
-@property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassItem *parentClass;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassToken *parentClass;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childClasses;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSSet *descendantClasses;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasChildClasses;
@@ -56,11 +56,11 @@
 
 #pragma mark - Getters and setters -- general
 
-- (void)addChildClass:(AKClassItem *)classItem;
-- (void)removeChildClass:(AKClassItem *)classItem;
+- (void)addChildClass:(AKClassToken *)classToken;
+- (void)removeChildClass:(AKClassToken *)classToken;
 
-- (void)addCategory:(AKCategoryItem *)categoryItem;
-- (AKCategoryItem *)categoryNamed:(NSString *)catName;
+- (void)addCategory:(AKCategoryToken *)categoryToken;
+- (AKCategoryToken *)categoryNamed:(NSString *)catName;
 
 - (void)addBindingItem:(AKBindingItem *)bindingItem;
 - (AKBindingItem *)bindingItemNamed:(NSString *)bindingName;

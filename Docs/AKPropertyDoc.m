@@ -39,14 +39,14 @@
 	} else {
 		// We inherited this property from an ancestor class or protocol.
 		if (methodIsInSameFramework) {
-			if ([ownerOfMethod isClassItem]) {
+			if ([ownerOfMethod isClassToken]) {
 				return [NSString stringWithFormat:@"This property is inherited from class %@.",
 						ownerOfMethod.tokenName];
 			} else {
 				return [NSString stringWithFormat:@"This property is declared in protocol <%@>.", ownerOfMethod.tokenName];
 			}
 		} else {
-			if ([ownerOfMethod isClassItem]) {
+			if ([ownerOfMethod isClassToken]) {
 				return [NSString stringWithFormat:@"This property is inherited from %@ class %@.",
 						methodFrameworkName, ownerOfMethod.tokenName];
 			} else {

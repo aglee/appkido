@@ -46,7 +46,7 @@
 
 	// Qualify the member name with ancestor or protocol info if any.
 	if (_behaviorToken != owningBehavior) {
-		if ([owningBehavior isClassItem]) {
+		if ([owningBehavior isClassToken]) {
 			// We inherited this member from an ancestor class.
 			displayString = [NSString stringWithFormat:@"%@ (%@)",
 							 displayString, owningBehavior.tokenName];
@@ -98,7 +98,7 @@
 			return [NSString stringWithFormat:@"This method is added by a category in %@.",
 					memberFrameworkName];
 		}
-	} else if ([owningBehavior isClassItem]) {
+	} else if ([owningBehavior isClassToken]) {
 		// We inherited this method from an ancestor class.
 		if (memberIsInSameFramework) {
 			return [NSString stringWithFormat:@"This method is inherited from class %@.",

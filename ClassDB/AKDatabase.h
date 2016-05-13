@@ -9,7 +9,7 @@
 #import "DocSetIndex.h"
 #import "DocSetModel.h"
 
-@class AKClassItem;
+@class AKClassToken;
 @class AKToken;
 @class AKFunctionItem;
 @class AKGlobalsItem;
@@ -66,8 +66,8 @@
 
 #pragma mark - Getters and setters -- classes
 
-- (NSArray<AKClassItem *> *)classesForFramework:(NSString *)frameworkName;
-- (AKClassItem *)classWithName:(NSString *)className;
+- (NSArray<AKClassToken *> *)classesForFramework:(NSString *)frameworkName;
+- (AKClassToken *)classWithName:(NSString *)className;
 
 #pragma mark - Getters and setters -- protocols
 

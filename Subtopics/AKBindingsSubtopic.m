@@ -7,7 +7,7 @@
 //
 
 #import "AKBindingsSubtopic.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKBindingDoc.h"
 
 @implementation AKBindingsSubtopic
@@ -25,9 +25,9 @@
 
 - (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken
 {
-    if ([behaviorToken isClassItem])
+    if ([behaviorToken isClassToken])
     {
-        return [(AKClassItem *)behaviorToken documentedBindings];
+        return [(AKClassToken *)behaviorToken documentedBindings];
     }
     else
     {

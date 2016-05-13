@@ -17,7 +17,7 @@
 	if (self) {
 		_docSetIndex = docSetIndex;
 		_frameworkNames = @[];
-		_classItemsByName = [[NSMutableDictionary alloc] init];
+		_classTokensByName = [[NSMutableDictionary alloc] init];
 		_protocolTokensByName = [[NSMutableDictionary alloc] init];
 		_functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
 		_functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
@@ -43,7 +43,7 @@
 	[self _importCTokens];
 
 	// Post-processing.
-	[self _pruneClassItemsWithoutTokens];  //TODO: Does this work?
+	[self _pruneClassTokensWithoutTokens];  //TODO: Does this work?
 }
 
 #pragma mark - Getters and setters -- frameworks
@@ -62,21 +62,21 @@
 
 - (NSArray *)classesForFramework:(NSString *)frameworkName
 {
-	NSMutableArray *classItems = [NSMutableArray array];
-	for (AKClassItem *classItem in [self allClasses]) {
-		if ([classItem.frameworkName isEqualToString:frameworkName]) 	{
-			[classItems addObject:classItem];
+	NSMutableArray *classTokens = [NSMutableArray array];
+	for (AKClassToken *classToken in [self allClasses]) {
+		if ([classToken.frameworkName isEqualToString:frameworkName]) 	{
+			[classTokens addObject:classToken];
 		}
 	}
-	return classItems;
+	return classTokens;
 }
 
 - (NSArray *)rootClasses
 {
 	NSMutableArray *result = [NSMutableArray array];
-	for (AKClassItem *classItem in [self allClasses]) {
-		if (classItem.parentClass == nil) {
-			[result addObject:classItem];
+	for (AKClassToken *classToken in [self allClasses]) {
+		if (classToken.parentClass == nil) {
+			[result addObject:classToken];
 		}
 	}
 	return result;
@@ -84,12 +84,12 @@
 
 - (NSArray *)allClasses
 {
-	return self.classItemsByName.allValues;
+	return self.classTokensByName.allValues;
 }
 
-- (AKClassItem *)classWithName:(NSString *)className
+- (AKClassToken *)classWithName:(NSString *)className
 {
-	return self.classItemsByName[className];
+	return self.classTokensByName[className];
 }
 
 #pragma mark - Getters and setters -- protocols
@@ -255,13 +255,13 @@
 	self.frameworkNames = frameworkNames;
 }
 
-- (void)_pruneClassItemsWithoutTokens  //TODO: See if there is a better way.
+- (void)_pruneClassTokensWithoutTokens  //TODO: See if there is a better way.
 {
-	for (NSString *className in self.classItemsByName.allKeys) {
-		AKClassItem *classItem = self.classItemsByName[className];
-		if (classItem.tokenMO == nil) {
+	for (NSString *className in self.classTokensByName.allKeys) {
+		AKClassToken *classToken = self.classTokensByName[className];
+		if (classToken.tokenMO == nil) {
 			QLog(@"+++ class '%@' has no token; removing it", className);
-			self.classItemsByName[className] = nil;
+			self.classTokensByName[className] = nil;
 		}
 	}
 }

@@ -11,7 +11,7 @@
 #import "DIGSFindBuffer.h"
 
 #import "AKAppDelegate.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
@@ -590,9 +590,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	if (!s_collectionClasses)
 	{
-		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:
+		NSArray *classTokens = [self _sortedDescendantsOfClassesWithNames:
   @[@"NSString", @"NSAttributedString", @"NSData", @"NSValue", @"NSArray", @"NSDictionary", @"NSSet", @"NSDate", @"NSHashTable", @"NSMapTable", @"NSPointerArray"]];
-		s_collectionClasses = [self _sortedDocLocatorsForClasses:classItems];
+		s_collectionClasses = [self _sortedDocLocatorsForClasses:classTokens];
 	}
 
 	return s_collectionClasses;
@@ -605,12 +605,12 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	if (!s_windowOrViewControllerClasses)
 	{
 #if APPKIDO_FOR_IPHONE
-		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"UIViewController"]];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesWithNames:@[@"UIViewController"]];
 #else
-		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesWithNames:@[@"NSWindow"]];
 #endif
 
-		s_windowOrViewControllerClasses = [self _sortedDocLocatorsForClasses:classItems];
+		s_windowOrViewControllerClasses = [self _sortedDocLocatorsForClasses:classTokens];
 	}
 
 	return s_windowOrViewControllerClasses;
@@ -633,9 +633,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 			nameOfRootViewClass = @"NSView";
 		}
 
-		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesWithNames:@[nameOfRootViewClass]];
 
-		s_viewClasses = [self _sortedDocLocatorsForClasses:classItems];
+		s_viewClasses = [self _sortedDocLocatorsForClasses:classTokens];
 	}
 
 	return s_viewClasses;
@@ -648,12 +648,12 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	if (!s_cellOrLayerClasses)
 	{
 #if APPKIDO_FOR_IPHONE
-		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"CALayer"]];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesWithNames:@[@"CALayer"]];
 #else
-		NSArray *classItems = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesWithNames:@[@"NSCell"]];
 #endif
 
-		s_cellOrLayerClasses = [self _sortedDocLocatorsForClasses:classItems];
+		s_cellOrLayerClasses = [self _sortedDocLocatorsForClasses:classTokens];
 	}
 
 	return s_cellOrLayerClasses;
@@ -665,23 +665,23 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	if (!s_classesWithDelegates) {
 		NSMutableSet *setOfItems = [NSMutableSet set];
-		for (AKClassItem *classItem in [[self.owningWindowController database] allClasses]) {
-			if ([self _classHasDelegate:classItem]) {
-				[setOfItems addObject:classItem];
+		for (AKClassToken *classToken in [[self.owningWindowController database] allClasses]) {
+			if ([self _classHasDelegate:classToken]) {
+				[setOfItems addObject:classToken];
 			}
 		}
-		NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
-		s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classItems];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesInSet:setOfItems];
+		s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classTokens];
 	}
 
 	return s_classesWithDelegates;
 }
 
 //TODO: Note the method name tests only work with Objective-C.
-- (BOOL)_classHasDelegate:(AKClassItem *)classItem
+- (BOOL)_classHasDelegate:(AKClassToken *)classToken
 {
 	// See if the class has an instance method with a name like setXXXDelegate:.
-	for (AKMethodItem *methodItem in [classItem instanceMethodItems]) {
+	for (AKMethodItem *methodItem in [classToken instanceMethodItems]) {
 		NSString *methodName = methodItem.tokenName;
 		if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"]) {
 			return YES;
@@ -689,7 +689,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}
 
 	// See if the class has a property named "delegate" or "xxxDelegate".
-	for (AKPropertyItem *propertyItem in [classItem propertyItems]) {
+	for (AKPropertyItem *propertyItem in [classToken propertyItems]) {
 		NSString *propertyName = propertyItem.tokenName;
 		if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"]) {
 			return YES;
@@ -697,7 +697,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}
 
 	// See if there's a protocol named ThisClassDelegate.
-	NSString *delegateProtocolName = [classItem.tokenName stringByAppendingString:@"Delegate"];
+	NSString *delegateProtocolName = [classToken.tokenName stringByAppendingString:@"Delegate"];
 	if ([[self.owningWindowController database] protocolWithName:delegateProtocolName]) {
 		return YES;
 	}
@@ -712,32 +712,32 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	if (!s_classesWithDataSources) {
 		NSMutableSet *setOfItems = [NSMutableSet set];
-		for (AKClassItem *classItem in [[self.owningWindowController database] allClasses]) {
-			if ([self _classHasDataSource:classItem]) {
-				[setOfItems addObject:classItem];
+		for (AKClassToken *classToken in [[self.owningWindowController database] allClasses]) {
+			if ([self _classHasDataSource:classToken]) {
+				[setOfItems addObject:classToken];
 			}
 		}
-		NSArray *classItems = [self _sortedDescendantsOfClassesInSet:setOfItems];
-		s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classItems];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesInSet:setOfItems];
+		s_classesWithDataSources = [self _sortedDocLocatorsForClasses:classTokens];
 	}
 
 	return s_classesWithDataSources;
 }
 
-- (BOOL)_classHasDataSource:(AKClassItem *)classItem
+- (BOOL)_classHasDataSource:(AKClassToken *)classToken
 {
 	// See if the class has a -setDataSource: method.
-	if ([classItem instanceMethodWithName:@"setDataSource:"]) {
+	if ([classToken instanceMethodWithName:@"setDataSource:"]) {
 		return YES;
 	}
 
 	// See if the class has a property named "dataSource".
-	if ([classItem propertyItemWithName:@"dataSource"]) {
+	if ([classToken propertyItemWithName:@"dataSource"]) {
 		return YES;
 	}
 
 	// See if there's a protocol named ThisClassDataSource.
-	NSString *dataSourceProtocolName = [classItem.tokenName stringByAppendingString:@"DataSource"];
+	NSString *dataSourceProtocolName = [classToken.tokenName stringByAppendingString:@"DataSource"];
 	if ([[self.owningWindowController database] protocolWithName:dataSourceProtocolName]) {
 		return YES;
 	}
@@ -771,24 +771,24 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_classesForFramework:(NSString *)fwName
 {
-	NSArray *classItems = [[self.owningWindowController database] classesForFramework:fwName];
+	NSArray *classTokens = [[self.owningWindowController database] classesForFramework:fwName];
 
-	return [self _sortedDocLocatorsForClasses:classItems];
+	return [self _sortedDocLocatorsForClasses:classTokens];
 }
 
-- (NSArray *)_sortedDocLocatorsForClasses:(NSArray *)classItems
+- (NSArray *)_sortedDocLocatorsForClasses:(NSArray *)classTokens
 {
 	NSMutableArray *quicklistItems = [NSMutableArray array];
 
-	for (AKClassItem *classItem in classItems)
+	for (AKClassToken *classToken in classTokens)
 	{
 //TODO: Is it safe to assume there is always a doc?
 //        // Don't list classes that don't have HTML documentation.  They
 //        // may have cropped up in header files and either not been
 //        // documented yet or intended for Apple's internal use.
-//        if (classItem.tokenDocumentation)
+//        if (classToken.tokenDocumentation)
 		{
-			AKTopic *topic = [AKClassTopic topicWithClassItem:classItem];
+			AKTopic *topic = [AKClassTopic topicWithClassToken:classToken];
 
 			[quicklistItems addObject:[AKDocLocator withTopic:topic
 												 subtopicName:nil
@@ -828,22 +828,22 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	for (NSString *name in classNames)
 	{
-		AKClassItem *classItem = [[self.owningWindowController database] classWithName:name];
+		AKClassToken *classToken = [[self.owningWindowController database] classWithName:name];
 
-		[setOfItems unionSet:[classItem descendantClasses]];
+		[setOfItems unionSet:[classToken descendantClasses]];
 	}
 
 	return [AKSortUtils arrayBySortingSet:setOfItems];
 }
 
-- (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)setOfClassItems
+- (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)setOfClassTokens
 {
-	NSMutableSet *resultSet = [NSMutableSet setWithCapacity:(setOfClassItems.count * 2)];
+	NSMutableSet *resultSet = [NSMutableSet setWithCapacity:(setOfClassTokens.count * 2)];
 
 	// Add descendant classes of the classes that were found.
-	for (AKClassItem *classItem in setOfClassItems)
+	for (AKClassToken *classToken in setOfClassTokens)
 	{
-		[resultSet unionSet:[classItem descendantClasses]];
+		[resultSet unionSet:[classToken descendantClasses]];
 	}
 
 	// Sort the classes we found and return the result.

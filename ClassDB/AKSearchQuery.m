@@ -9,7 +9,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
@@ -264,11 +264,11 @@
 
 - (void)_searchClassNames
 {
-    for (AKClassItem *classItem in [_database allClasses])
+    for (AKClassToken *classToken in [_database allClasses])
     {
-        if ([self _matchesItem:classItem])
+        if ([self _matchesItem:classToken])
         {
-            AKClassTopic *topic = [AKClassTopic topicWithClassItem:classItem];
+            AKClassTopic *topic = [AKClassTopic topicWithClassToken:classToken];
 
             [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
@@ -290,18 +290,18 @@
 
 - (void)_searchNamesOfClassMembers
 {
-    for (AKClassItem *classItem in [_database allClasses])
+    for (AKClassToken *classToken in [_database allClasses])
     {
-        AKClassTopic *topic = [AKClassTopic topicWithClassItem:classItem];
+        AKClassTopic *topic = [AKClassTopic topicWithClassToken:classToken];
 
         // Search members common to all behaviors.
         [self _searchMembersUnderBehaviorTopic:topic];
 
         // Search members specific to classes.
-        [self _searchTokens:[classItem documentedDelegateMethods]
+        [self _searchTokens:[classToken documentedDelegateMethods]
              underSubtopic:AKDelegateMethodsSubtopicName
            ofBehaviorTopic:topic];
-        [self _searchTokens:[classItem documentedNotifications]
+        [self _searchTokens:[classToken documentedNotifications]
              underSubtopic:AKNotificationsSubtopicName
            ofBehaviorTopic:topic];
     }

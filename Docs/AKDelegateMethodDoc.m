@@ -34,7 +34,7 @@
 		} else {
 			return [NSString stringWithFormat:@"This delegate method comes from the %@ framework.", methodFrameworkName];
 		}
-	} else if ([ownerOfMethod isClassItem]) {
+	} else if ([ownerOfMethod isClassToken]) {
 		// We inherited this method from an ancestor class.
 		if (methodIsInSameFramework) {
 			return [NSString stringWithFormat:@"This delegate method is used by class %@.", ownerOfMethod.tokenName];

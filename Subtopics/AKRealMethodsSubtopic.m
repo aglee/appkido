@@ -9,7 +9,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKMethodItem.h"
 #import "AKMemberDoc.h"
 

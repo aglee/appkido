@@ -10,7 +10,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKGroupItem.h"
 #import "AKMemberItem.h"
@@ -62,10 +62,10 @@
     [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
         // Export classes.
         [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
-            NSArray *allClassItems = [_database classesForFramework:fwName];
-            for (AKClassItem *classItem in [AKSortUtils arrayBySortingArray:allClassItems])
+            NSArray *allClassTokens = [_database classesForFramework:fwName];
+            for (AKClassToken *classToken in [AKSortUtils arrayBySortingArray:allClassTokens])
             {
-                [self _exportClass:classItem];
+                [self _exportClass:classToken];
             }
         }];
 
@@ -126,26 +126,26 @@
 
 #pragma mark - Private methods -- exporting classes and protocols
 
-- (void)_exportClass:(AKClassItem *)classItem
+- (void)_exportClass:(AKClassToken *)classToken
 {
-    [_xmlWriter tag:@"class" attributes:@{ @"name": classItem.tokenName } contentBlock:^{
-        [self _exportMembers:[classItem propertyItems]
+    [_xmlWriter tag:@"class" attributes:@{ @"name": classToken.tokenName } contentBlock:^{
+        [self _exportMembers:[classToken propertyItems]
                       ofType:@"properties"
                       xmlTag:@"property"];
 
-        [self _exportMembers:[classItem classMethodItems]
+        [self _exportMembers:[classToken classMethodItems]
                       ofType:@"classmethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classItem instanceMethodItems]
+        [self _exportMembers:[classToken instanceMethodItems]
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classItem documentedDelegateMethods]
+        [self _exportMembers:[classToken documentedDelegateMethods]
                       ofType:@"delegatemethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classItem documentedNotifications]
+        [self _exportMembers:[classToken documentedNotifications]
                       ofType:@"notifications"
                       xmlTag:@"notification"];
     }];

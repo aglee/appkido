@@ -7,26 +7,26 @@
 
 #import "AKMembersSubtopic.h"
 
-@class AKClassItem;
+@class AKClassToken;
 
 @interface AKPseudoMethodsSubtopic : AKMembersSubtopic
 {
 @private
-    AKClassItem *_classItem;
+    AKClassToken *_classToken;
 }
 
 #pragma mark - Factory methods
 
-+ (instancetype)subtopicForClassItem:(AKClassItem *)classItem
++ (instancetype)subtopicForClassToken:(AKClassToken *)classToken
           includeAncestors:(BOOL)includeAncestors;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithClassItem:(AKClassItem *)classItem
+- (instancetype)initWithClassToken:(AKClassToken *)classToken
        includeAncestors:(BOOL)includeAncestors NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassItem *classItem;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassToken *classToken;
 
 @end

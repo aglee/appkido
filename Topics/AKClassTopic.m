@@ -11,7 +11,7 @@
 #import "AKBindingsSubtopic.h"
 #import "AKClassMethodsSubtopic.h"
 #import "AKClassGeneralSubtopic.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKDelegateMethodsSubtopic.h"
 #import "AKInstanceMethodsSubtopic.h"
@@ -23,18 +23,18 @@
 
 #pragma mark - Factory methods
 
-+ (instancetype)topicWithClassItem:(AKClassItem *)classItem
++ (instancetype)topicWithClassToken:(AKClassToken *)classToken
 {
-    return [[self alloc] initWithClassItem:classItem];
+    return [[self alloc] initWithClassToken:classToken];
 }
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithClassItem:(AKClassItem *)classItem
+- (instancetype)initWithClassToken:(AKClassToken *)classToken
 {
     if ((self = [super init]))
     {
-        _classItem = classItem;
+        _classToken = classToken;
     }
 
     return self;
@@ -43,36 +43,36 @@
 - (instancetype)init
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithClassItem:nil];
+    return [self initWithClassToken:nil];
 }
 
 #pragma mark - AKTopic methods
 
-- (AKClassItem *)parentClassOfTopic
+- (AKClassToken *)parentClassOfTopic
 {
-    return _classItem.parentClass;
+    return _classToken.parentClass;
 }
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return _classItem.tokenName;
+    return _classToken.tokenName;
 }
 
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ class %@",
-            _classItem.frameworkName, _classItem.tokenName];
+            _classToken.frameworkName, _classToken.tokenName];
 }
 
 - (NSString *)pathInTopicBrowser
 {
-    if (_classItem == nil)
+    if (_classToken == nil)
     {
         return nil;
     }
 
-    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classItem.tokenName];
-    AKClassItem *superItem = _classItem;
+    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classToken.tokenName];
+    AKClassToken *superItem = _classToken;
 
     while ((superItem = superItem.parentClass))
     {
@@ -85,16 +85,16 @@
 
 - (BOOL)browserCellHasChildren
 {
-    return [_classItem hasChildClasses];
+    return [_classToken hasChildClasses];
 }
 
 - (NSArray *)childTopics
 {
     NSMutableArray *columnValues = [NSMutableArray array];
 
-    for (AKClassItem *subclassItem in [AKSortUtils arrayBySortingArray:[_classItem childClasses]])
+    for (AKClassToken *subclassToken in [AKSortUtils arrayBySortingArray:[_classToken childClasses]])
     {
-        [columnValues addObject:[AKClassTopic topicWithClassItem:subclassItem]];
+        [columnValues addObject:[AKClassTopic topicWithClassToken:subclassToken]];
     }
 
     return columnValues;
@@ -104,30 +104,30 @@
 
 - (NSString *)behaviorName
 {
-    return _classItem.tokenName;
+    return _classToken.tokenName;
 }
 
 - (AKToken *)topicItem
 {
-    return _classItem;
+    return _classToken;
 }
 
 - (void)populateSubtopicsArray:(NSMutableArray *)array
 {
     [array setArray:(@[
-                     [AKClassGeneralSubtopic subtopicForClassItem:_classItem],
-                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classItem includeAncestors:NO],
-//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classItem includeAncestors:YES],
-                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:NO],
-//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:YES],
-                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:NO],
-//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classItem includeAncestors:YES],
-                     [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
-//                     [AKDelegateMethodsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
-                     [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
-//                     [AKNotificationsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
-                     [AKBindingsSubtopic subtopicForClassItem:_classItem includeAncestors:NO],
-//                     [AKBindingsSubtopic subtopicForClassItem:_classItem includeAncestors:YES],
+                     [AKClassGeneralSubtopic subtopicForClassToken:_classToken],
+                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classToken includeAncestors:NO],
+//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classToken includeAncestors:YES],
+                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:NO],
+//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:YES],
+                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:NO],
+//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:YES],
+                     [AKDelegateMethodsSubtopic subtopicForClassToken:_classToken includeAncestors:NO],
+//                     [AKDelegateMethodsSubtopic subtopicForClassToken:_classToken includeAncestors:YES],
+                     [AKNotificationsSubtopic subtopicForClassToken:_classToken includeAncestors:NO],
+//                     [AKNotificationsSubtopic subtopicForClassToken:_classToken includeAncestors:YES],
+                     [AKBindingsSubtopic subtopicForClassToken:_classToken includeAncestors:NO],
+//                     [AKBindingsSubtopic subtopicForClassToken:_classToken includeAncestors:YES],
                      ])];
 }
 
@@ -150,15 +150,15 @@
     else
     {
         AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
-        AKClassItem *classItem = [db classWithName:className];
+        AKClassToken *classToken = [db classWithName:className];
 
-        if (!classItem)
+        if (!classToken)
         {
             DIGSLogInfo(@"couldn't find a class in the database named %@", className);
             return nil;
         }
 
-        return [self topicWithClassItem:classItem];
+        return [self topicWithClassToken:classToken];
     }
 }
 

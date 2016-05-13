@@ -7,20 +7,20 @@
 
 #import "AKBehaviorTopic.h"
 
-@class AKClassItem;
+@class AKClassToken;
 
 @interface AKClassTopic : AKBehaviorTopic
 {
 @private
-    AKClassItem *_classItem;
+    AKClassToken *_classToken;
 }
 
 #pragma mark - Factory methods
 
-+ (instancetype)topicWithClassItem:(AKClassItem *)classItem;
++ (instancetype)topicWithClassToken:(AKClassToken *)classToken;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithClassItem:(AKClassItem *)classItem NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithClassToken:(AKClassToken *)classToken NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -105,10 +105,10 @@
 //                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
                      [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:NO],
 //                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
-                     [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:NO],
-//                     [AKDelegateMethodsSubtopic subtopicForClassItem:nil includeAncestors:YES],
-                     [AKNotificationsSubtopic subtopicForClassItem:nil includeAncestors:NO],
-//                     [AKNotificationsSubtopic subtopicForClassItem:nil includeAncestors:YES],
+                     [AKDelegateMethodsSubtopic subtopicForClassToken:nil includeAncestors:NO],
+//                     [AKDelegateMethodsSubtopic subtopicForClassToken:nil includeAncestors:YES],
+                     [AKNotificationsSubtopic subtopicForClassToken:nil includeAncestors:NO],
+//                     [AKNotificationsSubtopic subtopicForClassToken:nil includeAncestors:YES],
                      ])];
 }
 

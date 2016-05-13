@@ -14,7 +14,7 @@
 
 #import "AKAboutWindowController.h"
 #import "AKAppVersion.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
 #import "AKDebugging.h"

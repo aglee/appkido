@@ -9,7 +9,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKProtocolToken.h"
 #import "AKMethodItem.h"
 #import "AKMemberDoc.h"
@@ -98,13 +98,13 @@
     {
         // Add superclasses to the list.  We will check nearest
         // superclasses first.
-        if ([[self behaviorToken] isClassItem])
+        if ([[self behaviorToken] isClassToken])
         {
-            AKClassItem *classItem = (AKClassItem *)[self behaviorToken];
+            AKClassToken *classToken = (AKClassToken *)[self behaviorToken];
 
-            while ((classItem = classItem.parentClass))
+            while ((classToken = classToken.parentClass))
             {
-                [ancestorItems addObject:classItem];
+                [ancestorItems addObject:classToken];
             }
         }
 

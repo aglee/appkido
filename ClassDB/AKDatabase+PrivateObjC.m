@@ -42,11 +42,11 @@
 		return NO;
 	}
 
-	AKBehaviorToken *item = [self _getOrAddClassOrCategoryItemWithName:token.tokenName];
-	if (item.isClassItem) {
+	AKBehaviorToken *item = [self _getOrAddClassOrCategoryTokenWithName:token.tokenName];
+	if (item.isClassToken) {
 		item.tokenMO = token;
-		if (((AKClassItem *)item).parentClass == nil) {
-			[self _fillInParentClassOfClassItem:((AKClassItem *)item)];
+		if (((AKClassToken *)item).parentClass == nil) {
+			[self _fillInParentClassOfClassToken:((AKClassToken *)item)];
 		}
 	}
 	return YES;
@@ -58,7 +58,7 @@
 // category names, e.g. "NSObject(NSFontPanelValidationAdditions)".  So rather
 // than trust the token type, this method goes by the token name to decide what
 // kind of token it is.
-- (AKBehaviorToken *)_getOrAddClassOrCategoryItemWithName:(NSString *)name
+- (AKBehaviorToken *)_getOrAddClassOrCategoryTokenWithName:(NSString *)name
 {
 	// AFAICT the tokenName for a category token always has the form
 	// "ClassName(CategoryName)" -- except in the case of
@@ -81,47 +81,47 @@
 	}
 
 	// Case 2: Only a class name.
-	AKClassItem *classItem = [self _getOrAddClassItemWithName:className];
+	AKClassToken *classToken = [self _getOrAddClassTokenWithName:className];
 	if (categoryName == nil) {
-		return classItem;
+		return classToken;
 	}
 
 	// Case 3: Both a class name and a category name.
-	AKCategoryItem *categoryItem = [classItem categoryNamed:categoryName];
-	if (categoryItem == nil) {
-		categoryItem = [[AKCategoryItem alloc] initWithToken:nil];
-		[classItem addCategory:categoryItem];
+	AKCategoryToken *categoryToken = [classToken categoryNamed:categoryName];
+	if (categoryToken == nil) {
+		categoryToken = [[AKCategoryToken alloc] initWithToken:nil];
+		[classToken addCategory:categoryToken];
 		//QLog(@"+++ added category %@ to class %@", categoryName, className);
 	}
-	return categoryItem;
+	return categoryToken;
 }
 
-- (AKClassItem *)_getOrAddClassItemWithName:(NSString *)className
+- (AKClassToken *)_getOrAddClassTokenWithName:(NSString *)className
 {
-	AKClassItem *classItem = self.classItemsByName[className];
-	if (classItem == nil) {
-		classItem = [[AKClassItem alloc] initWithToken:nil];
-		classItem.fallbackTokenName = className;
-		self.classItemsByName[className] = classItem;
-		//QLog(@"+++ class '%@', no token yet", classItem.tokenName);
+	AKClassToken *classToken = self.classTokensByName[className];
+	if (classToken == nil) {
+		classToken = [[AKClassToken alloc] initWithToken:nil];
+		classToken.fallbackTokenName = className;
+		self.classTokensByName[className] = classToken;
+		//QLog(@"+++ class '%@', no token yet", classToken.tokenName);
 	}
-	return classItem;
+	return classToken;
 }
 
-- (void)_fillInParentClassOfClassItem:(AKClassItem *)classItem
+- (void)_fillInParentClassOfClassToken:(AKClassToken *)classToken
 {
-	if (classItem.parentClass) {
-		QLog(@"+++ Item for class %@ already has parent class %@", classItem.tokenName, classItem.parentClass.tokenName);
+	if (classToken.parentClass) {
+		QLog(@"+++ Item for class %@ already has parent class %@", classToken.tokenName, classToken.parentClass.tokenName);
 		return;
 	}
-	if (classItem.tokenMO.superclassContainers.count > 1) {
-		QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classItem.tokenName);
+	if (classToken.tokenMO.superclassContainers.count > 1) {
+		QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classToken.tokenName);
 	}
-	Container *container = classItem.tokenMO.superclassContainers.anyObject;
+	Container *container = classToken.tokenMO.superclassContainers.anyObject;
 	if (container) {
-		AKClassItem *parentClassItem = [self _getOrAddClassItemWithName:container.containerName];
-		[parentClassItem addChildClass:classItem];
-		//QLog(@"+++ parent class '%@' => child class '%@'", parentClassItem.tokenName, classItem.tokenName);
+		AKClassToken *parentClassToken = [self _getOrAddClassTokenWithName:container.containerName];
+		[parentClassToken addChildClass:classToken];
+		//QLog(@"+++ parent class '%@' => child class '%@'", parentClassToken.tokenName, classToken.tokenName);
 	}
 }
 
@@ -132,7 +132,7 @@
 	}
 
 	NSString *containerName = token.container.containerName;
-	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryItemWithName:containerName];
+	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
 	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorToken];
 	[behaviorToken addClassMethod:methodItem];
 	return YES;
@@ -145,7 +145,7 @@
 	}
 
 	NSString *containerName = token.container.containerName;
-	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryItemWithName:containerName];
+	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
 	AKMethodItem *methodItem = [[AKMethodItem alloc] initWithToken:token owningBehavior:behaviorToken];
 	[behaviorToken addInstanceMethod:methodItem];
 	//QLog(@"+++ added instance method %@ to %@ %@", methodItem.tokenName, [behaviorToken className], containerName);
@@ -159,7 +159,7 @@
 	}
 
 	NSString *containerName = token.container.containerName;
-	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryItemWithName:containerName];
+	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
 	AKPropertyItem *propertyItem = [[AKPropertyItem alloc] initWithToken:token owningBehavior:behaviorToken];
 	[behaviorToken addPropertyItem:propertyItem];
 	return YES;
@@ -172,10 +172,10 @@
 	}
 
 	NSString *className = token.container.containerName;
-	AKClassItem *classItem = (AKClassItem *)[self _getOrAddClassOrCategoryItemWithName:className];
-	AKBindingItem *bindingItem = [[AKBindingItem alloc] initWithToken:token owningBehavior:classItem];
-	[classItem addBindingItem:bindingItem];
-	//QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classItem.tokenName);
+	AKClassToken *classToken = (AKClassToken *)[self _getOrAddClassOrCategoryTokenWithName:className];
+	AKBindingItem *bindingItem = [[AKBindingItem alloc] initWithToken:token owningBehavior:classToken];
+	[classToken addBindingItem:bindingItem];
+	//QLog(@"+++ added binding '%@' to class '%@'", bindingItem.tokenName, classToken.tokenName);
 	return YES;
 }
 

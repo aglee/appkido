@@ -7,28 +7,28 @@
 
 #import "AKClassGeneralSubtopic.h"
 #import "DIGSLog.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 
 @interface AKClassGeneralSubtopic ()
-@property (strong) AKClassItem *classItem;
+@property (strong) AKClassToken *classToken;
 @end
 
 @implementation AKClassGeneralSubtopic
 
 #pragma mark - Factory methods
 
-+ (instancetype)subtopicForClassItem:(AKClassItem *)classItem
++ (instancetype)subtopicForClassToken:(AKClassToken *)classToken
 {
-	return [[self alloc] initWithClassItem:classItem];
+	return [[self alloc] initWithClassToken:classToken];
 }
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithClassItem:(AKClassItem *)classItem
+- (instancetype)initWithClassToken:(AKClassToken *)classToken
 {
 	self = [super init];
 	if (self) {
-		_classItem = classItem;
+		_classToken = classToken;
 	}
 	return self;
 }
@@ -36,14 +36,14 @@
 - (instancetype)init
 {
 	DIGSLogError_NondesignatedInitializer();
-	return [self initWithClassItem:nil];
+	return [self initWithClassToken:nil];
 }
 
 #pragma mark - AKBehaviorGeneralSubtopic methods
 
 - (AKBehaviorToken *)behaviorToken
 {
-	return _classItem;
+	return _classToken;
 }
 
 @end

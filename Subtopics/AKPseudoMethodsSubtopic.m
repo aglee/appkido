@@ -9,7 +9,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKMethodItem.h"
 #import "AKMemberDoc.h"
 
@@ -17,21 +17,21 @@
 
 #pragma mark - Factory methods
 
-+ (instancetype)subtopicForClassItem:(AKClassItem *)classItem
++ (instancetype)subtopicForClassToken:(AKClassToken *)classToken
     includeAncestors:(BOOL)includeAncestors
 {
-    return [[self alloc] initWithClassItem:classItem
+    return [[self alloc] initWithClassToken:classToken
                            includeAncestors:includeAncestors];
 }
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithClassItem:(AKClassItem *)classItem
+- (instancetype)initWithClassToken:(AKClassToken *)classToken
        includeAncestors:(BOOL)includeAncestors
 {
     if ((self = [super initIncludingAncestors:includeAncestors]))
     {
-        _classItem = classItem;
+        _classToken = classToken;
     }
 
     return self;
@@ -40,22 +40,22 @@
 - (instancetype)initIncludingAncestors:(BOOL)includeAncestors
 {
     DIGSLogError_NondesignatedInitializer();
-    return [self initWithClassItem:nil includeAncestors:NO];
+    return [self initWithClassToken:nil includeAncestors:NO];
 }
 
 
 #pragma mark - Getters and setters
 
-- (AKClassItem *)classItem
+- (AKClassToken *)classToken
 {
-    return _classItem;
+    return _classToken;
 }
 
 #pragma mark - AKMembersSubtopic methods
 
 - (AKBehaviorToken *)behaviorToken
 {
-    return _classItem;
+    return _classToken;
 }
 
 #pragma mark - Subtopic methods

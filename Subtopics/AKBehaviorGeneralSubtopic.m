@@ -7,7 +7,7 @@
 
 #import "AKBehaviorGeneralSubtopic.h"
 #import "DIGSLog.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKHeaderFileDoc.h"
 
 @implementation AKBehaviorGeneralSubtopic

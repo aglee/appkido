@@ -9,7 +9,7 @@
 
 #import "DIGSLog.h"
 
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKSubtopic.h"
 
 @implementation AKTopic
@@ -25,7 +25,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 #pragma mark - Getters and setters
 
-- (AKClassItem *)parentClassOfTopic
+- (AKClassToken *)parentClassOfTopic
 {
     return nil;
 }

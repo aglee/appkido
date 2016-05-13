@@ -32,7 +32,7 @@
 
 #pragma mark - Getters and setters -- general
 
-- (BOOL)isClassItem
+- (BOOL)isClassToken
 {
 	return NO;
 }

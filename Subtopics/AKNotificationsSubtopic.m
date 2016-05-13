@@ -6,7 +6,7 @@
  */
 
 #import "AKNotificationsSubtopic.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKNotificationDoc.h"
 
 @implementation AKNotificationsSubtopic
@@ -24,9 +24,9 @@
 
 - (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken
 {
-    if ([behaviorToken isClassItem])
+    if ([behaviorToken isClassToken])
     {
-        return [(AKClassItem *)behaviorToken documentedNotifications];
+        return [(AKClassToken *)behaviorToken documentedNotifications];
     }
     else
     {

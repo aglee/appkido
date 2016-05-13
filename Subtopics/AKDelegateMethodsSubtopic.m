@@ -6,7 +6,7 @@
  */
 
 #import "AKDelegateMethodsSubtopic.h"
-#import "AKClassItem.h"
+#import "AKClassToken.h"
 #import "AKDelegateMethodDoc.h"
 
 @implementation AKDelegateMethodsSubtopic
@@ -24,9 +24,9 @@
 
 - (NSArray *)memberItemsForBehavior:(AKBehaviorToken *)behaviorToken
 {
-    if ([behaviorToken isClassItem])
+    if ([behaviorToken isClassToken])
     {
-        return [(AKClassItem *)behaviorToken documentedDelegateMethods];
+        return [(AKClassToken *)behaviorToken documentedDelegateMethods];
     }
     else
     {
