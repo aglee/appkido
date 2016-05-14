@@ -6,9 +6,9 @@
  */
 
 #import "AKDocLocator.h"
-#import "AKTopic.h"
+#import "AKNamedObject.h"
 #import "AKSubtopic.h"
-#import "AKDoc.h"
+#import "AKTopic.h"
 #import "DIGSLog.h"
 
 @implementation AKDocLocator
@@ -21,27 +21,27 @@
 
 + (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
-    return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
+	return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
 }
 
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
 {
-    if ((self = [super init]))
-    {
-        _topic = topic;
-        _subtopicName = [subtopicName copy];
-        _docName = [docName copy];
-    }
+	if ((self = [super init]))
+	{
+		_topic = topic;
+		_subtopicName = [subtopicName copy];
+		_docName = [docName copy];
+	}
 
-    return self;
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithTopic:nil subtopicName:nil docName:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithTopic:nil subtopicName:nil docName:nil];
 }
 
 
@@ -49,80 +49,77 @@
 
 -(NSString *)subtopicName
 {
-    return _subtopicName;
+	return _subtopicName;
 }
 
 - (void)setSubtopicName:(NSString *)subtopicName
 {
-    if (![_subtopicName isEqualToString:subtopicName])
-    {
-        [self _clearCachedObjects];
-    }
+	if (![_subtopicName isEqualToString:subtopicName])
+	{
+		[self _clearCachedObjects];
+	}
 
-    _subtopicName = [subtopicName copy];
+	_subtopicName = [subtopicName copy];
 }
 
 -(NSString *)docName
 {
-    return _docName;
+	return _docName;
 }
 
 - (void)setDocName:(NSString *)docName
 {
-    if (![_docName isEqualToString:docName])
-    {
-        [self _clearCachedObjects];
-    }
+	if (![_docName isEqualToString:docName])
+	{
+		[self _clearCachedObjects];
+	}
 
-    _docName = [docName copy];
+	_docName = [docName copy];
 }
 
 - (NSString *)stringToDisplayInLists
 {
-    // As described by the Character Palette:
-    //      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
-    //      Unicode: 00AB
-    //      UTF8: C2 AB
-    static unichar kLeftDoubleAngle = 0x00AB;
-    
-    if (_cachedDisplayString == nil)
-    {
-        NSString *topicName = [_topic stringToDisplayInLists];
+	// As described by the Character Palette:
+	//      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+	//      Unicode: 00AB
+	//      UTF8: C2 AB
+	static unichar kLeftDoubleAngle = 0x00AB;
 
-        if (_subtopicName == nil)
-        {
-            _cachedDisplayString = topicName;
-        }
-        else if (_docName == nil)
-        {
-            _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
-                                    _subtopicName,  //TODO: displayed string?
-                                    kLeftDoubleAngle,
-                                    topicName];
-        }
-        else
-        {
-            _cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
-                                    [[self docToDisplay] displayName],
-                                    kLeftDoubleAngle,
-                                    topicName];
-        }
+	if (_cachedDisplayString == nil)
+	{
+		NSString *topicName = [_topic stringToDisplayInLists];
 
-    }
+		if (_subtopicName == nil)
+		{
+			_cachedDisplayString = topicName;
+		}
+		else if (_docName == nil)
+		{
+			_cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
+									_subtopicName,  //TODO: displayed string?
+									kLeftDoubleAngle,
+									topicName];
+		}
+		else
+		{
+			_cachedDisplayString = [[NSString alloc] initWithFormat:@"%@  %C  %@",
+									[[self docToDisplay] displayName],
+									kLeftDoubleAngle,
+									topicName];
+		}
 
-    return _cachedDisplayString;
+	}
+
+	return _cachedDisplayString;
 }
 
-- (AKDoc *)docToDisplay
+- (AKNamedObject *)docToDisplay
 {
-    if (_cachedDoc == nil)
-    {
-        AKSubtopic *subtopic = [_topic subtopicWithName:_subtopicName];
-
-        _cachedDoc = [subtopic docWithName:_docName];
-    }
-
-    return _cachedDoc;
+	if (_cachedDoc == nil) {
+		AKSubtopic *subtopic = [_topic subtopicWithName:_subtopicName];
+		_cachedDoc = [subtopic docWithName:_docName];
+	}
+	return _cachedDoc;
 }
 
 #pragma mark - Sorting
@@ -142,222 +139,222 @@ static
 NSComparisonResult
 compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 {
-    NSString *sOne = nil;
-    NSString *sTwo = nil;
+	NSString *sOne = nil;
+	NSString *sTwo = nil;
 
-    // Get first shot at sOne.
-    NSString *docNameOne = locOne.docName;
-    NSString *subtopicNameOne = nil;
-    NSString *topicNameOne = nil;
+	// Get first shot at sOne.
+	NSString *docNameOne = locOne.docName;
+	NSString *subtopicNameOne = nil;
+	NSString *topicNameOne = nil;
 
-    if (docNameOne != nil)
-    {
-        sOne = docNameOne;
-    }
-    else
-    {
-        subtopicNameOne = locOne.subtopicName;
+	if (docNameOne != nil)
+	{
+		sOne = docNameOne;
+	}
+	else
+	{
+		subtopicNameOne = locOne.subtopicName;
 
-        if (subtopicNameOne != nil)
-        {
-            sOne = subtopicNameOne;
-        }
-        else
-        {
-            topicNameOne = [locOne.topicToDisplay sortName];
-            sOne = topicNameOne;
-        }
-    }
+		if (subtopicNameOne != nil)
+		{
+			sOne = subtopicNameOne;
+		}
+		else
+		{
+			topicNameOne = [locOne.topicToDisplay sortName];
+			sOne = topicNameOne;
+		}
+	}
 
-    // Get first shot at sTwo.
-    NSString *docNameTwo = locTwo.docName;
-    NSString *subtopicNameTwo = nil;
-    NSString *topicNameTwo = nil;
+	// Get first shot at sTwo.
+	NSString *docNameTwo = locTwo.docName;
+	NSString *subtopicNameTwo = nil;
+	NSString *topicNameTwo = nil;
 
-    if (docNameTwo != nil)
-    {
-        sTwo = docNameTwo;
-    }
-    else
-    {
-        subtopicNameTwo = locTwo.subtopicName;
+	if (docNameTwo != nil)
+	{
+		sTwo = docNameTwo;
+	}
+	else
+	{
+		subtopicNameTwo = locTwo.subtopicName;
 
-        if (subtopicNameTwo != nil)
-        {
-            sTwo = subtopicNameTwo;
-        }
-        else
-        {
-            topicNameTwo = [locTwo.topicToDisplay sortName];
-            sTwo = topicNameTwo;
-        }
-    }
+		if (subtopicNameTwo != nil)
+		{
+			sTwo = subtopicNameTwo;
+		}
+		else
+		{
+			topicNameTwo = [locTwo.topicToDisplay sortName];
+			sTwo = topicNameTwo;
+		}
+	}
 
-    // Try the first comparison.
-    NSComparisonResult result = [sOne caseInsensitiveCompare:sTwo];
-    if (result != NSOrderedSame)
-    {
-        return result;
-    }
+	// Try the first comparison.
+	NSComparisonResult result = [sOne caseInsensitiveCompare:sTwo];
+	if (result != NSOrderedSame)
+	{
+		return result;
+	}
 
-    // If we got this far, we have to try the secondary comparison.
-    if (sOne == topicNameOne)
-    {
-        // There is no secondary comparison string for locOne, so
-        // locTwo is greater.
-        return NSOrderedAscending;
-    }
+	// If we got this far, we have to try the secondary comparison.
+	if (sOne == topicNameOne)
+	{
+		// There is no secondary comparison string for locOne, so
+		// locTwo is greater.
+		return NSOrderedAscending;
+	}
 
-    if (sTwo == topicNameTwo)
-    {
-        // There is no secondary comparison string for locTwo, so
-        // locOne is greater.
-        return NSOrderedDescending;
-    }
+	if (sTwo == topicNameTwo)
+	{
+		// There is no secondary comparison string for locTwo, so
+		// locOne is greater.
+		return NSOrderedDescending;
+	}
 
-    // Both locOne and locTwo have a secondary comparison string,
-    // namely their respective topic names.
-    if (topicNameOne == nil)
-    {
-        topicNameOne = [locOne.topicToDisplay sortName];
-    }
+	// Both locOne and locTwo have a secondary comparison string,
+	// namely their respective topic names.
+	if (topicNameOne == nil)
+	{
+		topicNameOne = [locOne.topicToDisplay sortName];
+	}
 
-    if (topicNameTwo == nil)
-    {
-        topicNameTwo = [locTwo.topicToDisplay sortName];
-    }
+	if (topicNameTwo == nil)
+	{
+		topicNameTwo = [locTwo.topicToDisplay sortName];
+	}
 
-    return [topicNameOne caseInsensitiveCompare:topicNameTwo];
+	return [topicNameOne caseInsensitiveCompare:topicNameTwo];
 }
 
 + (void)sortArrayOfDocLocators:(NSMutableArray *)array
 {
-    [array sortUsingFunction:&compareDocLocators context:NULL];
+	[array sortUsingFunction:&compareDocLocators context:NULL];
 }
 
 #pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
-    if (prefDict == nil)
-    {
-        return nil;
-    }
+	if (prefDict == nil)
+	{
+		return nil;
+	}
 
-    id topicPref = prefDict[AKTopicPrefKey];
-    NSString *subtopicName = prefDict[AKSubtopicPrefKey];
-    NSString *docName = prefDict[AKDocNamePrefKey];
+	id topicPref = prefDict[AKTopicPrefKey];
+	NSString *subtopicName = prefDict[AKSubtopicPrefKey];
+	NSString *docName = prefDict[AKDocNamePrefKey];
 
-    AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
+	AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
 
-    return [self withTopic:topic subtopicName:subtopicName docName:docName];
+	return [self withTopic:topic subtopicName:subtopicName docName:docName];
 }
 
 - (NSDictionary *)asPrefDictionary
 {
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
+	NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    if (_topic)
-    {
-        prefDict[AKTopicPrefKey] = [_topic asPrefDictionary];
-    }
+	if (_topic)
+	{
+		prefDict[AKTopicPrefKey] = [_topic asPrefDictionary];
+	}
 
-    if (_subtopicName)
-    {
-        prefDict[AKSubtopicPrefKey] = _subtopicName;
-    }
+	if (_subtopicName)
+	{
+		prefDict[AKSubtopicPrefKey] = _subtopicName;
+	}
 
-    if (_docName)
-    {
-        prefDict[AKDocNamePrefKey] = _docName;
-    }
+	if (_docName)
+	{
+		prefDict[AKDocNamePrefKey] = _docName;
+	}
 
-    return prefDict;
+	return prefDict;
 }
 
 #pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
-    if (_cachedSortName == nil)
-    {
-        NSString *topicName = [_topic sortName];
+	if (_cachedSortName == nil)
+	{
+		NSString *topicName = [_topic sortName];
 
-        if (_subtopicName == nil)
-        {
-            _cachedSortName = topicName;
-        }
-        else
-        {
-            if (_docName == nil)
-            {
-                _cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _subtopicName, topicName];
-            }
-            else
-            {
-                _cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _docName, topicName];
-            }
-        }
+		if (_subtopicName == nil)
+		{
+			_cachedSortName = topicName;
+		}
+		else
+		{
+			if (_docName == nil)
+			{
+				_cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _subtopicName, topicName];
+			}
+			else
+			{
+				_cachedSortName = [[NSString alloc] initWithFormat:@"%@-%@", _docName, topicName];
+			}
+		}
 
-    }
+	}
 
-    return _cachedSortName;
+	return _cachedSortName;
 }
 
 #pragma mark - NSObject methods
 
 - (BOOL)isEqual:(id)anObject
 {
-    if (![anObject isKindOfClass:[AKDocLocator class]])
-    {
-        return NO;
-    }
+	if (![anObject isKindOfClass:[AKDocLocator class]])
+	{
+		return NO;
+	}
 
-    // The "!=" tests take care of nil cases.
+	// The "!=" tests take care of nil cases.
 
-    // See if the subtopics have the same name.
-    NSString *otherSubtopicName = [anObject subtopicName];
-    if ((otherSubtopicName != _subtopicName) && ![otherSubtopicName isEqualToString:_subtopicName])
-    {
-        return NO;
-    }
+	// See if the subtopics have the same name.
+	NSString *otherSubtopicName = [anObject subtopicName];
+	if ((otherSubtopicName != _subtopicName) && ![otherSubtopicName isEqualToString:_subtopicName])
+	{
+		return NO;
+	}
 
-    // See if the docs have the same name.
-    NSString *otherDocName = [anObject docName];
-    if ((otherDocName != _docName) && ![otherDocName isEqualToString:_docName])
-    {
-        return NO;
-    }
+	// See if the docs have the same name.
+	NSString *otherDocName = [anObject docName];
+	if ((otherDocName != _docName) && ![otherDocName isEqualToString:_docName])
+	{
+		return NO;
+	}
 
-    // See if the topics match.
-    AKTopic *otherTopic = [anObject topicToDisplay];
-    if ((otherTopic != _topic) && ![otherTopic isEqual:_topic])
-    {
-        return NO;
-    }
-
-    // If we got this far, the history items match.
-    return YES;
+	// See if the topics match.
+	AKTopic *otherTopic = [anObject topicToDisplay];
+	if ((otherTopic != _topic) && ![otherTopic isEqual:_topic])
+	{
+		return NO;
+	}
+	
+	// If we got this far, the history items match.
+	return YES;
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
-            self.className,
-            [_topic pathInTopicBrowser],
-            _subtopicName,
-            _docName];
+	return [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
+			self.className,
+			[_topic pathInTopicBrowser],
+			_subtopicName,
+			_docName];
 }
 
 #pragma mark - Private methods
 
 - (void)_clearCachedObjects
 {
-    _cachedDisplayString = nil;
-
-    _cachedSortName = nil;
-
-    _cachedDoc = nil;
+	_cachedDisplayString = nil;
+	
+	_cachedSortName = nil;
+	
+	_cachedDoc = nil;
 }
 
 @end

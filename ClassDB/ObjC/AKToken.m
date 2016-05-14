@@ -31,7 +31,12 @@
 	return @"";
 }
 
-#pragma mark - URLs
+#pragma mark - AKNamedObject methods
+
+- (NSString *)name
+{
+	return self.tokenName;  //TODO: Clean this up.
+}
 
 - (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
 {
@@ -48,13 +53,6 @@
 		docURL = [urlComponents URL];
 	}
 	return docURL;
-}
-
-#pragma mark - AKNamedObject methods
-
-- (NSString *)name
-{
-	return self.tokenName;  //TODO: Clean this up.
 }
 
 #pragma mark - AKSortable methods

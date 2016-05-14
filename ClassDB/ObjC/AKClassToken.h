@@ -9,6 +9,7 @@
 
 @class AKBindingToken;
 @class AKCategoryToken;
+@class AKMethodToken;
 @class AKNotificationToken;
 @class AKPropertyToken;
 

@@ -7,6 +7,7 @@
 //
 
 #import "AKNamedObject.h"
+#import "DocSetIndex.h"
 
 @implementation AKNamedObject
 
@@ -33,6 +34,18 @@
 - (NSString *)displayName
 {
 	return self.name;
+}
+
+- (NSString *)commentString
+{
+	return @"";
+}
+
+#pragma mark - URLs
+
+- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
+{
+	return nil;
 }
 
 #pragma mark - <AKSortable> methods

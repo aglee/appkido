@@ -5,7 +5,9 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKBehaviorGeneralDoc.h"
+#import "AKNamedObject.h"
+
+@class AKBehaviorToken;
 
 extern NSString *AKHeaderFileDocName;
 
@@ -13,5 +15,6 @@ extern NSString *AKHeaderFileDocName;
  * Represents the "Header File" doc under a class or protocol's "General"
  * subtopic.
  */
-@interface AKHeaderFileDoc : AKBehaviorGeneralDoc
+@interface AKHeaderFileDoc : AKNamedObject
+@property (strong) AKBehaviorToken *behaviorToken;
 @end

@@ -8,4 +8,13 @@
 #import "AKMethodToken.h"
 
 @implementation AKMethodToken
+
+#pragma mark - Init/awake/dealloc
+
+- (instancetype)initWithName:(NSString *)name
+{
+    NSAssert(self.class != AKMethodToken.class, @"Attempt to instantiate abstract class %@", self.className);
+    return [super initWithName:name];
+}
+
 @end

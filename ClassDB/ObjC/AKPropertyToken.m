@@ -9,4 +9,12 @@
 #import "AKPropertyToken.h"
 
 @implementation AKPropertyToken
+
+#pragma mark - AKMemberToken methods
+
+- (NSString *)punctuatedName
+{
+    return [@"." stringByAppendingString:self.name];
+}
+
 @end

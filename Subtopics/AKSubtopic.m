@@ -6,12 +6,16 @@
  */
 
 #import "AKSubtopic.h"
-
 #import "DIGSLog.h"
+#import "AKNamedObject.h"
 
-#import "AKDoc.h"
+@interface AKSubtopic ()
+@property (copy, readonly) NSArray *docList;
+@end
 
 @implementation AKSubtopic
+
+@synthesize docList = _docList;
 
 #pragma mark - AKXyzSubtopicName
 
@@ -29,97 +33,82 @@ NSString *AKAllNotificationsSubtopicName   = @"ALL Notifications";
 NSString *AKBindingsSubtopicName           = @"Bindings";
 NSString *AKAllBindingsSubtopicName        = @"ALL Bindings";
 
-#pragma mark - Init/awake/dealloc
-
-
 #pragma mark - Getters and setters
 
 - (NSString *)subtopicName
 {
-    DIGSLogError_MissingOverride();
-    return nil;
+	DIGSLogError_MissingOverride();
+	return nil;
 }
 
 - (NSString *)stringToDisplayInSubtopicList
 {
-    return [self subtopicName];
+	return [self subtopicName];
+}
+
+- (NSArray *)docList
+{
+	// Lazy loading.
+	if (_docList == nil) {
+		NSMutableArray *arrayOfDocs = [[NSMutableArray alloc] init];
+		[self populateDocList:arrayOfDocs];
+		_docList = arrayOfDocs;
+	}
+	return _docList;
 }
 
 #pragma mark - Docs
 
 - (NSInteger)numberOfDocs
 {
-    [self _makeSureDocListIsReady];
-
-    return _docList.count;
+	return self.docList.count;
 }
 
-- (AKDoc *)docAtIndex:(NSInteger)docIndex
+- (AKNamedObject *)docAtIndex:(NSInteger)docIndex
 {
-    [self _makeSureDocListIsReady];
-
-    return _docList[docIndex];
+	return self.docList[docIndex];
 }
 
 - (NSInteger)indexOfDocWithName:(NSString *)docName
 {
-    [self _makeSureDocListIsReady];
+	if (docName == nil) {
+		return -1;
+	}
 
-    if (docName == nil)
-    {
-        return -1;
-    }
+	NSInteger numDocs = self.docList.count;
+	NSInteger i;
 
-    NSInteger numDocs = _docList.count;
-    NSInteger i;
+	for (i = 0; i < numDocs; i++) {
+		AKNamedObject *doc = self.docList[i];
+		if ([doc.name isEqualToString:docName]) {
+			return i;
+		}
+	}
 
-    for (i = 0; i < numDocs; i++)
-    {
-        AKDoc *doc = _docList[i];
-
-        if ([[doc docName] isEqualToString:docName])
-        {
-            return i;
-        }
-    }
-
-    // If we got this far, the search failed.
-    return -1;
+	// If we got this far, the search failed.
+	return -1;
 }
 
-- (AKDoc *)docWithName:(NSString *)docName
+- (AKNamedObject *)docWithName:(NSString *)docName
 {
-    [self _makeSureDocListIsReady];
+	NSInteger docIndex = (docName == nil
+						  ? -1
+						  : [self indexOfDocWithName:docName]);
 
-    NSInteger docIndex = ((docName == nil)
-                          ? -1
-                          : [self indexOfDocWithName:docName]);
-
-    return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
+	return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
 }
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    DIGSLogError_MissingOverride();
+	DIGSLogError_MissingOverride();
 }
 
 #pragma mark - NSObject methods
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: subtopicName=%@>",
-            self.className,[self subtopicName]];
-}
-
-#pragma mark - Private methods
-
-- (void)_makeSureDocListIsReady
-{
-    if (_docList == nil)
-    {
-        _docList = [[NSMutableArray alloc] init];
-        [self populateDocList:_docList];
-    }
+	return [NSString stringWithFormat:@"<%@: subtopicName=%@>",
+			self.className, self.subtopicName];
 }
 
 @end

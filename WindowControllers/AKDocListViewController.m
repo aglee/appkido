@@ -11,8 +11,10 @@
 #import "AKDatabase.h"
 #import "AKDoc.h"
 #import "AKDocLocator.h"
+#import "AKNamedObject.h"
 #import "AKSubtopic.h"
 #import "AKTableView.h"
+#import "AKToken.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
 #import <WebKit/WebKit.h>
@@ -38,7 +40,7 @@
 {
 	NSInteger docIndex = _docListTable.selectedRow;
 	return ((docIndex >= 0)
-			? [[_subtopic docAtIndex:docIndex] commentString]
+			? [(AKToken *)[_subtopic docAtIndex:docIndex] commentString]
 			: @"");
 }
 
@@ -56,7 +58,7 @@
 	NSInteger selectedRow = _docListTable.selectedRow;
 	NSString *docName = ((selectedRow < 0)
 						 ? nil
-						 : [[_subtopic docAtIndex:selectedRow] docName]);
+						 : [_subtopic docAtIndex:selectedRow].name);
 
 	// Tell the main window to select the doc at the selected index.
 	[self.owningWindowController selectDocWithName:docName];
@@ -101,8 +103,8 @@
 				   byExtendingSelection:NO];
 
 		// Modify whereTo.
-		AKDoc *docToDisplay = [_subtopic docAtIndex:docIndex];
-		whereTo.docName = [docToDisplay docName];
+		AKNamedObject *docToDisplay = [_subtopic docAtIndex:docIndex];
+		whereTo.docName = docToDisplay.displayName;
 	}
 }
 
@@ -129,7 +131,7 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [[_subtopic docAtIndex:rowIndex] displayName];
+	return [_subtopic docAtIndex:rowIndex].displayName;
 }
 
 @end

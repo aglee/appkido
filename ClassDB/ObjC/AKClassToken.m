@@ -224,38 +224,6 @@
 	return result;
 }
 
-- (AKMethodToken *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-										frameworkName:(NSString *)frameworkName
-{
-	AKMethodToken *methodToken = [super addDeprecatedMethodIfAbsentWithName:methodName
-															frameworkName:frameworkName];
-
-//FIXME:
-//    // If it's neither an instance method nor a class method, but it looks
-//    // like it might be a delegate method, assume it is one.
-//    //TODO: Old note to self says this assumption is false for [NSTypesetter lineFragmentRectForProposedRect:remainingRect:].  Check on this.
-//    if (methodToken == nil)
-//    {
-//        if ([methodName ak_contains:@":"])
-//        {
-//            methodToken = [[AKMethodToken alloc] initWithTokenName:methodName
-//                                                        database:self.owningDatabase
-//                                                   frameworkName:frameworkName
-//                                                  owningBehavior:self];
-//            [methodToken setIsDeprecated:YES];
-//            [self addDelegateMethod:methodToken];
-//        }
-//        else
-//        {
-//            DIGSLogInfo(@"Skipping method named %@ because it doesn't look like a delegate method"
-//                        @" while processing deprecated methods in behavior %@",
-//                        methodName, [self tokenName]);
-//        }
-//    }
-
-	return methodToken;
-}
-
 #pragma mark - AKToken methods
 
 - (NSString *)tokenName

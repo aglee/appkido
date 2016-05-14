@@ -7,22 +7,16 @@
 
 #import <Foundation/Foundation.h>
 
-@class AKDoc;
+@class AKNamedObject;
 
 /*!
  * Abstract class that represents a subtopic of an AKTopic. Different kinds of
  * topic have different kinds of subtopic.
  *
  * UI notes: when a subtopic is selected in the subtopic list, the selected
- * AKSubtopic provides a list of AKDocs used to populate the doc list.
+ * AKSubtopic provides a list of AKNamedObjects used to populate the doc list.
  */
 @interface AKSubtopic : NSObject
-{
-@private
-    // Elements are AKDocs.  The array is lazily instantiated and populated by
-    // populateDocList:.
-    NSMutableArray *_docList;
-}
 
 #pragma mark - AKXyzSubtopicName
 
@@ -44,20 +38,20 @@ extern NSString *AKAllBindingsSubtopicName;
 #pragma mark - Getters and setters
 
 /*! Subclasses must override. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *subtopicName;
+@property (copy, readonly) NSString *subtopicName;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInSubtopicList;
+@property (copy, readonly) NSString *stringToDisplayInSubtopicList;
 
 #pragma mark - Docs
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDocs;
+@property (assign, readonly) NSInteger numberOfDocs;
 
-- (AKDoc *)docAtIndex:(NSInteger)docIndex;
+- (AKNamedObject *)docAtIndex:(NSInteger)docIndex;
 
 /*! Returns -1 if none found. */
 - (NSInteger)indexOfDocWithName:(NSString *)docName;
 
-- (AKDoc *)docWithName:(NSString *)docName;
+- (AKNamedObject *)docWithName:(NSString *)docName;
 
 /*! Subclasses must override. For internal use only. */
 - (void)populateDocList:(NSMutableArray *)docList;

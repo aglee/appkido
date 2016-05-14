@@ -133,7 +133,7 @@
 
 	NSString *containerName = tokenMO.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithName:tokenMO.tokenName];
+	AKClassMethodToken *methodToken = [[AKClassMethodToken alloc] initWithName:tokenMO.tokenName];
 	methodToken.tokenMO = tokenMO;
 	[behaviorToken addClassMethod:methodToken];
 	return YES;
@@ -147,7 +147,7 @@
 
 	NSString *containerName = tokenMO.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithName:tokenMO.tokenName];
+	AKInstanceMethodToken *methodToken = [[AKInstanceMethodToken alloc] initWithName:tokenMO.tokenName];
 	methodToken.tokenMO = tokenMO;
 	[behaviorToken addInstanceMethod:methodToken];
 	//QLog(@"+++ added instance method %@ to %@ %@", methodToken.tokenName, [behaviorToken className], containerName);
@@ -227,7 +227,7 @@
 
 	NSString *protocolName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithName:tokenMO.tokenName];
+	AKClassMethodToken *methodToken = [[AKClassMethodToken alloc] initWithName:tokenMO.tokenName];
 	methodToken.tokenMO = tokenMO;
 	[protocolToken addClassMethod:methodToken];
 	return YES;
@@ -241,7 +241,7 @@
 
 	NSString *protocolName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
-	AKMethodToken *methodToken = [[AKMethodToken alloc] initWithName:tokenMO.tokenName];
+	AKInstanceMethodToken *methodToken = [[AKInstanceMethodToken alloc] initWithName:tokenMO.tokenName];
 	methodToken.tokenMO = tokenMO;
 	[protocolToken addInstanceMethod:methodToken];
 	return YES;

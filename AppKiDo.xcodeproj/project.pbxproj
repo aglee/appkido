@@ -758,8 +758,8 @@
 		731976BA0606C1F0002E4E83 /* AKFunctionDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFunctionDoc.m; sourceTree = "<group>"; };
 		7319772E0606C3F6002E4E83 /* AKMemberDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMemberDoc.h; sourceTree = "<group>"; usesTabs = 1; };
 		7319772F0606C3F6002E4E83 /* AKMemberDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMemberDoc.m; sourceTree = "<group>"; usesTabs = 1; };
-		73197A840606E025002E4E83 /* AKHeaderFileDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHeaderFileDoc.h; sourceTree = "<group>"; usesTabs = 1; };
-		73197A850606E025002E4E83 /* AKHeaderFileDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderFileDoc.m; sourceTree = "<group>"; usesTabs = 1; };
+		73197A840606E025002E4E83 /* AKHeaderFileDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKHeaderFileDoc.h; path = ../Docs/AKHeaderFileDoc.h; sourceTree = "<group>"; usesTabs = 1; };
+		73197A850606E025002E4E83 /* AKHeaderFileDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKHeaderFileDoc.m; path = ../Docs/AKHeaderFileDoc.m; sourceTree = "<group>"; usesTabs = 1; };
 		73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKInheritanceDoc.h; sourceTree = "<group>"; usesTabs = 1; };
 		73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKInheritanceDoc.m; sourceTree = "<group>"; usesTabs = 1; };
 		7320C16F16DC5B9F00797F95 /* DIGSFindBufferDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIGSFindBufferDelegate.h; sourceTree = "<group>"; };
@@ -786,7 +786,7 @@
 		732BD5D505ED8FBE0055715D /* AKAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKAppDelegate.h; sourceTree = "<group>"; };
 		732BD5D605ED8FBE0055715D /* AKAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKAppDelegate.m; sourceTree = "<group>"; };
 		732EE0F7060E10E600B5EDA7 /* AKDocLocator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDocLocator.h; sourceTree = "<group>"; };
-		732EE0F8060E10E600B5EDA7 /* AKDocLocator.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDocLocator.m; sourceTree = "<group>"; };
+		732EE0F8060E10E600B5EDA7 /* AKDocLocator.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDocLocator.m; sourceTree = "<group>"; usesTabs = 1; };
 		7330D5B6083667540007FBD0 /* AKChildTopicOfFrameworkTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKChildTopicOfFrameworkTopic.h; sourceTree = "<group>"; };
 		7330D5B7083667540007FBD0 /* AKChildTopicOfFrameworkTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKChildTopicOfFrameworkTopic.m; sourceTree = "<group>"; };
 		7332E8D516E8141300A3764B /* AKPrefDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefDictionary.h; sourceTree = "<group>"; };
@@ -982,12 +982,12 @@
 		73ACB25D04EDC6AE00A80003 /* AKDelegateMethodsSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDelegateMethodsSubtopic.m; sourceTree = "<group>"; };
 		73ACB26004EDC6AE00A80003 /* AKInstanceMethodsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKInstanceMethodsSubtopic.h; sourceTree = "<group>"; };
 		73ACB26104EDC6AE00A80003 /* AKInstanceMethodsSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKInstanceMethodsSubtopic.m; sourceTree = "<group>"; };
-		73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKMembersSubtopic.h; sourceTree = "<group>"; };
-		73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKMembersSubtopic.m; sourceTree = "<group>"; };
+		73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKMembersSubtopic.h; sourceTree = "<group>"; usesTabs = 1; };
+		73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKMembersSubtopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		73ACB26604EDC6AE00A80003 /* AKNotificationsSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKNotificationsSubtopic.h; sourceTree = "<group>"; };
 		73ACB26704EDC6AE00A80003 /* AKNotificationsSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKNotificationsSubtopic.m; sourceTree = "<group>"; };
-		73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSubtopic.h; sourceTree = "<group>"; };
-		73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKSubtopic.m; sourceTree = "<group>"; };
+		73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKSubtopic.h; sourceTree = "<group>"; usesTabs = 1; };
+		73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKSubtopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		73AE0907049B71D800A80007 /* AKWindowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowLayout.h; sourceTree = "<group>"; };
 		73AE0908049B71D800A80007 /* AKWindowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowLayout.m; sourceTree = "<group>"; };
 		73B313A90617441B006C9BA7 /* AKGroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKGroupItem.h; path = ObjC/AKGroupItem.h; sourceTree = "<group>"; };
@@ -1233,6 +1233,8 @@
 				739719021CDC19AF0010E16A /* AKDocSetQuery.m */,
 				737F55601CE502E300376A4B /* AKNamedObject.h */,
 				737F55611CE502E300376A4B /* AKNamedObject.m */,
+				73197A840606E025002E4E83 /* AKHeaderFileDoc.h */,
+				73197A850606E025002E4E83 /* AKHeaderFileDoc.m */,
 				73B313A90617441B006C9BA7 /* AKGroupItem.h */,
 				73B313AA0617441B006C9BA7 /* AKGroupItem.m */,
 				73C8ABB60836AF2D0000E3F7 /* API tokens */,
@@ -1639,8 +1641,6 @@
 				73F3BC8317CBB5F900F2CDF0 /* AKBehaviorGeneralDoc.m */,
 				73197ACB0606E627002E4E83 /* AKInheritanceDoc.h */,
 				73197ACC0606E627002E4E83 /* AKInheritanceDoc.m */,
-				73197A840606E025002E4E83 /* AKHeaderFileDoc.h */,
-				73197A850606E025002E4E83 /* AKHeaderFileDoc.m */,
 			);
 			name = "behavior \"General\" docs";
 			sourceTree = "<group>";

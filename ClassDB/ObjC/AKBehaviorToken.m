@@ -7,9 +7,10 @@
 
 #import "AKBehaviorToken.h"
 #import "DIGSLog.h"
+#import "AKClassMethodToken.h"
+#import "AKInstanceMethodToken.h"
 #import "AKProtocolToken.h"
 #import "AKPropertyToken.h"
-#import "AKMethodToken.h"
 
 @interface AKBehaviorToken ()
 @property (copy) NSMutableDictionary *implementedProtocolsByName;
@@ -105,12 +106,12 @@
 	return self.classMethodsByName.allValues;
 }
 
-- (AKMethodToken *)classMethodWithName:(NSString *)methodName
+- (AKClassMethodToken *)classMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)self.classMethodsByName[methodName];
+	return (AKClassMethodToken *)self.classMethodsByName[methodName];
 }
 
-- (void)addClassMethod:(AKMethodToken *)methodToken
+- (void)addClassMethod:(AKClassMethodToken *)methodToken
 {
 	if (self.classMethodsByName[methodToken.name]) {
 		DIGSLogDebug(@"trying to add class method [%@] again to behavior [%@], will ignore",
@@ -123,12 +124,12 @@
 
 #pragma mark - Getters and setters -- instance methods
 
-- (AKMethodToken *)instanceMethodWithName:(NSString *)methodName
+- (AKInstanceMethodToken *)instanceMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)self.instanceMethodsByName[methodName];
+	return (AKInstanceMethodToken *)self.instanceMethodsByName[methodName];
 }
 
-- (void)addInstanceMethod:(AKMethodToken *)methodToken
+- (void)addInstanceMethod:(AKInstanceMethodToken *)methodToken
 {
 	if (self.instanceMethodsByName[methodToken.name]) {
 		DIGSLogDebug(@"trying to add instance method [%@] again to behavior [%@], will ignore",
@@ -137,31 +138,6 @@
 		self.instanceMethodsByName[methodToken.name] = methodToken;
 		methodToken.owningBehavior = self;
 	}
-}
-
-#pragma mark - Getters and setters -- deprecated methods
-
-- (AKMethodToken *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-										frameworkName:(NSString *)frameworkName
-{
-	// Is this an instance method or a class method?  Note this assumes a
-	// a method item for the method already exists, presumably because we
-	// parsed the header files.
-	AKMethodToken *methodToken = [self classMethodWithName:methodName];
-
-	if (methodToken == nil) {
-		methodToken = [self instanceMethodWithName:methodName];
-	}
-
-	if (methodToken == nil) {
-		DIGSLogInfo(@"Couldn't find class method or instance method named %@"
-					@" while processing deprecated methods for behavior %@",
-					methodName, [self tokenName]);
-	} else {
-		[methodToken setIsDeprecated:YES];
-	}
-	
-	return methodToken;
 }
 
 @end

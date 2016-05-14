@@ -12,9 +12,9 @@
 @interface AKMembersSubtopic : AKSubtopic
 {
 @private
-    // Do we include methods inherited from ancestor classes and declared
-    // in protocols?
-    BOOL _includesAncestors;
+	// Do we include methods inherited from ancestor classes and declared
+	// in protocols?
+	BOOL _includesAncestors;
 }
 
 #pragma mark - Init/awake/dealloc
@@ -23,10 +23,10 @@
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL includesAncestors;
+@property (assign, readonly) BOOL includesAncestors;
 
 /*! Subclasses must override this. */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKBehaviorToken *behaviorToken;
+@property (strong, readonly) AKBehaviorToken *behaviorToken;
 
 /*!
  * Subclass must override this.  Returns method items for just the behavior, no

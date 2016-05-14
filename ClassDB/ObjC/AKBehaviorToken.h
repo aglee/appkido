@@ -8,8 +8,9 @@
 #import "AKToken.h"
 
 @class AKBehaviorToken;
+@class AKClassMethodToken;
+@class AKInstanceMethodToken;
 @class AKMemberToken;
-@class AKMethodToken;
 @class AKPropertyToken;
 @class AKProtocolToken;
 
@@ -59,23 +60,14 @@ typedef void (^AKBlockForAddingMemberToken)(AKBehaviorToken *behaviorToken, AKMe
 #pragma mark - Getters and setters -- class methods
 
 /*! Does not include inherited methods. */
-- (AKMethodToken *)classMethodWithName:(NSString *)methodName;
+- (AKClassMethodToken *)classMethodWithName:(NSString *)methodName;
 /*! Does nothing if a class method with the same name already exists. */
-- (void)addClassMethod:(AKMethodToken *)methodToken;
+- (void)addClassMethod:(AKClassMethodToken *)methodToken;
 
 #pragma mark - Getters and setters -- instance methods
 
-- (AKMethodToken *)instanceMethodWithName:(NSString *)methodName;
+- (AKInstanceMethodToken *)instanceMethodWithName:(NSString *)methodName;
 /*! Does nothing if an instance method with the same name already exists. */
-- (void)addInstanceMethod:(AKMethodToken *)methodToken;
-
-#pragma mark - Getters and setters -- deprecated methods
-
-/*!
- * We have to guess whether it's a class method or instance method,
- * because the docs lump all deprecated methods together.
- */
-- (AKMethodToken *)addDeprecatedMethodIfAbsentWithName:(NSString *)methodName
-										frameworkName:(NSString *)frameworkName;
+- (void)addInstanceMethod:(AKInstanceMethodToken *)methodToken;
 
 @end
