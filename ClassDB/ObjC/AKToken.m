@@ -11,8 +11,6 @@
 
 @implementation AKToken
 
-@dynamic frameworkName;
-
 #pragma mark - Getters and setters
 
 - (NSString *)tokenName
@@ -26,16 +24,11 @@
 	return self.tokenMO.metainformation.declaredIn.frameworkName;
 }
 
+#pragma mark - <AKDocListItem> methods
+
 - (NSString *)commentString
 {
 	return @"";
-}
-
-#pragma mark - AKNamedObject methods
-
-- (NSString *)name
-{
-	return self.tokenName;  //TODO: Clean this up.
 }
 
 - (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
@@ -55,18 +48,11 @@
 	return docURL;
 }
 
-#pragma mark - AKSortable methods
-
-- (NSString *)sortName
-{
-	return self.tokenName;
-}
-
 #pragma mark - NSObject methods
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: tokenName=%@>", self.className, self.tokenName];
+	return [NSString stringWithFormat:@"<%@: name=%@>", self.className, self.tokenName];
 }
 
 @end

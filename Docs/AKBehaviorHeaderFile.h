@@ -6,15 +6,15 @@
  */
 
 #import "AKNamedObject.h"
+#import "AKDocListItem.h"
 
 @class AKBehaviorToken;
 
 extern NSString *AKBehaviorHeaderFileName;
 
 /*!
- * Represents the "Header File" doc under a class or protocol's "General"
- * subtopic.
+ * Provides the URL for the header file in which a token is declared, if there is one.
  */
-@interface AKBehaviorHeaderFile : AKNamedObject
+@interface AKBehaviorHeaderFile : AKNamedObject <AKDocListItem>
 @property (strong) AKBehaviorToken *behaviorToken;
 @end

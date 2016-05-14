@@ -6,6 +6,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "AKDocListItem.h"
 #import "AKPrefDictionary.h"
 #import "AKSortable.h"
 
@@ -35,14 +36,14 @@
 
     NSString *_cachedDisplayString;
     NSString *_cachedSortName;
-    AKNamedObject *_cachedDoc;
+    id<AKDocListItem> _cachedDoc;
 }
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKTopic *topicToDisplay;
 @property (NS_NONATOMIC_IOSONLY, copy) NSString *subtopicName;
 @property (NS_NONATOMIC_IOSONLY, copy) NSString *docName;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKNamedObject *docToDisplay;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id<AKDocListItem> docToDisplay;
 
 #pragma mark - Factory methods
 

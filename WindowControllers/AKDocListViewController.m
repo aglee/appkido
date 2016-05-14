@@ -38,9 +38,12 @@
 - (NSString *)docComment
 {
 	NSInteger docIndex = _docListTable.selectedRow;
-	return ((docIndex >= 0)
-			? [(AKToken *)[_subtopic docAtIndex:docIndex] commentString]
-			: @"");
+	if (docIndex < 0) {
+		return @"";
+	} else {
+		id<AKDocListItem> doc = [_subtopic docAtIndex:docIndex];
+		return doc.commentString;
+	}
 }
 
 #pragma mark - Navigation

@@ -6,17 +6,14 @@
 //
 
 #import "AKNamedObject.h"
+#import "AKDocListItem.h"
 #import "DocSetModel.h"
-#import "AKSortable.h"
-
-@class AKDatabase;
-@class DocSetIndex;
 
 /*!
  * Represents a named API construct, as represented by an underlying DSAToken
  * in the docset index (tokenMO).
  */
-@interface AKToken : AKNamedObject <AKSortable>
+@interface AKToken : AKNamedObject <AKDocListItem>
 
 @property (nonatomic, strong) DSAToken *tokenMO;
 @property (nonatomic, readonly) NSString *tokenName;

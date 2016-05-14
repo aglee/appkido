@@ -12,6 +12,7 @@
 #import "AKAppDelegate.h"
 #import "AKDatabase.h"
 #import "AKDebugging.h"
+#import "AKDocListItem.h"
 #import "AKDocLocator.h"
 #import "AKNamedObject.h"
 #import "AKPrefUtils.h"
@@ -63,7 +64,7 @@
 
 - (NSURL *)docURL
 {
-	AKNamedObject *docToDisplay = _docLocator.docToDisplay;
+	id<AKDocListItem> docToDisplay = _docLocator.docToDisplay;
 	if (docToDisplay == nil) {
 		return nil;
 	}

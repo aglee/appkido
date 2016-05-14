@@ -7,7 +7,7 @@
 
 #import "AKSubtopic.h"
 #import "DIGSLog.h"
-#import "AKNamedObject.h"
+#import "AKDocListItem.h"
 
 @interface AKSubtopic ()
 @property (copy, readonly) NSArray *docList;
@@ -64,7 +64,7 @@ NSString *AKAllBindingsSubtopicName        = @"ALL Bindings";
 	return self.docList.count;
 }
 
-- (AKNamedObject *)docAtIndex:(NSInteger)docIndex
+- (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex
 {
 	return self.docList[docIndex];
 }
@@ -79,7 +79,7 @@ NSString *AKAllBindingsSubtopicName        = @"ALL Bindings";
 	NSInteger i;
 
 	for (i = 0; i < numDocs; i++) {
-		AKNamedObject *doc = self.docList[i];
+		id<AKDocListItem> doc = self.docList[i];
 		if ([doc.name isEqualToString:docName]) {
 			return i;
 		}
@@ -89,7 +89,7 @@ NSString *AKAllBindingsSubtopicName        = @"ALL Bindings";
 	return -1;
 }
 
-- (AKNamedObject *)docWithName:(NSString *)docName
+- (id<AKDocListItem>)docWithName:(NSString *)docName
 {
 	NSInteger docIndex = (docName == nil
 						  ? -1

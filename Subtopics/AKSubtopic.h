@@ -7,14 +7,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class AKNamedObject;
+@protocol AKDocListItem;
 
 /*!
  * Abstract class that represents a subtopic of an AKTopic. Different kinds of
  * topic have different kinds of subtopic.
  *
  * When a subtopic is selected in the subtopic list, the selected AKSubtopic
- * provides a list of AKNamedObjects used to populate the doc list, via the
+ * provides a list of AKDocListItems used to populate the doc list, via the
  * populateDocList: method.
  */
 @interface AKSubtopic : NSObject
@@ -47,12 +47,12 @@ extern NSString *AKAllBindingsSubtopicName;
 
 @property (assign, readonly) NSInteger numberOfDocs;
 
-- (AKNamedObject *)docAtIndex:(NSInteger)docIndex;
+- (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex;
 
 /*! Returns -1 if none found. */
 - (NSInteger)indexOfDocWithName:(NSString *)docName;
 
-- (AKNamedObject *)docWithName:(NSString *)docName;
+- (id<AKDocListItem>)docWithName:(NSString *)docName;
 
 /*! Subclasses must override. For internal use only. */
 - (void)populateDocList:(NSMutableArray *)docList;

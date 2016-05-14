@@ -6,24 +6,14 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AKSortable.h"
-
-@class DocSetIndex;
-
-@interface AKNamedObject : NSObject <AKSortable>
-
-@property (copy, readonly) NSString *name;
-@property (copy, readonly) NSString *displayName;
-
-- (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;
+#import "AKNamed.h"
 
 /*!
- * The string to display in the comment field at the bottom of the window.
- * Defaults to the empty string.
+ * Trivial implementation of the AKNamed protocol.  sortName and displayName
+ * both return self.name.
  */
-@property (copy, readonly) NSString *commentString;
+@interface AKNamedObject : NSObject <AKNamed>
 
-- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex;
+- (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;
 
 @end

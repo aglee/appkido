@@ -7,9 +7,10 @@
 //
 
 #import "AKNamedObject.h"
-#import "DocSetIndex.h"
 
 @implementation AKNamedObject
+
+@synthesize name = _name;
 
 #pragma mark - Init/awake/dealloc
 
@@ -31,26 +32,12 @@
 
 #pragma mark - Getters and setters
 
-- (NSString *)displayName
+- (NSString *)sortName
 {
 	return self.name;
 }
 
-- (NSString *)commentString
-{
-	return @"";
-}
-
-#pragma mark - URLs
-
-- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
-{
-	return nil;
-}
-
-#pragma mark - <AKSortable> methods
-
-- (NSString *)sortName
+- (NSString *)displayName
 {
 	return self.name;
 }
