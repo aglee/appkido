@@ -15,6 +15,7 @@
 - (instancetype)initWithName:(NSString *)name
 {
 	NSParameterAssert(name != nil);
+	NSParameterAssert(name.length > 0);
 	self = [super init];
 	if (self) {
 		_name = name;

@@ -10,7 +10,7 @@
 
 @interface AKNamedObject : NSObject
 
-@property (copy) NSString *name;
+@property (copy, readonly) NSString *name;
 @property (copy, readonly) NSString *sortName;
 @property (copy, readonly) NSString *displayName;
 
