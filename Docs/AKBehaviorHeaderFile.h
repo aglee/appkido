@@ -1,5 +1,5 @@
 /*
- * AKHeaderFileDoc.m
+ * AKBehaviorHeaderFile.m
  *
  * Created by Andy Lee on Tue Mar 16 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
@@ -9,12 +9,12 @@
 
 @class AKBehaviorToken;
 
-extern NSString *AKHeaderFileDocName;
+extern NSString *AKBehaviorHeaderFileName;
 
 /*!
  * Represents the "Header File" doc under a class or protocol's "General"
  * subtopic.
  */
-@interface AKHeaderFileDoc : AKNamedObject
+@interface AKBehaviorHeaderFile : AKNamedObject
 @property (strong) AKBehaviorToken *behaviorToken;
 @end

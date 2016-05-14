@@ -7,7 +7,6 @@
 
 #import "AKNotificationsSubtopic.h"
 #import "AKClassToken.h"
-#import "AKNotificationDoc.h"
 
 @implementation AKNotificationsSubtopic
 
@@ -32,11 +31,6 @@
     {
         return @[];
     }
-}
-
-+ (id)memberDocClass
-{
-    return [AKNotificationDoc class];
 }
 
 @end

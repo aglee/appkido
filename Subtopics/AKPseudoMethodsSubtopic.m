@@ -6,12 +6,9 @@
  */
 
 #import "AKPseudoMethodsSubtopic.h"
-
 #import "DIGSLog.h"
-
 #import "AKClassToken.h"
 #import "AKMethodToken.h"
-#import "AKMemberDoc.h"
 
 @implementation AKPseudoMethodsSubtopic
 

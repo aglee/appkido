@@ -6,7 +6,6 @@
  */
 
 #import "AKFunctionsGroupSubtopic.h"
-#import "AKFunctionDoc.h"
 #import "AKGroupItem.h"
 #import "AKSortUtils.h"
 
@@ -16,19 +15,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    // Each subitem of a functions group item represents one function.
-    for (AKToken *functionToken in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
-    {
-//TODO: Is it safe to assume there is always a doc?
-//        AKFileSection *functionSection = functionToken.tokenDocumentation;
-//
-//        if (functionSection != nil)
-        {
-            AKDoc *newDoc = [[AKFunctionDoc alloc] initWithToken:functionToken];
-            
-            [docList addObject:newDoc];
-        }
-    }
+	[docList addObjectsFromArray:[AKSortUtils arrayBySortingArray:[self.groupItem subitems]]];
 }
 
 @end

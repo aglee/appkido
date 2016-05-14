@@ -7,7 +7,6 @@
 
 #import "AKDelegateMethodsSubtopic.h"
 #import "AKClassToken.h"
-#import "AKDelegateMethodDoc.h"
 
 @implementation AKDelegateMethodsSubtopic
 
@@ -32,11 +31,6 @@
     {
         return @[];
     }
-}
-
-+ (id)memberDocClass
-{
-    return [AKDelegateMethodDoc class];
 }
 
 @end

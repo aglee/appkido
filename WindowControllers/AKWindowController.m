@@ -7,15 +7,12 @@
 
 #import "AKWindowController.h"
 #import <WebKit/WebKit.h>
-
 #import "DIGSLog.h"
-
 #import "AKAppDelegate.h"
 #import "AKBrowser.h"
 #import "AKClassToken.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
-#import "AKDoc.h"
 #import "AKDocListViewController.h"
 #import "AKDocLocator.h"
 #import "AKDocViewController.h"

@@ -8,7 +8,7 @@
 #import "AKBehaviorGeneralSubtopic.h"
 #import "DIGSLog.h"
 #import "AKClassToken.h"
-#import "AKHeaderFileDoc.h"
+#import "AKBehaviorHeaderFile.h"
 
 @implementation AKBehaviorGeneralSubtopic
 
@@ -34,7 +34,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithName:self.behaviorToken.name];
+    AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithName:self.behaviorToken.name];
     headerFileDoc.behaviorToken = self.behaviorToken;
     [docList addObject:headerFileDoc];
 }

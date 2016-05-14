@@ -7,9 +7,7 @@
 //
 
 #import "AKPropertiesSubtopic.h"
-
 #import "AKClassToken.h"
-#import "AKPropertyDoc.h"
 
 @implementation AKPropertiesSubtopic
 
@@ -34,11 +32,6 @@
 - (NSArray *)memberTokensForBehavior:(AKBehaviorToken *)behaviorToken
 {
     return [behaviorToken propertyTokens];
-}
-
-+ (id)memberDocClass
-{
-    return [AKPropertyDoc class];
 }
 
 @end

@@ -11,7 +11,6 @@
 
 #import "AKDatabase.h"
 #import "AKToken.h"
-#import "AKDoc.h"
 #import "AKDocLocator.h"
 #import "AKSearchQuery.h"
 #import "AKTopic.h"

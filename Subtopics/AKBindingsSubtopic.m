@@ -8,7 +8,6 @@
 
 #import "AKBindingsSubtopic.h"
 #import "AKClassToken.h"
-#import "AKBindingDoc.h"
 
 @implementation AKBindingsSubtopic
 
@@ -33,11 +32,6 @@
     {
         return @[];
     }
-}
-
-+ (id)memberDocClass
-{
-    return [AKBindingDoc class];
 }
 
 @end

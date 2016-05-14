@@ -9,7 +9,6 @@
 #import "DIGSLog.h"
 #import "AKAppDelegate.h"
 #import "AKDatabase.h"
-#import "AKDoc.h"
 #import "AKDocLocator.h"
 #import "AKNamedObject.h"
 #import "AKSubtopic.h"
@@ -104,7 +103,7 @@
 
 		// Modify whereTo.
 		AKNamedObject *docToDisplay = [_subtopic docAtIndex:docIndex];
-		whereTo.docName = docToDisplay.displayName;
+		whereTo.docName = docToDisplay.name;
 	}
 }
 

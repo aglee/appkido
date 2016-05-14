@@ -34,7 +34,4 @@
  */
 - (NSArray *)memberTokensForBehavior:(AKBehaviorToken *)behaviorToken;
 
-/*! Subclasses must override this. */
-+ (id)memberDocClass;
-
 @end

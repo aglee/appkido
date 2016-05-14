@@ -9,7 +9,7 @@
 
 #import "AKBehaviorTopic.h"
 #import "AKDocLocator.h"
-#import "AKHeaderFileDoc.h"
+#import "AKBehaviorHeaderFile.h"
 #import "AKBehaviorToken.h"
 #import "AKSubtopic.h"
 #import "AKTableView.h"
@@ -82,7 +82,7 @@
     AKDocLocator *oldDocLocator = [self.owningWindowController currentDocLocator];
     AKDocLocator *newDocLocator = [[AKDocLocator alloc] initWithTopic:oldDocLocator.topicToDisplay
                                                           subtopicName:AKGeneralSubtopicName
-                                                               docName:AKHeaderFileDocName];
+                                                               docName:AKBehaviorHeaderFileName];
     [self.owningWindowController selectDocWithDocLocator:newDocLocator];
 }
 

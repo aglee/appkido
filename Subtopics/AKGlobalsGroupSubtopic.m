@@ -8,7 +8,6 @@
 
 #import "AKGlobalsGroupSubtopic.h"
 #import "DIGSLog.h"
-#import "AKGlobalsDoc.h"
 #import "AKGroupItem.h"
 #import "AKSortUtils.h"
 
@@ -18,12 +17,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    for (AKToken *subitem in [AKSortUtils arrayBySortingArray:[self.groupItem subitems]])
-    {
-        AKDoc *newDoc = [[AKGlobalsDoc alloc] initWithToken:subitem];
-
-        [docList addObject:newDoc];
-    }
+	[docList addObjectsFromArray:[AKSortUtils arrayBySortingArray:[self.groupItem subitems]]];
 }
 
 @end

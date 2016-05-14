@@ -5,19 +5,19 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKHeaderFileDoc.h"
+#import "AKBehaviorHeaderFile.h"
 #import "AKBehaviorToken.h"
 #import "DocSetIndex.h"
 
-NSString *AKHeaderFileDocName = @"Header File";
+NSString *AKBehaviorHeaderFileName = @"Header File";
 
-@implementation AKHeaderFileDoc
+@implementation AKBehaviorHeaderFile
 
 #pragma mark - AKBehaviorGeneralDoc methods
 
 - (NSString *)unqualifiedDocName
 {
-	return AKHeaderFileDocName;
+	return AKBehaviorHeaderFileName;
 }
 
 #pragma mark - AKToken methods

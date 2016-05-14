@@ -11,7 +11,6 @@
 #import "AKSortUtils.h"
 #import "AKGlobalsGroupSubtopic.h"
 #import "AKGroupItem.h"
-#import "AKDoc.h"
 
 @implementation AKGlobalsTopic
 

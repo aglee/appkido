@@ -6,9 +6,7 @@
  */
 
 #import "AKInstanceMethodsSubtopic.h"
-
 #import "AKBehaviorToken.h"
-#import "AKInstanceMethodDoc.h"
 
 @implementation AKInstanceMethodsSubtopic
 
@@ -33,11 +31,6 @@
 - (NSArray *)memberTokensForBehavior:(AKBehaviorToken *)behaviorToken
 {
     return [behaviorToken instanceMethodTokens];
-}
-
-+ (id)memberDocClass
-{
-    return [AKInstanceMethodDoc class];
 }
 
 @end

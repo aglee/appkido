@@ -49,12 +49,6 @@
 	return nil;
 }
 
-+ (id)memberDocClass
-{
-	DIGSLogError_MissingOverride();
-	return nil;
-}
-
 #pragma mark - AKSubtopic methods
 
 - (void)populateDocList:(NSMutableArray *)docList
