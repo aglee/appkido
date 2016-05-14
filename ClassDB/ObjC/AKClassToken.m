@@ -31,7 +31,6 @@
 	self = [super initWithName:name];
 	if (self) {
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
-		_tokenDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];
 
 		_childClassTokens = [[NSMutableArray alloc] init];
 		_categoryTokens = [[NSMutableArray alloc] init];

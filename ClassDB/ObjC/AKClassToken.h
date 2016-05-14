@@ -26,11 +26,6 @@
 {
 @private
 	NSMutableArray *_namesOfAllOwningFrameworks;
-
-	// Keys are names of owning frameworks. Values are the root file sections
-	// containing documentation for the framework.
-	NSMutableDictionary *_tokenDocumentationByFrameworkName;
-
 	NSMutableArray *_childClassTokens;  // Contains AKClassTokens.
 	NSMutableArray *_categoryTokens;  // Contains AKCategoryTokens.
 	AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodTokens.
@@ -38,13 +33,13 @@
 	AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingTokens.
 }
 
-@property (NS_NONATOMIC_IOSONLY, readonly, weak) AKClassToken *parentClass;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childClasses;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSSet *descendantClasses;
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasChildClasses;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allCategories;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedDelegateMethods;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *documentedNotifications;
+@property (readonly, weak) AKClassToken *parentClass;
+@property (readonly, copy) NSArray *childClasses;
+@property (readonly, copy) NSSet *descendantClasses;
+@property (readonly) BOOL hasChildClasses;
+@property (readonly, copy) NSArray *allCategories;
+@property (readonly, copy) NSArray *documentedDelegateMethods;
+@property (readonly, copy) NSArray *documentedNotifications;
 
 /*!
  * Names of all frameworks the class belongs to. The first element of the
