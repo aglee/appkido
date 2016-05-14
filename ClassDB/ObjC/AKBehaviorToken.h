@@ -8,9 +8,9 @@
 #import "AKToken.h"
 
 @class AKBehaviorToken;
-@class AKCollectionOfItems;
 @class AKMemberToken;
 @class AKMethodToken;
+@class AKNamedCollection;
 @class AKPropertyToken;
 @class AKProtocolToken;
 
@@ -40,35 +40,13 @@ typedef void (^AKBlockForAddingMemberToken)(AKBehaviorToken *behaviorToken, AKMe
  * of protocols before we've encountered its @protocol declaration.
  */
 @interface AKBehaviorToken : AKToken
-{
-@private
-	// One AKProtocolToken for each protocol this behavior conforms to.
-	NSMutableArray *_protocolTokens;
 
-	// Indexes the contents of _protocolTokens.
-	NSMutableSet *_protocolTokenNames;
-
-	// Contains AKPropertyTokens, each representing a property of this class.
-	AKCollectionOfItems *_indexOfProperties;
-
-	// Contains AKMethodTokens, one for each class method that has either
-	// been found in my .h file or been found in the documentation for my
-	// behavior.
-	AKCollectionOfItems *_indexOfClassMethods;
-
-	// Contains AKMethodTokens, one for each instance method that has either
-	// been found in my .h file or been found in the documentation for my
-	// behavior.
-	AKCollectionOfItems *_indexOfInstanceMethods;
-}
-
-#pragma mark - Getters and setters -- general
-
-@property (NS_NONATOMIC_IOSONLY, assign, readonly) BOOL isClassToken;
+@property (assign, readonly) BOOL isClassToken;
 /*! Includes protocols implemented by virtue of inheritance. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *implementedProtocols;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *instanceMethodTokens;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *propertyTokens;
+@property (readonly, copy) NSArray *implementedProtocols;
+@property (readonly, copy) NSArray *instanceMethodTokens;
+@property (readonly, copy) NSArray *propertyTokens;
+@property (readonly, copy) NSArray *classMethodTokens;
 
 #pragma mark - Getters and setters -- properties
 
@@ -82,7 +60,6 @@ typedef void (^AKBlockForAddingMemberToken)(AKBehaviorToken *behaviorToken, AKMe
 #pragma mark - Getters and setters -- class methods
 
 /*! Does not include inherited methods. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *classMethodTokens;
 - (AKMethodToken *)classMethodWithName:(NSString *)methodName;
 /*! Does nothing if a class method with the same name already exists. */
 - (void)addClassMethod:(AKMethodToken *)methodToken;

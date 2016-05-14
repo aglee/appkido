@@ -5,7 +5,7 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AKNamedCollection.h"
 #import "DocSetModel.h"
 #import "AKSortable.h"
 
@@ -15,15 +15,11 @@
  * Represents a named API construct, as represented by an underlying DSAToken
  * in the docset index (tokenMO).
  */
-@interface AKToken : NSObject <AKSortable>
+@interface AKToken : AKNamedObject <AKSortable>
 
 @property (nonatomic, strong) DSAToken *tokenMO;
 @property (nonatomic, readonly) NSString *tokenName;
 @property (nonatomic, readonly) NSString *frameworkName;
 @property (nonatomic, assign) BOOL isDeprecated;
-
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO NS_DESIGNATED_INITIALIZER;
 
 @end

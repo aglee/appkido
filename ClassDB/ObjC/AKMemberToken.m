@@ -14,20 +14,19 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO owningBehavior:(AKBehaviorToken *)behaviorToken
+- (instancetype)initWithName:(NSString *)name owningBehavior:(AKBehaviorToken *)behaviorToken
 {
     NSParameterAssert(behaviorToken != nil);
-    self = [super initWithTokenMO:tokenMO];
+    self = [super initWithName:name];
     if (self) {
         _owningBehavior = behaviorToken;
     }
     return self;
 }
 
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
+- (instancetype)initWithName:(NSString *)name
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithTokenMO:nil owningBehavior:nil];
+    return [self initWithName:nil owningBehavior:nil];
 }
 
 @end

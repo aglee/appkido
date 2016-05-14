@@ -13,23 +13,6 @@
 
 @dynamic frameworkName;
 
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
-{
-	self = [super init];
-	if (self) {
-		_tokenMO = tokenMO;
-	}
-	return self;
-}
-
-- (instancetype)init
-{
-	DIGSLogError_NondesignatedInitializer();
-	return [self initWithTokenMO:nil];
-}
-
 #pragma mark - Getters and setters
 
 - (NSString *)tokenName
@@ -41,6 +24,13 @@
 {
 	//TODO: In case this is nil, try to derive framework name from path.
 	return self.tokenMO.metainformation.declaredIn.frameworkName;
+}
+
+#pragma mark - AKNamedObject methods
+
+- (NSString *)name
+{
+	return self.tokenName;  //TODO: Clean this up.
 }
 
 #pragma mark - AKSortable methods

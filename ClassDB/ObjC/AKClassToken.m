@@ -26,9 +26,9 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
+- (instancetype)initWithName:(NSString *)name
 {
-	self = [super initWithTokenMO:tokenMO];
+	self = [super initWithName:name];
 	if (self) {
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 		_tokenDocumentationByFrameworkName = [[NSMutableDictionary alloc] init];

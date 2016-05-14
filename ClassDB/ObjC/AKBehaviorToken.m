@@ -10,22 +10,27 @@
 #import "AKProtocolToken.h"
 #import "AKPropertyToken.h"
 #import "AKMethodToken.h"
-#import "AKCollectionOfItems.h"
+#import "AKNamedCollection.h"
+
+@interface AKBehaviorToken ()
+@property (strong) AKNamedCollection *implementedProtocolsCollection;
+@property (strong) AKNamedCollection *propertiesCollection;
+@property (strong) AKNamedCollection *classMethodsCollection;
+@property (strong) AKNamedCollection *instanceMethodsCollection;
+@end
 
 @implementation AKBehaviorToken
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
+- (instancetype)initWithName:(NSString *)name
 {
-	self = [super initWithTokenMO:tokenMO];
+	self = [super initWithName:name];
 	if (self) {
-		_protocolTokens = [[NSMutableArray alloc] init];
-		_protocolTokenNames = [[NSMutableSet alloc] init];
-
-		_indexOfProperties = [[AKCollectionOfItems alloc] init];
-		_indexOfClassMethods = [[AKCollectionOfItems alloc] init];
-		_indexOfInstanceMethods = [[AKCollectionOfItems alloc] init];
+		_implementedProtocolsCollection = [[AKNamedCollection alloc] initWithName:@"Implemented Protocols"];
+		_propertiesCollection = [[AKNamedCollection alloc] initWithName:@"Properties"];
+		_classMethodsCollection = [[AKNamedCollection alloc] initWithName:@"Class Methods"];
+		_instanceMethodsCollection = [[AKNamedCollection alloc] initWithName:@"Instance Methods"];
 	}
 	return self;
 }
@@ -39,14 +44,9 @@
 
 - (void)addImplementedProtocol:(AKProtocolToken *)protocolToken
 {
-	if ([_protocolTokenNames containsObject:protocolToken.tokenName]) {
-		// I've seen this happen when a .h contains two declarations of a
-		// protocol in different #if branches. Example: NSURL.
+	if ([self.implementedProtocolsCollection addElementIfAbsent:protocolToken] != nil) {
 		DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
 					 [protocolToken tokenName], [self tokenName]);
-	} else {
-		[_protocolTokens addObject:protocolToken];
-		[_protocolTokenNames addObject:protocolToken.tokenName];
 	}
 }
 
@@ -59,8 +59,9 @@
 
 - (NSArray *)implementedProtocols
 {
-	NSMutableArray *result = [NSMutableArray arrayWithArray:_protocolTokens];
-	for (AKProtocolToken *protocolToken in _protocolTokens) 	{
+	NSArray *myProtocolTokens = self.implementedProtocolsCollection.elements;
+	NSMutableArray *result = [NSMutableArray arrayWithArray:myProtocolTokens];
+	for (AKProtocolToken *protocolToken in myProtocolTokens) 	{
 		if (protocolToken != self) {
 			[result addObjectsFromArray:[protocolToken implementedProtocols]];
 		}
@@ -70,53 +71,53 @@
 
 - (NSArray *)instanceMethodTokens
 {
-	return [_indexOfInstanceMethods allItems];
+	return self.instanceMethodsCollection.elements;
 }
 
 #pragma mark - Getters and setters -- properties
 
 - (NSArray *)propertyTokens
 {
-	return [_indexOfProperties allItems];
+	return self.propertiesCollection.elements;
 }
 
 - (AKPropertyToken *)propertyTokenWithName:(NSString *)propertyName
 {
-	return (AKPropertyToken *)[_indexOfProperties itemWithTokenName:propertyName];
+	return (AKPropertyToken *)[self.propertiesCollection elementWithName:propertyName];
 }
 
 - (void)addPropertyToken:(AKPropertyToken *)propertyToken
 {
-	[_indexOfProperties addToken:propertyToken];
+	(void)[self.propertiesCollection addElementIfAbsent:propertyToken];
 }
 
 #pragma mark - Getters and setters -- class methods
 
 - (NSArray *)classMethodTokens
 {
-	return [_indexOfClassMethods allItems];
+	return self.classMethodsCollection.elements;
 }
 
 - (AKMethodToken *)classMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)[_indexOfClassMethods itemWithTokenName:methodName];
+	return (AKMethodToken *)[self.classMethodsCollection elementWithName:methodName];
 }
 
 - (void)addClassMethod:(AKMethodToken *)methodToken
 {
-	[_indexOfClassMethods addToken:methodToken];
+	(void)[self.classMethodsCollection addElementIfAbsent:methodToken];
 }
 
 #pragma mark - Getters and setters -- instance methods
 
 - (AKMethodToken *)instanceMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)[_indexOfInstanceMethods itemWithTokenName:methodName];
+	return (AKMethodToken *)[self.instanceMethodsCollection elementWithName:methodName];
 }
 
 - (void)addInstanceMethod:(AKMethodToken *)methodToken
 {
-	[_indexOfInstanceMethods addToken:methodToken];
+	(void)[self.instanceMethodsCollection addElementIfAbsent:methodToken];
 }
 
 #pragma mark - Getters and setters -- deprecated methods

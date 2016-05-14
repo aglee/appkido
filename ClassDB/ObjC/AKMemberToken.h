@@ -21,6 +21,6 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO owningBehavior:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(NSString *)name owningBehavior:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
 
 @end

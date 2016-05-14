@@ -6,16 +6,15 @@
 //
 
 #import "AKMethodToken.h"
-
 #import "AKClassToken.h"
 
 @implementation AKMethodToken
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO owningBehavior:(AKBehaviorToken *)behaviorToken
+- (instancetype)initWithName:(NSString *)name owningBehavior:(AKBehaviorToken *)behaviorToken
 {
-    self = [super initWithTokenMO:tokenMO owningBehavior:behaviorToken];
+    self = [super initWithName:name owningBehavior:behaviorToken];
     if (self) {
         _argumentTypes = [[NSMutableArray alloc] init];
     }
