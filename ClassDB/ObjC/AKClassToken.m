@@ -9,7 +9,6 @@
 #import "DIGSLog.h"
 #import "AKBindingToken.h"
 #import "AKCategoryToken.h"
-#import "AKCollectionOfItems.h"
 #import "AKDatabase.h"
 #import "AKMethodToken.h"
 #import "AKNotificationToken.h"
@@ -18,7 +17,10 @@
 
 
 @interface AKClassToken ()
-@property (NS_NONATOMIC_IOSONLY, readwrite, weak) AKClassToken *parentClass;
+@property (readwrite, weak) AKClassToken *parentClass;
+@property (copy) NSMutableDictionary *delegateMethodsByName;
+@property (copy) NSMutableDictionary *notificationsByName;
+@property (copy) NSMutableDictionary *bindingsByName;
 @end
 
 
@@ -35,16 +37,11 @@
 		_childClassTokens = [[NSMutableArray alloc] init];
 		_categoryTokens = [[NSMutableArray alloc] init];
 
-		_indexOfDelegateMethods = [[AKCollectionOfItems alloc] init];
-		_indexOfNotifications = [[AKCollectionOfItems alloc] init];
-		_indexOfBindings = [[AKCollectionOfItems alloc] init];
+		_delegateMethodsByName = [[NSMutableDictionary alloc] init];
+		_notificationsByName = [[NSMutableDictionary alloc] init];
+		_bindingsByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	_indexOfDelegateMethods = nil;
 }
 
 #pragma mark - Getters and setters -- general
@@ -120,17 +117,17 @@
 
 - (void)addBindingToken:(AKBindingToken *)bindingToken
 {
-	[_indexOfBindings addToken:bindingToken];
+	self.bindingsByName[bindingToken.name] = bindingToken;
 }
 
 - (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName
 {
-	return (AKBindingToken *)[_indexOfBindings itemWithTokenName:bindingName];
+	return (AKBindingToken *)self.bindingsByName[bindingName];
 }
 
 - (NSArray *)documentedBindings
 {
-	return [_indexOfBindings allItems];
+	return self.bindingsByName.allValues;
 }
 
 #pragma mark - Getters and setters -- multiple owning frameworks
@@ -173,7 +170,7 @@
 
 - (NSArray *)documentedDelegateMethods
 {
-	NSMutableArray *methodList = [[_indexOfDelegateMethods allItems] mutableCopy];
+	NSMutableArray *methodList = [self.delegateMethodsByName.allValues mutableCopy];
 
 	// Handle classes like WebView that have different *kinds* of delegates.
 	[self _addExtraDelegateMethodsTo:methodList];
@@ -183,29 +180,29 @@
 
 - (AKMethodToken *)delegateMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)[_indexOfDelegateMethods itemWithTokenName:methodName];
+	return (AKMethodToken *)self.delegateMethodsByName[methodName];
 }
 
 - (void)addDelegateMethod:(AKMethodToken *)methodToken
 {
-	[_indexOfDelegateMethods addToken:methodToken];
+	self.delegateMethodsByName[methodToken.name] = methodToken;
 }
 
 #pragma mark - Getters and setters -- notifications
 
 - (NSArray *)documentedNotifications
 {
-	return [_indexOfNotifications allItems];
+	return self.notificationsByName.allValues;
 }
 
 - (AKNotificationToken *)notificationWithName:(NSString *)notificationName
 {
-	return (AKNotificationToken *)[_indexOfNotifications itemWithTokenName:notificationName];
+	return (AKNotificationToken *)self.notificationsByName[notificationName];
 }
 
 - (void)addNotification:(AKNotificationToken *)notificationToken
 {
-	[_indexOfNotifications addToken:notificationToken];
+	self.notificationsByName[notificationToken.name] = notificationToken;
 }
 
 #pragma mark - AKBehaviorToken methods

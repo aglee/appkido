@@ -10,7 +10,6 @@
 @class AKBehaviorToken;
 @class AKMemberToken;
 @class AKMethodToken;
-@class AKNamedCollection;
 @class AKPropertyToken;
 @class AKProtocolToken;
 

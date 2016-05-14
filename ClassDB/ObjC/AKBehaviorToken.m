@@ -10,13 +10,12 @@
 #import "AKProtocolToken.h"
 #import "AKPropertyToken.h"
 #import "AKMethodToken.h"
-#import "AKNamedCollection.h"
 
 @interface AKBehaviorToken ()
-@property (strong) AKNamedCollection *implementedProtocolsCollection;
-@property (strong) AKNamedCollection *propertiesCollection;
-@property (strong) AKNamedCollection *classMethodsCollection;
-@property (strong) AKNamedCollection *instanceMethodsCollection;
+@property (copy) NSMutableDictionary *implementedProtocolsByName;
+@property (copy) NSMutableDictionary *propertiesByName;
+@property (copy) NSMutableDictionary *classMethodsByName;
+@property (copy) NSMutableDictionary *instanceMethodsByName;
 @end
 
 @implementation AKBehaviorToken
@@ -27,10 +26,10 @@
 {
 	self = [super initWithName:name];
 	if (self) {
-		_implementedProtocolsCollection = [[AKNamedCollection alloc] initWithName:@"Implemented Protocols"];
-		_propertiesCollection = [[AKNamedCollection alloc] initWithName:@"Properties"];
-		_classMethodsCollection = [[AKNamedCollection alloc] initWithName:@"Class Methods"];
-		_instanceMethodsCollection = [[AKNamedCollection alloc] initWithName:@"Instance Methods"];
+		_implementedProtocolsByName = [[NSMutableDictionary alloc] init];
+		_propertiesByName = [[NSMutableDictionary alloc] init];
+		_classMethodsByName = [[NSMutableDictionary alloc] init];
+		_instanceMethodsByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -44,9 +43,11 @@
 
 - (void)addImplementedProtocol:(AKProtocolToken *)protocolToken
 {
-	if ([self.implementedProtocolsCollection addElementIfAbsent:protocolToken] != nil) {
-		DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@]",
-					 [protocolToken tokenName], [self tokenName]);
+	if (self.implementedProtocolsByName[protocolToken.name]) {
+		DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@], will ignore",
+					 protocolToken.name, self.name);
+	} else {
+		self.implementedProtocolsByName[protocolToken.name] = protocolToken;
 	}
 }
 
@@ -59,11 +60,11 @@
 
 - (NSArray *)implementedProtocols
 {
-	NSArray *myProtocolTokens = self.implementedProtocolsCollection.elements;
+	NSArray *myProtocolTokens = self.implementedProtocolsByName.allValues;
 	NSMutableArray *result = [NSMutableArray arrayWithArray:myProtocolTokens];
 	for (AKProtocolToken *protocolToken in myProtocolTokens) 	{
 		if (protocolToken != self) {
-			[result addObjectsFromArray:[protocolToken implementedProtocols]];
+			[result addObjectsFromArray:protocolToken.implementedProtocols];  //TODO: Could this lead to duplicates in the result list?
 		}
 	}
 	return result;
@@ -71,53 +72,68 @@
 
 - (NSArray *)instanceMethodTokens
 {
-	return self.instanceMethodsCollection.elements;
+	return self.instanceMethodsByName.allValues;
 }
 
 #pragma mark - Getters and setters -- properties
 
 - (NSArray *)propertyTokens
 {
-	return self.propertiesCollection.elements;
+	return self.propertiesByName.allValues;
 }
 
 - (AKPropertyToken *)propertyTokenWithName:(NSString *)propertyName
 {
-	return (AKPropertyToken *)[self.propertiesCollection elementWithName:propertyName];
+	return (AKPropertyToken *)self.propertiesByName[propertyName];
 }
 
 - (void)addPropertyToken:(AKPropertyToken *)propertyToken
 {
-	(void)[self.propertiesCollection addElementIfAbsent:propertyToken];
+	if (self.propertiesByName[propertyToken.name]) {
+		DIGSLogDebug(@"trying to add property [%@] again to behavior [%@], will ignore",
+					 propertyToken.name, self.name);
+	} else {
+		self.propertiesByName[propertyToken.name] = propertyToken;
+	}
 }
 
 #pragma mark - Getters and setters -- class methods
 
 - (NSArray *)classMethodTokens
 {
-	return self.classMethodsCollection.elements;
+	return self.classMethodsByName.allValues;
 }
 
 - (AKMethodToken *)classMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)[self.classMethodsCollection elementWithName:methodName];
+	return (AKMethodToken *)self.classMethodsByName[methodName];
 }
 
 - (void)addClassMethod:(AKMethodToken *)methodToken
 {
-	(void)[self.classMethodsCollection addElementIfAbsent:methodToken];
+	if (self.classMethodsByName[methodToken.name]) {
+		DIGSLogDebug(@"trying to add class method [%@] again to behavior [%@], will ignore",
+					 methodToken.name, self.name);
+	} else {
+		self.classMethodsByName[methodToken.name] = methodToken;
+	}
 }
 
 #pragma mark - Getters and setters -- instance methods
 
 - (AKMethodToken *)instanceMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)[self.instanceMethodsCollection elementWithName:methodName];
+	return (AKMethodToken *)self.instanceMethodsByName[methodName];
 }
 
 - (void)addInstanceMethod:(AKMethodToken *)methodToken
 {
-	(void)[self.instanceMethodsCollection addElementIfAbsent:methodToken];
+	if (self.instanceMethodsByName[methodToken.name]) {
+		DIGSLogDebug(@"trying to add instance method [%@] again to behavior [%@], will ignore",
+					 methodToken.name, self.name);
+	} else {
+		self.instanceMethodsByName[methodToken.name] = methodToken;
+	}
 }
 
 #pragma mark - Getters and setters -- deprecated methods

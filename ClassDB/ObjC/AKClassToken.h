@@ -9,7 +9,6 @@
 
 @class AKBindingToken;
 @class AKCategoryToken;
-@class AKCollectionOfItems;
 @class AKNotificationToken;
 @class AKPropertyToken;
 
@@ -28,9 +27,6 @@
 	NSMutableArray *_namesOfAllOwningFrameworks;
 	NSMutableArray *_childClassTokens;  // Contains AKClassTokens.
 	NSMutableArray *_categoryTokens;  // Contains AKCategoryTokens.
-	AKCollectionOfItems *_indexOfDelegateMethods;  // Contains AKMethodTokens.
-	AKCollectionOfItems *_indexOfNotifications;  // Contains AKNotificationTokens.
-	AKCollectionOfItems *_indexOfBindings;  // Contains AKBindingTokens.
 }
 
 @property (readonly, weak) AKClassToken *parentClass;

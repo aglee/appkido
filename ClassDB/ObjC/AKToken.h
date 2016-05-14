@@ -5,7 +5,7 @@
 // Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
 //
 
-#import "AKNamedCollection.h"
+#import "AKNamedObject.h"
 #import "DocSetModel.h"
 #import "AKSortable.h"
 
