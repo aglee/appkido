@@ -45,4 +45,14 @@ NSString *AKBehaviorHeaderFileName = @"Header File";
 	}
 }
 
+#pragma mark - <AKNamed> methods
+
+- (NSString *)name
+{
+	NSString *relativePath = self.behaviorToken.tokenMO.metainformation.declaredIn.headerPath;
+	NSString *headerFileName = relativePath.lastPathComponent;
+
+	return (headerFileName ?: @"Header File");
+}
+
 @end
