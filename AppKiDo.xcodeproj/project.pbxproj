@@ -1224,7 +1224,7 @@
 				737F55611CE502E300376A4B /* AKNamedObject.m */,
 				73B313A90617441B006C9BA7 /* AKGroupItem.h */,
 				73B313AA0617441B006C9BA7 /* AKGroupItem.m */,
-				73C8ABB60836AF2D0000E3F7 /* database items */,
+				73C8ABB60836AF2D0000E3F7 /* API tokens */,
 				731D743A0E4357F000C54AD5 /* export */,
 			);
 			name = database;
@@ -1798,15 +1798,16 @@
 			name = "behavior subtopics";
 			sourceTree = "<group>";
 		};
-		73C8ABB60836AF2D0000E3F7 /* database items */ = {
+		73C8ABB60836AF2D0000E3F7 /* API tokens */ = {
 			isa = PBXGroup;
 			children = (
 				730FCBD00685758B0083160A /* AKToken.h */,
 				730FCBD10685758B0083160A /* AKToken.m */,
-				73E86F450E397706002AFB76 /* Objective-C token types */,
-				73E86F440E3976FA002AFB76 /* C token types */,
+				73E86F460E397729002AFB76 /* behaviors */,
+				73E86F470E397732002AFB76 /* members of behaviors */,
+				73E86F440E3976FA002AFB76 /* functions, types, and constants */,
 			);
-			name = "database items";
+			name = "API tokens";
 			path = ObjC;
 			sourceTree = "<group>";
 		};
@@ -1848,22 +1849,13 @@
 			sourceTree = "<group>";
 			usesTabs = 0;
 		};
-		73E86F440E3976FA002AFB76 /* C token types */ = {
+		73E86F440E3976FA002AFB76 /* functions, types, and constants */ = {
 			isa = PBXGroup;
 			children = (
 				73B6B6C50DC1D229004FB7ED /* AKFunctionToken.h */,
 				73B6B6C60DC1D229004FB7ED /* AKFunctionToken.m */,
 			);
-			name = "C token types";
-			sourceTree = "<group>";
-		};
-		73E86F450E397706002AFB76 /* Objective-C token types */ = {
-			isa = PBXGroup;
-			children = (
-				73E86F460E397729002AFB76 /* behaviors */,
-				73E86F470E397732002AFB76 /* members */,
-			);
-			name = "Objective-C token types";
+			name = "functions, types, and constants";
 			sourceTree = "<group>";
 		};
 		73E86F460E397729002AFB76 /* behaviors */ = {
@@ -1881,7 +1873,7 @@
 			name = behaviors;
 			sourceTree = "<group>";
 		};
-		73E86F470E397732002AFB76 /* members */ = {
+		73E86F470E397732002AFB76 /* members of behaviors */ = {
 			isa = PBXGroup;
 			children = (
 				73E86F400E3974E1002AFB76 /* AKMemberToken.h */,
@@ -1895,7 +1887,7 @@
 				7357E6E31CD692E5009A613C /* AKBindingToken.h */,
 				7357E6E41CD692E5009A613C /* AKBindingToken.m */,
 			);
-			name = members;
+			name = "members of behaviors";
 			sourceTree = "<group>";
 		};
 		73F8F99816ECEA21001650D7 /* AppKiDo Cocoa categories */ = {
