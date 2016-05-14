@@ -30,12 +30,14 @@
 
 #pragma mark - Getters and setters
 
-- (NSString *)sortName
+- (NSString *)displayName
 {
 	return self.name;
 }
 
-- (NSString *)displayName
+#pragma mark - <AKSortable> methods
+
+- (NSString *)sortName
 {
 	return self.name;
 }

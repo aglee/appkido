@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AKSortable.h"
 
-@interface AKNamedObject : NSObject
+@interface AKNamedObject : NSObject <AKSortable>
 
 @property (copy, readonly) NSString *name;
-@property (copy, readonly) NSString *sortName;
 @property (copy, readonly) NSString *displayName;
 
 - (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;
