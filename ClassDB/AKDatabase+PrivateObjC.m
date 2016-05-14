@@ -91,7 +91,7 @@
 	if (categoryToken == nil) {
 		categoryToken = [[AKCategoryToken alloc] initWithName:categoryName];
 		[classToken addCategory:categoryToken];
-		QLog(@"+++ added category %@ to class %@", categoryName, className);
+		//QLog(@"+++ added category %@ to class %@", categoryName, className);
 	}
 	return categoryToken;
 }
