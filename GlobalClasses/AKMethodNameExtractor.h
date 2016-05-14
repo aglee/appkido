@@ -34,6 +34,6 @@
 #pragma mark - Parsing
 
 + (NSString *)extractMethodNameFromString:(NSString *)string;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *extractMethodName;
+@property (readonly, copy) NSString *extractMethodName;
 
 @end

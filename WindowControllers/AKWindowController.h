@@ -123,9 +123,9 @@
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDatabase *database;
+@property (readonly, strong) AKDatabase *database;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKDocLocator *currentDocLocator;
+@property (readonly, strong) AKDocLocator *currentDocLocator;
 
 #pragma mark - Navigation
 
@@ -152,7 +152,7 @@
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *docView;
+@property (readonly, strong) NSView *docView;
 
 - (void)revealPopQuizSymbol:(NSString *)apiSymbol;
 

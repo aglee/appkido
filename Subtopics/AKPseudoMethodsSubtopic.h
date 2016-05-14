@@ -27,6 +27,6 @@
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassToken *classToken;
+@property (readonly, strong) AKClassToken *classToken;
 
 @end

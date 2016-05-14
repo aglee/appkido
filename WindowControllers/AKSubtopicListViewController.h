@@ -30,7 +30,7 @@
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKSubtopic *selectedSubtopic;
+@property (readonly, strong) AKSubtopic *selectedSubtopic;
 
 #pragma mark - Action methods
 

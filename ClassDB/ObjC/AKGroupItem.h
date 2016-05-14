@@ -26,10 +26,10 @@
 
 - (void)addSubitem:(AKToken *)item;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSubitems;
+@property (readonly) NSInteger numberOfSubitems;
 
 /*! Order of returned items is not guaranteed. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *subitems;
+@property (readonly, copy) NSArray *subitems;
 
 - (AKToken *)subitemWithName:(NSString *)tokenName;
 

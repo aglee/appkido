@@ -32,7 +32,7 @@
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *docComment;
+@property (readonly, copy) NSString *docComment;
 
 #pragma mark - Navigation
 

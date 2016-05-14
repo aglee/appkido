@@ -17,6 +17,6 @@
 @required
 
 /*! Returns the sort key to be used by AKSortUtils. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sortName;
+@property (readonly, copy) NSString *sortName;
 
 @end

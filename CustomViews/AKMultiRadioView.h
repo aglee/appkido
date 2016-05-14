@@ -46,7 +46,7 @@
 #pragma mark - Getters and setters
 
 /*! Returns -1 if no submatrix has a selected cell. */
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger selectedTag;
+@property (readonly) NSInteger selectedTag;
 - (BOOL)selectCellWithTag:(NSInteger)tag;
 
 #pragma mark - Action methods

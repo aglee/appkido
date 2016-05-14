@@ -86,16 +86,16 @@
  * Xcode 4.3+, this is typically but not necessarily
  * /Applications/Xcode.app/Contents/Developer.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *devToolsPath;
+@property (readonly, copy) NSString *devToolsPath;
 
 /*!
  * Subclasses must override.  Returns the directory in which we look for
  * SDKs (special directories whose names end in .sdk).
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sdkSearchPath;
+@property (readonly, copy) NSString *sdkSearchPath;
 
 /*! Returns a sorted array of strings in order of version number. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sdkVersionsThatAreCoveredByDocSets;
+@property (readonly, copy) NSArray *sdkVersionsThatAreCoveredByDocSets;
 
 
 #pragma mark - Factory methods

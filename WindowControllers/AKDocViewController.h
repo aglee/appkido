@@ -32,7 +32,7 @@
 #pragma mark - Navigation
 
 /*! Returns either the web view or the text view. */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *docView;
+@property (readonly, strong) NSView *docView;
 
 - (NSURL *)docURL;
 

@@ -34,18 +34,18 @@
                     wrap:(BOOL)wrapFlag;
 
 /*! Removes whitespace from the beginning and end of the receiver. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *ak_trimWhitespace;
+@property (readonly, copy) NSString *ak_trimWhitespace;
 
 /*!
  * Converts a string containing HTML code into a plain-text string, by stripping
  * HTML tags and converting entities to their character equivalents.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *ak_stripHTML;
+@property (readonly, copy) NSString *ak_stripHTML;
 
 /*!
  * Extracts the first word in the receiver, assuming words are separated by
  * spaces. Ignores leading and trailing whitespace in the receiver.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *ak_firstWord;
+@property (readonly, copy) NSString *ak_firstWord;
 
 @end

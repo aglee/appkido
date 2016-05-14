@@ -44,7 +44,7 @@
  * owningFramework). After that, the order of the array is the order in which it
  * was discovered that the class belongs to the framework.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesOfAllOwningFrameworks;
+@property (readonly, copy) NSArray *namesOfAllOwningFrameworks;
 
 #pragma mark - Getters and setters -- general
 

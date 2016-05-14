@@ -43,12 +43,12 @@
     NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupItem}}
 }
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) DocSetIndex *docSetIndex;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *frameworkNames;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedFrameworkNames;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *rootClasses;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allClasses;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allProtocols;
+@property (readonly, strong) DocSetIndex *docSetIndex;
+@property (readonly, copy) NSArray *frameworkNames;
+@property (readonly, copy) NSArray *sortedFrameworkNames;
+@property (readonly, copy) NSArray *rootClasses;
+@property (readonly, copy) NSArray *allClasses;
+@property (readonly, copy) NSArray *allProtocols;
 
 #pragma mark - Init/awake/dealloc
 

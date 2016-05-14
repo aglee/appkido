@@ -34,10 +34,10 @@ extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKGlobalsTopicName;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassToken *parentClassOfTopic;  //TODO: KLUDGE
+@property (readonly, strong) AKClassToken *parentClassOfTopic;  //TODO: KLUDGE
 
 /*! Returns nil if the topic is not associated with a token item. */
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKToken *topicItem;
+@property (readonly, strong) AKToken *topicItem;
 
 #pragma mark - Names for various display contexts
 

@@ -70,6 +70,6 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 - (void)includeEverythingInSearch;
 
 /*! Returns a sorted array of AKDocLocators. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *queryResults;
+@property (readonly, copy) NSArray *queryResults;
 
 @end

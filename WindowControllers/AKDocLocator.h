@@ -39,11 +39,11 @@
     id<AKDocListItem> _cachedDoc;
 }
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) AKTopic *topicToDisplay;
-@property (NS_NONATOMIC_IOSONLY, copy) NSString *subtopicName;
-@property (NS_NONATOMIC_IOSONLY, copy) NSString *docName;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) id<AKDocListItem> docToDisplay;
+@property (readonly, strong) AKTopic *topicToDisplay;
+@property (copy) NSString *subtopicName;
+@property (copy) NSString *docName;
+@property (readonly, copy) NSString *stringToDisplayInLists;
+@property (readonly, strong) id<AKDocListItem> docToDisplay;
 
 #pragma mark - Factory methods
 
