@@ -1,0 +1,42 @@
+//
+//  AKNamedObject.m
+//  AppKiDo
+//
+//  Created by Andy Lee on 5/12/16.
+//  Copyright © 2016 Andy Lee. All rights reserved.
+//
+
+#import "AKNamedObject.h"
+
+@implementation AKNamedObject
+
+#pragma mark - Init/awake/dealloc
+
+- (instancetype)initWithName:(NSString *)name
+{
+	NSParameterAssert(name != nil);
+	self = [super init];
+	if (self) {
+		_name = name;
+	}
+	return self;
+}
+
+- (instancetype)init
+{
+	return [self initWithName:nil];
+}
+
+#pragma mark - Getters and setters
+
+- (NSString *)sortName
+{
+	return self.name;
+}
+
+- (NSString *)displayName
+{
+	return self.name;
+}
+
+@end
