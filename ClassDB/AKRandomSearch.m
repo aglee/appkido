@@ -7,12 +7,9 @@
 //
 
 #import "AKRandomSearch.h"
-
 #import "DIGSLog.h"
-
 #import "AKClassToken.h"
 #import "AKDatabase.h"
-#import "AKGlobalsItem.h"
 #import "AKGroupItem.h"
 #import "AKProtocolToken.h"
 
@@ -67,7 +64,6 @@
     [self _addProtocolsToSymbolArray:allSymbols];
     [self _addProtocolMembersToSymbolArray:allSymbols];
     [self _addFunctionsToSymbolArray:allSymbols];
-    [self _addGlobalsToSymbolArray:allSymbols];
 
     // Make a random selection.
     NSUInteger randomArrayIndex = (arc4random() % allSymbols.count);
@@ -124,20 +120,6 @@
         for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
         {
             [self _addTokens:[groupItem subitems] toSymbolArray:apiSymbols];
-        }
-    }
-}
-
-- (void)_addGlobalsToSymbolArray:(NSMutableArray *)apiSymbols
-{
-    for (NSString *fwName in [_database frameworkNames])
-    {
-        for (AKGroupItem *groupItem in [_database globalsGroupsForFramework:fwName])
-        {
-            for (AKGlobalsItem *globalsItem in [groupItem subitems])
-            {
-                [apiSymbols addObjectsFromArray:[globalsItem namesOfGlobals]];
-            }
         }
     }
 }

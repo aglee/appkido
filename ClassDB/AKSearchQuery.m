@@ -6,15 +6,12 @@
  */
 
 #import "AKSearchQuery.h"
-
 #import "DIGSLog.h"
-
 #import "AKClassToken.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
 #import "AKFunctionsTopic.h"
-#import "AKGlobalsItem.h"
 #import "AKGlobalsTopic.h"
 #import "AKGroupItem.h"
 #import "AKMethodToken.h"
@@ -22,7 +19,6 @@
 #import "AKProtocolTopic.h"
 #import "AKSortUtils.h"
 #import "AKSubtopic.h"
-
 #import "NSString+AppKiDo.h"
 
 @interface AKSearchQuery ()
@@ -205,7 +201,6 @@
         if (_includesMembers) [self _searchNamesOfClassMembers];
         if (_includesMembers) [self _searchNamesOfProtocolMembers];
         if (_includesFunctions) [self _searchFunctionNames];
-        if (_includesGlobals) [self _searchNamesOfGlobals];
 
         // Sort the results.
         [AKDocLocator sortArrayOfDocLocators:_searchResults];
@@ -366,49 +361,6 @@
                 {
                     AKTopic *topic = [AKFunctionsTopic topicWithFramework:fwName
                                                                     inDatabase:_database];
-                    [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:groupItem.tokenName
-                                                              docName:subitem.tokenName]];
-                }
-            }
-        }
-    }
-}
-
-// Search the globals in each of the groups of globals for each framework.
-- (void)_searchNamesOfGlobals
-{
-    for (NSString *fwName in [_database frameworkNames])
-    {
-        for (AKGroupItem *groupItem in [_database globalsGroupsForFramework:fwName])
-        {
-            for (AKGlobalsItem *subitem in [groupItem subitems])
-            {
-                BOOL matchFound = NO;
-
-//TODO: ak_stripHTML is too expensive -- bogging down the search
-//TODO: I don't think we actually need to strip any HTML -- no token name seems to contain & or <
-//                if ([self _matchesString:[[subitem tokenName] ak_stripHTML]])
-                if ([self _matchesItem:subitem])
-                {
-                    matchFound = YES;
-                }
-                else
-                {
-                    for (NSString *globalName in [subitem namesOfGlobals])
-                    {
-                        if ([self _matchesString:globalName])
-                        {
-                            matchFound = YES;
-                            break;
-                        }
-                    }
-                }
-
-                if (matchFound)
-                {
-                    AKTopic *topic = [AKGlobalsTopic topicWithFramework:fwName
-                                                                  inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
                                                          subtopicName:groupItem.tokenName
                                                               docName:subitem.tokenName]];

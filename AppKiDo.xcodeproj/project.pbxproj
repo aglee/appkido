@@ -63,7 +63,6 @@
 		65B1098809D7B6C300A8A637 /* AKDelegateMethodDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3724060E774900ABA5E5 /* AKDelegateMethodDoc.h */; };
 		65B1098909D7B6C300A8A637 /* AKNotificationDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3733060E775600ABA5E5 /* AKNotificationDoc.h */; };
 		65B1098A09D7B6C300A8A637 /* AKSearchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362064706169C7D0007F07A /* AKSearchQuery.h */; };
-		65B1098B09D7B6C300A8A637 /* AKGlobalsItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362078A0616C02F0007F07A /* AKGlobalsItem.h */; };
 		65B1098C09D7B6C300A8A637 /* AKGroupItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B313A90617441B006C9BA7 /* AKGroupItem.h */; };
 		65B1098D09D7B6C300A8A637 /* AKGroupItemSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B315450617A3F3006C9BA7 /* AKGroupItemSubtopic.h */; };
 		65B1098F09D7B6C300A8A637 /* AKPrefConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */; };
@@ -157,7 +156,6 @@
 		65B10A0D09D7B6C300A8A637 /* AKDelegateMethodDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3725060E774900ABA5E5 /* AKDelegateMethodDoc.m */; };
 		65B10A0E09D7B6C300A8A637 /* AKNotificationDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3734060E775600ABA5E5 /* AKNotificationDoc.m */; };
 		65B10A0F09D7B6C300A8A637 /* AKSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362064806169C7D0007F07A /* AKSearchQuery.m */; };
-		65B10A1009D7B6C300A8A637 /* AKGlobalsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362078B0616C02F0007F07A /* AKGlobalsItem.m */; };
 		65B10A1109D7B6C300A8A637 /* AKGroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B313AA0617441B006C9BA7 /* AKGroupItem.m */; };
 		65B10A1209D7B6C300A8A637 /* AKGroupItemSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B315460617A3F3006C9BA7 /* AKGroupItemSubtopic.m */; };
 		65B10A1409D7B6C300A8A637 /* AKPrefConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B5BD061B6947002C95F1 /* AKPrefConstants.m */; };
@@ -407,7 +405,6 @@
 		7399B2E60E632A5C001AE672 /* AKDelegateMethodDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3724060E774900ABA5E5 /* AKDelegateMethodDoc.h */; };
 		7399B2E70E632A5C001AE672 /* AKNotificationDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 730D3733060E775600ABA5E5 /* AKNotificationDoc.h */; };
 		7399B2E80E632A5C001AE672 /* AKSearchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362064706169C7D0007F07A /* AKSearchQuery.h */; };
-		7399B2E90E632A5C001AE672 /* AKGlobalsItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7362078A0616C02F0007F07A /* AKGlobalsItem.h */; };
 		7399B2EA0E632A5C001AE672 /* AKGroupItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B313A90617441B006C9BA7 /* AKGroupItem.h */; };
 		7399B2EB0E632A5C001AE672 /* AKGroupItemSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73B315450617A3F3006C9BA7 /* AKGroupItemSubtopic.h */; };
 		7399B2ED0E632A5C001AE672 /* AKPrefConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A1B5BC061B6947002C95F1 /* AKPrefConstants.h */; };
@@ -514,7 +511,6 @@
 		7399B3790E632A5C001AE672 /* AKDelegateMethodDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3725060E774900ABA5E5 /* AKDelegateMethodDoc.m */; };
 		7399B37A0E632A5C001AE672 /* AKNotificationDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D3734060E775600ABA5E5 /* AKNotificationDoc.m */; };
 		7399B37B0E632A5C001AE672 /* AKSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362064806169C7D0007F07A /* AKSearchQuery.m */; };
-		7399B37C0E632A5C001AE672 /* AKGlobalsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7362078B0616C02F0007F07A /* AKGlobalsItem.m */; };
 		7399B37D0E632A5C001AE672 /* AKGroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B313AA0617441B006C9BA7 /* AKGroupItem.m */; };
 		7399B37E0E632A5C001AE672 /* AKGroupItemSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B315460617A3F3006C9BA7 /* AKGroupItemSubtopic.m */; };
 		7399B3800E632A5C001AE672 /* AKPrefConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1B5BD061B6947002C95F1 /* AKPrefConstants.m */; };
@@ -898,8 +894,6 @@
 		735E298316E050E600E9FBC1 /* AKDebugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKDebugging.m; path = ../Debugging/AKDebugging.m; sourceTree = "<group>"; };
 		7362064706169C7D0007F07A /* AKSearchQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKSearchQuery.h; path = ClassDB/AKSearchQuery.h; sourceTree = "<group>"; };
 		7362064806169C7D0007F07A /* AKSearchQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKSearchQuery.m; path = ClassDB/AKSearchQuery.m; sourceTree = "<group>"; };
-		7362078A0616C02F0007F07A /* AKGlobalsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKGlobalsItem.h; path = ObjC/AKGlobalsItem.h; sourceTree = "<group>"; };
-		7362078B0616C02F0007F07A /* AKGlobalsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKGlobalsItem.m; path = ObjC/AKGlobalsItem.m; sourceTree = "<group>"; };
 		7370170405FBA7B300C74AA7 /* AKLinkResolver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKLinkResolver.h; sourceTree = "<group>"; };
 		7370170505FBA7B300C74AA7 /* AKLinkResolver.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKLinkResolver.m; sourceTree = "<group>"; };
 		737405C51195B28D000BD282 /* AKSDKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSDKVersion.h; sourceTree = "<group>"; };
@@ -1230,8 +1224,6 @@
 				737F55611CE502E300376A4B /* AKNamedObject.m */,
 				73B313A90617441B006C9BA7 /* AKGroupItem.h */,
 				73B313AA0617441B006C9BA7 /* AKGroupItem.m */,
-				7362078A0616C02F0007F07A /* AKGlobalsItem.h */,
-				7362078B0616C02F0007F07A /* AKGlobalsItem.m */,
 				73C8ABB60836AF2D0000E3F7 /* database items */,
 				731D743A0E4357F000C54AD5 /* export */,
 			);
@@ -1982,7 +1974,6 @@
 				65B1098809D7B6C300A8A637 /* AKDelegateMethodDoc.h in Headers */,
 				65B1098909D7B6C300A8A637 /* AKNotificationDoc.h in Headers */,
 				65B1098A09D7B6C300A8A637 /* AKSearchQuery.h in Headers */,
-				65B1098B09D7B6C300A8A637 /* AKGlobalsItem.h in Headers */,
 				65B1098C09D7B6C300A8A637 /* AKGroupItem.h in Headers */,
 				734AEE9D1CC5E1600064AAA9 /* TokenMetainformation.h in Headers */,
 				734AEE851CC5E1600064AAA9 /* Container.h in Headers */,
@@ -2143,7 +2134,6 @@
 				7399B2E60E632A5C001AE672 /* AKDelegateMethodDoc.h in Headers */,
 				7399B2E70E632A5C001AE672 /* AKNotificationDoc.h in Headers */,
 				7399B2E80E632A5C001AE672 /* AKSearchQuery.h in Headers */,
-				7399B2E90E632A5C001AE672 /* AKGlobalsItem.h in Headers */,
 				73A7F8101CD5AEAF00E8EC85 /* _ReturnValue.h in Headers */,
 				7399B2EA0E632A5C001AE672 /* AKGroupItem.h in Headers */,
 				7399B2EB0E632A5C001AE672 /* AKGroupItemSubtopic.h in Headers */,
@@ -2484,7 +2474,6 @@
 				65B10A0D09D7B6C300A8A637 /* AKDelegateMethodDoc.m in Sources */,
 				65B10A0E09D7B6C300A8A637 /* AKNotificationDoc.m in Sources */,
 				65B10A0F09D7B6C300A8A637 /* AKSearchQuery.m in Sources */,
-				65B10A1009D7B6C300A8A637 /* AKGlobalsItem.m in Sources */,
 				65B10A1109D7B6C300A8A637 /* AKGroupItem.m in Sources */,
 				65B10A1209D7B6C300A8A637 /* AKGroupItemSubtopic.m in Sources */,
 				734AEE941CC5E1600064AAA9 /* FilePath.m in Sources */,
@@ -2638,7 +2627,6 @@
 				739719061CDC19AF0010E16A /* AKDocSetQuery.m in Sources */,
 				7399B37B0E632A5C001AE672 /* AKSearchQuery.m in Sources */,
 				73A7F80E1CD5AEAF00E8EC85 /* _Parameter.m in Sources */,
-				7399B37C0E632A5C001AE672 /* AKGlobalsItem.m in Sources */,
 				7399B37D0E632A5C001AE672 /* AKGroupItem.m in Sources */,
 				7399B37E0E632A5C001AE672 /* AKGroupItemSubtopic.m in Sources */,
 				7399B3800E632A5C001AE672 /* AKPrefConstants.m in Sources */,

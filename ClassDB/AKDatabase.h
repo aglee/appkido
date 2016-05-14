@@ -12,7 +12,6 @@
 @class AKClassToken;
 @class AKToken;
 @class AKFunctionToken;
-@class AKGlobalsItem;
 @class AKGroupItem;
 @class AKProtocolToken;
 
