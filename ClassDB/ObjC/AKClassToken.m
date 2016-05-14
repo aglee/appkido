@@ -186,6 +186,7 @@
 - (void)addDelegateMethod:(AKMethodToken *)methodToken
 {
 	self.delegateMethodsByName[methodToken.name] = methodToken;
+	methodToken.owningBehavior = self;
 }
 
 #pragma mark - Getters and setters -- notifications
@@ -203,6 +204,7 @@
 - (void)addNotification:(AKNotificationToken *)notificationToken
 {
 	self.notificationsByName[notificationToken.name] = notificationToken;
+	notificationToken.owningBehavior = self;
 }
 
 #pragma mark - AKBehaviorToken methods

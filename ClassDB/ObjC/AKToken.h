@@ -10,6 +10,7 @@
 #import "AKSortable.h"
 
 @class AKDatabase;
+@class DocSetIndex;
 
 /*!
  * Represents a named API construct, as represented by an underlying DSAToken
@@ -21,5 +22,15 @@
 @property (nonatomic, readonly) NSString *tokenName;
 @property (nonatomic, readonly) NSString *frameworkName;
 @property (nonatomic, assign) BOOL isDeprecated;
+
+/*!
+ * The string to display in the comment field at the bottom of the window.
+ * Defaults to the empty string.
+ */
+@property (copy, readonly) NSString *commentString;
+
+#pragma mark - URLs
+
+- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex;
 
 @end

@@ -9,4 +9,12 @@
 #import "AKFunctionToken.h"
 
 @implementation AKFunctionToken
+
+#pragma mark - AKNamedObject methods
+
+- (NSString *)displayName
+{
+    return [self.name stringByAppendingString:@" ( )"];
+}
+
 @end

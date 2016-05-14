@@ -7,25 +7,11 @@
 
 #import "AKMemberToken.h"
 
-/*!
- * Represents an Objective-C method. Contains the name and signature of the
- * method. Does not distinguish between class and instance methods.
- *
- * An AKMethodToken instance must belong to at most one AKBehaviorToken instance,
- * regardless of how many behaviors declare a method with the same signature.
- */
 @interface AKMethodToken : AKMemberToken
-{
-@private
-    NSMutableArray *_argumentTypes;
-}
 
 #pragma mark - Getters and setters
 
-@property (NS_NONATOMIC_IOSONLY, getter=isClassMethod, readonly) BOOL classMethod;
-
-@property (NS_NONATOMIC_IOSONLY, getter=isDelegateMethod, readonly) BOOL delegateMethod;
-
-@property (NS_NONATOMIC_IOSONLY, copy) NSArray *argumentTypes;
+/*! Currently unused. */
+@property (copy) NSArray *argumentTypes;
 
 @end

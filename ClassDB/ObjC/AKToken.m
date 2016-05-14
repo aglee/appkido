@@ -6,8 +6,8 @@
 //
 
 #import "AKToken.h"
-
 #import "DIGSLog.h"
+#import "DocSetIndex.h"
 
 @implementation AKToken
 
@@ -24,6 +24,30 @@
 {
 	//TODO: In case this is nil, try to derive framework name from path.
 	return self.tokenMO.metainformation.declaredIn.frameworkName;
+}
+
+- (NSString *)commentString
+{
+	return @"";
+}
+
+#pragma mark - URLs
+
+- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
+{
+	NSURL *baseURL = docSetIndex.documentsBaseURL;
+	NSString *relativePath = self.tokenMO.metainformation.file.path;
+	if (relativePath == nil) {
+		return nil;
+	}
+	NSURL *docURL = [baseURL URLByAppendingPathComponent:relativePath];
+	NSString *anchor = self.tokenMO.metainformation.anchor;
+	if (anchor) {
+		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:docURL resolvingAgainstBaseURL:NO];
+		urlComponents.fragment = anchor;
+		docURL = [urlComponents URL];
+	}
+	return docURL;
 }
 
 #pragma mark - AKNamedObject methods

@@ -9,5 +9,4 @@
 #import "AKMemberToken.h"
 
 @interface AKBindingToken : AKMemberToken
-
 @end

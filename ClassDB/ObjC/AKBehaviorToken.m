@@ -94,6 +94,7 @@
 					 propertyToken.name, self.name);
 	} else {
 		self.propertiesByName[propertyToken.name] = propertyToken;
+		propertyToken.owningBehavior = self;
 	}
 }
 
@@ -116,6 +117,7 @@
 					 methodToken.name, self.name);
 	} else {
 		self.classMethodsByName[methodToken.name] = methodToken;
+		methodToken.owningBehavior = self;
 	}
 }
 
@@ -133,6 +135,7 @@
 					 methodToken.name, self.name);
 	} else {
 		self.instanceMethodsByName[methodToken.name] = methodToken;
+		methodToken.owningBehavior = self;
 	}
 }
 

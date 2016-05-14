@@ -17,10 +17,7 @@
  */
 @interface AKMemberToken : AKToken
 
-@property (nonatomic, readonly, weak) AKBehaviorToken *owningBehavior;
-
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initWithName:(NSString *)name owningBehavior:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
+@property (weak) AKBehaviorToken *owningBehavior;
+@property (copy, readonly) NSString *punctuatedName;
 
 @end
