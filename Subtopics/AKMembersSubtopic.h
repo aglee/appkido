@@ -9,6 +9,10 @@
 
 @class AKBehaviorToken;
 
+/*!
+ * A subtopic presented when a class or protocol is the selected topic.
+ * Populates the doc list with members of the class or protocol.
+ */
 @interface AKMembersSubtopic : AKSubtopic
 {
 @private

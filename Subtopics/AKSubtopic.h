@@ -13,8 +13,9 @@
  * Abstract class that represents a subtopic of an AKTopic. Different kinds of
  * topic have different kinds of subtopic.
  *
- * UI notes: when a subtopic is selected in the subtopic list, the selected
- * AKSubtopic provides a list of AKNamedObjects used to populate the doc list.
+ * When a subtopic is selected in the subtopic list, the selected AKSubtopic
+ * provides a list of AKNamedObjects used to populate the doc list, via the
+ * populateDocList: method.
  */
 @interface AKSubtopic : NSObject
 
