@@ -6,14 +6,9 @@
  */
 
 #import "AKLabelTopic.h"
-
 #import "DIGSLog.h"
 
 @implementation AKLabelTopic
-
-@synthesize label = _label;
-
-#pragma mark - String constants
 
 NSString *AKClassesLabelTopicName = @":: classes ::";
 NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
@@ -22,75 +17,63 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label
 {
-    AKLabelTopic *topic = [[self alloc] init];
-
-    topic.label = label;
-
-    return topic;
+	AKLabelTopic *topic = [[self alloc] init];
+	topic.label = label;
+	return topic;
 }
-
-#pragma mark - Init/awake/dealloc
-
 
 #pragma mark - AKTopic methods
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return _label;
+	return self.label;
 }
 
 - (NSString *)pathInTopicBrowser
 {
-    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, _label];
+	return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, self.label];
 }
 
 - (BOOL)browserCellShouldBeEnabled
 {
-    return NO;
+	return NO;
 }
 
 - (BOOL)browserCellHasChildren
 {
-    return NO;
+	return NO;
 }
 
 #pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
-    if (prefDict == nil)
-    {
-        return nil;
-    }
+	if (prefDict == nil) {
+		return nil;
+	}
 
-    NSString *labelString = prefDict[AKLabelStringPrefKey];
-
-    if (labelString == nil)
-    {
-        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
-        return nil;
-    }
-    else
-    {
-        return [self topicWithLabel:labelString];
-    }
+	NSString *labelString = prefDict[AKLabelStringPrefKey];
+	if (labelString == nil) {
+		DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
+		return nil;
+	} else {
+		return [self topicWithLabel:labelString];
+	}
 }
 
 - (NSDictionary *)asPrefDictionary
 {
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
-
-    prefDict[AKTopicClassNamePrefKey] = self.className;
-    prefDict[AKLabelStringPrefKey] = _label;
-
-    return prefDict;
+	NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
+	prefDict[AKTopicClassNamePrefKey] = self.className;
+	prefDict[AKLabelStringPrefKey] = self.label;
+	return prefDict;
 }
 
 #pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
-    return _label;
+	return self.label;
 }
 
 @end

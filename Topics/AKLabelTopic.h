@@ -11,19 +11,11 @@
  * Not a real topic. Used for displaying label text in the topic browser.
  */
 @interface AKLabelTopic : AKTopic
-{
-@private
-    NSString *_label;
-}
 
-@property (nonatomic, copy) NSString *label;
-
-#pragma mark - String constants
+@property (copy) NSString *label;
 
 extern NSString *AKClassesLabelTopicName;
 extern NSString *AKOtherTopicsLabelTopicName;
-
-#pragma mark - Factory methods
 
 + (AKLabelTopic *)topicWithLabel:(NSString *)label;
 

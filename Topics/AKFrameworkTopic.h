@@ -23,8 +23,8 @@
     NSString *_topicFrameworkName;
 }
 
-@property (nonatomic, readonly, strong) AKDatabase *topicDatabase;
-@property (nonatomic, readonly, copy) NSString *topicFrameworkName;
+@property (strong, readonly) AKDatabase *topicDatabase;
+@property (copy, readonly) NSString *topicFrameworkName;
 
 #pragma mark - Factory methods
 

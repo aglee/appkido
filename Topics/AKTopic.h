@@ -14,19 +14,17 @@
 @class AKSubtopic;
 
 /*!
- * Abstract class that represents a documentation topic to which an AppKiDo
- * window can navigate. Used as the representedObject of cells in the
- * topic browser.
+ * Abstract class that represents a "topic". Used as the representedObject of
+ * cells in the topic browser.
  *
- * UI notes: when a topic is selected in the topic browser, the selected AKTopic
- * provides **child topics** for populating the next column of the browser, and
- * **subtopics** for populating the subtopics list. For example, when a class is
- * selected in the topic browser, the child topics are the class's subclasses
- * and the subtopics are "General", "Class Methods", "Instance Methods", etc.
+ * IMPORTANT TERMINOLOGY: when a topic is selected in the topic browser, the
+ * selected AKTopic provides **child topics** for populating the next column of
+ * the browser, and **subtopics** for populating the subtopics list. For
+ * example, when a class is selected in the topic browser, the **child topics**
+ * are the class's subclasses and the **subtopics** include "Class Methods",
+ * "Instance Methods", etc.
  */
 @interface AKTopic : NSObject <AKPrefDictionary, AKSortable>
-
-#pragma mark - String constants
 
 extern NSString *AKTopicBrowserPathSeparator;
 
@@ -36,45 +34,39 @@ extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKGlobalsTopicName;
 
-#pragma mark - Getters and setters
-
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKClassToken *parentClassOfTopic;  //TODO: KLUDGE
 
-/*!
- * Returns nil if the topic is not associated with a token item.
- */
+/*! Returns nil if the topic is not associated with a token item. */
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) AKToken *topicItem;
 
 #pragma mark - Names for various display contexts
 
 /*! Subclasses must override. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInTopicBrowser;
-
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInDescriptionField;
-
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringToDisplayInLists;
+@property (copy, readonly) NSString *stringToDisplayInTopicBrowser;
+@property (copy, readonly) NSString *stringToDisplayInDescriptionField;
+@property (copy, readonly) NSString *stringToDisplayInLists;
 
 #pragma mark - Populating the topic browser
 
 /*! Subclasses must override. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pathInTopicBrowser;
+@property (copy, readonly) NSString *pathInTopicBrowser;
 
 /*! Subclasses may override. Defaults to YES. */
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL browserCellShouldBeEnabled;
+@property (assign, readonly) BOOL browserCellShouldBeEnabled;
 
 /*! Subclasses may override. Defaults to YES. */
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL browserCellHasChildren;
+@property (assign, readonly) BOOL browserCellHasChildren;
 
 /*!
  * Subclasses must override if they can possibly have children. Returns array of
  * AKTopics. Note the distinction between child topics and subtopics.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *childTopics;
+@property (copy, readonly) NSArray *childTopics;
 
 #pragma mark - Subtopics
 
 /*! Subclasses must override. */
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSubtopics;
+@property (assign, readonly) NSInteger numberOfSubtopics;
 
 /*! Subclasses must override. */
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex;

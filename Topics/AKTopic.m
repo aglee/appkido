@@ -6,9 +6,7 @@
  */
 
 #import "AKTopic.h"
-
 #import "DIGSLog.h"
-
 #import "AKClassToken.h"
 #import "AKSubtopic.h"
 
@@ -17,7 +15,6 @@
 #pragma mark - String constants
 
 NSString *AKTopicBrowserPathSeparator = @"/";
-
 NSString *AKProtocolsTopicName         = @"Protocols";
 NSString *AKInformalProtocolsTopicName = @"Informal Protocols";
 NSString *AKFunctionsTopicName         = @"Functions";
@@ -27,176 +24,163 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 - (AKClassToken *)parentClassOfTopic
 {
-    return nil;
+	return nil;
 }
 
 - (AKToken *)topicItem
 {
-    return nil;
+	return nil;
 }
 
 #pragma mark - Names for various display contexts
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    DIGSLogError_MissingOverride();
-    return @"??";
+	DIGSLogError_MissingOverride();
+	return @"??";
 }
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-    return @"...";
+	return @"...";
 }
 
 - (NSString *)stringToDisplayInLists
 {
-    return [self stringToDisplayInTopicBrowser];
+	return [self stringToDisplayInTopicBrowser];
 }
 
 #pragma mark - Populating the topic browser
 
 - (NSString *)pathInTopicBrowser
 {
-    DIGSLogError_MissingOverride();
-    return nil;
+	DIGSLogError_MissingOverride();
+	return nil;
 }
 
 - (BOOL)browserCellShouldBeEnabled
 {
-    return YES;
+	return YES;
 }
 
 - (BOOL)browserCellHasChildren
 {
-    return YES;
+	return YES;
 }
 
 - (NSArray *)childTopics
 {
-    return nil;
+	return nil;
 }
 
 #pragma mark - Subtopics
 
 - (NSInteger)numberOfSubtopics
 {
-    return 0;
+	return 0;
 }
 
 - (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
 {
-    DIGSLogError_MissingOverride();
-    return nil;
+	DIGSLogError_MissingOverride();
+	return nil;
 }
 
 - (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName
 {
-    if (subtopicName == nil)
-    {
-        return -1;
-    }
+	if (subtopicName == nil) {
+		return -1;
+	}
 
-    NSInteger numSubtopics = [self numberOfSubtopics];
-    NSInteger i;
+	NSInteger numSubtopics = [self numberOfSubtopics];
+	NSInteger i;
 
-    for (i = 0; i < numSubtopics; i++)
-    {
-        AKSubtopic *subtopic = [self subtopicAtIndex:i];
+	for (i = 0; i < numSubtopics; i++) {
+		AKSubtopic *subtopic = [self subtopicAtIndex:i];
+		if ([[subtopic subtopicName] isEqualToString:subtopicName]) {
+			return i;
+		}
+	}
 
-        if ([[subtopic subtopicName] isEqualToString:subtopicName])
-        {
-            return i;
-        }
-    }
-
-    // If we got this far, the search failed.
-    return -1;
+	// If we got this far, the search failed.
+	return -1;
 }
 
 - (AKSubtopic *)subtopicWithName:(NSString *)subtopicName
 {
-    NSInteger subtopicIndex = ((subtopicName == nil)
-                               ? -1
-                               : [self indexOfSubtopicWithName:subtopicName]);
-    return ((subtopicIndex < 0)
-            ? nil
-            : [self subtopicAtIndex:subtopicIndex]);
+	NSInteger subtopicIndex = ((subtopicName == nil)
+							   ? -1
+							   : [self indexOfSubtopicWithName:subtopicName]);
+	return ((subtopicIndex < 0)
+			? nil
+			: [self subtopicAtIndex:subtopicIndex]);
 }
 
 #pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
-    if (prefDict == nil)
-    {
-        return nil;
-    }
+	if (prefDict == nil) {
+		return nil;
+	}
 
-    NSString *topicClassName = prefDict[AKTopicClassNamePrefKey];
+	NSString *topicClassName = prefDict[AKTopicClassNamePrefKey];
 
-    if (topicClassName == nil)
-    {
-        DIGSLogWarning(@"missing name of topic class");
-        return nil;
-    }
+	if (topicClassName == nil) {
+		DIGSLogWarning(@"missing name of topic class");
+		return nil;
+	}
 
-    Class topicClass = NSClassFromString(topicClassName);
-    if (topicClass == nil)
-    {
-        DIGSLogInfo(@"couldn't find a class called %@", topicClassName);
-        return nil;
-    }
-    else
-    {
-        Class cl = topicClass;
+	Class topicClass = NSClassFromString(topicClassName);
+	if (topicClass == nil) {
+		DIGSLogInfo(@"couldn't find a class called %@", topicClassName);
+		return nil;
+	} else {
+		Class cl = topicClass;
 
-        while ((cl = [cl superclass]) != nil)
-        {
-            if (cl == [AKTopic class])
-            {
-                break;
-            }
-        }
+		while ((cl = [cl superclass]) != nil) {
+			if (cl == [AKTopic class]) {
+				break;
+			}
+		}
 
-        if (cl == nil)
-        {
-            DIGSLogWarning(@"%@ is not a proper descendant class of AKTopic", topicClassName);
-            return nil;
-        }
-    }
+		if (cl == nil) {
+			DIGSLogWarning(@"%@ is not a proper descendant class of AKTopic", topicClassName);
+			return nil;
+		}
+	}
 
-    return (AKTopic *)[topicClass fromPrefDictionary:prefDict];
+	return (AKTopic *)[topicClass fromPrefDictionary:prefDict];
 }
 
 - (NSDictionary *)asPrefDictionary
 {
-    DIGSLogError_MissingOverride();
-    return nil;
+	DIGSLogError_MissingOverride();
+	return nil;
 }
 
-#pragma mark - AKSortable methods
+#pragma mark - <AKSortable> methods
 
 - (NSString *)sortName
 {
-    return [self stringToDisplayInLists];
+	return [self stringToDisplayInLists];
 }
 
 #pragma mark - NSObject methods
 
+// Compare topics by comparing their browser paths.
 - (BOOL)isEqual:(id)anObject
 {
-    if (![anObject isKindOfClass:[AKTopic class]])
-    {
-        return NO;
-    }
-
-    // Compare topics by comparing their browser paths.
-    return ([[anObject pathInTopicBrowser] isEqualToString:[self pathInTopicBrowser]]);
+	if (![anObject isKindOfClass:[AKTopic class]]) {
+		return NO;
+	}
+	NSString *otherPath = ((AKTopic *)anObject).pathInTopicBrowser;
+	return [otherPath isEqualToString:self.pathInTopicBrowser];
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: browserPath=%@>", self.className, [self pathInTopicBrowser]];
+	return [NSString stringWithFormat:@"<%@: browserPath=%@>", self.className, self.pathInTopicBrowser];
 }
 
 @end
