@@ -15,7 +15,7 @@
     // have AKBehaviorTopic instances and never need to ask for their subtopics
     // (for example in a list of search results which the user may never
     // select).
-    NSMutableArray *_subtopics;
+    NSArray *_subtopics;
 }
 
 #pragma mark - Getters and setters
@@ -26,6 +26,6 @@
 #pragma mark - Subtopics
 
 /*! Subclasses must override. For internal use only. */
-- (void)populateSubtopicsArray:(NSMutableArray *)array;
+- (NSArray *)arrayWithSubtopics;
 
 @end

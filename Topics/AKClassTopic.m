@@ -108,12 +108,7 @@
     return _classToken;
 }
 
-- (void)populateSubtopicsArray:(NSMutableArray *)array
-{
-    [array setArray:[self subtopicsArray]];
-}
-
-- (NSArray *)subtopicsArray
+- (NSArray *)arrayWithSubtopics
 {
     return @[
              [self subtopicWithName:AKGeneralSubtopicName

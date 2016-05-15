@@ -11,9 +11,6 @@
 
 @implementation AKBehaviorTopic
 
-#pragma mark - Init/awake/dealloc
-
-
 #pragma mark - Getters and setters
 
 - (NSString *)behaviorName
@@ -51,9 +48,10 @@
 
 #pragma mark - Subtopics
 
-- (void)populateSubtopicsArray:(NSMutableArray *)array
+- (NSArray *)arrayWithSubtopics
 {
     DIGSLogError_MissingOverride();
+    return nil;
 }
 
 #pragma mark - AKSortable methods
@@ -69,10 +67,8 @@
 {
     if (!_subtopics)
     {
-        _subtopics = [[NSMutableArray alloc] init];
-        [self populateSubtopicsArray:_subtopics];
+        _subtopics = [self arrayWithSubtopics];
     }
-
     return _subtopics;
 }
 
