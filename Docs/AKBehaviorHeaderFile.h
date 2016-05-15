@@ -16,5 +16,9 @@ extern NSString *AKBehaviorHeaderFileName;
  * Provides the URL for the header file in which a token is declared, if there is one.
  */
 @interface AKBehaviorHeaderFile : AKNamedObject <AKDocListItem>
+
 @property (strong) AKBehaviorToken *behaviorToken;
+
+- (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
+
 @end

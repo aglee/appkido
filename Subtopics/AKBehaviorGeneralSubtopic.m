@@ -34,7 +34,7 @@
 
 - (void)populateDocList:(NSMutableArray *)docList
 {
-    AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithName:self.behaviorToken.name];
+    AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithBehaviorToken:self.behaviorToken];
     headerFileDoc.behaviorToken = self.behaviorToken;
     [docList addObject:headerFileDoc];
 }

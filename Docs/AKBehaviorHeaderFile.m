@@ -14,6 +14,21 @@ NSString *AKBehaviorHeaderFileName = @"Header File";
 
 @implementation AKBehaviorHeaderFile
 
+- (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken
+{
+	NSParameterAssert(behaviorToken != nil);
+	NSString *relativePath = self.behaviorToken.tokenMO.metainformation.declaredIn.headerPath;
+	NSString *headerFileName = relativePath.lastPathComponent;
+	NSString *name = (headerFileName.length ? headerFileName : @"Header File");
+
+	return [super initWithName:name];
+}
+
+- (instancetype)initWithName:(NSString *)name
+{
+	return [self initWithBehaviorToken:nil];
+}
+
 //#pragma mark - AKBehaviorGeneralDoc methods
 //
 //- (NSString *)unqualifiedDocName  //TODO: Clean this up.
