@@ -624,7 +624,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 		// Update the menu item title to reflect what's currently selected in the topic browser.
 		if ([anItem isKindOfClass:[NSMenuItem class]]) {
-			NSString *topicName = [currentTopic stringToDisplayInLists];
+			NSString *topicName = [currentTopic displayName];
 			NSString *menuTitle = [NSString stringWithFormat:@"Add \"%@\" to Favorites", topicName];
 			[anItem setTitle:menuTitle];
 		}
@@ -862,7 +862,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	// Reconstruct the Back button's contextual menu.
 	for (i = _windowHistoryIndex - 1; i >= 0; i--) {
 		AKDocLocator *historyItem = _windowHistory[i];
-		NSString *menuItemName = [historyItem stringToDisplayInLists];
+		NSString *menuItemName = [historyItem displayName];
 		if (menuItemName) {
 			[_backMenu addItemWithTitle:menuItemName
 								 action:@selector(goToHistoryItemInBackMenu:)
@@ -887,7 +887,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	// Reconstruct the Forward button's contextual menu.
 	for (i = _windowHistoryIndex + 1; i < historySize; i++) {
 		AKDocLocator *historyItem = _windowHistory[i];
-		NSString *menuItemName = [historyItem stringToDisplayInLists];
+		NSString *menuItemName = [historyItem displayName];
 		[_forwardMenu addItemWithTitle:menuItemName
 								action:@selector(goToHistoryItemInForwardMenu:)
 						 keyEquivalent:@""];
@@ -947,7 +947,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	// Update miscellaneous parts of the UI that reflect our current
 	// position in history.
 	[self _refreshNavigationButtons];
-	self.window.title = [historyItem stringToDisplayInLists];
+	self.window.title = [historyItem displayName];
 }
 
 - (void)_addHistoryItem:(AKDocLocator *)newHistoryItem
@@ -986,7 +986,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 	// Any time the history changes, we want to do the following UI updates.
 	[self _refreshNavigationButtons];
-	self.window.title = [newHistoryItem stringToDisplayInLists];
+	self.window.title = [newHistoryItem displayName];
 }
 
 - (AKTopic *)_currentTopic

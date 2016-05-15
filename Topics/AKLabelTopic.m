@@ -24,7 +24,7 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 
 #pragma mark - AKTopic methods
 
-- (NSString *)stringToDisplayInTopicBrowser
+- (NSString *)name
 {
 	return self.label;
 }

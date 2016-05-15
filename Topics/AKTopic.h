@@ -35,9 +35,9 @@
 #pragma mark - Names for various display contexts
 
 /*! Subclasses must override. */
-@property (copy, readonly) NSString *stringToDisplayInTopicBrowser;
+@property (copy, readonly) NSString *name;
 @property (copy, readonly) NSString *stringToDisplayInDescriptionField;
-@property (copy, readonly) NSString *stringToDisplayInLists;
+@property (copy, readonly) NSString *displayName;
 
 #pragma mark - Populating the topic browser
 

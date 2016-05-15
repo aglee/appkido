@@ -13,7 +13,7 @@
 
 #pragma mark - AKTopic methods
 
-- (NSString *)stringToDisplayInTopicBrowser
+- (NSString *)name
 {
     DIGSLogError_MissingOverride();
     return nil;
@@ -22,10 +22,10 @@
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ %@",
-            self.topicFrameworkName, [self stringToDisplayInTopicBrowser]];
+            self.topicFrameworkName, [self name]];
 }
 
-- (NSString *)stringToDisplayInLists
+- (NSString *)displayName
 {
     return [self stringToDisplayInDescriptionField];
 }
@@ -36,7 +36,7 @@
             AKTopicBrowserPathSeparator,
             self.topicFrameworkName,
             AKTopicBrowserPathSeparator,
-            [self stringToDisplayInTopicBrowser]];
+            [self name]];
 }
 
 @end

@@ -797,7 +797,7 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
 
         // It is possible for a Favorite to be invalid if the user has
         // chosen to exclude the framework the Favorite belongs to.
-        if ([favItem stringToDisplayInLists])
+        if ([favItem displayName])
         {
             [_favoritesList addObject:favItem];
         }
@@ -849,7 +849,7 @@ static NSString *_AKVersionURL = @"http://appkido.com/AppKiDo.version";
     for (i = 0; i < numFavs; i++)
     {
         AKDocLocator *favItem = _favoritesList[i];
-        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[favItem stringToDisplayInLists]
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[favItem displayName]
                                                            action:@selector(selectDocWithDocLocatorRepresentedBy:)
                                                     keyEquivalent:@""];
 

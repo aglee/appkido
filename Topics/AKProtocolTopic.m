@@ -45,7 +45,7 @@
 
 #pragma mark - AKTopic methods
 
-- (NSString *)stringToDisplayInTopicBrowser
+- (NSString *)name
 {
     return [NSString stringWithFormat:@"<%@>", _protocolToken.name];
 }

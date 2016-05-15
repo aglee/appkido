@@ -49,7 +49,7 @@
     return _classToken.parentClass;
 }
 
-- (NSString *)stringToDisplayInTopicBrowser
+- (NSString *)name
 {
     return _classToken.name;
 }

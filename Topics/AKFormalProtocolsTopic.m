@@ -16,7 +16,7 @@
 
 #pragma mark - AKTopic methods
 
-- (NSString *)stringToDisplayInTopicBrowser
+- (NSString *)name
 {
     return AKProtocolsTopicName;
 }

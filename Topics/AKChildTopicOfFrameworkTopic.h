@@ -12,7 +12,7 @@
  * is selected in the topic browser, the next column is populated with instances
  * of AKChildTopicOfFrameworkTopic classes.
  *
- * Subclasses must implement stringToDisplayInTopicBrowser.
+ * Subclasses must implement name.
  */
 @interface AKChildTopicOfFrameworkTopic : AKFrameworkTopic
 @end

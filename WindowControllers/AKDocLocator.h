@@ -42,7 +42,7 @@
 @property (readonly, strong) AKTopic *topicToDisplay;
 @property (copy) NSString *subtopicName;
 @property (copy) NSString *docName;
-@property (readonly, copy) NSString *stringToDisplayInLists;
+@property (readonly, copy) NSString *displayName;
 @property (readonly, strong) id<AKDocListItem> docToDisplay;
 
 #pragma mark - Factory methods

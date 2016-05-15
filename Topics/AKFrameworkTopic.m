@@ -51,7 +51,7 @@
 
 #pragma mark - AKTopic methods
 
-- (NSString *)stringToDisplayInTopicBrowser
+- (NSString *)name
 {
     return _topicFrameworkName;
 }
@@ -59,7 +59,7 @@
 - (NSString *)pathInTopicBrowser
 {
     return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator,
-            [self stringToDisplayInTopicBrowser]];
+            [self name]];
 }
 
 - (NSArray *)childTopics

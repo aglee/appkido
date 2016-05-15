@@ -26,7 +26,7 @@
 
 #pragma mark - Names for various display contexts
 
-- (NSString *)stringToDisplayInTopicBrowser
+- (NSString *)name
 {
 	DIGSLogError_MissingOverride();
 	return @"??";
@@ -37,9 +37,9 @@
 	return @"...";
 }
 
-- (NSString *)stringToDisplayInLists
+- (NSString *)displayName
 {
-	return [self stringToDisplayInTopicBrowser];
+	return [self name];
 }
 
 #pragma mark - Populating the topic browser
@@ -165,7 +165,7 @@
 
 - (NSString *)sortName
 {
-	return [self stringToDisplayInLists];
+	return [self displayName];
 }
 
 #pragma mark - NSObject methods

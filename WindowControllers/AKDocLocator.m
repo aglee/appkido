@@ -77,7 +77,7 @@
 	_docName = [docName copy];
 }
 
-- (NSString *)stringToDisplayInLists
+- (NSString *)displayName
 {
 	// As described by the Character Palette:
 	//      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
@@ -87,7 +87,7 @@
 
 	if (_cachedDisplayString == nil)
 	{
-		NSString *topicName = [_topic stringToDisplayInLists];
+		NSString *topicName = [_topic displayName];
 
 		if (_subtopicName == nil)
 		{
@@ -124,7 +124,7 @@
 
 #pragma mark - Sorting
 
-// We want this to mirror the logic of -stringToDisplayInLists, which is
+// We want this to mirror the logic of -displayName, which is
 // too expensive to call directly.  That logic is:
 //      *   If a doc locator has a doc name, then the string to display
 //          (and therefore to sort on) is DocName+TopicName.

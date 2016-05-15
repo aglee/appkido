@@ -410,7 +410,7 @@ enum
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
 			row:(NSInteger)rowIndex
 {
-	return [_docLocators[rowIndex] stringToDisplayInLists];
+	return [_docLocators[rowIndex] displayName];
 }
 
 #pragma mark - NSTableView delegate methods
