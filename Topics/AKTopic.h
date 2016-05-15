@@ -69,4 +69,9 @@
 
 - (AKSubtopic *)subtopicWithName:(NSString *)subtopicName;
 
+/*! Convenience method. */
+- (AKSubtopic *)subtopicWithName:(NSString *)name
+					docListItems:(NSArray *)docListItems
+							sort:(BOOL)sort;
+
 @end

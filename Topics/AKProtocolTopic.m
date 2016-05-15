@@ -97,13 +97,18 @@
 - (NSArray *)subtopicsArray
 {
     return @[
-             [self _generalSubtopic],
-             [[AKSubtopic alloc] initWithName:AKPropertiesSubtopicName
-                                 docListItems:_protocolToken.propertyTokens],
-             [[AKSubtopic alloc] initWithName:AKClassMethodsSubtopicName
-                                 docListItems:_protocolToken.classMethodTokens],
-             [[AKSubtopic alloc] initWithName:AKInstanceMethodsSubtopicName
-                                 docListItems:_protocolToken.instanceMethodTokens],
+             [self subtopicWithName:AKGeneralSubtopicName
+                       docListItems:[self _docListItemsForGeneralSubtopic]
+                               sort:NO],
+             [self subtopicWithName:AKPropertiesSubtopicName
+                       docListItems:_protocolToken.propertyTokens
+                               sort:YES],
+             [self subtopicWithName:AKClassMethodsSubtopicName
+                       docListItems:_protocolToken.classMethodTokens
+                               sort:YES],
+             [self subtopicWithName:AKInstanceMethodsSubtopicName
+                       docListItems:_protocolToken.instanceMethodTokens
+                               sort:YES],
 
              // These subtopics are added to the list even though they don't
              // apply to protocols, only classes.  This way, if, say, "Bindings"
@@ -118,25 +123,23 @@
              // just one item with a name like "(not applicable)" or something.
              //
              //TODO: Revisit the "ALL Instance Methods" etc. feature.
-//             [[AKSubtopic alloc] initWithName:AKDelegateMethodsSubtopicName
-//                                 docListItems:nil],
-//             [[AKSubtopic alloc] initWithName:AKNotificationsSubtopicName
-//                                 docListItems:nil],
-//             [[AKSubtopic alloc] initWithName:AKBindingsSubtopicName
-//                                 docListItems:nil],
+//             [self subtopicWithName:AKDelegateMethodsSubtopicName
+//                       docListItems:nil
+//                               sort:YES],
+//             [self subtopicWithName:AKNotificationsSubtopicName
+//                       docListItems:nil
+//                               sort:YES],
+//             [self subtopicWithName:AKBindingsSubtopicName
+//                       docListItems:nil
+//                               sort:YES],
              ];
 }
 
-- (AKSubtopic *)_generalSubtopic
+- (NSArray *)_docListItemsForGeneralSubtopic
 {
     AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithBehaviorToken:_protocolToken];
 
-    NSArray *docListItems = @[
-                              headerFileDoc
-                              ];
-
-    return [[AKSubtopic alloc] initWithName:AKGeneralSubtopicName
-                               docListItems:docListItems];
+    return @[headerFileDoc];
 }
 
 #pragma mark - AKPrefDictionary methods

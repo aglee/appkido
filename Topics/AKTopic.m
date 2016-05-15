@@ -108,6 +108,16 @@
 			: [self subtopicAtIndex:subtopicIndex]);
 }
 
+- (AKSubtopic *)subtopicWithName:(NSString *)name
+					docListItems:(NSArray *)docListItems
+							sort:(BOOL)sort
+{
+	if (sort) {
+		docListItems = [AKSortUtils arrayBySortingArray:docListItems];
+	}
+	return [[AKSubtopic alloc] initWithName:name docListItems:docListItems];
+}
+
 #pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict

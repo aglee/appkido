@@ -116,32 +116,35 @@
 - (NSArray *)subtopicsArray
 {
     return @[
-             [self _generalSubtopic],
-             [[AKSubtopic alloc] initWithName:AKPropertiesSubtopicName
-                                 docListItems:_classToken.propertyTokens],
-             [[AKSubtopic alloc] initWithName:AKClassMethodsSubtopicName
-                                 docListItems:_classToken.classMethodTokens],
-             [[AKSubtopic alloc] initWithName:AKInstanceMethodsSubtopicName
-                                 docListItems:_classToken.instanceMethodTokens],
-             [[AKSubtopic alloc] initWithName:AKDelegateMethodsSubtopicName
-                                 docListItems:_classToken.documentedDelegateMethods],
-             [[AKSubtopic alloc] initWithName:AKNotificationsSubtopicName
-                                 docListItems:_classToken.documentedNotifications],
-             [[AKSubtopic alloc] initWithName:AKBindingsSubtopicName
-                                 docListItems:_classToken.documentedBindings],
+             [self subtopicWithName:AKGeneralSubtopicName
+                       docListItems:[self _docListItemsForGeneralSubtopic]
+                               sort:NO],
+             [self subtopicWithName:AKPropertiesSubtopicName
+                       docListItems:_classToken.propertyTokens
+                               sort:YES],
+             [self subtopicWithName:AKClassMethodsSubtopicName
+                       docListItems:_classToken.classMethodTokens
+                               sort:YES],
+             [self subtopicWithName:AKInstanceMethodsSubtopicName
+                       docListItems:_classToken.instanceMethodTokens
+                               sort:YES],
+             [self subtopicWithName:AKDelegateMethodsSubtopicName
+                       docListItems:_classToken.documentedDelegateMethods
+                               sort:YES],
+             [self subtopicWithName:AKNotificationsSubtopicName
+                       docListItems:_classToken.documentedNotifications
+                               sort:YES],
+             [self subtopicWithName:AKBindingsSubtopicName
+                       docListItems:_classToken.documentedBindings
+                               sort:YES],
              ];
 }
 
-- (AKSubtopic *)_generalSubtopic
+- (NSArray *)_docListItemsForGeneralSubtopic
 {
     AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithBehaviorToken:_classToken];
 
-    NSArray *docListItems = @[
-                              headerFileDoc
-                              ];
-
-    return [[AKSubtopic alloc] initWithName:AKGeneralSubtopicName
-                               docListItems:docListItems];
+    return @[headerFileDoc];
 }
 
 #pragma mark - AKPrefDictionary methods
