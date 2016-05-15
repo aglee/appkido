@@ -21,7 +21,11 @@ NSString *AKBehaviorHeaderFileName = @"Header File";
 	NSString *headerFileName = relativePath.lastPathComponent;
 	NSString *name = (headerFileName.length ? headerFileName : @"Header File");
 
-	return [super initWithName:name];
+	self = [super initWithName:name];
+	if (self) {
+		_behaviorToken = behaviorToken;
+	}
+	return self;
 }
 
 - (instancetype)initWithName:(NSString *)name
