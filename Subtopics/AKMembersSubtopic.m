@@ -9,74 +9,47 @@
 #import "DIGSLog.h"
 #import "AKClassToken.h"
 #import "AKProtocolToken.h"
-#import "AKMethodToken.h"
+#import "AKMemberToken.h"
+
+@interface AKMembersSubtopic ()
+@property (strong) AKBehaviorToken *behaviorToken;
+@property (assign) BOOL includesAncestors;
+@end
 
 @implementation AKMembersSubtopic
 
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initIncludingAncestors:(BOOL)includeAncestors
-{
-	self = [super init];
-	if (self) {
-		_includesAncestors = includeAncestors;
-	}
-	return self;
-}
-
-- (instancetype)init
-{
-	DIGSLogError_NondesignatedInitializer();
-	return [self initIncludingAncestors:NO];
-}
-
-#pragma mark - Getters and setters
-
-- (BOOL)includesAncestors
-{
-	return _includesAncestors;
-}
-
-- (AKBehaviorToken *)behaviorToken
-{
-	DIGSLogError_MissingOverride();
-	return nil;
-}
-
+// What kind of members do we want -- class methods, instance methods, etc.?
 - (NSArray *)memberTokensForBehavior:(AKBehaviorToken *)behaviorToken
 {
 	DIGSLogError_MissingOverride();
 	return nil;
 }
 
-#pragma mark - AKSubtopic methods
-
 - (NSArray *)arrayWithDocListItems
 {
 	NSMutableArray *docList = [NSMutableArray array];
-	NSDictionary *methodTokensByName = [self _subtopicMethodsByName];
-	NSArray *sortedMethodNames = [methodTokensByName.allKeys
-								  sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-	for (NSString *methodName in sortedMethodNames) {
-		[docList addObject:methodTokensByName[methodName]];
+	NSDictionary *memberTokensByName = [self _subtopicMembersByName];
+	NSArray *sortedMemberNames = [memberTokensByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	for (NSString *memberName in sortedMemberNames) {
+		[docList addObject:memberTokensByName[memberName]];
 	}
 	return docList;
 }
 
 #pragma mark - Private methods
 
-// Get a list of all behaviors that declare methods we want to
-// include in our doc list.
-- (NSArray *)_ancestorItemsWeCareAbout
+// Get a list of all behaviors, including self.behaviorToken, that have members
+// we want to include.
+- (NSArray *)_ancestorBehaviorsWeCareAbout
 {
 	if (self.behaviorToken == nil) {
 		return @[];
 	}
 
-	// Get a list of all behaviors that declare methods we want to list.
+	// Get a list of all behaviors that declare members we want to list.
 	NSMutableArray *ancestorItems = [NSMutableArray arrayWithObject:self.behaviorToken];
 
-	if (_includesAncestors) {
+	if (self.includesAncestors) {
 		// Add superclasses to the list.  We will check nearest
 		// superclasses first.
 		if (self.behaviorToken.isClassToken) {
@@ -94,21 +67,21 @@
 	return ancestorItems;
 }
 
-- (NSDictionary *)_subtopicMethodsByName
+- (NSDictionary *)_subtopicMembersByName
 {
-	// Match each inherited method name to the ancestor we get it from.
+	// Match each inherited member name to the ancestor we get it from.
 	// Because of the order in which we traverse ancestors, the
-	// the *earliest* ancestor that implements each method is what will
+	// the *earliest* ancestor that has each member is what will
 	// remain in the dictionary.
-	NSMutableDictionary *methodsByName = [NSMutableDictionary dictionary];
+	NSMutableDictionary *membersByName = [NSMutableDictionary dictionary];
 
-	for (AKBehaviorToken *ancestorItem in [self _ancestorItemsWeCareAbout]) {
-		for (AKMethodToken *methodToken in [self memberTokensForBehavior:ancestorItem]) {
-			methodsByName[methodToken.name] = methodToken;
+	for (AKBehaviorToken *ancestorItem in [self _ancestorBehaviorsWeCareAbout]) {
+		for (AKMemberToken *memberToken in [self memberTokensForBehavior:ancestorItem]) {
+			membersByName[memberToken.name] = memberToken;
 		}
 	}
 	
-	return methodsByName;
+	return membersByName;
 }
 
 @end

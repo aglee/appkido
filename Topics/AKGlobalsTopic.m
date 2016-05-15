@@ -6,10 +6,9 @@
  */
 
 #import "AKGlobalsTopic.h"
-
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
-#import "AKGlobalsGroupSubtopic.h"
+//#import "AKGlobalsGroupSubtopic.h"
 #import "AKGroupItem.h"
 
 @implementation AKGlobalsTopic
@@ -42,9 +41,10 @@
     }
     else
     {
-        AKGroupItem *groupItem = groupItems[subtopicIndex];
-
-        return [[AKGlobalsGroupSubtopic alloc] initWithGroupItem:groupItem];
+//        AKGroupItem *groupItem = groupItems[subtopicIndex];
+//
+//        return [[AKGlobalsGroupSubtopic alloc] initWithGroupItem:groupItem];
+        return nil;  //TODO: Clean this up.
     }
 }
 

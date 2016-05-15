@@ -5,52 +5,33 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import <Foundation/Foundation.h>
+#import "AKNamedObject.h"
+#import "AKSubtopicConstants.h"
 
 @protocol AKDocListItem;
 
 /*!
- * Abstract class that represents a subtopic of an AKTopic. Different kinds of
- * topic have different kinds of subtopic.
+ * Used for items in the subtopic list.  When a subtopic is selected, the
+ * selected AKSubtopic provides a list of docListItems that will be used to
+ * populate the doc list.
  *
- * When a subtopic is selected in the subtopic list, the selected AKSubtopic
- * provides a list of AKDocListItems used to populate the doc list, via the
- * arrayWithDocListItems method.
+ * Note that .displayName is redeclared as readwrite, so it can be set
+ * separately from .name.  It defaults to .name.
  */
-@interface AKSubtopic : NSObject
+@interface AKSubtopic : AKNamedObject
 
-#pragma mark - AKXyzSubtopicName
+@property (copy) NSString *displayName;
+@property (copy, readonly) NSArray *docListItems;
 
-// Names of subtopics that are listed when the topic is a class or protocol.
-extern NSString *AKGeneralSubtopicName;
-extern NSString *AKPropertiesSubtopicName;
-extern NSString *AKAllPropertiesSubtopicName;
-extern NSString *AKClassMethodsSubtopicName;
-extern NSString *AKAllClassMethodsSubtopicName;
-extern NSString *AKInstanceMethodsSubtopicName;
-extern NSString *AKAllInstanceMethodsSubtopicName;
-extern NSString *AKDelegateMethodsSubtopicName;
-extern NSString *AKAllDelegateMethodsSubtopicName;
-extern NSString *AKNotificationsSubtopicName;
-extern NSString *AKAllNotificationsSubtopicName;
-extern NSString *AKBindingsSubtopicName;
-extern NSString *AKAllBindingsSubtopicName;
+#pragma mark - Init/awake/dealloc
 
-/*! Subclasses must override. */
-@property (copy, readonly) NSString *subtopicName;
-@property (copy, readonly) NSString *stringToDisplayInSubtopicList;
-@property (assign, readonly) NSInteger numberOfDocs;
+- (instancetype)initWithName:(NSString *)name docListItems:(NSArray *)docListItems NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Docs
 
-- (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex;
-
 /*! Returns -1 if none found. */
 - (NSInteger)indexOfDocWithName:(NSString *)docName;
-
+- (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex;
 - (id<AKDocListItem>)docWithName:(NSString *)docName;
-
-/*! Subclasses must override. For internal use only. */
-- (NSArray *)arrayWithDocListItems;
 
 @end

@@ -27,42 +27,35 @@
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-	self = [super initWithNibName:@"DocListView" windowController:windowController];
-	if (self) {
-	}
-	return self;
+	return [super initWithNibName:@"DocListView" windowController:windowController];
 }
 
 #pragma mark - Getters and setters
 
 - (NSString *)docComment
 {
-	NSInteger docIndex = _docListTable.selectedRow;
-	if (docIndex < 0) {
-		return @"";
-	} else {
-		id<AKDocListItem> doc = [_subtopic docAtIndex:docIndex];
-		return doc.commentString;
-	}
+	NSInteger docIndex = self.docListTable.selectedRow;
+	return (docIndex < 0
+			? @""
+			: [self.subtopic docAtIndex:docIndex].commentString);
 }
 
 #pragma mark - Navigation
 
 - (void)focusOnDocListTable
 {
-	(void)[_docListTable.window makeFirstResponder:_docListTable];
+	(void)[self.docListTable.window makeFirstResponder:self.docListTable];
 }
 
 #pragma mark - Action methods
 
+// Tell the window to select the doc at the selected index.
 - (IBAction)doDocListTableAction:(id)sender
 {
-	NSInteger selectedRow = _docListTable.selectedRow;
-	NSString *docName = ((selectedRow < 0)
+	NSInteger selectedRow = self.docListTable.selectedRow;
+	NSString *docName = (selectedRow < 0
 						 ? nil
-						 : [_subtopic docAtIndex:selectedRow].name);
-
-	// Tell the main window to select the doc at the selected index.
+						 : [self.subtopic docAtIndex:selectedRow].name);
 	[self.owningWindowController selectDocWithName:docName];
 }
 
@@ -81,10 +74,10 @@
 	//TODO: make Class Description interchangeable with Protocol Description
 
 	// Reload the doc list table.
-	[_docListTable reloadData];
+	[self.docListTable reloadData];
 
 	NSInteger docIndex = -1;
-	if ([_subtopic numberOfDocs] == 0) {
+	if (self.subtopic.docListItems.count == 0) {
 		// Modify whereTo.
 		[whereTo setDocName:nil];
 	} else {
@@ -93,20 +86,19 @@
 		if (docName == nil) {
 			docIndex = 0;
 		} else {
-			docIndex = [_subtopic indexOfDocWithName:docName];
+			docIndex = [self.subtopic indexOfDocWithName:docName];
 			if (docIndex < 0) {
 				docIndex = 0;
 			}
 		}
 
 		// Select the doc at that index.
-		[_docListTable scrollRowToVisible:docIndex];
-		[_docListTable selectRowIndexes:[NSIndexSet indexSetWithIndex:docIndex]
+		[self.docListTable scrollRowToVisible:docIndex];
+		[self.docListTable selectRowIndexes:[NSIndexSet indexSetWithIndex:docIndex]
 				   byExtendingSelection:NO];
 
 		// Modify whereTo.
-		AKNamedObject *docToDisplay = [_subtopic docAtIndex:docIndex];
-		whereTo.docName = docToDisplay.name;
+		whereTo.docName = [self.subtopic docAtIndex:docIndex].name;
 	}
 }
 
@@ -114,7 +106,7 @@
 
 - (void)applyUserPreferences
 {
-	[_docListTable applyListFontPrefs];
+	[self.docListTable applyListFontPrefs];
 }
 
 #pragma mark - NSUserInterfaceValidations methods
@@ -128,12 +120,12 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	return [_subtopic numberOfDocs];
+	return self.subtopic.docListItems.count;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [_subtopic docAtIndex:rowIndex].displayName;
+	return [self.subtopic docAtIndex:rowIndex].displayName;
 }
 
 @end

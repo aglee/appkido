@@ -6,20 +6,14 @@
  */
 
 #import "AKProtocolTopic.h"
-
 #import "DIGSLog.h"
-
-#import "AKFrameworkConstants.h"
-#import "AKDatabase.h"
-#import "AKProtocolToken.h"
-
 #import "AKAppDelegate.h"
-#import "AKProtocolGeneralSubtopic.h"
-#import "AKPropertiesSubtopic.h"
-#import "AKClassMethodsSubtopic.h"
-#import "AKInstanceMethodsSubtopic.h"
-#import "AKDelegateMethodsSubtopic.h"
-#import "AKNotificationsSubtopic.h"
+#import "AKBehaviorHeaderFile.h"
+#import "AKDatabase.h"
+#import "AKFrameworkConstants.h"
+#import "AKProtocolToken.h"
+#import "AKSubtopic.h"
+#import "AKSubtopicConstants.h"
 
 @implementation AKProtocolTopic
 
@@ -97,19 +91,52 @@
 
 - (void)populateSubtopicsArray:(NSMutableArray *)array
 {
-    [array setArray:(@[
-                     [AKProtocolGeneralSubtopic subtopicForProtocolToken:_protocolToken],
-                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:NO],
-//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
-                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:NO],
-//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
-                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:NO],
-//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_protocolToken includeAncestors:YES],
-                     [AKDelegateMethodsSubtopic subtopicForClassToken:nil includeAncestors:NO],
-//                     [AKDelegateMethodsSubtopic subtopicForClassToken:nil includeAncestors:YES],
-                     [AKNotificationsSubtopic subtopicForClassToken:nil includeAncestors:NO],
-//                     [AKNotificationsSubtopic subtopicForClassToken:nil includeAncestors:YES],
-                     ])];
+    [array setArray:[self subtopicsArray]];
+}
+
+- (NSArray *)subtopicsArray
+{
+    return @[
+             [self _generalSubtopic],
+             [[AKSubtopic alloc] initWithName:AKPropertiesSubtopicName
+                                 docListItems:_protocolToken.propertyTokens],
+             [[AKSubtopic alloc] initWithName:AKClassMethodsSubtopicName
+                                 docListItems:_protocolToken.classMethodTokens],
+             [[AKSubtopic alloc] initWithName:AKInstanceMethodsSubtopicName
+                                 docListItems:_protocolToken.instanceMethodTokens],
+
+             // These subtopics are added to the list even though they don't
+             // apply to protocols, only classes.  This way, if, say, "Bindings"
+             // is selected, and the user navigates from a class to a protocol
+             // and then to a class, the "Bindings" subtopic stays selected
+             // because it was always on the list.  The idea is to keep as much
+             // as possible the same as the user navigates around.
+             //
+             //TODO: Revisit this.  I'm thinking maybe this makes it look like
+             // protocols can have bindings, etc. (or that I *think* they can),
+             // when they can't.  One option would be to have a doc list with
+             // just one item with a name like "(not applicable)" or something.
+             //
+             //TODO: Revisit the "ALL Instance Methods" etc. feature.
+//             [[AKSubtopic alloc] initWithName:AKDelegateMethodsSubtopicName
+//                                 docListItems:nil],
+//             [[AKSubtopic alloc] initWithName:AKNotificationsSubtopicName
+//                                 docListItems:nil],
+//             [[AKSubtopic alloc] initWithName:AKBindingsSubtopicName
+//                                 docListItems:nil],
+             ];
+}
+
+- (AKSubtopic *)_generalSubtopic
+{
+    AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithBehaviorToken:_protocolToken];
+
+    NSArray *docListItems = @[
+                              headerFileDoc
+                              ];
+
+    return [[AKSubtopic alloc] initWithName:AKGeneralSubtopicName
+                               docListItems:docListItems];
 }
 
 #pragma mark - AKPrefDictionary methods

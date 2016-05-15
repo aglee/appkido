@@ -97,7 +97,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 
 	for (i = 0; i < numSubtopics; i++) {
 		AKSubtopic *subtopic = [self subtopicAtIndex:i];
-		if ([[subtopic subtopicName] isEqualToString:subtopicName]) {
+		if ([[subtopic name] isEqualToString:subtopicName]) {
 			return i;
 		}
 	}

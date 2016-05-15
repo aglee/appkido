@@ -8,16 +8,12 @@
 #import "AKClassTopic.h"
 #import "DIGSLog.h"
 #import "AKAppDelegate.h"
-#import "AKBindingsSubtopic.h"
-#import "AKClassMethodsSubtopic.h"
-#import "AKClassGeneralSubtopic.h"
+#import "AKBehaviorHeaderFile.h"
 #import "AKClassToken.h"
 #import "AKDatabase.h"
-#import "AKDelegateMethodsSubtopic.h"
-#import "AKInstanceMethodsSubtopic.h"
-#import "AKNotificationsSubtopic.h"
-#import "AKPropertiesSubtopic.h"
 #import "AKSortUtils.h"
+#import "AKSubtopic.h"
+#import "AKSubtopicConstants.h"
 
 @implementation AKClassTopic
 
@@ -114,21 +110,38 @@
 
 - (void)populateSubtopicsArray:(NSMutableArray *)array
 {
-    [array setArray:(@[
-                     [AKClassGeneralSubtopic subtopicForClassToken:_classToken],
-                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classToken includeAncestors:NO],
-//                     [AKPropertiesSubtopic subtopicForBehaviorToken:_classToken includeAncestors:YES],
-                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:NO],
-//                     [AKClassMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:YES],
-                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:NO],
-//                     [AKInstanceMethodsSubtopic subtopicForBehaviorToken:_classToken includeAncestors:YES],
-                     [AKDelegateMethodsSubtopic subtopicForClassToken:_classToken includeAncestors:NO],
-//                     [AKDelegateMethodsSubtopic subtopicForClassToken:_classToken includeAncestors:YES],
-                     [AKNotificationsSubtopic subtopicForClassToken:_classToken includeAncestors:NO],
-//                     [AKNotificationsSubtopic subtopicForClassToken:_classToken includeAncestors:YES],
-                     [AKBindingsSubtopic subtopicForClassToken:_classToken includeAncestors:NO],
-//                     [AKBindingsSubtopic subtopicForClassToken:_classToken includeAncestors:YES],
-                     ])];
+    [array setArray:[self subtopicsArray]];
+}
+
+- (NSArray *)subtopicsArray
+{
+    return @[
+             [self _generalSubtopic],
+             [[AKSubtopic alloc] initWithName:AKPropertiesSubtopicName
+                                 docListItems:_classToken.propertyTokens],
+             [[AKSubtopic alloc] initWithName:AKClassMethodsSubtopicName
+                                 docListItems:_classToken.classMethodTokens],
+             [[AKSubtopic alloc] initWithName:AKInstanceMethodsSubtopicName
+                                 docListItems:_classToken.instanceMethodTokens],
+             [[AKSubtopic alloc] initWithName:AKDelegateMethodsSubtopicName
+                                 docListItems:_classToken.documentedDelegateMethods],
+             [[AKSubtopic alloc] initWithName:AKNotificationsSubtopicName
+                                 docListItems:_classToken.documentedNotifications],
+             [[AKSubtopic alloc] initWithName:AKBindingsSubtopicName
+                                 docListItems:_classToken.documentedBindings],
+             ];
+}
+
+- (AKSubtopic *)_generalSubtopic
+{
+    AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithBehaviorToken:_classToken];
+
+    NSArray *docListItems = @[
+                              headerFileDoc
+                              ];
+
+    return [[AKSubtopic alloc] initWithName:AKGeneralSubtopicName
+                               docListItems:docListItems];
 }
 
 #pragma mark - AKPrefDictionary methods

@@ -6,7 +6,6 @@
  */
 
 #import "AKSubtopicListViewController.h"
-
 #import "AKBehaviorTopic.h"
 #import "AKDocLocator.h"
 #import "AKBehaviorHeaderFile.h"
@@ -66,7 +65,7 @@
     NSInteger selectedRow = _subtopicsTable.selectedRow;
     NSString *newSubtopicName = ((selectedRow < 0)
                                  ? nil
-                                 : [_subtopics[selectedRow] subtopicName]);
+                                 : [_subtopics[selectedRow] name]);
 
     // Tell the main window to select the subtopic at the selected index.
     [self.owningWindowController selectSubtopicWithName:newSubtopicName];
@@ -190,7 +189,7 @@
         // Modify whereTo.
         AKSubtopic *subtopic = _subtopics[subtopicIndex];
 
-        whereTo.subtopicName = [subtopic subtopicName];
+        whereTo.subtopicName = [subtopic name];
     }
 }
 
@@ -243,7 +242,7 @@
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
             row:(NSInteger)rowIndex
 {
-    return [_subtopics[rowIndex] stringToDisplayInSubtopicList];
+    return [_subtopics[rowIndex] displayName];
 }
 
 #pragma mark - NSTableView delegate methods
@@ -256,8 +255,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     if ([aCell isKindOfClass:[NSBrowserCell class]])
     {
         AKSubtopic *subtopic = _subtopics[rowIndex];
-
-        [aCell setLeaf:([subtopic numberOfDocs] == 0)];
+        [aCell setLeaf:(subtopic.docListItems.count == 0)];
     }
 }
 

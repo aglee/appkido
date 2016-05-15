@@ -6,10 +6,9 @@
  */
 
 #import "AKFunctionsTopic.h"
-
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
-#import "AKFunctionsGroupSubtopic.h"
+//#import "AKFunctionsGroupSubtopic.h"
 
 @implementation AKFunctionsTopic
 
@@ -42,9 +41,10 @@
     }
     else
     {
-        AKGroupItem *groupItem = groupItems[subtopicIndex];
-
-        return [[AKFunctionsGroupSubtopic alloc] initWithGroupItem:groupItem];
+//        AKGroupItem *groupItem = groupItems[subtopicIndex];
+//
+//        return [[AKFunctionsGroupSubtopic alloc] initWithGroupItem:groupItem];
+        return nil;  //TODO: Clean this up.
     }
 }
 
