@@ -12,14 +12,6 @@
 
 @implementation AKTopic
 
-#pragma mark - String constants
-
-NSString *AKTopicBrowserPathSeparator = @"/";
-NSString *AKProtocolsTopicName         = @"Protocols";
-NSString *AKInformalProtocolsTopicName = @"Informal Protocols";
-NSString *AKFunctionsTopicName         = @"Functions";
-NSString *AKGlobalsTopicName           = @"Types & Constants";
-
 #pragma mark - Getters and setters
 
 - (AKClassToken *)parentClassOfTopic

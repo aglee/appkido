@@ -8,6 +8,7 @@
 #import "AKSortable.h"
 #import "AKPrefDictionary.h"
 #import "AKPrefUtils.h"
+#import "AKTopicConstants.h"
 
 @class AKClassToken;
 @class AKToken;
@@ -25,14 +26,6 @@
  * "Instance Methods", etc.
  */
 @interface AKTopic : NSObject <AKPrefDictionary, AKSortable>
-
-extern NSString *AKTopicBrowserPathSeparator;
-
-// Names displayed in the topic browser for certain types of topics.
-extern NSString *AKProtocolsTopicName;
-extern NSString *AKInformalProtocolsTopicName;
-extern NSString *AKFunctionsTopicName;
-extern NSString *AKGlobalsTopicName;
 
 @property (readonly, strong) AKClassToken *parentClassOfTopic;  //TODO: KLUDGE
 
