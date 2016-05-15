@@ -42,4 +42,11 @@
 	return self.name;
 }
 
+#pragma mark - NSObject methods
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@: name=%@>", self.className, self.name];
+}
+
 @end
