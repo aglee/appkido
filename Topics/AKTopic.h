@@ -36,8 +36,8 @@ extern NSString *AKGlobalsTopicName;
 
 @property (readonly, strong) AKClassToken *parentClassOfTopic;  //TODO: KLUDGE
 
-/*! Returns nil if the topic is not associated with a token item. */
-@property (readonly, strong) AKToken *topicItem;
+/*! May be nil. */
+@property (readonly, strong) AKToken *topicToken;
 
 #pragma mark - Names for various display contexts
 

@@ -84,7 +84,7 @@
     return _protocolToken.name;
 }
 
-- (AKToken *)topicItem
+- (AKToken *)topicToken
 {
     return _protocolToken;
 }

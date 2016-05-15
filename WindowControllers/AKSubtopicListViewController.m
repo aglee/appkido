@@ -225,7 +225,7 @@
     {
         AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
         return ([currentTopic isKindOfClass:[AKBehaviorTopic class]]
-                && ([currentTopic topicItem].tokenMO.metainformation.declaredIn.headerPath != nil));
+                && ([currentTopic topicToken].tokenMO.metainformation.declaredIn.headerPath != nil));
     }
 
     return NO;

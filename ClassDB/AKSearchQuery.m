@@ -314,7 +314,7 @@
 
 - (void)_searchMembersUnderBehaviorTopic:(AKBehaviorTopic *)behaviorTopic
 {
-    AKBehaviorToken *behaviorToken = (AKBehaviorToken *)[behaviorTopic topicItem];
+    AKBehaviorToken *behaviorToken = (AKBehaviorToken *)[behaviorTopic topicToken];
 
     // Search the behavior's properties.
     [self _searchTokens:[behaviorToken propertyTokens]

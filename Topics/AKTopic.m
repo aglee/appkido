@@ -27,7 +27,7 @@ NSString *AKGlobalsTopicName           = @"Types & Constants";
 	return nil;
 }
 
-- (AKToken *)topicItem
+- (AKToken *)topicToken
 {
 	return nil;
 }
