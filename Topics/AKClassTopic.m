@@ -55,13 +55,13 @@
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return _classToken.tokenName;
+    return _classToken.name;
 }
 
 - (NSString *)stringToDisplayInDescriptionField
 {
     return [NSString stringWithFormat:@"%@ class %@",
-            _classToken.frameworkName, _classToken.tokenName];
+            _classToken.frameworkName, _classToken.name];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -71,13 +71,13 @@
         return nil;
     }
 
-    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classToken.tokenName];
+    NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:_classToken.name];
     AKClassToken *classToken = _classToken;
 
     while ((classToken = classToken.parentClass))
     {
         path = [AKTopicBrowserPathSeparator stringByAppendingString:
-                [classToken.tokenName stringByAppendingString:path]];
+                [classToken.name stringByAppendingString:path]];
     }
 
     return path;
@@ -104,7 +104,7 @@
 
 - (NSString *)behaviorName
 {
-    return _classToken.tokenName;
+    return _classToken.name;
 }
 
 - (AKToken *)topicItem

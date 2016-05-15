@@ -33,7 +33,7 @@
 
 - (NSString *)subtopicName
 {
-	return self.groupItem.tokenName;
+	return self.groupItem.name;
 }
 
 - (void)populateDocList:(NSMutableArray *)docList

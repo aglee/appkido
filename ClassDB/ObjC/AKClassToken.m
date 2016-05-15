@@ -53,7 +53,7 @@
 	// work around the typo in the Tiger docs where the superclass of
 	// NSAnimation was given as NSAnimation.
 	if (classToken == self) {
-		DIGSLogDebug(@"ignoring attempt to make %@ a subclass of itself", [self tokenName]);
+		DIGSLogDebug(@"ignoring attempt to make %@ a subclass of itself", self.name);
 		return;
 	}
 
@@ -91,7 +91,7 @@
 - (AKCategoryToken *)categoryNamed:(NSString *)catName
 {
 	for (AKToken *item in _categoryTokens) {
-		if ([item.tokenName isEqualToString:catName]) {
+		if ([item.name isEqualToString:catName]) {
 			return (AKCategoryToken *)item;
 		}
 	}
@@ -225,11 +225,6 @@
 }
 
 #pragma mark - AKToken methods
-
-- (NSString *)tokenName
-{
-	return super.tokenName ?: self.fallbackTokenName;
-}
 
 - (void)setMainFrameworkName:(NSString *)frameworkName  //TODO: Fix the multiple-frameworks thing for class items.
 {

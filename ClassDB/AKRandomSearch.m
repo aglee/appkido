@@ -77,7 +77,7 @@
 {
     for (AKToken *item in itemsToAdd)
     {
-        [apiSymbols addObject:item.tokenName];
+        [apiSymbols addObject:item.name];
     }
 }
 

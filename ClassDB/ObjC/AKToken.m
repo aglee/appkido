@@ -13,11 +13,6 @@
 
 #pragma mark - Getters and setters
 
-- (NSString *)tokenName
-{
-	return self.tokenMO.tokenName;
-}
-
 - (NSString *)frameworkName
 {
 	//TODO: In case this is nil, try to derive framework name from path.
@@ -52,7 +47,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: name=%@>", self.className, self.tokenName];
+	return [NSString stringWithFormat:@"<%@: name=%@>", self.className, self.name];
 }
 
 @end

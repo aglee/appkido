@@ -94,9 +94,4 @@
 - (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Fix the multi-frameworkness of class items.
 
 
-#pragma mark - KLUDGES
-
-@property (copy) NSString *fallbackTokenName;
-
-
 @end

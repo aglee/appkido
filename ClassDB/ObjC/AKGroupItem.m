@@ -42,7 +42,7 @@
 {
     for (AKToken *subitem in _subitems)
     {
-        if ([subitem.tokenName isEqualToString:tokenName])
+        if ([subitem.name isEqualToString:tokenName])
         {
             return subitem;
         }

@@ -682,7 +682,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
 	// See if the class has an instance method with a name like setXXXDelegate:.
 	for (AKMethodToken *methodToken in [classToken instanceMethodTokens]) {
-		NSString *methodName = methodToken.tokenName;
+		NSString *methodName = methodToken.name;
 		if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"]) {
 			return YES;
 		}
@@ -690,14 +690,14 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	// See if the class has a property named "delegate" or "xxxDelegate".
 	for (AKPropertyToken *propertyToken in [classToken propertyTokens]) {
-		NSString *propertyName = propertyToken.tokenName;
+		NSString *propertyName = propertyToken.name;
 		if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"]) {
 			return YES;
 		}
 	}
 
 	// See if there's a protocol named ThisClassDelegate.
-	NSString *delegateProtocolName = [classToken.tokenName stringByAppendingString:@"Delegate"];
+	NSString *delegateProtocolName = [classToken.name stringByAppendingString:@"Delegate"];
 	if ([[self.owningWindowController database] protocolWithName:delegateProtocolName]) {
 		return YES;
 	}
@@ -737,7 +737,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}
 
 	// See if there's a protocol named ThisClassDataSource.
-	NSString *dataSourceProtocolName = [classToken.tokenName stringByAppendingString:@"DataSource"];
+	NSString *dataSourceProtocolName = [classToken.name stringByAppendingString:@"DataSource"];
 	if ([[self.owningWindowController database] protocolWithName:dataSourceProtocolName]) {
 		return YES;
 	}
@@ -757,7 +757,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 		for (AKProtocolToken *protocolToken in [[self.owningWindowController database] allProtocols])
 		{
-			if ([protocolToken.tokenName ak_contains:@"DataSource"])
+			if ([protocolToken.name ak_contains:@"DataSource"])
 			{
 				[protocolTokens addObject:protocolToken];
 			}

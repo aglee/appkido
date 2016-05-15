@@ -254,7 +254,7 @@
 
 - (BOOL)_matchesItem:(AKToken *)token
 {
-    return [self _matchesString:token.tokenName];
+    return [self _matchesString:token.name];
 }
 
 - (void)_searchClassNames
@@ -362,8 +362,8 @@
                     AKTopic *topic = [AKFunctionsTopic topicWithFramework:fwName
                                                                     inDatabase:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:groupItem.tokenName
-                                                              docName:subitem.tokenName]];
+                                                         subtopicName:groupItem.name
+                                                              docName:subitem.name]];
                 }
             }
         }
@@ -380,7 +380,7 @@
         {
             [_searchResults addObject:[AKDocLocator withTopic:topic
                                                  subtopicName:subtopicName
-                                                      docName:item.tokenName]];
+                                                      docName:item.name]];
         }
     }
 }

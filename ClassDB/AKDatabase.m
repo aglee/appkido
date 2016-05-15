@@ -117,7 +117,7 @@
 - (void)addProtocolToken:(AKProtocolToken *)protocolToken
 {
 	// Do nothing if we already have a protocol with the same name.
-	NSString *protocolName = protocolToken.tokenName;
+	NSString *protocolName = protocolToken.name;
 	if (_protocolTokensByName[protocolName]) {
 		DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
 		return;
@@ -158,13 +158,13 @@
 	}
 
 	// Add the functions group if it isn't already in the framework.
-	NSString *groupName = groupItem.tokenName;
+	NSString *groupName = groupItem.name;
 
 	if (groupsByName[groupName]) {
 		DIGSLogWarning(@"Trying to add functions group [%@] again", groupName);
 	} else {
 		[groupList addObject:groupItem];
-		groupsByName[groupItem.tokenName] = groupItem;
+		groupsByName[groupItem.name] = groupItem;
 	}
 }
 
@@ -200,13 +200,13 @@
 	}
 
 	// Add the globals group if it isn't already in the framework.
-	NSString *groupName = groupItem.tokenName;
+	NSString *groupName = groupItem.name;
 
 	if (groupsByName[groupName]) {
 		DIGSLogWarning(@"Trying to add globals group [%@] again", groupName);
 	} else {
 		[groupList addObject:groupItem];
-		groupsByName[groupItem.tokenName] = groupItem;
+		groupsByName[groupItem.name] = groupItem;
 	}
 }
 

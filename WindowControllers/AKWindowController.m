@@ -812,7 +812,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
 	return [NSString stringWithFormat:(@"Go to superclass (%@)"
 									   @"\n(Control-click or right-click for menu)"),
-			[[self _currentTopic] parentClassOfTopic].tokenName];
+			[[self _currentTopic] parentClassOfTopic].name];
 }
 
 - (void)_refreshNavigationButtons
@@ -840,7 +840,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	// Reconstruct the Superclass button's contextual menu.
 	AKClassToken *ancestorItem = parentClass;
 	while (ancestorItem != nil) {
-		[_superclassesMenu addItemWithTitle:ancestorItem.tokenName
+		[_superclassesMenu addItemWithTitle:ancestorItem.name
 									 action:@selector(selectAncestorClass:)
 							  keyEquivalent:@""];
 		ancestorItem = ancestorItem.parentClass;

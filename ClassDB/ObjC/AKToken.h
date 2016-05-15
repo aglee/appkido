@@ -16,7 +16,6 @@
 @interface AKToken : AKNamedObject <AKDocListItem>
 
 @property (nonatomic, strong) DSAToken *tokenMO;
-@property (nonatomic, readonly) NSString *tokenName;
 @property (nonatomic, readonly) NSString *frameworkName;
 @property (nonatomic, assign) BOOL isDeprecated;
 

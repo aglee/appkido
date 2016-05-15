@@ -102,7 +102,7 @@
 
 	for (AKBehaviorToken *ancestorItem in [self _ancestorItemsWeCareAbout]) {
 		for (AKMethodToken *methodToken in [self memberTokensForBehavior:ancestorItem]) {
-			methodsByName[methodToken.tokenName] = methodToken;
+			methodsByName[methodToken.name] = methodToken;
 		}
 	}
 	

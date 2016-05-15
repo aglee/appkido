@@ -53,7 +53,7 @@
 
 - (NSString *)stringToDisplayInTopicBrowser
 {
-    return [NSString stringWithFormat:@"<%@>", _protocolToken.tokenName];
+    return [NSString stringWithFormat:@"<%@>", _protocolToken.name];
 }
 
 - (NSString *)stringToDisplayInDescriptionField
@@ -63,7 +63,7 @@
                               : @"%@ protocol <%@>");
 
     return [NSString stringWithFormat:stringFormat,
-            _protocolToken.frameworkName, _protocolToken.tokenName];
+            _protocolToken.frameworkName, _protocolToken.name];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -75,7 +75,7 @@
     return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
             AKTopicBrowserPathSeparator, _protocolToken.frameworkName,
             AKTopicBrowserPathSeparator, whichProtocols,
-            AKTopicBrowserPathSeparator, _protocolToken.tokenName];
+            AKTopicBrowserPathSeparator, _protocolToken.name];
 }
 
 - (BOOL)browserCellHasChildren
@@ -87,7 +87,7 @@
 
 - (NSString *)behaviorName
 {
-    return _protocolToken.tokenName;
+    return _protocolToken.name;
 }
 
 - (AKToken *)topicItem

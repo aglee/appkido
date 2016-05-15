@@ -101,7 +101,6 @@
 	AKClassToken *classToken = self.classTokensByName[className];
 	if (classToken == nil) {
 		classToken = [[AKClassToken alloc] initWithName:className];
-		classToken.fallbackTokenName = className;
 		self.classTokensByName[className] = classToken;
 		//QLog(@"+++ class '%@', no token yet", classToken.tokenName);
 	}
@@ -111,11 +110,11 @@
 - (void)_fillInParentClassOfClassToken:(AKClassToken *)classToken
 {
 	if (classToken.parentClass) {
-		QLog(@"+++ Item for class %@ already has parent class %@", classToken.tokenName, classToken.parentClass.tokenName);
+		QLog(@"+++ Item for class %@ already has parent class %@", classToken.name, classToken.parentClass.name);
 		return;
 	}
 	if (classToken.tokenMO.superclassContainers.count > 1) {
-		QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classToken.tokenName);
+		QLog(@"%s [ODD] Unexpected multiple inheritance for class %@", __PRETTY_FUNCTION__, classToken.name);
 	}
 	Container *container = classToken.tokenMO.superclassContainers.anyObject;
 	if (container) {
