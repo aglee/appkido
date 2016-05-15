@@ -51,14 +51,16 @@
 
 #pragma mark - AKSubtopic methods
 
-- (void)populateDocList:(NSMutableArray *)docList
+- (NSArray *)arrayWithDocListItems
 {
+	NSMutableArray *docList = [NSMutableArray array];
 	NSDictionary *methodTokensByName = [self _subtopicMethodsByName];
 	NSArray *sortedMethodNames = [methodTokensByName.allKeys
 								  sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	for (NSString *methodName in sortedMethodNames) {
 		[docList addObject:methodTokensByName[methodName]];
 	}
+	return docList;
 }
 
 #pragma mark - Private methods

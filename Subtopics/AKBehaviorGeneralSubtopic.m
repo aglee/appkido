@@ -32,11 +32,10 @@
     return [self subtopicName];
 }
 
-- (void)populateDocList:(NSMutableArray *)docList
+- (NSArray *)arrayWithDocListItems
 {
     AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithBehaviorToken:self.behaviorToken];
-    headerFileDoc.behaviorToken = self.behaviorToken;
-    [docList addObject:headerFileDoc];
+    return @[headerFileDoc];
 }
 
 @end

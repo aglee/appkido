@@ -36,9 +36,9 @@
 	return self.groupItem.name;
 }
 
-- (void)populateDocList:(NSMutableArray *)docList
+- (NSArray *)arrayWithDocListItems
 {
-	[docList addObjectsFromArray:[AKSortUtils arrayBySortingArray:self.groupItem.subitems]];
+	return [AKSortUtils arrayBySortingArray:self.groupItem.subitems];
 }
 
 @end

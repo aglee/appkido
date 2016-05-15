@@ -50,9 +50,7 @@ NSString *AKAllBindingsSubtopicName        = @"ALL Bindings";
 {
 	// Lazy loading.
 	if (_docList == nil) {
-		NSMutableArray *arrayOfDocs = [[NSMutableArray alloc] init];
-		[self populateDocList:arrayOfDocs];
-		_docList = arrayOfDocs;
+		_docList = [self arrayWithDocListItems];
 	}
 	return _docList;
 }
@@ -98,9 +96,10 @@ NSString *AKAllBindingsSubtopicName        = @"ALL Bindings";
 	return (docIndex < 0) ? nil : [self docAtIndex:docIndex];
 }
 
-- (void)populateDocList:(NSMutableArray *)docList
+- (NSArray *)arrayWithDocListItems
 {
 	DIGSLogError_MissingOverride();
+	return nil;
 }
 
 #pragma mark - NSObject methods

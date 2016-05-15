@@ -15,7 +15,7 @@
  *
  * When a subtopic is selected in the subtopic list, the selected AKSubtopic
  * provides a list of AKDocListItems used to populate the doc list, via the
- * populateDocList: method.
+ * arrayWithDocListItems method.
  */
 @interface AKSubtopic : NSObject
 
@@ -36,16 +36,12 @@ extern NSString *AKAllNotificationsSubtopicName;
 extern NSString *AKBindingsSubtopicName;
 extern NSString *AKAllBindingsSubtopicName;
 
-#pragma mark - Getters and setters
-
 /*! Subclasses must override. */
 @property (copy, readonly) NSString *subtopicName;
-
 @property (copy, readonly) NSString *stringToDisplayInSubtopicList;
+@property (assign, readonly) NSInteger numberOfDocs;
 
 #pragma mark - Docs
-
-@property (assign, readonly) NSInteger numberOfDocs;
 
 - (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex;
 
@@ -55,6 +51,6 @@ extern NSString *AKAllBindingsSubtopicName;
 - (id<AKDocListItem>)docWithName:(NSString *)docName;
 
 /*! Subclasses must override. For internal use only. */
-- (void)populateDocList:(NSMutableArray *)docList;
+- (NSArray *)arrayWithDocListItems;
 
 @end
