@@ -6,7 +6,6 @@
  */
 
 #import "AKGroupItemSubtopic.h"
-
 #import "AKGroupItem.h"
 
 @implementation AKGroupItemSubtopic
@@ -17,26 +16,29 @@
 
 - (instancetype)initWithGroupItem:(AKGroupItem *)groupItem
 {
-    if ((self = [super init]))
-    {
-        _groupItem = groupItem;
-    }
-
-    return self;
+	self = [super init];
+	if (self) {
+		_groupItem = groupItem;
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithGroupItem:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithGroupItem:nil];
 }
-
 
 #pragma mark - AKSubtopic methods
 
 - (NSString *)subtopicName
 {
-    return _groupItem.tokenName;
+	return self.groupItem.tokenName;
+}
+
+- (void)populateDocList:(NSMutableArray *)docList
+{
+	[docList addObjectsFromArray:[AKSortUtils arrayBySortingArray:self.groupItem.subitems]];
 }
 
 @end

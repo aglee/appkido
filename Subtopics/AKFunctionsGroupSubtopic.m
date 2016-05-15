@@ -6,16 +6,6 @@
  */
 
 #import "AKFunctionsGroupSubtopic.h"
-#import "AKGroupItem.h"
-#import "AKSortUtils.h"
 
 @implementation AKFunctionsGroupSubtopic
-
-#pragma mark - AKSubtopic methods
-
-- (void)populateDocList:(NSMutableArray *)docList
-{
-	[docList addObjectsFromArray:[AKSortUtils arrayBySortingArray:[self.groupItem subitems]]];
-}
-
 @end

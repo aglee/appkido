@@ -923,7 +923,7 @@
 		73B313A90617441B006C9BA7 /* AKGroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKGroupItem.h; path = ClassDB/ObjC/AKGroupItem.h; sourceTree = "<group>"; };
 		73B313AA0617441B006C9BA7 /* AKGroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKGroupItem.m; path = ClassDB/ObjC/AKGroupItem.m; sourceTree = "<group>"; };
 		73B315450617A3F3006C9BA7 /* AKGroupItemSubtopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGroupItemSubtopic.h; sourceTree = "<group>"; };
-		73B315460617A3F3006C9BA7 /* AKGroupItemSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGroupItemSubtopic.m; sourceTree = "<group>"; };
+		73B315460617A3F3006C9BA7 /* AKGroupItemSubtopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGroupItemSubtopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		73B3182F09ED63E1009BA8E6 /* AppKiDo.sdef */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.sdef; path = AppKiDo.sdef; sourceTree = "<group>"; };
 		73B502561CE7AF68009D1BE5 /* AKDocListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDocListItem.h; path = ClassDB/AKDocListItem.h; sourceTree = "<group>"; };
 		73B502591CE7B1F6009D1BE5 /* AKNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKNamed.h; path = ClassDB/AKNamed.h; sourceTree = "<group>"; };
