@@ -8,13 +8,4 @@
 #import "AKTopic.h"
 
 @interface AKBehaviorTopic : AKTopic
-
-/*! Subclasses must override. */
-@property (copy, readonly) NSString *behaviorName;
-
-#pragma mark - Subtopics
-
-/*! Subclasses must override. For internal use only. */
-- (NSArray *)arrayWithSubtopics;
-
 @end

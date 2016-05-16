@@ -33,7 +33,7 @@
 @property (readonly, weak) AKClassToken *parentClass;
 @property (readonly, copy) NSArray *childClasses;
 @property (readonly, copy) NSSet *descendantClasses;
-@property (readonly) BOOL hasChildClasses;
+//@property (readonly) BOOL hasChildClasses;
 @property (readonly, copy) NSArray *allCategories;
 @property (readonly, copy) NSArray *documentedDelegateMethods;
 @property (readonly, copy) NSArray *documentedNotifications;

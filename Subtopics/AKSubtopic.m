@@ -31,7 +31,7 @@
 	return [self initWithName:name docListItems:nil];
 }
 
-#pragma mark - <AKSubtopicListItem> methods
+#pragma mark - Accessing doc list items
 
 - (NSInteger)indexOfDocWithName:(NSString *)docName
 {
@@ -39,11 +39,8 @@
 		return -1;
 	}
 
-	NSInteger numDocs = self.docListItems.count;
-	NSInteger i;
-	for (i = 0; i < numDocs; i++) {
-		id<AKDocListItem> doc = self.docListItems[i];
-		if ([doc.name isEqualToString:docName]) {
+	for (NSUInteger i = 0; i < self.docListItems.count; i++) {
+		if ([[self docAtIndex:i].name isEqualToString:docName]) {
 			return i;
 		}
 	}

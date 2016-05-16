@@ -17,21 +17,12 @@
  * childTopics to return instances of AKChildTopicOfFrameworkTopic.
  */
 @interface AKFrameworkTopic : AKTopic
-{
-@private
-    AKDatabase *_topicDatabase;
-    NSString *_topicFrameworkName;
-}
 
-@property (strong, readonly) AKDatabase *topicDatabase;
-@property (copy, readonly) NSString *topicFrameworkName;
-
-#pragma mark - Factory methods
-
-+ (AKFrameworkTopic *)topicWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)database;
+@property (strong, readonly) AKDatabase *database;
+@property (copy, readonly) NSString *frameworkName;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFramework:(NSString *)frameworkName database:(AKDatabase *)database NS_DESIGNATED_INITIALIZER;
 
 @end

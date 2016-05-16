@@ -6,37 +6,31 @@
  */
 
 #import "AKChildTopicOfFrameworkTopic.h"
-
 #import "DIGSLog.h"
 
 @implementation AKChildTopicOfFrameworkTopic
 
 #pragma mark - AKTopic methods
 
-- (NSString *)name
-{
-    DIGSLogError_MissingOverride();
-    return nil;
-}
-
 - (NSString *)stringToDisplayInDescriptionField
 {
-    return [NSString stringWithFormat:@"%@ %@",
-            self.topicFrameworkName, [self name]];
-}
-
-- (NSString *)displayName
-{
-    return [self stringToDisplayInDescriptionField];
+	return [NSString stringWithFormat:@"%@ %@", self.frameworkName, self.name];
 }
 
 - (NSString *)pathInTopicBrowser
 {
-    return [NSString stringWithFormat:@"%@%@%@%@",
-            AKTopicBrowserPathSeparator,
-            self.topicFrameworkName,
-            AKTopicBrowserPathSeparator,
-            [self name]];
+	return [NSString stringWithFormat:@"%@%@%@%@",
+			AKTopicBrowserPathSeparator,
+			self.frameworkName,
+			AKTopicBrowserPathSeparator,
+			self.name];
+}
+
+#pragma mark - <AKNamed> methods
+
+- (NSString *)displayName
+{
+	return [self stringToDisplayInDescriptionField];
 }
 
 @end

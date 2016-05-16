@@ -21,7 +21,7 @@
 	return self;
 }
 
-#pragma mark - <AKTopicBrowserItem> methods
+#pragma mark - AKTopic methods
 
 - (NSString *)pathInTopicBrowser
 {
@@ -31,11 +31,6 @@
 - (BOOL)browserCellShouldBeEnabled
 {
 	return NO;
-}
-
-- (BOOL)browserCellShouldBeLeaf
-{
-	return YES;
 }
 
 #pragma mark - AKPrefDictionary methods
@@ -57,10 +52,8 @@
 
 - (NSDictionary *)asPrefDictionary
 {
-	NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
-	prefDict[AKTopicClassNamePrefKey] = self.className;
-	prefDict[AKLabelStringPrefKey] = self.label;
-	return prefDict;
+	return @{ AKTopicClassNamePrefKey: self.className,
+			  AKLabelStringPrefKey: self.label };
 }
 
 #pragma mark - <AKNamed> methods

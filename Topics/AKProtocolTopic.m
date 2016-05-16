@@ -10,7 +10,6 @@
 #import "AKAppDelegate.h"
 #import "AKBehaviorHeaderFile.h"
 #import "AKDatabase.h"
-#import "AKFrameworkConstants.h"
 #import "AKProtocolToken.h"
 #import "AKSubtopicConstants.h"
 
@@ -26,6 +25,7 @@
 
 - (instancetype)initWithProtocolToken:(AKProtocolToken *)protocolToken
 {
+	NSParameterAssert(protocolToken != nil);
 	self = [super init];
 	if (self) {
 		_protocolToken = protocolToken;
@@ -41,9 +41,9 @@
 
 #pragma mark - AKTopic methods
 
-- (NSString *)name
+- (AKToken *)topicToken
 {
-	return [NSString stringWithFormat:@"<%@>", self.protocolToken.name];
+	return self.protocolToken;
 }
 
 - (NSString *)stringToDisplayInDescriptionField
@@ -66,38 +66,21 @@
 			AKTopicBrowserPathSeparator, self.protocolToken.name];
 }
 
-- (BOOL)browserCellShouldBeLeaf
-{
-	return YES;
-}
-
-#pragma mark - AKBehaviorTopic methods
-
-- (NSString *)behaviorName
-{
-	return self.protocolToken.name;
-}
-
-- (AKToken *)topicToken
-{
-	return self.protocolToken;
-}
-
-- (NSArray *)arrayWithSubtopics
+- (NSArray *)_arrayWithSubtopics
 {
 	return @[
-			 [self subtopicWithName:AKGeneralSubtopicName
-					   docListItems:[self _docListItemsForGeneralSubtopic]
-							   sort:NO],
-			 [self subtopicWithName:AKPropertiesSubtopicName
-					   docListItems:self.protocolToken.propertyTokens
-							   sort:YES],
-			 [self subtopicWithName:AKClassMethodsSubtopicName
-					   docListItems:self.protocolToken.classMethodTokens
-							   sort:YES],
-			 [self subtopicWithName:AKInstanceMethodsSubtopicName
-					   docListItems:self.protocolToken.instanceMethodTokens
-							   sort:YES],
+			 AKCreateSubtopic(AKGeneralSubtopicName,
+							  [self _docListItemsForGeneralSubtopic],
+							  NO),
+			 AKCreateSubtopic(AKPropertiesSubtopicName,
+							  self.protocolToken.propertyTokens,
+							  YES),
+			 AKCreateSubtopic(AKClassMethodsSubtopicName,
+							  self.protocolToken.classMethodTokens,
+							  YES),
+			 AKCreateSubtopic(AKInstanceMethodsSubtopicName,
+							  self.protocolToken.instanceMethodTokens,
+							  YES),
 
  // These subtopics are added to the list even though they don't
  // apply to protocols, only classes.  This way, if, say, "Bindings"
@@ -112,16 +95,17 @@
  // just one item with a name like "(not applicable)" or something.
  //
  //TODO: Revisit the "ALL Instance Methods" etc. feature.
- //             [self subtopicWithName:AKDelegateMethodsSubtopicName
- //                       docListItems:nil
- //                               sort:YES],
- //             [self subtopicWithName:AKNotificationsSubtopicName
- //                       docListItems:nil
- //                               sort:YES],
- //             [self subtopicWithName:AKBindingsSubtopicName
- //                       docListItems:nil
- //                               sort:YES],
+//              AKCreateSubtopic(AKDelegateMethodsSubtopicName, nil, YES),
+//              AKCreateSubtopic(AKNotificationsSubtopicName, nil, YES),
+//              AKCreateSubtopic(AKBindingsSubtopicName, nil, YES),
 			 ];
+}
+
+#pragma mark - <AKNamed> methods
+
+- (NSString *)name
+{
+	return [NSString stringWithFormat:@"<%@>", self.protocolToken.name];
 }
 
 #pragma mark - AKPrefDictionary methods

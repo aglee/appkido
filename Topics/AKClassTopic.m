@@ -42,20 +42,14 @@
 
 #pragma mark - AKTopic methods
 
+- (AKToken *)topicToken
+{
+	return self.classToken;
+}
+
 - (AKClassToken *)parentClassOfTopic
 {
 	return self.classToken.parentClass;
-}
-
-- (NSString *)name
-{
-	return self.classToken.name;
-}
-
-- (NSString *)stringToDisplayInDescriptionField
-{
-	return [NSString stringWithFormat:@"%@ class %@",
-			self.classToken.frameworkName, self.classToken.name];
 }
 
 - (NSString *)pathInTopicBrowser
@@ -75,12 +69,13 @@
 	return path;
 }
 
-- (BOOL)browserCellShouldBeLeaf
+- (NSString *)stringToDisplayInDescriptionField
 {
-	return !(self.classToken.hasChildClasses);
+	return [NSString stringWithFormat:@"%@ class %@",
+			self.classToken.frameworkName, self.classToken.name];
 }
 
-- (NSArray *)childTopics
+- (NSArray *)_arrayWithChildTopics
 {
 	NSMutableArray *columnValues = [NSMutableArray array];
 
@@ -92,46 +87,41 @@
 	return columnValues;
 }
 
-#pragma mark - AKBehaviorTopic methods
+- (NSArray *)_arrayWithSubtopics
+{
+	return @[
+			 AKCreateSubtopic(AKGeneralSubtopicName,
+							  [self _docListItemsForGeneralSubtopic],
+							  NO),
+			 AKCreateSubtopic(AKPropertiesSubtopicName,
+							  self.classToken.propertyTokens,
+							  YES),
+			 AKCreateSubtopic(AKClassMethodsSubtopicName,
+							  self.classToken.classMethodTokens,
+							  YES),
+			 AKCreateSubtopic(AKInstanceMethodsSubtopicName,
+							  self.classToken.instanceMethodTokens,
+							  YES),
+			 AKCreateSubtopic(AKDelegateMethodsSubtopicName,
+							  self.classToken.documentedDelegateMethods,
+							  YES),
+			 AKCreateSubtopic(AKNotificationsSubtopicName,
+							  self.classToken.documentedNotifications,
+							  YES),
+			 AKCreateSubtopic(AKBindingsSubtopicName,
+							  self.classToken.documentedBindings,
+							  YES),
+			 ];
+}
 
-- (NSString *)behaviorName
+#pragma mark - <AKNamed> methods
+
+- (NSString *)name
 {
 	return self.classToken.name;
 }
 
-- (AKToken *)topicToken
-{
-	return self.classToken;
-}
-
-- (NSArray *)arrayWithSubtopics
-{
-	return @[
-			 [self subtopicWithName:AKGeneralSubtopicName
-					   docListItems:[self _docListItemsForGeneralSubtopic]
-							   sort:NO],
-			 [self subtopicWithName:AKPropertiesSubtopicName
-					   docListItems:self.classToken.propertyTokens
-							   sort:YES],
-			 [self subtopicWithName:AKClassMethodsSubtopicName
-					   docListItems:self.classToken.classMethodTokens
-							   sort:YES],
-			 [self subtopicWithName:AKInstanceMethodsSubtopicName
-					   docListItems:self.classToken.instanceMethodTokens
-							   sort:YES],
-			 [self subtopicWithName:AKDelegateMethodsSubtopicName
-					   docListItems:self.classToken.documentedDelegateMethods
-							   sort:YES],
-			 [self subtopicWithName:AKNotificationsSubtopicName
-					   docListItems:self.classToken.documentedNotifications
-							   sort:YES],
-			 [self subtopicWithName:AKBindingsSubtopicName
-					   docListItems:self.classToken.documentedBindings
-							   sort:YES],
-			 ];
-}
-
-#pragma mark - AKPrefDictionary methods
+#pragma mark - <AKPrefDictionary> methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {

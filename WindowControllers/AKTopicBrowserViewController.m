@@ -215,7 +215,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     [cell setRepresentedObject:topic];
     [cell setTitle:topic.name];
     [cell setEnabled:topic.browserCellShouldBeEnabled];
-    [cell setLeaf:topic.browserCellShouldBeLeaf];
+    [cell setLeaf:(topic.childTopics.count == 0)];
 }
 
 - (BOOL)browser:(NSBrowser *)sender isColumnValid:(NSInteger)column
@@ -307,7 +307,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
     for (NSString *fwName in [db sortedFrameworkNames])
     {
-        [columnValues addObject:[AKFrameworkTopic topicWithFramework:fwName inDatabase:db]];
+        [columnValues addObject:[[AKFrameworkTopic alloc] initWithFramework:fwName database:db]];
     }
 
     [_topicListsForBrowserColumns addObject:columnValues];

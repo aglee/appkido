@@ -15,8 +15,8 @@
 @class AKProtocolToken;
 
 /*!
- * Abstract class. Represents an API construct that can have methods.  Concrete
- * subclasses include AKClassToken, AKProtocolToken, and AKCategoryToken.
+ * Abstract class. Represents an API construct that can have properties and
+ * methods, i.e. a protocol, class, or category.
  *
  * Note: unlike other database items, class and protocol items can be
  * initialized with nil as their owning framework name. The reason is that when

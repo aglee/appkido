@@ -7,50 +7,37 @@
 
 #import "AKGlobalsTopic.h"
 #import "AKDatabase.h"
-#import "AKSortUtils.h"
-//#import "AKGlobalsGroupSubtopic.h"
 #import "AKGroupItem.h"
+#import "AKSortUtils.h"
 
 @implementation AKGlobalsTopic
 
 #pragma mark - AKTopic methods
 
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
+{
+	if (subtopicIndex < 0) {
+		return nil;
+	}
+
+	NSArray *groupItems = [AKSortUtils arrayBySortingArray:[self.database globalsGroupsForFramework:self.frameworkName]];
+
+
+	if ((NSUInteger)subtopicIndex >= groupItems.count) {
+		return nil;
+	} else {
+//		AKGroupItem *groupItem = groupItems[subtopicIndex];
+//
+//		return [[AKGlobalsGroupSubtopic alloc] initWithGroupItem:groupItem];
+		return nil;  //TODO: Clean this up.
+	}
+}
+
+#pragma mark - <AKNamed> methods
+
 - (NSString *)name
 {
-    return AKGlobalsTopicName;
-}
-
-- (NSInteger)numberOfSubtopics
-{
-    return [self.topicDatabase globalsGroupsForFramework:self.topicFrameworkName].count;
-}
-
-- (id<AKSubtopicListItem>)subtopicAtIndex:(NSInteger)subtopicIndex
-{
-    if (subtopicIndex < 0)
-    {
-        return nil;
-    }
-
-    NSArray *groupItems = [AKSortUtils arrayBySortingArray:[self.topicDatabase globalsGroupsForFramework:self.topicFrameworkName]];
-
-
-    if ((unsigned)subtopicIndex >= groupItems.count)
-    {
-        return nil;
-    }
-    else
-    {
-//        AKGroupItem *groupItem = groupItems[subtopicIndex];
-//
-//        return [[AKGlobalsGroupSubtopic alloc] initWithGroupItem:groupItem];
-        return nil;  //TODO: Clean this up.
-    }
-}
-
-- (BOOL)browserCellShouldBeLeaf
-{
-    return YES;
+	return AKGlobalsTopicName;
 }
 
 @end

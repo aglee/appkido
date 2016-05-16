@@ -6,7 +6,6 @@
  */
 
 #import "AKFormalProtocolsTopic.h"
-
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
 #import "AKProtocolToken.h"
@@ -16,22 +15,23 @@
 
 #pragma mark - AKTopic methods
 
-- (NSString *)name
+- (NSArray *)_arrayWithChildTopics
 {
-    return AKProtocolsTopicName;
+	NSMutableArray *columnValues = [NSMutableArray array];
+	NSArray *formalProtocols = [self.database formalProtocolsForFramework:self.frameworkName];
+
+	for (AKProtocolToken *protocolToken in formalProtocols) {
+		[columnValues addObject:[[AKProtocolTopic alloc] initWithProtocolToken:protocolToken]];
+	}
+
+	return [AKSortUtils arrayBySortingArray:columnValues];
 }
 
-- (NSArray *)childTopics
+#pragma mark - <AKNamed> methods
+
+- (NSString *)name
 {
-    NSMutableArray *columnValues = [NSMutableArray array];
-    NSArray *formalProtocols = [self.topicDatabase formalProtocolsForFramework:self.topicFrameworkName];
-
-    for (AKProtocolToken *protocolToken in formalProtocols)
-    {
-        [columnValues addObject:[[AKProtocolTopic alloc] initWithProtocolToken:protocolToken]];
-    }
-
-    return [AKSortUtils arrayBySortingArray:columnValues];
+	return AKProtocolsTopicName;
 }
 
 @end

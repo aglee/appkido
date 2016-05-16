@@ -359,8 +359,8 @@
             {
                 if ([self _matchesItem:subitem])
                 {
-                    AKTopic *topic = [AKFunctionsTopic topicWithFramework:fwName
-                                                                    inDatabase:_database];
+                    AKTopic *topic = [[AKFunctionsTopic alloc] initWithFramework:fwName
+                                                                        database:_database];
                     [_searchResults addObject:[AKDocLocator withTopic:topic
                                                          subtopicName:groupItem.name
                                                               docName:subitem.name]];

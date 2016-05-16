@@ -12,33 +12,19 @@
 
 @implementation AKTopic
 
-#pragma mark - Convenience method
+@synthesize childTopics = _childTopics;
+@synthesize subtopics = _subtopics;
 
-- (AKSubtopic *)subtopicWithName:(NSString *)name
-					docListItems:(NSArray *)docListItems
-							sort:(BOOL)sort
-{
-	if (sort) {
-		docListItems = [AKSortUtils arrayBySortingArray:docListItems];
-	}
-	return [[AKSubtopic alloc] initWithName:name docListItems:docListItems];
-}
-
-#pragma mark - <AKTopicBrowserItem> methods
-
-- (AKClassToken *)parentClassOfTopic
-{
-	return nil;
-}
+#pragma mark - Getters and setters
 
 - (AKToken *)topicToken
 {
 	return nil;
 }
 
-- (NSString *)stringToDisplayInDescriptionField
+- (AKClassToken *)parentClassOfTopic
 {
-	return @"...";
+	return nil;
 }
 
 - (NSString *)pathInTopicBrowser
@@ -47,25 +33,35 @@
 	return nil;
 }
 
+- (NSString *)stringToDisplayInDescriptionField
+{
+	return @"...";
+}
+
 - (BOOL)browserCellShouldBeEnabled
 {
 	return YES;
 }
 
-- (BOOL)browserCellShouldBeLeaf
-{
-	return NO;
-}
-
 - (NSArray *)childTopics
 {
-	return nil;
+	// Lazy loading.
+	if (_childTopics == nil) {
+		_childTopics = [self _arrayWithChildTopics];
+	}
+	return _childTopics;
 }
 
-- (NSInteger)numberOfSubtopics
+- (NSArray *)subtopics
 {
-	return 0;
+	// Lazy loading.
+	if (_subtopics == nil) {
+		_subtopics = [self _arrayWithSubtopics];
+	}
+	return _subtopics;
 }
+
+#pragma mark - Accessing subtopics
 
 - (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName
 {
@@ -73,12 +69,8 @@
 		return -1;
 	}
 
-	NSInteger numSubtopics = [self numberOfSubtopics];
-	NSInteger i;
-
-	for (i = 0; i < numSubtopics; i++) {
-		AKSubtopic *subtopic = [self subtopicAtIndex:i];
-		if ([subtopic.name isEqualToString:subtopicName]) {
+	for (NSUInteger i = 0; i < self.subtopics.count; i++) {
+		if ([[self subtopicAtIndex:i].name isEqualToString:subtopicName]) {
 			return i;
 		}
 	}
@@ -87,21 +79,22 @@
 	return -1;
 }
 
-- (id<AKSubtopicListItem>)subtopicAtIndex:(NSInteger)subtopicIndex
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
 {
-	DIGSLogError_MissingOverride();
-	return nil;
+	return self.subtopics[subtopicIndex];
 }
 
-- (id<AKSubtopicListItem>)subtopicWithName:(NSString *)subtopicName
+- (AKSubtopic *)subtopicWithName:(NSString *)subtopicName
 {
 	NSInteger subtopicIndex = ((subtopicName == nil)
 							   ? -1
 							   : [self indexOfSubtopicWithName:subtopicName]);
-	return ((subtopicIndex < 0)
+	return (subtopicIndex < 0
 			? nil
 			: [self subtopicAtIndex:subtopicIndex]);
 }
+
+
 
 #pragma mark - <AKNamed> methods
 
@@ -179,6 +172,26 @@
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<%@: browserPath=%@>", self.className, self.pathInTopicBrowser];
+}
+
+#pragma mark - For internal use
+
+AKSubtopic *AKCreateSubtopic(NSString *subtopicName, NSArray *docListItems, BOOL sort)
+{
+	if (sort) {
+		docListItems = [AKSortUtils arrayBySortingArray:docListItems];
+	}
+	return [[AKSubtopic alloc] initWithName:subtopicName docListItems:docListItems];
+}
+
+- (NSArray *)_arrayWithChildTopics
+{
+	return @[];
+}
+
+- (NSArray *)_arrayWithSubtopics
+{
+	return @[];
 }
 
 @end

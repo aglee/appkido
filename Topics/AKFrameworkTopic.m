@@ -6,7 +6,6 @@
  */
 
 #import "AKFrameworkTopic.h"
-
 #import "DIGSLog.h"
 #import "AKFrameworkConstants.h"
 #import "AKSortUtils.h"
@@ -19,123 +18,108 @@
 
 @implementation AKFrameworkTopic
 
-@synthesize topicDatabase = _topicDatabase;
-@synthesize topicFrameworkName = _topicFrameworkName;
-
-#pragma mark - Factory methods
-
-+ (AKFrameworkTopic *)topicWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)database
-{
-    return [[self alloc] initWithFramework:frameworkName inDatabase:database];
-}
+@synthesize database = _database;
+@synthesize frameworkName = _frameworkName;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithFramework:(NSString *)frameworkName inDatabase:(AKDatabase *)aDatabase
+- (instancetype)initWithFramework:(NSString *)frameworkName database:(AKDatabase *)database
 {
-    if ((self = [super init]))
-    {
-        _topicDatabase = aDatabase;
-        _topicFrameworkName = [frameworkName copy];
-    }
-
-    return self;
+	NSParameterAssert(frameworkName != nil);
+	NSParameterAssert(database != nil);
+	self = [super init];
+	if (self) {
+		_database = database;
+		_frameworkName = frameworkName;
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithFramework:nil inDatabase:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithFramework:nil database:nil];
 }
-
 
 #pragma mark - AKTopic methods
 
-- (NSString *)name
-{
-    return _topicFrameworkName;
-}
-
 - (NSString *)pathInTopicBrowser
 {
-    return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator,
-            [self name]];
+	return [NSString stringWithFormat:@"%@%@", AKTopicBrowserPathSeparator, self.name];
 }
 
-- (NSArray *)childTopics
+- (NSArray *)_arrayWithChildTopics
 {
-    NSMutableArray *columnValues = [NSMutableArray array];
+	NSMutableArray *columnValues = [NSMutableArray array];
+	AKDatabase *db = self.database;
+	NSString *fwName = self.frameworkName;
+	AKTopic *childTopic;
 
-    if ([_topicDatabase functionsGroupsForFramework:_topicFrameworkName].count > 0)
-    {
-        [columnValues addObject:[AKFunctionsTopic topicWithFramework:_topicFrameworkName
-                                                               inDatabase:_topicDatabase]];
-    }
+	if ([db formalProtocolsForFramework:fwName].count > 0) {
+		childTopic = [[AKFormalProtocolsTopic alloc] initWithFramework:fwName database:db];
+		[columnValues addObject:childTopic];
+	}
 
-    if ([_topicDatabase globalsGroupsForFramework:_topicFrameworkName].count > 0)
-    {
-        [columnValues addObject:[AKGlobalsTopic topicWithFramework:_topicFrameworkName
-                                                             inDatabase:_topicDatabase]];
-    }
+	if ([db informalProtocolsForFramework:fwName].count > 0) {
+		childTopic = [[AKInformalProtocolsTopic alloc] initWithFramework:fwName database:db];
+		[columnValues addObject:childTopic];
+	}
+	
+	if ([db functionsGroupsForFramework:fwName].count > 0) {
+		childTopic = [[AKFunctionsTopic alloc] initWithFramework:fwName database:db];
+		[columnValues addObject:childTopic];
+	}
 
-    if ([_topicDatabase formalProtocolsForFramework:_topicFrameworkName].count > 0)
-    {
-        [columnValues addObject:[AKFormalProtocolsTopic topicWithFramework:_topicFrameworkName
-                                                                     inDatabase:_topicDatabase]];
-    }
+	if ([db globalsGroupsForFramework:fwName].count > 0) {
+		childTopic = [[AKGlobalsTopic alloc] initWithFramework:fwName database:db];
+		[columnValues addObject:childTopic];
+	}
 
-    if ([_topicDatabase informalProtocolsForFramework:_topicFrameworkName].count > 0)
-    {
-        [columnValues addObject:[AKInformalProtocolsTopic topicWithFramework:_topicFrameworkName
-                                                                       inDatabase:_topicDatabase]];
-    }
+	return columnValues;
+}
 
-    return columnValues;
+#pragma mark - <AKNamed> methods
+
+- (NSString *)name
+{
+	return self.frameworkName;
 }
 
 #pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
-    if (prefDict == nil)
-    {
-        return nil;
-    }
+	if (prefDict == nil) {
+		return nil;
+	}
 
-    // Get the framework name.
-    NSString *fwName = prefDict[AKFrameworkNamePrefKey];
+	// Get the framework name.
+	NSString *fwName = prefDict[AKFrameworkNamePrefKey];
 
-    if ([fwName isEqualToString:@"ApplicationKit"])
-    {
-        // In older versions of AppKiDo, "AppKit" was saved as "ApplicationKit" in prefs.
-        fwName = AKAppKitFrameworkName;
-    }
+	if ([fwName isEqualToString:@"ApplicationKit"]) {
+		// In older versions of AppKiDo, "AppKit" was saved as "ApplicationKit" in prefs.
+		fwName = AKAppKitFrameworkName;
+	}
 
-    if (fwName == nil)
-    {
-        DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
-        return nil;
-    }
+	if (fwName == nil) {
+		DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
+		return nil;
+	}
 
-    AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
-    if (![db hasFrameworkWithName:fwName])
-    {
-        DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);
-        return nil;
-    }
+	AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
+	if (![db hasFrameworkWithName:fwName]) {
+		DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);
+		return nil;
+	}
 
-    // If we got this far, we have what we need to create an instance.
-    return [self topicWithFramework:fwName inDatabase:db];
+	// If we got this far, we have what we need to create an instance.
+	return [[self alloc] initWithFramework:fwName database:db];
 }
 
 - (NSDictionary *)asPrefDictionary
 {
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
-
-    prefDict[AKTopicClassNamePrefKey] = self.className;
-    prefDict[AKFrameworkNamePrefKey] = _topicFrameworkName;
-
-    return prefDict;
+	return @{ AKTopicClassNamePrefKey: self.className,
+			  AKFrameworkNamePrefKey: self.frameworkName };
 }
 
 @end

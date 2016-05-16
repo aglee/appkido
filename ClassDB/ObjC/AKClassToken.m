@@ -83,10 +83,10 @@
 	return descendantClassTokens;
 }
 
-- (BOOL)hasChildClasses
-{
-	return (_childClassTokens.count > 0);
-}
+//- (BOOL)hasChildClasses
+//{
+//	return (_childClassTokens.count > 0);
+//}
 
 - (AKCategoryToken *)categoryNamed:(NSString *)catName
 {

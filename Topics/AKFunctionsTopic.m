@@ -8,49 +8,37 @@
 #import "AKFunctionsTopic.h"
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
-//#import "AKFunctionsGroupSubtopic.h"
+#import "AKSubtopic.h"
 
 @implementation AKFunctionsTopic
 
 #pragma mark - AKTopic methods
 
+- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
+{
+	if (subtopicIndex < 0) {
+		return nil;
+	}
+
+	//TODO: Do we care about the cost of computing this every time?
+	NSArray *groupItems = [AKSortUtils arrayBySortingArray:
+						   [self.database functionsGroupsForFramework:self.frameworkName]];
+
+	if ((unsigned)subtopicIndex >= groupItems.count) {
+		return nil;
+	} else {
+//		AKGroupItem *groupItem = groupItems[subtopicIndex];
+//
+//		return [[AKFunctionsGroupSubtopic alloc] initWithGroupItem:groupItem];
+		return nil;  //TODO: Clean this up.
+	}
+}
+
+#pragma mark - <AKNamed> methods
+
 - (NSString *)name
 {
-    return AKFunctionsTopicName;
-}
-
-- (NSInteger)numberOfSubtopics
-{
-    return [self.topicDatabase functionsGroupsForFramework:self.topicFrameworkName].count;
-}
-
-- (id<AKSubtopicListItem>)subtopicAtIndex:(NSInteger)subtopicIndex
-{
-    if (subtopicIndex < 0)
-    {
-        return nil;
-    }
-
-    //TODO: Do we care about the cost of computing this every time?
-    NSArray *groupItems = [AKSortUtils arrayBySortingArray:
-                [self.topicDatabase functionsGroupsForFramework:self.topicFrameworkName]];
-
-    if ((unsigned)subtopicIndex >= groupItems.count)
-    {
-        return nil;
-    }
-    else
-    {
-//        AKGroupItem *groupItem = groupItems[subtopicIndex];
-//
-//        return [[AKFunctionsGroupSubtopic alloc] initWithGroupItem:groupItem];
-        return nil;  //TODO: Clean this up.
-    }
-}
-
-- (BOOL)browserCellShouldBeLeaf
-{
-    return YES;
+	return AKFunctionsTopicName;
 }
 
 @end
