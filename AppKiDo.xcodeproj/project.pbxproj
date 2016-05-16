@@ -183,6 +183,8 @@
 		7320C18616DCF9FD00797F95 /* AKWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7320C17716DCF9ED00797F95 /* AKWindowController.h */; };
 		7320C18716DCF9FD00797F95 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17816DCF9F900797F95 /* AKWindowController.m */; };
 		7320C18816DCF9FD00797F95 /* AKWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7320C17816DCF9F900797F95 /* AKWindowController.m */; };
+		7322FBC01CE95BB2007E0764 /* AKSubtopicListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBBF1CE95BB2007E0764 /* AKSubtopicListItem.h */; };
+		7322FBC11CE95BB2007E0764 /* AKSubtopicListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBBF1CE95BB2007E0764 /* AKSubtopicListItem.h */; };
 		7332E8D616E8141300A3764B /* AKPrefDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7332E8D516E8141300A3764B /* AKPrefDictionary.h */; };
 		7332E8D716E8141300A3764B /* AKPrefDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7332E8D516E8141300A3764B /* AKPrefDictionary.h */; };
 		7332E8DE16E8EFAE00A3764B /* FindPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7332E8DC16E8EFAE00A3764B /* FindPanel.xib */; };
@@ -649,6 +651,7 @@
 		7320C17616DCF9E500797F95 /* AKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewController.m; sourceTree = "<group>"; };
 		7320C17716DCF9ED00797F95 /* AKWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowController.h; sourceTree = "<group>"; usesTabs = 1; };
 		7320C17816DCF9F900797F95 /* AKWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowController.m; sourceTree = "<group>"; usesTabs = 1; };
+		7322FBBF1CE95BB2007E0764 /* AKSubtopicListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKSubtopicListItem.h; path = ClassDB/AKSubtopicListItem.h; sourceTree = "<group>"; };
 		7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+AppKiDo.h"; sourceTree = "<group>"; };
 		7323B6E804DDD45B00CCE8CB /* NSView+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+AppKiDo.m"; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };
@@ -1214,6 +1217,7 @@
 			children = (
 				734AEE3B1CC5E1600064AAA9 /* DocSet Data */,
 				739CD2600E4498AC00CFA042 /* dev tools */,
+				73B5025D1CE7B7E1009D1BE5 /* UI navigation protocols */,
 				730030820498501500A80007 /* database */,
 				73B5025C1CE7B67A009D1BE5 /* database items - general */,
 				73C8ABB60836AF2D0000E3F7 /* database items - tokens */,
@@ -1568,19 +1572,19 @@
 		73B5025C1CE7B67A009D1BE5 /* database items - general */ = {
 			isa = PBXGroup;
 			children = (
-				73B5025D1CE7B7E1009D1BE5 /* protocols */,
 				73B313A90617441B006C9BA7 /* AKGroupItem.h */,
 				73B313AA0617441B006C9BA7 /* AKGroupItem.m */,
 			);
 			name = "database items - general";
 			sourceTree = "<group>";
 		};
-		73B5025D1CE7B7E1009D1BE5 /* protocols */ = {
+		73B5025D1CE7B7E1009D1BE5 /* UI navigation protocols */ = {
 			isa = PBXGroup;
 			children = (
+				7322FBBF1CE95BB2007E0764 /* AKSubtopicListItem.h */,
 				73B502561CE7AF68009D1BE5 /* AKDocListItem.h */,
 			);
-			name = protocols;
+			name = "UI navigation protocols";
 			sourceTree = "<group>";
 		};
 		73C8ABB60836AF2D0000E3F7 /* database items - tokens */ = {
@@ -1827,6 +1831,7 @@
 				73A4ACD516F25D81004E6A1C /* AKRandomSearch.h in Headers */,
 				73A4ACDB16F35815004E6A1C /* AKTabChain.h in Headers */,
 				73A4ACE016F36F5E004E6A1C /* AKTabChainWindowDelegate.h in Headers */,
+				7322FBC01CE95BB2007E0764 /* AKSubtopicListItem.h in Headers */,
 				737F1DED17021C8A00D560C7 /* AKPopQuizWindowController.h in Headers */,
 				734AEE991CC5E1600064AAA9 /* OrderedSubnode.h in Headers */,
 				73DB1379170E176500F3776A /* QuietLog.h in Headers */,
@@ -1855,6 +1860,7 @@
 				7399B2CB0E632A5C001AE672 /* AKSubtopic.h in Headers */,
 				7399B2CC0E632A5C001AE672 /* AKClassTopic.h in Headers */,
 				7399B2CD0E632A5C001AE672 /* AKFormalProtocolsTopic.h in Headers */,
+				7322FBC11CE95BB2007E0764 /* AKSubtopicListItem.h in Headers */,
 				7399B2CE0E632A5C001AE672 /* AKFrameworkTopic.h in Headers */,
 				7399B2CF0E632A5C001AE672 /* AKFunctionsTopic.h in Headers */,
 				7399B2D00E632A5C001AE672 /* AKInformalProtocolsTopic.h in Headers */,
