@@ -417,7 +417,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (BOOL)tableView:(NSTableView*)tableView
 	   acceptDrop:(id <NSDraggingInfo>)info
-			  row:(int)row
+			  row:(NSInteger)row
 	dropOperation:(NSTableViewDropOperation)operation
 {
 	if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)
@@ -452,7 +452,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSDragOperation)tableView:(NSTableView*)tableView
 				validateDrop:(id <NSDraggingInfo>)info
-				 proposedRow:(int)row
+				 proposedRow:(NSInteger)row
 	   proposedDropOperation:(NSTableViewDropOperation)operation
 {
 	if (_selectedQuicklistMode != _AKFavoritesQuicklistMode)

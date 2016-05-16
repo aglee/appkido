@@ -203,7 +203,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     [matrix renewRows:[self _numberOfRowsInColumn:column] columns:1];
 }
 
-- (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(int)row column:(int)column
+- (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(NSInteger)row column:(NSInteger)column
 {
     NSArray *topicList = _topicListsForBrowserColumns[column];
     AKTopic *topic = topicList[row];
@@ -218,7 +218,7 @@ static const NSInteger AKMinBrowserColumns = 2;
     [cell setLeaf:topic.browserCellShouldBeLeaf];
 }
 
-- (BOOL)browser:(NSBrowser *)sender isColumnValid:(int)column
+- (BOOL)browser:(NSBrowser *)sender isColumnValid:(NSInteger)column
 {
     return YES;
 }
