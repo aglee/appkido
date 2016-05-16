@@ -17,21 +17,8 @@
  * displaying.
  */
 @interface AKSavedWindowState : NSObject <AKPrefDictionary>
-{
-@private
-    AKWindowLayout *_savedWindowLayout;
-    AKDocLocator *_savedDocLocator;
-}
 
-@property (nonatomic, strong) AKWindowLayout *savedWindowLayout;
-@property (nonatomic, strong) AKDocLocator *savedDocLocator;
-
-#pragma mark - Getters and setters
-
-- (AKWindowLayout *)savedWindowLayout;
-- (void)setSavedWindowLayout:(AKWindowLayout *)windowLayout;
-
-- (AKDocLocator *)savedDocLocator;
-- (void)setSavedDocLocator:(AKDocLocator *)docLocator;
+@property (strong) AKWindowLayout *savedWindowLayout;
+@property (strong) AKDocLocator *savedDocLocator;
 
 @end

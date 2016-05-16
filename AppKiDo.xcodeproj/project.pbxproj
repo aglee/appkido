@@ -881,8 +881,8 @@
 		73C891D914E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DevToolsPanel.xib; sourceTree = "<group>"; };
 		73C891DB14E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		73C891DD14E10B7600A54FF6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Prefs.xib; sourceTree = "<group>"; };
-		73C96E23049CA60200A87B79 /* AKSavedWindowState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSavedWindowState.h; sourceTree = "<group>"; };
-		73C96E24049CA60200A87B79 /* AKSavedWindowState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSavedWindowState.m; sourceTree = "<group>"; };
+		73C96E23049CA60200A87B79 /* AKSavedWindowState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSavedWindowState.h; sourceTree = "<group>"; usesTabs = 1; };
+		73C96E24049CA60200A87B79 /* AKSavedWindowState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSavedWindowState.m; sourceTree = "<group>"; usesTabs = 1; };
 		73C983F20FE47F6800C4BEBA /* AKMacDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKMacDevTools.h; path = CocoaFrameworks/AKMacDevTools.h; sourceTree = "<group>"; };
 		73C983F30FE47F6800C4BEBA /* AKMacDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKMacDevTools.m; path = CocoaFrameworks/AKMacDevTools.m; sourceTree = "<group>"; };
 		73D237260D4562BA00EF7503 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
