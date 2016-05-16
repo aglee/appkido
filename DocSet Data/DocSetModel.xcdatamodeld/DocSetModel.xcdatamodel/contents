@@ -126,22 +126,22 @@
         <attribute name="typeName" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="APILanguage" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Container" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="DistributionVersion" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="DocSet" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="DownloadableFile" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="FilePath" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Header" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Node" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="NodeURL" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="NodeUUID" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="OrderedSubnode" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Parameter" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ReturnValue" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Token" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="TokenGroup" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="TokenMetainformation" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="TokenType" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="APILanguage" positionX="-9540" positionY="-1279" width="128" height="73"/>
+        <element name="Container" positionX="-10386" positionY="-1582" width="128" height="88"/>
+        <element name="DistributionVersion" positionX="-10287" positionY="-1107" width="128" height="135"/>
+        <element name="DocSet" positionX="-9324" positionY="-1450" width="128" height="73"/>
+        <element name="DownloadableFile" positionX="-9344" positionY="-1339" width="128" height="88"/>
+        <element name="FilePath" positionX="-9920" positionY="-1138" width="128" height="58"/>
+        <element name="Header" positionX="-10224" positionY="-1207" width="128" height="73"/>
+        <element name="Node" positionX="-9216" positionY="-1188" width="128" height="270"/>
+        <element name="NodeURL" positionX="-9083" positionY="-1386" width="128" height="135"/>
+        <element name="NodeUUID" positionX="-9083" positionY="-1476" width="128" height="73"/>
+        <element name="OrderedSubnode" positionX="-9002" positionY="-1087" width="128" height="88"/>
+        <element name="Parameter" positionX="-9774" positionY="-1125" width="128" height="88"/>
+        <element name="ReturnValue" positionX="-10287" positionY="-913" width="128" height="58"/>
+        <element name="Token" positionX="-10082" positionY="-1687" width="128" height="238"/>
+        <element name="TokenGroup" positionX="-9873" positionY="-1486" width="128" height="73"/>
+        <element name="TokenMetainformation" positionX="-10071" positionY="-1150" width="128" height="268"/>
+        <element name="TokenType" positionX="-10242" positionY="-1426" width="128" height="58"/>
     </elements>
 </model>
