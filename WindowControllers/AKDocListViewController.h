@@ -17,7 +17,7 @@
  * Manages the "doc list", which lists the docs of the window's currently
  * selected subtopic.
  */
-@interface AKDocListViewController : AKViewController
+@interface AKDocListViewController : AKViewController <NSTableViewDelegate, NSTableViewDataSource, NSUserInterfaceValidations>
 {
 @private
 	// The subtopic whose list of docs we should display.

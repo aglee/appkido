@@ -20,7 +20,7 @@
  * the database, and loads window states remembered from the previous launch.
  * On quit, saves the states of all open windows.
  */
-@interface AKAppDelegate : NSObject <AKUIController>
+@interface AKAppDelegate : NSObject <AKUIController, NSUserInterfaceValidations, NSApplicationDelegate>
 {
 @private
     AKDatabase *_appDatabase;

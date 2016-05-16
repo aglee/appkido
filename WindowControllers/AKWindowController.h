@@ -29,7 +29,7 @@
  * chain. The action methods of the view controllers are such that this
  * shouldn't cause a conflict between action messages with the same name.
  */
-@interface AKWindowController : NSWindowController <AKUIController, NSToolbarDelegate>
+@interface AKWindowController : NSWindowController <AKUIController, NSToolbarDelegate, NSUserInterfaceValidations, NSSplitViewDelegate, NSWindowDelegate>
 {
 @private
 	// The source of all data the window displays.

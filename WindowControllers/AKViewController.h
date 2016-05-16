@@ -14,7 +14,7 @@
 /*!
  * Base class for view controllers used by AKWindowController.
  */
-@interface AKViewController : NSViewController <AKUIController>
+@interface AKViewController : NSViewController <AKUIController, NSUserInterfaceValidations>
 {
 @private
     __unsafe_unretained AKWindowController *_owningWindowController;  // weak reference

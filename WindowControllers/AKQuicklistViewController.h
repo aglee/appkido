@@ -18,7 +18,7 @@
 /*!
  * Controller for a browser window's quicklist drawer.
  */
-@interface AKQuicklistViewController : AKViewController <DIGSFindBufferDelegate, AKMultiRadioViewDelegate>
+@interface AKQuicklistViewController : AKViewController <DIGSFindBufferDelegate, AKMultiRadioViewDelegate, NSTableViewDelegate, NSTableViewDataSource, NSUserInterfaceValidations>
 {
 @private
     // AKDocLocator objects listed in _quicklistTable.

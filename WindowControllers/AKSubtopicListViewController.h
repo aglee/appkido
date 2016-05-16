@@ -14,7 +14,7 @@
  * Manages the "subtopic list", which lists the subtopics of the window's
  * currently selected topic.
  */
-@interface AKSubtopicListViewController : AKViewController
+@interface AKSubtopicListViewController : AKViewController <NSTableViewDelegate, NSTableViewDataSource, NSUserInterfaceValidations>
 {
 @private
     // Elements are instances of AKSubtopic classes.  Order of elements

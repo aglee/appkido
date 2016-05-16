@@ -13,7 +13,7 @@
  * Manages the NSBrowser used to navigate the top-level "topics" in an AppKiDo
  * browser window.
  */
-@interface AKTopicBrowserViewController : AKViewController
+@interface AKTopicBrowserViewController : AKViewController <NSUserInterfaceValidations, NSBrowserDelegate>
 {
 @private
     // Values to display in all the columns of the browser.  Each element

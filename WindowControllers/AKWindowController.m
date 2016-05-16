@@ -591,6 +591,43 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	[_quicklistController putWindowLayoutInto:windowLayout];
 }
 
+#pragma mark - NSWindowController methods
+
+- (void)windowDidLoad
+{
+	_defaultBrowserHeight = NSHeight(_topicBrowserContainerView.frame);
+
+	// Load our view controllers and plug their views into the UI. Do this
+	// early, because a number of things we do next assume the view controllers
+	// have been loaded.
+	[self _setUpViewControllers];
+
+	// Add our toolbar.
+	//TODO: Is it worth doing this in the nib now that we can?
+	[self _setUpToolbar];
+
+	// Apply display preferences specified in the defaults database.
+	[self applyUserPreferences];
+
+	// Make the navigation popups use small fonts. I determined empirically that
+	// 11 is the size Cocoa uses for small menus.
+	NSFont *smallMenuFont = [NSFont menuFontOfSize:11];
+
+	_superclassesMenu.font = smallMenuFont;
+	_backMenu.font = smallMenuFont;
+	_forwardMenu.font = smallMenuFont;
+
+	// Select NSObject in the topic browser.
+	_windowHistoryIndex = -1;
+	[_windowHistory removeAllObjects];
+
+	AKClassToken *classToken = [_database classWithName:@"NSObject"];
+	[self selectTopic:[[AKClassTopic alloc] initWithClassToken:classToken]];
+
+	// Start with the topic browser having focus.
+	[self.window makeFirstResponder:_topicBrowserController.topicBrowser];
+}
+
 #pragma mark - NSUserInterfaceValidations methods
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
@@ -671,43 +708,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	} else {
 		return NO;
 	}
-}
-
-#pragma mark - NSWindowController methods
-
-- (void)windowDidLoad
-{
-	_defaultBrowserHeight = NSHeight(_topicBrowserContainerView.frame);
-
-	// Load our view controllers and plug their views into the UI. Do this
-	// early, because a number of things we do next assume the view controllers
-	// have been loaded.
-	[self _setUpViewControllers];
-
-	// Add our toolbar.
-	//TODO: Is it worth doing this in the nib now that we can?
-	[self _setUpToolbar];
-
-	// Apply display preferences specified in the defaults database.
-	[self applyUserPreferences];
-
-	// Make the navigation popups use small fonts. I determined empirically that
-	// 11 is the size Cocoa uses for small menus.
-	NSFont *smallMenuFont = [NSFont menuFontOfSize:11];
-
-	_superclassesMenu.font = smallMenuFont;
-	_backMenu.font = smallMenuFont;
-	_forwardMenu.font = smallMenuFont;
-
-	// Select NSObject in the topic browser.
-	_windowHistoryIndex = -1;
-	[_windowHistory removeAllObjects];
-
-	AKClassToken *classToken = [_database classWithName:@"NSObject"];
-	[self selectTopic:[[AKClassTopic alloc] initWithClassToken:classToken]];
-
-	// Start with the topic browser having focus.
-	[self.window makeFirstResponder:_topicBrowserController.topicBrowser];
 }
 
 #pragma mark - NSSplitView delegate methods

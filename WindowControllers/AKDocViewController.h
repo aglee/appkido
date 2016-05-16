@@ -7,10 +7,11 @@
 //
 
 #import "AKViewController.h"
+#import <WebKit/WebKit.h>
 
 @class WebView;
 
-@interface AKDocViewController : AKViewController
+@interface AKDocViewController : AKViewController <WebPolicyDelegate, WebUIDelegate>
 {
 @private
 	AKDocLocator *_docLocator;
