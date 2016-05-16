@@ -788,7 +788,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 //        // documented yet or intended for Apple's internal use.
 //        if (classToken.tokenDocumentation)
 		{
-			AKTopic *topic = [AKClassTopic topicWithClassToken:classToken];
+			AKTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
 
 			[quicklistItems addObject:[AKDocLocator withTopic:topic
 												 subtopicName:nil
@@ -811,7 +811,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 //        // documented yet or intended for Apple's internal use.
 //        if (protocolToken.tokenDocumentation)
 		{
-			AKTopic *topic = [AKProtocolTopic topicWithProtocolToken:protocolToken];
+			AKTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
 
 			[quicklistItems addObject:[AKDocLocator withTopic:topic
 												 subtopicName:nil

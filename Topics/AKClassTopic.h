@@ -10,16 +10,6 @@
 @class AKClassToken;
 
 @interface AKClassTopic : AKBehaviorTopic
-{
-@private
-    AKClassToken *_classToken;
-}
-
-#pragma mark - Factory methods
-
-+ (instancetype)topicWithClassToken:(AKClassToken *)classToken;
-
-#pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithClassToken:(AKClassToken *)classToken NS_DESIGNATED_INITIALIZER;
 

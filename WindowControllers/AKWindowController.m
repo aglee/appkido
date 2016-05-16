@@ -304,7 +304,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
 	AKClassToken *superclassToken = [[self _currentTopic] parentClassOfTopic];
 	if (superclassToken) {
-		[self selectTopic:[AKClassTopic topicWithClassToken:superclassToken]];
+		[self selectTopic:[[AKClassTopic alloc] initWithClassToken:superclassToken]];
 	}
 }
 
@@ -327,7 +327,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	}
 
 	// Do the jump.
-	[self selectTopic:[AKClassTopic topicWithClassToken:classToken]];
+	[self selectTopic:[[AKClassTopic alloc] initWithClassToken:classToken]];
 }
 
 - (IBAction)selectFormalProtocolsTopic:(id)sender
@@ -704,7 +704,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	[_windowHistory removeAllObjects];
 
 	AKClassToken *classToken = [_database classWithName:@"NSObject"];
-	[self selectTopic:[AKClassTopic topicWithClassToken:classToken]];
+	[self selectTopic:[[AKClassTopic alloc] initWithClassToken:classToken]];
 
 	// Start with the topic browser having focus.
 	[self.window makeFirstResponder:_topicBrowserController.topicBrowser];

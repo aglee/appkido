@@ -213,9 +213,9 @@ static const NSInteger AKMinBrowserColumns = 2;
     }
 
     [cell setRepresentedObject:topic];
-    [cell setTitle:[topic name]];
-    [cell setEnabled:[topic browserCellShouldBeEnabled]];
-    [cell setLeaf:![topic browserCellHasChildren]];
+    [cell setTitle:topic.name];
+    [cell setEnabled:topic.browserCellShouldBeEnabled];
+    [cell setLeaf:topic.browserCellShouldBeLeaf];
 }
 
 - (BOOL)browser:(NSBrowser *)sender isColumnValid:(int)column
@@ -295,15 +295,15 @@ static const NSInteger AKMinBrowserColumns = 2;
     AKDatabase *db = [self.owningWindowController database];
 
     // Set up the "classes" section.
-    [columnValues addObject:[AKLabelTopic topicWithLabel:AKClassesLabelTopicName]];
+    [columnValues addObject:[[AKLabelTopic alloc] initWithLabel:@":: classes ::"]];
 
     for (AKClassToken *classToken in [AKSortUtils arrayBySortingArray:[db rootClasses]])
     {
-        [columnValues addObject:[AKClassTopic topicWithClassToken:classToken]];
+        [columnValues addObject:[[AKClassTopic alloc] initWithClassToken:classToken]];
     }
 
     // Set up the "other topics" section.
-    [columnValues addObject:[AKLabelTopic topicWithLabel:AKOtherTopicsLabelTopicName]];
+    [columnValues addObject:[[AKLabelTopic alloc] initWithLabel:@":: other topics ::"]];
 
     for (NSString *fwName in [db sortedFrameworkNames])
     {

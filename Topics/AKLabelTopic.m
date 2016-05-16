@@ -10,24 +10,18 @@
 
 @implementation AKLabelTopic
 
-NSString *AKClassesLabelTopicName = @":: classes ::";
-NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
+#pragma mark - Init/awake/dealloc
 
-#pragma mark - Factory methods
-
-+ (AKLabelTopic *)topicWithLabel:(NSString *)label
+- (instancetype)initWithLabel:(NSString *)label
 {
-	AKLabelTopic *topic = [[self alloc] init];
-	topic.label = label;
-	return topic;
+	self = [super init];
+	if (self) {
+		_label = label;
+	}
+	return self;
 }
 
-#pragma mark - AKTopic methods
-
-- (NSString *)name
-{
-	return self.label;
-}
+#pragma mark - <AKTopicBrowserItem> methods
 
 - (NSString *)pathInTopicBrowser
 {
@@ -39,9 +33,9 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 	return NO;
 }
 
-- (BOOL)browserCellHasChildren
+- (BOOL)browserCellShouldBeLeaf
 {
-	return NO;
+	return YES;
 }
 
 #pragma mark - AKPrefDictionary methods
@@ -57,7 +51,7 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 		DIGSLogWarning(@"malformed pref dictionary for class %@", [self className]);
 		return nil;
 	} else {
-		return [self topicWithLabel:labelString];
+		return [[self alloc] initWithLabel:labelString];
 	}
 }
 
@@ -69,9 +63,9 @@ NSString *AKOtherTopicsLabelTopicName = @":: other topics ::";
 	return prefDict;
 }
 
-#pragma mark - AKSortable methods
+#pragma mark - <AKNamed> methods
 
-- (NSString *)sortName
+- (NSString *)name
 {
 	return self.label;
 }

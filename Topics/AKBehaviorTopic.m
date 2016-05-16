@@ -6,70 +6,64 @@
  */
 
 #import "AKBehaviorTopic.h"
-
 #import "DIGSLog.h"
+
+@interface AKBehaviorTopic ()
+@property (copy, readonly) NSArray *subtopics;  // Contains AKSubtopics.
+@end
 
 @implementation AKBehaviorTopic
 
+@dynamic behaviorName;
+@synthesize subtopics = _subtopics;
+
 #pragma mark - Getters and setters
 
-- (NSString *)behaviorName
+- (NSArray *)subtopics
 {
-    DIGSLogError_MissingOverride();
-    return nil;
+	// Lazy loading.  We do this because there are common cases where we'll
+	// have AKBehaviorTopic instances and never need to ask for their subtopics
+	// (for example in a list of search results which the user may never
+	// select).
+	if (!_subtopics) {
+		_subtopics = [self arrayWithSubtopics];
+	}
+	return _subtopics;
 }
 
 #pragma mark - AKTopic methods
 
 - (NSDictionary *)asPrefDictionary
 {
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
-
-    prefDict[AKTopicClassNamePrefKey] = self.className;
-    prefDict[AKBehaviorNamePrefKey] = [self behaviorName];
-
-    return prefDict;
+	return @{ AKTopicClassNamePrefKey : self.className,
+			  AKBehaviorNamePrefKey : self.behaviorName };
 }
 
 - (NSInteger)numberOfSubtopics
 {
-    return [self _subtopics].count;
+	return self.subtopics.count;
 }
 
-- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
+- (id<AKSubtopicListItem>)subtopicAtIndex:(NSInteger)subtopicIndex
 {
-    if (subtopicIndex < 0)
-    {
-        return nil;
-    }
-
-    return [self _subtopics][subtopicIndex];
+	return (subtopicIndex < 0
+			? nil
+			: self.subtopics[subtopicIndex]);
 }
 
 #pragma mark - Subtopics
 
 - (NSArray *)arrayWithSubtopics
 {
-    DIGSLogError_MissingOverride();
-    return nil;
+	DIGSLogError_MissingOverride();
+	return nil;
 }
 
 #pragma mark - AKSortable methods
 
 - (NSString *)sortName
 {
-    return [self behaviorName];
-}
-
-#pragma mark - Private methods
-
-- (NSArray *)_subtopics
-{
-    if (!_subtopics)
-    {
-        _subtopics = [self arrayWithSubtopics];
-    }
-    return _subtopics;
+	return self.behaviorName;
 }
 
 @end

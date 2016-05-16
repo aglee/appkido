@@ -28,7 +28,7 @@
 
     for (AKProtocolToken *protocolToken in formalProtocols)
     {
-        [columnValues addObject:[AKProtocolTopic topicWithProtocolToken:protocolToken]];
+        [columnValues addObject:[[AKProtocolTopic alloc] initWithProtocolToken:protocolToken]];
     }
 
     return [AKSortUtils arrayBySortingArray:columnValues];

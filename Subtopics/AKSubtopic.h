@@ -7,6 +7,7 @@
 
 #import "AKNamedObject.h"
 #import "AKSubtopicConstants.h"
+#import "AKSubtopicListItem.h"
 
 @protocol AKDocListItem;
 
@@ -18,20 +19,12 @@
  * Note that .displayName is redeclared as readwrite, so it can be set
  * separately from .name.  It defaults to .name.
  */
-@interface AKSubtopic : AKNamedObject
+@interface AKSubtopic : AKNamedObject <AKSubtopicListItem>
 
 @property (copy) NSString *displayName;
-@property (copy, readonly) NSArray *docListItems;
 
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithName:(NSString *)name docListItems:(NSArray *)docListItems NS_DESIGNATED_INITIALIZER;
-
-#pragma mark - Docs
-
-/*! Returns -1 if none found. */
-- (NSInteger)indexOfDocWithName:(NSString *)docName;
-- (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex;
-- (id<AKDocListItem>)docWithName:(NSString *)docName;
 
 @end

@@ -10,7 +10,8 @@
 #import "AKDocLocator.h"
 #import "AKBehaviorHeaderFile.h"
 #import "AKBehaviorToken.h"
-#import "AKSubtopic.h"
+#import "AKSubtopicConstants.h"
+#import "AKSubtopicListItem.h"
 #import "AKTableView.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
@@ -49,7 +50,7 @@
 
 #pragma mark - Getters and setters
 
-- (AKSubtopic *)selectedSubtopic
+- (id<AKSubtopicListItem>)selectedSubtopic
 {
     NSInteger subtopicIndex = _subtopicsTable.selectedRow;
 
@@ -153,9 +154,7 @@
         [_subtopics removeAllObjects];
         for (i = 0; i < numSubtopics; i++)
         {
-            AKSubtopic *subtopic = [newTopic subtopicAtIndex:i];
-
-            [_subtopics addObject:subtopic];
+            [_subtopics addObject:[newTopic subtopicAtIndex:i]];
         }
         [_subtopicsTable reloadData];
     }
@@ -187,9 +186,8 @@
                      byExtendingSelection:NO];
 
         // Modify whereTo.
-        AKSubtopic *subtopic = _subtopics[subtopicIndex];
-
-        whereTo.subtopicName = [subtopic name];
+        id<AKSubtopicListItem> subtopic = _subtopics[subtopicIndex];
+        whereTo.subtopicName = subtopic.name;
     }
 }
 
@@ -224,8 +222,8 @@
     else if (itemAction == @selector(selectHeaderFile:))
     {
         AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
-        return ([currentTopic isKindOfClass:[AKBehaviorTopic class]]
-                && ([currentTopic topicToken].tokenMO.metainformation.declaredIn.headerPath != nil));
+        NSString *headerPath = currentTopic.topicToken.tokenMO.metainformation.declaredIn.headerPath;
+        return (headerPath != nil);
     }
 
     return NO;
@@ -254,7 +252,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
     if ([aCell isKindOfClass:[NSBrowserCell class]])
     {
-        AKSubtopic *subtopic = _subtopics[rowIndex];
+        id<AKSubtopicListItem> subtopic = _subtopics[rowIndex];
         [aCell setLeaf:(subtopic.docListItems.count == 0)];
     }
 }

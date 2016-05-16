@@ -6,7 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKSubtopic.h"
+#import <Foundation/Foundation.h>
 
 // Names of subtopics that are listed when the topic is a class or protocol.
 extern NSString *AKGeneralSubtopicName;

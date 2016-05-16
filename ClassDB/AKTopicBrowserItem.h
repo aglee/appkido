@@ -7,6 +7,7 @@
 //
 
 #import "AKNamed.h"
+#import "AKSubtopicListItem.h"
 
 @class AKClassToken;
 @class AKSubtopic;
@@ -29,7 +30,7 @@
 
 /*! Returns -1 if none found. */
 - (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName;
-- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex;
-- (AKSubtopic *)subtopicWithName:(NSString *)subtopicName;
+- (id<AKSubtopicListItem>)subtopicAtIndex:(NSInteger)subtopicIndex;
+- (id<AKSubtopicListItem>)subtopicWithName:(NSString *)subtopicName;
 
 @end

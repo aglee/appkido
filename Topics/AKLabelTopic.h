@@ -8,15 +8,14 @@
 #import "AKTopic.h"
 
 /*!
- * Not a real topic. Used for displaying label text in the topic browser.
+ * Used for displaying label text in the topic browser.
  */
 @interface AKLabelTopic : AKTopic
 
 @property (copy) NSString *label;
 
-extern NSString *AKClassesLabelTopicName;
-extern NSString *AKOtherTopicsLabelTopicName;
+#pragma mark - Init/awake/dealloc
 
-+ (AKLabelTopic *)topicWithLabel:(NSString *)label;
+- (instancetype)initWithLabel:(NSString *)label;
 
 @end

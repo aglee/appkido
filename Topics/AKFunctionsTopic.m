@@ -24,7 +24,7 @@
     return [self.topicDatabase functionsGroupsForFramework:self.topicFrameworkName].count;
 }
 
-- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
+- (id<AKSubtopicListItem>)subtopicAtIndex:(NSInteger)subtopicIndex
 {
     if (subtopicIndex < 0)
     {
@@ -48,9 +48,9 @@
     }
 }
 
-- (BOOL)browserCellHasChildren
+- (BOOL)browserCellShouldBeLeaf
 {
-    return NO;
+    return YES;
 }
 
 @end

@@ -12,7 +12,19 @@
 
 @implementation AKTopic
 
-#pragma mark - Getters and setters
+#pragma mark - Convenience method
+
+- (AKSubtopic *)subtopicWithName:(NSString *)name
+					docListItems:(NSArray *)docListItems
+							sort:(BOOL)sort
+{
+	if (sort) {
+		docListItems = [AKSortUtils arrayBySortingArray:docListItems];
+	}
+	return [[AKSubtopic alloc] initWithName:name docListItems:docListItems];
+}
+
+#pragma mark - <AKTopicBrowserItem> methods
 
 - (AKClassToken *)parentClassOfTopic
 {
@@ -24,25 +36,10 @@
 	return nil;
 }
 
-#pragma mark - Names for various display contexts
-
-- (NSString *)name
-{
-	DIGSLogError_MissingOverride();
-	return @"??";
-}
-
 - (NSString *)stringToDisplayInDescriptionField
 {
 	return @"...";
 }
-
-- (NSString *)displayName
-{
-	return [self name];
-}
-
-#pragma mark - Populating the topic browser
 
 - (NSString *)pathInTopicBrowser
 {
@@ -55,9 +52,9 @@
 	return YES;
 }
 
-- (BOOL)browserCellHasChildren
+- (BOOL)browserCellShouldBeLeaf
 {
-	return YES;
+	return NO;
 }
 
 - (NSArray *)childTopics
@@ -65,17 +62,9 @@
 	return nil;
 }
 
-#pragma mark - Subtopics
-
 - (NSInteger)numberOfSubtopics
 {
 	return 0;
-}
-
-- (AKSubtopic *)subtopicAtIndex:(NSInteger)subtopicIndex
-{
-	DIGSLogError_MissingOverride();
-	return nil;
 }
 
 - (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName
@@ -89,7 +78,7 @@
 
 	for (i = 0; i < numSubtopics; i++) {
 		AKSubtopic *subtopic = [self subtopicAtIndex:i];
-		if ([[subtopic name] isEqualToString:subtopicName]) {
+		if ([subtopic.name isEqualToString:subtopicName]) {
 			return i;
 		}
 	}
@@ -98,7 +87,13 @@
 	return -1;
 }
 
-- (AKSubtopic *)subtopicWithName:(NSString *)subtopicName
+- (id<AKSubtopicListItem>)subtopicAtIndex:(NSInteger)subtopicIndex
+{
+	DIGSLogError_MissingOverride();
+	return nil;
+}
+
+- (id<AKSubtopicListItem>)subtopicWithName:(NSString *)subtopicName
 {
 	NSInteger subtopicIndex = ((subtopicName == nil)
 							   ? -1
@@ -108,17 +103,25 @@
 			: [self subtopicAtIndex:subtopicIndex]);
 }
 
-- (AKSubtopic *)subtopicWithName:(NSString *)name
-					docListItems:(NSArray *)docListItems
-							sort:(BOOL)sort
+#pragma mark - <AKNamed> methods
+
+- (NSString *)name
 {
-	if (sort) {
-		docListItems = [AKSortUtils arrayBySortingArray:docListItems];
-	}
-	return [[AKSubtopic alloc] initWithName:name docListItems:docListItems];
+	DIGSLogError_MissingOverride();
+	return @"??";
 }
 
-#pragma mark - AKPrefDictionary methods
+- (NSString *)sortName
+{
+	return self.name;
+}
+
+- (NSString *)displayName
+{
+	return self.name;
+}
+
+#pragma mark - <AKPrefDictionary> methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
@@ -159,13 +162,6 @@
 {
 	DIGSLogError_MissingOverride();
 	return nil;
-}
-
-#pragma mark - <AKSortable> methods
-
-- (NSString *)sortName
-{
-	return [self displayName];
 }
 
 #pragma mark - NSObject methods

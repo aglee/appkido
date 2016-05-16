@@ -14,19 +14,6 @@
 @class AKPropertyToken;
 @class AKProtocolToken;
 
-#pragma mark - Blocks as alternatives to performSelector
-
-typedef id (^AKBlockForGettingMemberToken)(AKBehaviorToken *behaviorToken, NSString *memberName);
-
-typedef void (^AKBlockForAddingMemberToken)(AKBehaviorToken *behaviorToken, AKMemberToken *memberToken);
-
-#define blockForGettingMemberToken(xxxWithName) ^id (AKBehaviorToken *behaviorToken, NSString *memberName) { return [(id)behaviorToken xxxWithName:memberName]; }
-
-#define blockForAddingMemberToken(addXXXItem) ^void (AKBehaviorToken *behaviorToken, AKMemberToken *memberToken) { [(id)behaviorToken addXXXItem:(id)memberToken]; }
-
-
-#pragma mark -
-
 /*!
  * Abstract class. Represents an API construct that can have methods.  Concrete
  * subclasses include AKClassToken, AKProtocolToken, and AKCategoryToken.

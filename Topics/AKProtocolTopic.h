@@ -10,14 +10,6 @@
 @class AKProtocolToken;
 
 @interface AKProtocolTopic : AKBehaviorTopic
-{
-@private
-    AKProtocolToken *_protocolToken;
-}
-
-#pragma mark - Factory methods
-
-+ (instancetype)topicWithProtocolToken:(AKProtocolToken *)protocolToken;
 
 #pragma mark - Init/awake/dealloc
 

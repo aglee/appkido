@@ -31,7 +31,7 @@
 	return [self initWithName:name docListItems:nil];
 }
 
-#pragma mark - Docs
+#pragma mark - <AKSubtopicListItem> methods
 
 - (NSInteger)indexOfDocWithName:(NSString *)docName
 {

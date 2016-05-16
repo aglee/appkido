@@ -263,7 +263,7 @@
     {
         if ([self _matchesItem:classToken])
         {
-            AKClassTopic *topic = [AKClassTopic topicWithClassToken:classToken];
+            AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
 
             [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
@@ -276,7 +276,7 @@
     {
         if ([self _matchesItem:protocolToken])
         {
-            AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolToken:protocolToken];
+            AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
 
             [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
         }
@@ -287,7 +287,7 @@
 {
     for (AKClassToken *classToken in [_database allClasses])
     {
-        AKClassTopic *topic = [AKClassTopic topicWithClassToken:classToken];
+        AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
 
         // Search members common to all behaviors.
         [self _searchMembersUnderBehaviorTopic:topic];
@@ -306,7 +306,7 @@
 {
     for (AKProtocolToken *protocolToken in [_database allProtocols])
     {
-        AKProtocolTopic *topic = [AKProtocolTopic topicWithProtocolToken:protocolToken];
+        AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
 
         [self _searchMembersUnderBehaviorTopic:topic];
     }

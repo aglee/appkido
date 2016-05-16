@@ -7,7 +7,7 @@
 
 #import "AKDocLocator.h"
 #import "AKNamedObject.h"
-#import "AKSubtopic.h"
+#import "AKSubtopicListItem.h"
 #import "AKTopic.h"
 #import "DIGSLog.h"
 
@@ -116,7 +116,7 @@
 - (id<AKDocListItem>)docToDisplay
 {
 	if (_cachedDoc == nil) {
-		AKSubtopic *subtopic = [_topic subtopicWithName:_subtopicName];
+		id<AKSubtopicListItem> subtopic = [_topic subtopicWithName:_subtopicName];
 		_cachedDoc = [subtopic docWithName:_docName];
 	}
 	return _cachedDoc;
