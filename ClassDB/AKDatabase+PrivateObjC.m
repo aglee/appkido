@@ -52,8 +52,11 @@
 	}
 
 	AKBehaviorToken *item = [self _getOrAddClassOrCategoryTokenWithName:tokenMO.tokenName];
+	if (item.tokenMO) {
+		QLog(@"+++ [ODD] %s item %@ already has a tokenMO", __PRETTY_FUNCTION__, item);
+	}
+	item.tokenMO = tokenMO;
 	if (item.isClassToken) {
-		item.tokenMO = tokenMO;
 		if (((AKClassToken *)item).parentClass == nil) {
 			[self _fillInParentClassOfClassToken:((AKClassToken *)item)];
 		}
