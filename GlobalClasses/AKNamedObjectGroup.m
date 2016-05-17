@@ -29,6 +29,11 @@
 
 #pragma mark - Getters and setters
 
+- (NSArray *)sortedObjectNames
+{
+	return [self.objectsByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+}
+
 - (NSArray *)sortedObjects
 {
 	return [AKSortUtils arrayBySortingArray:self.objectsByName.allValues];

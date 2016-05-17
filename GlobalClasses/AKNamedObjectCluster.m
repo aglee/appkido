@@ -29,6 +29,11 @@
 
 #pragma mark - Getters and setters
 
+- (NSArray *)sortedGroupNames
+{
+	return [self.groupsByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+}
+
 - (NSArray *)sortedGroups
 {
 	return [AKSortUtils arrayBySortingArray:self.groupsByName.allValues];
@@ -53,7 +58,7 @@
 
 - (void)addNamedObject:(AKNamedObject *)namedObject toGroupWithName:(NSString *)groupName
 {
-	QLog(@"+++ Adding object '%@' to group '%@' within cluster '%@'", namedObject.name, groupName, self.name);
+	//QLog(@"+++ Adding object '%@' to group '%@' within cluster '%@'", namedObject.name, groupName, self.name);
 	AKNamedObjectGroup *group = self.groupsByName[groupName];
 	if (group == nil) {
 		group = [[AKNamedObjectGroup alloc] initWithName:groupName];

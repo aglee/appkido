@@ -15,6 +15,7 @@
  */
 @interface AKNamedObjectCluster : AKNamedObject
 
+@property (copy, readonly) NSArray *sortedGroupNames;
 @property (copy, readonly) NSArray *sortedGroups;
 
 #pragma mark - Accessing token groups

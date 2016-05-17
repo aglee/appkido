@@ -13,6 +13,7 @@
  */
 @interface AKNamedObjectGroup : AKNamedObject
 
+@property (copy, readonly) NSArray *sortedObjectNames;
 @property (copy, readonly) NSArray *sortedObjects;
 
 #pragma mark - Accessing objects in the group
