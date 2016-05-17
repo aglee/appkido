@@ -46,19 +46,25 @@
  */
 @property (readonly, copy) NSArray *namesOfAllOwningFrameworks;
 
-#pragma mark - Getters and setters -- general
+#pragma mark - Subclass tokens
 
 - (void)addChildClass:(AKClassToken *)classToken;
 - (void)removeChildClass:(AKClassToken *)classToken;
 
+#pragma mark - Category tokens
+
 - (void)addCategory:(AKCategoryToken *)categoryToken;
 - (AKCategoryToken *)categoryNamed:(NSString *)catName;
+
+#pragma mark - Bindings tokens
 
 - (void)addBindingToken:(AKBindingToken *)bindingToken;
 - (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName;
 - (NSArray *)documentedBindings;
 
-#pragma mark - Getters and setters -- multiple owning frameworks
+#pragma mark - Owning frameworks
+
+- (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Fix the multi-frameworkness of class items.
 
 - (BOOL)isOwnedByFramework:(NSString *)frameworkName;
 
@@ -74,24 +80,18 @@
 //- (void)associateDocumentation:(AKFileSection *)fileSection
 //            withFramework:(NSString *)frameworkName;
 
-#pragma mark - Getters and setters -- delegate methods
+#pragma mark - Delegate method tokens
 
 - (AKMethodToken *)delegateMethodWithName:(NSString *)methodName;
 
 /*! Does nothing if a delegate method with the same name already exists. */
 - (void)addDelegateMethod:(AKMethodToken *)methodToken;
 
-#pragma mark - Getters and setters -- notifications
+#pragma mark - Notification tokens
 
 - (AKNotificationToken *)notificationWithName:(NSString *)notificationName;
 
 /*! Does nothing if a notification with the same name already exists. */
 - (void)addNotification:(AKNotificationToken *)notificationToken;
-
-
-
-
-- (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Fix the multi-frameworkness of class items.
-
 
 @end

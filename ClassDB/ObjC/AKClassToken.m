@@ -44,7 +44,7 @@
 	return self;
 }
 
-#pragma mark - Getters and setters -- general
+#pragma mark - Subclass tokens
 
 - (void)addChildClass:(AKClassToken *)classToken
 {
@@ -88,6 +88,8 @@
 //	return (_childClassTokens.count > 0);
 //}
 
+#pragma mark - Category tokens
+
 - (AKCategoryToken *)categoryNamed:(NSString *)catName
 {
 	for (AKToken *item in _categoryTokens) {
@@ -108,12 +110,14 @@
 	NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryTokens];
 
 	// Get categories from ancestor classes.
-	if (_parentClass) {
-		[result addObjectsFromArray:[_parentClass allCategories]];
+	if (self.parentClass) {
+		[result addObjectsFromArray:self.parentClass.allCategories];
 	}
 
 	return result;
 }
+
+#pragma mark - Bindings tokens
 
 - (void)addBindingToken:(AKBindingToken *)bindingToken
 {
@@ -130,7 +134,16 @@
 	return self.bindingsByName.allValues;
 }
 
-#pragma mark - Getters and setters -- multiple owning frameworks
+#pragma mark - Owning frameworks
+
+- (void)setMainFrameworkName:(NSString *)frameworkName  //TODO: Fix the multiple-frameworks thing for class items.
+{
+	// Move this framework name to the beginning of _namesOfAllOwningFrameworks.
+	if (frameworkName) {
+		[_namesOfAllOwningFrameworks removeObject:frameworkName];
+		[_namesOfAllOwningFrameworks insertObject:frameworkName atIndex:0];
+	}
+}
 
 - (NSArray *)namesOfAllOwningFrameworks
 {
@@ -166,7 +179,7 @@
 //    _tokenDocumentationByFrameworkName[frameworkName] = fileSection;
 //}
 
-#pragma mark - Getters and setters -- delegate methods
+#pragma mark - Delegate method tokens
 
 - (NSArray *)documentedDelegateMethods
 {
@@ -189,7 +202,7 @@
 	methodToken.owningBehavior = self;
 }
 
-#pragma mark - Getters and setters -- notifications
+#pragma mark - Notification tokens
 
 - (NSArray *)documentedNotifications
 {
@@ -219,20 +232,9 @@
 	NSMutableArray *result = [NSMutableArray arrayWithArray:[super implementedProtocols]];
 
 	// Get protocols from ancestor classes.
-	[result addObjectsFromArray:[_parentClass implementedProtocols]];
+	[result addObjectsFromArray:self.parentClass.implementedProtocols];
 
 	return result;
-}
-
-#pragma mark - AKToken methods
-
-- (void)setMainFrameworkName:(NSString *)frameworkName  //TODO: Fix the multiple-frameworks thing for class items.
-{
-	// Move this framework name to the beginning of _namesOfAllOwningFrameworks.
-	if (frameworkName) {
-		[_namesOfAllOwningFrameworks removeObject:frameworkName];
-		[_namesOfAllOwningFrameworks insertObject:frameworkName atIndex:0];
-	}
 }
 
 #pragma mark - Private methods
