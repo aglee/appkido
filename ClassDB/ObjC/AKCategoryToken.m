@@ -6,6 +6,15 @@
 //
 
 #import "AKCategoryToken.h"
+#import "AKClassToken.h"
 
 @implementation AKCategoryToken
+
+#pragma mark - NSObject methods
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %@(%@)>", self.className, self.owningClassToken.name, self.name];
+}
+
 @end

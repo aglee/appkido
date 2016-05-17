@@ -7,9 +7,12 @@
 
 #import "AKBehaviorToken.h"
 
+@class AKClassToken;
+
 /*!
  * Represents an Objective-C category. This class currently isn't complete and
  * isn't used for anything serious.
  */
 @interface AKCategoryToken : AKBehaviorToken
+@property (weak) AKClassToken *owningClassToken;
 @end

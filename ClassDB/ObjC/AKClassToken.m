@@ -102,7 +102,18 @@
 
 - (void)addCategory:(AKCategoryToken *)categoryToken
 {
+	[categoryToken.owningClassToken removeCategoryToken:categoryToken];
 	[_categoryTokens addObject:categoryToken];
+	categoryToken.owningClassToken = self;
+}
+
+- (void)removeCategoryToken:(AKCategoryToken *)categoryToken
+{
+	NSInteger i = [_childClassTokens indexOfObject:categoryToken];
+	if (i >= 0) {
+		categoryToken.owningClassToken = nil;
+		[_categoryTokens removeObjectAtIndex:i];
+	}
 }
 
 - (NSArray *)allCategories
