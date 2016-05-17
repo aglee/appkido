@@ -14,6 +14,7 @@
 @class AKToken;
 @class AKFunctionToken;
 @class AKNamedObjectCluster;
+@class AKNamedObjectGroup;
 @class AKProtocolToken;
 
 /*!
@@ -30,7 +31,6 @@
 @interface AKDatabase : NSObject
 
 @property (readonly, strong) DocSetIndex *docSetIndex;
-@property (readonly, copy) NSArray *frameworkNames;
 @property (readonly, copy) NSArray *sortedFrameworkNames;
 @property (readonly, copy) NSArray *rootClasses;
 @property (readonly, copy) NSArray *allClasses;
@@ -65,7 +65,8 @@
 #pragma mark - Private stuff
 
 @interface AKDatabase ()
-@property (copy, readwrite) NSArray *frameworkNames;
+@property (strong) AKNamedObjectGroup *frameworksGroup;
+
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
 

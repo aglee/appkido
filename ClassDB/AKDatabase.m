@@ -8,7 +8,9 @@
 #import "AKDatabase.h"
 #import "AKClassToken.h"
 #import "AKDocSetQuery.h"
+#import "AKFramework.h"
 #import "AKNamedObjectCluster.h"
+#import "AKNamedObjectGroup.h"
 #import "AKProtocolToken.h"
 
 @implementation AKDatabase
@@ -20,7 +22,7 @@
 	self = [super init];
 	if (self) {
 		_docSetIndex = docSetIndex;
-		_frameworkNames = @[];
+		_frameworksGroup = [[AKNamedObjectGroup alloc] initWithName:@"Frameworks"];
 		_classTokensByName = [[NSMutableDictionary alloc] init];
 		_protocolTokensByName = [[NSMutableDictionary alloc] init];
 		_constantsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Constants"];
@@ -42,26 +44,26 @@
 
 - (NSArray *)sortedFrameworkNames
 {
-	return self.frameworkNames;
+	return self.frameworksGroup.sortedObjectNames;
 }
 
 #pragma mark - Populating the database
 
 - (void)populate
 {
-	[self _importFrameworkNames];
+	[self _importFrameworks];
 	[self _importObjectiveCTokens];
 	[self _importCTokens];
 
 	// Post-processing.
-	[self _pruneClassTokensWithoutTokens];  //TODO: Does this work?
+	//[self _pruneClassTokensWithoutTokens];  //TODO: Does this work?
 }
 
 #pragma mark - Frameworks
 
 - (BOOL)hasFrameworkWithName:(NSString *)frameworkName
 {
-	return [self.frameworkNames containsObject:frameworkName];
+	return ([self.frameworksGroup objectWithName:frameworkName] != nil);
 }
 
 #pragma mark - Class tokens
@@ -167,7 +169,7 @@
 	return [query fetchObjectsWithError:&error];  //TODO: Handle error.
 }
 
-- (void)_importFrameworkNames
+- (void)_importFrameworks
 {
 	AKDocSetQuery *query = [self _queryWithEntityName:@"Header"];
 	query.distinctKeyPathsString = @"frameworkName";
@@ -175,10 +177,12 @@
 
 	NSError *error;
 	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];  //TODO: Handle error.
-	NSArray *frameworkNames = [fetchedObjects valueForKey:@"frameworkName"];
-	frameworkNames = [frameworkNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 
-	self.frameworkNames = frameworkNames;
+	for (NSDictionary *dict in fetchedObjects) {
+		NSString *frameworkName = dict[@"frameworkName"];
+		AKFramework *framework = [[AKFramework alloc] initWithName:frameworkName];
+		[self.frameworksGroup addNamedObject:framework];
+	}
 }
 
 - (void)_pruneClassTokensWithoutTokens  //TODO: See if there is a better way.

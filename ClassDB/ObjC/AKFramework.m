@@ -11,4 +11,19 @@
 
 @implementation AKFramework
 
+#pragma mark - Init/awake/dealloc
+
+- (instancetype)initWithName:(NSString *)name
+{
+    self = [super initWithName:name];
+    if (self) {
+        _constantsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Constants"];
+        _enumsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Enums"];
+        _functionsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Functions"];
+        _macrosCluster = [[AKNamedObjectCluster alloc] initWithName:@"Macros"];
+        _typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Typedef"];
+    }
+    return self;
+}
+
 @end

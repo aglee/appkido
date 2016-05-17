@@ -73,7 +73,7 @@
 
 - (BOOL)_maybeImportTagToken:(DSAToken *)tokenMO
 {
-//TODO: I'm not sure what the token type "tag" means.  Hypothesis is that I can ignore it.
+	//TODO: I'm not sure yet what the token type "tag" means.  Current hypothesis is that I can ignore it.
 	if (![tokenMO.tokenType.typeName isEqualToString:@"tag"]) {
 		return NO;
 	}

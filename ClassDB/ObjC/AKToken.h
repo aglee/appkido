@@ -19,6 +19,7 @@
  */
 @interface AKToken : AKNamedObject <AKDocListItem>
 
+/*! "MO" is for "managed object", to help me tell whether I'm referring to a DSAToken instance or an AKToken object. */
 @property (nonatomic, strong) DSAToken *tokenMO;
 @property (nonatomic, readonly) NSString *frameworkName;
 @property (nonatomic, assign) BOOL isDeprecated;
