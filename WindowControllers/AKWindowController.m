@@ -18,8 +18,6 @@
 #import "AKDocViewController.h"
 #import "AKFindPanelController.h"
 #import "AKFormalProtocolsTopic.h"
-#import "AKFunctionsTopic.h"
-#import "AKGlobalsTopic.h"
 #import "AKInformalProtocolsTopic.h"
 #import "AKLinkResolver.h"
 #import "AKPrefUtils.h"
@@ -213,9 +211,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	// in the same doc. We do a Find Next so the doc view will highlight it.
 	// Example: NSXMLParserInvalidConditionalSectionError -- it's in the middle
 	// of the page, so we need this kludge to scroll the web view down.
-	if ([[self currentDocLocator].topicToDisplay isKindOfClass:[AKGlobalsTopic class]]) {
-		[self performSelector:@selector(_popQuizKludge) withObject:nil afterDelay:0];
-	}
+//TODO: Revisit this after all token types are handled.
+//	if ([[self currentDocLocator].topicToDisplay isKindOfClass:[AKGlobalsTopic class]]) {
+//		[self performSelector:@selector(_popQuizKludge) withObject:nil afterDelay:0];
+//	}
 }
 
 - (void)_popQuizKludge
@@ -350,24 +349,24 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	}
 }
 
-- (IBAction)selectFunctionsTopic:(id)sender
+- (IBAction)selectFunctionsTopic:(id)sender  //TODO: Clean this up.
 {
-	if ([sender isKindOfClass:[NSMenuItem class]]) {
-		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[[AKFunctionsTopic alloc] initWithFramework:frameworkName
-															 database:_database]];
-		[self _showBrowser];
-	}
+//	if ([sender isKindOfClass:[NSMenuItem class]]) {
+//		NSString *frameworkName = [sender menu].title;
+//		[self selectTopic:[[AKFunctionsTopic alloc] initWithFramework:frameworkName
+//															 database:_database]];
+//		[self _showBrowser];
+//	}
 }
 
-- (IBAction)selectGlobalsTopic:(id)sender
+- (IBAction)selectGlobalsTopic:(id)sender  //TODO: Clean this up.
 {
-	if ([sender isKindOfClass:[NSMenuItem class]]) {
-		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[[AKGlobalsTopic alloc] initWithFramework:frameworkName
-														   database:_database]];
-		[self _showBrowser];
-	}
+//	if ([sender isKindOfClass:[NSMenuItem class]]) {
+//		NSString *frameworkName = [sender menu].title;
+//		[self selectTopic:[[AKGlobalsTopic alloc] initWithFramework:frameworkName
+//														   database:_database]];
+//		[self _showBrowser];
+//	}
 }
 
 - (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender

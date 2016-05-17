@@ -14,5 +14,4 @@ extern NSString *AKTopicBrowserPathSeparator;
 extern NSString *AKProtocolsTopicName;
 extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
-extern NSString *AKGlobalsTopicName;
 

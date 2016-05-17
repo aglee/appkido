@@ -10,38 +10,24 @@
 #import "DocSetModel.h"
 
 @class AKClassToken;
+@class AKDocSetQuery;
 @class AKToken;
 @class AKFunctionToken;
-@class AKGroupItem;
+@class AKNamedObjectCluster;
 @class AKProtocolToken;
 
 /*!
- * Contains information about a Cocoa-style Objective-C API: the names of API
- * constructs, the logical relationships between them, and where each one is
- * documented. An example of a fact in this database is "The Foundation
- * class NSString is a subclass of NSObject, and is documented in file XYZ."
+ * Contains information about a Cocoa-style API: the names of API constructs,
+ * the logical relationships between them, and where each one is documented.
+ * An example of a fact in this database is "The Foundation class NSString is a
+ * subclass of NSObject, and is documented in file XYZ."
  *
- * All this information is represented as a graph of AKToken objects.
- * Every query to this database returns a collection of database items.
- *
- * Before querying a database, you need to populate it by calling -populate.
- * You can set a delegate which will be messaged at various points while the
- * database is being populated.
- *
- * An AKDatabase lives entirely in memory and is currently constructed from
- * scratch at launch.
+ * Before querying a database, you need to populate it by calling -populate,
+ * which imports imformation from the database's DocSetIndex.  An AKDatabase
+ * lives entirely in memory, and there is currently no way to save the imported
+ * information; it must be re-imported when the application relaunches.
  */
 @interface AKDatabase : NSObject
-{
-@private
-    // Functions.
-    NSMutableDictionary *_functionsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupItem]}
-    NSMutableDictionary *_functionsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupItem}}
-
-    // Globals.
-    NSMutableDictionary *_globalsGroupListsByFramework;  // @{FRAMEWORK_NAME: @[AKGroupItem]}
-    NSMutableDictionary *_globalsGroupsByFrameworkAndGroup;  // @{FRAMEWORK_NAME: @{GROUP_NAME: AKGroupItem}}
-}
 
 @property (readonly, strong) DocSetIndex *docSetIndex;
 @property (readonly, copy) NSArray *frameworkNames;
@@ -56,37 +42,53 @@
 
 #pragma mark - Populating the database
 
-/*! Populates the database using contents of the DocSetIndex. */
+/*! Imports information from the DocSetIndex. */
 - (void)populate;
 
-#pragma mark - Getters and setters -- frameworks
+#pragma mark - Frameworks
 
 - (BOOL)hasFrameworkWithName:(NSString *)frameworkName;
 
-#pragma mark - Getters and setters -- classes
+#pragma mark - Class Tokens
 
 - (NSArray<AKClassToken *> *)classesForFramework:(NSString *)frameworkName;
 - (AKClassToken *)classWithName:(NSString *)className;
 
-#pragma mark - Getters and setters -- protocols
+#pragma mark - Protocol Tokens
 
 - (NSArray<AKProtocolToken *> *)formalProtocolsForFramework:(NSString *)frameworkName;
 - (NSArray<AKProtocolToken *> *)informalProtocolsForFramework:(NSString *)frameworkName;
 - (AKProtocolToken *)protocolWithName:(NSString *)name;
 
-/*! Does nothing if we already contain a protocol with that name. */
+@end
+
+#pragma mark - Private stuff
+
+@interface AKDatabase ()
+@property (copy, readwrite) NSArray *frameworkNames;
+@property (copy, readonly) NSMutableDictionary *classTokensByName;
+@property (copy, readonly) NSMutableDictionary *protocolTokensByName;
+
+@property (strong) AKNamedObjectCluster *constantsCluster;
+@property (strong) AKNamedObjectCluster *enumsCluster;
+@property (strong) AKNamedObjectCluster *functionsCluster;
+@property (strong) AKNamedObjectCluster *macrosCluster;
+@property (strong) AKNamedObjectCluster *typedefsCluster;
+
 - (void)addProtocolToken:(AKProtocolToken *)protocolToken;
 
-#pragma mark - Getters and setters -- functions
-
-- (NSArray *)functionsGroupsForFramework:(NSString *)frameworkName;
-- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName inFramework:(NSString *)frameworkName;
-- (void)addFunctionsGroup:(AKGroupItem *)functionsGroup;
-
-#pragma mark - Getters and setters -- globals
-
-- (NSArray *)globalsGroupsForFramework:(NSString *)frameworkName;
-- (AKGroupItem *)globalsGroupNamed:(NSString *)groupName inFramework:(NSString *)frameworkName;
-- (void)addGlobalsGroup:(AKGroupItem *)globalsGroup;
-
+- (AKDocSetQuery *)_queryWithEntityName:(NSString *)entityName;
+- (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName;
 @end
+
+
+@interface AKDatabase (PrivateObjC)
+- (void)_importObjectiveCTokens;
+@end
+
+
+@interface AKDatabase (PrivateC)
+- (void)_importCTokens;
+@end
+
+

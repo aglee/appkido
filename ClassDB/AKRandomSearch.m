@@ -10,7 +10,6 @@
 #import "DIGSLog.h"
 #import "AKClassToken.h"
 #import "AKDatabase.h"
-#import "AKGroupItem.h"
 #import "AKProtocolToken.h"
 
 @interface AKRandomSearch ()
@@ -113,15 +112,15 @@
     }
 }
 
-- (void)_addFunctionsToSymbolArray:(NSMutableArray *)apiSymbols
+- (void)_addFunctionsToSymbolArray:(NSMutableArray *)apiSymbols  //TODO: Clean this up.
 {
-    for (NSString *fwName in [_database frameworkNames])
-    {
-        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
-        {
-            [self _addTokens:[groupItem subitems] toSymbolArray:apiSymbols];
-        }
-    }
+//    for (NSString *fwName in [_database frameworkNames])
+//    {
+//        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
+//        {
+//            [self _addTokens:[groupItem subitems] toSymbolArray:apiSymbols];
+//        }
+//    }
 }
 
 @end

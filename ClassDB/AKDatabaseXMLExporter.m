@@ -12,7 +12,6 @@
 
 #import "AKClassToken.h"
 #import "AKDatabase.h"
-#import "AKGroupItem.h"
 #import "AKMemberToken.h"
 #import "AKProtocolToken.h"
 #import "AKSortUtils.h"
@@ -72,17 +71,11 @@
         // Export protocols.
         [self _exportProtocolsForFramework:fwName];
 
-        // Export functions.
-        [self _exportGroupItems:[_database functionsGroupsForFramework:fwName]
-                      inSection:@"functions"
-                    ofFramework:fwName
-                     subitemTag:@"function"];
-
-        // Export globals.
-        [self _exportGroupItems:[_database globalsGroupsForFramework:fwName]
-                      inSection:@"globals"
-                    ofFramework:fwName
-                     subitemTag:@"global"];
+//        // Export functions.
+//        [self _exportGroupItems:[_database functionsGroupsForFramework:fwName]  //TODO: Clean this up.
+//                      inSection:@"functions"
+//                    ofFramework:fwName
+//                     subitemTag:@"function"];
     }];
 }
 
@@ -109,19 +102,19 @@
     }];
 }
 
-- (void)_exportGroupItems:(NSArray *)groupItems
-                inSection:(NSString *)frameworkSection
-              ofFramework:(NSString *)fwName
-               subitemTag:(NSString *)subitemTag
-{
-    [self _writeDividerWithString:fwName string:frameworkSection];
-    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
-        for (AKGroupItem *groupItem in [AKSortUtils arrayBySortingArray:groupItems])
-        {
-            [self _exportGroupItem:groupItem usingsubitemTag:subitemTag];
-        }
-    }];
-}
+//- (void)_exportGroupItems:(NSArray *)groupItems  //TODO: Clean this up.
+//                inSection:(NSString *)frameworkSection
+//              ofFramework:(NSString *)fwName
+//               subitemTag:(NSString *)subitemTag
+//{
+//    [self _writeDividerWithString:fwName string:frameworkSection];
+//    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
+//        for (AKGroupItem *groupItem in [AKSortUtils arrayBySortingArray:groupItems])
+//        {
+//            [self _exportGroupItem:groupItem usingsubitemTag:subitemTag];
+//        }
+//    }];
+//}
 
 
 #pragma mark - Private methods -- exporting classes and protocols
@@ -219,15 +212,16 @@
     [_xmlWriter tag:subitemTag attributes:attributes];
 }
 
-- (void)_exportGroupItem:(AKGroupItem *)groupItem usingsubitemTag:(NSString *)subitemTag
-{
-    [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.name } contentBlock:^{
-        for (AKToken *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
-        {
-            [self _exportGroupSubitem:subitem withXMLTag:subitemTag];
-        }
-    }];
-}
+//TODO: Clean this up.
+//- (void)_exportGroupItem:(AKGroupItem *)groupItem usingsubitemTag:(NSString *)subitemTag
+//{
+//    [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.name } contentBlock:^{
+//        for (AKToken *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
+//        {
+//            [self _exportGroupSubitem:subitem withXMLTag:subitemTag];
+//        }
+//    }];
+//}
 
 #pragma mark - Private methods -- low-level utilities
 

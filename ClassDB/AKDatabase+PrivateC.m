@@ -6,80 +6,88 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKDatabase+Private.h"
+#import "AKDatabase.h"
+#import "AKFunctionToken.h"
+#import "AKNamedObjectCluster.h"
 
 @implementation AKDatabase (PrivateC)
 
 - (void)_importCTokens
 {
-	for (DSAToken *token in [self _arrayWithTokenMOsForLanguage:@"C"]) {
-		if (![self _maybeImportCToken:token]) {
-			QLog(@"+++ %s [ODD] Could not import token with type '%@'", __PRETTY_FUNCTION__, token.tokenType.typeName);
+	for (DSAToken *tokenMO in [self _arrayWithTokenMOsForLanguage:@"C"]) {
+		if (![self _maybeImportCToken:tokenMO]) {
+			QLog(@"+++ %s [ODD] Could not import token '%@' with type '%@'", __PRETTY_FUNCTION__, tokenMO.tokenName, tokenMO.tokenType.typeName);
 		}
 	}
 }
 
-- (BOOL)_maybeImportCToken:(DSAToken *)token
+- (BOOL)_maybeImportCToken:(DSAToken *)tokenMO
 {
-	return ([self _maybeImportDataToken:token]
-			|| [self _maybeImportEnumToken:token]
-			|| [self _maybeImportFunctionToken:token]
-			|| [self _maybeImportMacroToken:token]
-			|| [self _maybeImportStructToken:token]
-			|| [self _maybeImportTypedefToken:token]);
+	return ([self _maybeImportDataToken:tokenMO]
+			|| [self _maybeImportEnumToken:tokenMO]
+			|| [self _maybeImportFunctionToken:tokenMO]
+			|| [self _maybeImportMacroToken:tokenMO]
+			|| [self _maybeImportTagToken:tokenMO]
+			|| [self _maybeImportTypedefToken:tokenMO]);
 }
 
-- (BOOL)_maybeImportDataToken:(DSAToken *)token
+- (BOOL)_maybeImportDataToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"data"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"data"]) {
+		return NO;
+	}
+	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	[self.constantsCluster addNamedObject:token toGroupWithName:@"Constants"];
+	return YES;
+}
+
+- (BOOL)_maybeImportEnumToken:(DSAToken *)tokenMO
+{
+	if (![tokenMO.tokenType.typeName isEqualToString:@"econst"]) {
+		return NO;
+	}
+	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	[self.enumsCluster addNamedObject:token toGroupWithName:@"Enums"];
+	return YES;
+}
+
+- (BOOL)_maybeImportFunctionToken:(DSAToken *)tokenMO
+{
+	if (![tokenMO.tokenType.typeName isEqualToString:@"func"]) {
+		return NO;
+	}
+	AKToken *token = [[AKFunctionToken alloc] initWithName:tokenMO.tokenName];
+	[self.functionsCluster addNamedObject:token toGroupWithName:@"Functions"];
+	return YES;
+}
+
+- (BOOL)_maybeImportMacroToken:(DSAToken *)tokenMO
+{
+	if (![tokenMO.tokenType.typeName isEqualToString:@"macro"]) {
+		return NO;
+	}
+	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	[self.macrosCluster addNamedObject:token toGroupWithName:@"Macros"];
+	return YES;
+}
+
+- (BOOL)_maybeImportTagToken:(DSAToken *)tokenMO
+{
+//TODO: I'm not sure what the token type "tag" means.  Hypothesis is that I can ignore it.
+	if (![tokenMO.tokenType.typeName isEqualToString:@"tag"]) {
 		return NO;
 	}
 
 	return YES;
 }
 
-- (BOOL)_maybeImportEnumToken:(DSAToken *)token
+- (BOOL)_maybeImportTypedefToken:(DSAToken *)tokenMO
 {
-	if (![token.tokenType.typeName isEqualToString:@"econst"]) {
+	if (![tokenMO.tokenType.typeName isEqualToString:@"tdef"]) {
 		return NO;
 	}
-
-	return YES;
-}
-
-- (BOOL)_maybeImportFunctionToken:(DSAToken *)token
-{
-	if (![token.tokenType.typeName isEqualToString:@"func"]) {
-		return NO;
-	}
-
-	return YES;
-}
-
-- (BOOL)_maybeImportMacroToken:(DSAToken *)token
-{
-	if (![token.tokenType.typeName isEqualToString:@"macro"]) {
-		return NO;
-	}
-
-	return YES;
-}
-
-- (BOOL)_maybeImportStructToken:(DSAToken *)token
-{
-	if (![token.tokenType.typeName isEqualToString:@"tag"]) {
-		return NO;
-	}
-
-	return YES;
-}
-
-- (BOOL)_maybeImportTypedefToken:(DSAToken *)token
-{
-	if (![token.tokenType.typeName isEqualToString:@"tdef"]) {
-		return NO;
-	}
-
+	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	[self.typedefsCluster addNamedObject:token toGroupWithName:@"Typedefs"];
 	return YES;
 }
 

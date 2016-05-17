@@ -19,6 +19,9 @@
  * Abstract class that represents a "topic". Used as the representedObject of
  * cells in the topic browser.
  *
+ * Concrete subclasses need to do implement _arrayWithChildTopics and
+ * _arrayWithSubtopics.
+ *
  * IMPORTANT TERMINOLOGY: when a topic is selected in the topic browser, the
  * selected AKTopic provides **child topics** for populating the next column of
  * the browser, and **subtopics** for populating the subtopics list. For

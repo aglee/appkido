@@ -26,13 +26,9 @@ Here are the API constructs represented in AppKiDo, and their corresponding item
 * **Functions** -- AKFunctionToken
     * C functions. Also, #define'd macros that look like functions.
     * Examples: NSStringFromSelector(), NSAssert1().
-* **Globals** -- AKGlobalsItem
-    * This is my catchall term for typedefs, enums, and constants.
-    * Examples: NSApp, NSRoundedBezelStyle.
-* **Groups** -- AKGroupItem
-    * Since Apple's documentation organizes functions and globals into named groups, AppKiDo has an AKGroupItem class that represents such a group.
-    * This is the one type of token item that does not correspond to an Objective-C language construct.
-    * Examples:
+
+xxx discuss AKToken, AKFramework
+
 
 AppKiDo tags each token item with a **framework name** such as "Foundation" or "AppKit". Generally, each token item belongs to exactly one framework, but there is one exception: AKClassToken. In Cocoa, a class can span multiple frameworks by way of categories. For example, NSString is declared in Foundation but has a category in AppKit. For this reason, AKClassToken can be tagged with multiple framework names, though like every other token item it has exactly one primary owning framework.
 

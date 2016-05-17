@@ -11,9 +11,6 @@
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
-#import "AKFunctionsTopic.h"
-#import "AKGlobalsTopic.h"
-#import "AKGroupItem.h"
 #import "AKMethodToken.h"
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
@@ -349,25 +346,25 @@
 }
 
 // Search the functions in each of the function groups for each framework.
-- (void)_searchFunctionNames
+- (void)_searchFunctionNames  //TODO: Clean this up.
 {
-    for (NSString *fwName in [_database frameworkNames])
-    {
-        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
-        {
-            for (AKToken *subitem in [groupItem subitems])
-            {
-                if ([self _matchesItem:subitem])
-                {
-                    AKTopic *topic = [[AKFunctionsTopic alloc] initWithFramework:fwName
-                                                                        database:_database];
-                    [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                         subtopicName:groupItem.name
-                                                              docName:subitem.name]];
-                }
-            }
-        }
-    }
+//    for (NSString *fwName in [_database frameworkNames])
+//    {
+//        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
+//        {
+//            for (AKToken *subitem in [groupItem subitems])
+//            {
+//                if ([self _matchesItem:subitem])
+//                {
+//                    AKTopic *topic = [[AKFunctionsTopic alloc] initWithFramework:fwName
+//                                                                        database:_database];
+//                    [_searchResults addObject:[AKDocLocator withTopic:topic
+//                                                         subtopicName:groupItem.name
+//                                                              docName:subitem.name]];
+//                }
+//            }
+//        }
+//    }
 }
 
 - (void)_searchTokens:(NSArray *)itemArray

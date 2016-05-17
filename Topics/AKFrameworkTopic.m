@@ -13,8 +13,6 @@
 #import "AKAppDelegate.h"
 #import "AKFormalProtocolsTopic.h"
 #import "AKInformalProtocolsTopic.h"
-#import "AKFunctionsTopic.h"
-#import "AKGlobalsTopic.h"
 
 @implementation AKFrameworkTopic
 
@@ -65,15 +63,10 @@
 		[columnValues addObject:childTopic];
 	}
 	
-	if ([db functionsGroupsForFramework:fwName].count > 0) {
-		childTopic = [[AKFunctionsTopic alloc] initWithFramework:fwName database:db];
-		[columnValues addObject:childTopic];
-	}
-
-	if ([db globalsGroupsForFramework:fwName].count > 0) {
-		childTopic = [[AKGlobalsTopic alloc] initWithFramework:fwName database:db];
-		[columnValues addObject:childTopic];
-	}
+//	if ([db functionsGroupsForFramework:fwName].count > 0) {
+//		childTopic = [[AKFunctionsTopic alloc] initWithFramework:fwName database:db];
+//		[columnValues addObject:childTopic];
+//	}
 
 	return columnValues;
 }

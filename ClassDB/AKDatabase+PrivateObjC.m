@@ -6,7 +6,16 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKDatabase+Private.h"
+#import "AKDatabase.h"
+#import "AKBehaviorToken.h"
+#import "AKBindingToken.h"
+#import "AKCategoryToken.h"
+#import "AKClassToken.h"
+#import "AKClassMethodToken.h"
+#import "AKInstanceMethodToken.h"
+#import "AKPropertyToken.h"
+#import "AKProtocolToken.h"
+#import "AKRegexUtils.h"
 
 @implementation AKDatabase (PrivateObjC)
 

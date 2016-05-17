@@ -9,8 +9,8 @@
 #import "AKNamed.h"
 
 /*!
- * Trivial implementation of the AKNamed protocol.  sortName and displayName
- * both return self.name.
+ * Trivial implementation of the AKNamed protocol.  Stores name in an ivar.
+ * Both sortName and displayName return self.name.
  */
 @interface AKNamedObject : NSObject <AKNamed>
 

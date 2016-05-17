@@ -5,7 +5,11 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKDatabase+Private.h"
+#import "AKDatabase.h"
+#import "AKClassToken.h"
+#import "AKDocSetQuery.h"
+#import "AKNamedObjectCluster.h"
+#import "AKProtocolToken.h"
 
 @implementation AKDatabase
 
@@ -19,11 +23,11 @@
 		_frameworkNames = @[];
 		_classTokensByName = [[NSMutableDictionary alloc] init];
 		_protocolTokensByName = [[NSMutableDictionary alloc] init];
-		_functionsGroupListsByFramework = [[NSMutableDictionary alloc] init];
-		_functionsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
-
-		_globalsGroupListsByFramework = [[NSMutableDictionary alloc] init];
-		_globalsGroupsByFrameworkAndGroup = [[NSMutableDictionary alloc] init];
+		_constantsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Constants"];
+		_enumsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Enums"];
+		_functionsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Functions"];
+		_macrosCluster = [[AKNamedObjectCluster alloc] initWithName:@"Macros"];
+		_typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Typedef"];
 	}
 	return self;
 }
@@ -32,6 +36,13 @@
 {
 	DIGSLogError_NondesignatedInitializer();
 	return [self initWithDocSetIndex:nil];
+}
+
+#pragma mark - Getters and setters
+
+- (NSArray *)sortedFrameworkNames
+{
+	return self.frameworkNames;
 }
 
 #pragma mark - Populating the database
@@ -46,19 +57,14 @@
 	[self _pruneClassTokensWithoutTokens];  //TODO: Does this work?
 }
 
-#pragma mark - Getters and setters -- frameworks
-
-- (NSArray *)sortedFrameworkNames
-{
-	return self.frameworkNames;
-}
+#pragma mark - Frameworks
 
 - (BOOL)hasFrameworkWithName:(NSString *)frameworkName
 {
 	return [self.frameworkNames containsObject:frameworkName];
 }
 
-#pragma mark - Getters and setters -- classes
+#pragma mark - Class tokens
 
 - (NSArray *)classesForFramework:(NSString *)frameworkName
 {
@@ -92,7 +98,7 @@
 	return self.classTokensByName[className];
 }
 
-#pragma mark - Getters and setters -- protocols
+#pragma mark - Protocol tokens
 
 - (NSArray *)formalProtocolsForFramework:(NSString *)frameworkName
 {
@@ -127,88 +133,8 @@
 	_protocolTokensByName[protocolName] = protocolToken;
 }
 
-#pragma mark - Getters and setters -- functions
+#pragma mark - Function tokens
 
-- (NSArray *)functionsGroupsForFramework:(NSString *)frameworkName
-{
-	return _functionsGroupListsByFramework[frameworkName];
-}
-
-- (AKGroupItem *)functionsGroupNamed:(NSString *)groupName inFramework:(NSString *)frameworkName
-{
-	return _functionsGroupsByFrameworkAndGroup[frameworkName][groupName];
-}
-
-- (void)addFunctionsGroup:(AKGroupItem *)groupItem
-{
-	NSString *frameworkName = groupItem.frameworkName;
-
-	// See if we have any functions groups in the framework yet.
-	NSMutableArray *groupList = nil;
-	NSMutableDictionary *groupsByName = _functionsGroupsByFrameworkAndGroup[frameworkName];
-
-	if (groupsByName) {
-		groupList = _functionsGroupListsByFramework[frameworkName];
-	} else {
-		groupsByName = [NSMutableDictionary dictionary];
-		_functionsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
-
-		groupList = [NSMutableArray array];
-		_functionsGroupListsByFramework[frameworkName] = groupList;
-	}
-
-	// Add the functions group if it isn't already in the framework.
-	NSString *groupName = groupItem.name;
-
-	if (groupsByName[groupName]) {
-		DIGSLogWarning(@"Trying to add functions group [%@] again", groupName);
-	} else {
-		[groupList addObject:groupItem];
-		groupsByName[groupItem.name] = groupItem;
-	}
-}
-
-#pragma mark - Getters and setters -- globals
-
-- (NSArray *)globalsGroupsForFramework:(NSString *)frameworkName
-{
-	return _globalsGroupListsByFramework[frameworkName];
-}
-
-- (AKGroupItem *)globalsGroupNamed:(NSString *)groupName
-				  inFramework:(NSString *)frameworkName
-{
-	return _globalsGroupsByFrameworkAndGroup[frameworkName][groupName];
-}
-
-- (void)addGlobalsGroup:(AKGroupItem *)groupItem
-{
-	NSString *frameworkName = groupItem.frameworkName;
-
-	// See if we have any globals groups in the framework yet.
-	NSMutableArray *groupList = nil;
-	NSMutableDictionary *groupsByName = _globalsGroupsByFrameworkAndGroup[frameworkName];
-
-	if (groupsByName) {
-		groupList = _globalsGroupListsByFramework[frameworkName];
-	} else {
-		groupsByName = [NSMutableDictionary dictionary];
-		_globalsGroupsByFrameworkAndGroup[frameworkName] = groupsByName;
-
-		groupList = [NSMutableArray array];
-		_globalsGroupListsByFramework[frameworkName] = groupList;
-	}
-
-	// Add the globals group if it isn't already in the framework.
-	NSString *groupName = groupItem.name;
-
-	if (groupsByName[groupName]) {
-		DIGSLogWarning(@"Trying to add globals group [%@] again", groupName);
-	} else {
-		[groupList addObject:groupItem];
-		groupsByName[groupItem.name] = groupItem;
-	}
-}
 
 #pragma mark - Private methods - misc
 
