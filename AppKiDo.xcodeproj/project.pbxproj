@@ -317,10 +317,10 @@
 		738D41C015B07EC6008950F6 /* AKAppVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 738D41BC15B07EC6008950F6 /* AKAppVersion.m */; };
 		7395580F0D29CA83008105BD /* AKDatabaseXMLExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */; };
 		739558100D29CA83008105BD /* AKDatabaseXMLExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */; };
-		739719031CDC19AF0010E16A /* AKDocSetQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 739719011CDC19AF0010E16A /* AKDocSetQuery.h */; };
-		739719041CDC19AF0010E16A /* AKDocSetQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 739719011CDC19AF0010E16A /* AKDocSetQuery.h */; };
-		739719051CDC19AF0010E16A /* AKDocSetQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 739719021CDC19AF0010E16A /* AKDocSetQuery.m */; };
-		739719061CDC19AF0010E16A /* AKDocSetQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 739719021CDC19AF0010E16A /* AKDocSetQuery.m */; };
+		739719031CDC19AF0010E16A /* AKManagedObjectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 739719011CDC19AF0010E16A /* AKManagedObjectQuery.h */; };
+		739719041CDC19AF0010E16A /* AKManagedObjectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 739719011CDC19AF0010E16A /* AKManagedObjectQuery.h */; };
+		739719051CDC19AF0010E16A /* AKManagedObjectQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 739719021CDC19AF0010E16A /* AKManagedObjectQuery.m */; };
+		739719061CDC19AF0010E16A /* AKManagedObjectQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 739719021CDC19AF0010E16A /* AKManagedObjectQuery.m */; };
 		7399B2B50E632A5C001AE672 /* AKBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A70498501500A80007 /* AKBrowser.h */; };
 		7399B2B60E632A5C001AE672 /* AKTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030A90498501500A80007 /* AKTableView.h */; };
 		7399B2B70E632A5C001AE672 /* AKSortable.h in Headers */ = {isa = PBXBuildFile; fileRef = 730030DD0498501500A80007 /* AKSortable.h */; };
@@ -817,8 +817,8 @@
 		738D41BC15B07EC6008950F6 /* AKAppVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKAppVersion.m; path = GlobalClasses/AKAppVersion.m; sourceTree = SOURCE_ROOT; };
 		7395580D0D29CA83008105BD /* AKDatabaseXMLExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDatabaseXMLExporter.h; sourceTree = "<group>"; };
 		7395580E0D29CA83008105BD /* AKDatabaseXMLExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseXMLExporter.m; sourceTree = "<group>"; };
-		739719011CDC19AF0010E16A /* AKDocSetQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocSetQuery.h; sourceTree = "<group>"; };
-		739719021CDC19AF0010E16A /* AKDocSetQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocSetQuery.m; sourceTree = "<group>"; };
+		739719011CDC19AF0010E16A /* AKManagedObjectQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKManagedObjectQuery.h; sourceTree = "<group>"; };
+		739719021CDC19AF0010E16A /* AKManagedObjectQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKManagedObjectQuery.m; sourceTree = "<group>"; };
 		7399B3C10E632A5C001AE672 /* AppKiDo-for-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppKiDo-for-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7399B3C30E632A5C001AE672 /* Info-iPhone.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iPhone.plist"; sourceTree = "<group>"; };
 		7399B3FA0E638B54001AE672 /* app-icon-iphone.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "app-icon-iphone.icns"; path = "images/app-icon-iphone.icns"; sourceTree = "<group>"; };
@@ -1095,8 +1095,6 @@
 				73EE9E3E06856D120008CBEC /* AKDatabase.m */,
 				737F553E1CDFA15C00376A4B /* AKDatabase+PrivateObjC.m */,
 				737F55431CDFA3F300376A4B /* AKDatabase+PrivateC.m */,
-				739719011CDC19AF0010E16A /* AKDocSetQuery.h */,
-				739719021CDC19AF0010E16A /* AKDocSetQuery.m */,
 			);
 			name = database;
 			path = ClassDB;
@@ -1116,6 +1114,8 @@
 				73D239CB0D4ABBA000EF7503 /* AKDevToolsUtils.m */,
 				7323C9C108313881002E8D7D /* AKFileUtils.h */,
 				7323C9C208313881002E8D7D /* AKFileUtils.m */,
+				739719011CDC19AF0010E16A /* AKManagedObjectQuery.h */,
+				739719021CDC19AF0010E16A /* AKManagedObjectQuery.m */,
 				73C1E9221CECAEE3002BFD8F /* AKResult.h */,
 				73C1E9231CECAEE3002BFD8F /* AKResult.m */,
 				73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */,
@@ -1827,7 +1827,7 @@
 				734AEE931CC5E1600064AAA9 /* FilePath.h in Headers */,
 				73B6B6C70DC1D229004FB7ED /* AKFunctionToken.h in Headers */,
 				734AEE9F1CC5E1600064AAA9 /* TokenType.h in Headers */,
-				739719031CDC19AF0010E16A /* AKDocSetQuery.h in Headers */,
+				739719031CDC19AF0010E16A /* AKManagedObjectQuery.h in Headers */,
 				73B914950E089D180012C16F /* AKDevToolsViewController.h in Headers */,
 				734AEE8B1CC5E1600064AAA9 /* DSADistributionVersion.h in Headers */,
 				73B5025A1CE7B1F6009D1BE5 /* AKNamed.h in Headers */,
@@ -1961,7 +1961,7 @@
 				7399B31D0E632A5C001AE672 /* AKPropertyToken.h in Headers */,
 				7399B31E0E632A5C001AE672 /* AKMemberToken.h in Headers */,
 				7399B31F0E632A5C001AE672 /* AKNotificationToken.h in Headers */,
-				739719041CDC19AF0010E16A /* AKDocSetQuery.h in Headers */,
+				739719041CDC19AF0010E16A /* AKManagedObjectQuery.h in Headers */,
 				7399B3250E632A5C001AE672 /* AKDevToolsPanelController.h in Headers */,
 				73A7F8001CD5AE9A00E8EC85 /* Parameter.h in Headers */,
 				73C735A90F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */,
@@ -2221,7 +2221,7 @@
 				65B109F209D7B6C300A8A637 /* AKSubtopic.m in Sources */,
 				7357E6F91CD6B866009A613C /* AKRegexUtils.m in Sources */,
 				65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */,
-				739719051CDC19AF0010E16A /* AKDocSetQuery.m in Sources */,
+				739719051CDC19AF0010E16A /* AKManagedObjectQuery.m in Sources */,
 				65B109F409D7B6C300A8A637 /* AKProtocolsTopic.m in Sources */,
 				7322FBED1CEA9EEE007E0764 /* AKFramework.m in Sources */,
 				734AEEA81CC5E1600064AAA9 /* _DownloadableFile.m in Sources */,
@@ -2368,7 +2368,7 @@
 				7399B3730E632A5C001AE672 /* AKBehaviorHeaderFile.m in Sources */,
 				737F55651CE502E300376A4B /* AKNamedObject.m in Sources */,
 				7399B3750E632A5C001AE672 /* AKDocLocator.m in Sources */,
-				739719061CDC19AF0010E16A /* AKDocSetQuery.m in Sources */,
+				739719061CDC19AF0010E16A /* AKManagedObjectQuery.m in Sources */,
 				7399B37B0E632A5C001AE672 /* AKSearchQuery.m in Sources */,
 				73A7F80E1CD5AEAF00E8EC85 /* _Parameter.m in Sources */,
 				7322FBDC1CEA6B93007E0764 /* AKNamedObjectGroup.m in Sources */,

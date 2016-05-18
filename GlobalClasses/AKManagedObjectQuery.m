@@ -1,24 +1,24 @@
 //
-//  AKDocSetQuery.m
+//  AKManagedObjectQuery.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 4/29/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKDocSetQuery.h"
+#import "AKManagedObjectQuery.h"
 #import "AKRegexUtils.h"
 #import "AKResult.h"
 #import "QuietLog.h"
 
 #define MyErrorDomain @"com.appkido.AppKiDo"
 
-@interface AKDocSetQuery ()
+@interface AKManagedObjectQuery ()
 @property (strong) NSManagedObjectContext *moc;
 @property (copy) NSString *entityName;
 @end
 
-@implementation AKDocSetQuery
+@implementation AKManagedObjectQuery
 
 #pragma mark - Init/awake/dealloc
 

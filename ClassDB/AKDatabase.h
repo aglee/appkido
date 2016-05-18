@@ -10,7 +10,7 @@
 #import "DocSetModel.h"
 
 @class AKClassToken;
-@class AKDocSetQuery;
+@class AKManagedObjectQuery;
 @class AKToken;
 @class AKFunctionToken;
 @class AKNamedObjectCluster;
@@ -77,7 +77,7 @@
 
 - (void)addProtocolToken:(AKProtocolToken *)protocolToken;
 
-- (AKDocSetQuery *)_queryWithEntityName:(NSString *)entityName;
+- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
 - (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName;
 @end
 

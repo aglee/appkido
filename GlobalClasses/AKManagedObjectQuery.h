@@ -1,5 +1,5 @@
 //
-//  AKDocSetQuery.h
+//  AKManagedObjectQuery.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 4/29/16.
@@ -13,7 +13,7 @@
 /*!
  * Convenience methods for doing simple Core Data fetches.
  */
-@interface AKDocSetQuery : NSObject
+@interface AKManagedObjectQuery : NSObject
 
 @property (copy) NSArray *keyPaths;
 /*! No placeholders, just a string. */

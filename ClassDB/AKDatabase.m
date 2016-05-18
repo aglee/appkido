@@ -7,7 +7,7 @@
 
 #import "AKDatabase.h"
 #import "AKClassToken.h"
-#import "AKDocSetQuery.h"
+#import "AKManagedObjectQuery.h"
 #import "AKFramework.h"
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
@@ -146,14 +146,14 @@
 
 #pragma mark - Private methods - populating the database - misc
 
-- (AKDocSetQuery *)_queryWithEntityName:(NSString *)entityName
+- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName
 {
-	return [[AKDocSetQuery alloc] initWithMOC:self.docSetIndex.managedObjectContext entityName:entityName];
+	return [[AKManagedObjectQuery alloc] initWithMOC:self.docSetIndex.managedObjectContext entityName:entityName];
 }
 
 - (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName
 {
-	AKDocSetQuery *query = [self _queryWithEntityName:@"Token"];
+	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Token"];
 	query.predicateString = [NSString stringWithFormat:@"language.fullName = '%@'", languageName];
 	AKResult *result = [query fetchObjects];
 	return result.object;  //TODO: Handle error.
@@ -161,7 +161,7 @@
 
 - (void)_importFrameworks
 {
-	AKDocSetQuery *query = [self _queryWithEntityName:@"Header"];
+	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Header"];
 	query.keyPaths = @[ @"frameworkName" ];
 	query.predicateString = @"frameworkName != NULL";
 
