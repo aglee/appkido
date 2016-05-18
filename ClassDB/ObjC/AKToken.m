@@ -29,7 +29,11 @@
 
 #pragma mark - Getters and setters
 
+- (NSString *)headerPath
 {
+	return self.tokenMO.metainformation.declaredIn.headerPath;
+}
+
 - (DSAToken *)tokenMO
 {
 	return _tokenMO;

@@ -17,7 +17,7 @@ NSString *AKBehaviorHeaderFileName = @"Header File";
 - (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken
 {
 	NSParameterAssert(behaviorToken != nil);
-	NSString *relativePath = self.behaviorToken.tokenMO.metainformation.declaredIn.headerPath;
+	NSString *relativePath = self.behaviorToken.headerPath;
 	NSString *headerFileName = relativePath.lastPathComponent;
 	NSString *name = (headerFileName.length ? headerFileName : @"Header File");
 
@@ -56,7 +56,7 @@ NSString *AKBehaviorHeaderFileName = @"Header File";
 	// - For Swift tokens (55,905 of them in the 10.11.4 docset), the 	headerPath is not a path, but either "Swift" or a framework name.
 	//
 	// - There's a bunch of tokens that have *no* headerPath.  I think that's a bug in some cases, not sure if all cases.
-	NSString *relativePath = self.behaviorToken.tokenMO.metainformation.declaredIn.headerPath;
+	NSString *relativePath = self.behaviorToken.headerPath;
 	if ([relativePath hasPrefix:@"/"]) {
 		return [docSetIndex.headerFilesBaseURL URLByAppendingPathComponent:relativePath];
 	} else {
@@ -68,9 +68,7 @@ NSString *AKBehaviorHeaderFileName = @"Header File";
 
 - (NSString *)name
 {
-	NSString *relativePath = self.behaviorToken.tokenMO.metainformation.declaredIn.headerPath;
-	NSString *headerFileName = relativePath.lastPathComponent;
-
+	NSString *headerFileName = self.behaviorToken.headerPath.lastPathComponent;
 	return (headerFileName ?: @"Header File");
 }
 

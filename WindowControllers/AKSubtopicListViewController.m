@@ -34,7 +34,6 @@
     return self;
 }
 
-
 - (void)awakeFromNib
 {
     // Use a custom cell for the subtopics table.
@@ -216,14 +215,13 @@
         || (itemAction == @selector(selectNotificationsSubtopic:))
         || (itemAction == @selector(selectAllNotificationsSubtopic:)))
     {
-        AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
+        AKTopic *currentTopic = self.owningWindowController.currentDocLocator.topicToDisplay;
         return [currentTopic isKindOfClass:[AKBehaviorTopic class]];
     }
     else if (itemAction == @selector(selectHeaderFile:))
     {
-        AKTopic *currentTopic = [self.owningWindowController currentDocLocator].topicToDisplay;
-        NSString *headerPath = currentTopic.topicToken.tokenMO.metainformation.declaredIn.headerPath;
-        return (headerPath != nil);
+        AKTopic *currentTopic = self.owningWindowController.currentDocLocator.topicToDisplay;
+        return (currentTopic.topicToken.headerPath != nil);
     }
 
     return NO;
