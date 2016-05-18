@@ -41,7 +41,7 @@
 + (AKResult *)failureResultWithError:(NSError *)error
 {
     NSParameterAssert(error != nil);
-    QLog(@"+++ [ERROR] %@", error);
+    //QLog(@"+++ [ERROR] %@", error);
     AKFailureResult *result = [[AKFailureResult alloc] init];
     result.error = error;
     return result;
