@@ -7,6 +7,7 @@
 
 #import "AKToken.h"
 #import "AKRegexUtils.h"
+#import "AKResult.h"
 #import "DIGSLog.h"
 #import "DocSetIndex.h"
 
@@ -50,6 +51,17 @@
 	_frameworkName = [self _frameworkNameForTokenMO:tokenMO];
 }
 
+- (NSRegularExpression *)_regexForFindingFrameworkNameInHeaderPath
+{
+	// Look for a match with .../SomeFrameworkName.framework/...
+	static NSRegularExpression *s_regex;
+	static dispatch_once_t once;
+	dispatch_once(&once,^{
+		s_regex = [AKRegexUtils constructRegexWithPattern:@".*/(%ident%)\\.framework/.*"].object;
+	});
+	return s_regex;
+}
+
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO
 {
 	// See if the DocSetIndex specifies a framework for this token.
@@ -62,7 +74,7 @@
 	if (frameworkName == nil) {
 		NSString *headerPath = tokenMO.metainformation.declaredIn.headerPath;
 		if (headerPath) {
-			NSDictionary *captureGroups = [AKRegexUtils matchPattern:@".*/(%ident%)\\.framework/.*" toEntireString:headerPath];
+			NSDictionary *captureGroups = [AKRegexUtils matchRegex:[self _regexForFindingFrameworkNameInHeaderPath] toEntireString:headerPath].object;
 			frameworkName = captureGroups[@1];
 			if (frameworkName) {
 				QLog(@"+++ Framework %@ for %@ was inferred from header path", frameworkName, self);
