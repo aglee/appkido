@@ -85,17 +85,8 @@
         // Write formal protocols.
         [self _writeDividerWithString:fwName string:@"formal protocols"];
 
-        NSArray *formalProtocols = [_database formalProtocolsForFramework:fwName];
-        for (AKProtocolToken *protocolToken in [AKSortUtils arrayBySortingArray:formalProtocols])
-        {
-            [self _exportProtocol:protocolToken];
-        }
-
-        // Write informal protocols.
-        [self _writeDividerWithString:fwName string:@"informal protocols"];
-
-        NSArray *informalProtocols = [_database informalProtocolsForFramework:fwName];
-        for (AKProtocolToken *protocolToken in [AKSortUtils arrayBySortingArray:informalProtocols])
+        NSArray *protocolTokens = [_database protocolsForFramework:fwName];
+        for (AKProtocolToken *protocolToken in [AKSortUtils arrayBySortingArray:protocolTokens])
         {
             [self _exportProtocol:protocolToken];
         }
@@ -149,7 +140,6 @@
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:2];
 
     attributes[@"name"] = protocolToken.name;
-    attributes[@"type"] = (protocolToken.isInformal ? @"informal" : @"formal");
 
     [_xmlWriter tag:@"protocol" attributes:attributes contentBlock:^{
         [self _exportMembers:[protocolToken propertyTokens]

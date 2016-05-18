@@ -99,14 +99,9 @@
 
 #pragma mark - Protocol tokens
 
-- (NSArray *)formalProtocolsForFramework:(NSString *)frameworkName
+- (NSArray *)protocolsForFramework:(NSString *)frameworkName
 {
-	return [self _allProtocolsForFramework:frameworkName withInformalFlag:NO];
-}
-
-- (NSArray *)informalProtocolsForFramework:(NSString *)frameworkName
-{
-	return [self _allProtocolsForFramework:frameworkName withInformalFlag:YES];
+	return [self _allProtocolsForFramework:frameworkName];
 }
 
 - (NSArray *)allProtocols
@@ -138,13 +133,10 @@
 #pragma mark - Private methods - misc
 
 - (NSArray *)_allProtocolsForFramework:(NSString *)fwName
-						   withInformalFlag:(BOOL)informalFlag
 {
 	NSMutableArray *result = [NSMutableArray array];
 	for (AKProtocolToken *protocolToken in [self allProtocols]) {
-		if ((protocolToken.isInformal == informalFlag)
-			&& [protocolToken.frameworkName isEqualToString:fwName]) {
-
+		if ([protocolToken.frameworkName isEqualToString:fwName]) {
 			[result addObject:protocolToken];
 		}
 	}

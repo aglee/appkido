@@ -8,10 +8,4 @@
 #import "AKProtocolToken.h"
 
 @implementation AKProtocolToken
-
-- (BOOL)isInformal
-{
-	return (self.headerPath == nil); //TODO: Is this a reliable test for informal protocols?  Some might be declared as categories (e.g. on NSObject), and thus have a headerPath.
-}
-
 @end

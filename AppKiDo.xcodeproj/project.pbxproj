@@ -34,9 +34,8 @@
 		65B1096B09D7B6C300A8A637 /* AKMembersSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */; };
 		65B1096D09D7B6C300A8A637 /* AKSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */; };
 		65B1096E09D7B6C300A8A637 /* AKClassTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1704EDCF3B00A80003 /* AKClassTopic.h */; };
-		65B1096F09D7B6C300A8A637 /* AKFormalProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1904EDCF3B00A80003 /* AKFormalProtocolsTopic.h */; };
+		65B1096F09D7B6C300A8A637 /* AKProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1904EDCF3B00A80003 /* AKProtocolsTopic.h */; };
 		65B1097009D7B6C300A8A637 /* AKFrameworkTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1D04EDCF3B00A80003 /* AKFrameworkTopic.h */; };
-		65B1097209D7B6C300A8A637 /* AKInformalProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2104EDCF3B00A80003 /* AKInformalProtocolsTopic.h */; };
 		65B1097309D7B6C300A8A637 /* AKLabelTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2504EDCF3B00A80003 /* AKLabelTopic.h */; };
 		65B1097409D7B6C300A8A637 /* AKProtocolTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2704EDCF3B00A80003 /* AKProtocolTopic.h */; };
 		65B1097509D7B6C300A8A637 /* AKTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2904EDCF3B00A80003 /* AKTopic.h */; };
@@ -105,9 +104,8 @@
 		65B109F009D7B6C300A8A637 /* AKMembersSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */; };
 		65B109F209D7B6C300A8A637 /* AKSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */; };
 		65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1804EDCF3B00A80003 /* AKClassTopic.m */; };
-		65B109F409D7B6C300A8A637 /* AKFormalProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1A04EDCF3B00A80003 /* AKFormalProtocolsTopic.m */; };
+		65B109F409D7B6C300A8A637 /* AKProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1A04EDCF3B00A80003 /* AKProtocolsTopic.m */; };
 		65B109F509D7B6C300A8A637 /* AKFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1E04EDCF3B00A80003 /* AKFrameworkTopic.m */; };
-		65B109F709D7B6C300A8A637 /* AKInformalProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2204EDCF3B00A80003 /* AKInformalProtocolsTopic.m */; };
 		65B109F809D7B6C300A8A637 /* AKLabelTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2604EDCF3B00A80003 /* AKLabelTopic.m */; };
 		65B109F909D7B6C300A8A637 /* AKProtocolTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2804EDCF3B00A80003 /* AKProtocolTopic.m */; };
 		65B109FA09D7B6C300A8A637 /* AKTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2A04EDCF3B00A80003 /* AKTopic.m */; };
@@ -336,9 +334,8 @@
 		7399B2C90E632A5C001AE672 /* AKMembersSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26404EDC6AE00A80003 /* AKMembersSubtopic.h */; };
 		7399B2CB0E632A5C001AE672 /* AKSubtopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73ACB26A04EDC6AE00A80003 /* AKSubtopic.h */; };
 		7399B2CC0E632A5C001AE672 /* AKClassTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1704EDCF3B00A80003 /* AKClassTopic.h */; };
-		7399B2CD0E632A5C001AE672 /* AKFormalProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1904EDCF3B00A80003 /* AKFormalProtocolsTopic.h */; };
+		7399B2CD0E632A5C001AE672 /* AKProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1904EDCF3B00A80003 /* AKProtocolsTopic.h */; };
 		7399B2CE0E632A5C001AE672 /* AKFrameworkTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F1D04EDCF3B00A80003 /* AKFrameworkTopic.h */; };
-		7399B2D00E632A5C001AE672 /* AKInformalProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2104EDCF3B00A80003 /* AKInformalProtocolsTopic.h */; };
 		7399B2D10E632A5C001AE672 /* AKLabelTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2504EDCF3B00A80003 /* AKLabelTopic.h */; };
 		7399B2D20E632A5C001AE672 /* AKProtocolTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2704EDCF3B00A80003 /* AKProtocolTopic.h */; };
 		7399B2D30E632A5C001AE672 /* AKTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 73895F2904EDCF3B00A80003 /* AKTopic.h */; };
@@ -417,9 +414,8 @@
 		7399B35C0E632A5C001AE672 /* AKMembersSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26504EDC6AE00A80003 /* AKMembersSubtopic.m */; };
 		7399B35E0E632A5C001AE672 /* AKSubtopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ACB26B04EDC6AE00A80003 /* AKSubtopic.m */; };
 		7399B35F0E632A5C001AE672 /* AKClassTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1804EDCF3B00A80003 /* AKClassTopic.m */; };
-		7399B3600E632A5C001AE672 /* AKFormalProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1A04EDCF3B00A80003 /* AKFormalProtocolsTopic.m */; };
+		7399B3600E632A5C001AE672 /* AKProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1A04EDCF3B00A80003 /* AKProtocolsTopic.m */; };
 		7399B3610E632A5C001AE672 /* AKFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F1E04EDCF3B00A80003 /* AKFrameworkTopic.m */; };
-		7399B3630E632A5C001AE672 /* AKInformalProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2204EDCF3B00A80003 /* AKInformalProtocolsTopic.m */; };
 		7399B3640E632A5C001AE672 /* AKLabelTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2604EDCF3B00A80003 /* AKLabelTopic.m */; };
 		7399B3650E632A5C001AE672 /* AKProtocolTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2804EDCF3B00A80003 /* AKProtocolTopic.m */; };
 		7399B3660E632A5C001AE672 /* AKTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73895F2A04EDCF3B00A80003 /* AKTopic.m */; };
@@ -800,12 +796,10 @@
 		737F55611CE502E300376A4B /* AKNamedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObject.m; sourceTree = "<group>"; usesTabs = 1; };
 		73895F1704EDCF3B00A80003 /* AKClassTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKClassTopic.h; sourceTree = "<group>"; usesTabs = 1; };
 		73895F1804EDCF3B00A80003 /* AKClassTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKClassTopic.m; sourceTree = "<group>"; usesTabs = 1; };
-		73895F1904EDCF3B00A80003 /* AKFormalProtocolsTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFormalProtocolsTopic.h; sourceTree = "<group>"; };
-		73895F1A04EDCF3B00A80003 /* AKFormalProtocolsTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKFormalProtocolsTopic.m; sourceTree = "<group>"; usesTabs = 1; };
+		73895F1904EDCF3B00A80003 /* AKProtocolsTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKProtocolsTopic.h; sourceTree = "<group>"; };
+		73895F1A04EDCF3B00A80003 /* AKProtocolsTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKProtocolsTopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		73895F1D04EDCF3B00A80003 /* AKFrameworkTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFrameworkTopic.h; sourceTree = "<group>"; usesTabs = 1; };
 		73895F1E04EDCF3B00A80003 /* AKFrameworkTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkTopic.m; sourceTree = "<group>"; usesTabs = 1; };
-		73895F2104EDCF3B00A80003 /* AKInformalProtocolsTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKInformalProtocolsTopic.h; sourceTree = "<group>"; };
-		73895F2204EDCF3B00A80003 /* AKInformalProtocolsTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKInformalProtocolsTopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		73895F2504EDCF3B00A80003 /* AKLabelTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKLabelTopic.h; sourceTree = "<group>"; usesTabs = 1; };
 		73895F2604EDCF3B00A80003 /* AKLabelTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKLabelTopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		73895F2704EDCF3B00A80003 /* AKProtocolTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKProtocolTopic.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -1438,10 +1432,8 @@
 				73895F1E04EDCF3B00A80003 /* AKFrameworkTopic.m */,
 				7330D5B6083667540007FBD0 /* AKChildTopicOfFrameworkTopic.h */,
 				7330D5B7083667540007FBD0 /* AKChildTopicOfFrameworkTopic.m */,
-				73895F1904EDCF3B00A80003 /* AKFormalProtocolsTopic.h */,
-				73895F1A04EDCF3B00A80003 /* AKFormalProtocolsTopic.m */,
-				73895F2104EDCF3B00A80003 /* AKInformalProtocolsTopic.h */,
-				73895F2204EDCF3B00A80003 /* AKInformalProtocolsTopic.m */,
+				73895F1904EDCF3B00A80003 /* AKProtocolsTopic.h */,
+				73895F1A04EDCF3B00A80003 /* AKProtocolsTopic.m */,
 			);
 			name = "framework-based topics";
 			sourceTree = "<group>";
@@ -1722,9 +1714,8 @@
 				7322FBD91CEA6B93007E0764 /* AKNamedObjectGroup.h in Headers */,
 				73AAFF8B1CE9112900A11AF0 /* AKTopicConstants.h in Headers */,
 				65B1096E09D7B6C300A8A637 /* AKClassTopic.h in Headers */,
-				65B1096F09D7B6C300A8A637 /* AKFormalProtocolsTopic.h in Headers */,
+				65B1096F09D7B6C300A8A637 /* AKProtocolsTopic.h in Headers */,
 				65B1097009D7B6C300A8A637 /* AKFrameworkTopic.h in Headers */,
-				65B1097209D7B6C300A8A637 /* AKInformalProtocolsTopic.h in Headers */,
 				65B1097309D7B6C300A8A637 /* AKLabelTopic.h in Headers */,
 				73A7F80F1CD5AEAF00E8EC85 /* _ReturnValue.h in Headers */,
 				65B1097409D7B6C300A8A637 /* AKProtocolTopic.h in Headers */,
@@ -1868,9 +1859,8 @@
 				7399B2CB0E632A5C001AE672 /* AKSubtopic.h in Headers */,
 				7399B2CC0E632A5C001AE672 /* AKClassTopic.h in Headers */,
 				7322FBE01CEA813D007E0764 /* AKNamedObjectGroupTopic.h in Headers */,
-				7399B2CD0E632A5C001AE672 /* AKFormalProtocolsTopic.h in Headers */,
+				7399B2CD0E632A5C001AE672 /* AKProtocolsTopic.h in Headers */,
 				7399B2CE0E632A5C001AE672 /* AKFrameworkTopic.h in Headers */,
-				7399B2D00E632A5C001AE672 /* AKInformalProtocolsTopic.h in Headers */,
 				7399B2D10E632A5C001AE672 /* AKLabelTopic.h in Headers */,
 				7399B2D20E632A5C001AE672 /* AKProtocolTopic.h in Headers */,
 				7399B2D30E632A5C001AE672 /* AKTopic.h in Headers */,
@@ -2182,11 +2172,10 @@
 				7357E6F91CD6B866009A613C /* AKRegexUtils.m in Sources */,
 				65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */,
 				739719051CDC19AF0010E16A /* AKDocSetQuery.m in Sources */,
-				65B109F409D7B6C300A8A637 /* AKFormalProtocolsTopic.m in Sources */,
+				65B109F409D7B6C300A8A637 /* AKProtocolsTopic.m in Sources */,
 				7322FBED1CEA9EEE007E0764 /* AKFramework.m in Sources */,
 				734AEEA81CC5E1600064AAA9 /* _DownloadableFile.m in Sources */,
 				65B109F509D7B6C300A8A637 /* AKFrameworkTopic.m in Sources */,
-				65B109F709D7B6C300A8A637 /* AKInformalProtocolsTopic.m in Sources */,
 				65B109F809D7B6C300A8A637 /* AKLabelTopic.m in Sources */,
 				65B109F909D7B6C300A8A637 /* AKProtocolTopic.m in Sources */,
 				7322FBDB1CEA6B93007E0764 /* AKNamedObjectGroup.m in Sources */,
@@ -2312,9 +2301,8 @@
 				7322FBE81CEA82E5007E0764 /* AKNamedObjectClusterTopic.m in Sources */,
 				7399B35E0E632A5C001AE672 /* AKSubtopic.m in Sources */,
 				7399B35F0E632A5C001AE672 /* AKClassTopic.m in Sources */,
-				7399B3600E632A5C001AE672 /* AKFormalProtocolsTopic.m in Sources */,
+				7399B3600E632A5C001AE672 /* AKProtocolsTopic.m in Sources */,
 				7399B3610E632A5C001AE672 /* AKFrameworkTopic.m in Sources */,
-				7399B3630E632A5C001AE672 /* AKInformalProtocolsTopic.m in Sources */,
 				7399B3640E632A5C001AE672 /* AKLabelTopic.m in Sources */,
 				7399B3650E632A5C001AE672 /* AKProtocolTopic.m in Sources */,
 				7399B3660E632A5C001AE672 /* AKTopic.m in Sources */,

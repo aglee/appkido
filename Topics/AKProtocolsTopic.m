@@ -1,26 +1,26 @@
 /*
- * AKFormalProtocolsTopic.m
+ * AKProtocolsTopic.m
  *
  * Created by Andy Lee on Sun May 25 2003.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKFormalProtocolsTopic.h"
+#import "AKProtocolsTopic.h"
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 
-@implementation AKFormalProtocolsTopic
+@implementation AKProtocolsTopic
 
 #pragma mark - AKTopic methods
 
 - (NSArray *)_arrayWithChildTopics
 {
 	NSMutableArray *columnValues = [NSMutableArray array];
-	NSArray *formalProtocols = [self.database formalProtocolsForFramework:self.frameworkName];
+	NSArray *protocolTokens = [self.database protocolsForFramework:self.frameworkName];
 
-	for (AKProtocolToken *protocolToken in formalProtocols) {
+	for (AKProtocolToken *protocolToken in protocolTokens) {
 		[columnValues addObject:[[AKProtocolTopic alloc] initWithProtocolToken:protocolToken]];
 	}
 

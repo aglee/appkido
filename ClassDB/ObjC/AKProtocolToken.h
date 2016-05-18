@@ -8,11 +8,8 @@
 #import "AKBehaviorToken.h"
 
 /*!
- * Represents an Objective-C protocol, either formal or informal.  A protocol is
- * assumed to be informal if no header file has been specified for it.
+ * Represents an Objective-C protocol, either formal or informal.  We used to
+ * try to tell the difference but don't any more.
  */
 @interface AKProtocolToken : AKBehaviorToken
-
-@property (nonatomic, readonly, assign)  BOOL isInformal;
-
 @end

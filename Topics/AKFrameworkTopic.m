@@ -11,8 +11,7 @@
 #import "AKSortUtils.h"
 #import "AKDatabase.h"
 #import "AKAppDelegate.h"
-#import "AKFormalProtocolsTopic.h"
-#import "AKInformalProtocolsTopic.h"
+#import "AKProtocolsTopic.h"
 
 @implementation AKFrameworkTopic
 
@@ -53,16 +52,11 @@
 	NSString *fwName = self.frameworkName;
 	AKTopic *childTopic;
 
-	if ([db formalProtocolsForFramework:fwName].count > 0) {
-		childTopic = [[AKFormalProtocolsTopic alloc] initWithFramework:fwName database:db];
+	if ([db protocolsForFramework:fwName].count > 0) {
+		childTopic = [[AKProtocolsTopic alloc] initWithFramework:fwName database:db];
 		[columnValues addObject:childTopic];
 	}
 
-	if ([db informalProtocolsForFramework:fwName].count > 0) {
-		childTopic = [[AKInformalProtocolsTopic alloc] initWithFramework:fwName database:db];
-		[columnValues addObject:childTopic];
-	}
-	
 //	if ([db functionsGroupsForFramework:fwName].count > 0) {
 //		childTopic = [[AKFunctionsTopic alloc] initWithFramework:fwName database:db];
 //		[columnValues addObject:childTopic];

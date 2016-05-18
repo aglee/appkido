@@ -182,10 +182,7 @@
 - (IBAction)selectAncestorClass:(id)sender;
 
 /*! Expects sender to be an NSMenuItem whose title is a framework name. */
-- (IBAction)selectFormalProtocolsTopic:(id)sender;
-
-/*! Expects sender to be an NSMenuItem whose title is a framework name. */
-- (IBAction)selectInformalProtocolsTopic:(id)sender;
+- (IBAction)selectProtocolsTopic:(id)sender;
 
 /*! Expects sender to be an NSMenuItem whose title is a framework name. */
 - (IBAction)selectFunctionsTopic:(id)sender;

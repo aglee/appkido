@@ -48,21 +48,15 @@
 
 - (NSString *)stringToDisplayInDescriptionField
 {
-	NSString *stringFormat = (self.protocolToken.isInformal
-							  ? @"%@ INFORMAL protocol <%@>"
-							  : @"%@ protocol <%@>");
-	return [NSString stringWithFormat:stringFormat,
+	return [NSString stringWithFormat:@"%@ protocol <%@>",
 			self.protocolToken.frameworkName, self.protocolToken.name];
 }
 
 - (NSString *)pathInTopicBrowser
 {
-	NSString *whichProtocols = (self.protocolToken.isInformal
-								? AKInformalProtocolsTopicName
-								: AKProtocolsTopicName);
 	return [NSString stringWithFormat:@"%@%@%@%@%@<%@>",
 			AKTopicBrowserPathSeparator, self.protocolToken.frameworkName,
-			AKTopicBrowserPathSeparator, whichProtocols,
+			AKTopicBrowserPathSeparator, AKProtocolsTopicName,
 			AKTopicBrowserPathSeparator, self.protocolToken.name];
 }
 

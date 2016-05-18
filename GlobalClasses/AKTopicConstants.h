@@ -12,6 +12,5 @@ extern NSString *AKTopicBrowserPathSeparator;
 
 // Names displayed in the topic browser for certain types of topics.
 extern NSString *AKProtocolsTopicName;
-extern NSString *AKInformalProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 

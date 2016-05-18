@@ -56,8 +56,7 @@
 
 #pragma mark - Protocol Tokens
 
-- (NSArray<AKProtocolToken *> *)formalProtocolsForFramework:(NSString *)frameworkName;
-- (NSArray<AKProtocolToken *> *)informalProtocolsForFramework:(NSString *)frameworkName;
+- (NSArray<AKProtocolToken *> *)protocolsForFramework:(NSString *)frameworkName;
 - (AKProtocolToken *)protocolWithName:(NSString *)name;
 
 @end

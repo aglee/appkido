@@ -17,8 +17,7 @@
 #import "AKDocLocator.h"
 #import "AKDocViewController.h"
 #import "AKFindPanelController.h"
-#import "AKFormalProtocolsTopic.h"
-#import "AKInformalProtocolsTopic.h"
+#import "AKProtocolsTopic.h"
 #import "AKLinkResolver.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolTopic.h"
@@ -329,22 +328,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	[self selectTopic:[[AKClassTopic alloc] initWithClassToken:classToken]];
 }
 
-- (IBAction)selectFormalProtocolsTopic:(id)sender
+- (IBAction)selectProtocolsTopic:(id)sender
 {
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
 		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[[AKFormalProtocolsTopic alloc] initWithFramework:frameworkName
+		[self selectTopic:[[AKProtocolsTopic alloc] initWithFramework:frameworkName
 																   database:_database]];
-		[self _showBrowser];
-	}
-}
-
-- (IBAction)selectInformalProtocolsTopic:(id)sender
-{
-	if ([sender isKindOfClass:[NSMenuItem class]]) {
-		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[[AKInformalProtocolsTopic alloc] initWithFramework:frameworkName
-																	 database:_database]];
 		[self _showBrowser];
 	}
 }
@@ -648,8 +637,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 		return isValid;
 	} else if (itemAction == @selector(selectAncestorClass:)) {
 		return ([[self _currentTopic] parentClassOfTopic] != nil);
-	} else if ((itemAction == @selector(selectFormalProtocolsTopic:))
-			   || (itemAction == @selector(selectInformalProtocolsTopic:))
+	} else if ((itemAction == @selector(selectProtocolsTopic:))
 			   || (itemAction == @selector(selectFunctionsTopic:))
 			   || (itemAction == @selector(selectGlobalsTopic:))
 			   || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
