@@ -23,33 +23,36 @@
 - (void)_importObjectiveCTokens
 {
 	for (DSAToken *tokenMO in [self _arrayWithTokenMOsForLanguage:@"Objective-C"]) {
-		if (![self _maybeImportObjectiveCToken:tokenMO]) {
-			QLog(@"+++ %s [ODD] Could not import token with type '%@'", __PRETTY_FUNCTION__, tokenMO.tokenType.typeName);
+		AKToken *token = [self _maybeImportObjectiveCToken:tokenMO];
+		if (token) {
+			token.frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+		} else {
+			QLog(@"+++ %s [ODD] Could not import token '%@' with type '%@'", __PRETTY_FUNCTION__, tokenMO.tokenName, tokenMO.tokenType.typeName);
 		}
 	}
 }
 
-- (BOOL)_maybeImportObjectiveCToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportObjectiveCToken:(DSAToken *)tokenMO
 {
 	return ([self _maybeImportClassOrCategoryToken:tokenMO]
-			|| [self _maybeImportClassMethodToken:tokenMO]
-			|| [self _maybeImportInstanceMethodToken:tokenMO]
-			|| [self _maybeImportPropertyToken:tokenMO]
-			|| [self _maybeImportBindingToken:tokenMO]
-			|| [self _maybeImportProtocolToken:tokenMO]
-			|| [self _maybeImportProtocolClassMethodToken:tokenMO]
-			|| [self _maybeImportProtocolInstanceMethodToken:tokenMO]
-			|| [self _maybeImportProtocolPropertyToken:tokenMO]);
+			?: [self _maybeImportClassMethodToken:tokenMO]
+			?: [self _maybeImportInstanceMethodToken:tokenMO]
+			?: [self _maybeImportPropertyToken:tokenMO]
+			?: [self _maybeImportBindingToken:tokenMO]
+			?: [self _maybeImportProtocolToken:tokenMO]
+			?: [self _maybeImportProtocolClassMethodToken:tokenMO]
+			?: [self _maybeImportProtocolInstanceMethodToken:tokenMO]
+			?: [self _maybeImportProtocolPropertyToken:tokenMO]);
 }
 
 #pragma mark - Classes and categories
 
-- (BOOL)_maybeImportClassOrCategoryToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportClassOrCategoryToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"cl"]
 		&& ![tokenMO.tokenType.typeName isEqualToString:@"cat"]) {
 
-		return NO;
+		return nil;
 	}
 
 	AKBehaviorToken *item = [self _getOrAddClassOrCategoryTokenWithName:tokenMO.tokenName];
@@ -62,7 +65,7 @@
 			[self _fillInParentClassOfClassToken:((AKClassToken *)item)];
 		}
 	}
-	return YES;
+	return item;
 }
 
 - (NSRegularExpression *)_regexForCategoryNames
@@ -149,23 +152,23 @@
 	}
 }
 
-- (BOOL)_maybeImportClassMethodToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportClassMethodToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"clm"]) {
-		return NO;
+		return nil;
 	}
 
 	NSString *containerName = tokenMO.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
 	AKClassMethodToken *methodToken = [[AKClassMethodToken alloc] initWithTokenMO:tokenMO];
 	[behaviorToken addClassMethod:methodToken];
-	return YES;
+	return methodToken;
 }
 
-- (BOOL)_maybeImportInstanceMethodToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportInstanceMethodToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"instm"]) {
-		return NO;
+		return nil;
 	}
 
 	NSString *containerName = tokenMO.container.containerName;
@@ -173,26 +176,26 @@
 	AKInstanceMethodToken *methodToken = [[AKInstanceMethodToken alloc] initWithTokenMO:tokenMO];
 	[behaviorToken addInstanceMethod:methodToken];
 	//QLog(@"+++ added instance method %@ to %@ %@", methodToken.tokenName, [behaviorToken className], containerName);
-	return YES;
+	return methodToken;
 }
 
-- (BOOL)_maybeImportPropertyToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportPropertyToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"instp"]) {
-		return NO;
+		return nil;
 	}
 
 	NSString *containerName = tokenMO.container.containerName;
 	AKBehaviorToken *behaviorToken = [self _getOrAddClassOrCategoryTokenWithName:containerName];
 	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithTokenMO:tokenMO];
 	[behaviorToken addPropertyToken:propertyToken];
-	return YES;
+	return propertyToken;
 }
 
-- (BOOL)_maybeImportBindingToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportBindingToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"binding"]) {
-		return NO;
+		return nil;
 	}
 
 	NSString *className = tokenMO.container.containerName;
@@ -200,19 +203,18 @@
 	AKBindingToken *bindingToken = [[AKBindingToken alloc] initWithTokenMO:tokenMO];
 	[classToken addBindingToken:bindingToken];
 	//QLog(@"+++ added binding '%@' to class '%@'", bindingToken.tokenName, classToken.tokenName);
-	return YES;
+	return bindingToken;
 }
 
 #pragma mark - Protocols
 
-- (BOOL)_maybeImportProtocolToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportProtocolToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"intf"]) {
-		return NO;
+		return nil;
 	}
 
-	(void)[self _getOrAddProtocolTokenWithTokenMO:tokenMO];
-	return YES;
+	return [self _getOrAddProtocolTokenWithTokenMO:tokenMO];
 }
 
 - (AKProtocolToken *)_getOrAddProtocolTokenWithTokenMO:(DSAToken *)tokenMO
@@ -239,43 +241,43 @@
 	return protocolToken;
 }
 
-- (BOOL)_maybeImportProtocolClassMethodToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportProtocolClassMethodToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"intfcm"]) {
-		return NO;
+		return nil;
 	}
 
 	NSString *protocolName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
 	AKClassMethodToken *methodToken = [[AKClassMethodToken alloc] initWithTokenMO:tokenMO];
 	[protocolToken addClassMethod:methodToken];
-	return YES;
+	return methodToken;
 }
 
-- (BOOL)_maybeImportProtocolInstanceMethodToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportProtocolInstanceMethodToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"intfm"]) {
-		return NO;
+		return nil;
 	}
 
 	NSString *protocolName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:protocolName];
 	AKInstanceMethodToken *methodToken = [[AKInstanceMethodToken alloc] initWithTokenMO:tokenMO];
 	[protocolToken addInstanceMethod:methodToken];
-	return YES;
+	return methodToken;
 }
 
-- (BOOL)_maybeImportProtocolPropertyToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportProtocolPropertyToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"intfp"]) {
-		return NO;
+		return nil;
 	}
 
 	NSString *propertyName = tokenMO.container.containerName;
 	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:propertyName];
 	AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithTokenMO:tokenMO];
 	[protocolToken addPropertyToken:propertyToken];
-	return YES;
+	return propertyToken;
 }
 
 @end
