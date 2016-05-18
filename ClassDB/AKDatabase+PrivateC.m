@@ -36,7 +36,7 @@
 	if (![tokenMO.tokenType.typeName isEqualToString:@"data"]) {
 		return NO;
 	}
-	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.constantsCluster addNamedObject:token toGroupWithName:@"Constants"];
 	return YES;
 }
@@ -46,7 +46,7 @@
 	if (![tokenMO.tokenType.typeName isEqualToString:@"econst"]) {
 		return NO;
 	}
-	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.enumsCluster addNamedObject:token toGroupWithName:@"Enums"];
 	return YES;
 }
@@ -56,7 +56,7 @@
 	if (![tokenMO.tokenType.typeName isEqualToString:@"func"]) {
 		return NO;
 	}
-	AKToken *token = [[AKFunctionToken alloc] initWithName:tokenMO.tokenName];
+	AKToken *token = [[AKFunctionToken alloc] initWithTokenMO:tokenMO];
 	[self.functionsCluster addNamedObject:token toGroupWithName:@"Functions"];
 	return YES;
 }
@@ -66,7 +66,7 @@
 	if (![tokenMO.tokenType.typeName isEqualToString:@"macro"]) {
 		return NO;
 	}
-	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.macrosCluster addNamedObject:token toGroupWithName:@"Macros"];
 	return YES;
 }
@@ -86,7 +86,7 @@
 	if (![tokenMO.tokenType.typeName isEqualToString:@"tdef"]) {
 		return NO;
 	}
-	AKToken *token = [[AKToken alloc] initWithName:tokenMO.tokenName];
+	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.typedefsCluster addNamedObject:token toGroupWithName:@"Typedefs"];
 	return YES;
 }

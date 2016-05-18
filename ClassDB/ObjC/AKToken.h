@@ -24,4 +24,8 @@
 @property (nonatomic, readonly) NSString *frameworkName;
 @property (nonatomic, assign) BOOL isDeprecated;
 
+#pragma mark - Init/awake/dealloc
+
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO;
+
 @end

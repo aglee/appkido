@@ -6,17 +6,69 @@
 //
 
 #import "AKToken.h"
+#import "AKRegexUtils.h"
 #import "DIGSLog.h"
 #import "DocSetIndex.h"
 
 @implementation AKToken
 
+@synthesize tokenMO = _tokenMO;
+@synthesize frameworkName = _frameworkName;
+
+#pragma mark - Init/awake/dealloc
+
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
+{
+	NSParameterAssert(tokenMO != nil);
+	self = [super initWithName:tokenMO.tokenName];
+	if (self) {
+		[self _takeIvarValuesFromTokenMO:tokenMO];
+	}
+	return self;
+}
+
 #pragma mark - Getters and setters
 
-- (NSString *)frameworkName
 {
-	//TODO: In case this is nil, try to derive framework name from path.
-	return self.tokenMO.metainformation.declaredIn.frameworkName;
+- (DSAToken *)tokenMO
+{
+	return _tokenMO;
+}
+
+- (void)setTokenMO:(DSAToken *)tokenMO
+{
+	[self _takeIvarValuesFromTokenMO:tokenMO];
+}
+
+- (void)_takeIvarValuesFromTokenMO:(DSAToken *)tokenMO
+{
+	_tokenMO = tokenMO;
+	_frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+}
+
+- (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO
+{
+	// See if the DocSetIndex specifies a framework for this token.
+	NSString *frameworkName = tokenMO.metainformation.declaredIn.frameworkName;
+	if (frameworkName) {
+		//QLog(@"+++ Framework %@ for %@ was explicit", frameworkName, self);
+	}
+
+	// See if we can infer the framework name from the headerPath.
+	if (frameworkName == nil) {
+		NSString *headerPath = tokenMO.metainformation.declaredIn.headerPath;
+		if (headerPath) {
+			NSDictionary *captureGroups = [AKRegexUtils matchPattern:@".*/(%ident%)\\.framework/.*" toEntireString:headerPath];
+			frameworkName = captureGroups[@1];
+			if (frameworkName) {
+				QLog(@"+++ Framework %@ for %@ was inferred from header path", frameworkName, self);
+			}
+		}
+	}
+
+	//TODO: Failing that, try to infer framework name from doc path and maybe doc file name.
+
+	return frameworkName;
 }
 
 #pragma mark - <AKDocListItem> methods
