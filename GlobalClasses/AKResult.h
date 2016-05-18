@@ -24,7 +24,7 @@
 /*! error must not be nil. */
 + (AKResult *)failureResultWithError:(NSError *)error;
 + (AKResult *)failureResultWithErrorDomain:(NSString *)domain
-                                      code:(NSInteger)code
-                               description:(NSString *)desc;
+									  code:(NSInteger)code
+							   description:(NSString *)desc;
 
 @end

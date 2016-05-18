@@ -33,28 +33,28 @@
 
 + (AKResult *)successResultWithObject:(id)obj
 {
-    AKSuccessResult *result = [[AKSuccessResult alloc] init];
-    result.object = obj;
-    return result;
+	AKSuccessResult *result = [[AKSuccessResult alloc] init];
+	result.object = obj;
+	return result;
 }
 
 + (AKResult *)failureResultWithError:(NSError *)error
 {
-    NSParameterAssert(error != nil);
-    //QLog(@"+++ [ERROR] %@", error);
-    AKFailureResult *result = [[AKFailureResult alloc] init];
-    result.error = error;
-    return result;
+	NSParameterAssert(error != nil);
+	//QLog(@"+++ [ERROR] %@", error);
+	AKFailureResult *result = [[AKFailureResult alloc] init];
+	result.error = error;
+	return result;
 }
 
 + (AKResult *)failureResultWithErrorDomain:(NSString *)domain
-                                      code:(NSInteger)code
-                               description:(NSString *)desc
+									  code:(NSInteger)code
+							   description:(NSString *)desc
 {
-    NSError *error = [NSError errorWithDomain:domain
-                                         code:code
-                                     userInfo:@{ NSLocalizedDescriptionKey : desc }];
-    return [self failureResultWithError:error];
+	NSError *error = [NSError errorWithDomain:domain
+										 code:code
+									 userInfo:@{ NSLocalizedDescriptionKey : desc }];
+	return [self failureResultWithError:error];
 }
 
 @end
