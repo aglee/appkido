@@ -14,8 +14,8 @@
 #define MyErrorDomain @"com.appkido.AppKiDo"
 
 @interface AKManagedObjectQuery ()
-@property (strong) NSManagedObjectContext *moc;
-@property (copy) NSString *entityName;
+@property (readonly) NSManagedObjectContext *moc;
+@property (readonly) NSString *entityName;
 @end
 
 @implementation AKManagedObjectQuery
