@@ -12,6 +12,7 @@
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
 #import "AKProtocolToken.h"
+#import "AKResult.h"
 
 @implementation AKDatabase
 
@@ -147,26 +148,29 @@
 
 - (AKDocSetQuery *)_queryWithEntityName:(NSString *)entityName
 {
-	return [[AKDocSetQuery alloc] initWithDocSetIndex:self.docSetIndex entityName:entityName];
+	return [[AKDocSetQuery alloc] initWithMOC:self.docSetIndex.managedObjectContext entityName:entityName];
 }
 
 - (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName
 {
-	NSError *error;
 	AKDocSetQuery *query = [self _queryWithEntityName:@"Token"];
 	query.predicateString = [NSString stringWithFormat:@"language.fullName = '%@'", languageName];
-	return [query fetchObjectsWithError:&error];  //TODO: Handle error.
+	AKResult *result = [query fetchObjects];
+	return result.object;  //TODO: Handle error.
 }
 
 - (void)_importFrameworks
 {
 	AKDocSetQuery *query = [self _queryWithEntityName:@"Header"];
-	query.distinctKeyPathsString = @"frameworkName";
+	query.keyPaths = @[ @"frameworkName" ];
 	query.predicateString = @"frameworkName != NULL";
 
-	NSError *error;
-	NSArray *fetchedObjects = [query fetchObjectsWithError:&error];  //TODO: Handle error.
+	AKResult *result = [query fetchDistinctObjects];  //TODO: Handle error.
+	if (result.error) {
+		return;
+	}
 
+	NSArray *fetchedObjects = result.object;
 	for (NSDictionary *dict in fetchedObjects) {
 		NSString *frameworkName = dict[@"frameworkName"];
 		AKFramework *framework = [[AKFramework alloc] initWithName:frameworkName];

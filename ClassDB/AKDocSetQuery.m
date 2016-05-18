@@ -8,37 +8,27 @@
 
 #import "AKDocSetQuery.h"
 #import "AKRegexUtils.h"
-#import "DocSetIndex.h"
+#import "AKResult.h"
 #import "QuietLog.h"
-#import <WebKit/WebKit.h>
 
 #define MyErrorDomain @"com.appkido.AppKiDo"
 
 @interface AKDocSetQuery ()
-@property (strong) DocSetIndex *docSetIndex;
+@property (strong) NSManagedObjectContext *moc;
 @property (copy) NSString *entityName;
 @end
 
-#pragma mark -
-
 @implementation AKDocSetQuery
-
-#pragma mark - Factory methods
-
-+ (instancetype)queryWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName
-{
-    return [[self alloc] initWithDocSetIndex:docSetIndex entityName:entityName];
-}
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName
+- (instancetype)initWithMOC:(NSManagedObjectContext *)moc entityName:(NSString *)entityName
 {
-    NSParameterAssert(docSetIndex != nil);
+    NSParameterAssert(moc != nil);
     NSParameterAssert(entityName != nil);
     self = [super init];
     if (self) {
-        _docSetIndex = docSetIndex;
+        _moc = moc;
         _entityName = entityName;
     }
     return self;
@@ -46,133 +36,102 @@
 
 - (instancetype)init
 {
-    return [self initWithDocSetIndex:nil entityName:nil];
+    return [self initWithMOC:nil entityName:nil];
 }
 
-#pragma mark - Querying the DocSetIndex
+#pragma mark - Executing fetch requests
 
-- (NSArray *)fetchObjectsWithError:(NSError **)errorPtr
+- (AKResult *)fetchObjects
 {
-    NSError *error;
-    NSArray *fetchedObjects = [self _fetchObjectsWithError:errorPtr];
-    if (fetchedObjects == nil) {
-        QLog(@"+++ %s [ERROR] %@", error);
-    }
-    return fetchedObjects;
+    return [self _fetchObjectsDistinct:NO];
 }
 
-#pragma mark - Private methods - handling fetch commands
-
-- (NSArray *)_fetchObjectsWithError:(NSError **)errorPtr
+- (AKResult *)fetchDistinctObjects
 {
+    return [self _fetchObjectsDistinct:YES];
+}
+
+#pragma mark - Private methods - handling fetch requests
+
+- (AKResult *)_fetchObjectsDistinct:(BOOL)distinct
+{
+    AKResult *result;
+
     // Try to construct the fetch request.
-    NSFetchRequest *fetchRequest = [self _createFetchRequestWithError:errorPtr];
-    if (fetchRequest == nil) {
-        return nil;
+    result = [self _createFetchRequest];
+    if (result.error) {
+        return result;
     }
 
-    // If distinct key paths were specified, modify the fetch request accordingly.
-    if (self.distinctKeyPathsString.length) {
-        NSArray *keyPaths = [self _parseKeyPathsStringWithError:errorPtr];
-
-        if (keyPaths == nil) {
-            return nil;
-        }
-
+    NSFetchRequest *fetchRequest = result.object;
+    if (distinct) {
         fetchRequest.returnsDistinctResults = YES;
         fetchRequest.resultType = NSDictionaryResultType;
-        fetchRequest.propertiesToFetch = keyPaths;
+        fetchRequest.propertiesToFetch = self.keyPaths;
     }
 
     // Try to execute the fetch request.
-    return [self _executeFetchRequest:fetchRequest error:errorPtr];
+    return [self _executeFetchRequest:fetchRequest];
 }
 
-- (NSArray *)_executeFetchRequest:(NSFetchRequest *)fetchRequest error:(NSError **)errorPtr
-{
-	@try {
-		NSArray *fetchedObjects = [self.docSetIndex.managedObjectContext executeFetchRequest:fetchRequest error:errorPtr];
-        return fetchedObjects;
-	}
-	@catch (NSException *ex) {
-        if (errorPtr) {
-            NSString *errorMessage = [NSString stringWithFormat:@"Exception during attempt to fetch data: %@. Error: %@.", ex, (errorPtr ? *errorPtr : @"unknown")];
-            *errorPtr = [NSError errorWithDomain:MyErrorDomain code:9999 userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
-        }
-		return nil;
-	}
-}
-
-- (NSFetchRequest *)_createFetchRequestWithError:(NSError **)errorPtr
+- (AKResult *)_createFetchRequest
 {
 	// Require the entity name to be a non-empty identifier.
 	NSDictionary *captureGroups = [AKRegexUtils matchPattern:@"%ident%" toEntireString:self.entityName];
 	if (captureGroups == nil) {
-        if (errorPtr) {
-            *errorPtr = [NSError errorWithDomain:MyErrorDomain code:9999 userInfo:@{ NSLocalizedDescriptionKey : @"Entity name is not a valid identifier." }];
-        }
-		return nil;
+        return [AKResult failureResultWithErrorDomain:MyErrorDomain
+                                                 code:9999
+                                          description:@"Entity name is not a valid identifier."];
 	}
 
 	// Try to make an NSPredicate, if one was specified.
 	NSPredicate *predicate = nil;
 	if (self.predicateString.length) {
-		predicate = [self _createPredicateWithError:errorPtr];
-		if (predicate == nil) {
-			return nil;
-		}
+        AKResult *result = [self _createPredicate];
+        if (result.error) {
+            return result;
+        }
+		predicate = result.object;
 	}
 
-	// If we got this far, everything is okay.
+	// If we got this far, we can construct the fetch request.
 	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:self.entityName];
 	fetchRequest.predicate = predicate;
-	return fetchRequest;
+	return [AKResult successResultWithObject:fetchRequest];
 }
 
-- (NSPredicate *)_createPredicateWithError:(NSError **)errorPtr
+- (AKResult *)_createPredicate
 {
 	@try {
-		return [NSPredicate predicateWithFormat:self.predicateString];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:self.predicateString];
+		return [AKResult successResultWithObject:predicate];
 	}
 	@catch (NSException *ex) {
 		if ([ex.name isEqualToString:NSInvalidArgumentException]) {
-            if (errorPtr) {
-                *errorPtr = [NSError errorWithDomain:MyErrorDomain code:9999 userInfo:@{ NSLocalizedDescriptionKey : @"Invalid predicate string." }];
-            }
-			return nil;
+			return [AKResult failureResultWithErrorDomain:MyErrorDomain
+                                                     code:9999
+                                              description:@"Invalid predicate string."];
 		} else {
 			@throw ex;
 		}
-		return nil;
 	}
 }
 
-- (NSArray *)_parseKeyPathsStringWithError:(NSError **)errorPtr
+- (AKResult *)_executeFetchRequest:(NSFetchRequest *)fetchRequest
 {
-	NSMutableArray *keyPaths = [NSMutableArray array];
-	NSDictionary *errorInfo;
-	NSArray *commaSeparatedComponents = [self.distinctKeyPathsString componentsSeparatedByString:@","];
-	for (__strong NSString *expectedKeyPath in commaSeparatedComponents) {
-		expectedKeyPath = [expectedKeyPath stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		if (![AKRegexUtils matchPattern:@"%keypath%" toEntireString:expectedKeyPath]) {
-            if (errorPtr) {
-                NSString *errorMessage = [NSString stringWithFormat:@"'%@' is not a key path.  Make sure to comma-separate key paths.", expectedKeyPath];
-                errorInfo = @{ NSLocalizedDescriptionKey : errorMessage };
-                *errorPtr = [NSError errorWithDomain:MyErrorDomain code:9999 userInfo:errorInfo];
-            }
-			return nil;
-		} else {
-			[keyPaths addObject:expectedKeyPath];
-		}
-	}
-	if (keyPaths.count == 0) {
-        if (errorPtr) {
-            errorInfo = @{ NSLocalizedDescriptionKey : @"One or more comma-separated key paths must be specified." };
-            *errorPtr = [NSError errorWithDomain:MyErrorDomain code:9999 userInfo:errorInfo];
-        }
-		return nil;
-	}
-	return keyPaths;
+    @try {
+        NSError *error;
+        NSArray *fetchedObjects = [self.moc executeFetchRequest:fetchRequest error:&error];
+        return (fetchedObjects
+                ? [AKResult successResultWithObject:fetchedObjects]
+                : [AKResult failureResultWithError:error]);
+    }
+    @catch (NSException *ex) {
+        NSString *errorMessage = [NSString stringWithFormat:@"Failed to fetch data: %@.", ex];
+        return [AKResult failureResultWithErrorDomain:MyErrorDomain
+                                                 code:9999
+                                          description:errorMessage];
+    }
 }
 
 @end

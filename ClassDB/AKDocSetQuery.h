@@ -7,31 +7,27 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "DocSetModel.h"
 
-@class DocSetIndex;
+@class AKResult;
 
 /*!
-    TODO: Document the convenience syntax ("%ident%" etc.).
+ * Convenience methods for doing simple Core Data fetches.
  */
 @interface AKDocSetQuery : NSObject
 
-@property (strong, readonly) DocSetIndex *docSetIndex;
-@property (copy, readonly) NSString *entityName;
-/*! If non-empty, the specified key paths are used for propertiesToFetch, and the fetch request is NSDictionaryResultType. */
-@property (copy) NSString *distinctKeyPathsString;
+@property (copy) NSArray *keyPaths;
+/*! No placeholders, just a string. */
 @property (copy) NSString *predicateString;
-
-#pragma mark - Factory methods
-
-+ (instancetype)queryWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex entityName:(NSString *)entityName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMOC:(NSManagedObjectContext *)moc entityName:(NSString *)entityName NS_DESIGNATED_INITIALIZER;
 
-#pragma mark - Querying the DocSetIndex
+#pragma mark - Executing fetch requests
 
-- (NSArray *)fetchObjectsWithError:(NSError **)errorPtr;
+- (AKResult *)fetchObjects;
+
+/*! Uses self.keyPaths for propertiesToFetch, and uses NSDictionaryResultType for the fetch request. */
+- (AKResult *)fetchDistinctObjects;
 
 @end
