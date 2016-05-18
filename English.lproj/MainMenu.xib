@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1090" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AKApplication">
@@ -248,9 +248,6 @@
                                     <action selector="popQuiz:" target="-1" id="1334"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="489">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="502">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -369,10 +366,6 @@
                 </menuItem>
             </items>
         </menu>
-        <customObject id="258" userLabel="AppDelegate" customClass="AKAppDelegate">
-            <connections>
-                <outlet property="firstGoMenuDivider" destination="489" id="1298"/>
-            </connections>
-        </customObject>
+        <customObject id="258" userLabel="AppDelegate" customClass="AKAppDelegate"/>
     </objects>
 </document>

@@ -43,13 +43,7 @@
 
     // Elements are AKDocLocators.
     NSMutableArray *_favoritesList;
-
-    // IB outlets.
-    NSMenuItem *__weak _firstGoMenuDivider;
 }
-
-/*! We insert menu items after this item in the "Go" menu. */
-@property (nonatomic, weak) IBOutlet NSMenuItem *firstGoMenuDivider;
 
 #pragma mark - Shared instance
 

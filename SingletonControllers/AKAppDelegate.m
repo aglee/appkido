@@ -57,8 +57,6 @@
 
 @implementation AKAppDelegate
 
-@synthesize firstGoMenuDivider = _firstGoMenuDivider;
-
 #pragma mark - Shared instance
 
 + (AKAppDelegate *)appDelegate
@@ -516,7 +514,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     _splashWindowController = nil;
 
     // Finish initializing the UI.
-    [self _initGoMenu];
     [self _getFavoritesFromPrefs];
 
     // Register interest in window-close events.
@@ -552,61 +549,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     NSUpdateDynamicServices();
     
     _finishedInitializing = YES;
-}
-
-- (void)_initGoMenu
-{
-    DIGSLogDebug_EnteringMethod();
-
-    NSMenu *goMenu = _firstGoMenuDivider.menu;
-    NSInteger menuIndex = [goMenu indexOfItem:_firstGoMenuDivider];
-
-    for (NSString *fwName in [_appDatabase sortedFrameworkNames])
-    {
-        // See what information we have for this framework.
-        NSArray *formalProtocolTokens = [_appDatabase formalProtocolsForFramework:fwName];
-        NSArray *informalProtocolTokens = [_appDatabase informalProtocolsForFramework:fwName];
-        NSArray *functionsGroupItems = nil;  // [_appDatabase functionsGroupsForFramework:fwName];
-
-        // Construct the submenu of framework-related topics.
-        NSMenu *fwTopicSubmenu = [[NSMenu alloc] initWithTitle:fwName];
-
-        if (formalProtocolTokens.count > 0)
-        {
-            NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKProtocolsTopicName
-                                                              action:@selector(selectFormalProtocolsTopic:)
-                                                       keyEquivalent:@""];
-
-            [fwTopicSubmenu addItem:subitem];
-        }
-
-        if (informalProtocolTokens.count > 0)
-        {
-            NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKInformalProtocolsTopicName
-                                                              action:@selector(selectInformalProtocolsTopic:)
-                                                       keyEquivalent:@""];
-
-            [fwTopicSubmenu addItem:subitem];
-        }
-
-        if (functionsGroupItems.count > 0)
-        {
-            NSMenuItem *subitem = [[NSMenuItem alloc] initWithTitle:AKFunctionsTopicName
-                                                              action:@selector(selectFunctionsTopic:)
-                                                       keyEquivalent:@""];
-
-            [fwTopicSubmenu addItem:subitem];
-        }
-
-        // Construct the menu item to add to the Go menu, and add it.
-        NSMenuItem *fwMenuItem = [[NSMenuItem alloc] initWithTitle:fwName
-                                                             action:nil
-                                                      keyEquivalent:@""];
-
-        fwMenuItem.submenu = fwTopicSubmenu;
-        menuIndex++;
-        [goMenu insertItem:fwMenuItem atIndex:menuIndex];
-    }
 }
 
 - (void)_openInitialWindows
