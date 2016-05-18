@@ -77,7 +77,7 @@
 - (AKResult *)_createFetchRequest
 {
 	// Require the entity name to be a non-empty identifier.
-	NSDictionary *captureGroups = [AKRegexUtils matchPattern:@"%ident%" toEntireString:self.entityName];
+	NSDictionary *captureGroups = [AKRegexUtils matchPattern:@"%ident%" toEntireString:self.entityName].object;
 	if (captureGroups == nil) {
         return [AKResult failureResultWithErrorDomain:MyErrorDomain
                                                  code:9999

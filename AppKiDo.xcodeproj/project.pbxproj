@@ -777,8 +777,8 @@
 		7352078F0687BC7B00BC8B33 /* AKBehaviorTopic.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = AKBehaviorTopic.m; path = Topics/AKBehaviorTopic.m; sourceTree = SOURCE_ROOT; usesTabs = 1; };
 		7357E6E31CD692E5009A613C /* AKBindingToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBindingToken.h; sourceTree = "<group>"; };
 		7357E6E41CD692E5009A613C /* AKBindingToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKBindingToken.m; sourceTree = "<group>"; };
-		7357E6F51CD6B866009A613C /* AKRegexUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKRegexUtils.h; sourceTree = "<group>"; };
-		7357E6F61CD6B866009A613C /* AKRegexUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKRegexUtils.m; sourceTree = "<group>"; };
+		7357E6F51CD6B866009A613C /* AKRegexUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKRegexUtils.h; sourceTree = "<group>"; usesTabs = 1; };
+		7357E6F61CD6B866009A613C /* AKRegexUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKRegexUtils.m; sourceTree = "<group>"; usesTabs = 1; };
 		7359EB2B0BADB68100574728 /* AKApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKApplication.h; path = ../AKApplication.h; sourceTree = "<group>"; };
 		7359EB2C0BADB68100574728 /* AKApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKApplication.m; path = ../AKApplication.m; sourceTree = "<group>"; };
 		735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSimpleTask.h; sourceTree = "<group>"; };

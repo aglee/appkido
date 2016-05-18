@@ -16,6 +16,7 @@
 #import "AKPropertyToken.h"
 #import "AKProtocolToken.h"
 #import "AKRegexUtils.h"
+#import "AKResult.h"
 
 @implementation AKDatabase (PrivateObjC)
 
@@ -64,6 +65,17 @@
 	return YES;
 }
 
+- (NSRegularExpression *)_regexForCategoryNames
+{
+	static NSRegularExpression *s_regexForCategoryNames;
+	static dispatch_once_t once;
+	dispatch_once(&once,^{
+		s_regexForCategoryNames = [AKRegexUtils constructRegexWithPattern:@"(%ident%)(?:\\((%ident%)\\))?"].object;
+		NSAssert(s_regexForCategoryNames != nil, @"%s Failed to construct regex.", __PRETTY_FUNCTION__);
+	});
+	return s_regexForCategoryNames;
+}
+
 // The contorted logic here is a workaround for what looks like a bug in the
 // 10.11.4 docset.  It contains tokens that are marked as classes (token type
 // "cl"), where that is clearly an error, because their names have the form of
@@ -82,7 +94,8 @@
 	}
 
 	// Try to parse a class name and category name from the token name.
-	NSDictionary *captureGroups = [AKRegexUtils matchPattern:@"(%ident%)(?:\\((%ident%)\\))?" toEntireString:name];
+	AKResult *result = [AKRegexUtils matchRegex:[self _regexForCategoryNames] toEntireString:name];
+	NSDictionary *captureGroups = result.object;
 	NSString *className = captureGroups[@1];
 	NSString *categoryName = captureGroups[@2];
 

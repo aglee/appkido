@@ -7,49 +7,57 @@
 //
 
 #import "AKRegexUtils.h"
+#import "AKResult.h"
 
 @implementation AKRegexUtils
 
-// Replaces %ident%, %lit%, %keypath% with canned sub-patterns.
-// Ignores leading and trailing whitespace with \\s*.
-// Allows internal whitespace to be any length of any whitespace.
-// Returns dictionary with NSNumber keys indication position of capture group (1-based).
-// Returns nil if invalid pattern.
-+ (NSDictionary *)matchPattern:(NSString *)pattern toEntireString:(NSString *)inputString
++ (AKResult *)constructRegexWithPattern:(NSString *)pattern
 {
-	// Assume leading and trailing whitespace can be ignored, and remove it from both the input string and the pattern.
-	inputString = [inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	if (inputString.length == 0) {
-		QLog(@"%@", @"Can't handle empty string");
-		return nil;  //TODO: Revisit how to handle nil.
-	}
+	// Remove leading and trailing whitespace from the pattern.
 	pattern = [pattern stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-	// Interpret any internal whitespace in the pattern as meaning "non-empty whitespace of any length".
+	// Interpret any internal whitespace in the pattern as "non-empty whitespace of any length".
 	pattern = [self _makeAllWhitespaceStretchyInPattern:pattern];
 
-	// Expand %...% placeholders.  Replace %keypath% before replacing %ident%, because the expansion of %keypath% contains "%ident%".
-	pattern = [pattern stringByReplacingOccurrencesOfString:@"%keypath%" withString:@"(?:(?:%ident%(?:\\.%ident%)*)(?:\\.@count)?)"];
-	pattern = [pattern stringByReplacingOccurrencesOfString:@"%ident%" withString:@"(?:[_A-Za-z][_0-9A-Za-z]*)"];
-	pattern = [pattern stringByReplacingOccurrencesOfString:@"%lit%" withString:@"(?:(?:[^\"]|(?:\\\"))*)"];
+	// Expand %...% placeholders.  Note that we replace %keypath% BEFORE replacing %ident%, because the expansion of %keypath% contains "%ident%".
+	pattern = [pattern stringByReplacingOccurrencesOfString:@"%keypath%"
+												 withString:@"(?:(?:%ident%(?:\\.%ident%)*)(?:\\.@count)?)"];
+	pattern = [pattern stringByReplacingOccurrencesOfString:@"%ident%"
+												 withString:@"(?:[_A-Za-z][_0-9A-Za-z]*)"];
+	pattern = [pattern stringByReplacingOccurrencesOfString:@"%lit%"
+												 withString:@"(?:(?:[^\"]|(?:\\\"))*)"];
 
-	// Apply the regex to the input string.
+	// Try to construct the NSRegularExpression object.
 	NSError *error = nil;
-	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
+	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+																		   options:0
+																			 error:&error];
+	return (regex
+			? [AKResult successResultWithObject:regex]
+			: [AKResult failureResultWithError:error]);
+}
 
-	if (regex == nil) {
-		QLog(@"regex construction error: %@", error);
-		return nil;
++ (AKResult *)matchRegex:(NSRegularExpression *)regex toEntireString:(NSString *)inputString
+{
+	// Remove leading and trailing whitespace from the input string.
+	inputString = [inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	if (inputString.length == 0) {
+		return [AKResult failureResultWithErrorDomain:self.className
+												 code:0
+										  description:@"The pattern string can't be empty or blank."];
 	}
 
+	// Try to match the regex.
 	NSRange rangeOfEntireString = NSMakeRange(0, inputString.length);
 	NSTextCheckingResult *matchResult = [regex firstMatchInString:inputString options:0 range:rangeOfEntireString];
 	if (matchResult == nil) {
-//		QLog(@"%@", @"failed to match regex");
-		return nil;
+		return [AKResult failureResultWithErrorDomain:self.className
+												 code:0
+										  description:@"Failed to match the regex."];
 	} else if (!NSEqualRanges(matchResult.range, rangeOfEntireString)) {
-//		QLog(@"%@", @"regex did not match entire string");
-		return nil;
+		return [AKResult failureResultWithErrorDomain:self.className
+												 code:0
+										  description:@"The regex did not match the entire string."];
 	}
 
 	// Collect all the capture groups that were matched.  We start iterating at 1 because the zeroeth capture group is the entire matching string.
@@ -65,7 +73,16 @@
 //		QLog(@"    @%@: [%@]", obj, captureGroupsByIndex[obj]);
 //	}];
 
-	return captureGroupsByIndex;
+	return [AKResult successResultWithObject:captureGroupsByIndex];
+}
+
++ (AKResult *)matchPattern:(NSString *)pattern toEntireString:(NSString *)inputString
+{
+	AKResult *result = [self constructRegexWithPattern:pattern];
+	if (result.error) {
+		return result;
+	}
+	return [self matchRegex:result.object toEntireString:inputString];
 }
 
 #pragma mark - Private methods
