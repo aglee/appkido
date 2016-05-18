@@ -7,6 +7,7 @@
 //
 
 #import "AKResult.h"
+#import "QuietLog.h"
 
 @interface AKSuccessResult : AKResult
 @property (strong) id object;
@@ -40,6 +41,7 @@
 + (AKResult *)failureResultWithError:(NSError *)error
 {
     NSParameterAssert(error != nil);
+    QLog(@"+++ [ERROR] %@", error);
     AKFailureResult *result = [[AKFailureResult alloc] init];
     result.error = error;
     return result;
