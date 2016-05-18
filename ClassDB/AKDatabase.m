@@ -12,6 +12,7 @@
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
 #import "AKProtocolToken.h"
+#import "AKRegexUtils.h"
 #import "AKResult.h"
 
 @implementation AKDatabase
@@ -189,6 +190,68 @@
 		AKFramework *framework = [[AKFramework alloc] initWithName:frameworkName];
 		[self.frameworksGroup addNamedObject:framework];
 	}
+}
+
+- (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO
+{
+	// See if the DocSetIndex specifies a framework for this token.
+	NSString *frameworkName = tokenMO.metainformation.declaredIn.frameworkName;
+	if (frameworkName) {
+		//QLog(@"+++ Framework %@ for %@ was explicit", frameworkName, self);
+	}
+
+	// See if we can infer the framework name from the headerPath.
+	if (frameworkName == nil) {
+		NSString *headerPath = tokenMO.metainformation.declaredIn.headerPath;
+		frameworkName = [self _tryToInferFrameworkNameFromHeaderPath:headerPath];
+	}
+
+	// Try to infer framework name from doc path and maybe doc file name.
+	if (frameworkName == nil) {
+		NSString *docPath = tokenMO.metainformation.file.path;
+		frameworkName = [self _tryToInferFrameworkNameFromDocPath:docPath];
+	}
+
+	return frameworkName;
+}
+
+//TODO: Remember that Swift tokens have the framework name *as* the declaredIn.headerPath value.
+- (NSRegularExpression *)_regexForFindingFrameworkNameInHeaderPath
+{
+	// Look for a match with .../SomeFrameworkName.framework/...
+	static NSRegularExpression *s_regex;
+	static dispatch_once_t once;
+	dispatch_once(&once,^{
+		s_regex = [AKRegexUtils constructRegexWithPattern:@".*/(%ident%)\\.framework/.*"].object;
+	});
+	return s_regex;
+}
+
+- (NSString *)_tryToInferFrameworkNameFromHeaderPath:(NSString *)headerPath
+{
+	if (headerPath == nil) {
+		return nil;
+	}
+
+	NSDictionary *captureGroups = [AKRegexUtils matchRegex:[self _regexForFindingFrameworkNameInHeaderPath] toEntireString:headerPath].object;
+	NSString *inferredFrameworkName = captureGroups[@1];
+	if (inferredFrameworkName) {
+		QLog(@"+++ Framework %@ for %@ was inferred from header path", inferredFrameworkName, self);
+	}
+	return inferredFrameworkName;
+}
+
+- (NSString *)_tryToInferFrameworkNameFromDocPath:(NSString *)docPath
+{
+	if (docPath == nil) {
+		return nil;
+	}
+
+	NSString *inferredFrameworkName;
+	if (inferredFrameworkName) {
+		QLog(@"+++ Framework %@ for %@ was inferred from doc path", inferredFrameworkName, self);
+	}
+	return inferredFrameworkName;
 }
 
 @end

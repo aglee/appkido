@@ -79,6 +79,7 @@
 
 - (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
 - (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName;
+- (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
 @end
 
 
