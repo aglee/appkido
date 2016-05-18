@@ -15,80 +15,84 @@
 - (void)_importCTokens
 {
 	for (DSAToken *tokenMO in [self _arrayWithTokenMOsForLanguage:@"C"]) {
-		if (![self _maybeImportCToken:tokenMO]) {
+		AKToken *token = [self _maybeImportCToken:tokenMO];
+		if (token) {
+			token.frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+//		} else {
+		} else if (![tokenMO.tokenType.typeName isEqualToString:@"tag"]) {  //TODO: Figure out whether I really do want to ignore the "tag" token type.
 			QLog(@"+++ %s [ODD] Could not import token '%@' with type '%@'", __PRETTY_FUNCTION__, tokenMO.tokenName, tokenMO.tokenType.typeName);
 		}
 	}
 }
 
-- (BOOL)_maybeImportCToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportCToken:(DSAToken *)tokenMO
 {
 	return ([self _maybeImportDataToken:tokenMO]
-			|| [self _maybeImportEnumToken:tokenMO]
-			|| [self _maybeImportFunctionToken:tokenMO]
-			|| [self _maybeImportMacroToken:tokenMO]
-			|| [self _maybeImportTagToken:tokenMO]
-			|| [self _maybeImportTypedefToken:tokenMO]);
+			?: [self _maybeImportEnumToken:tokenMO]
+			?: [self _maybeImportFunctionToken:tokenMO]
+			?: [self _maybeImportMacroToken:tokenMO]
+			?: [self _maybeImportTagToken:tokenMO]
+			?: [self _maybeImportTypedefToken:tokenMO]);
 }
 
-- (BOOL)_maybeImportDataToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportDataToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"data"]) {
-		return NO;
+		return nil;
 	}
 	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.constantsCluster addNamedObject:token toGroupWithName:@"Constants"];
-	return YES;
+	return token;
 }
 
-- (BOOL)_maybeImportEnumToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportEnumToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"econst"]) {
-		return NO;
+		return nil;
 	}
 	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.enumsCluster addNamedObject:token toGroupWithName:@"Enums"];
-	return YES;
+	return token;
 }
 
-- (BOOL)_maybeImportFunctionToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportFunctionToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"func"]) {
-		return NO;
+		return nil;
 	}
 	AKToken *token = [[AKFunctionToken alloc] initWithTokenMO:tokenMO];
 	[self.functionsCluster addNamedObject:token toGroupWithName:@"Functions"];
-	return YES;
+	return token;
 }
 
-- (BOOL)_maybeImportMacroToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportMacroToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"macro"]) {
-		return NO;
+		return nil;
 	}
 	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.macrosCluster addNamedObject:token toGroupWithName:@"Macros"];
-	return YES;
+	return token;
 }
 
-- (BOOL)_maybeImportTagToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportTagToken:(DSAToken *)tokenMO
 {
 	//TODO: I'm not sure yet what the token type "tag" means.  Current hypothesis is that I can ignore it.
 	if (![tokenMO.tokenType.typeName isEqualToString:@"tag"]) {
-		return NO;
+		return nil;
 	}
 
-	return YES;
+	return nil;
 }
 
-- (BOOL)_maybeImportTypedefToken:(DSAToken *)tokenMO
+- (AKToken *)_maybeImportTypedefToken:(DSAToken *)tokenMO
 {
 	if (![tokenMO.tokenType.typeName isEqualToString:@"tdef"]) {
-		return NO;
+		return nil;
 	}
 	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
 	[self.typedefsCluster addNamedObject:token toGroupWithName:@"Typedefs"];
-	return YES;
+	return token;
 }
 
 @end
