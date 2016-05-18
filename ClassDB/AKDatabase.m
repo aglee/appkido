@@ -52,9 +52,22 @@
 
 - (void)populate
 {
+	// Prefetch all these objects so they don't have to be individually fetched
+	// later when we iterate through various objects.  Saves a few seconds.
+	NSArray *keepAround = @[
+							[[self _queryWithEntityName:@"Token"] fetchObjects].object,
+							[[self _queryWithEntityName:@"TokenMetainformation"] fetchObjects].object,
+							[[self _queryWithEntityName:@"Header"] fetchObjects].object,
+							[[self _queryWithEntityName:@"FilePath"] fetchObjects].object,
+							];
+
+	// Load up our internal data structures with stuff from the docset index.
 	[self _importFrameworks];
 	[self _importObjectiveCTokens];
 	[self _importCTokens];
+
+	// Don't let ARC get rid of keepAround until we get here.
+	[keepAround self];
 }
 
 #pragma mark - Frameworks
