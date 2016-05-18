@@ -54,9 +54,6 @@
 	[self _importFrameworks];
 	[self _importObjectiveCTokens];
 	[self _importCTokens];
-
-	// Post-processing.
-	//[self _pruneClassTokensWithoutTokens];  //TODO: Does this work?
 }
 
 #pragma mark - Frameworks
@@ -182,17 +179,6 @@
 		NSString *frameworkName = dict[@"frameworkName"];
 		AKFramework *framework = [[AKFramework alloc] initWithName:frameworkName];
 		[self.frameworksGroup addNamedObject:framework];
-	}
-}
-
-- (void)_pruneClassTokensWithoutTokens  //TODO: See if there is a better way.
-{
-	for (NSString *className in self.classTokensByName.allKeys) {
-		AKClassToken *classToken = self.classTokensByName[className];
-		if (classToken.tokenMO == nil) {
-			QLog(@"+++ class '%@' has no token; removing it", className);
-			self.classTokensByName[className] = nil;
-		}
 	}
 }
 
