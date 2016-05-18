@@ -1099,35 +1099,21 @@
 		730030CE0498501500A80007 /* AppKiDo support classes */ = {
 			isa = PBXGroup;
 			children = (
-				738D41BB15B07EC6008950F6 /* AKAppVersion.h */,
-				738D41BC15B07EC6008950F6 /* AKAppVersion.m */,
+				73C1E9281CECAFB7002BFD8F /* named objects */,
+				73C1E92B1CECB016002BFD8F /* preferences */,
+				73C1E9291CECAFD9002BFD8F /* sorting */,
+				73C1E92C1CECB033002BFD8F /* string parsing */,
+				73C1E92A1CECB007002BFD8F /* versions */,
 				735E298216E050E600E9FBC1 /* AKDebugging.h */,
 				735E298316E050E600E9FBC1 /* AKDebugging.m */,
 				73D239CA0D4ABBA000EF7503 /* AKDevToolsUtils.h */,
 				73D239CB0D4ABBA000EF7503 /* AKDevToolsUtils.m */,
 				7323C9C108313881002E8D7D /* AKFileUtils.h */,
 				7323C9C208313881002E8D7D /* AKFileUtils.m */,
-				73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */,
-				73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */,
-				73B502591CE7B1F6009D1BE5 /* AKNamed.h */,
-				737F55601CE502E300376A4B /* AKNamedObject.h */,
-				737F55611CE502E300376A4B /* AKNamedObject.m */,
-				7322FBD71CEA6B93007E0764 /* AKNamedObjectGroup.h */,
-				7322FBD81CEA6B93007E0764 /* AKNamedObjectGroup.m */,
-				7322FBD11CEA65A4007E0764 /* AKNamedObjectCluster.h */,
-				7322FBD21CEA65A4007E0764 /* AKNamedObjectCluster.m */,
-				7332E8D516E8141300A3764B /* AKPrefDictionary.h */,
-				73D409E104A391D600A80003 /* AKPrefUtils.h */,
-				73D409E204A391D600A80003 /* AKPrefUtils.m */,
-				7357E6F51CD6B866009A613C /* AKRegexUtils.h */,
-				7357E6F61CD6B866009A613C /* AKRegexUtils.m */,
-				737405C51195B28D000BD282 /* AKSDKVersion.h */,
-				737405C61195B28D000BD282 /* AKSDKVersion.m */,
+				73C1E9221CECAEE3002BFD8F /* AKResult.h */,
+				73C1E9231CECAEE3002BFD8F /* AKResult.m */,
 				73D59E8915B3EC8200A1BEAF /* AKServicesProvider.h */,
 				73D59E8A15B3EC8200A1BEAF /* AKServicesProvider.m */,
-				730030DD0498501500A80007 /* AKSortable.h */,
-				73D409E704A3A04F00A80003 /* AKSortUtils.h */,
-				73D409E804A3A04F00A80003 /* AKSortUtils.m */,
 			);
 			name = "AppKiDo support classes";
 			path = GlobalClasses;
@@ -1585,6 +1571,62 @@
 				73B502561CE7AF68009D1BE5 /* AKDocListItem.h */,
 			);
 			name = "UI navigation protocols";
+			sourceTree = "<group>";
+		};
+		73C1E9281CECAFB7002BFD8F /* named objects */ = {
+			isa = PBXGroup;
+			children = (
+				73B502591CE7B1F6009D1BE5 /* AKNamed.h */,
+				737F55601CE502E300376A4B /* AKNamedObject.h */,
+				737F55611CE502E300376A4B /* AKNamedObject.m */,
+				7322FBD71CEA6B93007E0764 /* AKNamedObjectGroup.h */,
+				7322FBD81CEA6B93007E0764 /* AKNamedObjectGroup.m */,
+				7322FBD11CEA65A4007E0764 /* AKNamedObjectCluster.h */,
+				7322FBD21CEA65A4007E0764 /* AKNamedObjectCluster.m */,
+			);
+			name = "named objects";
+			sourceTree = "<group>";
+		};
+		73C1E9291CECAFD9002BFD8F /* sorting */ = {
+			isa = PBXGroup;
+			children = (
+				730030DD0498501500A80007 /* AKSortable.h */,
+				73D409E704A3A04F00A80003 /* AKSortUtils.h */,
+				73D409E804A3A04F00A80003 /* AKSortUtils.m */,
+			);
+			name = sorting;
+			sourceTree = "<group>";
+		};
+		73C1E92A1CECB007002BFD8F /* versions */ = {
+			isa = PBXGroup;
+			children = (
+				738D41BB15B07EC6008950F6 /* AKAppVersion.h */,
+				738D41BC15B07EC6008950F6 /* AKAppVersion.m */,
+				737405C51195B28D000BD282 /* AKSDKVersion.h */,
+				737405C61195B28D000BD282 /* AKSDKVersion.m */,
+			);
+			name = versions;
+			sourceTree = "<group>";
+		};
+		73C1E92B1CECB016002BFD8F /* preferences */ = {
+			isa = PBXGroup;
+			children = (
+				7332E8D516E8141300A3764B /* AKPrefDictionary.h */,
+				73D409E104A391D600A80003 /* AKPrefUtils.h */,
+				73D409E204A391D600A80003 /* AKPrefUtils.m */,
+			);
+			name = preferences;
+			sourceTree = "<group>";
+		};
+		73C1E92C1CECB033002BFD8F /* string parsing */ = {
+			isa = PBXGroup;
+			children = (
+				73D59E8315B3EA4800A1BEAF /* AKMethodNameExtractor.h */,
+				73D59E8415B3EA4800A1BEAF /* AKMethodNameExtractor.m */,
+				7357E6F51CD6B866009A613C /* AKRegexUtils.h */,
+				7357E6F61CD6B866009A613C /* AKRegexUtils.m */,
+			);
+			name = "string parsing";
 			sourceTree = "<group>";
 		};
 		73C8ABB60836AF2D0000E3F7 /* database items - tokens */ = {

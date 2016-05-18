@@ -8,15 +8,12 @@
 #import <Foundation/Foundation.h>
 
 /*!
- * An informal protocol that declares the sort method used by AKSortUtils. The
- * objects you want to sort don't have to formally conform to AKSortable as long
- * as they implement -sortName.
+ * Informal protocol.  Declares the sortName method used by AKSortUtils.
  */
 @protocol AKSortable
 
 @required
 
-/*! Returns the sort key to be used by AKSortUtils. */
 @property (readonly, copy) NSString *sortName;
 
 @end

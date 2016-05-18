@@ -11,7 +11,7 @@
 @class AKNamedObjectGroup;
 
 /*!
- * A named collection of AKNamedObjectGroups.
+ * A named collection of AKNamedObjectGroups.  Object names are unique within the cluster.
  */
 @interface AKNamedObjectCluster : AKNamedObject
 
