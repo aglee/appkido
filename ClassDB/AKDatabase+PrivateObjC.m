@@ -27,7 +27,7 @@
 		if (token) {
 			token.frameworkName = [self _frameworkNameForTokenMO:tokenMO];
 		} else {
-			QLog(@"+++ %s [ODD] Could not import token '%@' with type '%@'", __PRETTY_FUNCTION__, tokenMO.tokenName, tokenMO.tokenType.typeName);
+			QLog(@"+++ [ODD] Could not import token '%@' with type '%@'", tokenMO.tokenName, tokenMO.tokenType.typeName);
 		}
 	}
 }

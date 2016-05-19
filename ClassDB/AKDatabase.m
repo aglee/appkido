@@ -27,11 +27,6 @@
 		_frameworksGroup = [[AKNamedObjectGroup alloc] initWithName:@"Frameworks"];
 		_classTokensByName = [[NSMutableDictionary alloc] init];
 		_protocolTokensByName = [[NSMutableDictionary alloc] init];
-		_constantsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Constants"];
-		_enumsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Enums"];
-		_functionsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Functions"];
-		_macrosCluster = [[AKNamedObjectCluster alloc] initWithName:@"Macros"];
-		_typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Typedef"];
 	}
 	return self;
 }
@@ -78,9 +73,9 @@
 
 #pragma mark - Frameworks
 
-- (BOOL)hasFrameworkWithName:(NSString *)frameworkName
+- (AKFramework *)frameworkWithName:(NSString *)frameworkName
 {
-	return ([self.frameworksGroup objectWithName:frameworkName] != nil);
+	return (AKFramework *)[self.frameworksGroup objectWithName:frameworkName];
 }
 
 #pragma mark - Class tokens

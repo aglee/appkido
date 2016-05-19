@@ -103,7 +103,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 		// Workaround for -setPath: annoyance: make the browser
 		// columns as right-justified as possible.
-		[self.topicBrowser.window disableFlushWindow];
+		[self.topicBrowser.window disableFlushWindow];  //TODO: Still needed?
 		[self.topicBrowser scrollColumnToVisible:0];
 		[self.topicBrowser scrollColumnToVisible:self.topicBrowser.lastColumn];
 		[self.topicBrowser.window enableFlushWindow];
@@ -260,11 +260,10 @@ static const NSInteger AKMinBrowserColumns = 2;
 		[columnValues addObject:[[AKClassTopic alloc] initWithClassToken:classToken]];
 	}
 
-	// Set up the "other topics" section.
-	[columnValues addObject:[[AKLabelTopic alloc] initWithLabel:@":: other topics ::"]];
-
-	for (NSString *fwName in [db sortedFrameworkNames]) {
-		[columnValues addObject:[[AKFrameworkTopic alloc] initWithFramework:fwName database:db]];
+	// Set up the "frameworks" section.
+	[columnValues addObject:[[AKLabelTopic alloc] initWithLabel:@":: frameworks ::"]];
+	for (AKFramework *fw in db.sortedFrameworks) {
+		[columnValues addObject:[[AKFrameworkTopic alloc] initWithFramework:fw]];
 	}
 
 	[_topicListsForBrowserColumns addObject:columnValues];

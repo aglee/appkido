@@ -19,7 +19,7 @@
  * Abstract class that represents a "topic". Used as the representedObject of
  * cells in the topic browser.
  *
- * Concrete subclasses need to do implement _arrayWithChildTopics and
+ * Concrete subclasses must implement _arrayWithChildTopics and
  * _arrayWithSubtopics.
  *
  * IMPORTANT TERMINOLOGY: when a topic is selected in the topic browser, the

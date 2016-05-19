@@ -6,28 +6,29 @@
  */
 
 #import "AKFrameworkTopic.h"
-#import "DIGSLog.h"
-#import "AKFrameworkConstants.h"
-#import "AKSortUtils.h"
-#import "AKDatabase.h"
 #import "AKAppDelegate.h"
-#import "AKProtocolsTopic.h"
+#import "AKDatabase.h"
+#import "AKFramework.h"
+#import "AKFrameworkConstants.h"
+#import "AKNamedObjectCluster.h"
+#import "AKNamedObjectClusterTopic.h"
+#import "AKNamedObjectGroup.h"
+#import "AKNamedObjectGroupTopic.h"
+#import "AKSortUtils.h"
+#import "DIGSLog.h"
 
 @implementation AKFrameworkTopic
 
-@synthesize database = _database;
-@synthesize frameworkName = _frameworkName;
+@synthesize framework = _framework;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithFramework:(NSString *)frameworkName database:(AKDatabase *)database
+- (instancetype)initWithFramework:(AKFramework *)framework
 {
-	NSParameterAssert(frameworkName != nil);
-	NSParameterAssert(database != nil);
+	NSParameterAssert(framework != nil);
 	self = [super init];
 	if (self) {
-		_database = database;
-		_frameworkName = frameworkName;
+		_framework = framework;
 	}
 	return self;
 }
@@ -35,7 +36,7 @@
 - (instancetype)init
 {
 	DIGSLogError_NondesignatedInitializer();
-	return [self initWithFramework:nil database:nil];
+	return [self initWithFramework:nil];
 }
 
 #pragma mark - AKTopic methods
@@ -48,19 +49,26 @@
 - (NSArray *)_arrayWithChildTopics
 {
 	NSMutableArray *columnValues = [NSMutableArray array];
-	AKDatabase *db = self.database;
-	NSString *fwName = self.frameworkName;
 	AKTopic *childTopic;
 
-	if ([db protocolsForFramework:fwName].count > 0) {
-		childTopic = [[AKProtocolsTopic alloc] initWithFramework:fwName database:db];
+	if (self.framework.protocolsGroup.count > 0) {
+		childTopic = [[AKNamedObjectGroupTopic alloc] initWithNamedObjectGroup:self.framework.protocolsGroup];
 		[columnValues addObject:childTopic];
 	}
 
-//	if ([db functionsGroupsForFramework:fwName].count > 0) {
-//		childTopic = [[AKFunctionsTopic alloc] initWithFramework:fwName database:db];
-//		[columnValues addObject:childTopic];
-//	}
+	NSArray *clusters = @[
+						  self.framework.functionsCluster,
+						  self.framework.enumsCluster,
+						  self.framework.macrosCluster,
+						  self.framework.typedefsCluster,
+						  self.framework.constantsCluster,
+						  ];
+	for (AKNamedObjectCluster *cluster in clusters) {
+		if (cluster.count > 0) {
+			childTopic = [[AKNamedObjectClusterTopic alloc] initWithNamedObjectCluster:cluster];
+			[columnValues addObject:childTopic];
+		}
+	}
 
 	return columnValues;
 }
@@ -69,7 +77,7 @@
 
 - (NSString *)name
 {
-	return self.frameworkName;
+	return self.framework.name;
 }
 
 #pragma mark - AKPrefDictionary methods
@@ -93,20 +101,21 @@
 		return nil;
 	}
 
-	AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];
-	if (![db hasFrameworkWithName:fwName]) {
+	AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];  //TODO: Global database.
+	AKFramework *framework = [db frameworkWithName:fwName];
+	if (framework == nil) {
 		DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);
 		return nil;
 	}
 
 	// If we got this far, we have what we need to create an instance.
-	return [[self alloc] initWithFramework:fwName database:db];
+	return [[self alloc] initWithFramework:framework];
 }
 
 - (NSDictionary *)asPrefDictionary
 {
 	return @{ AKTopicClassNamePrefKey: self.className,
-			  AKFrameworkNamePrefKey: self.frameworkName };
+			  AKFrameworkNamePrefKey: self.framework.name };
 }
 
 @end

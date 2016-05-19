@@ -13,6 +13,7 @@
 @class AKManagedObjectQuery;
 @class AKToken;
 @class AKFunctionToken;
+@class AKFramework;
 @class AKNamedObjectCluster;
 @class AKNamedObjectGroup;
 @class AKProtocolToken;
@@ -48,7 +49,7 @@
 
 #pragma mark - Frameworks
 
-- (BOOL)hasFrameworkWithName:(NSString *)frameworkName;
+- (AKFramework *)frameworkWithName:(NSString *)frameworkName;
 
 #pragma mark - Class Tokens
 
@@ -69,12 +70,6 @@
 
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
-
-@property (strong) AKNamedObjectCluster *constantsCluster;
-@property (strong) AKNamedObjectCluster *enumsCluster;
-@property (strong) AKNamedObjectCluster *functionsCluster;
-@property (strong) AKNamedObjectCluster *macrosCluster;
-@property (strong) AKNamedObjectCluster *typedefsCluster;
 
 - (void)addProtocolToken:(AKProtocolToken *)protocolToken;
 

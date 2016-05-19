@@ -7,7 +7,9 @@
 //
 
 #import "AKNamedObject.h"
+#import "DocSetModel.h"
 
+@class AKToken;
 @class AKTokenCluster;
 @class AKNamedObjectGroup;
 
@@ -20,5 +22,7 @@
 @property (strong) AKTokenCluster *functionsCluster;
 @property (strong) AKTokenCluster *macrosCluster;
 @property (strong) AKTokenCluster *typedefsCluster;
+
+- (AKToken *)maybeImportCToken:(DSAToken *)tokenMO;
 
 @end

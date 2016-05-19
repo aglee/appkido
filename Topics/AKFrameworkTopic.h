@@ -7,22 +7,17 @@
 
 #import "AKTopic.h"
 
-@class AKDatabase;
+@class AKFramework;
 
 /*!
- * Abstract class that represents an aspect of a framework other than its
- * classes -- for example, its functions or its formal protocols. Provides
- * implementations for several AKTopic abstract methods, but not childTopics,
- * because that depends on the type of framework. Subclasses must override
- * childTopics to return instances of AKChildTopicOfFrameworkTopic.
+ * Represents a framework.
  */
 @interface AKFrameworkTopic : AKTopic
 
-@property (strong, readonly) AKDatabase *database;
-@property (copy, readonly) NSString *frameworkName;
+@property (copy, readonly) AKFramework *framework;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithFramework:(NSString *)frameworkName database:(AKDatabase *)database NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFramework:(AKFramework *)framework NS_DESIGNATED_INITIALIZER;
 
 @end

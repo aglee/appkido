@@ -5,7 +5,7 @@
  * Copyright (c) 2005 Andy Lee. All rights reserved.
  */
 
-#import "AKFrameworkTopic.h"
+#import "AKNamedObjectClusterTopic.h"
 
 /*!
  * Abstract class used for child topics of an AKFrameworkTopic. When a framework
@@ -14,5 +14,5 @@
  *
  * Subclasses must implement name.
  */
-@interface AKChildTopicOfFrameworkTopic : AKFrameworkTopic
+@interface AKChildTopicOfFrameworkTopic : AKNamedObjectClusterTopic
 @end

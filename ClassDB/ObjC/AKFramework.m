@@ -40,4 +40,17 @@
     return self;
 }
 
+- (AKToken *)maybeImportCToken:(DSAToken *)tokenMO
+{
+    AKTokenCluster *tokenCluster = self.tokenClustersByTokenType[tokenMO.tokenType.typeName];
+    if (tokenCluster == nil) {
+        return nil;
+    }
+
+    AKToken *token = [tokenCluster tokenWithTokenMO:tokenMO];
+    token.frameworkName = self.name;
+    [tokenCluster addNamedObject:token toGroupWithName:tokenCluster.name];
+    return token;
+}
+
 @end

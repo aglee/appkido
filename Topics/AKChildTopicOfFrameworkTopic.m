@@ -10,27 +10,27 @@
 
 @implementation AKChildTopicOfFrameworkTopic
 
-#pragma mark - AKTopic methods
-
-- (NSString *)stringToDisplayInDescriptionField
-{
-	return [NSString stringWithFormat:@"%@ %@", self.frameworkName, self.name];
-}
-
-- (NSString *)pathInTopicBrowser
-{
-	return [NSString stringWithFormat:@"%@%@%@%@",
-			AKTopicBrowserPathSeparator,
-			self.frameworkName,
-			AKTopicBrowserPathSeparator,
-			self.name];
-}
-
-#pragma mark - <AKNamed> methods
-
-- (NSString *)displayName
-{
-	return [self stringToDisplayInDescriptionField];
-}
+//#pragma mark - AKTopic methods
+//
+//- (NSString *)stringToDisplayInDescriptionField
+//{
+//	return [NSString stringWithFormat:@"%@ %@", self.frameworkName, self.name];
+//}
+//
+//- (NSString *)pathInTopicBrowser
+//{
+//	return [NSString stringWithFormat:@"%@%@%@%@",
+//			AKTopicBrowserPathSeparator,
+//			self.frameworkName,
+//			AKTopicBrowserPathSeparator,
+//			self.name];
+//}
+//
+//#pragma mark - <AKNamed> methods
+//
+//- (NSString *)displayName
+//{
+//	return [self stringToDisplayInDescriptionField];
+//}
 
 @end
