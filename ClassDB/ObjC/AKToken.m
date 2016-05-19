@@ -60,7 +60,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: name=%@>", self.className, self.name];
+	return [NSString stringWithFormat:@"<%@: name=%@ type=%@>", self.className, self.name, self.tokenMO.tokenType.typeName];
 }
 
 @end
