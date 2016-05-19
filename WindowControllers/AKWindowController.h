@@ -181,15 +181,6 @@
 /*! Expects sender to be an NSMenuItem in the Superclasses popup menu. */
 - (IBAction)selectAncestorClass:(id)sender;
 
-/*! Expects sender to be an NSMenuItem whose title is a framework name. */
-- (IBAction)selectProtocolsTopic:(id)sender;
-
-/*! Expects sender to be an NSMenuItem whose title is a framework name. */
-- (IBAction)selectFunctionsTopic:(id)sender;
-
-/*! Expects sender to be an NSMenuItem whose title is a framework name. */
-- (IBAction)selectGlobalsTopic:(id)sender;
-
 /*!
  * Used by items in the Favorites menu. Does nothing unless sender is an
  * NSMenuItem whose representedObject is an AKDocLocator.

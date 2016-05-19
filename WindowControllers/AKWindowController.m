@@ -328,36 +328,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	[self selectTopic:[[AKClassTopic alloc] initWithClassToken:classToken]];
 }
 
-- (IBAction)selectProtocolsTopic:(id)sender
-{
-	if ([sender isKindOfClass:[NSMenuItem class]]) {
-		NSString *frameworkName = [sender menu].title;
-		[self selectTopic:[[AKProtocolsTopic alloc] initWithFramework:frameworkName
-																   database:_database]];
-		[self _showBrowser];
-	}
-}
-
-- (IBAction)selectFunctionsTopic:(id)sender  //TODO: Clean this up.
-{
-//	if ([sender isKindOfClass:[NSMenuItem class]]) {
-//		NSString *frameworkName = [sender menu].title;
-//		[self selectTopic:[[AKFunctionsTopic alloc] initWithFramework:frameworkName
-//															 database:_database]];
-//		[self _showBrowser];
-//	}
-}
-
-- (IBAction)selectGlobalsTopic:(id)sender  //TODO: Clean this up.
-{
-//	if ([sender isKindOfClass:[NSMenuItem class]]) {
-//		NSString *frameworkName = [sender menu].title;
-//		[self selectTopic:[[AKGlobalsTopic alloc] initWithFramework:frameworkName
-//														   database:_database]];
-//		[self _showBrowser];
-//	}
-}
-
 - (IBAction)selectDocWithDocLocatorRepresentedBy:(id)sender
 {
 	if ([sender isKindOfClass:[NSMenuItem class]]
@@ -637,10 +607,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 		return isValid;
 	} else if (itemAction == @selector(selectAncestorClass:)) {
 		return ([[self _currentTopic] parentClassOfTopic] != nil);
-	} else if ((itemAction == @selector(selectProtocolsTopic:))
-			   || (itemAction == @selector(selectFunctionsTopic:))
-			   || (itemAction == @selector(selectGlobalsTopic:))
-			   || (itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
+	} else if ((itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
 			   || (itemAction == @selector(rememberWindowLayout:))) {
 		return YES;
 	} else if (itemAction == @selector(addTopicToFavorites:)) {
