@@ -49,6 +49,11 @@
 	return self.frameworksGroup.sortedObjectNames;
 }
 
+- (NSArray *)sortedFrameworks
+{
+	return self.frameworksGroup.sortedObjects;
+}
+
 #pragma mark - Populating the database
 
 - (void)populate

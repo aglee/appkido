@@ -32,6 +32,7 @@
 
 @property (readonly, strong) DocSetIndex *docSetIndex;
 @property (readonly, copy) NSArray *sortedFrameworkNames;
+@property (readonly, copy) NSArray *sortedFrameworks;
 @property (readonly, copy) NSArray *rootClasses;
 @property (readonly, copy) NSArray *allClasses;
 @property (readonly, copy) NSArray *allProtocols;
