@@ -32,30 +32,6 @@
 	return self.tokenMO.metainformation.declaredIn.headerPath;
 }
 
-#pragma mark - <AKDoc> methods
-
-- (NSString *)commentString
-{
-	return @"";
-}
-
-- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
-{
-	NSURL *baseURL = docSetIndex.documentsBaseURL;
-	NSString *relativePath = self.tokenMO.metainformation.file.path;
-	if (relativePath == nil) {
-		return nil;
-	}
-	NSURL *docURL = [baseURL URLByAppendingPathComponent:relativePath];
-	NSString *anchor = self.tokenMO.metainformation.anchor;
-	if (anchor) {
-		NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:docURL resolvingAgainstBaseURL:NO];
-		urlComponents.fragment = anchor;
-		docURL = [urlComponents URL];
-	}
-	return docURL;
-}
-
 #pragma mark - NSObject methods
 
 - (NSString *)description

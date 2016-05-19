@@ -64,42 +64,4 @@
     return displayString;
 }
 
-// This implementation of -commentString assumes the receiver represents a
-// method.  Subclasses of AKMemberDoc for which this is not true need to
-// override this method.
-//- (NSString *)commentString
-//{
-//    NSString *memberFrameworkName = self.token.frameworkName;
-//    BOOL memberIsInSameFramework = [memberFrameworkName isEqualToString:self.behaviorToken.frameworkName];
-//    AKBehaviorToken *owningBehavior = ((AKMemberToken *)self.token).owningBehavior;
-//
-//    if (self.behaviorToken == owningBehavior) {
-//        // We're the first class/protocol to declare this method.
-//        if (memberIsInSameFramework) {
-//            return @"";
-//        } else {
-//            return [NSString stringWithFormat:@"This method is added by a category in %@.",
-//                    memberFrameworkName];
-//        }
-//    } else if ([owningBehavior isClassToken]) {
-//        // We inherited this method from an ancestor class.
-//        if (memberIsInSameFramework) {
-//            return [NSString stringWithFormat:@"This method is inherited from class %@.",
-//                    owningBehavior.tokenName];
-//        } else {
-//            return [NSString stringWithFormat:@"This method is inherited from %@ class %@.",
-//                    memberFrameworkName, owningBehavior.tokenName];
-//        }
-//    } else {
-//        // We implement this method in order to conform to a protocol.
-//        if (memberIsInSameFramework) {
-//            return [NSString stringWithFormat:@"This method is declared in protocol <%@>.",
-//                    owningBehavior.tokenName];
-//        } else {
-//            return [NSString stringWithFormat:@"This method is declared in %@ protocol <%@>.",
-//                    memberFrameworkName, owningBehavior.tokenName];
-//        }
-//    }
-//}
-
 @end

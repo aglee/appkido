@@ -197,6 +197,10 @@
 		7332E8D716E8141300A3764B /* AKPrefDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7332E8D516E8141300A3764B /* AKPrefDictionary.h */; };
 		7332E8DE16E8EFAE00A3764B /* FindPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7332E8DC16E8EFAE00A3764B /* FindPanel.xib */; };
 		7332E8DF16E8EFAE00A3764B /* FindPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7332E8DC16E8EFAE00A3764B /* FindPanel.xib */; };
+		7339B92B1CEE6867000C68AD /* AKToken+AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7339B9291CEE6867000C68AD /* AKToken+AKDoc.h */; };
+		7339B92C1CEE6867000C68AD /* AKToken+AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7339B9291CEE6867000C68AD /* AKToken+AKDoc.h */; };
+		7339B92D1CEE6867000C68AD /* AKToken+AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B92A1CEE6867000C68AD /* AKToken+AKDoc.m */; };
+		7339B92E1CEE6867000C68AD /* AKToken+AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B92A1CEE6867000C68AD /* AKToken+AKDoc.m */; };
 		734AEE801CC5E1600064AAA9 /* DocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE3C1CC5E1600064AAA9 /* DocSetIndex.h */; };
 		734AEE811CC5E1600064AAA9 /* DocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE3D1CC5E1600064AAA9 /* DocSetIndex.m */; };
 		734AEE821CC5E1600064AAA9 /* DocSetModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE3F1CC5E1600064AAA9 /* DocSetModel.h */; };
@@ -689,6 +693,8 @@
 		7330D5B7083667540007FBD0 /* AKFrameworkTokenClusterTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkTokenClusterTopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		7332E8D516E8141300A3764B /* AKPrefDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPrefDictionary.h; sourceTree = "<group>"; };
 		7332E8DD16E8EFAE00A3764B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindPanel.xib; sourceTree = "<group>"; };
+		7339B9291CEE6867000C68AD /* AKToken+AKDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AKToken+AKDoc.h"; sourceTree = "<group>"; };
+		7339B92A1CEE6867000C68AD /* AKToken+AKDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKToken+AKDoc.m"; sourceTree = "<group>"; };
 		733ACAF20498483100A80007 /* app-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "app-icon.icns"; path = "images/app-icon.icns"; sourceTree = SOURCE_ROOT; };
 		733E49641CD58B0100F27735 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		734168FA0841F59C0027E6BD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -1286,9 +1292,19 @@
 				73B502561CE7AF68009D1BE5 /* AKDoc.h */,
 				73197A840606E025002E4E83 /* AKHeaderFileDoc.h */,
 				73197A850606E025002E4E83 /* AKHeaderFileDoc.m */,
+				7339B9281CEE6800000C68AD /* tokens as docs (categories) */,
 			);
 			name = docs;
 			path = Docs;
+			sourceTree = "<group>";
+		};
+		7339B9281CEE6800000C68AD /* tokens as docs (categories) */ = {
+			isa = PBXGroup;
+			children = (
+				7339B9291CEE6867000C68AD /* AKToken+AKDoc.h */,
+				7339B92A1CEE6867000C68AD /* AKToken+AKDoc.m */,
+			);
+			name = "tokens as docs (categories)";
 			sourceTree = "<group>";
 		};
 		734701A804ED644C00A80003 /* saveable window states (models) */ = {
@@ -1768,6 +1784,7 @@
 				65B1096209D7B6C300A8A637 /* AKPrefUtils.h in Headers */,
 				65B1096309D7B6C300A8A637 /* AKSortUtils.h in Headers */,
 				65B1096409D7B6C300A8A637 /* NSString+AppKiDo.h in Headers */,
+				7339B92B1CEE6867000C68AD /* AKToken+AKDoc.h in Headers */,
 				65B1096509D7B6C300A8A637 /* AKColoredBox.h in Headers */,
 				734AEEB71CC5E1600064AAA9 /* _OrderedSubnode.h in Headers */,
 				734AEE951CC5E1600064AAA9 /* Header.h in Headers */,
@@ -1961,6 +1978,7 @@
 				7399B3030E632A5C001AE672 /* DIGSMarginView.h in Headers */,
 				7357E6F81CD6B866009A613C /* AKRegexUtils.h in Headers */,
 				7322FBEC1CEA9EEE007E0764 /* AKFramework.h in Headers */,
+				7339B92C1CEE6867000C68AD /* AKToken+AKDoc.h in Headers */,
 				7399B3040E632A5C001AE672 /* DIGSMatchingBackgroundView.h in Headers */,
 				7399B3050E632A5C001AE672 /* DIGSTextSelection.h in Headers */,
 				7399B3060E632A5C001AE672 /* DIGSTextView.h in Headers */,
@@ -2237,6 +2255,7 @@
 				65B109F009D7B6C300A8A637 /* AKMembersSubtopic.m in Sources */,
 				734AEE861CC5E1600064AAA9 /* Container.m in Sources */,
 				734AEE9E1CC5E1600064AAA9 /* TokenMetainformation.m in Sources */,
+				7339B92D1CEE6867000C68AD /* AKToken+AKDoc.m in Sources */,
 				65B109F209D7B6C300A8A637 /* AKSubtopic.m in Sources */,
 				7357E6F91CD6B866009A613C /* AKRegexUtils.m in Sources */,
 				65B109F309D7B6C300A8A637 /* AKClassTopic.m in Sources */,
@@ -2366,6 +2385,7 @@
 				7399B3530E632A5C001AE672 /* AKPrefUtils.m in Sources */,
 				7399B3540E632A5C001AE672 /* AKSortUtils.m in Sources */,
 				7399B3550E632A5C001AE672 /* NSString+AppKiDo.m in Sources */,
+				7339B92E1CEE6867000C68AD /* AKToken+AKDoc.m in Sources */,
 				7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */,
 				7399B3580E632A5C001AE672 /* NSView+AppKiDo.m in Sources */,
 				7399B35C0E632A5C001AE672 /* AKMembersSubtopic.m in Sources */,
