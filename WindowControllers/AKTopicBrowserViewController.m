@@ -23,8 +23,6 @@
 
 @implementation AKTopicBrowserViewController
 
-@synthesize topicBrowser = _topicBrowser;
-
 static const NSInteger AKMinBrowserColumns = 2;
 
 #pragma mark - Init/dealloc/awake

@@ -20,9 +20,6 @@
 	// is an array of values to be displayed in one column of the browser.
 	// Values are instances of AKTopic classes.
 	NSMutableArray *_topicListsForBrowserColumns;
-
-	// IBOutlets.
-	AKBrowser *__weak _topicBrowser;
 }
 
 @property (nonatomic, weak) IBOutlet AKBrowser *topicBrowser;
@@ -30,10 +27,7 @@
 #pragma mark - Action methods
 
 - (IBAction)addBrowserColumn:(id)sender;
-
 - (IBAction)removeBrowserColumn:(id)sender;
-
-/*! Called when the user selects a topic in the topic browser. */
 - (IBAction)doBrowserAction:(id)sender;
 
 @end
