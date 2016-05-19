@@ -657,8 +657,8 @@
 		7320C16F16DC5B9F00797F95 /* DIGSFindBufferDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIGSFindBufferDelegate.h; sourceTree = "<group>"; };
 		7320C17116DCF9D200797F95 /* AKSubtopicListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSubtopicListViewController.h; sourceTree = "<group>"; };
 		7320C17216DCF9D500797F95 /* AKSubtopicListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSubtopicListViewController.m; sourceTree = "<group>"; };
-		7320C17316DCF9DA00797F95 /* AKTopicBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTopicBrowserViewController.h; sourceTree = "<group>"; };
-		7320C17416DCF9DF00797F95 /* AKTopicBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTopicBrowserViewController.m; sourceTree = "<group>"; };
+		7320C17316DCF9DA00797F95 /* AKTopicBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTopicBrowserViewController.h; sourceTree = "<group>"; usesTabs = 1; };
+		7320C17416DCF9DF00797F95 /* AKTopicBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTopicBrowserViewController.m; sourceTree = "<group>"; usesTabs = 1; };
 		7320C17516DCF9E300797F95 /* AKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKViewController.h; sourceTree = "<group>"; };
 		7320C17616DCF9E500797F95 /* AKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKViewController.m; sourceTree = "<group>"; };
 		7320C17716DCF9ED00797F95 /* AKWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowController.h; sourceTree = "<group>"; usesTabs = 1; };

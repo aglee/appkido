@@ -16,13 +16,13 @@
 @interface AKTopicBrowserViewController : AKViewController <NSUserInterfaceValidations, NSBrowserDelegate>
 {
 @private
-    // Values to display in all the columns of the browser.  Each element
-    // is an array of values to be displayed in one column of the browser.
-    // Values are instances of AKTopic classes.
-    NSMutableArray *_topicListsForBrowserColumns;
+	// Values to display in all the columns of the browser.  Each element
+	// is an array of values to be displayed in one column of the browser.
+	// Values are instances of AKTopic classes.
+	NSMutableArray *_topicListsForBrowserColumns;
 
-    // IBOutlets.
-    AKBrowser *__weak _topicBrowser;
+	// IBOutlets.
+	AKBrowser *__weak _topicBrowser;
 }
 
 @property (nonatomic, weak) IBOutlet AKBrowser *topicBrowser;
