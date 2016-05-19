@@ -38,31 +38,30 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 - (void)awakeFromNib
 {
-	_topicBrowser.pathSeparator = AKTopicBrowserPathSeparator;
-	[_topicBrowser setReusesColumns:NO];
-	[_topicBrowser loadColumnZero];
-	[_topicBrowser selectRow:1 inColumn:0];  // selects "NSObject"
+	self.topicBrowser.pathSeparator = AKTopicBrowserPathSeparator;
+	self.topicBrowser.reusesColumns = NO;
+	[self.topicBrowser loadColumnZero];
+	[self.topicBrowser selectRow:1 inColumn:0];  // Row 0 contains a label, so can't be selected.
 }
 
 #pragma mark - Action methods
 
 - (IBAction)addBrowserColumn:(id)sender
 {
-	NSInteger numColumns = _topicBrowser.maxVisibleColumns;
-	_topicBrowser.maxVisibleColumns = (numColumns + 1);
+	self.topicBrowser.maxVisibleColumns++;
 }
 
 - (IBAction)removeBrowserColumn:(id)sender
 {
-	NSInteger numColumns = _topicBrowser.maxVisibleColumns;
-	if (numColumns > AKMinBrowserColumns) {
-		_topicBrowser.maxVisibleColumns = (numColumns - 1);
+	if (self.topicBrowser.maxVisibleColumns > AKMinBrowserColumns) {
+		self.topicBrowser.maxVisibleColumns--;
 	}
 }
 
 - (IBAction)doBrowserAction:(id)sender
 {
-	[self.owningWindowController selectTopic:[_topicBrowser.selectedCell representedObject]];
+	AKTopic *topic = (AKTopic *)[self.topicBrowser.selectedCell representedObject];
+	[self.owningWindowController selectTopic:topic];
 }
 
 #pragma mark - AKViewController methods
@@ -95,7 +94,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 		}
 
 		// Update the topic browser.
-		if (![_topicBrowser setPath:newBrowserPath]) {
+		if (![self.topicBrowser setPath:newBrowserPath]) {
 			DIGSLogError_ExitingMethodPrematurely(([NSString stringWithFormat:
 													@"can't navigate to browser path [%@]",
 													newBrowserPath]));
@@ -104,10 +103,10 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 		// Workaround for -setPath: annoyance: make the browser
 		// columns as right-justified as possible.
-		[_topicBrowser.window disableFlushWindow];
-		[_topicBrowser scrollColumnToVisible:0];
-		[_topicBrowser scrollColumnToVisible:_topicBrowser.lastColumn];
-		[_topicBrowser.window enableFlushWindow];
+		[self.topicBrowser.window disableFlushWindow];
+		[self.topicBrowser scrollColumnToVisible:0];
+		[self.topicBrowser scrollColumnToVisible:self.topicBrowser.lastColumn];
+		[self.topicBrowser.window enableFlushWindow];
 	}
 }
 
@@ -120,12 +119,12 @@ static const NSInteger AKMinBrowserColumns = 2;
 	NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
 	NSInteger fontSize = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
 	NSFont *font = [NSFont fontWithName:fontName size:fontSize];
-	[_topicBrowser.cellPrototype setFont:font];
+	[self.topicBrowser.cellPrototype setFont:font];
 
 	// Make the browser redraw to reflect its new display attributes.
-	NSString *savedPath = [_topicBrowser path];
-	[_topicBrowser loadColumnZero];
-	[_topicBrowser setPath:savedPath];
+	NSString *savedPath = self.topicBrowser.path;
+	[self.topicBrowser loadColumnZero];
+	[self.topicBrowser setPath:savedPath];
 }
 
 - (void)takeWindowLayoutFrom:(AKWindowLayout *)windowLayout
@@ -136,9 +135,9 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 	// Restore the number of browser columns.
 	if (windowLayout.numberOfBrowserColumns) {
-		_topicBrowser.maxVisibleColumns = windowLayout.numberOfBrowserColumns;
+		self.topicBrowser.maxVisibleColumns = windowLayout.numberOfBrowserColumns;
 	} else {
-		_topicBrowser.maxVisibleColumns = 3;
+		self.topicBrowser.maxVisibleColumns = 3;
 	}
 }
 
@@ -147,7 +146,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 	if (windowLayout == nil) {
 		return;
 	}
-	windowLayout.numberOfBrowserColumns = _topicBrowser.maxVisibleColumns;
+	windowLayout.numberOfBrowserColumns = self.topicBrowser.maxVisibleColumns;
 }
 
 #pragma mark - NSUserInterfaceValidations methods
@@ -160,7 +159,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 		return (self.view.frame.size.height > 0.0);
 	} else if (itemAction == @selector(removeBrowserColumn:)) {
 		return ((self.view.frame.size.height > 0.0)
-				&& (_topicBrowser.maxVisibleColumns > AKMinBrowserColumns));
+				&& (self.topicBrowser.maxVisibleColumns > AKMinBrowserColumns));
 	} else {
 		return NO;
 	}
@@ -205,7 +204,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 	}
 
 	// Discard data for columns we will no longer displaying.
-	NSInteger numBrowserColumns = _topicBrowser.lastColumn + 1;
+	NSInteger numBrowserColumns = self.topicBrowser.lastColumn + 1;
 	if (column > numBrowserColumns) {  // gmd
 		DIGSLogError(@"_topicListsForBrowserColumns has too few elements /gmd");
 		return 0;
@@ -237,7 +236,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 	if (columnNumber == 0) {
 		[self _setUpTopicsForZeroethBrowserColumn];
 	} else {
-		AKTopic *prevTopic = [[_topicBrowser selectedCellInColumn:(columnNumber - 1)] representedObject];
+		AKTopic *prevTopic = [[self.topicBrowser selectedCellInColumn:(columnNumber - 1)] representedObject];
 		NSArray *columnValues = [prevTopic childTopics];
 
 		if (columnValues.count > 0) {
@@ -253,12 +252,11 @@ static const NSInteger AKMinBrowserColumns = 2;
 - (void)_setUpTopicsForZeroethBrowserColumn
 {
 	NSMutableArray *columnValues = [NSMutableArray array];
-	AKDatabase *db = [self.owningWindowController database];
+	AKDatabase *db = self.owningWindowController.database;
 
 	// Set up the "classes" section.
 	[columnValues addObject:[[AKLabelTopic alloc] initWithLabel:@":: classes ::"]];
-
-	for (AKClassToken *classToken in [AKSortUtils arrayBySortingArray:[db rootClasses]]) {
+	for (AKClassToken *classToken in [AKSortUtils arrayBySortingArray:db.rootClasses]) {
 		[columnValues addObject:[[AKClassTopic alloc] initWithClassToken:classToken]];
 	}
 
