@@ -11,7 +11,7 @@
 #import "AKFramework.h"
 #import "AKFrameworkConstants.h"
 #import "AKNamedObjectCluster.h"
-#import "AKNamedObjectClusterTopic.h"
+#import "AKFrameworkTokenClusterTopic.h"
 #import "AKNamedObjectGroup.h"
 #import "AKNamedObjectGroupTopic.h"
 #import "AKSortUtils.h"
@@ -65,7 +65,7 @@
 						  ];
 	for (AKNamedObjectCluster *cluster in clusters) {
 		if (cluster.count > 0) {
-			childTopic = [[AKNamedObjectClusterTopic alloc] initWithNamedObjectCluster:cluster];
+			childTopic = [[AKFrameworkTokenClusterTopic alloc] initWithNamedObjectCluster:cluster framework:self.framework];
 			[columnValues addObject:childTopic];
 		}
 	}

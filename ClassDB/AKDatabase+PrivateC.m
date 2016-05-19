@@ -47,7 +47,7 @@
 	if (token == nil) {
 		//QLog(@"+++ [ODD] Could not import token '%@' with type '%@'", tokenMO.tokenName, tokenMO.tokenType.typeName);
 	} else {
-		QLog(@"+++ Framework %@ imported C token %@", framework.name, token);
+		//QLog(@"+++ Framework %@ imported C token %@", framework.name, token);
 	}
 	return token;
 }
