@@ -1,5 +1,5 @@
 //
-//  AKDocListItem.h
+//  AKDoc.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 5/14/16.
@@ -16,7 +16,7 @@
  * display in the comment field at the bottom of the window, and also provides
  * a URL for the content that should be displayed in the doc view.
  */
-@protocol AKDocListItem <AKNamed>
+@protocol AKDoc <AKNamed>
 
 @required
 

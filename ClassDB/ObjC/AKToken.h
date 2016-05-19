@@ -6,7 +6,7 @@
 //
 
 #import "AKNamedObject.h"
-#import "AKDocListItem.h"
+#import "AKDoc.h"
 #import "DocSetModel.h"
 
 /*!
@@ -14,10 +14,10 @@
  * in the docset index (tokenMO).
  *
  * In practice, not all AKTokens are potentially doc list items, but most are,
- * so it's simpler to declare AKToken to conform to AKDocListItem.  The way it's
+ * so it's simpler to declare AKToken to conform to AKDoc.  The way it's
  * implemented should work for all tokens if they *were* to be doc list items.
  */
-@interface AKToken : AKNamedObject <AKDocListItem>
+@interface AKToken : AKNamedObject <AKDoc>
 
 /*! "MO" is for "managed object", to help me tell whether I'm referring to a DSAToken instance or an AKToken object. */
 @property (nonatomic, strong) DSAToken *tokenMO;

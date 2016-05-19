@@ -32,7 +32,7 @@
 	return self.tokenMO.metainformation.declaredIn.headerPath;
 }
 
-#pragma mark - <AKDocListItem> methods
+#pragma mark - <AKDoc> methods
 
 - (NSString *)commentString
 {

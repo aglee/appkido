@@ -8,7 +8,7 @@
 #import "AKNamedObject.h"
 #import "AKSubtopicConstants.h"
 
-@protocol AKDocListItem;
+@protocol AKDoc;
 
 /*!
  * Used for items in the subtopic list.  When a subtopic is selected, the
@@ -31,7 +31,7 @@
 
 /*! Returns -1 if none found. */
 - (NSInteger)indexOfDocWithName:(NSString *)docName;
-- (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex;
-- (id<AKDocListItem>)docWithName:(NSString *)docName;
+- (id<AKDoc>)docAtIndex:(NSInteger)docIndex;
+- (id<AKDoc>)docWithName:(NSString *)docName;
 
 @end

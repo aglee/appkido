@@ -113,7 +113,7 @@
 	return _cachedDisplayString;
 }
 
-- (id<AKDocListItem>)docToDisplay
+- (id<AKDoc>)docToDisplay
 {
 	if (_cachedDoc == nil) {
 		AKSubtopic *subtopic = [_topic subtopicWithName:_subtopicName];

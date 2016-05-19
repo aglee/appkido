@@ -7,7 +7,7 @@
 
 #import "AKSubtopic.h"
 #import "DIGSLog.h"
-#import "AKDocListItem.h"
+#import "AKDoc.h"
 
 @implementation AKSubtopic
 
@@ -49,12 +49,12 @@
 	return -1;
 }
 
-- (id<AKDocListItem>)docAtIndex:(NSInteger)docIndex
+- (id<AKDoc>)docAtIndex:(NSInteger)docIndex
 {
 	return (docIndex < 0) ? nil : self.docListItems[docIndex];
 }
 
-- (id<AKDocListItem>)docWithName:(NSString *)docName
+- (id<AKDoc>)docWithName:(NSString *)docName
 {
 	return [self docAtIndex:[self indexOfDocWithName:docName]];
 }

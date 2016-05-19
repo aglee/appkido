@@ -8,7 +8,7 @@
 #import "AKClassTopic.h"
 #import "DIGSLog.h"
 #import "AKAppDelegate.h"
-#import "AKBehaviorHeaderFile.h"
+#import "AKHeaderFileDoc.h"
 #import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKSortUtils.h"
@@ -149,7 +149,7 @@
 
 - (NSArray *)_docListItemsForGeneralSubtopic
 {
-	AKBehaviorHeaderFile *headerFileDoc = [[AKBehaviorHeaderFile alloc] initWithBehaviorToken:self.classToken];
+	AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithBehaviorToken:self.classToken];
 
 	return @[headerFileDoc];
 }

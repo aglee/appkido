@@ -1,18 +1,18 @@
 /*
- * AKBehaviorHeaderFile.m
+ * AKHeaderFileDoc.m
  *
  * Created by Andy Lee on Tue Mar 16 2004.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKBehaviorHeaderFile.h"
+#import "AKHeaderFileDoc.h"
 #import "AKBehaviorToken.h"
-#import "AKDocListItem.h"
+#import "AKDoc.h"
 #import "DocSetIndex.h"
 
-NSString *AKBehaviorHeaderFileName = @"Header File";
+NSString *AKHeaderFileDocName = @"Header File";
 
-@implementation AKBehaviorHeaderFile
+@implementation AKHeaderFileDoc
 
 - (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken
 {
@@ -33,14 +33,7 @@ NSString *AKBehaviorHeaderFileName = @"Header File";
 	return [self initWithBehaviorToken:nil];
 }
 
-//#pragma mark - AKBehaviorGeneralDoc methods
-//
-//- (NSString *)unqualifiedDocName  //TODO: Clean this up.
-//{
-//	return AKBehaviorHeaderFileName;
-//}
-
-#pragma mark - <AKDocListItem> methods
+#pragma mark - <AKDoc> methods
 
 - (NSString *)commentString
 {
