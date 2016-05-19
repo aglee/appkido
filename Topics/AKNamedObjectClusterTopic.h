@@ -12,6 +12,6 @@
 
 @interface AKNamedObjectClusterTopic : AKTopic
 
-- (instancetype)initWithNamedObjectCluster:(AKNamedObjectCluster *)namedObjectCluster;
+- (instancetype)initWithNamedObjectCluster:(AKNamedObjectCluster *)namedObjectCluster NS_DESIGNATED_INITIALIZER;
 
 @end

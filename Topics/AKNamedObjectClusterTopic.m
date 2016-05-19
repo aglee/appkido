@@ -21,11 +21,17 @@
 
 - (instancetype)initWithNamedObjectCluster:(AKNamedObjectCluster *)namedObjectCluster
 {
+    NSParameterAssert(namedObjectCluster != nil);
     self = [super init];
     if (self) {
         _namedObjectCluster = namedObjectCluster;
     }
     return self;
+}
+
+- (instancetype)init
+{
+    return [self initWithNamedObjectCluster:nil];
 }
 
 #pragma mark - AKTopic methods
