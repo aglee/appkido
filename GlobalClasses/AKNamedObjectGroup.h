@@ -16,6 +16,7 @@
  */
 @interface AKNamedObjectGroup : AKNamedObject
 
+@property (assign, readonly) NSInteger count;
 @property (copy, readonly) NSArray *sortedObjectNames;
 @property (copy, readonly) NSArray *sortedObjects;
 

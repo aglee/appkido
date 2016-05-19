@@ -29,6 +29,11 @@
 
 #pragma mark - Getters and setters
 
+- (NSInteger)count
+{
+	return self.objectsByName.count;
+}
+
 - (NSArray *)sortedObjectNames
 {
 	return [self.objectsByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
