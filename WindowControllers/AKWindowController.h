@@ -9,7 +9,6 @@
 #import "AKUIController.h"
 
 @class AKDatabase;
-@class AKDoc;
 @class AKDocListViewController;
 @class AKDocLocator;
 @class AKDocViewController;
