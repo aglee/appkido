@@ -8,14 +8,17 @@
 
 #import "AKNamedObject.h"
 
-@class AKNamedObjectCluster;
+@class AKTokenCluster;
+@class AKNamedObjectGroup;
 
 @interface AKFramework : AKNamedObject
 
-@property (strong) AKNamedObjectCluster *constantsCluster;
-@property (strong) AKNamedObjectCluster *enumsCluster;
-@property (strong) AKNamedObjectCluster *functionsCluster;
-@property (strong) AKNamedObjectCluster *macrosCluster;
-@property (strong) AKNamedObjectCluster *typedefsCluster;
+@property (strong) AKNamedObjectGroup *protocolsGroup;
+
+@property (strong) AKTokenCluster *constantsCluster;
+@property (strong) AKTokenCluster *enumsCluster;
+@property (strong) AKTokenCluster *functionsCluster;
+@property (strong) AKTokenCluster *macrosCluster;
+@property (strong) AKTokenCluster *typedefsCluster;
 
 @end
