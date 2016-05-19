@@ -17,7 +17,6 @@
 #import "AKDocLocator.h"
 #import "AKDocViewController.h"
 #import "AKFindPanelController.h"
-#import "AKProtocolsTopic.h"
 #import "AKLinkResolver.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolTopic.h"
