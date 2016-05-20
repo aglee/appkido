@@ -1193,29 +1193,24 @@
 			path = ClassDB;
 			sourceTree = "<group>";
 		};
-		732BD5D405ED8FBE0055715D /* one-time controllers */ = {
+		732BD5D405ED8FBE0055715D /* singleton controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7359EB2B0BADB68100574728 /* AKApplication.h */,
-				7359EB2C0BADB68100574728 /* AKApplication.m */,
 				732BD5D505ED8FBE0055715D /* AKAppDelegate.h */,
 				732BD5D605ED8FBE0055715D /* AKAppDelegate.m */,
-				734B75D216D062060027514D /* AKSplashWindowController.h */,
-				734B75D316D062060027514D /* AKSplashWindowController.m */,
+				7359EB2B0BADB68100574728 /* AKApplication.h */,
+				7359EB2C0BADB68100574728 /* AKApplication.m */,
 				738D41B015B078E0008950F6 /* AKAboutWindowController.h */,
 				738D41B115B078E0008950F6 /* AKAboutWindowController.m */,
-				73B914930E089D180012C16F /* AKDevToolsViewController.h */,
-				73B914940E089D180012C16F /* AKDevToolsViewController.m */,
-				739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */,
-				739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */,
 				73C74137066BFAEF00A76FEE /* AKFindPanelController.h */,
 				73C74138066BFAEF00A76FEE /* AKFindPanelController.m */,
 				737F1DEB17021C8A00D560C7 /* AKPopQuizWindowController.h */,
 				737F1DEC17021C8A00D560C7 /* AKPopQuizWindowController.m */,
-				73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */,
-				73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */,
+				734B75D216D062060027514D /* AKSplashWindowController.h */,
+				734B75D316D062060027514D /* AKSplashWindowController.m */,
+				7339B9691CEEA514000C68AD /* preferences */,
 			);
-			name = "one-time controllers";
+			name = "singleton controllers";
 			path = SingletonControllers;
 			sourceTree = "<group>";
 		};
@@ -1265,9 +1260,11 @@
 		732BD60505ED90AB0055715D /* -- CONTROLLER CLASSES -- */ = {
 			isa = PBXGroup;
 			children = (
-				732BD5D405ED8FBE0055715D /* one-time controllers */,
-				73A0230A16DD18C300240111 /* per-window controllers */,
-				734701A804ED644C00A80003 /* saveable window states (models) */,
+				732BD5D405ED8FBE0055715D /* singleton controllers */,
+				7339B9681CEEA46B000C68AD /* singleton window controllers */,
+				73A0230A16DD18C300240111 /* regular window controllers */,
+				73A4ACCD16F1EE20004E6A1C /* view controllers */,
+				734701A804ED644C00A80003 /* saveable window states */,
 			);
 			name = "-- CONTROLLER CLASSES --";
 			sourceTree = "<group>";
@@ -1307,15 +1304,37 @@
 			name = "tokens as docs (categories)";
 			sourceTree = "<group>";
 		};
-		734701A804ED644C00A80003 /* saveable window states (models) */ = {
+		7339B9681CEEA46B000C68AD /* singleton window controllers */ = {
 			isa = PBXGroup;
 			children = (
+			);
+			name = "singleton window controllers";
+			path = SingletonControllers;
+			sourceTree = "<group>";
+		};
+		7339B9691CEEA514000C68AD /* preferences */ = {
+			isa = PBXGroup;
+			children = (
+				73C74139066BFAEF00A76FEE /* AKPrefPanelController.h */,
+				73C7413A066BFAEF00A76FEE /* AKPrefPanelController.m */,
+				739E1C7E0E4F453900119B06 /* AKDevToolsPanelController.h */,
+				739E1C7F0E4F453900119B06 /* AKDevToolsPanelController.m */,
+				73B914930E089D180012C16F /* AKDevToolsViewController.h */,
+				73B914940E089D180012C16F /* AKDevToolsViewController.m */,
+			);
+			name = preferences;
+			sourceTree = "<group>";
+		};
+		734701A804ED644C00A80003 /* saveable window states */ = {
+			isa = PBXGroup;
+			children = (
+				73A0231C16DD1EE400240111 /* AKUIController.h */,
 				73AE0907049B71D800A80007 /* AKWindowLayout.h */,
 				73AE0908049B71D800A80007 /* AKWindowLayout.m */,
 				73C96E23049CA60200A87B79 /* AKSavedWindowState.h */,
 				73C96E24049CA60200A87B79 /* AKSavedWindowState.m */,
 			);
-			name = "saveable window states (models)";
+			name = "saveable window states";
 			path = WindowControllers;
 			sourceTree = "<group>";
 		};
@@ -1533,16 +1552,14 @@
 			path = ClassDB;
 			sourceTree = "<group>";
 		};
-		73A0230A16DD18C300240111 /* per-window controllers */ = {
+		73A0230A16DD18C300240111 /* regular window controllers */ = {
 			isa = PBXGroup;
 			children = (
-				73A0231C16DD1EE400240111 /* AKUIController.h */,
 				7320C17716DCF9ED00797F95 /* AKWindowController.h */,
 				7320C17816DCF9F900797F95 /* AKWindowController.m */,
 				7300310C0498501500A80007 /* AKWindowController+Toolbar.m */,
-				73A4ACCD16F1EE20004E6A1C /* view controllers */,
 			);
-			name = "per-window controllers";
+			name = "regular window controllers";
 			path = WindowControllers;
 			sourceTree = "<group>";
 		};
@@ -1579,6 +1596,7 @@
 				73A0232016DD214C00240111 /* AKQuicklistViewController.m */,
 			);
 			name = "view controllers";
+			path = WindowControllers;
 			sourceTree = "<group>";
 		};
 		73ACB25904EDC6AE00A80003 /* subtopics */ = {
