@@ -6,7 +6,6 @@
  */
 
 #import "AKTopicBrowserViewController.h"
-#import "AKBrowser.h"
 #import "AKClassToken.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
@@ -17,11 +16,20 @@
 #import "AKProtocolToken.h"
 #import "AKSortUtils.h"
 #import "AKSubtopicListViewController.h"
+#import "AKTopic.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 #import "DIGSLog.h"
 
+@interface AKTopicBrowserViewController ()
+@property (readonly) NSMutableArray *topicArraysForBrowserColumns;
+@property (readonly) NSArray *topicsForFirstBrowserColumn;
+@end
+
 @implementation AKTopicBrowserViewController
+
+@synthesize topicArraysForBrowserColumns = _topicArraysForBrowserColumns;
+@synthesize topicsForFirstBrowserColumn = _topicsForFirstBrowserColumn;
 
 static const NSInteger AKMinBrowserColumns = 2;
 
@@ -29,9 +37,10 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-	self = [super initWithNibName:@"TopicBrowserView" windowController:windowController];
+	self = [super initWithNibName:nibName windowController:windowController];
 	if (self) {
-		_topicListsForBrowserColumns = [[NSMutableArray alloc] init];
+		_topicArraysForBrowserColumns = [[NSMutableArray alloc] init];
+		_topicsForFirstBrowserColumn = [self _rootTopics];
 	}
 	return self;
 }
@@ -60,7 +69,11 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 - (IBAction)doBrowserAction:(id)sender
 {
-	AKTopic *topic = (AKTopic *)[self.topicBrowser.selectedCell representedObject];
+//[STILL MATRIX-BASED] See note elsewhere in this file about not being able to use item-based delegate.
+//	AKTopic *topic = (AKTopic *)[self.topicBrowser.selectedCell representedObject];
+	NSIndexPath *indexPath = self.topicBrowser.selectionIndexPath;
+	AKTopic *topic = (AKTopic *)[self.topicBrowser itemAtIndexPath:indexPath];
+
 	[self.owningWindowController selectTopic:topic];
 }
 
@@ -116,10 +129,10 @@ static const NSInteger AKMinBrowserColumns = 2;
 {
 	// You'd think since NSBrowser is an NSControl, you could send it setFont:
 	// directly, but no.
-	NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
-	NSInteger fontSize = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
-	NSFont *font = [NSFont fontWithName:fontName size:fontSize];
-	[self.topicBrowser.cellPrototype setFont:font];
+	//[STILL MATRIX-BASED]: Note that setting the font on cellPrototype only
+	// works if we use the matrix-based delegate methods.  That's why I haven't
+	// switched yet to the item-based methods.
+	[self.topicBrowser.cellPrototype setFont:[self _browserFont]];
 
 	// Make the browser redraw to reflect its new display attributes.
 	NSString *savedPath = self.topicBrowser.path;
@@ -165,8 +178,48 @@ static const NSInteger AKMinBrowserColumns = 2;
 	}
 }
 
-#pragma mark - NSBrowser delegate methods
+#pragma mark - <NSBrowserDelegate> methods
 
+//[STILL MATRIX-BASED]: This is very annoying.  The browser delegate code could be simplified if I were to switch it to implement the item-based delegate methods.  But when I do that, my old way of changing the browser's font no longer works (setFont: on the cellPrototype), and I haven't found any way that does.
+//- (id)rootItemForBrowser:(NSBrowser *)browser
+//{
+//	return nil;
+//}
+//
+//- (NSInteger)browser:(NSBrowser *)browser numberOfChildrenOfItem:(AKTopic *)item
+//{
+//	return (item == nil
+//			? self.topicsForFirstBrowserColumn.count
+//			: item.childTopics.count);
+//}
+//
+//- (id)browser:(NSBrowser *)browser child:(NSInteger)index ofItem:(AKTopic *)item
+//{
+//	return (item == nil
+//			? self.topicsForFirstBrowserColumn[index]
+//			: item.childTopics[index]);
+//}
+//
+//- (id)browser:(NSBrowser *)browser objectValueForItem:(AKTopic *)item
+//{
+//	return item.name;
+//}
+//
+//- (BOOL)browser:(NSBrowser *)browser isLeafItem:(AKTopic *)item
+//{
+//	return (item.childTopics.count == 0);
+//}
+//
+//- (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(NSInteger)row column:(NSInteger)column
+//{
+//	AKTopic *topic = [sender itemAtRow:row inColumn:column];
+//	[cell setEnabled:topic.browserCellShouldBeEnabled];
+//	[cell setFont:[self _browserFont]];
+//}
+
+#pragma mark - <NSBrowserDelegate> methods
+
+//[STILL MATRIX-BASED]: See comments in this file about why I haven't switched to item-based.
 - (void)browser:(NSBrowser *)sender createRowsForColumn:(NSInteger)column inMatrix:(NSMatrix *)matrix
 {
 	[matrix renewRows:[self _numberOfRowsInColumn:column] columns:1];
@@ -174,7 +227,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 - (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(NSInteger)row column:(NSInteger)column
 {
-	NSArray *topicList = _topicListsForBrowserColumns[column];
+	NSArray *topicList = self.topicArraysForBrowserColumns[column];
 	AKTopic *topic = topicList[row];
 
 	if ([topic name] == nil) {
@@ -194,29 +247,29 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 #pragma mark - Private methods
 
-- (NSInteger)_numberOfRowsInColumn:(NSInteger)column
+- (NSInteger)_numberOfRowsInColumn:(NSUInteger)columnIndex
 {
 	// Defensive programming: see if we are trying to populate a
 	// browser column that's too far to the right.
-	if (column > (int)_topicListsForBrowserColumns.count) {
-		DIGSLogError(@"_topicListsForBrowserColumns has too few elements");
+	if (columnIndex > self.topicArraysForBrowserColumns.count) {
+		DIGSLogError(@"topicArraysForBrowserColumns has too few elements");
 		return 0;
 	}
 
 	// Discard data for columns we will no longer displaying.
-	NSInteger numBrowserColumns = self.topicBrowser.lastColumn + 1;
-	if (column > numBrowserColumns) {  // gmd
-		DIGSLogError(@"_topicListsForBrowserColumns has too few elements /gmd");
+	NSUInteger numBrowserColumns = self.topicBrowser.lastColumn + 1;
+	if (columnIndex > numBrowserColumns) {  // gmd
+		DIGSLogError(@"topicArraysForBrowserColumns has too few elements /gmd");
 		return 0;
 	}
-	while (numBrowserColumns < (int)_topicListsForBrowserColumns.count) {
-		[_topicListsForBrowserColumns removeLastObject];
+	while (numBrowserColumns < self.topicArraysForBrowserColumns.count) {
+		[self.topicArraysForBrowserColumns removeLastObject];
 	}
 
 	// Compute browser values for this column if we don't have them already.
-	if (column == (int)_topicListsForBrowserColumns.count) {
-		[self _setUpChildTopics];
-		if (column >= (int)_topicListsForBrowserColumns.count) { // gmd
+	if (columnIndex == self.topicArraysForBrowserColumns.count) {
+		[self _addArrayOfChildTopics];
+		if (columnIndex >= self.topicArraysForBrowserColumns.count) { // gmd
 			// This Framework has no additional topics like Functions,
 			// Protocols, etc. (happens for PDFKit, PreferencePanes, which
 			// just have classes)
@@ -226,47 +279,50 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 	// Now that the data ducks have been lined up, simply pluck our answer
 	// from _topicListsForBrowserColumns.
-	return [_topicListsForBrowserColumns[column] count];
+	NSArray *topics = self.topicArraysForBrowserColumns[columnIndex];
+	return topics.count;
 }
 
-- (void)_setUpChildTopics
+- (void)_addArrayOfChildTopics
 {
-	NSInteger columnNumber = _topicListsForBrowserColumns.count;
-
-	if (columnNumber == 0) {
-		[self _setUpTopicsForZeroethBrowserColumn];
+	NSInteger columnIndex = self.topicArraysForBrowserColumns.count;
+	if (columnIndex == 0) {
+		[self.topicArraysForBrowserColumns addObject:[self _rootTopics]];
 	} else {
-		AKTopic *prevTopic = [[self.topicBrowser selectedCellInColumn:(columnNumber - 1)] representedObject];
-		NSArray *columnValues = [prevTopic childTopics];
-
-		if (columnValues.count > 0) {
-			[_topicListsForBrowserColumns addObject:columnValues];
+		AKTopic *prevTopic = [[self.topicBrowser selectedCellInColumn:(columnIndex - 1)] representedObject];
+		NSArray *childTopics = prevTopic.childTopics;
+		if (childTopics.count > 0) {
+			[self.topicArraysForBrowserColumns addObject:childTopics];
 		}
 	}
 }
 
-// On entry, _topicListsForBrowserColumns must be empty. The items in the
-// zeroeth column are in two sections: "classes" (root classes), and
-// "other topics" (list of frameworks so that we can navigate to things like
-// functions and protocols).
-- (void)_setUpTopicsForZeroethBrowserColumn
+// Items in the topic browser's first column.
+- (NSArray *)_rootTopics
 {
-	NSMutableArray *columnValues = [NSMutableArray array];
+	NSMutableArray *topics = [NSMutableArray array];
 	AKDatabase *db = self.owningWindowController.database;
 
 	// Set up the "classes" section.
-	[columnValues addObject:[[AKLabelTopic alloc] initWithLabel:@":: classes ::"]];
+	[topics addObject:[[AKLabelTopic alloc] initWithLabel:@":: classes ::"]];
 	for (AKClassToken *classToken in [AKSortUtils arrayBySortingArray:db.rootClasses]) {
-		[columnValues addObject:[[AKClassTopic alloc] initWithClassToken:classToken]];
+		[topics addObject:[[AKClassTopic alloc] initWithClassToken:classToken]];
 	}
 
 	// Set up the "frameworks" section.
-	[columnValues addObject:[[AKLabelTopic alloc] initWithLabel:@":: frameworks ::"]];
+	[topics addObject:[[AKLabelTopic alloc] initWithLabel:@":: frameworks ::"]];
 	for (AKFramework *fw in db.sortedFrameworks) {
-		[columnValues addObject:[[AKFrameworkTopic alloc] initWithFramework:fw]];
+		[topics addObject:[[AKFrameworkTopic alloc] initWithFramework:fw]];
 	}
 
-	[_topicListsForBrowserColumns addObject:columnValues];
+	return topics;
+}
+
+- (NSFont *)_browserFont
+{
+	NSString *fontName = [AKPrefUtils stringValueForPref:AKListFontNamePrefName];
+	NSInteger fontSize = [AKPrefUtils intValueForPref:AKListFontSizePrefName];
+	return [NSFont fontWithName:fontName size:fontSize];
 }
 
 @end

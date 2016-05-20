@@ -196,7 +196,7 @@ static NSComparisonResult _versionSortFunction(id leftVersionString, id rightVer
 	for (NSString *docSetVersion in _installedDocSetPathsBySDKVersion)
 	{
         //FIXME: REMOVE DEBUGGING
-        if ([docSetVersion hasPrefix:sdkVersion])
+//        if ([docSetVersion hasPrefix:sdkVersion])
         {
             return docSetVersion;
         }
