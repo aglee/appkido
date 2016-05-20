@@ -70,9 +70,9 @@ static const NSInteger AKMinBrowserColumns = 2;
 - (IBAction)doBrowserAction:(id)sender
 {
 //[STILL MATRIX-BASED] See note elsewhere in this file about not being able to use item-based delegate.
-//	AKTopic *topic = (AKTopic *)[self.topicBrowser.selectedCell representedObject];
-	NSIndexPath *indexPath = self.topicBrowser.selectionIndexPath;
-	AKTopic *topic = (AKTopic *)[self.topicBrowser itemAtIndexPath:indexPath];
+//	NSIndexPath *indexPath = self.topicBrowser.selectionIndexPath;
+//	AKTopic *topic = (AKTopic *)[self.topicBrowser itemAtIndexPath:indexPath];
+	AKTopic *topic = (AKTopic *)[self.topicBrowser.selectedCell representedObject];
 
 	[self.owningWindowController selectTopic:topic];
 }
