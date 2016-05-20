@@ -233,9 +233,8 @@ static const NSInteger AKMinBrowserColumns = 2;
 	if ([topic name] == nil) {
 		NSLog(@"+++ ???");
 	}
-
 	[cell setRepresentedObject:topic];
-	[cell setTitle:topic.name];
+	[cell setTitle:topic.displayName];
 	[cell setEnabled:topic.browserCellShouldBeEnabled];
 	[cell setLeaf:(topic.childTopics.count == 0)];
 }

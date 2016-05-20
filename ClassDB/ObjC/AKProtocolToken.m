@@ -8,4 +8,12 @@
 #import "AKProtocolToken.h"
 
 @implementation AKProtocolToken
+
+#pragma mark - <AKNamed> methods
+
+- (NSString *)displayName
+{
+	return [NSString stringWithFormat:@"<%@>", self.name];
+}
+
 @end

@@ -99,7 +99,12 @@
 
 - (NSString *)name
 {
-	return [NSString stringWithFormat:@"<%@>", self.protocolToken.name];
+	return self.protocolToken.name;
+}
+
+- (NSString *)displayName
+{
+	return self.protocolToken.displayName;
 }
 
 #pragma mark - AKPrefDictionary methods
