@@ -116,7 +116,8 @@
 
 - (NSArray *)protocolsForFramework:(NSString *)frameworkName
 {
-	return [self _allProtocolsForFramework:frameworkName];
+	AKFramework *framework = (AKFramework *)[self.frameworksGroup objectWithName:frameworkName];
+	return framework.protocolsGroup.sortedObjects;
 }
 
 - (NSArray *)allProtocols
