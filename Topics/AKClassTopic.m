@@ -77,14 +77,14 @@
 
 - (NSArray *)_arrayWithChildTopics
 {
-	NSMutableArray *columnValues = [NSMutableArray array];
+	NSMutableArray *childTopics = [NSMutableArray array];
 
 	NSArray *childClassTokens = [AKSortUtils arrayBySortingArray:[self.classToken childClasses]];
 	for (AKClassToken *subclassToken in childClassTokens) {
-		[columnValues addObject:[[AKClassTopic alloc] initWithClassToken:subclassToken]];
+		[childTopics addObject:[[AKClassTopic alloc] initWithClassToken:subclassToken]];
 	}
 
-	return columnValues;
+	return childTopics;
 }
 
 - (NSArray *)_arrayWithSubtopics
