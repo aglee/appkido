@@ -66,7 +66,7 @@
 #pragma mark - Private stuff
 
 @interface AKDatabase ()
-@property (strong) AKNamedObjectGroup *frameworksGroup;
+@property (strong, readonly) AKNamedObjectGroup *frameworksGroup;
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
 
