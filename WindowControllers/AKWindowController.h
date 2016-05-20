@@ -6,7 +6,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "AKUIController.h"
+#import "AKUIConfigurable.h"
 
 @class AKDatabase;
 @class AKDocListViewController;
@@ -28,7 +28,7 @@
  * chain. The action methods of the view controllers are such that this
  * shouldn't cause a conflict between action messages with the same name.
  */
-@interface AKWindowController : NSWindowController <AKUIController, NSToolbarDelegate, NSUserInterfaceValidations, NSSplitViewDelegate, NSWindowDelegate>
+@interface AKWindowController : NSWindowController <AKUIConfigurable, NSToolbarDelegate, NSUserInterfaceValidations, NSSplitViewDelegate, NSWindowDelegate>
 {
 @private
 	// The source of all data the window displays.

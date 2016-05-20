@@ -123,7 +123,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 	}
 }
 
-#pragma mark - AKUIController methods
+#pragma mark - AKUIConfigurable methods
 
 - (void)applyUserPreferences
 {

@@ -190,7 +190,7 @@
     }
 }
 
-#pragma mark - AKUIController methods
+#pragma mark - AKUIConfigurable methods
 
 - (void)applyUserPreferences
 {

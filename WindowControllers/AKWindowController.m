@@ -439,7 +439,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	return tabChain;
 }
 
-#pragma mark - AKUIController methods
+#pragma mark - AKUIConfigurable methods
 
 - (void)applyUserPreferences
 {

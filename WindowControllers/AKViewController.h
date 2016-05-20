@@ -6,7 +6,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "AKUIController.h"
+#import "AKUIConfigurable.h"
 
 @class AKDocLocator;
 @class AKWindowController;
@@ -14,7 +14,7 @@
 /*!
  * Base class for view controllers used by AKWindowController.
  */
-@interface AKViewController : NSViewController <AKUIController, NSUserInterfaceValidations>
+@interface AKViewController : NSViewController <AKUIConfigurable, NSUserInterfaceValidations>
 {
 @private
     __unsafe_unretained AKWindowController *_owningWindowController;  // weak reference

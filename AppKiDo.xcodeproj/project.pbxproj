@@ -474,8 +474,8 @@
 		73A0231916DD1D6300240111 /* AKDocViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231616DD1D6200240111 /* AKDocViewController.h */; };
 		73A0231A16DD1D6300240111 /* AKDocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0231716DD1D6200240111 /* AKDocViewController.m */; };
 		73A0231B16DD1D6300240111 /* AKDocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0231716DD1D6200240111 /* AKDocViewController.m */; };
-		73A0231D16DD1EE400240111 /* AKUIController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231C16DD1EE400240111 /* AKUIController.h */; };
-		73A0231E16DD1EE400240111 /* AKUIController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231C16DD1EE400240111 /* AKUIController.h */; };
+		73A0231D16DD1EE400240111 /* AKUIConfigurable.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231C16DD1EE400240111 /* AKUIConfigurable.h */; };
+		73A0231E16DD1EE400240111 /* AKUIConfigurable.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231C16DD1EE400240111 /* AKUIConfigurable.h */; };
 		73A0232116DD214C00240111 /* AKQuicklistViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231F16DD214C00240111 /* AKQuicklistViewController.h */; };
 		73A0232216DD214C00240111 /* AKQuicklistViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A0231F16DD214C00240111 /* AKQuicklistViewController.h */; };
 		73A0232316DD214C00240111 /* AKQuicklistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0232016DD214C00240111 /* AKQuicklistViewController.m */; };
@@ -837,7 +837,7 @@
 		73A0231116DD1CDB00240111 /* AKDocListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocListViewController.m; sourceTree = "<group>"; usesTabs = 1; };
 		73A0231616DD1D6200240111 /* AKDocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocViewController.h; sourceTree = "<group>"; usesTabs = 1; };
 		73A0231716DD1D6200240111 /* AKDocViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocViewController.m; sourceTree = "<group>"; usesTabs = 1; };
-		73A0231C16DD1EE400240111 /* AKUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKUIController.h; sourceTree = "<group>"; };
+		73A0231C16DD1EE400240111 /* AKUIConfigurable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKUIConfigurable.h; sourceTree = "<group>"; };
 		73A0231F16DD214C00240111 /* AKQuicklistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKQuicklistViewController.h; sourceTree = "<group>"; };
 		73A0232016DD214C00240111 /* AKQuicklistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKQuicklistViewController.m; sourceTree = "<group>"; usesTabs = 1; };
 		73A0232B16DD259800240111 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/QuicklistView.xib; sourceTree = "<group>"; };
@@ -1328,7 +1328,7 @@
 		734701A804ED644C00A80003 /* saveable window states */ = {
 			isa = PBXGroup;
 			children = (
-				73A0231C16DD1EE400240111 /* AKUIController.h */,
+				73A0231C16DD1EE400240111 /* AKUIConfigurable.h */,
 				73AE0907049B71D800A80007 /* AKWindowLayout.h */,
 				73AE0908049B71D800A80007 /* AKWindowLayout.m */,
 				73C96E23049CA60200A87B79 /* AKSavedWindowState.h */,
@@ -1920,7 +1920,7 @@
 				73ECA3D31CE6CE9B00A78815 /* AKInstanceMethodToken.h in Headers */,
 				73A0231816DD1D6300240111 /* AKDocViewController.h in Headers */,
 				734AEE971CC5E1600064AAA9 /* NodeUUID.h in Headers */,
-				73A0231D16DD1EE400240111 /* AKUIController.h in Headers */,
+				73A0231D16DD1EE400240111 /* AKUIConfigurable.h in Headers */,
 				73A0232116DD214C00240111 /* AKQuicklistViewController.h in Headers */,
 				7304030716DF8DAB005E04A1 /* AKButtonCell.h in Headers */,
 				7304030C16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h in Headers */,
@@ -2036,7 +2036,7 @@
 				7320C18616DCF9FD00797F95 /* AKWindowController.h in Headers */,
 				73A0231316DD1CDB00240111 /* AKDocListViewController.h in Headers */,
 				73A0231916DD1D6300240111 /* AKDocViewController.h in Headers */,
-				73A0231E16DD1EE400240111 /* AKUIController.h in Headers */,
+				73A0231E16DD1EE400240111 /* AKUIConfigurable.h in Headers */,
 				73A0232216DD214C00240111 /* AKQuicklistViewController.h in Headers */,
 				7322FBD41CEA65A4007E0764 /* AKNamedObjectCluster.h in Headers */,
 				7304030816DF8DAB005E04A1 /* AKButtonCell.h in Headers */,

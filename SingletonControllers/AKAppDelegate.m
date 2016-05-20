@@ -374,7 +374,7 @@ static NSTimeInterval g_checkpointTime = 0.0;
     [AKPopQuizWindowController showPopQuiz];
 }
 
-#pragma mark - AKUIController methods
+#pragma mark - AKUIConfigurable methods
 
 - (void)applyUserPreferences
 {
