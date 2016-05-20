@@ -201,6 +201,14 @@
 		7339B92C1CEE6867000C68AD /* AKToken+AKDoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7339B9291CEE6867000C68AD /* AKToken+AKDoc.h */; };
 		7339B92D1CEE6867000C68AD /* AKToken+AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B92A1CEE6867000C68AD /* AKToken+AKDoc.m */; };
 		7339B92E1CEE6867000C68AD /* AKToken+AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B92A1CEE6867000C68AD /* AKToken+AKDoc.m */; };
+		7339B96C1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7339B96A1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h */; };
+		7339B96D1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7339B96A1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h */; };
+		7339B96E1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B96B1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m */; };
+		7339B96F1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B96B1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m */; };
+		7339B9721CEF9707000C68AD /* AKFrameworkRelatedTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7339B9701CEF9707000C68AD /* AKFrameworkRelatedTopic.h */; };
+		7339B9731CEF9707000C68AD /* AKFrameworkRelatedTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7339B9701CEF9707000C68AD /* AKFrameworkRelatedTopic.h */; };
+		7339B9741CEF9707000C68AD /* AKFrameworkRelatedTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B9711CEF9707000C68AD /* AKFrameworkRelatedTopic.m */; };
+		7339B9751CEF9707000C68AD /* AKFrameworkRelatedTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7339B9711CEF9707000C68AD /* AKFrameworkRelatedTopic.m */; };
 		734AEE801CC5E1600064AAA9 /* DocSetIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE3C1CC5E1600064AAA9 /* DocSetIndex.h */; };
 		734AEE811CC5E1600064AAA9 /* DocSetIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 734AEE3D1CC5E1600064AAA9 /* DocSetIndex.m */; };
 		734AEE821CC5E1600064AAA9 /* DocSetModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 734AEE3F1CC5E1600064AAA9 /* DocSetModel.h */; };
@@ -695,6 +703,10 @@
 		7332E8DD16E8EFAE00A3764B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindPanel.xib; sourceTree = "<group>"; };
 		7339B9291CEE6867000C68AD /* AKToken+AKDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AKToken+AKDoc.h"; sourceTree = "<group>"; };
 		7339B92A1CEE6867000C68AD /* AKToken+AKDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKToken+AKDoc.m"; sourceTree = "<group>"; };
+		7339B96A1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkProtocolsTopic.h; sourceTree = "<group>"; usesTabs = 1; };
+		7339B96B1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkProtocolsTopic.m; sourceTree = "<group>"; usesTabs = 1; };
+		7339B9701CEF9707000C68AD /* AKFrameworkRelatedTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkRelatedTopic.h; sourceTree = "<group>"; usesTabs = 1; };
+		7339B9711CEF9707000C68AD /* AKFrameworkRelatedTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkRelatedTopic.m; sourceTree = "<group>"; usesTabs = 1; };
 		733ACAF20498483100A80007 /* app-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "app-icon.icns"; path = "images/app-icon.icns"; sourceTree = SOURCE_ROOT; };
 		733E49641CD58B0100F27735 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		734168FA0841F59C0027E6BD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -1221,7 +1233,6 @@
 				739CD2600E4498AC00CFA042 /* dev tools */,
 				73B5025D1CE7B7E1009D1BE5 /* UI navigation protocols */,
 				730030820498501500A80007 /* database */,
-				73B5025C1CE7B67A009D1BE5 /* database items - general */,
 				73C8ABB60836AF2D0000E3F7 /* database items - tokens */,
 				731D743A0E4357F000C54AD5 /* database - export */,
 			);
@@ -1472,8 +1483,12 @@
 		735FA9FD0837CB06009379EB /* topics - frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7339B9701CEF9707000C68AD /* AKFrameworkRelatedTopic.h */,
+				7339B9711CEF9707000C68AD /* AKFrameworkRelatedTopic.m */,
 				73895F1D04EDCF3B00A80003 /* AKFrameworkTopic.h */,
 				73895F1E04EDCF3B00A80003 /* AKFrameworkTopic.m */,
+				7339B96A1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h */,
+				7339B96B1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m */,
 				7330D5B6083667540007FBD0 /* AKFrameworkTokenClusterTopic.h */,
 				7330D5B7083667540007FBD0 /* AKFrameworkTokenClusterTopic.m */,
 			);
@@ -1609,13 +1624,6 @@
 			);
 			name = subtopics;
 			path = Subtopics;
-			sourceTree = "<group>";
-		};
-		73B5025C1CE7B67A009D1BE5 /* database items - general */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "database items - general";
 			sourceTree = "<group>";
 		};
 		73B5025D1CE7B7E1009D1BE5 /* UI navigation protocols */ = {
@@ -1808,6 +1816,7 @@
 				734AEE951CC5E1600064AAA9 /* Header.h in Headers */,
 				65B1096709D7B6C300A8A637 /* NSView+AppKiDo.h in Headers */,
 				737F55621CE502E300376A4B /* AKNamedObject.h in Headers */,
+				7339B96C1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h in Headers */,
 				734AEE9B1CC5E1600064AAA9 /* TokenGroup.h in Headers */,
 				65B1096B09D7B6C300A8A637 /* AKMembersSubtopic.h in Headers */,
 				65B1096D09D7B6C300A8A637 /* AKSubtopic.h in Headers */,
@@ -1911,6 +1920,7 @@
 				734B75D516D062060027514D /* AKSplashWindowController.h in Headers */,
 				734AEEBD1CC5E1600064AAA9 /* _TokenType.h in Headers */,
 				7320C17916DCF9FC00797F95 /* AKSubtopicListViewController.h in Headers */,
+				7339B9721CEF9707000C68AD /* AKFrameworkRelatedTopic.h in Headers */,
 				734AEEB51CC5E1600064AAA9 /* _NodeUUID.h in Headers */,
 				7320C17D16DCF9FC00797F95 /* AKTopicBrowserViewController.h in Headers */,
 				7320C18116DCF9FC00797F95 /* AKViewController.h in Headers */,
@@ -2042,11 +2052,13 @@
 				7304030816DF8DAB005E04A1 /* AKButtonCell.h in Headers */,
 				7304030D16DFBDE3005E04A1 /* AKMultiRadioViewDelegate.h in Headers */,
 				735E298516E050E600E9FBC1 /* AKDebugging.h in Headers */,
+				7339B96D1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.h in Headers */,
 				7332E8D716E8141300A3764B /* AKPrefDictionary.h in Headers */,
 				73F8F99416ECE9A4001650D7 /* NSObject+AppKiDo.h in Headers */,
 				73F8F9A216ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h in Headers */,
 				73F8F9B416EE99A3001650D7 /* AKFocusView.h in Headers */,
 				7357E6E61CD692E5009A613C /* AKBindingToken.h in Headers */,
+				7339B9731CEF9707000C68AD /* AKFrameworkRelatedTopic.h in Headers */,
 				73F8F9C016EED364001650D7 /* AKBorderHidingView.h in Headers */,
 				73A4ACD616F25D81004E6A1C /* AKRandomSearch.h in Headers */,
 				73A4ACDC16F35815004E6A1C /* AKTabChain.h in Headers */,
@@ -2252,6 +2264,7 @@
 				65B109DC09D7B6C300A8A637 /* AKBrowser.m in Sources */,
 				65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */,
 				65B109E309D7B6C300A8A637 /* AKWindowController+Toolbar.m in Sources */,
+				7339B9741CEF9707000C68AD /* AKFrameworkRelatedTopic.m in Sources */,
 				7322FBE11CEA813D007E0764 /* AKNamedObjectGroupTopic.m in Sources */,
 				65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */,
 				734AEEBF1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld in Sources */,
@@ -2368,6 +2381,7 @@
 				7320C18716DCF9FD00797F95 /* AKWindowController.m in Sources */,
 				73A0231416DD1CDB00240111 /* AKDocListViewController.m in Sources */,
 				73A0231A16DD1D6300240111 /* AKDocViewController.m in Sources */,
+				7339B96E1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m in Sources */,
 				73A0232316DD214C00240111 /* AKQuicklistViewController.m in Sources */,
 				7304030916DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 				735E298616E050E600E9FBC1 /* AKDebugging.m in Sources */,
@@ -2414,6 +2428,7 @@
 				7399B3640E632A5C001AE672 /* AKLabelTopic.m in Sources */,
 				7399B3650E632A5C001AE672 /* AKProtocolTopic.m in Sources */,
 				7399B3660E632A5C001AE672 /* AKTopic.m in Sources */,
+				7339B9751CEF9707000C68AD /* AKFrameworkRelatedTopic.m in Sources */,
 				7399B3680E632A5C001AE672 /* AKCategoryToken.m in Sources */,
 				7399B3690E632A5C001AE672 /* AKClassToken.m in Sources */,
 				737F55451CDFA3F300376A4B /* AKDatabase+PrivateC.m in Sources */,
@@ -2490,6 +2505,7 @@
 				73A0232416DD214C00240111 /* AKQuicklistViewController.m in Sources */,
 				7304030A16DF8DAB005E04A1 /* AKButtonCell.m in Sources */,
 				735E298716E050E600E9FBC1 /* AKDebugging.m in Sources */,
+				7339B96F1CEF96D6000C68AD /* AKFrameworkProtocolsTopic.m in Sources */,
 				73F8F99616ECE9A4001650D7 /* NSObject+AppKiDo.m in Sources */,
 				73F8F9A416ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m in Sources */,
 				73F8F9B616EE99A3001650D7 /* AKFocusView.m in Sources */,

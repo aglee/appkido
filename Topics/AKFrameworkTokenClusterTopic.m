@@ -8,30 +8,35 @@
 #import "AKFrameworkTokenClusterTopic.h"
 #import "AKFramework.h"
 #import "AKNamedObjectCluster.h"
+#import "AKNamedObjectGroup.h"
+#import "AKSubtopic.h"
 #import "DIGSLog.h"
+
+@interface AKFrameworkTokenClusterTopic ()
+@property (strong, readonly) AKNamedObjectCluster *tokenCluster;
+@end
 
 @implementation AKFrameworkTokenClusterTopic
 
-@synthesize framework = _framework;
+@synthesize tokenCluster = _tokenCluster;
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithNamedObjectCluster:(AKNamedObjectCluster *)namedObjectCluster
-								 framework:(AKFramework *)framework
+- (instancetype)initWithFramework:(AKFramework *)framework
+					 tokenCluster:(AKNamedObjectCluster *)tokenCluster
 {
-	NSParameterAssert(namedObjectCluster != nil);
-	NSParameterAssert(framework != nil);
-	self = [super initWithNamedObjectCluster:namedObjectCluster];
+	NSParameterAssert(tokenCluster != nil);
+	self = [super initWithFramework:framework];
 	if (self) {
-		_framework = framework;
+		_tokenCluster = tokenCluster;
 	}
 	return self;
 }
 
-- (instancetype)initWithNamedObjectCluster:(AKNamedObjectCluster *)namedObjectCluster
+- (instancetype)initWithFramework:(AKFramework *)framework
 {
 	DIGSLogError_NondesignatedInitializer();
-	return [self initWithNamedObjectCluster:nil framework:nil];
+	return [self initWithFramework:nil tokenCluster:nil];
 }
 
 #pragma mark - AKTopic methods
@@ -44,17 +49,26 @@
 - (NSString *)pathInTopicBrowser
 {
 	return [NSString stringWithFormat:@"%@%@%@%@",
-			AKTopicBrowserPathSeparator,
-			self.framework.name,
-			AKTopicBrowserPathSeparator,
-			self.name];
+			AKTopicBrowserPathSeparator, self.framework.name,
+			AKTopicBrowserPathSeparator, self.name];
+}
+
+- (NSArray *)_arrayWithSubtopics
+{
+	NSMutableArray *subtopics = [[NSMutableArray alloc] init];
+	for (AKNamedObjectGroup *group in self.tokenCluster.sortedGroups) {
+		AKSubtopic *subtopic = [[AKSubtopic alloc] initWithName:group.name
+												   docListItems:group.sortedObjects];
+		[subtopics addObject:subtopic];
+	}
+	return subtopics;
 }
 
 #pragma mark - <AKNamed> methods
 
-- (NSString *)displayName
+- (NSString *)name
 {
-	return [self stringToDisplayInDescriptionField];
+	return self.tokenCluster.name;
 }
 
 @end

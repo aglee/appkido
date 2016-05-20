@@ -10,34 +10,14 @@
 #import "AKDatabase.h"
 #import "AKFramework.h"
 #import "AKFrameworkConstants.h"
-#import "AKNamedObjectCluster.h"
+#import "AKFrameworkProtocolsTopic.h"
 #import "AKFrameworkTokenClusterTopic.h"
+#import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
-#import "AKNamedObjectGroupTopic.h"
 #import "AKSortUtils.h"
 #import "DIGSLog.h"
 
 @implementation AKFrameworkTopic
-
-@synthesize framework = _framework;
-
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initWithFramework:(AKFramework *)framework
-{
-	NSParameterAssert(framework != nil);
-	self = [super init];
-	if (self) {
-		_framework = framework;
-	}
-	return self;
-}
-
-- (instancetype)init
-{
-	DIGSLogError_NondesignatedInitializer();
-	return [self initWithFramework:nil];
-}
 
 #pragma mark - AKTopic methods
 
@@ -48,29 +28,26 @@
 
 - (NSArray *)_arrayWithChildTopics
 {
-	NSMutableArray *columnValues = [NSMutableArray array];
-	AKTopic *childTopic;
+	NSMutableArray *childTopics = [NSMutableArray array];
 
 	if (self.framework.protocolsGroup.count > 0) {
-		childTopic = [[AKNamedObjectGroupTopic alloc] initWithNamedObjectGroup:self.framework.protocolsGroup];
-		[columnValues addObject:childTopic];
+		AKTopic *protocolsTopic = [[AKFrameworkProtocolsTopic alloc] initWithFramework:self.framework];
+		[childTopics addObject:protocolsTopic];
 	}
 
-	NSArray *clusters = @[
-						  self.framework.functionsCluster,
-						  self.framework.enumsCluster,
-						  self.framework.macrosCluster,
-						  self.framework.typedefsCluster,
-						  self.framework.constantsCluster,
-						  ];
-	for (AKNamedObjectCluster *cluster in clusters) {
+	NSArray *tokenClusters = @[self.framework.functionsCluster,
+							   self.framework.enumsCluster,
+							   self.framework.macrosCluster,
+							   self.framework.typedefsCluster,
+							   self.framework.constantsCluster];
+	for (AKNamedObjectCluster *cluster in tokenClusters) {
 		if (cluster.count > 0) {
-			childTopic = [[AKFrameworkTokenClusterTopic alloc] initWithNamedObjectCluster:cluster framework:self.framework];
-			[columnValues addObject:childTopic];
+			AKTopic *child = [[AKFrameworkTokenClusterTopic alloc] initWithFramework:self.framework tokenCluster:cluster];
+			[childTopics addObject:child];
 		}
 	}
 
-	return columnValues;
+	return childTopics;
 }
 
 #pragma mark - <AKNamed> methods
