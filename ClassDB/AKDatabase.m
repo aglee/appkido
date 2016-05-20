@@ -129,35 +129,6 @@
 	return _protocolTokensByName[name];
 }
 
-- (void)addProtocolToken:(AKProtocolToken *)protocolToken
-{
-	// Do nothing if we already have a protocol with the same name.
-	NSString *protocolName = protocolToken.name;
-	if (_protocolTokensByName[protocolName]) {
-		DIGSLogDebug(@"Trying to add protocol [%@] again", protocolName);
-		return;
-	}
-
-	// Add the protocol to our lookup by protocol name.
-	_protocolTokensByName[protocolName] = protocolToken;
-}
-
-#pragma mark - Function tokens
-
-
-#pragma mark - Private methods - misc
-
-- (NSArray *)_allProtocolsForFramework:(NSString *)fwName
-{
-	NSMutableArray *result = [NSMutableArray array];
-	for (AKProtocolToken *protocolToken in [self allProtocols]) {
-		if ([protocolToken.frameworkName isEqualToString:fwName]) {
-			[result addObject:protocolToken];
-		}
-	}
-	return result;
-}
-
 #pragma mark - Private methods - populating the database - misc
 
 - (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName

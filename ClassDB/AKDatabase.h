@@ -67,11 +67,8 @@
 
 @interface AKDatabase ()
 @property (strong) AKNamedObjectGroup *frameworksGroup;
-
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
-
-- (void)addProtocolToken:(AKProtocolToken *)protocolToken;
 
 - (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
 - (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName;
