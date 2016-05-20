@@ -12,7 +12,9 @@
 #import "AKCategoryToken.h"
 #import "AKClassToken.h"
 #import "AKClassMethodToken.h"
+#import "AKFramework.h"
 #import "AKInstanceMethodToken.h"
+#import "AKNamedObjectGroup.h"
 #import "AKPropertyToken.h"
 #import "AKProtocolToken.h"
 #import "AKRegexUtils.h"
@@ -24,11 +26,17 @@
 {
 	for (DSAToken *tokenMO in [self _arrayWithTokenMOsForLanguage:@"Objective-C"]) {
 		AKToken *token = [self _maybeImportObjectiveCToken:tokenMO];
-		if (token) {
-			token.frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-		} else {
-			QLog(@"+++ [ODD] Could not import token '%@' with type '%@'", tokenMO.tokenName, tokenMO.tokenType.typeName);
+		if (token == nil) {
+			QLog(@"+++ [ODD] Could not import tokenMO %@, type %@", tokenMO.tokenName, tokenMO.tokenType.typeName);
+			continue;
 		}
+
+		token.tokenMO = tokenMO;
+		NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+		if (frameworkName == nil) {
+			//QLog(@"+++ Could not infer framework name for tokenMO %@, type %@", tokenMO.tokenName, tokenMO.tokenType.typeName);
+		}
+		token.frameworkName = frameworkName;
 	}
 }
 
@@ -214,19 +222,21 @@
 		return nil;
 	}
 
-	return [self _getOrAddProtocolTokenWithTokenMO:tokenMO];
-}
-
-- (AKProtocolToken *)_getOrAddProtocolTokenWithTokenMO:(DSAToken *)tokenMO
-{
-	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:tokenMO.tokenName];
-	if (protocolToken.tokenMO == nil) {
-		protocolToken.tokenMO = tokenMO;
-		//QLog(@"+++ protocol '%@' has tokenMO, is in framework '%@'", protocolToken.tokenName, protocolToken.frameworkName);
-	} else {
-		// We don't expect to encounter the same class twice with the same token.
-		QLog(@"+++ [ODD] protocol '%@' already has a token", tokenMO.tokenName);
+	NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+	if (frameworkName == nil) {
+		QLog(@"+++ Could not infer framework name for tokenMO %@, type %@", tokenMO.tokenName, tokenMO.tokenType.typeName);
+		return nil;
 	}
+
+	AKFramework *framework = [self frameworkWithName:frameworkName];
+	if (framework == nil) {
+		framework = [[AKFramework alloc] initWithName:frameworkName];
+		[self.frameworksGroup addNamedObject:framework];
+		QLog(@"+++ Had to create new AKFramework %@ for tokenMO %@, type %@", framework.name, tokenMO.tokenName, tokenMO.tokenType.typeName);
+	}
+
+	AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:tokenMO.tokenName];
+	[framework.protocolsGroup addNamedObject:protocolToken];
 	return protocolToken;
 }
 
@@ -236,7 +246,6 @@
 	if (protocolToken == nil) {
 		protocolToken = [[AKProtocolToken alloc] initWithName:protocolName];
 		self.protocolTokensByName[protocolName] = protocolToken;
-		//QLog(@"+++ protocol '%@', no token yet", protocolToken.tokenName);
 	}
 	return protocolToken;
 }
