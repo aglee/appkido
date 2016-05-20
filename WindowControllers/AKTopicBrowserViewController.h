@@ -7,22 +7,12 @@
 
 #import "AKViewController.h"
 
-@class AKBrowser;
-
 /*!
- * Manages the NSBrowser used to navigate the top-level "topics" in an AppKiDo
- * browser window.
+ * Manages the NSBrowser used to navigate the top-level "topics".
  */
 @interface AKTopicBrowserViewController : AKViewController <NSUserInterfaceValidations, NSBrowserDelegate>
-{
-@private
-	// Values to display in all the columns of the browser.  Each element
-	// is an array of values to be displayed in one column of the browser.
-	// Values are instances of AKTopic classes.
-	NSMutableArray *_topicListsForBrowserColumns;
-}
 
-@property (nonatomic, weak) IBOutlet AKBrowser *topicBrowser;
+@property (weak) IBOutlet NSBrowser *topicBrowser;
 
 #pragma mark - Action methods
 

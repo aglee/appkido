@@ -9,7 +9,6 @@
 #import <WebKit/WebKit.h>
 #import "DIGSLog.h"
 #import "AKAppDelegate.h"
-#import "AKBrowser.h"
 #import "AKClassToken.h"
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
@@ -719,7 +718,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 								containerView:_quicklistDrawer.contentView];
 
 	// Load the window with initial data.
-	AKBrowser *topicBrowser = _topicBrowserController.topicBrowser;
+	NSBrowser *topicBrowser = _topicBrowserController.topicBrowser;
 
 	[topicBrowser loadColumnZero];
 	self.window.initialFirstResponder = topicBrowser;
@@ -753,7 +752,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	[containerView addSubview:[vc view]];
 
 	// Patch the view controller into the responder chain after self.
-	//TODO: Do I need to unpatch on dealloc?  Do I even need to patch at all any more, now that VC's are patched in by AppKit?
+	//TODO: Do I need to unpatch on dealloc?  Do I even need to patch at all any more, now that VC's are patched in by AppKit?  Though note, that's a recent change.
 	NSResponder *nextResponder = self.nextResponder;
 	self.nextResponder = vc;
 	[vc setNextResponder:nextResponder];
