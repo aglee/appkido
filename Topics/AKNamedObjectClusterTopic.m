@@ -39,9 +39,9 @@
 - (NSArray *)_arrayWithSubtopics
 {
     NSMutableArray *subtopics = [[NSMutableArray alloc] init];
-    for (AKNamedObjectGroup *namedObject in self.namedObjectCluster.sortedGroups) {
-        AKSubtopic *subtopic = [[AKSubtopic alloc] initWithName:namedObject.name
-                                                   docListItems:namedObject.sortedObjects];
+    for (AKNamedObjectGroup *group in self.namedObjectCluster.sortedGroups) {
+        AKSubtopic *subtopic = [[AKSubtopic alloc] initWithName:group.name
+                                                   docListItems:group.sortedObjects];
         [subtopics addObject:subtopic];
     }
     return subtopics;
