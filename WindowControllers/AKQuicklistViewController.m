@@ -279,7 +279,7 @@ enum
 
 	// If no search results were found, reselect the search field so the
 	// user can try again.  Otherwise, select the first search result.
-	NSArray *searchResults = [_searchQuery queryResults];
+	NSArray *searchResults = [_searchQuery performSearch];
 	NSInteger numSearchResults = searchResults.count;
 	if (numSearchResults == 0)
 	{
@@ -564,7 +564,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 		case _AKSearchResultsQuicklistMode:
 		{
 			[self _updateSearchQuery];
-			tableValues = [_searchQuery queryResults];
+			tableValues = [_searchQuery performSearch];
 			break;
 		}
 
@@ -856,7 +856,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	[self _selectQuicklistMode:_AKSearchResultsQuicklistMode];
 
 	// Can't jump if there are no search results.
-	if ([_searchQuery queryResults].count == 0)
+	if ([_searchQuery performSearch].count == 0)
 	{
 		_indexWithinSearchResults = -1;
 		return;
@@ -865,9 +865,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	// Reset our remembered index into the array of search results.
 	if (resultIndex < 0)
 	{
-		resultIndex = [_searchQuery queryResults].count - 1;
+		resultIndex = [_searchQuery performSearch].count - 1;
 	}
-	else if ((unsigned)resultIndex > [_searchQuery queryResults].count - 1)
+	else if ((unsigned)resultIndex > [_searchQuery performSearch].count - 1)
 	{
 		resultIndex = 0;
 	}
@@ -890,7 +890,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
 	NSString *lowercaseSearchString = searchString.lowercaseString;
 	NSInteger searchResultIndex = 0;
-	NSArray *searchResults = [_searchQuery queryResults];
+	NSArray *searchResults = [_searchQuery performSearch];
 	NSInteger numSearchResults = searchResults.count;
 	NSInteger i;
 

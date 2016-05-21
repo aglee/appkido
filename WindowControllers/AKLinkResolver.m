@@ -81,14 +81,14 @@
 //    [searchQuery setIgnoresCase:YES];
 //    searchQuery.searchComparison = AKSearchForExactMatch;
 //
-//    if ([searchQuery queryResults].count == 0)
+//    if ([searchQuery performSearch].count == 0)
 //    {
 //        tokenNameOrDocTitle = [tokenNameOrDocTitle stringByReplacingOccurrencesOfString:@"_" withString:@" "];
 //        searchQuery.searchComparison = AKSearchForPrefix;
 //        searchQuery.searchString = tokenNameOrDocTitle;
 //    }
 //
-//    for (AKDocLocator *docLocator in [searchQuery queryResults])
+//    for (AKDocLocator *docLocator in [searchQuery performSearch])
 //    {
 //        AKFileSection *docSection = [[docLocator docToDisplay] fileSection];
 //

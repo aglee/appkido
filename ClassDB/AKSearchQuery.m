@@ -20,18 +20,24 @@
 
 @interface AKSearchQuery ()
 @property (nonatomic, strong) AKDatabase *database;
+// Caches search results.  Made this strong rather than copy because for our
+// internal purposes (modifiying the array in place), we want the self-same
+// NSMutableArray, and a copy won't do.  Copy wouldn't work anyway, because
+// it causes the getter to return an immutable NSArray; the resulting
+// exception on my attempt to modify the array was how I realized I needed
+// to change this from copy to strong.
 @property (nonatomic, strong) NSMutableArray *searchResults;
 @end
 
 @implementation AKSearchQuery
 
 @synthesize searchString = _searchString;
-@dynamic includesClassesAndProtocols;
-@dynamic includesMembers;
-@dynamic includesFunctions;
-@dynamic includesGlobals;
-@dynamic ignoresCase;
-@dynamic searchComparison;
+@synthesize includesClassesAndProtocols = _includesClassesAndProtocols;
+@synthesize includesMembers = _includesMembers;
+@synthesize includesFunctions = _includesFunctions;
+@synthesize includesGlobals = _includesGlobals;
+@synthesize ignoresCase = _ignoresCase;
+@synthesize searchComparison = _searchComparison;
 
 #pragma mark - Init/awake/dealloc
 
@@ -167,7 +173,7 @@
 	[self setIncludesGlobals:YES];
 }
 
-- (NSArray *)queryResults
+- (NSArray *)performSearch
 {
 	if (self.searchResults == nil) {
 		self.searchResults = [NSMutableArray array];

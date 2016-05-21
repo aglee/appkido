@@ -24,15 +24,6 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
  * last time a search was performed.
  */
 @interface AKSearchQuery : NSObject
-{
-@private
-	BOOL _includesClassesAndProtocols;
-	BOOL _includesMembers;
-	BOOL _includesFunctions;
-	BOOL _includesGlobals;
-	BOOL _ignoresCase;
-	AKSearchComparison _searchComparison;
-}
 
 @property (nonatomic, copy) NSString *searchString;
 @property (nonatomic, assign) BOOL includesClassesAndProtocols;
@@ -46,8 +37,6 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 @property (nonatomic, assign) BOOL includesGlobals;
 @property (nonatomic, assign) BOOL ignoresCase;
 @property (nonatomic, assign) AKSearchComparison searchComparison;
-/*! Returns a sorted array of AKDocLocators. */
-@property (readonly, copy) NSArray *queryResults;
 
 #pragma mark - Init/awake/dealloc
 
@@ -58,5 +47,7 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 /*! Sends all the -setIncludesXXX: messages with YES as the flag. */
 - (void)includeEverythingInSearch;
 
+/*! Returns a sorted array of AKDocLocators. */
+- (NSArray *)performSearch;
 
 @end
