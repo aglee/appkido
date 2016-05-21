@@ -72,7 +72,9 @@
 					  ? [[AKFunctionToken alloc] initWithTokenMO:tokenMO]
 					  : [[AKToken alloc] initWithTokenMO:tokenMO]);
 	token.frameworkName = framework.name;
-	[tokenCluster addNamedObject:token toGroupWithName:tokenCluster.name];  //TODO: Figure out the right group name.
+
+	NSString *groupName = tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
+	[tokenCluster addNamedObject:token toGroupWithName:groupName];
 	//QLog(@"+++ Framework %@ imported C token %@", framework.name, token);
 
 	return token;
