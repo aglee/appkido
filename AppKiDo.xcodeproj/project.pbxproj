@@ -181,14 +181,6 @@
 		7322FBDA1CEA6B93007E0764 /* AKNamedObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBD71CEA6B93007E0764 /* AKNamedObjectGroup.h */; };
 		7322FBDB1CEA6B93007E0764 /* AKNamedObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322FBD81CEA6B93007E0764 /* AKNamedObjectGroup.m */; };
 		7322FBDC1CEA6B93007E0764 /* AKNamedObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322FBD81CEA6B93007E0764 /* AKNamedObjectGroup.m */; };
-		7322FBDF1CEA813D007E0764 /* AKNamedObjectGroupTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBDD1CEA813D007E0764 /* AKNamedObjectGroupTopic.h */; };
-		7322FBE01CEA813D007E0764 /* AKNamedObjectGroupTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBDD1CEA813D007E0764 /* AKNamedObjectGroupTopic.h */; };
-		7322FBE11CEA813D007E0764 /* AKNamedObjectGroupTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322FBDE1CEA813D007E0764 /* AKNamedObjectGroupTopic.m */; };
-		7322FBE21CEA813D007E0764 /* AKNamedObjectGroupTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322FBDE1CEA813D007E0764 /* AKNamedObjectGroupTopic.m */; };
-		7322FBE51CEA82E5007E0764 /* AKNamedObjectClusterTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBE31CEA82E5007E0764 /* AKNamedObjectClusterTopic.h */; };
-		7322FBE61CEA82E5007E0764 /* AKNamedObjectClusterTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBE31CEA82E5007E0764 /* AKNamedObjectClusterTopic.h */; };
-		7322FBE71CEA82E5007E0764 /* AKNamedObjectClusterTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322FBE41CEA82E5007E0764 /* AKNamedObjectClusterTopic.m */; };
-		7322FBE81CEA82E5007E0764 /* AKNamedObjectClusterTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322FBE41CEA82E5007E0764 /* AKNamedObjectClusterTopic.m */; };
 		7322FBEB1CEA9EEE007E0764 /* AKFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBE91CEA9EEE007E0764 /* AKFramework.h */; };
 		7322FBEC1CEA9EEE007E0764 /* AKFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7322FBE91CEA9EEE007E0764 /* AKFramework.h */; };
 		7322FBED1CEA9EEE007E0764 /* AKFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322FBEA1CEA9EEE007E0764 /* AKFramework.m */; };
@@ -667,10 +659,6 @@
 		7322FBD21CEA65A4007E0764 /* AKNamedObjectCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObjectCluster.m; sourceTree = "<group>"; usesTabs = 1; };
 		7322FBD71CEA6B93007E0764 /* AKNamedObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNamedObjectGroup.h; sourceTree = "<group>"; usesTabs = 1; };
 		7322FBD81CEA6B93007E0764 /* AKNamedObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObjectGroup.m; sourceTree = "<group>"; usesTabs = 1; };
-		7322FBDD1CEA813D007E0764 /* AKNamedObjectGroupTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNamedObjectGroupTopic.h; sourceTree = "<group>"; };
-		7322FBDE1CEA813D007E0764 /* AKNamedObjectGroupTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObjectGroupTopic.m; sourceTree = "<group>"; };
-		7322FBE31CEA82E5007E0764 /* AKNamedObjectClusterTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNamedObjectClusterTopic.h; sourceTree = "<group>"; };
-		7322FBE41CEA82E5007E0764 /* AKNamedObjectClusterTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObjectClusterTopic.m; sourceTree = "<group>"; };
 		7322FBE91CEA9EEE007E0764 /* AKFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFramework.h; path = ObjC/AKFramework.h; sourceTree = "<group>"; };
 		7322FBEA1CEA9EEE007E0764 /* AKFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFramework.m; path = ObjC/AKFramework.m; sourceTree = "<group>"; };
 		7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+AppKiDo.h"; sourceTree = "<group>"; };
@@ -1502,10 +1490,6 @@
 				73895F2A04EDCF3B00A80003 /* AKTopic.m */,
 				73895F2504EDCF3B00A80003 /* AKLabelTopic.h */,
 				73895F2604EDCF3B00A80003 /* AKLabelTopic.m */,
-				7322FBDD1CEA813D007E0764 /* AKNamedObjectGroupTopic.h */,
-				7322FBDE1CEA813D007E0764 /* AKNamedObjectGroupTopic.m */,
-				7322FBE31CEA82E5007E0764 /* AKNamedObjectClusterTopic.h */,
-				7322FBE41CEA82E5007E0764 /* AKNamedObjectClusterTopic.m */,
 				735FA9FD0837CB06009379EB /* topics - frameworks */,
 				73895F4304EDCF5100A80003 /* topics - behaviors */,
 			);
@@ -1817,7 +1801,6 @@
 				734AEEB11CC5E1600064AAA9 /* _FilePath.h in Headers */,
 				73C1E9241CECAEE3002BFD8F /* AKResult.h in Headers */,
 				65B1097809D7B6C300A8A637 /* AKClassToken.h in Headers */,
-				7322FBDF1CEA813D007E0764 /* AKNamedObjectGroupTopic.h in Headers */,
 				734AEEAB1CC5E1600064AAA9 /* _DSANode.h in Headers */,
 				65B1097909D7B6C300A8A637 /* AKMethodToken.h in Headers */,
 				7357E6E51CD692E5009A613C /* AKBindingToken.h in Headers */,
@@ -1855,7 +1838,6 @@
 				65B109AB09D7B6C300A8A637 /* DIGSTextView.h in Headers */,
 				65B109AC09D7B6C300A8A637 /* AKWindow.h in Headers */,
 				65B109B109D7B6C300A8A637 /* AKFileUtils.h in Headers */,
-				7322FBE51CEA82E5007E0764 /* AKNamedObjectClusterTopic.h in Headers */,
 				73ECA3CE1CE6CDEC00A78815 /* AKClassMethodToken.h in Headers */,
 				65B109B309D7B6C300A8A637 /* AKFrameworkTokenClusterTopic.h in Headers */,
 				65B109BD09D7B6C300A8A637 /* AKMultiRadioView.h in Headers */,
@@ -1953,14 +1935,12 @@
 				7399B2C90E632A5C001AE672 /* AKMembersSubtopic.h in Headers */,
 				7399B2CB0E632A5C001AE672 /* AKSubtopic.h in Headers */,
 				7399B2CC0E632A5C001AE672 /* AKClassTopic.h in Headers */,
-				7322FBE01CEA813D007E0764 /* AKNamedObjectGroupTopic.h in Headers */,
 				7399B2CE0E632A5C001AE672 /* AKFrameworkTopic.h in Headers */,
 				7399B2D10E632A5C001AE672 /* AKLabelTopic.h in Headers */,
 				7399B2D20E632A5C001AE672 /* AKProtocolTopic.h in Headers */,
 				7399B2D30E632A5C001AE672 /* AKTopic.h in Headers */,
 				73AAFF8C1CE9112900A11AF0 /* AKTopicConstants.h in Headers */,
 				7399B2D50E632A5C001AE672 /* AKCategoryToken.h in Headers */,
-				7322FBE61CEA82E5007E0764 /* AKNamedObjectClusterTopic.h in Headers */,
 				7399B2D60E632A5C001AE672 /* AKClassToken.h in Headers */,
 				7399B2D70E632A5C001AE672 /* AKMethodToken.h in Headers */,
 				7399B2D80E632A5C001AE672 /* AKProtocolToken.h in Headers */,
@@ -2245,7 +2225,6 @@
 				65B109DD09D7B6C300A8A637 /* AKTableView.m in Sources */,
 				65B109E309D7B6C300A8A637 /* AKWindowController+Toolbar.m in Sources */,
 				7339B9741CEF9707000C68AD /* AKFrameworkRelatedTopic.m in Sources */,
-				7322FBE11CEA813D007E0764 /* AKNamedObjectGroupTopic.m in Sources */,
 				65B109E509D7B6C300A8A637 /* AKWindowLayout.m in Sources */,
 				734AEEBF1CC5E1600064AAA9 /* DocSetModel.xcdatamodeld in Sources */,
 				65B109E609D7B6C300A8A637 /* AKSavedWindowState.m in Sources */,
@@ -2356,7 +2335,6 @@
 				7320C17B16DCF9FC00797F95 /* AKSubtopicListViewController.m in Sources */,
 				7320C17F16DCF9FC00797F95 /* AKTopicBrowserViewController.m in Sources */,
 				7320C18316DCF9FC00797F95 /* AKViewController.m in Sources */,
-				7322FBE71CEA82E5007E0764 /* AKNamedObjectClusterTopic.m in Sources */,
 				7320C18716DCF9FD00797F95 /* AKWindowController.m in Sources */,
 				73A0231416DD1CDB00240111 /* AKDocListViewController.m in Sources */,
 				73A0231A16DD1D6300240111 /* AKDocViewController.m in Sources */,
@@ -2399,7 +2377,6 @@
 				7399B3560E632A5C001AE672 /* AKColoredBox.m in Sources */,
 				7399B3580E632A5C001AE672 /* NSView+AppKiDo.m in Sources */,
 				7399B35C0E632A5C001AE672 /* AKMembersSubtopic.m in Sources */,
-				7322FBE81CEA82E5007E0764 /* AKNamedObjectClusterTopic.m in Sources */,
 				7399B35E0E632A5C001AE672 /* AKSubtopic.m in Sources */,
 				7399B35F0E632A5C001AE672 /* AKClassTopic.m in Sources */,
 				7399B3610E632A5C001AE672 /* AKFrameworkTopic.m in Sources */,
@@ -2472,7 +2449,6 @@
 				735D9F7A16CC5DAC00B72158 /* ALSimpleTask.m in Sources */,
 				734B75D816D062060027514D /* AKSplashWindowController.m in Sources */,
 				7320C17C16DCF9FC00797F95 /* AKSubtopicListViewController.m in Sources */,
-				7322FBE21CEA813D007E0764 /* AKNamedObjectGroupTopic.m in Sources */,
 				7320C18016DCF9FC00797F95 /* AKTopicBrowserViewController.m in Sources */,
 				7320C18416DCF9FC00797F95 /* AKViewController.m in Sources */,
 				7320C18816DCF9FD00797F95 /* AKWindowController.m in Sources */,
