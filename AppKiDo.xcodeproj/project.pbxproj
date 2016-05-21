@@ -307,10 +307,10 @@
 		737F1DEE17021C8A00D560C7 /* AKPopQuizWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 737F1DEB17021C8A00D560C7 /* AKPopQuizWindowController.h */; };
 		737F1DEF17021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F1DEC17021C8A00D560C7 /* AKPopQuizWindowController.m */; };
 		737F1DF017021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F1DEC17021C8A00D560C7 /* AKPopQuizWindowController.m */; };
-		737F55411CDFA15C00376A4B /* AKDatabase+PrivateObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F553E1CDFA15C00376A4B /* AKDatabase+PrivateObjC.m */; };
-		737F55421CDFA15C00376A4B /* AKDatabase+PrivateObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F553E1CDFA15C00376A4B /* AKDatabase+PrivateObjC.m */; };
-		737F55441CDFA3F300376A4B /* AKDatabase+PrivateC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F55431CDFA3F300376A4B /* AKDatabase+PrivateC.m */; };
-		737F55451CDFA3F300376A4B /* AKDatabase+PrivateC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F55431CDFA3F300376A4B /* AKDatabase+PrivateC.m */; };
+		737F55411CDFA15C00376A4B /* AKDatabase+ImportObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F553E1CDFA15C00376A4B /* AKDatabase+ImportObjC.m */; };
+		737F55421CDFA15C00376A4B /* AKDatabase+ImportObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F553E1CDFA15C00376A4B /* AKDatabase+ImportObjC.m */; };
+		737F55441CDFA3F300376A4B /* AKDatabase+ImportC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F55431CDFA3F300376A4B /* AKDatabase+ImportC.m */; };
+		737F55451CDFA3F300376A4B /* AKDatabase+ImportC.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F55431CDFA3F300376A4B /* AKDatabase+ImportC.m */; };
 		737F55621CE502E300376A4B /* AKNamedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 737F55601CE502E300376A4B /* AKNamedObject.h */; };
 		737F55631CE502E300376A4B /* AKNamedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 737F55601CE502E300376A4B /* AKNamedObject.h */; };
 		737F55641CE502E300376A4B /* AKNamedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 737F55611CE502E300376A4B /* AKNamedObject.m */; };
@@ -805,8 +805,8 @@
 		7359EB2C0BADB68100574728 /* AKApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKApplication.m; path = ../AKApplication.m; sourceTree = "<group>"; };
 		735D9F7516CC5DAC00B72158 /* ALSimpleTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSimpleTask.h; sourceTree = "<group>"; };
 		735D9F7616CC5DAC00B72158 /* ALSimpleTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSimpleTask.m; sourceTree = "<group>"; };
-		735E298216E050E600E9FBC1 /* AKDebugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKDebugging.h; path = ../Debugging/AKDebugging.h; sourceTree = "<group>"; usesTabs = 1; };
-		735E298316E050E600E9FBC1 /* AKDebugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKDebugging.m; path = ../Debugging/AKDebugging.m; sourceTree = "<group>"; usesTabs = 1; };
+		735E298216E050E600E9FBC1 /* AKDebugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDebugging.h; sourceTree = "<group>"; usesTabs = 1; };
+		735E298316E050E600E9FBC1 /* AKDebugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDebugging.m; sourceTree = "<group>"; usesTabs = 1; };
 		7362064706169C7D0007F07A /* AKSearchQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKSearchQuery.h; path = ClassDB/AKSearchQuery.h; sourceTree = "<group>"; };
 		7362064806169C7D0007F07A /* AKSearchQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKSearchQuery.m; path = ClassDB/AKSearchQuery.m; sourceTree = "<group>"; };
 		7370170405FBA7B300C74AA7 /* AKLinkResolver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKLinkResolver.h; sourceTree = "<group>"; };
@@ -816,8 +816,8 @@
 		737F1DE817021BCD00D560C7 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PopQuiz.xib; sourceTree = "<group>"; };
 		737F1DEB17021C8A00D560C7 /* AKPopQuizWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKPopQuizWindowController.h; path = SingletonControllers/AKPopQuizWindowController.h; sourceTree = SOURCE_ROOT; };
 		737F1DEC17021C8A00D560C7 /* AKPopQuizWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKPopQuizWindowController.m; path = SingletonControllers/AKPopQuizWindowController.m; sourceTree = SOURCE_ROOT; };
-		737F553E1CDFA15C00376A4B /* AKDatabase+PrivateObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+PrivateObjC.m"; sourceTree = "<group>"; usesTabs = 1; };
-		737F55431CDFA3F300376A4B /* AKDatabase+PrivateC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+PrivateC.m"; sourceTree = "<group>"; usesTabs = 1; };
+		737F553E1CDFA15C00376A4B /* AKDatabase+ImportObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportObjC.m"; sourceTree = "<group>"; usesTabs = 1; };
+		737F55431CDFA3F300376A4B /* AKDatabase+ImportC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportC.m"; sourceTree = "<group>"; usesTabs = 1; };
 		737F55601CE502E300376A4B /* AKNamedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNamedObject.h; sourceTree = "<group>"; };
 		737F55611CE502E300376A4B /* AKNamedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObject.m; sourceTree = "<group>"; usesTabs = 1; };
 		73895F1704EDCF3B00A80003 /* AKClassTopic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKClassTopic.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -1117,8 +1117,8 @@
 			children = (
 				73EE9E3D06856D120008CBEC /* AKDatabase.h */,
 				73EE9E3E06856D120008CBEC /* AKDatabase.m */,
-				737F553E1CDFA15C00376A4B /* AKDatabase+PrivateObjC.m */,
-				737F55431CDFA3F300376A4B /* AKDatabase+PrivateC.m */,
+				737F553E1CDFA15C00376A4B /* AKDatabase+ImportObjC.m */,
+				737F55431CDFA3F300376A4B /* AKDatabase+ImportC.m */,
 				7322FBE91CEA9EEE007E0764 /* AKFramework.h */,
 				7322FBEA1CEA9EEE007E0764 /* AKFramework.m */,
 			);
@@ -2276,7 +2276,7 @@
 				65B109E809D7B6C300A8A637 /* AKSortUtils.m in Sources */,
 				734AEEAA1CC5E1600064AAA9 /* _DSADistributionVersion.m in Sources */,
 				65B109E909D7B6C300A8A637 /* NSString+AppKiDo.m in Sources */,
-				737F55441CDFA3F300376A4B /* AKDatabase+PrivateC.m in Sources */,
+				737F55441CDFA3F300376A4B /* AKDatabase+ImportC.m in Sources */,
 				734AEEB01CC5E1600064AAA9 /* _DSAToken.m in Sources */,
 				65B109EA09D7B6C300A8A637 /* AKColoredBox.m in Sources */,
 				734AEEB41CC5E1600064AAA9 /* _Header.m in Sources */,
@@ -2327,7 +2327,7 @@
 				734AEEB81CC5E1600064AAA9 /* _OrderedSubnode.m in Sources */,
 				65B10A2109D7B6C300A8A637 /* AKBehaviorTopic.m in Sources */,
 				734AEE961CC5E1600064AAA9 /* Header.m in Sources */,
-				737F55411CDFA15C00376A4B /* AKDatabase+PrivateObjC.m in Sources */,
+				737F55411CDFA15C00376A4B /* AKDatabase+ImportObjC.m in Sources */,
 				734AEEAC1CC5E1600064AAA9 /* _DSANode.m in Sources */,
 				65B10A2B09D7B6C300A8A637 /* DIGSFileProcessor.m in Sources */,
 				734AEE8C1CC5E1600064AAA9 /* DSADistributionVersion.m in Sources */,
@@ -2431,7 +2431,7 @@
 				7339B9751CEF9707000C68AD /* AKFrameworkRelatedTopic.m in Sources */,
 				7399B3680E632A5C001AE672 /* AKCategoryToken.m in Sources */,
 				7399B3690E632A5C001AE672 /* AKClassToken.m in Sources */,
-				737F55451CDFA3F300376A4B /* AKDatabase+PrivateC.m in Sources */,
+				737F55451CDFA3F300376A4B /* AKDatabase+ImportC.m in Sources */,
 				7399B36A0E632A5C001AE672 /* AKMethodToken.m in Sources */,
 				73A7F8121CD5AEAF00E8EC85 /* _ReturnValue.m in Sources */,
 				7399B36B0E632A5C001AE672 /* AKProtocolToken.m in Sources */,
@@ -2514,7 +2514,7 @@
 				73A4ACDE16F35815004E6A1C /* AKTabChain.m in Sources */,
 				737F1DF017021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */,
 				73DB137C170E176500F3776A /* QuietLog.m in Sources */,
-				737F55421CDFA15C00376A4B /* AKDatabase+PrivateObjC.m in Sources */,
+				737F55421CDFA15C00376A4B /* AKDatabase+ImportObjC.m in Sources */,
 				73AAFF8E1CE9112900A11AF0 /* AKTopicConstants.m in Sources */,
 				7322FBD61CEA65A4007E0764 /* AKNamedObjectCluster.m in Sources */,
 			);
