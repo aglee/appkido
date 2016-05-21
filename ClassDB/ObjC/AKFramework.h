@@ -15,13 +15,13 @@
 
 @interface AKFramework : AKNamedObject
 
-@property (strong) AKNamedObjectGroup *protocolsGroup;
+@property (strong, readonly) AKNamedObjectGroup *protocolsGroup;
 
-@property (strong) AKTokenCluster *constantsCluster;
-@property (strong) AKTokenCluster *enumsCluster;
-@property (strong) AKTokenCluster *functionsCluster;
-@property (strong) AKTokenCluster *macrosCluster;
-@property (strong) AKTokenCluster *typedefsCluster;
+@property (strong, readonly) AKTokenCluster *constantsCluster;
+@property (strong, readonly) AKTokenCluster *enumsCluster;
+@property (strong, readonly) AKTokenCluster *functionsCluster;
+@property (strong, readonly) AKTokenCluster *macrosCluster;
+@property (strong, readonly) AKTokenCluster *typedefsCluster;
 
 - (AKToken *)maybeImportCToken:(DSAToken *)tokenMO;
 
