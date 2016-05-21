@@ -30,6 +30,7 @@
     if (self) {
         _moc = moc;
         _entityName = entityName;
+        _returnsObjectsAsFaults = YES;
     }
     return self;
 }
@@ -43,17 +44,17 @@
 
 - (AKResult *)fetchObjects
 {
-    return [self _fetchObjectsDistinct:NO];
+    return [self _fetchDistinctObjects:NO];
 }
 
 - (AKResult *)fetchDistinctObjects
 {
-    return [self _fetchObjectsDistinct:YES];
+    return [self _fetchDistinctObjects:YES];
 }
 
 #pragma mark - Private methods - handling fetch requests
 
-- (AKResult *)_fetchObjectsDistinct:(BOOL)distinct
+- (AKResult *)_fetchDistinctObjects:(BOOL)distinct
 {
     AKResult *result;
 
@@ -69,6 +70,7 @@
         fetchRequest.resultType = NSDictionaryResultType;
         fetchRequest.propertiesToFetch = self.keyPaths;
     }
+    fetchRequest.returnsObjectsAsFaults = self.returnsObjectsAsFaults;
 
     // Try to execute the fetch request.
     return [self _executeFetchRequest:fetchRequest];
