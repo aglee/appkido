@@ -19,367 +19,325 @@
 #import "NSString+AppKiDo.h"
 
 @interface AKSearchQuery ()
-@property (nonatomic, strong) NSArray *searchResults;
+@property (nonatomic, strong) AKDatabase *database;
+@property (nonatomic, strong) NSMutableArray *searchResults;
 @end
 
 @implementation AKSearchQuery
 
-@dynamic searchString;
-@dynamic rangeForEntireSearchString;
+@synthesize searchString = _searchString;
 @dynamic includesClassesAndProtocols;
 @dynamic includesMembers;
 @dynamic includesFunctions;
 @dynamic includesGlobals;
 @dynamic ignoresCase;
 @dynamic searchComparison;
-@synthesize searchResults = _searchResults;
 
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDatabase:(AKDatabase *)db
 {
-    if ((self = [super init]))
-    {
-        _database = db;
-
-        _searchString = nil;
-
-        _includesClassesAndProtocols = YES;
-        _includesMembers = YES;
-        _includesFunctions = YES;
-        _includesGlobals = YES;
-        _ignoresCase = YES;
-        _searchComparison = AKSearchForSubstring;
-
-        _searchResults = [[NSMutableArray alloc] init];
-    }
-
-    return self;
+	NSParameterAssert(db != nil);
+	self = [super init];
+	if (self) {
+		_database = db;
+		_searchString = nil;
+		_includesClassesAndProtocols = YES;
+		_includesMembers = YES;
+		_includesFunctions = YES;
+		_includesGlobals = YES;
+		_ignoresCase = YES;
+		_searchComparison = AKSearchForSubstring;
+		_searchResults = [[NSMutableArray alloc] init];
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithDatabase:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithDatabase:nil];
 }
-
 
 #pragma mark - Getters and setters
 
 - (NSString *)searchString
 {
-    return _searchString;
+	return _searchString;
 }
 
-- (void)setSearchString:(NSString *)s
+- (void)setSearchString:(NSString *)searchString
 {
-    if ((_searchString == s) || [_searchString isEqualToString:s])
-    {
-        return;
-    }
+	if (_searchString == searchString || [_searchString isEqualToString:searchString]) {
+		return;
+	}
 
-    // Set the ivar.
-    _searchString = [s copy];
+	// Set the ivar.
+	_searchString = [searchString copy];
 
-    // Update other ivars.
-    _rangeForEntireSearchString = NSMakeRange(0, s.length);
-    [self setSearchResults:nil];
+	// Update other ivars.
+	self.searchResults = nil;
 }
 
 - (BOOL)includesClassesAndProtocols
 {
-    return _includesClassesAndProtocols;
+	return _includesClassesAndProtocols;
 }
 
 - (void)setIncludesClassesAndProtocols:(BOOL)flag
 {
-    if (_includesClassesAndProtocols != flag)
-    {
-        _includesClassesAndProtocols = flag;
-        [self setSearchResults:nil];
-    }
+	if (_includesClassesAndProtocols != flag) {
+		_includesClassesAndProtocols = flag;
+		self.searchResults = nil;
+	}
 }
 
 - (BOOL)includesMembers
 {
-    return _includesMembers;
+	return _includesMembers;
 }
 
 - (void)setIncludesMembers:(BOOL)flag
 {
-    if (_includesMembers != flag)
-    {
-        _includesMembers = flag;
-        [self setSearchResults:nil];
-    }
+	if (_includesMembers != flag) {
+		_includesMembers = flag;
+		self.searchResults = nil;
+	}
 }
 
 - (BOOL)includesFunctions
 {
-    return _includesFunctions;
+	return _includesFunctions;
 }
 
 - (void)setIncludesFunctions:(BOOL)flag
 {
-    if (_includesFunctions != flag)
-    {
-        _includesFunctions = flag;
-        [self setSearchResults:nil];
-    }
+	if (_includesFunctions != flag) {
+		_includesFunctions = flag;
+		self.searchResults = nil;
+	}
 }
 
 - (BOOL)includesGlobals
 {
-    return _includesGlobals;
+	return _includesGlobals;
 }
 
 - (void)setIncludesGlobals:(BOOL)flag
 {
-    if (_includesGlobals != flag)
-    {
-        _includesGlobals = flag;
-        [self setSearchResults:nil];
-    }
+	if (_includesGlobals != flag) {
+		_includesGlobals = flag;
+		self.searchResults = nil;
+	}
 }
 
 - (BOOL)ignoresCase
 {
-    return _ignoresCase;
+	return _ignoresCase;
 }
 
 - (void)setIgnoresCase:(BOOL)flag
 {
-    if (_ignoresCase != flag)
-    {
-        _ignoresCase = flag;
-        [self setSearchResults:nil];
-    }
+	if (_ignoresCase != flag) {
+		_ignoresCase = flag;
+		self.searchResults = nil;
+	}
 }
 
 - (AKSearchComparison)searchComparison
 {
-    return _searchComparison;
+	return _searchComparison;
 }
 
 - (void)setSearchComparison:(AKSearchComparison)searchComparison
 {
-    if (_searchComparison != searchComparison)
-    {
-        _searchComparison = searchComparison;
-        [self setSearchResults:nil];
-    }
+	if (_searchComparison != searchComparison) {
+		_searchComparison = searchComparison;
+		self.searchResults = nil;
+	}
 }
 
 #pragma mark - Searching
 
 - (void)includeEverythingInSearch
 {
-    [self setIncludesClassesAndProtocols:YES];
-    [self setIncludesMembers:YES];
-    [self setIncludesFunctions:YES];
-    [self setIncludesGlobals:YES];
+	[self setIncludesClassesAndProtocols:YES];
+	[self setIncludesMembers:YES];
+	[self setIncludesFunctions:YES];
+	[self setIncludesGlobals:YES];
 }
 
 - (NSArray *)queryResults
 {
-    if (_searchResults == nil)
-    {
-        self.searchResults = [NSMutableArray array];
+	if (self.searchResults == nil) {
+		self.searchResults = [NSMutableArray array];
 
-        if (_searchString.length == 0)
-        {
-            return _searchResults;
-        }
+		if (self.searchString.length == 0) {
+			return self.searchResults;
+		}
 
-        // Search the various types of API constructs that we know about.
-        // Each of the following calls appends its results to _searchResults.
-        if (_includesClassesAndProtocols) [self _searchClassNames];
-        if (_includesClassesAndProtocols) [self _searchProtocolNames];
-        if (_includesMembers) [self _searchNamesOfClassMembers];
-        if (_includesMembers) [self _searchNamesOfProtocolMembers];
-        if (_includesFunctions) [self _searchFunctionNames];
+		// Search the various types of API constructs that we know about.
+		// Each of the following calls appends its results to self.searchResults.
+		if (self.includesClassesAndProtocols) {
+			[self _searchClassNames];
+			[self _searchProtocolNames];
+		}
+		if (self.includesMembers) {
+			[self _searchNamesOfClassMembers];
+			[self _searchNamesOfProtocolMembers];
+		}
+		if (self.includesFunctions) {
+			[self _searchFunctionNames];
+		}
 
-        // Sort the results.
-        [AKDocLocator sortArrayOfDocLocators:_searchResults];
-    }
+		// Sort the results.
+		[AKDocLocator sortArrayOfDocLocators:self.searchResults];
+	}
 
-    return _searchResults;
+	return self.searchResults;
 }
 
 #pragma mark - Private methods
 
-- (BOOL)_matchesString:(NSString *)s
+- (BOOL)_matchesString:(NSString *)string
 {
-    switch (_searchComparison)
-    {
-        case AKSearchForSubstring:
-        {
-            return (_ignoresCase
-                    ? [s ak_containsCaseInsensitive:_searchString]
-                    : [s ak_contains:_searchString]);
-        }
+	NSString *haystack = (self.ignoresCase ? string.uppercaseString : string);
+	NSString *needle = (self.ignoresCase ? self.searchString.uppercaseString : self.searchString);
+	switch (self.searchComparison) {
+		case AKSearchForSubstring: {
+			return [haystack ak_contains:needle];
+		}
 
-        case AKSearchForExactMatch:
-        {
-            return (_ignoresCase
-                    ? ([s compare:_searchString options:NSCaseInsensitiveSearch] == 0)
-                    : [s isEqualToString:_searchString]);
-        }
+		case AKSearchForExactMatch: {
+			return [haystack isEqualToString:needle];
+		}
 
-        case AKSearchForPrefix:
-        {
-            if (_ignoresCase)
-            {
-                return ((s.length >= _rangeForEntireSearchString.length)
-                        && ([s compare:_searchString
-                               options:NSCaseInsensitiveSearch
-                                 range:_rangeForEntireSearchString] == 0));
-            }
-            else
-            {
-                return [s hasPrefix:_searchString];
-            }
-        }
+		case AKSearchForPrefix: {
+			return [haystack hasPrefix:needle];
+		}
 
-        default:
-        {
-            DIGSLogDebug(@"Unexpected search comparison mode %d", _searchComparison);
-            return NO;
-        }
-    }
+		default: {
+			DIGSLogDebug(@"Unexpected search comparison mode %d", self.searchComparison);
+			return NO;
+		}
+	}
 }
 
-- (BOOL)_matchesItem:(AKToken *)token
+- (BOOL)_matchesToken:(AKToken *)token
 {
-    return [self _matchesString:token.name];
+	return [self _matchesString:token.name];
 }
 
 - (void)_searchClassNames
 {
-    for (AKClassToken *classToken in [_database allClasses])
-    {
-        if ([self _matchesItem:classToken])
-        {
-            AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
-
-            [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
-        }
-    }
+	for (AKClassToken *classToken in self.database.allClasses) {
+		if ([self _matchesToken:classToken]) 	{
+			AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
+			[self.searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+		}
+	}
 }
 
 - (void)_searchProtocolNames
 {
-    for (AKProtocolToken *protocolToken in [_database allProtocols])
-    {
-        if ([self _matchesItem:protocolToken])
-        {
-            AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
-
-            [_searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
-        }
-    }
+	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
+		if ([self _matchesToken:protocolToken]) {
+			AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
+			[self.searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+		}
+	}
 }
 
 - (void)_searchNamesOfClassMembers
 {
-    for (AKClassToken *classToken in [_database allClasses])
-    {
-        AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
+	for (AKClassToken *classToken in self.database.allClasses) {
+		AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
 
-        // Search members common to all behaviors.
-        [self _searchMembersUnderBehaviorTopic:topic];
+		// Search members common to all behaviors.
+		[self _searchMembersUnderBehaviorTopic:topic];
 
-        // Search members specific to classes.
-        [self _searchTokens:[classToken documentedDelegateMethods]
-             underSubtopic:AKDelegateMethodsSubtopicName
-           ofBehaviorTopic:topic];
-        [self _searchTokens:[classToken documentedNotifications]
-             underSubtopic:AKNotificationsSubtopicName
-           ofBehaviorTopic:topic];
-    }
+		// Search members specific to classes.
+		[self _searchTokens:[classToken documentedDelegateMethods]
+			  underSubtopic:AKDelegateMethodsSubtopicName
+			ofBehaviorTopic:topic];
+		[self _searchTokens:[classToken documentedNotifications]
+			  underSubtopic:AKNotificationsSubtopicName
+			ofBehaviorTopic:topic];
+	}
 }
 
 - (void)_searchNamesOfProtocolMembers
 {
-    for (AKProtocolToken *protocolToken in [_database allProtocols])
-    {
-        AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
-
-        [self _searchMembersUnderBehaviorTopic:topic];
-    }
+	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
+		AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
+		[self _searchMembersUnderBehaviorTopic:topic];
+	}
 }
 
 - (void)_searchMembersUnderBehaviorTopic:(AKBehaviorTopic *)behaviorTopic
 {
-    AKBehaviorToken *behaviorToken = (AKBehaviorToken *)[behaviorTopic topicToken];
+	AKBehaviorToken *behaviorToken = (AKBehaviorToken *)[behaviorTopic topicToken];
 
-    // Search the behavior's properties.
-    [self _searchTokens:[behaviorToken propertyTokens]
-         underSubtopic:AKPropertiesSubtopicName
-       ofBehaviorTopic:behaviorTopic];
+	// Search the behavior's properties.
+	[self _searchTokens:[behaviorToken propertyTokens]
+		  underSubtopic:AKPropertiesSubtopicName
+		ofBehaviorTopic:behaviorTopic];
 
-    // If the search string has the form "setXYZ", search the class's
-    // properties for "XYZ".
-    if ([_searchString.lowercaseString hasPrefix:@"set"]
-        && _searchString.length > 3)
-    {
-        // Kludge to temporarily set _searchString to "XYZ".
-        NSString *savedSearchString = _searchString;
-        _searchString = [_searchString substringFromIndex:3];
-        {{
-            [self _searchTokens:[behaviorToken propertyTokens]
-                 underSubtopic:AKPropertiesSubtopicName
-               ofBehaviorTopic:behaviorTopic];
-        }}
-        _searchString = savedSearchString;
-    }
+	// If the search string has the form "setXYZ", search the class's
+	// properties for "XYZ".
+	if (self.searchString.length > 3 && [self.searchString hasPrefix:@"set"]) {
+		// Kludge to temporarily set _searchString to "XYZ".  Don't use the setter method, because that will clear self.searchResults.
+		//TODO: But this only works if case-insensitive.  Need to tweak the first N characters in that case.
+		NSString *savedSearchString = _searchString;
+		_searchString = [_searchString substringFromIndex:3];
+		{{
+			[self _searchTokens:[behaviorToken propertyTokens]
+				  underSubtopic:AKPropertiesSubtopicName
+				ofBehaviorTopic:behaviorTopic];
+		}}
+		_searchString = savedSearchString;
+	}
 
-    // Search the behavior's class methods.
-    [self _searchTokens:[behaviorToken classMethodTokens]
-         underSubtopic:AKClassMethodsSubtopicName
-       ofBehaviorTopic:behaviorTopic];
+	// Search the behavior's class methods.
+	[self _searchTokens:[behaviorToken classMethodTokens]
+		  underSubtopic:AKClassMethodsSubtopicName
+		ofBehaviorTopic:behaviorTopic];
 
-    // Search the behavior's instance methods.
-    [self _searchTokens:[behaviorToken instanceMethodTokens]
-         underSubtopic:AKInstanceMethodsSubtopicName
-       ofBehaviorTopic:behaviorTopic];
+	// Search the behavior's instance methods.
+	[self _searchTokens:[behaviorToken instanceMethodTokens]
+		  underSubtopic:AKInstanceMethodsSubtopicName
+		ofBehaviorTopic:behaviorTopic];
 }
 
 // Search the functions in each of the function groups for each framework.
 - (void)_searchFunctionNames  //TODO: Clean this up.
 {
-//    for (NSString *fwName in [_database frameworkNames])
-//    {
-//        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
-//        {
-//            for (AKToken *subitem in [groupItem subitems])
-//            {
-//                if ([self _matchesItem:subitem])
-//                {
-//                    AKTopic *topic = [[AKFunctionsTopic alloc] initWithFramework:fwName
-//                                                                        database:_database];
-//                    [_searchResults addObject:[AKDocLocator withTopic:topic
-//                                                         subtopicName:groupItem.name
-//                                                              docName:subitem.name]];
-//                }
-//            }
-//        }
-//    }
+//	for (NSString *fwName in [_database frameworkNames]) {
+//		for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName]) {
+//			for (AKToken *subitem in [groupItem subitems]) {
+//				if ([self _matchesItem:subitem]) 	{
+//					AKTopic *topic = [[AKFunctionsTopic alloc] initWithFramework:fwName
+//																		database:_database];
+//					[_searchResults addObject:[AKDocLocator withTopic:topic
+//														 subtopicName:groupItem.name
+//															  docName:subitem.name]];
+//				}
+//			}
+//		}
+//	}
 }
 
-- (void)_searchTokens:(NSArray *)itemArray
-         underSubtopic:(NSString *)subtopicName
-     ofBehaviorTopic:(AKBehaviorTopic *)topic
+- (void)_searchTokens:(NSArray *)tokenArray
+		underSubtopic:(NSString *)subtopicName
+	  ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
-    for (AKToken *item in itemArray)
-    {
-        if ([self _matchesItem:item])
-        {
-            [_searchResults addObject:[AKDocLocator withTopic:topic
-                                                 subtopicName:subtopicName
-                                                      docName:item.name]];
-        }
-    }
+	for (AKToken *token in tokenArray) {
+		if ([self _matchesToken:token]) {
+			[self.searchResults addObject:[AKDocLocator withTopic:topic
+													 subtopicName:subtopicName
+														  docName:token.name]];
+		}
+	}
 }
 
 @end
