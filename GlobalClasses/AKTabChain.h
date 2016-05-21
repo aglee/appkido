@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Andy Lee. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 //TODO: convenience method to auto-generate tab chain array
 

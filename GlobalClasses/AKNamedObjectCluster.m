@@ -8,6 +8,7 @@
 
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
+#import "AKSortUtils.h"
 #import "AKToken.h"
 
 @interface AKNamedObjectCluster ()

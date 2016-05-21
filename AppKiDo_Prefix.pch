@@ -3,27 +3,6 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-
-    #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
-    @protocol NSToolbarDelegate <NSObject> @end
-    @protocol NSTextViewDelegate <NSObject> @end
-    #endif
-
-    #import "DIGSLog.h"
-    #import "DIGSFileProcessor.h"
-    #import "DIGSFindBuffer.h"
-    #import "DIGSTextSelection.h"
-    #import "DIGSMarginView.h"
-    #import "DIGSMatchingBackgroundView.h"
-    #import "DIGSTextView.h"
-
-    #import "AKFrameworkConstants.h"
-
-    #import "AKFileUtils.h"
-    #import "AKSortable.h"
-    #import "AKSortUtils.h"
-    #import "AKPrefUtils.h"
-
-    #import "QuietLog.h"
+#import "DIGSLog.h"
+#import "QuietLog.h"
 #endif

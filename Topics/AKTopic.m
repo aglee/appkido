@@ -6,9 +6,10 @@
  */
 
 #import "AKTopic.h"
-#import "DIGSLog.h"
 #import "AKClassToken.h"
+#import "AKSortUtils.h"
 #import "AKSubtopic.h"
+#import "DIGSLog.h"
 
 @implementation AKTopic
 

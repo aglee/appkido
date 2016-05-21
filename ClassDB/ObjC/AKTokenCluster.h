@@ -13,6 +13,7 @@
 
 @interface AKTokenCluster : AKNamedObjectCluster
 
+/*! Returns a new AKToken object, after adding it to self. */
 - (AKToken *)tokenWithTokenMO:(DSAToken *)tokenMO;
 
 @end

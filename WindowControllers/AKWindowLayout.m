@@ -6,8 +6,8 @@
  */
 
 #import "AKWindowLayout.h"
-
 #import "AKFrameworkConstants.h"
+#import "AKPrefConstants.h"
 
 @implementation AKWindowLayout
 
@@ -38,7 +38,7 @@
         _toolbarIsVisible = YES;
         _quicklistDrawerIsOpen = YES;
         _quicklistMode = 0;
-        _frameworkPopupSelection = [AKFoundationFrameworkName copy];
+        _frameworkPopupSelection = AKFoundationFrameworkName;
         _searchIncludesClasses = YES;
         _searchIncludesMembers = YES;
         _searchIncludesFunctions = YES;
