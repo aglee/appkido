@@ -55,19 +55,22 @@
 {
 	// Prefetch all these objects so they don't have to be individually fetched
 	// later when we iterate through various objects.  Saves a few seconds.
-	NSArray *keepAround = @[
-							[[self _queryWithEntityName:@"Token"] fetchObjects].object,
-							[[self _queryWithEntityName:@"TokenMetainformation"] fetchObjects].object,
-							[[self _queryWithEntityName:@"Header"] fetchObjects].object,
-							[[self _queryWithEntityName:@"FilePath"] fetchObjects].object,
-							];
+	NSArray *entitiesToPrefetch = @[ @"Token", @"TokenMetainformation", @"Header", @"FilePath", @"Node" ];
+	NSMutableArray *keepAround = [NSMutableArray array];
+	for (NSString *entityName in entitiesToPrefetch) {
+		AKManagedObjectQuery *query = [self _queryWithEntityName:entityName];
+		query.returnsObjectsAsFaults = NO;
+		NSArray *fetchedObjects = [query fetchObjects].object;
+		QLog(@"+++ Pre-fetched %zd instances of %@", fetchedObjects.count, entityName);
+		[keepAround addObject:fetchedObjects];
+	}
 
 	// Load up our internal data structures with stuff from the docset index.
 	[self _importFrameworks];
 	[self _importObjectiveCTokens];
 	[self _importCTokens];
 
-	// Don't let ARC get rid of keepAround until we get here.
+	// This will keep ARC from freeing keepAround until we've finished importing.
 	[keepAround self];
 }
 
