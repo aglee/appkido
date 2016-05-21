@@ -31,7 +31,7 @@
 // it causes the getter to return an immutable NSArray; the resulting
 // exception on my attempt to modify the array was how I realized I needed
 // to change this from copy to strong.
-@property (nonatomic, strong) NSMutableArray *searchResults;
+@property (nonatomic, strong) NSMutableArray *cachedSearchResults;
 @end
 
 @implementation AKSearchQuery
@@ -59,7 +59,7 @@
 		_includesGlobals = YES;
 		_ignoresCase = YES;
 		_searchComparison = AKSearchForSubstring;
-		_searchResults = [[NSMutableArray alloc] init];
+		_cachedSearchResults = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -87,7 +87,7 @@
 	_searchString = [searchString copy];
 
 	// Update other ivars.
-	self.searchResults = nil;
+	self.cachedSearchResults = nil;
 }
 
 - (BOOL)includesClassesAndProtocols
@@ -99,7 +99,7 @@
 {
 	if (_includesClassesAndProtocols != flag) {
 		_includesClassesAndProtocols = flag;
-		self.searchResults = nil;
+		self.cachedSearchResults = nil;
 	}
 }
 
@@ -112,7 +112,7 @@
 {
 	if (_includesMembers != flag) {
 		_includesMembers = flag;
-		self.searchResults = nil;
+		self.cachedSearchResults = nil;
 	}
 }
 
@@ -125,7 +125,7 @@
 {
 	if (_includesFunctions != flag) {
 		_includesFunctions = flag;
-		self.searchResults = nil;
+		self.cachedSearchResults = nil;
 	}
 }
 
@@ -138,7 +138,7 @@
 {
 	if (_includesGlobals != flag) {
 		_includesGlobals = flag;
-		self.searchResults = nil;
+		self.cachedSearchResults = nil;
 	}
 }
 
@@ -151,7 +151,7 @@
 {
 	if (_ignoresCase != flag) {
 		_ignoresCase = flag;
-		self.searchResults = nil;
+		self.cachedSearchResults = nil;
 	}
 }
 
@@ -164,7 +164,7 @@
 {
 	if (_searchComparison != searchComparison) {
 		_searchComparison = searchComparison;
-		self.searchResults = nil;
+		self.cachedSearchResults = nil;
 	}
 }
 
@@ -180,17 +180,17 @@
 
 - (NSArray *)performSearch
 {
-	if (self.searchResults == nil) {
+	if (self.cachedSearchResults == nil) {
 		[self _refreshCachedSearchedResults];
 	}
-	return self.searchResults;
+	return self.cachedSearchResults;
 }
 
 #pragma mark - Private methods - general
 
 - (void)_refreshCachedSearchedResults
 {
-	self.searchResults = [NSMutableArray array];
+	self.cachedSearchResults = [NSMutableArray array];
 
 	if (self.searchString.length == 0) {
 		return;
@@ -213,7 +213,7 @@
 	}
 
 	// Sort the results.
-	[AKDocLocator sortArrayOfDocLocators:self.searchResults];
+	[AKDocLocator sortArrayOfDocLocators:self.cachedSearchResults];
 }
 
 - (BOOL)_matchesString:(NSString *)string
@@ -252,7 +252,7 @@
 	for (AKClassToken *classToken in self.database.allClasses) {
 		if ([self _matchesToken:classToken]) 	{
 			AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
-			[self.searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+			[self.cachedSearchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
 		}
 	}
 }
@@ -262,7 +262,7 @@
 	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
 		if ([self _matchesToken:protocolToken]) {
 			AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
-			[self.searchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+			[self.cachedSearchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
 		}
 	}
 }
@@ -334,9 +334,9 @@
 {
 	for (AKToken *token in tokenArray) {
 		if ([self _matchesToken:token]) {
-			[self.searchResults addObject:[AKDocLocator withTopic:topic
-													 subtopicName:subtopicName
-														  docName:token.name]];
+			[self.cachedSearchResults addObject:[AKDocLocator withTopic:topic
+														   subtopicName:subtopicName
+																docName:token.name]];
 		}
 	}
 }
@@ -388,9 +388,9 @@
 	for (AKNamedObjectGroup *tokenGroup in tokenCluster.sortedGroups) {
 		for (AKToken *token in tokenGroup.sortedObjects) {
 			if ([self _matchesToken:token]) {
-				[self.searchResults addObject:[AKDocLocator withTopic:frameworkTopic
-														 subtopicName:tokenGroup.name
-															  docName:token.name]];
+				[self.cachedSearchResults addObject:[AKDocLocator withTopic:frameworkTopic
+															   subtopicName:tokenGroup.name
+																	docName:token.name]];
 			}
 		}
 	}
