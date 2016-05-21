@@ -92,11 +92,11 @@
 
     if (firstResponder == nil)
     {
-        NSLog(@"The key window has no first responder.\n\n");
+        NSLog(@"The key window has no first responder.");
     }
     else
     {
-        NSLog(@"The key window's first responder is <%@: %p>.\n\n", [firstResponder className], firstResponder);
+        NSLog(@"The key window's first responder is <%@: %p>.", [firstResponder className], firstResponder);
     }
 }
 
@@ -126,12 +126,12 @@
 
 - (IBAction)printValidKeyViewLoop:(id)sender
 {
-    [self _printViewSequenceUsingSelector:@selector(nextValidKeyView)];
+    [self _printViewSequenceWithKeyPath:@"nextValidKeyView"];
 }
 
 - (IBAction)printEntireKeyViewLoop:(id)sender
 {
-    [self _printViewSequenceUsingSelector:@selector(nextKeyView)];
+    [self _printViewSequenceWithKeyPath:@"nextKeyView"];
 }
 
 - (IBAction)printFunWindowFacts:(id)sender
@@ -150,7 +150,7 @@
 
 #pragma mark - Private methods
 
-- (void)_printViewSequenceUsingSelector:(SEL)nextViewSelector
+- (void)_printViewSequenceWithKeyPath:(NSString *)nextViewKeyPath
 {
     [self printFirstResponder:nil];
     
@@ -158,7 +158,7 @@
 
     if ([firstResponder isKindOfClass:[NSView class]])
     {
-        [firstResponder ak_printSequenceUsingSelector:nextViewSelector];
+        [firstResponder ak_printSequenceWithKeyPath:nextViewKeyPath];
     }
 }
 

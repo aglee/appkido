@@ -15,37 +15,26 @@
 	return [NSString stringWithFormat:@"<%@: %p>", self.className, self];
 }
 
-- (void)ak_printSequenceUsingSelector:(SEL)nextObjectSelector
+- (void)ak_printSequenceWithKeyPath:(NSString *)nextObjectKeyPath
 {
-	NSString *selectorName = NSStringFromSelector(nextObjectSelector);
-	NSObject *obj = self;
 	NSMutableSet *pointersToVisitedObjects = [NSMutableSet set];
 
-	NSLog(@"BEGIN %@ sequence:", selectorName);
-	while (YES) {
+	NSLog(@"BEGIN %@ sequence:", nextObjectKeyPath);
+	for (NSObject *obj = self; obj != nil; obj = [obj valueForKeyPath:nextObjectKeyPath]) {
 		// Log the object.
 		NSLog(@"  <%@: %p>", obj.className, obj);
 
-		// Have we encountered this view before?
+		// Have we encountered this object before?
 		NSValue *objWrapper = [NSValue valueWithNonretainedObject:obj];
 		if ([pointersToVisitedObjects containsObject:objWrapper]) {
-			NSLog(@"END %@ sequence -- sequence contains a loop", selectorName);
-			break;
+			NSLog(@"END %@ sequence -- sequence contains a loop", nextObjectKeyPath);
+			return;
 		}
 
+		// Remember that we encountered this object.
 		[pointersToVisitedObjects addObject:objWrapper];
-
-		// Have we reached the end of the chain?
-		//disable warning:"PerformSelector may cause a leak because its selector is unknown"
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		obj = [obj performSelector:nextObjectSelector];
-#pragma clang diagnostic pop
-		if (obj == nil) {
-			NSLog(@"END %@ sequence -- sequence ends with nil", selectorName);
-			break;
-		}
 	}
+	NSLog(@"END %@ sequence -- sequence ends with nil", nextObjectKeyPath);
 }
 
 - (void)ak_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths

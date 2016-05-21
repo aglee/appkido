@@ -18,7 +18,7 @@
  * nil or detect a loop. Sends nextObjectSelector to each object to get the next
  * object in the sequence.
  */
-- (void)ak_printSequenceUsingSelector:(SEL)nextObjectSelector;  //TODO: A block-based version might be nice.
+- (void)ak_printSequenceWithKeyPath:(NSString *)nextObjectKeyPath;
 
 - (void)ak_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths
 				 childObjectsKeyPath:(NSString *)childObjectsKeyPath;
