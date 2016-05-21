@@ -11,7 +11,6 @@
 
 @implementation AKSubtopic
 
-@synthesize displayName = _displayName;
 @synthesize docListItems = _docListItems;
 
 #pragma mark - Init/awake/dealloc
@@ -20,7 +19,6 @@
 {
 	self = [super initWithName:name];
 	if (self) {
-		_displayName = name;
 		_docListItems = docListItems;
 	}
 	return self;
