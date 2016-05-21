@@ -537,14 +537,6 @@
 		73C1E9251CECAEE3002BFD8F /* AKResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C1E9221CECAEE3002BFD8F /* AKResult.h */; };
 		73C1E9261CECAEE3002BFD8F /* AKResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C1E9231CECAEE3002BFD8F /* AKResult.m */; };
 		73C1E9271CECAEE3002BFD8F /* AKResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C1E9231CECAEE3002BFD8F /* AKResult.m */; };
-		73C1E92F1CED73E4002BFD8F /* AKTokenCluster.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C1E92D1CED73E3002BFD8F /* AKTokenCluster.h */; };
-		73C1E9301CED73E4002BFD8F /* AKTokenCluster.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C1E92D1CED73E3002BFD8F /* AKTokenCluster.h */; };
-		73C1E9311CED73E4002BFD8F /* AKTokenCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C1E92E1CED73E4002BFD8F /* AKTokenCluster.m */; };
-		73C1E9321CED73E4002BFD8F /* AKTokenCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C1E92E1CED73E4002BFD8F /* AKTokenCluster.m */; };
-		73C1E9351CED7504002BFD8F /* AKFunctionTokenCluster.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C1E9331CED7504002BFD8F /* AKFunctionTokenCluster.h */; };
-		73C1E9361CED7504002BFD8F /* AKFunctionTokenCluster.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C1E9331CED7504002BFD8F /* AKFunctionTokenCluster.h */; };
-		73C1E9371CED7504002BFD8F /* AKFunctionTokenCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C1E9341CED7504002BFD8F /* AKFunctionTokenCluster.m */; };
-		73C1E9381CED7504002BFD8F /* AKFunctionTokenCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C1E9341CED7504002BFD8F /* AKFunctionTokenCluster.m */; };
 		73C735A70F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
 		73C735A80F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */; };
 		73C735A90F43C65D00EC86AF /* AKIPhoneDevTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */; };
@@ -895,10 +887,6 @@
 		73B9158806133DBF00066E17 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = English; path = English.lproj/Credits.html; sourceTree = "<group>"; };
 		73C1E9221CECAEE3002BFD8F /* AKResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKResult.h; sourceTree = "<group>"; usesTabs = 1; };
 		73C1E9231CECAEE3002BFD8F /* AKResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKResult.m; sourceTree = "<group>"; usesTabs = 1; };
-		73C1E92D1CED73E3002BFD8F /* AKTokenCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTokenCluster.h; sourceTree = "<group>"; };
-		73C1E92E1CED73E4002BFD8F /* AKTokenCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTokenCluster.m; sourceTree = "<group>"; };
-		73C1E9331CED7504002BFD8F /* AKFunctionTokenCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFunctionTokenCluster.h; sourceTree = "<group>"; };
-		73C1E9341CED7504002BFD8F /* AKFunctionTokenCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFunctionTokenCluster.m; sourceTree = "<group>"; };
 		73C735A50F43C65D00EC86AF /* AKIPhoneDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKIPhoneDevTools.h; path = CocoaFrameworks/AKIPhoneDevTools.h; sourceTree = "<group>"; };
 		73C735A60F43C65D00EC86AF /* AKIPhoneDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKIPhoneDevTools.m; path = CocoaFrameworks/AKIPhoneDevTools.m; sourceTree = "<group>"; };
 		73C74137066BFAEF00A76FEE /* AKFindPanelController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKFindPanelController.h; sourceTree = "<group>"; };
@@ -1696,10 +1684,6 @@
 			children = (
 				730FCBD00685758B0083160A /* AKToken.h */,
 				730FCBD10685758B0083160A /* AKToken.m */,
-				73C1E92D1CED73E3002BFD8F /* AKTokenCluster.h */,
-				73C1E92E1CED73E4002BFD8F /* AKTokenCluster.m */,
-				73C1E9331CED7504002BFD8F /* AKFunctionTokenCluster.h */,
-				73C1E9341CED7504002BFD8F /* AKFunctionTokenCluster.m */,
 				73E86F460E397729002AFB76 /* behaviors */,
 				73E86F470E397732002AFB76 /* members of behaviors */,
 				73E86F440E3976FA002AFB76 /* functions, types, constants */,
@@ -1840,7 +1824,6 @@
 				65B1097A09D7B6C300A8A637 /* AKProtocolToken.h in Headers */,
 				65B1097C09D7B6C300A8A637 /* AKAppDelegate.h in Headers */,
 				65B1097E09D7B6C300A8A637 /* AKLinkResolver.h in Headers */,
-				73C1E92F1CED73E4002BFD8F /* AKTokenCluster.h in Headers */,
 				734AEE8D1CC5E1600064AAA9 /* DSANode.h in Headers */,
 				65B1098209D7B6C300A8A637 /* AKHeaderFileDoc.h in Headers */,
 				65B1098409D7B6C300A8A637 /* AKDocLocator.h in Headers */,
@@ -1855,7 +1838,6 @@
 				73A7F80B1CD5AEAF00E8EC85 /* _Parameter.h in Headers */,
 				65B1099609D7B6C300A8A637 /* AKDatabase.h in Headers */,
 				734AEEB91CC5E1600064AAA9 /* _TokenGroup.h in Headers */,
-				73C1E9351CED7504002BFD8F /* AKFunctionTokenCluster.h in Headers */,
 				73B502571CE7AF68009D1BE5 /* AKDoc.h in Headers */,
 				734AEEA11CC5E1600064AAA9 /* _APILanguage.h in Headers */,
 				734AEE871CC5E1600064AAA9 /* DocSet.h in Headers */,
@@ -1983,7 +1965,6 @@
 				7399B2D70E632A5C001AE672 /* AKMethodToken.h in Headers */,
 				7399B2D80E632A5C001AE672 /* AKProtocolToken.h in Headers */,
 				7399B2DA0E632A5C001AE672 /* AKAppDelegate.h in Headers */,
-				73C1E9361CED7504002BFD8F /* AKFunctionTokenCluster.h in Headers */,
 				7399B2DC0E632A5C001AE672 /* AKLinkResolver.h in Headers */,
 				7399B2E00E632A5C001AE672 /* AKHeaderFileDoc.h in Headers */,
 				7399B2E20E632A5C001AE672 /* AKDocLocator.h in Headers */,
@@ -2032,7 +2013,6 @@
 				73C983F40FE47F6800C4BEBA /* AKMacDevTools.h in Headers */,
 				731657930FE48AE70097F3A1 /* AKDevTools.h in Headers */,
 				737405C71195B28D000BD282 /* AKSDKVersion.h in Headers */,
-				73C1E9301CED73E4002BFD8F /* AKTokenCluster.h in Headers */,
 				F28A5B2E13E5C73600BB8F76 /* TCMXMLWriter.h in Headers */,
 				738D41BA15B07D7F008950F6 /* AKAboutWindowController.h in Headers */,
 				738D41BE15B07EC6008950F6 /* AKAppVersion.h in Headers */,
@@ -2311,7 +2291,6 @@
 				734AEEAE1CC5E1600064AAA9 /* _DSANodeURL.m in Sources */,
 				65B10A0709D7B6C300A8A637 /* AKHeaderFileDoc.m in Sources */,
 				734AEE9A1CC5E1600064AAA9 /* OrderedSubnode.m in Sources */,
-				73C1E9371CED7504002BFD8F /* AKFunctionTokenCluster.m in Sources */,
 				65B10A0909D7B6C300A8A637 /* AKDocLocator.m in Sources */,
 				65B10A0F09D7B6C300A8A637 /* AKSearchQuery.m in Sources */,
 				734AEE941CC5E1600064AAA9 /* FilePath.m in Sources */,
@@ -2398,7 +2377,6 @@
 				73A4ACDD16F35815004E6A1C /* AKTabChain.m in Sources */,
 				737F1DEF17021C8A00D560C7 /* AKPopQuizWindowController.m in Sources */,
 				73DB137B170E176500F3776A /* QuietLog.m in Sources */,
-				73C1E9311CED73E4002BFD8F /* AKTokenCluster.m in Sources */,
 				734AEE881CC5E1600064AAA9 /* DocSet.m in Sources */,
 				73A7F80D1CD5AEAF00E8EC85 /* _Parameter.m in Sources */,
 			);
@@ -2465,7 +2443,6 @@
 				73A7F8021CD5AE9A00E8EC85 /* Parameter.m in Sources */,
 				7399B39C0E632A5C001AE672 /* AKFileUtils.m in Sources */,
 				7399B39E0E632A5C001AE672 /* AKFrameworkTokenClusterTopic.m in Sources */,
-				73C1E9381CED7504002BFD8F /* AKFunctionTokenCluster.m in Sources */,
 				7399B39F0E632A5C001AE672 /* AKMultiRadioView.m in Sources */,
 				7399B3A10E632A5C001AE672 /* AKApplication.m in Sources */,
 				7399B3A20E632A5C001AE672 /* AKDatabaseXMLExporter.m in Sources */,
@@ -2477,7 +2454,6 @@
 				7399B3AD0E632A5C001AE672 /* AKDevToolsViewController.m in Sources */,
 				7399B3AF0E632A5C001AE672 /* AKPropertyToken.m in Sources */,
 				7399B3B00E632A5C001AE672 /* AKMemberToken.m in Sources */,
-				73C1E9321CED73E4002BFD8F /* AKTokenCluster.m in Sources */,
 				7399B3B10E632A5C001AE672 /* AKNotificationToken.m in Sources */,
 				7399B3B70E632A5C001AE672 /* AKDevToolsPanelController.m in Sources */,
 				73C735AA0F43C65D00EC86AF /* AKIPhoneDevTools.m in Sources */,

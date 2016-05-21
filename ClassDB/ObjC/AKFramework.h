@@ -9,20 +9,19 @@
 #import "AKNamedObject.h"
 #import "DocSetModel.h"
 
-@class AKToken;
-@class AKTokenCluster;
 @class AKNamedObjectGroup;
+@class AKNamedObjectCluster;
 
 @interface AKFramework : AKNamedObject
 
 @property (strong, readonly) AKNamedObjectGroup *protocolsGroup;
 
-@property (strong, readonly) AKTokenCluster *constantsCluster;
-@property (strong, readonly) AKTokenCluster *enumsCluster;
-@property (strong, readonly) AKTokenCluster *functionsCluster;
-@property (strong, readonly) AKTokenCluster *macrosCluster;
-@property (strong, readonly) AKTokenCluster *typedefsCluster;
+@property (strong, readonly) AKNamedObjectCluster *constantsCluster;
+@property (strong, readonly) AKNamedObjectCluster *enumsCluster;
+@property (strong, readonly) AKNamedObjectCluster *functionsCluster;
+@property (strong, readonly) AKNamedObjectCluster *macrosCluster;
+@property (strong, readonly) AKNamedObjectCluster *typedefsCluster;
 
-- (AKToken *)maybeImportCToken:(DSAToken *)tokenMO;
+- (AKNamedObjectCluster *)tokenClusterWithTokenType:(NSString *)tokenType;
 
 @end

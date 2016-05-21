@@ -7,8 +7,7 @@
 //
 
 #import "AKFramework.h"
-#import "AKFunctionTokenCluster.h"
-#import "AKToken.h"
+#import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
 
 @interface AKFramework ()
@@ -24,11 +23,11 @@
     self = [super initWithName:name];
     if (self) {
         _protocolsGroup = [[AKNamedObjectGroup alloc] initWithName:@"Protocols"];
-        _constantsCluster = [[AKTokenCluster alloc] initWithName:@"Constants"];
-        _enumsCluster = [[AKTokenCluster alloc] initWithName:@"Enums"];
-        _functionsCluster = [[AKFunctionTokenCluster alloc] initWithName:@"Functions"];
-        _macrosCluster = [[AKTokenCluster alloc] initWithName:@"Macros"];
-        _typedefsCluster = [[AKTokenCluster alloc] initWithName:@"Typedefs"];
+        _constantsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Constants"];
+        _enumsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Enums"];
+        _functionsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Functions"];
+        _macrosCluster = [[AKNamedObjectCluster alloc] initWithName:@"Macros"];
+        _typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Typedefs"];
         _tokenClustersByTokenType = @{
                                       @"data": _constantsCluster,
                                       @"econst": _enumsCluster,
@@ -40,17 +39,9 @@
     return self;
 }
 
-- (AKToken *)maybeImportCToken:(DSAToken *)tokenMO
+- (AKNamedObjectCluster *)tokenClusterWithTokenType:(NSString *)tokenType
 {
-    AKTokenCluster *tokenCluster = self.tokenClustersByTokenType[tokenMO.tokenType.typeName];
-    if (tokenCluster == nil) {
-        return nil;
-    }
-
-    AKToken *token = [tokenCluster tokenWithTokenMO:tokenMO];
-    token.frameworkName = self.name;
-    [tokenCluster addNamedObject:token toGroupWithName:tokenCluster.name];
-    return token;
+    return self.tokenClustersByTokenType[tokenType];
 }
 
 @end
