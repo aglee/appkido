@@ -28,22 +28,12 @@
  * The term "locator" suggests rough conceptual similarity to a URL.
  */
 @interface AKDocLocator : NSObject <AKPrefDictionary, AKSortable>
-{
-@private
-    AKTopic *_topic;
-    NSString *_subtopicName;
-    NSString *_docName;
 
-    NSString *_cachedDisplayString;
-    NSString *_cachedSortName;
-    id<AKDoc> _cachedDoc;
-}
-
-@property (readonly, strong) AKTopic *topicToDisplay;
+@property (strong, readonly) AKTopic *topicToDisplay;
 @property (copy) NSString *subtopicName;
 @property (copy) NSString *docName;
-@property (readonly, copy) NSString *displayName;
-@property (readonly, strong) id<AKDoc> docToDisplay;
+@property (copy, readonly) NSString *displayName;
+@property (strong, readonly) id<AKDoc> docToDisplay;
 
 #pragma mark - Factory methods
 

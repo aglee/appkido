@@ -675,7 +675,7 @@
 		732BD55D05ED8DC60055715D /* AKProtocolToken.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKProtocolToken.m; sourceTree = "<group>"; usesTabs = 1; };
 		732BD5D505ED8FBE0055715D /* AKAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKAppDelegate.h; sourceTree = "<group>"; };
 		732BD5D605ED8FBE0055715D /* AKAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKAppDelegate.m; sourceTree = "<group>"; };
-		732EE0F7060E10E600B5EDA7 /* AKDocLocator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDocLocator.h; sourceTree = "<group>"; };
+		732EE0F7060E10E600B5EDA7 /* AKDocLocator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDocLocator.h; sourceTree = "<group>"; usesTabs = 1; };
 		732EE0F8060E10E600B5EDA7 /* AKDocLocator.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDocLocator.m; sourceTree = "<group>"; usesTabs = 1; };
 		7330D5B6083667540007FBD0 /* AKFrameworkTokenClusterTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkTokenClusterTopic.h; sourceTree = "<group>"; };
 		7330D5B7083667540007FBD0 /* AKFrameworkTokenClusterTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkTokenClusterTopic.m; sourceTree = "<group>"; usesTabs = 1; };
