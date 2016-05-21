@@ -52,4 +52,37 @@
     }
 }
 
+- (void)ak_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths
+                 childObjectsKeyPath:(NSString *)childObjectsKeyPath
+{
+    [self _printTreeWithSelfKeyPaths:selfKeyPaths
+                 childObjectsKeyPath:childObjectsKeyPath
+                               depth:0];
+}
+
+#pragma mark - Private methods
+
+- (void)_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths
+               childObjectsKeyPath:(NSString *)childObjectsKeyPath
+                             depth:(NSUInteger)depth
+{
+    // Print info for self.
+    NSMutableString *selfString = [NSMutableString string];
+    for (NSUInteger indentCount = 0; indentCount < depth; indentCount++) {
+        [selfString appendString:@"\t"];
+    }
+    [selfString appendString:self.className];
+    for (NSString *keyPath in selfKeyPaths) {
+        [selfString appendFormat:@" %@=%@", keyPath, [self valueForKeyPath:keyPath]];
+    }
+    NSLog(@"%@", selfString);
+    
+    // Print each of self's child objects.
+    for (id childObject in [self valueForKeyPath:childObjectsKeyPath]) {
+        [childObject _printTreeWithSelfKeyPaths:selfKeyPaths
+                            childObjectsKeyPath:childObjectsKeyPath
+                                          depth:(depth + 1)];
+    }
+}
+
 @end

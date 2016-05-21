@@ -20,4 +20,7 @@
  */
 - (void)ak_printSequenceUsingSelector:(SEL)nextObjectSelector;  //TODO: A block-based version might be nice.
 
+- (void)ak_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths
+                 childObjectsKeyPath:(NSString *)childObjectsKeyPath;
+
 @end
