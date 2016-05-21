@@ -11,11 +11,16 @@
 #import "AKClassTopic.h"
 #import "AKDatabase.h"
 #import "AKDocLocator.h"
+#import "AKFramework.h"
+#import "AKFrameworkTopic.h"
 #import "AKMethodToken.h"
+#import "AKNamedObjectCluster.h"
+#import "AKNamedObjectGroup.h"
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 #import "AKSortUtils.h"
 #import "AKSubtopic.h"
+#import "AKToken.h"
 #import "NSString+AppKiDo.h"
 
 @interface AKSearchQuery ()
@@ -176,34 +181,40 @@
 - (NSArray *)performSearch
 {
 	if (self.searchResults == nil) {
-		self.searchResults = [NSMutableArray array];
-
-		if (self.searchString.length == 0) {
-			return self.searchResults;
-		}
-
-		// Search the various types of API constructs that we know about.
-		// Each of the following calls appends its results to self.searchResults.
-		if (self.includesClassesAndProtocols) {
-			[self _searchClassNames];
-			[self _searchProtocolNames];
-		}
-		if (self.includesMembers) {
-			[self _searchNamesOfClassMembers];
-			[self _searchNamesOfProtocolMembers];
-		}
-		if (self.includesFunctions) {
-			[self _searchFunctionNames];
-		}
-
-		// Sort the results.
-		[AKDocLocator sortArrayOfDocLocators:self.searchResults];
+		[self _refreshCachedSearchedResults];
 	}
-
 	return self.searchResults;
 }
 
-#pragma mark - Private methods
+#pragma mark - Private methods - general
+
+- (void)_refreshCachedSearchedResults
+{
+	self.searchResults = [NSMutableArray array];
+
+	if (self.searchString.length == 0) {
+		return;
+	}
+
+	// Each of the following calls appends its results to searchResults.
+	if (self.includesClassesAndProtocols) {
+		[self _searchClasses];
+		[self _searchProtocols];
+	}
+	if (self.includesMembers) {
+		[self _searchClassMembers];
+		[self _searchProtocolMembers];
+	}
+	if (self.includesFunctions) {
+		[self _searchFunctions];
+	}
+	if (self.includesGlobals) {
+		[self _searchGlobals];
+	}
+
+	// Sort the results.
+	[AKDocLocator sortArrayOfDocLocators:self.searchResults];
+}
 
 - (BOOL)_matchesString:(NSString *)string
 {
@@ -234,7 +245,9 @@
 	return [self _matchesString:token.name];
 }
 
-- (void)_searchClassNames
+#pragma mark - Private methods - searching behaviors and their members
+
+- (void)_searchClasses
 {
 	for (AKClassToken *classToken in self.database.allClasses) {
 		if ([self _matchesToken:classToken]) 	{
@@ -244,7 +257,7 @@
 	}
 }
 
-- (void)_searchProtocolNames
+- (void)_searchProtocols
 {
 	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
 		if ([self _matchesToken:protocolToken]) {
@@ -254,7 +267,7 @@
 	}
 }
 
-- (void)_searchNamesOfClassMembers
+- (void)_searchClassMembers
 {
 	for (AKClassToken *classToken in self.database.allClasses) {
 		AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
@@ -272,7 +285,7 @@
 	}
 }
 
-- (void)_searchNamesOfProtocolMembers
+- (void)_searchProtocolMembers
 {
 	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
 		AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
@@ -315,24 +328,6 @@
 		ofBehaviorTopic:behaviorTopic];
 }
 
-// Search the functions in each of the function groups for each framework.
-- (void)_searchFunctionNames  //TODO: Clean this up.
-{
-//	for (NSString *fwName in [_database frameworkNames]) {
-//		for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName]) {
-//			for (AKToken *subitem in [groupItem subitems]) {
-//				if ([self _matchesItem:subitem]) 	{
-//					AKTopic *topic = [[AKFunctionsTopic alloc] initWithFramework:fwName
-//																		database:_database];
-//					[_searchResults addObject:[AKDocLocator withTopic:topic
-//														 subtopicName:groupItem.name
-//															  docName:subitem.name]];
-//				}
-//			}
-//		}
-//	}
-}
-
 - (void)_searchTokens:(NSArray *)tokenArray
 		underSubtopic:(NSString *)subtopicName
 	  ofBehaviorTopic:(AKBehaviorTopic *)topic
@@ -342,6 +337,61 @@
 			[self.searchResults addObject:[AKDocLocator withTopic:topic
 													 subtopicName:subtopicName
 														  docName:token.name]];
+		}
+	}
+}
+
+#pragma mark - Private methods - searching token clusters with AKFramework
+
+- (void)_searchFunctions
+{
+	for (AKFramework *framework in self.database.sortedFrameworks) {
+		[self _searchFunctionsInFramework:framework];
+	}
+}
+
+- (void)_searchFunctionsInFramework:(AKFramework *)framework
+{
+	NSArray *tokenClusters = @[ framework.functionsCluster ];
+	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
+	[self _searchTokenClusters:tokenClusters inFrameworkTopic:frameworkTopic];
+}
+
+- (void)_searchGlobals
+{
+	for (AKFramework *framework in self.database.sortedFrameworks) {
+		[self _searchGlobalsInFramework:framework];
+	}
+}
+
+- (void)_searchGlobalsInFramework:(AKFramework *)framework
+{
+	NSArray *tokenClusters = @[ framework.enumsCluster,
+								framework.macrosCluster,
+								framework.typedefsCluster,
+								framework.constantsCluster ];
+	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
+	[self _searchTokenClusters:tokenClusters inFrameworkTopic:frameworkTopic];
+}
+
+- (void)_searchTokenClusters:(NSArray *)tokenClusters
+			inFrameworkTopic:(AKFrameworkTopic *)frameworkTopic
+{
+	for (AKNamedObjectCluster *cluster in tokenClusters) {
+		[self _searchTokenCluster:cluster inFrameworkTopic:frameworkTopic];
+	}
+}
+
+- (void)_searchTokenCluster:(AKNamedObjectCluster *)tokenCluster
+		   inFrameworkTopic:(AKFrameworkTopic *)frameworkTopic
+{
+	for (AKNamedObjectGroup *tokenGroup in tokenCluster.sortedGroups) {
+		for (AKToken *token in tokenGroup.sortedObjects) {
+			if ([self _matchesToken:token]) {
+				[self.searchResults addObject:[AKDocLocator withTopic:frameworkTopic
+														 subtopicName:tokenGroup.name
+															  docName:token.name]];
+			}
 		}
 	}
 }
