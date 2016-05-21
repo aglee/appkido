@@ -19,16 +19,18 @@
 
 + (AKDebugging *)sharedInstance
 {
-	static AKDebugging *s_sharedInstance = nil;
-	if (!s_sharedInstance) {
+	static AKDebugging *s_sharedInstance;
+	static dispatch_once_t once;
+	dispatch_once(&once,^{
 		s_sharedInstance = [[self alloc] init];
-	}
+	});
+
 	return s_sharedInstance;
 }
 
 #pragma mark - Initial setup
 
-+ (BOOL)userCanDebug
++ (BOOL)userCanDebug  //TODO: Make this a BOOL setting in NSUserDefaults.
 {
 	return ([NSUserName() isEqualToString:@"alee"]
 			&& [NSFullUserName() isEqualToString:@"Andy Lee"]);
