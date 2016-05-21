@@ -679,8 +679,8 @@
 		7322FBDE1CEA813D007E0764 /* AKNamedObjectGroupTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObjectGroupTopic.m; sourceTree = "<group>"; };
 		7322FBE31CEA82E5007E0764 /* AKNamedObjectClusterTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNamedObjectClusterTopic.h; sourceTree = "<group>"; };
 		7322FBE41CEA82E5007E0764 /* AKNamedObjectClusterTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNamedObjectClusterTopic.m; sourceTree = "<group>"; };
-		7322FBE91CEA9EEE007E0764 /* AKFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFramework.h; sourceTree = "<group>"; };
-		7322FBEA1CEA9EEE007E0764 /* AKFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFramework.m; sourceTree = "<group>"; };
+		7322FBE91CEA9EEE007E0764 /* AKFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFramework.h; path = ObjC/AKFramework.h; sourceTree = "<group>"; };
+		7322FBEA1CEA9EEE007E0764 /* AKFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKFramework.m; path = ObjC/AKFramework.m; sourceTree = "<group>"; };
 		7323B6E704DDD45B00CCE8CB /* NSView+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+AppKiDo.h"; sourceTree = "<group>"; };
 		7323B6E804DDD45B00CCE8CB /* NSView+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+AppKiDo.m"; sourceTree = "<group>"; };
 		7323C9C108313881002E8D7D /* AKFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFileUtils.h; sourceTree = "<group>"; };
@@ -943,8 +943,8 @@
 		73ECA3D21CE6CE9B00A78815 /* AKInstanceMethodToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKInstanceMethodToken.m; sourceTree = "<group>"; usesTabs = 1; };
 		73EE9E3D06856D120008CBEC /* AKDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AKDatabase.h; sourceTree = "<group>"; usesTabs = 1; };
 		73EE9E3E06856D120008CBEC /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; usesTabs = 1; };
-		73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AppKiDo.h"; sourceTree = "<group>"; };
-		73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AppKiDo.m"; sourceTree = "<group>"; };
+		73F8F99116ECE9A4001650D7 /* NSObject+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AppKiDo.h"; sourceTree = "<group>"; usesTabs = 1; };
+		73F8F99216ECE9A4001650D7 /* NSObject+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AppKiDo.m"; sourceTree = "<group>"; usesTabs = 1; };
 		73F8F99F16ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+AppKiDo.h"; sourceTree = "<group>"; };
 		73F8F9A016ED1C18001650D7 /* NSMutableAttributedString+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+AppKiDo.m"; sourceTree = "<group>"; };
 		73F8F9B116EE99A3001650D7 /* AKFocusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKFocusView.h; path = CustomViews/AKFocusView.h; sourceTree = "<group>"; };
@@ -1119,6 +1119,8 @@
 				73EE9E3E06856D120008CBEC /* AKDatabase.m */,
 				737F553E1CDFA15C00376A4B /* AKDatabase+PrivateObjC.m */,
 				737F55431CDFA3F300376A4B /* AKDatabase+PrivateC.m */,
+				7322FBE91CEA9EEE007E0764 /* AKFramework.h */,
+				7322FBEA1CEA9EEE007E0764 /* AKFramework.m */,
 			);
 			name = database;
 			path = ClassDB;
@@ -1694,8 +1696,6 @@
 			children = (
 				730FCBD00685758B0083160A /* AKToken.h */,
 				730FCBD10685758B0083160A /* AKToken.m */,
-				7322FBE91CEA9EEE007E0764 /* AKFramework.h */,
-				7322FBEA1CEA9EEE007E0764 /* AKFramework.m */,
 				73C1E92D1CED73E3002BFD8F /* AKTokenCluster.h */,
 				73C1E92E1CED73E4002BFD8F /* AKTokenCluster.m */,
 				73C1E9331CED7504002BFD8F /* AKFunctionTokenCluster.h */,
