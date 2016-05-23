@@ -92,7 +92,7 @@
 			_cachedDisplayName = [[NSString alloc] initWithFormat:@"%@  %C  %@",
 								  self.docToDisplay.displayName,
 								  kLeftDoubleAngle,
-								  self.topicToDisplay.displayName];
+								  self.subtopicName];
 		}
 	}
 
