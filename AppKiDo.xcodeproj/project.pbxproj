@@ -1895,6 +1895,7 @@
 				73664CDD1CF2BBBE0094F405 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73664CDE1CF2BBBE0094F405 /* Build configuration list for PBXNativeTarget "AppKiDoTests" */ = {
 			isa = XCConfigurationList;
@@ -1903,6 +1904,7 @@
 				73664CE01CF2BBBE0094F405 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73664CE11CF2BBBE0094F405 /* Build configuration list for PBXNativeTarget "AppKiDoUITests" */ = {
 			isa = XCConfigurationList;
@@ -1911,6 +1913,7 @@
 				73664CE31CF2BBBE0094F405 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73664F161CF2BFDC0094F405 /* Build configuration list for PBXAggregateTarget "Mogenerator" */ = {
 			isa = XCConfigurationList;
@@ -1919,6 +1922,7 @@
 				73664F181CF2BFDC0094F405 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
