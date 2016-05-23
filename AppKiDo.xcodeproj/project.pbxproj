@@ -748,10 +748,10 @@
 		73664D4A1CF2BE9D0094F405 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
-				73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */,
 				73664D4D1CF2BE9D0094F405 /* AKDatabase.h */,
 				73664D4E1CF2BE9D0094F405 /* AKDatabase.m */,
+				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
+				73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */,
 				73664D4F1CF2BE9D0094F405 /* AKDatabaseXMLExporter.h */,
 				73664D501CF2BE9D0094F405 /* AKDatabaseXMLExporter.m */,
 				73664D511CF2BE9D0094F405 /* Dev Tools */,
@@ -1018,6 +1018,7 @@
 			children = (
 				73664E2F1CF2BE9E0094F405 /* Third-Party */,
 				73664E191CF2BE9E0094F405 /* DIGS */,
+				736826FB1CF348A2004B070E /* Named Objects and Collections */,
 				73664DFA1CF2BE9E0094F405 /* AKAppVersion.h */,
 				73664DFB1CF2BE9E0094F405 /* AKAppVersion.m */,
 				73664DFC1CF2BE9E0094F405 /* AKDebugging.h */,
@@ -1028,13 +1029,6 @@
 				73664E011CF2BE9E0094F405 /* AKManagedObjectQuery.m */,
 				73664E021CF2BE9E0094F405 /* AKMethodNameExtractor.h */,
 				73664E031CF2BE9E0094F405 /* AKMethodNameExtractor.m */,
-				73664E041CF2BE9E0094F405 /* AKNamed.h */,
-				73664E051CF2BE9E0094F405 /* AKNamedObject.h */,
-				73664E061CF2BE9E0094F405 /* AKNamedObject.m */,
-				73664E071CF2BE9E0094F405 /* AKNamedObjectCluster.h */,
-				73664E081CF2BE9E0094F405 /* AKNamedObjectCluster.m */,
-				73664E091CF2BE9E0094F405 /* AKNamedObjectGroup.h */,
-				73664E0A1CF2BE9E0094F405 /* AKNamedObjectGroup.m */,
 				73664E0B1CF2BE9E0094F405 /* AKRegexUtils.h */,
 				73664E0C1CF2BE9E0094F405 /* AKRegexUtils.m */,
 				73664E0D1CF2BE9E0094F405 /* AKResult.h */,
@@ -1208,6 +1202,20 @@
 				73664EF61CF2BEB70094F405 /* superclass-tool.tiff */,
 			);
 			path = toolbar;
+			sourceTree = "<group>";
+		};
+		736826FB1CF348A2004B070E /* Named Objects and Collections */ = {
+			isa = PBXGroup;
+			children = (
+				73664E041CF2BE9E0094F405 /* AKNamed.h */,
+				73664E051CF2BE9E0094F405 /* AKNamedObject.h */,
+				73664E061CF2BE9E0094F405 /* AKNamedObject.m */,
+				73664E071CF2BE9E0094F405 /* AKNamedObjectCluster.h */,
+				73664E081CF2BE9E0094F405 /* AKNamedObjectCluster.m */,
+				73664E091CF2BE9E0094F405 /* AKNamedObjectGroup.h */,
+				73664E0A1CF2BE9E0094F405 /* AKNamedObjectGroup.m */,
+			);
+			path = "Named Objects and Collections";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
