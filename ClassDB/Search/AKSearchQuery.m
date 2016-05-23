@@ -169,6 +169,14 @@
 	}
 }
 
+- (NSArray *)searchResults
+{
+	if (self.cachedSearchResults == nil) {
+		[self _refreshCachedSearchedResults];
+	}
+	return self.cachedSearchResults;
+}
+
 #pragma mark - Searching
 
 - (void)includeEverythingInSearch
@@ -177,14 +185,6 @@
 	[self setIncludesMembers:YES];
 	[self setIncludesFunctions:YES];
 	[self setIncludesGlobals:YES];
-}
-
-- (NSArray *)performSearch
-{
-	if (self.cachedSearchResults == nil) {
-		[self _refreshCachedSearchedResults];
-	}
-	return self.cachedSearchResults;
 }
 
 #pragma mark - Private methods - general
