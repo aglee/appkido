@@ -11,7 +11,6 @@
 #import "AKCategoryToken.h"
 #import "AKDatabase.h"
 #import "AKMethodToken.h"
-#import "AKNotificationToken.h"
 #import "AKProtocolToken.h"
 #import "NSString+AppKiDo.h"
 
@@ -19,7 +18,6 @@
 @interface AKClassToken ()
 @property (readwrite, weak) AKClassToken *parentClass;
 @property (copy) NSMutableDictionary *delegateMethodsByName;
-@property (copy) NSMutableDictionary *notificationsByName;
 @property (copy) NSMutableDictionary *bindingsByName;
 @end
 
@@ -38,7 +36,6 @@
 		_categoryTokens = [[NSMutableArray alloc] init];
 
 		_delegateMethodsByName = [[NSMutableDictionary alloc] init];
-		_notificationsByName = [[NSMutableDictionary alloc] init];
 		_bindingsByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -211,24 +208,6 @@
 {
 	self.delegateMethodsByName[methodToken.name] = methodToken;
 	methodToken.owningBehavior = self;
-}
-
-#pragma mark - Notification tokens
-
-- (NSArray *)documentedNotifications
-{
-	return self.notificationsByName.allValues;
-}
-
-- (AKNotificationToken *)notificationWithName:(NSString *)notificationName
-{
-	return (AKNotificationToken *)self.notificationsByName[notificationName];
-}
-
-- (void)addNotification:(AKNotificationToken *)notificationToken
-{
-	self.notificationsByName[notificationToken.name] = notificationToken;
-	notificationToken.owningBehavior = self;
 }
 
 #pragma mark - AKBehaviorToken methods

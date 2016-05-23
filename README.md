@@ -18,9 +18,9 @@ Here are the API constructs represented in AppKiDo, and their corresponding item
 * **Properties** -- AKPropertyToken
     * Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyToken for such properties. Rather, AKMethodToken is used for their documented getter and setter methods.
     * Examples: NSDraggingSession's draggingLocation, NSTask's terminationHandler.
-* **Methods** -- AKMethodToken, AKNotificationToken
-    * AKMethodToken is used for both instance methods and class methods.
+* **Methods** -- AKClassMethodToken, AKInstanceMethodToken
     * Delegate methods are treated similarly to instance methods, because they are considered part of the behavior of the class. In particular, they are "inherited" by subclasses of the delegating class.
+		* TODO: Note there are delegate class methods too.
     * Notifications are treated similarly to methods, even though they aren't methods at all, for the same reason.
     * Examples: -init, +stringWithFormat:, tabView:willSelectTabViewItem:, NSWindowWillCloseNotification.
 * **Functions** -- AKFunctionToken

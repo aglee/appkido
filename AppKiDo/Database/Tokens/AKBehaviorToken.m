@@ -9,6 +9,7 @@
 #import "DIGSLog.h"
 #import "AKClassMethodToken.h"
 #import "AKInstanceMethodToken.h"
+#import "AKNotificationToken.h"
 #import "AKProtocolToken.h"
 #import "AKPropertyToken.h"
 
@@ -17,6 +18,7 @@
 @property (copy) NSMutableDictionary *propertiesByName;
 @property (copy) NSMutableDictionary *classMethodsByName;
 @property (copy) NSMutableDictionary *instanceMethodsByName;
+@property (copy) NSMutableDictionary *notificationsByName;
 @end
 
 @implementation AKBehaviorToken
@@ -31,16 +33,46 @@
 		_propertiesByName = [[NSMutableDictionary alloc] init];
 		_classMethodsByName = [[NSMutableDictionary alloc] init];
 		_instanceMethodsByName = [[NSMutableDictionary alloc] init];
+		_notificationsByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
 
-#pragma mark - Getters and setters -- general
+#pragma mark - Getters and setters
 
 - (BOOL)isClassToken
 {
 	return NO;
 }
+
+- (NSArray *)implementedProtocols
+{
+	NSArray *myProtocolTokens = self.implementedProtocolsByName.allValues;
+	NSMutableArray *result = [NSMutableArray arrayWithArray:myProtocolTokens];
+	for (AKProtocolToken *protocolToken in myProtocolTokens) 	{
+		if (protocolToken != self) {
+			[result addObjectsFromArray:protocolToken.implementedProtocols];  //TODO: Could this lead to duplicates in the result list?
+		}
+	}
+	return result;
+}
+
+- (NSArray *)propertyTokens
+{
+	return self.propertiesByName.allValues;
+}
+
+- (NSArray *)classMethodTokens
+{
+	return self.classMethodsByName.allValues;
+}
+
+- (NSArray *)instanceMethodTokens
+{
+	return self.instanceMethodsByName.allValues;
+}
+
+#pragma mark - Implemented protocol tokens
 
 - (void)addImplementedProtocol:(AKProtocolToken *)protocolToken
 {
@@ -59,29 +91,7 @@
 	}
 }
 
-- (NSArray *)implementedProtocols
-{
-	NSArray *myProtocolTokens = self.implementedProtocolsByName.allValues;
-	NSMutableArray *result = [NSMutableArray arrayWithArray:myProtocolTokens];
-	for (AKProtocolToken *protocolToken in myProtocolTokens) 	{
-		if (protocolToken != self) {
-			[result addObjectsFromArray:protocolToken.implementedProtocols];  //TODO: Could this lead to duplicates in the result list?
-		}
-	}
-	return result;
-}
-
-- (NSArray *)instanceMethodTokens
-{
-	return self.instanceMethodsByName.allValues;
-}
-
-#pragma mark - Getters and setters -- properties
-
-- (NSArray *)propertyTokens
-{
-	return self.propertiesByName.allValues;
-}
+#pragma mark - Property tokens
 
 - (AKPropertyToken *)propertyTokenWithName:(NSString *)propertyName
 {
@@ -99,12 +109,7 @@
 	}
 }
 
-#pragma mark - Getters and setters -- class methods
-
-- (NSArray *)classMethodTokens
-{
-	return self.classMethodsByName.allValues;
-}
+#pragma mark - Method tokens
 
 - (AKClassMethodToken *)classMethodWithName:(NSString *)methodName
 {
@@ -122,8 +127,6 @@
 	}
 }
 
-#pragma mark - Getters and setters -- instance methods
-
 - (AKInstanceMethodToken *)instanceMethodWithName:(NSString *)methodName
 {
 	return (AKInstanceMethodToken *)self.instanceMethodsByName[methodName];
@@ -138,6 +141,24 @@
 		self.instanceMethodsByName[methodToken.name] = methodToken;
 		methodToken.owningBehavior = self;
 	}
+}
+
+#pragma mark - Notification tokens
+
+- (NSArray *)notificationTokens
+{
+	return self.notificationsByName.allValues;
+}
+
+- (AKNotificationToken *)notificationWithName:(NSString *)notificationName
+{
+	return (AKNotificationToken *)self.notificationsByName[notificationName];
+}
+
+- (void)addNotification:(AKNotificationToken *)notificationToken
+{
+	self.notificationsByName[notificationToken.name] = notificationToken;
+	notificationToken.owningBehavior = self;
 }
 
 @end

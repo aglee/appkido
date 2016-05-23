@@ -10,14 +10,12 @@
 @class AKBindingToken;
 @class AKCategoryToken;
 @class AKMethodToken;
-@class AKNotificationToken;
 @class AKPropertyToken;
 
 /*!
  * Represents an Objective-C class, which in addition to having methods can have
- * categories, subclasses, and a superclass; can have delegate methods; can
- * respond to notifications; and can span multiple frameworks by way of its
- * categories.
+ * categories, subclasses, and a superclass; can have delegate methods; and can
+ * span multiple frameworks by way of its categories.
  *
  * We use the terms "parent class" and "child class" rather than "superclass"
  * and "subclass", to avoid confusion.
@@ -36,7 +34,6 @@
 //@property (readonly) BOOL hasChildClasses;
 @property (readonly, copy) NSArray *allCategories;
 @property (readonly, copy) NSArray *documentedDelegateMethods;
-@property (readonly, copy) NSArray *documentedNotifications;
 
 /*!
  * Names of all frameworks the class belongs to. The first element of the
@@ -86,12 +83,5 @@
 
 /*! Does nothing if a delegate method with the same name already exists. */
 - (void)addDelegateMethod:(AKMethodToken *)methodToken;
-
-#pragma mark - Notification tokens
-
-- (AKNotificationToken *)notificationWithName:(NSString *)notificationName;
-
-/*! Does nothing if a notification with the same name already exists. */
-- (void)addNotification:(AKNotificationToken *)notificationToken;
 
 @end
