@@ -9,6 +9,7 @@
 #import "AKFramework.h"
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
+#import "AKTopicConstants.h"
 
 @interface AKFramework ()
 @property (strong) NSDictionary *tokenClustersByTokenType;
@@ -22,12 +23,12 @@
 {
     self = [super initWithName:name];
     if (self) {
-        _protocolsGroup = [[AKNamedObjectGroup alloc] initWithName:@"Protocols"];
-        _constantsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Constants"];
-        _enumsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Enums"];
-        _functionsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Functions"];
-        _macrosCluster = [[AKNamedObjectCluster alloc] initWithName:@"Macros"];
-        _typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:@"Typedefs"];
+        _protocolsGroup = [[AKNamedObjectGroup alloc] initWithName:AKProtocolsTopicName];
+        _constantsCluster = [[AKNamedObjectCluster alloc] initWithName:AKConstantsTopicName];
+        _enumsCluster = [[AKNamedObjectCluster alloc] initWithName:AKEnumsTopicName];
+        _functionsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsTopicName];
+        _macrosCluster = [[AKNamedObjectCluster alloc] initWithName:AKMacrosTopicName];
+        _typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:AKTypedefsTopicName];
         _tokenClustersByTokenType = @{
                                       @"data": _constantsCluster,
                                       @"econst": _enumsCluster,
