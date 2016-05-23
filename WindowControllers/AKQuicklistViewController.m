@@ -789,10 +789,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 //        if (classToken.tokenDocumentation)
 		{
 			AKTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
-
-			[quicklistItems addObject:[AKDocLocator withTopic:topic
-												 subtopicName:nil
-													  docName:nil]];
+			[quicklistItems addObject:[[AKDocLocator alloc] initWithTopic:topic
+															 subtopicName:nil
+																  docName:nil]];
 		}
 	}
 
@@ -812,10 +811,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 //        if (protocolToken.tokenDocumentation)
 		{
 			AKTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
-
-			[quicklistItems addObject:[AKDocLocator withTopic:topic
-												 subtopicName:nil
-													  docName:nil]];
+			[quicklistItems addObject:[[AKDocLocator alloc] initWithTopic:topic
+															 subtopicName:nil
+																  docName:nil]];
 		}
 	}
 

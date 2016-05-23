@@ -337,9 +337,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)addTopicToFavorites:(id)sender
 {
-	AKDocLocator *docLocator = [AKDocLocator withTopic:[self _currentTopic]
-										  subtopicName:nil
-											   docName:nil];
+	AKDocLocator *docLocator = [[AKDocLocator alloc] initWithTopic:[self _currentTopic]
+													  subtopicName:nil
+														   docName:nil];
 	[[AKAppDelegate appDelegate] addFavorite:docLocator];
 }
 
@@ -620,8 +620,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 		// Enable the item if the selected topic isn't already a favorite.
 		NSArray *favoritesList = [[AKAppDelegate appDelegate] favoritesList];
-		AKDocLocator *proposedFavorite = [AKDocLocator withTopic:currentTopic subtopicName:nil docName:nil];
-
+		AKDocLocator *proposedFavorite = [[AKDocLocator alloc] initWithTopic:currentTopic
+																subtopicName:nil
+																	 docName:nil];
 		if ([favoritesList containsObject:proposedFavorite]) {
 			return NO;
 		} else {
@@ -856,10 +857,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 		return;
 	}
 
-	AKDocLocator *newHistoryItem = [AKDocLocator withTopic:topic
-											  subtopicName:subtopicName
-												   docName:docName];
-
+	AKDocLocator *newHistoryItem = [[AKDocLocator alloc] initWithTopic:topic
+														  subtopicName:subtopicName
+															   docName:docName];
 	[_topicBrowserController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 	[_subtopicListController goFromDocLocator:[self currentDocLocator] toDocLocator:newHistoryItem];
 

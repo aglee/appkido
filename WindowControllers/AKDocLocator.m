@@ -22,13 +22,6 @@
 @synthesize subtopicName = _subtopicName;
 @synthesize docName = _docName;
 
-#pragma mark - Factory methods
-
-+ (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
-{
-	return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
-}
-
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
@@ -213,7 +206,7 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 	NSString *docName = prefDict[AKDocNamePrefKey];
 	AKTopic *topic = [AKTopic fromPrefDictionary:topicPref];
 
-	return [self withTopic:topic subtopicName:subtopicName docName:docName];
+	return [[self alloc] initWithTopic:topic subtopicName:subtopicName docName:docName];
 }
 
 - (NSDictionary *)asPrefDictionary

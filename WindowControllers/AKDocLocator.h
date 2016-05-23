@@ -35,10 +35,6 @@
 @property (copy, readonly) NSString *displayName;
 @property (strong, readonly) id<AKDoc> docToDisplay;
 
-#pragma mark - Factory methods
-
-+ (id)withTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName;
-
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
