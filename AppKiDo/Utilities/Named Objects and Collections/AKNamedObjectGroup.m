@@ -55,7 +55,7 @@
 {
 	NSParameterAssert(namedObject != nil);
 	if (self.objectsByName[namedObject.name]) {
-		QLog(@"+++ [ODD] %s Replacing existing object with %@", __PRETTY_FUNCTION__, namedObject);
+		QLog(@"+++ [ODD] %s Replacing existing object %@ with %@", __PRETTY_FUNCTION__, self.objectsByName[namedObject.name], namedObject);
 	}
 	self.objectsByName[namedObject.name] = namedObject;
 }
