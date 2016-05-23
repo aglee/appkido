@@ -14,6 +14,7 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 };
 
 @class AKDatabase;
+@class AKToken;
 
 /*!
  * Searches the tokens in an AKDatabase, subject to a set of search parameters.

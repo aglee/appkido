@@ -13,6 +13,7 @@
 #import "AKDocLocator.h"
 #import "AKFramework.h"
 #import "AKFrameworkTopic.h"
+#import "AKFrameworkTokenClusterTopic.h"
 #import "AKMethodToken.h"
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
@@ -188,34 +189,6 @@
 
 #pragma mark - Private methods - general
 
-- (void)_refreshCachedSearchedResults
-{
-	self.cachedSearchResults = [NSMutableArray array];
-
-	if (self.searchString.length == 0) {
-		return;
-	}
-
-	// Each of the following calls appends its results to searchResults.
-	if (self.includesClassesAndProtocols) {
-		[self _searchClasses];
-		[self _searchProtocols];
-	}
-	if (self.includesMembers) {
-		[self _searchClassMembers];
-		[self _searchProtocolMembers];
-	}
-	if (self.includesFunctions) {
-		[self _searchFunctions];
-	}
-	if (self.includesGlobals) {
-		[self _searchGlobals];
-	}
-
-	// Sort the results.
-	[AKDocLocator sortArrayOfDocLocators:self.cachedSearchResults];
-}
-
 - (BOOL)_matchesString:(NSString *)string
 {
 	NSString *haystack = (self.ignoresCase ? string.uppercaseString : string);
@@ -240,9 +213,34 @@
 	}
 }
 
-- (BOOL)_matchesToken:(AKToken *)token
+- (void)_refreshCachedSearchedResults
 {
-	return [self _matchesString:token.name];
+	self.cachedSearchResults = [NSMutableArray array];
+
+	if (self.searchString.length == 0) {
+		return;
+	}
+
+//	[self.database addResultsOfSearch:self toArray:self.cachedSearchResults];
+//
+	// Each of the following calls appends its results to searchResults.
+	if (self.includesClassesAndProtocols) {
+		[self _searchClasses];
+		[self _searchProtocols];
+	}
+	if (self.includesMembers) {
+		[self _searchClassMembers];
+		[self _searchProtocolMembers];
+	}
+	if (self.includesFunctions) {
+		[self _searchFunctions];
+	}
+	if (self.includesGlobals) {
+		[self _searchGlobals];
+	}
+
+	// Sort the results.
+	[AKDocLocator sortArrayOfDocLocators:self.cachedSearchResults];
 }
 
 #pragma mark - Private methods - searching behaviors and their members
@@ -250,9 +248,11 @@
 - (void)_searchClasses
 {
 	for (AKClassToken *classToken in self.database.allClasses) {
-		if ([self _matchesToken:classToken]) 	{
+		if ([self _matchesString:classToken.name]) 	{
 			AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
-			[self.cachedSearchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	   subtopicName:nil
+																			docName:nil]];
 		}
 	}
 }
@@ -260,9 +260,11 @@
 - (void)_searchProtocols
 {
 	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
-		if ([self _matchesToken:protocolToken]) {
+		if ([self _matchesString:protocolToken.name]) {
 			AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
-			[self.cachedSearchResults addObject:[AKDocLocator withTopic:topic subtopicName:nil docName:nil]];
+			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	   subtopicName:nil
+																			docName:nil]];
 		}
 	}
 }
@@ -333,10 +335,10 @@
 	  ofBehaviorTopic:(AKBehaviorTopic *)topic
 {
 	for (AKToken *token in tokenArray) {
-		if ([self _matchesToken:token]) {
-			[self.cachedSearchResults addObject:[AKDocLocator withTopic:topic
-														   subtopicName:subtopicName
-																docName:token.name]];
+		if ([self _matchesString:token.name]) {
+			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	   subtopicName:subtopicName
+																			docName:token.name]];
 		}
 	}
 }
@@ -352,9 +354,10 @@
 
 - (void)_searchFunctionsInFramework:(AKFramework *)framework
 {
-	NSArray *tokenClusters = @[ framework.functionsCluster ];
+	NSArray *childTopicNames = @[ AKFunctionsTopicName ];
 	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
-	[self _searchTokenClusters:tokenClusters inFrameworkTopic:frameworkTopic];
+	[self _searchTokenClusterChildTopicsWithNames:childTopicNames
+							  underFrameworkTopic:frameworkTopic ];
 }
 
 - (void)_searchGlobals
@@ -366,31 +369,36 @@
 
 - (void)_searchGlobalsInFramework:(AKFramework *)framework
 {
-	NSArray *tokenClusters = @[ framework.enumsCluster,
-								framework.macrosCluster,
-								framework.typedefsCluster,
-								framework.constantsCluster ];
+	NSArray *childTopicNames = @[ AKEnumsTopicName,
+								AKMacrosTopicName,
+								AKTypedefsTopicName,
+								AKConstantsTopicName ];
 	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
-	[self _searchTokenClusters:tokenClusters inFrameworkTopic:frameworkTopic];
+	[self _searchTokenClusterChildTopicsWithNames:childTopicNames
+							  underFrameworkTopic:frameworkTopic ];
 }
 
-- (void)_searchTokenClusters:(NSArray *)tokenClusters
-			inFrameworkTopic:(AKFrameworkTopic *)frameworkTopic
+- (void)_searchTokenClusterChildTopicsWithNames:(NSArray *)childTopicNames
+							underFrameworkTopic:(AKFrameworkTopic *)frameworkTopic
 {
-	for (AKNamedObjectCluster *cluster in tokenClusters) {
-		[self _searchTokenCluster:cluster inFrameworkTopic:frameworkTopic];
+	for (NSString *childTopicName in childTopicNames) {
+		AKTopic *childTopic = [frameworkTopic childTopicWithName:childTopicName];
+		NSAssert(childTopic == nil
+				 || [childTopic isKindOfClass:AKFrameworkTokenClusterTopic.class],
+				 @"Child topic %@ of framework topic %@ is not a %@",
+				 childTopic, frameworkTopic, AKFrameworkTokenClusterTopic.class);
+		[self _searchFrameworkTokenClusterTopic:(AKFrameworkTokenClusterTopic *)childTopic];
 	}
 }
 
-- (void)_searchTokenCluster:(AKNamedObjectCluster *)tokenCluster
-		   inFrameworkTopic:(AKFrameworkTopic *)frameworkTopic
+- (void)_searchFrameworkTokenClusterTopic:(AKFrameworkTokenClusterTopic *)tokenClusterTopic
 {
-	for (AKNamedObjectGroup *tokenGroup in tokenCluster.sortedGroups) {
-		for (AKToken *token in tokenGroup.sortedObjects) {
-			if ([self _matchesToken:token]) {
-				[self.cachedSearchResults addObject:[AKDocLocator withTopic:frameworkTopic
-															   subtopicName:tokenGroup.name
-																	docName:token.name]];
+	for (AKSubtopic *subtopic in tokenClusterTopic.subtopics) {
+		for (id<AKDoc> doc in subtopic.docListItems) {
+			if ([self _matchesString:doc.name]) {
+				[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:tokenClusterTopic
+																		   subtopicName:subtopic.name
+																				docName:doc.name]];
 			}
 		}
 	}
