@@ -1,8 +1,0 @@
-//
-// Prefix header for all source files of the 'AppKiDo' target in the 'AppKiDo' project
-//
-
-#ifdef __OBJC__
-#import "DIGSLog.h"
-#import "QuietLog.h"
-#endif
