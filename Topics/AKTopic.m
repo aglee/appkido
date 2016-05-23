@@ -62,6 +62,18 @@
 	return _subtopics;
 }
 
+#pragma mark - Accessing child topics
+
+- (AKTopic *)childTopicWithName:(NSString *)childTopicName
+{
+	for (AKTopic *child in self.childTopics) {
+		if ([child.name isEqualToString:childTopicName]) {
+			return child;
+		}
+	}
+	return nil;
+}
+
 #pragma mark - Accessing subtopics
 
 - (NSInteger)indexOfSubtopicWithName:(NSString *)subtopicName

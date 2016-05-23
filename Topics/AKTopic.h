@@ -42,6 +42,10 @@
 @property (copy, readonly) NSArray *childTopics;
 @property (copy, readonly) NSArray *subtopics;
 
+#pragma mark - Accessing child topics
+
+- (AKTopic *)childTopicWithName:(NSString *)childTopicName;
+
 #pragma mark - Accessing subtopics
 
 /*! Returns -1 if none found. */
