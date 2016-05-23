@@ -37,11 +37,13 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTopic:(AKTopic *)topic
+				 subtopicName:(NSString *)subtopicName
+					  docName:(NSString *)docName NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Sorting
 
 /*! *Should* be equivalent to using the -sortName mechanism, but faster. */
-+ (void)sortArrayOfDocLocators:(NSMutableArray *)array;
++ (void)sortArrayOfDocLocators:(NSMutableArray *)array;  //TODO: Should I move this to AKSearchQuery, which is the only place it's used?
 
 @end

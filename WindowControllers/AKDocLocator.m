@@ -24,7 +24,9 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTopic:(AKTopic *)topic subtopicName:(NSString *)subtopicName docName:(NSString *)docName
+- (instancetype)initWithTopic:(AKTopic *)topic
+				 subtopicName:(NSString *)subtopicName
+					  docName:(NSString *)docName
 {
 	NSParameterAssert(topic != nil);
 	NSParameterAssert(subtopicName != nil || docName == nil);
@@ -42,7 +44,6 @@
 	DIGSLogError_NondesignatedInitializer();
 	return [self initWithTopic:nil subtopicName:nil docName:nil];
 }
-
 
 #pragma mark - Getters and setters
 
@@ -213,16 +214,16 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 {
 	NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-	if (_topicToDisplay) {
-		prefDict[AKTopicPrefKey] = [_topicToDisplay asPrefDictionary];
+	if (self.topicToDisplay) {
+		prefDict[AKTopicPrefKey] = [self.topicToDisplay asPrefDictionary];
 	}
 
-	if (_subtopicName) {
-		prefDict[AKSubtopicPrefKey] = _subtopicName;
+	if (self.subtopicName) {
+		prefDict[AKSubtopicPrefKey] = self.subtopicName;
 	}
 
-	if (_docName) {
-		prefDict[AKDocNamePrefKey] = _docName;
+	if (self.docName) {
+		prefDict[AKDocNamePrefKey] = self.docName;
 	}
 
 	return prefDict;
