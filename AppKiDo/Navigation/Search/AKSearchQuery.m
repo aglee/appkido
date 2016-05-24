@@ -221,6 +221,7 @@
 	}
 
 	// Each of the following calls appends its results to searchResults.
+	[self _searchFrameworks];
 	if (self.includesClassesAndProtocols) {
 		[self _searchClasses];
 		[self _searchProtocols];
@@ -238,6 +239,20 @@
 
 	// Sort the results.
 	[AKDocLocator sortArrayOfDocLocators:self.cachedSearchResults];
+}
+
+#pragma mark - Private methods - searching frameworks
+
+- (void)_searchFrameworks
+{
+	for (AKFramework *framework in self.database.sortedFrameworks) {
+		if ([self _matchesString:framework.name]) 	{
+			AKFrameworkTopic *topic = [[AKFrameworkTopic alloc] initWithFramework:framework];
+			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	   subtopicName:nil
+																			docName:nil]];
+		}
+	}
 }
 
 #pragma mark - Private methods - searching behaviors and their members
