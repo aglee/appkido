@@ -78,6 +78,8 @@
 		[tokenArray addObjectsFromArray:classToken.classMethodTokens];
 		[tokenArray addObjectsFromArray:classToken.instanceMethodTokens];
 		[tokenArray addObjectsFromArray:classToken.delegateMethodTokens];
+		[tokenArray addObjectsFromArray:classToken.dataTypeTokens];
+		[tokenArray addObjectsFromArray:classToken.constantTokens];
 		[tokenArray addObjectsFromArray:classToken.notificationTokens];
 	}
 }

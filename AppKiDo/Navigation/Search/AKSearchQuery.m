@@ -338,6 +338,16 @@
 		  underSubtopic:AKInstanceMethodsSubtopicName
 		ofBehaviorTopic:behaviorTopic];
 
+	// Search the behavior's data types.
+	[self _searchTokens:behaviorToken.dataTypeTokens
+		  underSubtopic:AKDataTypesSubtopicName
+		ofBehaviorTopic:behaviorTopic];
+
+	// Search the behavior's constants.
+	[self _searchTokens:behaviorToken.constantTokens
+		  underSubtopic:AKConstantsSubtopicName
+		ofBehaviorTopic:behaviorTopic];
+
 	// Search the behavior's notifications.
 	[self _searchTokens:behaviorToken.notificationTokens
 		  underSubtopic:AKNotificationsSubtopicName
