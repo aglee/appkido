@@ -11,10 +11,6 @@
 #import "AKNamedObjectGroup.h"
 #import "AKTopicConstants.h"
 
-@interface AKFramework ()
-@property (strong) NSDictionary *tokenClustersByTokenType;
-@end
-
 @implementation AKFramework
 
 #pragma mark - Init/awake/dealloc
@@ -29,20 +25,8 @@
 		_functionsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsTopicName];
 		_macrosCluster = [[AKNamedObjectCluster alloc] initWithName:AKMacrosTopicName];
 		_typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:AKTypedefsTopicName];
-		_tokenClustersByTokenType = @{
-									  @"data": _constantsCluster,
-									  @"econst": _enumsCluster,
-									  @"func": _functionsCluster,
-									  @"macro": _macrosCluster,
-									  @"tdef": _typedefsCluster,
-									  };
 	}
 	return self;
-}
-
-- (AKNamedObjectCluster *)tokenClusterWithTokenType:(NSString *)tokenType
-{
-	return self.tokenClustersByTokenType[tokenType];
 }
 
 @end

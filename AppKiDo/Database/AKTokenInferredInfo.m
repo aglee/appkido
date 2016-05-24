@@ -14,6 +14,7 @@
 #import "DIGSLog.h"
 
 @interface AKTokenInferredInfo ()
+@property (strong) DSAToken *tokenMO;
 @property (strong) AKDatabase *database;
 @property (copy) NSString *frameworkChildTopicName;
 @property (strong) AKBehaviorToken *behaviorToken;
@@ -29,7 +30,7 @@
 {
 	self = [super init];
 	if (self) {
-		_nodeName = tokenMO.parentNode.kName;
+		_tokenMO = tokenMO;
 		_database = database;
 
 		[self _inferOtherIvarsFromNodeName];
@@ -39,9 +40,11 @@
 
 #pragma mark - Private methods
 
+// Called from init, hence all the direct ivar accesses.
 - (void)_inferOtherIvarsFromNodeName
 {
-	NSMutableArray *words = [[_nodeName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] mutableCopy];
+	NSString *nodeName = _tokenMO.parentNode.kName;
+	NSMutableArray *words = [[nodeName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] mutableCopy];
 	[words removeObject:@""];
 
 	NSString *lastWord = words.lastObject;
@@ -50,7 +53,7 @@
 
 	// If it doesn't end with "Reference" we don't know how to parse it any further.
 	if (![lastWord isEqualToString:@"Reference"]) {
-		_referenceSubject = _nodeName;
+		_referenceSubject = nodeName;
 
 		return;
 	}
@@ -59,14 +62,14 @@
 	if ([nextToLastWord isEqualToString:@"Class"]) {
 		_behaviorToken = [_database classWithName:firstWord];
 		if (_behaviorToken == nil) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about class '%@', but there is no such class in the database.", _nodeName, firstWord);
+			QLog(@"+++ [ODD] Node name '%@' seems to be about class '%@', but there is no such class in the database.", nodeName, firstWord);
 		}
 
 		_framework = [_database frameworkWithName:_behaviorToken.frameworkName];
 		_referenceSubject = firstWord;
 
 		if (words.count != 3) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about class '%@', but does not have exactly 3 words.", _nodeName, firstWord);
+			QLog(@"+++ [ODD] Node name '%@' seems to be about class '%@', but does not have exactly 3 words.", nodeName, firstWord);
 		}
 
 		return;
@@ -76,14 +79,14 @@
 	if ([nextToLastWord isEqualToString:@"Protocol"]) {
 		_behaviorToken = [_database protocolWithName:firstWord];
 		if (_behaviorToken == nil) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about protocol '%@', but there is no such protocol in the database.", _nodeName, firstWord);
+			QLog(@"+++ [ODD] Node name '%@' seems to be about protocol '%@', but there is no such protocol in the database.", nodeName, firstWord);
 		}
 
 		_framework = [_database frameworkWithName:_behaviorToken.frameworkName];
 		_referenceSubject = firstWord;
 
 		if (words.count != 3) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about protocol '%@', but does not have exactly 3 words.", _nodeName, firstWord);
+			QLog(@"+++ [ODD] Node name '%@' seems to be about protocol '%@', but does not have exactly 3 words.", nodeName, firstWord);
 		}
 
 		return;

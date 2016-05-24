@@ -24,8 +24,6 @@
 @property (readonly, copy) NSSet *descendantClasses;
 @property (readonly, copy) NSArray *allCategories;
 @property (readonly, copy) NSArray *delegateMethodTokens;
-@property (readonly, copy) NSArray *constantTokens;
-@property (readonly, copy) NSArray *dataTypeTokens;
 
 /*!
  * Names of all frameworks the class belongs to. The first element of the

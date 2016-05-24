@@ -22,15 +22,13 @@
 - (void)_importCTokens
 {
 	for (DSAToken *tokenMO in [self _arrayWithTokenMOsForLanguage:@"C"]) {
-		AKToken *token;
-
 		// Special case: "tag" tokens.  As far as I can tell, they are redundant
 		// with other tags, so I'm going to ignore them until I learn otherwise.
 		if ([tokenMO.tokenType.typeName isEqualToString:@"tag"]) {
 			continue;
 		}
 
-		// Figure out what context we can about the token.
+		// Infer some info about the token.
 		AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO database:self];
 		if (inferredInfo.framework == nil) {
 			NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
@@ -40,41 +38,47 @@
 			continue;
 		}
 
-		// Is it a function token?
-		token = [self _maybeAddFunctionTokenWithTokenMO:tokenMO toFramework:inferredInfo.framework];
+		// Is it a function?
+		AKToken *token;
+		token = [self _maybeAddFunctionTokenWithInferredInfo:inferredInfo];
 		if (token) {
 			continue;
 		}
 
 		// Is it a notification?
-		token = [self _maybeAddNotificationWithTokenMO:tokenMO inferredInfo:inferredInfo];
+		token = [self _maybeAddNotificationWithInferredInfo:inferredInfo];
 		if (token) {
 			continue;
 		}
 
-		// Create the AKToken and try to add it to the framework.
-		token = [self _maybeLastChanceAddTokenWithTokenMO:tokenMO inferredInfo:inferredInfo];
+		// Does it belong to a behavior?
+		token = [self _maybeAddTokenToBehaviorWithInferredInfo:inferredInfo];
+		if (token) {
+			continue;
+		}
+
+		// Add the token to one of the framework's bins.
+		token = [self _maybeAddTokenToFrameworkWithInferredInfo:inferredInfo];
 		if (token) {
 			continue;
 		}
 	}
 }
 
-- (AKToken *)_maybeAddNotificationWithTokenMO:(DSAToken *)tokenMO inferredInfo:(AKTokenInferredInfo *)inferredInfo
+- (AKToken *)_maybeAddNotificationWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
 {
-	if (![tokenMO.tokenName hasSuffix:@"Notification"]) {
+	if (![inferredInfo.tokenMO.tokenName hasSuffix:@"Notification"]) {
 		return nil;
 	}
 
 	if (inferredInfo.behaviorToken) {
 		// Attach the notification to its owning behavior.
-		AKNotificationToken *notifToken = [[AKNotificationToken alloc] initWithTokenMO:tokenMO];
+		AKNotificationToken *notifToken = [[AKNotificationToken alloc] initWithTokenMO:inferredInfo.tokenMO];
 		[inferredInfo.behaviorToken addNotification:notifToken];
 		return notifToken;
 	} else {
 		// Non-behavior notifications get lumped with the framework's other constants.
-		AKToken *notifToken = [[AKToken alloc] initWithTokenMO:tokenMO];
-//		NSString *groupName = tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
+		AKToken *notifToken = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
 		NSString *groupName = inferredInfo.referenceSubject;  //TODO: Figure out the right group name.
 		[inferredInfo.framework.constantsCluster addNamedObject:notifToken
 												toGroupWithName:groupName];
@@ -82,36 +86,66 @@
 	}
 }
 
-- (AKToken *)_maybeAddFunctionTokenWithTokenMO:(DSAToken *)tokenMO toFramework:(AKFramework *)framework
+- (AKToken *)_maybeAddFunctionTokenWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
 {
-	if (![tokenMO.tokenType.typeName isEqualToString:@"func"]) {
+	if (![inferredInfo.tokenMO.tokenType.typeName isEqualToString:@"func"]) {
 		return nil;
 	}
 
-	AKToken *token = [[AKFunctionToken alloc] initWithTokenMO:tokenMO];
-	token.frameworkName = framework.name;
+	AKToken *token = [[AKFunctionToken alloc] initWithTokenMO:inferredInfo.tokenMO];
+	token.frameworkName = inferredInfo.framework.name;
 
-	NSString *groupName = tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
-	[framework.functionsCluster addNamedObject:token toGroupWithName:groupName];
+	NSString *groupName = inferredInfo.tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
+	[inferredInfo.framework.functionsCluster addNamedObject:token toGroupWithName:groupName];
 
 	return token;
 }
 
-- (AKToken *)_maybeLastChanceAddTokenWithTokenMO:(DSAToken *)tokenMO
-									 inferredInfo:(AKTokenInferredInfo *)inferredInfo
+- (AKToken *)_maybeAddTokenToBehaviorWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
+{
+	if (inferredInfo.behaviorToken == nil) {
+		return nil;
+	}
+
+	AKToken *token = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
+	token.frameworkName = inferredInfo.framework.name;
+
+	NSString *tokenType = inferredInfo.tokenMO.tokenType.typeName;
+	if ([tokenType isEqualToString:@"data"]
+		|| [tokenType isEqualToString:@"econst"]
+		|| [tokenType isEqualToString:@"macro"]) {
+
+		[inferredInfo.behaviorToken addConstantToken:token];
+		QLog(@"+++ Added constant %@ to %@.", token.name, inferredInfo.behaviorToken);
+	} else if ([tokenType isEqualToString:@"tdef"]) {
+		[inferredInfo.behaviorToken addDataTypeToken:token];
+		QLog(@"+++ Added data type %@ to %@.", token, inferredInfo.behaviorToken);
+	} else {
+		QLog(@"+++ [ODD] %s Unexpected token type %@ for %@.", tokenType, token);
+	}
+
+	return token;
+}
+
+- (AKToken *)_maybeAddTokenToFrameworkWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
 {
 	// Figure out which token cluster within the framework the token belongs to.
-	AKNamedObjectCluster *tokenCluster = [inferredInfo.framework tokenClusterWithTokenType:tokenMO.tokenType.typeName];
+	NSDictionary *clustersByType = @{
+									 @"data" : inferredInfo.framework.constantsCluster,
+									 @"econst" : inferredInfo.framework.enumsCluster,
+									 @"macro" : inferredInfo.framework.macrosCluster,
+									 @"tdef" : inferredInfo.framework.typedefsCluster,
+									 };
+	AKNamedObjectCluster *tokenCluster = clustersByType[inferredInfo.tokenMO.tokenType.typeName];
 	if (tokenCluster == nil) {
-		QLog(@"+++ Could not import token %@ -- framework %@ has no token bin for type %@.", tokenMO.tokenName, inferredInfo.framework.name, tokenMO.tokenType.typeName);
+		QLog(@"+++ Could not import token %@ -- framework %@ has no token bin for type %@.", inferredInfo.tokenMO.tokenName, inferredInfo.framework.name, inferredInfo.tokenMO.tokenType.typeName);
 		return nil;
 	}
 
 	// Create the token and add it to the framework.
-	AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
+	AKToken *token = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
 	token.frameworkName = inferredInfo.framework.name;
 
-//	NSString *groupName = tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
 	NSString *groupName = inferredInfo.referenceSubject;  //TODO: Figure out the right group name.
 	[tokenCluster addNamedObject:token toGroupWithName:groupName];
 

@@ -7,7 +7,6 @@
 //
 
 #import "AKNamedObject.h"
-#import "DocSetModel.h"
 
 @class AKNamedObjectGroup;
 @class AKNamedObjectCluster;
@@ -20,7 +19,5 @@
 @property (strong, readonly) AKNamedObjectCluster *functionsCluster;
 @property (strong, readonly) AKNamedObjectCluster *macrosCluster;
 @property (strong, readonly) AKNamedObjectCluster *typedefsCluster;
-
-- (AKNamedObjectCluster *)tokenClusterWithTokenType:(NSString *)tokenType;
 
 @end

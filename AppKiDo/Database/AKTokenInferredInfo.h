@@ -19,7 +19,7 @@
  */
 @interface AKTokenInferredInfo : NSObject
 
-@property (copy) NSString *nodeName;
+@property (strong, readonly) DSAToken *tokenMO;
 
 /*! For "Foundation Constants Reference" this would be the Foundation framework. */
 @property (strong) AKFramework *framework;
