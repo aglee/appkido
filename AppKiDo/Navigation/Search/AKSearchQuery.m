@@ -221,8 +221,6 @@
 		return;
 	}
 
-//	[self.database addResultsOfSearch:self toArray:self.cachedSearchResults];
-//
 	// Each of the following calls appends its results to searchResults.
 	if (self.includesClassesAndProtocols) {
 		[self _searchClasses];
@@ -278,11 +276,8 @@
 		[self _searchMembersUnderBehaviorTopic:topic];
 
 		// Search members specific to classes.
-		[self _searchTokens:[classToken documentedDelegateMethods]
+		[self _searchTokens:classToken.documentedDelegateMethods
 			  underSubtopic:AKDelegateMethodsSubtopicName
-			ofBehaviorTopic:topic];
-		[self _searchTokens:[classToken notificationTokens]
-			  underSubtopic:AKNotificationsSubtopicName
 			ofBehaviorTopic:topic];
 	}
 }
@@ -300,7 +295,7 @@
 	AKBehaviorToken *behaviorToken = (AKBehaviorToken *)[behaviorTopic topicToken];
 
 	// Search the behavior's properties.
-	[self _searchTokens:[behaviorToken propertyTokens]
+	[self _searchTokens:behaviorToken.propertyTokens
 		  underSubtopic:AKPropertiesSubtopicName
 		ofBehaviorTopic:behaviorTopic];
 
@@ -312,7 +307,7 @@
 		NSString *savedSearchString = _searchString;
 		_searchString = [_searchString substringFromIndex:3];
 		{{
-			[self _searchTokens:[behaviorToken propertyTokens]
+			[self _searchTokens:behaviorToken.propertyTokens
 				  underSubtopic:AKPropertiesSubtopicName
 				ofBehaviorTopic:behaviorTopic];
 		}}
@@ -320,13 +315,18 @@
 	}
 
 	// Search the behavior's class methods.
-	[self _searchTokens:[behaviorToken classMethodTokens]
+	[self _searchTokens:behaviorToken.classMethodTokens
 		  underSubtopic:AKClassMethodsSubtopicName
 		ofBehaviorTopic:behaviorTopic];
 
 	// Search the behavior's instance methods.
-	[self _searchTokens:[behaviorToken instanceMethodTokens]
+	[self _searchTokens:behaviorToken.instanceMethodTokens
 		  underSubtopic:AKInstanceMethodsSubtopicName
+		ofBehaviorTopic:behaviorTopic];
+
+	// Search the behavior's notifications.
+	[self _searchTokens:behaviorToken.notificationTokens
+		  underSubtopic:AKNotificationsSubtopicName
 		ofBehaviorTopic:behaviorTopic];
 }
 
@@ -370,9 +370,9 @@
 - (void)_searchGlobalsInFramework:(AKFramework *)framework
 {
 	NSArray *childTopicNames = @[ AKEnumsTopicName,
-								AKMacrosTopicName,
-								AKTypedefsTopicName,
-								AKConstantsTopicName ];
+								  AKMacrosTopicName,
+								  AKTypedefsTopicName,
+								  AKConstantsTopicName ];
 	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
 	[self _searchTokenClusterChildTopicsWithNames:childTopicNames
 							  underFrameworkTopic:frameworkTopic ];
