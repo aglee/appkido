@@ -75,6 +75,9 @@
 			 AKCreateSubtopic(AKInstanceMethodsSubtopicName,
 							  self.protocolToken.instanceMethodTokens,
 							  YES),
+			 AKCreateSubtopic(AKNotificationsSubtopicName,
+							  self.protocolToken.notificationTokens,
+							  YES),
 
  // These subtopics are added to the list even though they don't
  // apply to protocols, only classes.  This way, if, say, "Bindings"
