@@ -21,28 +21,28 @@
 
 - (instancetype)initWithName:(NSString *)name
 {
-    self = [super initWithName:name];
-    if (self) {
-        _protocolsGroup = [[AKNamedObjectGroup alloc] initWithName:AKProtocolsTopicName];
-        _constantsCluster = [[AKNamedObjectCluster alloc] initWithName:AKConstantsTopicName];
-        _enumsCluster = [[AKNamedObjectCluster alloc] initWithName:AKEnumsTopicName];
-        _functionsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsTopicName];
-        _macrosCluster = [[AKNamedObjectCluster alloc] initWithName:AKMacrosTopicName];
-        _typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:AKTypedefsTopicName];
-        _tokenClustersByTokenType = @{
-                                      @"data": _constantsCluster,
-                                      @"econst": _enumsCluster,
-                                      @"func": _functionsCluster,
-                                      @"macro": _macrosCluster,
-                                      @"tdef": _typedefsCluster,
-                                      };
-    }
-    return self;
+	self = [super initWithName:name];
+	if (self) {
+		_protocolsGroup = [[AKNamedObjectGroup alloc] initWithName:AKProtocolsTopicName];
+		_constantsCluster = [[AKNamedObjectCluster alloc] initWithName:AKConstantsTopicName];
+		_enumsCluster = [[AKNamedObjectCluster alloc] initWithName:AKEnumsTopicName];
+		_functionsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsTopicName];
+		_macrosCluster = [[AKNamedObjectCluster alloc] initWithName:AKMacrosTopicName];
+		_typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:AKTypedefsTopicName];
+		_tokenClustersByTokenType = @{
+									  @"data": _constantsCluster,
+									  @"econst": _enumsCluster,
+									  @"func": _functionsCluster,
+									  @"macro": _macrosCluster,
+									  @"tdef": _typedefsCluster,
+									  };
+	}
+	return self;
 }
 
 - (AKNamedObjectCluster *)tokenClusterWithTokenType:(NSString *)tokenType
 {
-    return self.tokenClustersByTokenType[tokenType];
+	return self.tokenClustersByTokenType[tokenType];
 }
 
 @end

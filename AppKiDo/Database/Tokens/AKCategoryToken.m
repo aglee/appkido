@@ -14,7 +14,10 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %@(%@)>", self.className, self.owningClassToken.name, self.name];
+	return [NSString stringWithFormat:@"<%@: %@(%@)>",
+			self.className,
+			self.owningClassToken.name,
+			self.name];
 }
 
 @end

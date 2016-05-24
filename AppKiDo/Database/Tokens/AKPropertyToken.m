@@ -14,7 +14,7 @@
 
 - (NSString *)punctuatedName
 {
-    return [@"." stringByAppendingString:self.name];
+	return [@"." stringByAppendingString:self.name];
 }
 
 @end

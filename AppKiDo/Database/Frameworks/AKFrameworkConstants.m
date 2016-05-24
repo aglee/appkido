@@ -7,8 +7,7 @@
 
 #import "AKFrameworkConstants.h"
 
-
-#pragma mark - AKXyzFrameworkName
+#pragma mark - Frameworks that we give special treatment
 
 NSString *AKFoundationFrameworkName  = @"Foundation";
 NSString *AKAppKitFrameworkName      = @"AppKit";
@@ -19,24 +18,23 @@ NSString *AKQuartzCoreFrameworkName  = @"QuartzCore";
 
 NSArray *_AKNamesOfEssentialFrameworks()
 {
-    static NSArray *s_namesOfEssentialFrameworks = nil;
-
-    if (s_namesOfEssentialFrameworks == nil)
-    {
-        s_namesOfEssentialFrameworks = @[
-                                        AKFoundationFrameworkName,
+	static NSArray *s_namesOfEssentialFrameworks = nil;
+	static dispatch_once_t once;
+	dispatch_once(&once,^{
+		s_namesOfEssentialFrameworks = @[
+										 AKFoundationFrameworkName,
 #if APPKIDO_FOR_IPHONE
-                                        @"CoreGraphics",  //TODO: KLUDGE -- to get CGPoint etc.
-                                        AKUIKitFrameworkName,
+										 @"CoreGraphics",  //TODO: KLUDGE -- to get CGPoint etc.
+										 AKUIKitFrameworkName,
 #else
-                                        @"ApplicationServices",  //TODO: KLUDGE -- to get CGPoint etc.
-                                        AKAppKitFrameworkName,
-                                        AKCoreDataFrameworkName,
-                                        AKCoreImageFrameworkName,
+										 @"ApplicationServices",  //TODO: KLUDGE -- to get CGPoint etc.
+										 AKAppKitFrameworkName,
+										 AKCoreDataFrameworkName,
+										 AKCoreImageFrameworkName,
 #endif
-                                        AKQuartzCoreFrameworkName,
-                                        ];
-    }
+										 AKQuartzCoreFrameworkName,
+										 ];
+	});
 
-    return s_namesOfEssentialFrameworks;
+	return s_namesOfEssentialFrameworks;
 }

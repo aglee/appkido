@@ -8,8 +8,5 @@
 
 #import "AKToken.h"
 
-/*!
- * Represents a C function.
- */
 @interface AKFunctionToken : AKToken
 @end

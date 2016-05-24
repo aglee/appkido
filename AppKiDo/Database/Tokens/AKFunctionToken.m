@@ -14,7 +14,7 @@
 
 - (NSString *)displayName
 {
-    return [self.name stringByAppendingString:@" ( )"];
+	return [self.name stringByAppendingString:@" ( )"];
 }
 
 @end

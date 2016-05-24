@@ -7,10 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Frameworks that we give special treatment
 
-#pragma mark - AKXyzFrameworkName
-
-// Names of Apple frameworks that we give special treatment.
 extern NSString *AKFoundationFrameworkName;
 extern NSString *AKAppKitFrameworkName;
 extern NSString *AKUIKitFrameworkName;

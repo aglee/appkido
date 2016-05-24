@@ -13,8 +13,8 @@
 
 - (instancetype)initWithName:(NSString *)name
 {
-    NSAssert(self.class != AKMethodToken.class, @"Attempt to instantiate abstract class %@", self.className);
-    return [super initWithName:name];
+	NSAssert(self.class != AKMethodToken.class, @"Attempt to instantiate abstract class %@", self.className);
+	return [super initWithName:name];
 }
 
 @end

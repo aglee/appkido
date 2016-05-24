@@ -14,13 +14,11 @@
 #import "AKProtocolToken.h"
 #import "NSString+AppKiDo.h"
 
-
 @interface AKClassToken ()
 @property (readwrite, weak) AKClassToken *parentClass;
 @property (copy) NSMutableDictionary *delegateMethodsByName;
 @property (copy) NSMutableDictionary *bindingsByName;
 @end
-
 
 @implementation AKClassToken
 
@@ -31,10 +29,8 @@
 	self = [super initWithName:name];
 	if (self) {
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
-
 		_childClassTokens = [[NSMutableArray alloc] init];
 		_categoryTokens = [[NSMutableArray alloc] init];
-
 		_delegateMethodsByName = [[NSMutableDictionary alloc] init];
 		_bindingsByName = [[NSMutableDictionary alloc] init];
 	}
@@ -63,7 +59,7 @@
 {
 	NSInteger i = [_childClassTokens indexOfObject:classToken];
 	if (i >= 0) {
-		[classToken setParentClass:nil];
+		classToken.parentClass = nil;
 		[_childClassTokens removeObjectAtIndex:i];
 	}
 }
@@ -80,18 +76,13 @@
 	return descendantClassTokens;
 }
 
-//- (BOOL)hasChildClasses
-//{
-//	return (_childClassTokens.count > 0);
-//}
-
 #pragma mark - Category tokens
 
 - (AKCategoryToken *)categoryNamed:(NSString *)catName
 {
-	for (AKToken *item in _categoryTokens) {
+	for (AKCategoryToken *item in _categoryTokens) {
 		if ([item.name isEqualToString:catName]) {
-			return (AKCategoryToken *)item;
+			return item;
 		}
 	}
 	return nil;
@@ -134,7 +125,7 @@
 
 - (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName
 {
-	return (AKBindingToken *)self.bindingsByName[bindingName];
+	return self.bindingsByName[bindingName];
 }
 
 - (NSArray *)bindingTokens
@@ -166,25 +157,23 @@
 //TODO: Commenting out, come back later.
 //- (AKFileSection *)documentationAssociatedWithFramework:(NSString *)frameworkName
 //{
-//    return _tokenDocumentationByFrameworkName[frameworkName];
+//	return _tokenDocumentationByFrameworkName[frameworkName];
 //}
 //
 //- (void)associateDocumentation:(AKFileSection *)fileSection
-//            withFramework:(NSString *)frameworkName
+//				 withFramework:(NSString *)frameworkName
 //{
-//    if (frameworkName == nil)
-//    {
-//        DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
-//                       [self tokenName], [fileSection filePath]);
-//        return;
-//    }
+//	if (frameworkName == nil) {
+//		DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
+//					   self.name, fileSection.filePath);
+//		return;
+//	}
 //
-//    if (![_namesOfAllOwningFrameworks containsObject:frameworkName])
-//    {
-//        [_namesOfAllOwningFrameworks addObject:frameworkName];
-//    }
+//	if (![_namesOfAllOwningFrameworks containsObject:frameworkName]) {
+//		[_namesOfAllOwningFrameworks addObject:frameworkName];
+//	}
 //
-//    _tokenDocumentationByFrameworkName[frameworkName] = fileSection;
+//	_tokenDocumentationByFrameworkName[frameworkName] = fileSection;
 //}
 
 #pragma mark - Delegate method tokens
@@ -201,7 +190,7 @@
 
 - (AKMethodToken *)delegateMethodWithName:(NSString *)methodName
 {
-	return (AKMethodToken *)self.delegateMethodsByName[methodName];
+	return self.delegateMethodsByName[methodName];
 }
 
 - (void)addDelegateMethod:(AKMethodToken *)methodToken
@@ -232,8 +221,8 @@
 - (void)_addDescendantsToSet:(NSMutableSet *)descendantClassTokens
 {
 	[descendantClassTokens addObject:self];
-	for (AKClassToken *sub in _childClassTokens) {
-		[sub _addDescendantsToSet:descendantClassTokens];
+	for (AKClassToken *child in _childClassTokens) {
+		[child _addDescendantsToSet:descendantClassTokens];
 	}
 }
 
@@ -241,44 +230,37 @@
 // Look for instance method names of the form setFooDelegate:.
 - (void)_addExtraDelegateMethodsTo:(NSMutableArray *)methodsList
 {
-//TODO: Commenting out for now, come back to this later.
-//    // Look for a protocol named ThisClassDelegate.
-//    AKDatabase *db = self.owningDatabase;
-//    NSString *possibleDelegateProtocolName = [self.tokenName stringByAppendingString:@"Delegate"];
-//    AKProtocolToken *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
+////TODO: Commenting out for now, come back to this later.
+//	// Look for a protocol named ThisClassDelegate.
+//	AKDatabase *db = self.owningDatabase;
+//	NSString *possibleDelegateProtocolName = [self.name stringByAppendingString:@"Delegate"];
+//	AKProtocolToken *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
 //
-//    if (delegateProtocol)
-//    {
-//        [methodsList addObjectsFromArray:[delegateProtocol instanceMethodTokens]];
-//    }
+//	if (delegateProtocol) {
+//		[methodsList addObjectsFromArray:delegateProtocol.instanceMethodTokens];
+//	}
 //
-//    // Look for instance method names of the form setFooDelegate:.
-//    //TODO: To be really thorough, check for fooDelegate properties.
-//    for (AKMethodToken *methodToken in [self instanceMethodTokens])
-//    {
-//        NSString *methodName = methodToken.tokenName;
+//	// Look for instance method names of the form setFooDelegate:.
+//	//TODO: To be really thorough, check for fooDelegate properties.
+//	for (AKMethodToken *methodToken in [self instanceMethodTokens]) {
+//		NSString *methodName = methodToken.name;
 //
-//        if ([methodName hasPrefix:@"set"]
-//            && [methodName hasSuffix:@"Delegate:"]
-//            && ![methodName isEqualToString:@"setDelegate:"])
-//        {
-//            //TODO: Can't I just look for protocol FooDelegate?
-//            NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
-//                                         substringFromIndex:3].uppercaseString;
-//
-//            for (AKProtocolToken *protocolToken in [db allProtocols])
-//            {
-//                NSString *protocolName = protocolToken.tokenName.uppercaseString;
-//
-//                if ([protocolName hasSuffix:protocolSuffix])
-//                {
-//                    [methodsList addObjectsFromArray:[protocolToken instanceMethodTokens]];
-//                    
-//                    break;
-//                }
-//            }
-//        }
-//    }
+//		if ([methodName hasPrefix:@"set"]
+//			&& [methodName hasSuffix:@"Delegate:"]
+//			&& ![methodName isEqualToString:@"setDelegate:"])
+//		{
+//			//TODO: Can't I just look for protocol FooDelegate?
+//			NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
+//										substringFromIndex:3].uppercaseString;
+//			for (AKProtocolToken *protocolToken in [db allProtocols]) {
+//				NSString *protocolName = protocolToken.name.uppercaseString;
+//				if ([protocolName hasSuffix:protocolSuffix]) {
+//					[methodsList addObjectsFromArray:protocolToken.instanceMethodTokens];
+//					break;
+//				}
+//			}
+//		}
+//	}
 }
 
 @end

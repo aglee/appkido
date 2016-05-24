@@ -76,9 +76,9 @@
 - (NSString *)displayName
 {
 	// As described by the Character Palette:
-	//      Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
-	//      Unicode: 00AB
-	//      UTF8: C2 AB
+	//		Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+	//		Unicode: 00AB
+	//		UTF8: C2 AB
 	static unichar kLeftDoubleAngle = 0x00AB;
 
 	if (_cachedDisplayName == nil) {
@@ -113,11 +113,11 @@
 
 // We want this to mirror the logic of -displayName, which is
 // too expensive to call directly.  That logic is:
-//      *   If a doc locator has a doc name, then the string to display
-//          (and therefore to sort on) is DocName+TopicName.
-//      *   Otherwise, if the doc locator as a subtopic name, the string
-//          to display is SubtopicName+TopicName.
-//      *   Otherwise, the string to display is just TopicName.
+// * If a doc locator has a doc name, then the string to display
+//   (and therefore to sort on) is DocName+TopicName.
+// * Otherwise, if the doc locator as a subtopic name, the string
+//   to display is SubtopicName+TopicName.
+// * Otherwise, the string to display is just TopicName.
 //
 // At most we'll have to do two string comparisons.  The work is in
 // figuring out what two strings to compare first, and if those are equal,
@@ -181,10 +181,10 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 
 	// Both locOne and locTwo have a secondary comparison string, namely their respective topic names.
 	if (topicNameOne == nil) {
-		topicNameOne = [locOne.topicToDisplay sortName];
+		topicNameOne = locOne.topicToDisplay.sortName;
 	}
 	if (topicNameTwo == nil) {
-		topicNameTwo = [locTwo.topicToDisplay sortName];
+		topicNameTwo = locTwo.topicToDisplay.sortName;
 	}
 	return [topicNameOne caseInsensitiveCompare:topicNameTwo];
 }

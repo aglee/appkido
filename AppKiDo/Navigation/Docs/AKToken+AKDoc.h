@@ -10,5 +10,4 @@
 #import "AKDoc.h"
 
 @interface AKToken (AKDoc) <AKDoc>
-
 @end

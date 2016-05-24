@@ -15,7 +15,6 @@
 @interface AKFramework : AKNamedObject
 
 @property (strong, readonly) AKNamedObjectGroup *protocolsGroup;
-
 @property (strong, readonly) AKNamedObjectCluster *constantsCluster;
 @property (strong, readonly) AKNamedObjectCluster *enumsCluster;
 @property (strong, readonly) AKNamedObjectCluster *functionsCluster;
