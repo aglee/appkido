@@ -33,7 +33,7 @@
 @property (readonly, copy) NSSet *descendantClasses;
 //@property (readonly) BOOL hasChildClasses;
 @property (readonly, copy) NSArray *allCategories;
-@property (readonly, copy) NSArray *documentedDelegateMethods;
+@property (readonly, copy) NSArray *delegateMethodTokens;
 
 /*!
  * Names of all frameworks the class belongs to. The first element of the
@@ -57,7 +57,7 @@
 
 - (void)addBindingToken:(AKBindingToken *)bindingToken;
 - (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName;
-- (NSArray *)documentedBindings;
+- (NSArray *)bindingTokens;
 
 #pragma mark - Owning frameworks
 

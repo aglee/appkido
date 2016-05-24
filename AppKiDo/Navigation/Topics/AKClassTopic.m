@@ -103,13 +103,13 @@
 							  self.classToken.instanceMethodTokens,
 							  YES),
 			 AKCreateSubtopic(AKDelegateMethodsSubtopicName,
-							  self.classToken.documentedDelegateMethods,
+							  self.classToken.delegateMethodTokens,
 							  YES),
 			 AKCreateSubtopic(AKNotificationsSubtopicName,
 							  self.classToken.notificationTokens,
 							  YES),
 			 AKCreateSubtopic(AKBindingsSubtopicName,
-							  self.classToken.documentedBindings,
+							  self.classToken.bindingTokens,
 							  YES),
 			 ];
 }

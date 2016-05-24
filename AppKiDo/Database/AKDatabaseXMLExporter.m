@@ -125,7 +125,7 @@
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classToken documentedDelegateMethods]
+        [self _exportMembers:[classToken delegateMethodTokens]
                       ofType:@"delegatemethods"
                       xmlTag:@"method"];
 

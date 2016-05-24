@@ -137,7 +137,7 @@
 	return (AKBindingToken *)self.bindingsByName[bindingName];
 }
 
-- (NSArray *)documentedBindings
+- (NSArray *)bindingTokens
 {
 	return self.bindingsByName.allValues;
 }
@@ -189,7 +189,7 @@
 
 #pragma mark - Delegate method tokens
 
-- (NSArray *)documentedDelegateMethods
+- (NSArray *)delegateMethodTokens
 {
 	NSMutableArray *methodList = [self.delegateMethodsByName.allValues mutableCopy];
 

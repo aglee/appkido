@@ -276,7 +276,7 @@
 		[self _searchMembersUnderBehaviorTopic:topic];
 
 		// Search members specific to classes.
-		[self _searchTokens:classToken.documentedDelegateMethods
+		[self _searchTokens:classToken.delegateMethodTokens
 			  underSubtopic:AKDelegateMethodsSubtopicName
 			ofBehaviorTopic:topic];
 	}
