@@ -7,10 +7,14 @@
 //
 
 #import "AKDatabase.h"
+#import "AKClassToken.h"
 #import "AKFramework.h"
 #import "AKFunctionToken.h"
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
+#import "AKNodeNameInferredInfo.h"
+#import "AKNotificationToken.h"
+#import "AKProtocolToken.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase (PrivateC)
@@ -18,8 +22,15 @@
 - (void)_importCTokens
 {
 	for (DSAToken *tokenMO in [self _arrayWithTokenMOsForLanguage:@"C"]) {
-		//TODO: Figure out whether I really do want to ignore the "tag" token type.
+		// Special case: "tag" tokens.  As far as I can tell, they are redundant
+		// with other tags, so I'm going to ignore them until I learn otherwise.
 		if ([tokenMO.tokenType.typeName isEqualToString:@"tag"]) {
+			continue;
+		}
+
+		// Special case: notifications.  Handle them separately.
+		AKToken *token = [self _maybeAddNotificationWithTokenMO:tokenMO];
+		if (token) {
 			continue;
 		}
 
@@ -29,14 +40,36 @@
 			continue;
 		}
 
-		// Create the AKToken and add it to the framework.
-		AKToken *token = [self _maybeAddTokenWithTokenMO:tokenMO toFramework:framework];
+		// Create the AKToken and try to add it to the framework.
+		token = [self _maybeAddTokenWithTokenMO:tokenMO toFramework:framework];
 		if (token == nil) {
 			continue;
 		}
+	}
+}
 
-		// Handle the case where the token seems to refer to a notification.
-		[self _checkWhetherTokenIsNotification:token];
+- (AKToken *)_maybeAddNotificationWithTokenMO:(DSAToken *)tokenMO
+{
+	if (![tokenMO.tokenName hasSuffix:@"Notification"]) {
+		return nil;
+	}
+
+	// Try to figure out what behavior to attach the notification to.
+	NSString *parentNodeName = tokenMO.parentNode.kName;
+	AKNodeNameInferredInfo *inferredInfo = [[AKNodeNameInferredInfo alloc] initWithNodeName:parentNodeName database:self];
+
+	if (inferredInfo.behaviorToken) {
+		// Attach the notification to its owning behavior.
+		AKNotificationToken *notifToken = [[AKNotificationToken alloc] initWithTokenMO:tokenMO];
+		[inferredInfo.behaviorToken addNotification:notifToken];
+		return notifToken;
+	} else {
+		// Non-behavior notifications get lumped with the framework's other constants.
+		AKToken *notifToken = [[AKToken alloc] initWithTokenMO:tokenMO];
+		NSString *groupName = tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
+		[inferredInfo.framework.constantsCluster addNamedObject:notifToken
+												toGroupWithName:groupName];
+		return notifToken;
 	}
 }
 
@@ -79,15 +112,6 @@
 	//QLog(@"+++ Framework %@ imported C token %@", framework.name, token);
 
 	return token;
-}
-
-- (void)_checkWhetherTokenIsNotification:(AKToken *)token
-{
-	if (![token.name hasSuffix:@"Notification"]) {
-		return;
-	}
-
-	//TODO: Fill this in.
 }
 
 @end
