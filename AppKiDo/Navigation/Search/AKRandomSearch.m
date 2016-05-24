@@ -39,27 +39,32 @@
 
 #pragma mark - Random selection
 
-- (NSString *)selectRandomTokenName
+- (NSString *)selectRandomName
 {
 	// Collect all the token names in the database.  If multiple tokens have the
 	// same name, that name will appear in the array multiple times.  I *think*
 	// that's what we want.
-	//TODO: How about AKDatabase having an allTokens method?
-	NSMutableArray *allTokens = [NSMutableArray array];
+	NSMutableArray<id<AKNamed>> *allNamedObjects = [NSMutableArray array];
 
-	[self _addClassTokensToArray:allTokens];
-	[self _addClassMemberTokensToArray:allTokens];
-	[self _addProtocolTokensToArray:allTokens];
-	[self _addProtocolMemberTokensToArray:allTokens];
-	[self _addTokensFromFrameworkTokenClustersToArray:allTokens];
+	[self _addFrameworksToArray:allNamedObjects];
+	[self _addClassTokensToArray:allNamedObjects];
+	[self _addClassMemberTokensToArray:allNamedObjects];
+	[self _addProtocolTokensToArray:allNamedObjects];
+	[self _addProtocolMemberTokensToArray:allNamedObjects];
+	[self _addTokensFromFrameworkTokenClustersToArray:allNamedObjects];
 
 	// Make a random selection.
-	NSUInteger randomArrayIndex = (arc4random() % allTokens.count);
-	AKToken *randomToken = allTokens[randomArrayIndex];
+	NSUInteger randomArrayIndex = (arc4random() % allNamedObjects.count);
+	AKToken *randomToken = allNamedObjects[randomArrayIndex];
 	return randomToken.name;
 }
 
 #pragma mark - Private methods
+
+- (void)_addFrameworksToArray:(NSMutableArray *)tokenArray
+{
+	[tokenArray addObjectsFromArray:self.database.sortedFrameworks];
+}
 
 - (void)_addClassTokensToArray:(NSMutableArray *)tokenArray
 {

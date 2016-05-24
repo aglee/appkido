@@ -63,7 +63,7 @@
     // Choose a random API symbol.
     AKDatabase *db = [[AKAppDelegate appDelegate] appDatabase];
     AKRandomSearch *randomSearch = [[AKRandomSearch alloc] initWithDatabase:db];
-	NSString *apiSymbol = [randomSearch selectRandomTokenName];
+	NSString *apiSymbol = [randomSearch selectRandomName];
 
     self.chosenAPISymbol = apiSymbol;
 

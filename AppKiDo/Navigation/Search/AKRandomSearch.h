@@ -11,7 +11,7 @@
 @class AKDatabase;
 
 /*!
- * Selects a random token name from the specified database.
+ * Selects a random name from the frameworks and tokens in a database.
  */
 @interface AKRandomSearch : NSObject
 
@@ -21,6 +21,6 @@
 
 #pragma mark - Random selection
 
-- (NSString *)selectRandomTokenName;
+- (NSString *)selectRandomName;
 
 @end
