@@ -18,6 +18,8 @@
 @property (readwrite, weak) AKClassToken *parentClass;
 @property (copy) NSMutableDictionary *delegateMethodsByName;
 @property (copy) NSMutableDictionary *bindingsByName;
+@property (copy) NSMutableDictionary *constantTokensByName;
+@property (copy) NSMutableDictionary *dataTypeTokensByName;
 @end
 
 @implementation AKClassToken
@@ -39,6 +41,8 @@
 		_categoryTokens = [[NSMutableArray alloc] init];
 		_delegateMethodsByName = [[NSMutableDictionary alloc] init];
 		_bindingsByName = [[NSMutableDictionary alloc] init];
+		_constantTokensByName = [[NSMutableDictionary alloc] init];
+		_dataTypeTokensByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -84,28 +88,28 @@
 
 #pragma mark - Category tokens
 
-- (AKCategoryToken *)categoryNamed:(NSString *)catName
+- (AKCategoryToken *)categoryNamed:(NSString *)name
 {
 	for (AKCategoryToken *token in _categoryTokens) {
-		if ([token.name isEqualToString:catName]) {
+		if ([token.name isEqualToString:name]) {
 			return token;
 		}
 	}
 	return nil;
 }
 
-- (void)addCategory:(AKCategoryToken *)categoryToken
+- (void)addCategory:(AKCategoryToken *)token
 {
-	[categoryToken.owningClassToken removeCategoryToken:categoryToken];
-	[_categoryTokens addObject:categoryToken];
-	categoryToken.owningClassToken = self;
+	[token.owningClassToken removeCategoryToken:token];
+	[_categoryTokens addObject:token];
+	token.owningClassToken = self;
 }
 
-- (void)removeCategoryToken:(AKCategoryToken *)categoryToken
+- (void)removeCategoryToken:(AKCategoryToken *)token
 {
-	NSInteger i = [_childClassTokens indexOfObject:categoryToken];
+	NSInteger i = [_childClassTokens indexOfObject:token];
 	if (i >= 0) {
-		categoryToken.owningClassToken = nil;
+		token.owningClassToken = nil;
 		[_categoryTokens removeObjectAtIndex:i];
 	}
 }
@@ -124,19 +128,53 @@
 
 #pragma mark - Bindings tokens
 
-- (void)addBindingToken:(AKBindingToken *)bindingToken
+- (void)addBindingToken:(AKToken *)token
 {
-	self.bindingsByName[bindingToken.name] = bindingToken;
+	self.bindingsByName[token.name] = token;
 }
 
-- (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName
+- (AKToken *)bindingTokenNamed:(NSString *)name
 {
-	return self.bindingsByName[bindingName];
+	return self.bindingsByName[name];
 }
 
 - (NSArray *)bindingTokens
 {
 	return self.bindingsByName.allValues;
+}
+
+#pragma mark - Constants tokens
+
+- (void)addConstantToken:(AKToken *)token
+{
+	self.constantTokensByName[token.name] = token;
+}
+
+- (AKToken *)constantTokenNamed:(NSString *)name
+{
+	return self.constantTokensByName[name];
+}
+
+- (NSArray *)constantTokens
+{
+	return self.constantTokensByName.allValues;
+}
+
+#pragma mark - Data types tokens
+
+- (void)addDataTypeToken:(AKToken *)token
+{
+	self.dataTypeTokensByName[token.name] = token;
+}
+
+- (AKToken *)dataTypeTokenNamed:(NSString *)name
+{
+	return self.dataTypeTokensByName[name];
+}
+
+- (NSArray *)dataTypeTokens
+{
+	return self.dataTypeTokensByName.allValues;
 }
 
 #pragma mark - Owning frameworks

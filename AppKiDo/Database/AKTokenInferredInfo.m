@@ -1,37 +1,37 @@
 //
-//  AKNodeNameInferredInfo.m
+//  AKTokenInferredInfo.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 5/23/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKNodeNameInferredInfo.h"
+#import "AKTokenInferredInfo.h"
 #import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKProtocolToken.h"
 #import "AKTopicConstants.h"
 #import "DIGSLog.h"
 
-@interface AKNodeNameInferredInfo ()
+@interface AKTokenInferredInfo ()
 @property (strong) AKDatabase *database;
-@property (strong) AKFramework *framework;
 @property (copy) NSString *frameworkChildTopicName;
 @property (strong) AKBehaviorToken *behaviorToken;
 @property (copy) NSString *headerFileName;
 @property (copy) NSString *referenceSubject;
 @end
 
-@implementation AKNodeNameInferredInfo
+@implementation AKTokenInferredInfo
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO database:(AKDatabase *)database
 {
 	self = [super init];
 	if (self) {
-		_nodeName = nodeName;
+		_nodeName = tokenMO.parentNode.kName;
 		_database = database;
+
 		[self _inferOtherIvarsFromNodeName];
 	}
 	return self;

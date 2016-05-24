@@ -6,7 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKDatabase.h"
+#import "AKDatabase+Private.h"
 #import "AKBehaviorToken.h"
 #import "AKBindingToken.h"
 #import "AKCategoryToken.h"

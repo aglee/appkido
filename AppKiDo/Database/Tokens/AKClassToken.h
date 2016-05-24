@@ -24,6 +24,8 @@
 @property (readonly, copy) NSSet *descendantClasses;
 @property (readonly, copy) NSArray *allCategories;
 @property (readonly, copy) NSArray *delegateMethodTokens;
+@property (readonly, copy) NSArray *constantTokens;
+@property (readonly, copy) NSArray *dataTypeTokens;
 
 /*!
  * Names of all frameworks the class belongs to. The first element of the
@@ -40,14 +42,26 @@
 
 #pragma mark - Category tokens
 
-- (void)addCategory:(AKCategoryToken *)categoryToken;
-- (AKCategoryToken *)categoryNamed:(NSString *)catName;
+- (void)addCategory:(AKCategoryToken *)token;
+- (AKCategoryToken *)categoryNamed:(NSString *)name;
 
 #pragma mark - Bindings tokens
 
-- (void)addBindingToken:(AKBindingToken *)bindingToken;
-- (AKBindingToken *)bindingTokenNamed:(NSString *)bindingName;
+- (void)addBindingToken:(AKBindingToken *)token;
+- (AKBindingToken *)bindingTokenNamed:(NSString *)name;
 - (NSArray *)bindingTokens;
+
+#pragma mark - Constants tokens
+
+- (void)addConstantToken:(AKToken *)token;
+- (AKToken *)constantTokenNamed:(NSString *)name;
+- (NSArray *)constantTokens;
+
+#pragma mark - Data types tokens
+
+- (void)addDataTypeToken:(AKToken *)token;
+- (AKToken *)dataTypeTokenNamed:(NSString *)name;
+- (NSArray *)dataTypeTokens;
 
 #pragma mark - Owning frameworks
 

@@ -5,7 +5,7 @@
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKDatabase.h"
+#import "AKDatabase+Private.h"
 #import "AKClassToken.h"
 #import "AKFramework.h"
 #import "AKManagedObjectQuery.h"
@@ -14,6 +14,7 @@
 #import "AKProtocolToken.h"
 #import "AKRegexUtils.h"
 #import "AKResult.h"
+#import "AKTokenInferredInfo.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase
@@ -168,6 +169,18 @@
 	}
 }
 
+- (AKTokenInferredInfo *)_inferredInfoForTokenMO:(DSAToken *)tokenMO
+{
+	AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO database:self];
+
+	if (inferredInfo.framework == nil) {
+		NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+		inferredInfo.framework = [self frameworkWithName:frameworkName];
+	}
+
+	return inferredInfo;
+}
+
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO
 {
 	// See if the DocSetIndex specifies a framework for this token.
@@ -229,7 +242,7 @@
 		return nil;
 	}
 
-	NSString *inferredFrameworkName;
+	NSString *inferredFrameworkName;  //TODO: Fill this in.
 	if (inferredFrameworkName) {
 		QLog(@"+++ Framework %@ for %@ was inferred from doc path", inferredFrameworkName, self);
 	}

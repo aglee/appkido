@@ -6,15 +6,15 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKDatabase.h"
+#import "AKDatabase+Private.h"
 #import "AKClassToken.h"
 #import "AKFramework.h"
 #import "AKFunctionToken.h"
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
-#import "AKNodeNameInferredInfo.h"
 #import "AKNotificationToken.h"
 #import "AKProtocolToken.h"
+#import "AKTokenInferredInfo.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase (PrivateC)
@@ -28,20 +28,20 @@
 			continue;
 		}
 
+		// Figure out what framework the token belongs to.
+		AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO database:self];
+		if (inferredInfo.framework == nil) {
+			continue;
+		}
+
 		// Special case: notifications.  Handle them separately.
 		AKToken *token = [self _maybeAddNotificationWithTokenMO:tokenMO];
 		if (token) {
 			continue;
 		}
 
-		// Figure out what framework the token belongs to.
-		AKFramework *framework = [self _frameworkForTokenMO:tokenMO];
-		if (framework == nil) {
-			continue;
-		}
-
 		// Create the AKToken and try to add it to the framework.
-		token = [self _maybeAddTokenWithTokenMO:tokenMO toFramework:framework];
+		token = [self _maybeAddTokenWithTokenMO:tokenMO toFramework:inferredInfo.framework];
 		if (token == nil) {
 			continue;
 		}
@@ -55,8 +55,7 @@
 	}
 
 	// Try to figure out what behavior to attach the notification to.
-	NSString *parentNodeName = tokenMO.parentNode.kName;
-	AKNodeNameInferredInfo *inferredInfo = [[AKNodeNameInferredInfo alloc] initWithNodeName:parentNodeName database:self];
+	AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO database:self];
 
 	if (inferredInfo.behaviorToken) {
 		// Attach the notification to its owning behavior.
@@ -71,25 +70,6 @@
 												toGroupWithName:groupName];
 		return notifToken;
 	}
-}
-
-- (AKFramework *)_frameworkForTokenMO:(DSAToken *)tokenMO
-{
-	// Figure out the name of the framework the token belongs to.
-	NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-	if (frameworkName == nil) {
-		//QLog(@"+++ Could not determine framework for token with name %@, type %@.", tokenMO.tokenName, tokenMO.tokenType.typeName);
-		return nil;
-	}
-
-	// Get the AKFramework with that name.
-	AKFramework *framework = [self frameworkWithName:frameworkName];
-	if (framework == nil) {
-		QLog(@"+++ Could not import token %@, type %@ -- unaware of any framework named %@.", tokenMO.tokenName, tokenMO.tokenType.typeName, frameworkName);
-		return nil;
-	}
-
-	return framework;
 }
 
 - (AKToken *)_maybeAddTokenWithTokenMO:(DSAToken *)tokenMO toFramework:(AKFramework *)framework

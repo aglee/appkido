@@ -1,5 +1,5 @@
 //
-//  AKNodeNameInferredInfo.h
+//  AKTokenInferredInfo.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 5/23/16.
@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DocSetModel.h"
 
 @class AKBehaviorToken;
 @class AKDatabase;
@@ -16,12 +17,12 @@
  * Deconstructs node names to try to infer what the node is about -- what's the
  * relevant framework, class, protocol, etc.
  */
-@interface AKNodeNameInferredInfo : NSObject
+@interface AKTokenInferredInfo : NSObject
 
 @property (copy) NSString *nodeName;
 
 /*! For "Foundation Constants Reference" this would be the Foundation framework. */
-@property (strong, readonly) AKFramework *framework;
+@property (strong) AKFramework *framework;
 
 /*! For "Foundation Constants Reference" this would be "Constants". */
 @property (copy, readonly) NSString *frameworkChildTopicName;
@@ -45,6 +46,6 @@
  * the node name is a framework name, a class name, a protocol name, or none of
  * the above.
  */
-- (instancetype)initWithNodeName:(NSString *)nodeName database:(AKDatabase *)database;
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO database:(AKDatabase *)database;
 
 @end
