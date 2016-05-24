@@ -75,26 +75,15 @@
 			 AKCreateSubtopic(AKInstanceMethodsSubtopicName,
 							  self.protocolToken.instanceMethodTokens,
 							  YES),
+			 AKCreateSubtopic(AKDataTypesSubtopicName,
+							  self.protocolToken.dataTypeTokens,
+							  YES),
+			 AKCreateSubtopic(AKConstantsSubtopicName,
+							  self.protocolToken.constantTokens,
+							  YES),
 			 AKCreateSubtopic(AKNotificationsSubtopicName,
 							  self.protocolToken.notificationTokens,
 							  YES),
-
-// These subtopics are added to the list even though they don't
-// apply to protocols, only classes.  This way, if, say, "Bindings"
-// is selected, and the user navigates from a class to a protocol
-// and then to a class, the "Bindings" subtopic stays selected
-// because it was always on the list.  The idea is to keep as much
-// as possible the same as the user navigates around.
-//
-//TODO: Revisit this.  I'm thinking maybe this makes it look like
-// protocols can have bindings, etc. (or that I *think* they can),
-// when they can't.  One option would be to have a doc list with
-// just one item with a name like "(not applicable)" or something.
-//
-//TODO: Revisit the "ALL Instance Methods" etc. feature.
-//			 AKCreateSubtopic(AKDelegateMethodsSubtopicName, nil, YES),
-//			 AKCreateSubtopic(AKNotificationsSubtopicName, nil, YES),
-//			 AKCreateSubtopic(AKBindingsSubtopicName, nil, YES),
 			 ];
 }
 
