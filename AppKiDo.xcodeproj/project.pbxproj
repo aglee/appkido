@@ -208,7 +208,6 @@
 		73664F131CF2BEB70094F405 /* search-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 73664EF51CF2BEB70094F405 /* search-tool.tiff */; };
 		73664F141CF2BEB70094F405 /* superclass-tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 73664EF61CF2BEB70094F405 /* superclass-tool.tiff */; };
 		736826FE1CF34998004B070E /* AKArrayAssortment.m in Sources */ = {isa = PBXBuildFile; fileRef = 736826FD1CF34998004B070E /* AKArrayAssortment.m */; };
-		736827021CF355A1004B070E /* AKNodeNameInferredInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 736827011CF355A1004B070E /* AKNodeNameInferredInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -566,8 +565,6 @@
 		73664F1B1CF2C5680094F405 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		736826FC1CF34998004B070E /* AKArrayAssortment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKArrayAssortment.h; sourceTree = "<group>"; };
 		736826FD1CF34998004B070E /* AKArrayAssortment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKArrayAssortment.m; sourceTree = "<group>"; };
-		736827001CF355A1004B070E /* AKNodeNameInferredInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNodeNameInferredInfo.h; sourceTree = "<group>"; };
-		736827011CF355A1004B070E /* AKNodeNameInferredInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNodeNameInferredInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -763,7 +760,6 @@
 				73664D511CF2BE9D0094F405 /* Dev Tools */,
 				73664D5A1CF2BE9D0094F405 /* Frameworks */,
 				73664D5F1CF2BE9D0094F405 /* Tokens */,
-				736826FF1CF3558C004B070E /* Nodes */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -1227,15 +1223,6 @@
 			path = "Named Objects and Collections";
 			sourceTree = "<group>";
 		};
-		736826FF1CF3558C004B070E /* Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				736827001CF355A1004B070E /* AKNodeNameInferredInfo.h */,
-				736827011CF355A1004B070E /* AKNodeNameInferredInfo.m */,
-			);
-			path = Nodes;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1551,7 +1538,6 @@
 				73664E9A1CF2BE9E0094F405 /* DocSetModel.xcdatamodeld in Sources */,
 				73664E6A1CF2BE9E0094F405 /* AKBehaviorToken.m in Sources */,
 				73664E671CF2BE9E0094F405 /* AKMacDevTools.m in Sources */,
-				736827021CF355A1004B070E /* AKNodeNameInferredInfo.m in Sources */,
 				73664E9E1CF2BE9E0094F405 /* AKToken+AKDoc.m in Sources */,
 				73664E4E1CF2BE9E0094F405 /* NSView+AppKiDo.m in Sources */,
 				73664E781CF2BE9E0094F405 /* APILanguage.m in Sources */,
