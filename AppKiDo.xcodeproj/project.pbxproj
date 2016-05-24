@@ -154,7 +154,6 @@
 		73664EB91CF2BE9E0094F405 /* AKResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E0E1CF2BE9E0094F405 /* AKResult.m */; };
 		73664EBA1CF2BE9E0094F405 /* AKSDKVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E101CF2BE9E0094F405 /* AKSDKVersion.m */; };
 		73664EBB1CF2BE9E0094F405 /* AKServicesProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E121CF2BE9E0094F405 /* AKServicesProvider.m */; };
-		73664EBC1CF2BE9E0094F405 /* AKSortUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E151CF2BE9E0094F405 /* AKSortUtils.m */; };
 		73664EBD1CF2BE9E0094F405 /* AKTabChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E171CF2BE9E0094F405 /* AKTabChain.m */; };
 		73664EBE1CF2BE9E0094F405 /* ALSimpleTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E1B1CF2BE9E0094F405 /* ALSimpleTask.m */; };
 		73664EBF1CF2BE9E0094F405 /* DIGSFileProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E1D1CF2BE9E0094F405 /* DIGSFileProcessor.m */; };
@@ -484,8 +483,6 @@
 		73664E111CF2BE9E0094F405 /* AKServicesProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKServicesProvider.h; sourceTree = "<group>"; };
 		73664E121CF2BE9E0094F405 /* AKServicesProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKServicesProvider.m; sourceTree = "<group>"; };
 		73664E131CF2BE9E0094F405 /* AKSortable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSortable.h; sourceTree = "<group>"; };
-		73664E141CF2BE9E0094F405 /* AKSortUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSortUtils.h; sourceTree = "<group>"; };
-		73664E151CF2BE9E0094F405 /* AKSortUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSortUtils.m; sourceTree = "<group>"; };
 		73664E161CF2BE9E0094F405 /* AKTabChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTabChain.h; sourceTree = "<group>"; };
 		73664E171CF2BE9E0094F405 /* AKTabChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTabChain.m; sourceTree = "<group>"; };
 		73664E181CF2BE9E0094F405 /* AKTabChainWindowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTabChainWindowDelegate.h; sourceTree = "<group>"; };
@@ -1055,8 +1052,6 @@
 				73664E111CF2BE9E0094F405 /* AKServicesProvider.h */,
 				73664E121CF2BE9E0094F405 /* AKServicesProvider.m */,
 				73664E131CF2BE9E0094F405 /* AKSortable.h */,
-				73664E141CF2BE9E0094F405 /* AKSortUtils.h */,
-				73664E151CF2BE9E0094F405 /* AKSortUtils.m */,
 				73664E161CF2BE9E0094F405 /* AKTabChain.h */,
 				73664E171CF2BE9E0094F405 /* AKTabChain.m */,
 				73664E181CF2BE9E0094F405 /* AKTabChainWindowDelegate.h */,
@@ -1485,7 +1480,6 @@
 				73664E9D1CF2BE9E0094F405 /* AKHeaderFileDoc.m in Sources */,
 				73664E7D1CF2BE9E0094F405 /* DSANode.m in Sources */,
 				73664E8A1CF2BE9E0094F405 /* _Container.m in Sources */,
-				73664EBC1CF2BE9E0094F405 /* AKSortUtils.m in Sources */,
 				73664EB01CF2BE9E0094F405 /* AKAppVersion.m in Sources */,
 				73664CBC1CF2BBBE0094F405 /* main.m in Sources */,
 				73664E9B1CF2BE9E0094F405 /* AKDocLocator.m in Sources */,
