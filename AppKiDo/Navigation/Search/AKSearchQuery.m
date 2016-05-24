@@ -281,7 +281,7 @@
 		[self _searchTokens:[classToken documentedDelegateMethods]
 			  underSubtopic:AKDelegateMethodsSubtopicName
 			ofBehaviorTopic:topic];
-		[self _searchTokens:[classToken documentedNotifications]
+		[self _searchTokens:[classToken notificationTokens]
 			  underSubtopic:AKNotificationsSubtopicName
 			ofBehaviorTopic:topic];
 	}

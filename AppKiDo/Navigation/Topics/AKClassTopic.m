@@ -106,7 +106,7 @@
 							  self.classToken.documentedDelegateMethods,
 							  YES),
 			 AKCreateSubtopic(AKNotificationsSubtopicName,
-							  self.classToken.documentedNotifications,
+							  self.classToken.notificationTokens,
 							  YES),
 			 AKCreateSubtopic(AKBindingsSubtopicName,
 							  self.classToken.documentedBindings,

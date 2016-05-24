@@ -93,7 +93,7 @@
         [self _addTokens:[classToken classMethodTokens] toSymbolArray:apiSymbols];
         [self _addTokens:[classToken instanceMethodTokens] toSymbolArray:apiSymbols];
         [self _addTokens:[classToken documentedDelegateMethods] toSymbolArray:apiSymbols];
-        [self _addTokens:[classToken documentedNotifications] toSymbolArray:apiSymbols];
+        [self _addTokens:[classToken notificationTokens] toSymbolArray:apiSymbols];
     }
 }
 

@@ -129,7 +129,7 @@
                       ofType:@"delegatemethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classToken documentedNotifications]
+        [self _exportMembers:[classToken notificationTokens]
                       ofType:@"notifications"
                       xmlTag:@"notification"];
     }];
