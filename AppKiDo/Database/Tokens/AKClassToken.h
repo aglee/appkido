@@ -51,18 +51,6 @@
 - (AKBindingToken *)bindingTokenNamed:(NSString *)name;
 - (NSArray *)bindingTokens;
 
-#pragma mark - Constants tokens
-
-- (void)addConstantToken:(AKToken *)token;
-- (AKToken *)constantTokenNamed:(NSString *)name;
-- (NSArray *)constantTokens;
-
-#pragma mark - Data types tokens
-
-- (void)addDataTypeToken:(AKToken *)token;
-- (AKToken *)dataTypeTokenNamed:(NSString *)name;
-- (NSArray *)dataTypeTokens;
-
 #pragma mark - Owning frameworks
 
 - (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Handle the multi-frameworkness of classes.

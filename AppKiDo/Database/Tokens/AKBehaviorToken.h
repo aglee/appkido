@@ -52,6 +52,18 @@
 /*! Does nothing if an instance method with the same name already exists. */
 - (void)addInstanceMethod:(AKInstanceMethodToken *)methodToken;
 
+#pragma mark - Data types tokens
+
+- (void)addDataTypeToken:(AKToken *)token;
+- (AKToken *)dataTypeTokenNamed:(NSString *)name;
+- (NSArray *)dataTypeTokens;
+
+#pragma mark - Constants tokens
+
+- (void)addConstantToken:(AKToken *)token;
+- (AKToken *)constantTokenNamed:(NSString *)name;
+- (NSArray *)constantTokens;
+
 #pragma mark - Notification tokens
 
 - (AKNotificationToken *)notificationWithName:(NSString *)notificationName;

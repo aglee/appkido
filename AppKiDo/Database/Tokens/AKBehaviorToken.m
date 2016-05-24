@@ -18,6 +18,8 @@
 @property (copy) NSMutableDictionary *propertiesByName;
 @property (copy) NSMutableDictionary *classMethodsByName;
 @property (copy) NSMutableDictionary *instanceMethodsByName;
+@property (copy) NSMutableDictionary *dataTypeTokensByName;
+@property (copy) NSMutableDictionary *constantTokensByName;
 @property (copy) NSMutableDictionary *notificationsByName;
 @end
 
@@ -33,6 +35,8 @@
 		_propertiesByName = [[NSMutableDictionary alloc] init];
 		_classMethodsByName = [[NSMutableDictionary alloc] init];
 		_instanceMethodsByName = [[NSMutableDictionary alloc] init];
+		_dataTypeTokensByName = [[NSMutableDictionary alloc] init];
+		_constantTokensByName = [[NSMutableDictionary alloc] init];
 		_notificationsByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -134,6 +138,40 @@
 		self.instanceMethodsByName[methodToken.name] = methodToken;
 		methodToken.owningBehavior = self;
 	}
+}
+
+#pragma mark - Data types tokens
+
+- (void)addDataTypeToken:(AKToken *)token
+{
+	self.dataTypeTokensByName[token.name] = token;
+}
+
+- (AKToken *)dataTypeTokenNamed:(NSString *)name
+{
+	return self.dataTypeTokensByName[name];
+}
+
+- (NSArray *)dataTypeTokens
+{
+	return self.dataTypeTokensByName.allValues;
+}
+
+#pragma mark - Constants tokens
+
+- (void)addConstantToken:(AKToken *)token
+{
+	self.constantTokensByName[token.name] = token;
+}
+
+- (AKToken *)constantTokenNamed:(NSString *)name
+{
+	return self.constantTokensByName[name];
+}
+
+- (NSArray *)constantTokens
+{
+	return self.constantTokensByName.allValues;
 }
 
 #pragma mark - Notification tokens

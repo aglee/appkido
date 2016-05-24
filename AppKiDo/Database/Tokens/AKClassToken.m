@@ -18,8 +18,6 @@
 @property (readwrite, weak) AKClassToken *parentClass;
 @property (copy) NSMutableDictionary *delegateMethodsByName;
 @property (copy) NSMutableDictionary *bindingsByName;
-@property (copy) NSMutableDictionary *constantTokensByName;
-@property (copy) NSMutableDictionary *dataTypeTokensByName;
 @end
 
 @implementation AKClassToken
@@ -41,8 +39,6 @@
 		_categoryTokens = [[NSMutableArray alloc] init];
 		_delegateMethodsByName = [[NSMutableDictionary alloc] init];
 		_bindingsByName = [[NSMutableDictionary alloc] init];
-		_constantTokensByName = [[NSMutableDictionary alloc] init];
-		_dataTypeTokensByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -141,40 +137,6 @@
 - (NSArray *)bindingTokens
 {
 	return self.bindingsByName.allValues;
-}
-
-#pragma mark - Constants tokens
-
-- (void)addConstantToken:(AKToken *)token
-{
-	self.constantTokensByName[token.name] = token;
-}
-
-- (AKToken *)constantTokenNamed:(NSString *)name
-{
-	return self.constantTokensByName[name];
-}
-
-- (NSArray *)constantTokens
-{
-	return self.constantTokensByName.allValues;
-}
-
-#pragma mark - Data types tokens
-
-- (void)addDataTypeToken:(AKToken *)token
-{
-	self.dataTypeTokensByName[token.name] = token;
-}
-
-- (AKToken *)dataTypeTokenNamed:(NSString *)name
-{
-	return self.dataTypeTokensByName[name];
-}
-
-- (NSArray *)dataTypeTokens
-{
-	return self.dataTypeTokensByName.allValues;
 }
 
 #pragma mark - Owning frameworks
