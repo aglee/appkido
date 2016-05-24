@@ -13,8 +13,8 @@
 @class AKFramework;
 
 /*!
- * Used by AKDatabase's inferredInfoForNodeName: method.  Deconstructs node
- * names to try to infer what the node is about.
+ * Deconstructs node names to try to infer what the node is about -- what's the
+ * relevant framework, class, protocol, etc.
  */
 @interface AKNodeNameInferredInfo : NSObject
 

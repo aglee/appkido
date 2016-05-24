@@ -20,14 +20,6 @@
  * methods and can receive notifications, i.e. a protocol, class, or category.
  * (I used to think only classes have associated notifications, but it appears
  * the NSAccessibility protocol does as well.)
- *
- * Note: unlike other database items, class and protocol items can be
- * initialized with nil as their owning framework name. The reason is that when
- * we are constructing the database, we may encounter a reference to a class or
- * protocol before it has been declared. For example, we may encounter a
- * category (and thus the name of its owning class) before we encounter the
- * owning class's declaration. Or we may encounter a protocol in a class's list
- * of protocols before we've encountered its @protocol declaration.
  */
 @interface AKBehaviorToken : AKToken
 
@@ -39,10 +31,9 @@
 @property (readonly, copy) NSArray *classMethodTokens;
 @property (readonly, copy) NSArray *notificationTokens;
 
-#pragma mark - Implemented protocol tokens
+#pragma mark - Adopted protocol tokens
 
 - (void)addImplementedProtocol:(AKProtocolToken *)protocolToken;
-- (void)addImplementedProtocols:(NSArray *)protocolTokens;
 
 #pragma mark - Property tokens
 

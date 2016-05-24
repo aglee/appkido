@@ -790,12 +790,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	}
 
 	// Reconstruct the Superclass button's contextual menu.
-	AKClassToken *ancestorItem = parentClass;
-	while (ancestorItem != nil) {
-		[_superclassesMenu addItemWithTitle:ancestorItem.name
+	AKClassToken *ancestorToken = parentClass;
+	while (ancestorToken != nil) {
+		[_superclassesMenu addItemWithTitle:ancestorToken.name
 									 action:@selector(selectAncestorClass:)
 							  keyEquivalent:@""];
-		ancestorItem = ancestorItem.parentClass;
+		ancestorToken = ancestorToken.parentClass;
 	}
 }
 

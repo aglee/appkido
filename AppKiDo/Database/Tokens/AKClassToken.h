@@ -14,19 +14,10 @@
 
 /*!
  * Represents an Objective-C class, which in addition to having methods can have
- * categories, subclasses, and a superclass; can have delegate methods; and can
- * span multiple frameworks by way of its categories.
- *
- * We use the terms "parent class" and "child class" rather than "superclass"
- * and "subclass", to avoid confusion.
+ * a superclass, subclasses, categories, and delegate methods; and can span
+ * multiple frameworks by way of its categories.
  */
 @interface AKClassToken : AKBehaviorToken
-{
-@private
-	NSMutableArray *_namesOfAllOwningFrameworks;
-	NSMutableArray *_childClassTokens;  // Contains AKClassTokens.
-	NSMutableArray *_categoryTokens;  // Contains AKCategoryTokens.
-}
 
 @property (readonly, weak) AKClassToken *parentClass;
 @property (readonly, copy) NSArray *childClasses;
@@ -60,7 +51,7 @@
 
 #pragma mark - Owning frameworks
 
-- (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Fix the multi-frameworkness of class items.
+- (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Handle the multi-frameworkness of classes.
 
 - (BOOL)isOwnedByFramework:(NSString *)frameworkName;
 

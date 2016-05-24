@@ -7,120 +7,98 @@
 //
 
 #import "AKRandomSearch.h"
-#import "DIGSLog.h"
 #import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKProtocolToken.h"
+#import "DIGSLog.h"
 
 @interface AKRandomSearch ()
-@property (nonatomic, readwrite, copy) NSString *selectedAPISymbol;
+@property (readonly) AKDatabase *database;
 @end
 
 @implementation AKRandomSearch
 
-@synthesize selectedAPISymbol = _selectedAPISymbol;
-
-#pragma mark - Factory methods
-
-+ (instancetype)randomSearchWithDatabase:(AKDatabase *)db
-{
-    AKRandomSearch *randomSearch = [[self alloc] initWithDatabase:db];
-
-    [randomSearch makeRandomSelection];
-
-    return randomSearch;
-}
-
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithDatabase:(AKDatabase *)db
+- (instancetype)initWithDatabase:(AKDatabase *)database
 {
-    if ((self = [super init]))
-    {
-        _database = db;
-    }
-
-    return self;
+	NSParameterAssert(database != nil);
+	self = [super init];
+	if (self) {
+		_database = database;
+	}
+	return self;
 }
 
 - (instancetype)init
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithDatabase:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithDatabase:nil];
 }
 
 
 #pragma mark - Random selection
 
-- (void)makeRandomSelection
+- (NSString *)selectRandomTokenName
 {
-    // Construct an array containing all the API symbols we want to choose from,
-    // and a parallel array containing corresponding database items.
-    NSMutableArray *allSymbols = [NSMutableArray array];
+	// Collect all the token names in the database.  If multiple tokens have the
+	// same name, that name will appear in the array multiple times.  I *think*
+	// that's what we want.
+	//TODO: How about AKDatabase having an allTokens method?
+	NSMutableArray *allTokens = [NSMutableArray array];
 
-    [self _addClassesToSymbolArray:allSymbols];
-    [self _addClassMembersToSymbolArray:allSymbols];
-    [self _addProtocolsToSymbolArray:allSymbols];
-    [self _addProtocolMembersToSymbolArray:allSymbols];
-    [self _addFunctionsToSymbolArray:allSymbols];
+	[self _addClassTokensToArray:allTokens];
+	[self _addClassMemberTokensToArray:allTokens];
+	[self _addProtocolTokensToArray:allTokens];
+	[self _addProtocolMemberTokensToArray:allTokens];
+	[self _addTokensFromFrameworkTokenClustersToArray:allTokens];
 
-    // Make a random selection.
-    NSUInteger randomArrayIndex = (arc4random() % allSymbols.count);
-
-    self.selectedAPISymbol = allSymbols[randomArrayIndex];
+	// Make a random selection.
+	NSUInteger randomArrayIndex = (arc4random() % allTokens.count);
+	AKToken *randomToken = allTokens[randomArrayIndex];
+	return randomToken.name;
 }
 
 #pragma mark - Private methods
 
-- (void)_addTokens:(NSArray *)itemsToAdd toSymbolArray:(NSMutableArray *)apiSymbols
+- (void)_addClassTokensToArray:(NSMutableArray *)tokenArray
 {
-    for (AKToken *item in itemsToAdd)
-    {
-        [apiSymbols addObject:item.name];
-    }
+	[tokenArray addObjectsFromArray:self.database.allClasses];
 }
 
-- (void)_addClassesToSymbolArray:(NSMutableArray *)apiSymbols
+- (void)_addClassMemberTokensToArray:(NSMutableArray *)tokenArray
 {
-    [self _addTokens:[_database allClasses] toSymbolArray:apiSymbols];
+	for (AKClassToken *classToken in self.database.allClasses) {
+		[tokenArray addObjectsFromArray:classToken.propertyTokens];
+		[tokenArray addObjectsFromArray:classToken.classMethodTokens];
+		[tokenArray addObjectsFromArray:classToken.instanceMethodTokens];
+		[tokenArray addObjectsFromArray:classToken.delegateMethodTokens];
+		[tokenArray addObjectsFromArray:classToken.notificationTokens];
+	}
 }
 
-- (void)_addClassMembersToSymbolArray:(NSMutableArray *)apiSymbols
+- (void)_addProtocolTokensToArray:(NSMutableArray *)tokenArray
 {
-    for (AKClassToken *classToken in [_database allClasses])
-    {
-        [self _addTokens:[classToken propertyTokens] toSymbolArray:apiSymbols];
-        [self _addTokens:[classToken classMethodTokens] toSymbolArray:apiSymbols];
-        [self _addTokens:[classToken instanceMethodTokens] toSymbolArray:apiSymbols];
-        [self _addTokens:[classToken delegateMethodTokens] toSymbolArray:apiSymbols];
-        [self _addTokens:[classToken notificationTokens] toSymbolArray:apiSymbols];
-    }
+	[tokenArray addObjectsFromArray:self.database.allProtocols];
 }
 
-- (void)_addProtocolsToSymbolArray:(NSMutableArray *)apiSymbols
+- (void)_addProtocolMemberTokensToArray:(NSMutableArray *)tokenArray
 {
-    [self _addTokens:[_database allProtocols] toSymbolArray:apiSymbols];
+	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
+		[tokenArray addObjectsFromArray:protocolToken.propertyTokens];
+		[tokenArray addObjectsFromArray:protocolToken.classMethodTokens];
+		[tokenArray addObjectsFromArray:protocolToken.instanceMethodTokens];
+		[tokenArray addObjectsFromArray:protocolToken.notificationTokens];
+	}
 }
 
-- (void)_addProtocolMembersToSymbolArray:(NSMutableArray *)apiSymbols
+- (void)_addTokensFromFrameworkTokenClustersToArray:(NSMutableArray *)tokenArray  //TODO: Clean this up.
 {
-    for (AKProtocolToken *protocolToken in [_database allProtocols])
-    {
-        [self _addTokens:[protocolToken propertyTokens] toSymbolArray:apiSymbols];
-        [self _addTokens:[protocolToken classMethodTokens] toSymbolArray:apiSymbols];
-        [self _addTokens:[protocolToken instanceMethodTokens] toSymbolArray:apiSymbols];
-    }
-}
-
-- (void)_addFunctionsToSymbolArray:(NSMutableArray *)apiSymbols  //TODO: Clean this up.
-{
-//    for (NSString *fwName in [_database frameworkNames])
-//    {
-//        for (AKGroupItem *groupItem in [_database functionsGroupsForFramework:fwName])
-//        {
-//            [self _addTokens:[groupItem subitems] toSymbolArray:apiSymbols];
-//        }
-//    }
+//	for (NSString *fwName in self.database.frameworkNames) {
+//		for (AKGroupItem *groupItem in [self.database functionsGroupsForFramework:fwName]) {
+//			[self _addTokens:groupItem.subitems toArray:tokenArray];
+//		}
+//	}
 }
 
 @end

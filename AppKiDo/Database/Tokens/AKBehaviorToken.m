@@ -84,13 +84,6 @@
 	}
 }
 
-- (void)addImplementedProtocols:(NSArray *)protocolTokens
-{
-	for (AKProtocolToken *protocolToken in protocolTokens) {
-		[self addImplementedProtocol:protocolToken];
-	}
-}
-
 #pragma mark - Property tokens
 
 - (AKPropertyToken *)propertyTokenWithName:(NSString *)propertyName

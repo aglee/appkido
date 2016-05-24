@@ -64,17 +64,17 @@
 		return nil;
 	}
 
-	AKBehaviorToken *item = [self _getOrAddClassOrCategoryTokenWithName:tokenMO.tokenName];
-	if (item.tokenMO) {
-		QLog(@"+++ [ODD] %s item %@ already has a tokenMO", __PRETTY_FUNCTION__, item);
+	AKBehaviorToken *token = [self _getOrAddClassOrCategoryTokenWithName:tokenMO.tokenName];
+	if (token.tokenMO) {
+		QLog(@"+++ [ODD] %s item %@ already has a tokenMO", __PRETTY_FUNCTION__, token);
 	}
-	item.tokenMO = tokenMO;
-	if (item.isClassToken) {
-		if (((AKClassToken *)item).parentClass == nil) {
-			[self _fillInParentClassOfClassToken:((AKClassToken *)item)];
+	token.tokenMO = tokenMO;
+	if (token.isClassToken) {
+		if (((AKClassToken *)token).parentClass == nil) {
+			[self _fillInParentClassOfClassToken:((AKClassToken *)token)];
 		}
 	}
-	return item;
+	return token;
 }
 
 - (NSRegularExpression *)_regexForCategoryNames
@@ -147,7 +147,7 @@
 - (void)_fillInParentClassOfClassToken:(AKClassToken *)classToken
 {
 	if (classToken.parentClass) {
-		QLog(@"+++ Item for class %@ already has parent class %@", classToken.name, classToken.parentClass.name);
+		QLog(@"+++ Class token %@ already has superclass token %@", classToken.name, classToken.parentClass.name);
 		return;
 	}
 	if (classToken.tokenMO.superclassContainers.count > 1) {
@@ -157,7 +157,7 @@
 	if (container) {
 		AKClassToken *parentClassToken = [self _getOrAddClassTokenWithName:container.containerName];
 		[parentClassToken addChildClass:classToken];
-		//QLog(@"+++ parent class '%@' => child class '%@'", parentClassToken.tokenName, classToken.tokenName);
+		//QLog(@"+++ superclass '%@' => subclass '%@'", parentClassToken.tokenName, classToken.tokenName);
 	}
 }
 

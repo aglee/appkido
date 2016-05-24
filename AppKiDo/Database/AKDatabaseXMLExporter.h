@@ -33,7 +33,7 @@
 
 #pragma mark - The main export method
 
-/*! Exports the database's items and frameworks in XML format. */
+/*! Exports the database in XML format. */
 - (void)doExport;
 
 

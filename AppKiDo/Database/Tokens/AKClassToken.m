@@ -21,6 +21,12 @@
 @end
 
 @implementation AKClassToken
+{
+@private
+	NSMutableArray *_namesOfAllOwningFrameworks;
+	NSMutableArray *_childClassTokens;  // Contains AKClassTokens.
+	NSMutableArray *_categoryTokens;  // Contains AKCategoryTokens.
+}
 
 #pragma mark - Init/awake/dealloc
 
@@ -80,9 +86,9 @@
 
 - (AKCategoryToken *)categoryNamed:(NSString *)catName
 {
-	for (AKCategoryToken *item in _categoryTokens) {
-		if ([item.name isEqualToString:catName]) {
-			return item;
+	for (AKCategoryToken *token in _categoryTokens) {
+		if ([token.name isEqualToString:catName]) {
+			return token;
 		}
 	}
 	return nil;
@@ -135,7 +141,7 @@
 
 #pragma mark - Owning frameworks
 
-- (void)setMainFrameworkName:(NSString *)frameworkName  //TODO: Fix the multiple-frameworks thing for class items.
+- (void)setMainFrameworkName:(NSString *)frameworkName  //TODO: Fix the multiple-frameworks thing for classes.
 {
 	// Move this framework name to the beginning of _namesOfAllOwningFrameworks.
 	if (frameworkName) {
