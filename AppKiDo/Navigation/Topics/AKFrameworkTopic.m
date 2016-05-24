@@ -14,7 +14,6 @@
 #import "AKFrameworkTokenClusterTopic.h"
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
-#import "AKSortUtils.h"
 #import "DIGSLog.h"
 
 @implementation AKFrameworkTopic

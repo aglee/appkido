@@ -11,8 +11,8 @@
 #import "AKHeaderFileDoc.h"
 #import "AKClassToken.h"
 #import "AKDatabase.h"
-#import "AKSortUtils.h"
 #import "AKSubtopicConstants.h"
+#import "NSArray+AppKiDo.h"
 
 @interface AKClassTopic ()
 @property (strong, readonly) AKClassToken *classToken;
@@ -79,7 +79,7 @@
 {
 	NSMutableArray *childTopics = [NSMutableArray array];
 
-	NSArray *childClassTokens = [AKSortUtils arrayBySortingArray:[self.classToken childClasses]];
+	NSArray *childClassTokens = [self.classToken.childClasses ak_sortedBySortName];
 	for (AKClassToken *subclassToken in childClassTokens) {
 		[childTopics addObject:[[AKClassTopic alloc] initWithClassToken:subclassToken]];
 	}

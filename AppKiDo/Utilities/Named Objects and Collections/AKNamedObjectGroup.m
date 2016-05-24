@@ -7,8 +7,8 @@
 //
 
 #import "AKNamedObjectGroup.h"
-#import "AKSortUtils.h"
 #import "DIGSLog.h"
+#import "NSArray+AppKiDo.h"
 
 @interface AKNamedObjectGroup ()
 @property (copy) NSMutableDictionary *objectsByName;
@@ -41,7 +41,7 @@
 
 - (NSArray *)sortedObjects
 {
-	return [AKSortUtils arrayBySortingArray:self.objectsByName.allValues];
+	return [self.objectsByName.allValues ak_sortedBySortName];
 }
 
 #pragma mark - Accessing objects in the group

@@ -7,14 +7,12 @@
  */
 
 #import "AKDatabaseXMLExporter.h"
-
-#import "DIGSLog.h"
-
 #import "AKClassToken.h"
 #import "AKDatabase.h"
 #import "AKMemberToken.h"
 #import "AKProtocolToken.h"
-#import "AKSortUtils.h"
+#import "DIGSLog.h"
+#import "NSArray+AppKiDo.h"
 
 @implementation AKDatabaseXMLExporter
 
@@ -62,7 +60,7 @@
         // Export classes.
         [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
             NSArray *allClassTokens = [_database classesForFramework:fwName];
-            for (AKClassToken *classToken in [AKSortUtils arrayBySortingArray:allClassTokens])
+            for (AKClassToken *classToken in [allClassTokens ak_sortedBySortName])
             {
                 [self _exportClass:classToken];
             }
@@ -86,7 +84,7 @@
         [self _writeDividerWithString:fwName string:@"formal protocols"];
 
         NSArray *protocolTokens = [_database protocolsForFramework:fwName];
-        for (AKProtocolToken *protocolToken in [AKSortUtils arrayBySortingArray:protocolTokens])
+        for (AKProtocolToken *protocolToken in [protocolTokens ak_sortedBySortName])
         {
             [self _exportProtocol:protocolToken];
         }
@@ -100,7 +98,7 @@
 //{
 //    [self _writeDividerWithString:fwName string:frameworkSection];
 //    [_xmlWriter tag:frameworkSection attributes:nil contentBlock:^{
-//        for (AKGroupItem *groupItem in [AKSortUtils arrayBySortingArray:groupItems])
+//        for (AKGroupItem *groupItem in [groupItems ak_sortedBySortName])
 //        {
 //            [self _exportGroupItem:groupItem usingsubitemTag:subitemTag];
 //        }
@@ -164,7 +162,7 @@
                 xmlTag:(NSString *)memberTag
 {
     [_xmlWriter tag:membersType attributes:nil contentBlock:^{
-        for (AKMemberToken *memberToken in [AKSortUtils arrayBySortingArray:memberTokens])
+        for (AKMemberToken *memberToken in [memberTokens ak_sortedBySortName])
         {
             [self _exportMember:memberToken withXMLTag:memberTag];
         }
@@ -206,7 +204,7 @@
 //- (void)_exportGroupItem:(AKGroupItem *)groupItem usingsubitemTag:(NSString *)subitemTag
 //{
 //    [_xmlWriter tag:@"group" attributes:@{ @"name": groupItem.name } contentBlock:^{
-//        for (AKToken *subitem in [AKSortUtils arrayBySortingArray:[groupItem subitems]])
+//        for (AKToken *subitem in [groupItem.subitems ak_sortedBySortName])
 //        {
 //            [self _exportGroupSubitem:subitem withXMLTag:subitemTag];
 //        }

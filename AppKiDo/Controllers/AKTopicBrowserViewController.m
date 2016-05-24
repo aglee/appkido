@@ -14,12 +14,12 @@
 #import "AKLabelTopic.h"
 #import "AKPrefUtils.h"
 #import "AKProtocolToken.h"
-#import "AKSortUtils.h"
 #import "AKSubtopicListViewController.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 #import "DIGSLog.h"
+#import "NSArray+AppKiDo.h"
 
 @interface AKTopicBrowserViewController ()
 @property (readonly) NSMutableArray *topicArraysForBrowserColumns;
@@ -304,7 +304,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 	// Set up the "classes" section.
 	[topics addObject:[[AKLabelTopic alloc] initWithLabel:@":: classes ::"]];
-	for (AKClassToken *classToken in [AKSortUtils arrayBySortingArray:db.rootClasses]) {
+	for (AKClassToken *classToken in [db.rootClasses ak_sortedBySortName]) {
 		[topics addObject:[[AKClassTopic alloc] initWithClassToken:classToken]];
 	}
 

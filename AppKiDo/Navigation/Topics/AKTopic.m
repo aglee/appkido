@@ -7,9 +7,9 @@
 
 #import "AKTopic.h"
 #import "AKClassToken.h"
-#import "AKSortUtils.h"
 #import "AKSubtopic.h"
 #import "DIGSLog.h"
+#import "NSArray+AppKiDo.h"
 
 @implementation AKTopic
 
@@ -192,7 +192,7 @@
 AKSubtopic *AKCreateSubtopic(NSString *subtopicName, NSArray *docListItems, BOOL sort)
 {
 	if (sort) {
-		docListItems = [AKSortUtils arrayBySortingArray:docListItems];
+		docListItems = [docListItems ak_sortedBySortName];
 	}
 	return [[AKSubtopic alloc] initWithName:subtopicName docListItems:docListItems];
 }

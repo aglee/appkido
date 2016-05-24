@@ -8,8 +8,8 @@
 
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
-#import "AKSortUtils.h"
 #import "AKToken.h"
+#import "NSArray+AppKiDo.h"
 
 @interface AKNamedObjectCluster ()
 @property (copy) NSMutableDictionary *groupsByName;
@@ -42,7 +42,7 @@
 
 - (NSArray *)sortedGroups
 {
-	return [AKSortUtils arrayBySortingArray:self.groupsByName.allValues];
+	return [self.groupsByName.allValues ak_sortedBySortName];
 }
 
 #pragma mark - Accessing token groups

@@ -19,7 +19,6 @@
 #import "AKNamedObjectGroup.h"
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
-#import "AKSortUtils.h"
 #import "AKSubtopic.h"
 #import "AKToken.h"
 #import "NSString+AppKiDo.h"

@@ -10,6 +10,7 @@
 #import "AKClassToken.h"
 #import "AKProtocolToken.h"
 #import "AKMemberToken.h"
+#import "NSArray+AppKiDo.h"
 
 @interface AKMembersSubtopic ()
 @property (strong) AKBehaviorToken *behaviorToken;
@@ -29,8 +30,7 @@
 {
 	NSMutableArray *docList = [NSMutableArray array];
 	NSDictionary *memberTokensByName = [self _subtopicMembersByName];
-	NSArray *sortedMemberNames = [memberTokensByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-	for (NSString *memberName in sortedMemberNames) {
+	for (NSString *memberName in [memberTokensByName.allKeys ak_sortedStrings]) {
 		[docList addObject:memberTokensByName[memberName]];
 	}
 	return docList;

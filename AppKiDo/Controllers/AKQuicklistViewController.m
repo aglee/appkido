@@ -6,10 +6,6 @@
  */
 
 #import "AKQuicklistViewController.h"
-
-#import "DIGSLog.h"
-#import "DIGSFindBuffer.h"
-
 #import "AKAppDelegate.h"
 #import "AKClassToken.h"
 #import "AKClassTopic.h"
@@ -23,11 +19,13 @@
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 #import "AKSearchQuery.h"
-#import "AKSortUtils.h"
 #import "AKTableView.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
-
+#import "DIGSFindBuffer.h"
+#import "DIGSLog.h"
+#import "NSArray+AppKiDo.h"
+#import "NSSet+AppKiDo.h"
 #import "NSString+AppKiDo.h"
 
 #pragma mark - Private constants
@@ -794,7 +792,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 		}
 	}
 
-	return [AKSortUtils arrayBySortingArray:quicklistItems];
+	return [quicklistItems ak_sortedBySortName];
 }
 
 - (NSArray *)_sortedDocLocatorsForProtocols:(NSArray *)protocolTokens
@@ -816,21 +814,20 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 		}
 	}
 
-	return [AKSortUtils arrayBySortingArray:quicklistItems];
+	return [quicklistItems ak_sortedBySortName];
 }
 
 - (NSArray *)_sortedDescendantsOfClassesWithNames:(NSArray *)classNames
 {
-	NSMutableSet *setOfItems = [NSMutableSet setWithCapacity:100];
+	NSMutableSet *setOfClassTokens = [NSMutableSet setWithCapacity:100];
 
 	for (NSString *name in classNames)
 	{
-		AKClassToken *classToken = [[self.owningWindowController database] classWithName:name];
-
-		[setOfItems unionSet:[classToken descendantClasses]];
+		AKClassToken *classToken = [self.owningWindowController.database classWithName:name];
+		[setOfClassTokens unionSet:[classToken descendantClasses]];
 	}
 
-	return [AKSortUtils arrayBySortingSet:setOfItems];
+	return [setOfClassTokens ak_sortedBySortName];
 }
 
 - (NSArray *)_sortedDescendantsOfClassesInSet:(NSSet *)setOfClassTokens
@@ -844,7 +841,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}
 
 	// Sort the classes we found and return the result.
-	return [AKSortUtils arrayBySortingSet:resultSet];
+	return [resultSet ak_sortedBySortName];
 }
 
 - (void)_selectSearchResultAtIndex:(NSInteger)resultIndex
