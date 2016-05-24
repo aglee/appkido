@@ -623,7 +623,6 @@
 		73664CB61CF2BBBE0094F405 /* AppKiDo */ = {
 			isa = PBXGroup;
 			children = (
-				73664D1E1CF2BE9D0094F405 /* Cocoa Categories */,
 				73664DF91CF2BE9E0094F405 /* Utilities */,
 				73664DF31CF2BE9E0094F405 /* Prefs */,
 				73664D7A1CF2BE9D0094F405 /* DocSet Data */,
@@ -1031,6 +1030,7 @@
 			isa = PBXGroup;
 			children = (
 				73664E2F1CF2BE9E0094F405 /* Third-Party */,
+				73664D1E1CF2BE9D0094F405 /* Cocoa Categories */,
 				73664E191CF2BE9E0094F405 /* DIGS */,
 				736826FB1CF348A2004B070E /* Named Objects and Collections */,
 				73664DFA1CF2BE9E0094F405 /* AKAppVersion.h */,
