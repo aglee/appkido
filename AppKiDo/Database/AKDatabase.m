@@ -169,18 +169,6 @@
 	}
 }
 
-- (AKTokenInferredInfo *)_inferredInfoForTokenMO:(DSAToken *)tokenMO
-{
-	AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO database:self];
-
-	if (inferredInfo.framework == nil) {
-		NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-		inferredInfo.framework = [self frameworkWithName:frameworkName];
-	}
-
-	return inferredInfo;
-}
-
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO
 {
 	// See if the DocSetIndex specifies a framework for this token.

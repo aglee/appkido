@@ -17,7 +17,6 @@
 
 - (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
 - (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName;
-- (AKTokenInferredInfo *)_inferredInfoForTokenMO:(DSAToken *)tokenMO;
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
 @end
 
