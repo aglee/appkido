@@ -37,7 +37,7 @@
 	NSArray *tokenClusters = @[self.framework.functionsCluster,
 							   self.framework.enumsCluster,
 							   self.framework.macrosCluster,
-							   self.framework.typedefsCluster,
+							   self.framework.dataTypesCluster,
 							   self.framework.constantsCluster];
 	for (AKNamedObjectCluster *cluster in tokenClusters) {
 		if (cluster.count > 0) {

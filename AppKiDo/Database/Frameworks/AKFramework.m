@@ -24,7 +24,7 @@
 		_enumsCluster = [[AKNamedObjectCluster alloc] initWithName:AKEnumsTopicName];
 		_functionsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsTopicName];
 		_macrosCluster = [[AKNamedObjectCluster alloc] initWithName:AKMacrosTopicName];
-		_typedefsCluster = [[AKNamedObjectCluster alloc] initWithName:AKTypedefsTopicName];
+		_dataTypesCluster = [[AKNamedObjectCluster alloc] initWithName:AKDataTypesTopicName];
 	}
 	return self;
 }

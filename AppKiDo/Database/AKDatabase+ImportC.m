@@ -134,7 +134,7 @@
 									 @"data" : inferredInfo.framework.constantsCluster,
 									 @"econst" : inferredInfo.framework.enumsCluster,
 									 @"macro" : inferredInfo.framework.macrosCluster,
-									 @"tdef" : inferredInfo.framework.typedefsCluster,
+									 @"tdef" : inferredInfo.framework.dataTypesCluster,
 									 };
 	AKNamedObjectCluster *tokenCluster = clustersByType[inferredInfo.tokenMO.tokenType.typeName];
 	if (tokenCluster == nil) {

@@ -15,6 +15,6 @@ extern NSString *AKProtocolsTopicName;
 extern NSString *AKFunctionsTopicName;
 extern NSString *AKEnumsTopicName;
 extern NSString *AKMacrosTopicName;
-extern NSString *AKTypedefsTopicName;
+extern NSString *AKDataTypesTopicName;
 extern NSString *AKConstantsTopicName;
 

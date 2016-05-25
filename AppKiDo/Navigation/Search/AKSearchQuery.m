@@ -395,7 +395,7 @@
 {
 	NSArray *childTopicNames = @[ AKEnumsTopicName,
 								  AKMacrosTopicName,
-								  AKTypedefsTopicName,
+								  AKDataTypesTopicName,
 								  AKConstantsTopicName ];
 	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
 	[self _searchTokenClusterChildTopicsWithNames:childTopicNames

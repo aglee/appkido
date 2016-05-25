@@ -95,7 +95,7 @@
 	// Is it of the form "<framework> <childtopic> Reference"?
 	static NSSet *s_childTopicNames;
 	if (s_childTopicNames == nil) {
-		s_childTopicNames = [NSSet setWithObjects:AKEnumsTopicName, AKMacrosTopicName, AKTypedefsTopicName, AKConstantsTopicName, nil];
+		s_childTopicNames = [NSSet setWithObjects:AKEnumsTopicName, AKMacrosTopicName, AKDataTypesTopicName, AKConstantsTopicName, nil];
 	}
 	if (words.count == 3
 		&& [_database frameworkWithName:firstWord] != nil

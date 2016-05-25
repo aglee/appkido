@@ -18,6 +18,6 @@
 @property (strong, readonly) AKNamedObjectCluster *enumsCluster;
 @property (strong, readonly) AKNamedObjectCluster *functionsCluster;
 @property (strong, readonly) AKNamedObjectCluster *macrosCluster;
-@property (strong, readonly) AKNamedObjectCluster *typedefsCluster;
+@property (strong, readonly) AKNamedObjectCluster *dataTypesCluster;
 
 @end
