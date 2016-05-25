@@ -310,7 +310,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 	// Set up the "frameworks" section.
 	[topics addObject:[[AKLabelTopic alloc] initWithLabel:@":: frameworks ::"]];
-	for (AKFramework *fw in db.frameworks) {
+	for (AKFramework *fw in [db.frameworks ak_sortedBySortName]) {
 		[topics addObject:[[AKFrameworkTopic alloc] initWithFramework:fw]];
 	}
 
