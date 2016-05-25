@@ -6,12 +6,7 @@
  */
 
 #import "AKAppDelegate.h"
-
 #import <CoreFoundation/CoreFoundation.h>
-
-#import "DIGSLog.h"
-#import "DIGSFindBuffer.h"
-
 #import "AKAboutWindowController.h"
 #import "AKAppVersion.h"
 #import "AKClassToken.h"
@@ -32,7 +27,9 @@
 #import "AKTopic.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
-
+#import "DIGSLog.h"
+#import "DIGSFindBuffer.h"
+#import "DocSetIndex.h"
 #import "NSString+AppKiDo.h"
 
 #define MEASURE_PARSE_SPEED 1
@@ -108,8 +105,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-
 }
 
 #pragma mark - Getters and setters

@@ -6,10 +6,10 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "DocSetIndex.h"
 #import "DocSetModel.h"
 
 @class AKClassToken;
+@class DocSetIndex;
 @class AKManagedObjectQuery;
 @class AKToken;
 @class AKFunctionToken;

@@ -7,6 +7,7 @@
 
 #import "AKDatabase+Private.h"
 #import "AKClassToken.h"
+#import "DocSetIndex.h"
 #import "AKFramework.h"
 #import "AKManagedObjectQuery.h"
 #import "AKNamedObjectCluster.h"
