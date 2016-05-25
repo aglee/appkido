@@ -36,7 +36,12 @@
 
 - (NSArray *)sortedObjectNames
 {
-	return [self.objectsByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	return [self.objectsByName.allKeys ak_sortedStrings];
+}
+
+- (NSArray *)objects
+{
+	return self.objectsByName.allValues;
 }
 
 - (NSArray *)sortedObjects

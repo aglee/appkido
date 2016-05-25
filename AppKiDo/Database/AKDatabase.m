@@ -47,9 +47,9 @@
 	return self.frameworksGroup.sortedObjectNames;
 }
 
-- (NSArray *)sortedFrameworks
+- (NSArray *)frameworks
 {
-	return self.frameworksGroup.sortedObjects;
+	return self.frameworksGroup.objects;
 }
 
 #pragma mark - Populating the database
@@ -123,7 +123,7 @@
 - (NSArray *)protocolsForFramework:(NSString *)frameworkName
 {
 	AKFramework *framework = (AKFramework *)[self.frameworksGroup objectWithName:frameworkName];
-	return framework.protocolsGroup.sortedObjects;
+	return framework.protocolsGroup.objects;
 }
 
 - (NSArray *)allProtocols

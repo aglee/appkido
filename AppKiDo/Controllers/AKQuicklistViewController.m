@@ -130,7 +130,7 @@ enum
 	// We don't want that.
 	[_frameworkPopup setAutoenablesItems:NO];
 
-	for (NSString *fwName in [[self.owningWindowController database] sortedFrameworkNames])
+	for (NSString *fwName in self.owningWindowController.database.sortedFrameworkNames)
 	{
 		[_frameworkPopup addItemWithTitle:fwName];
 	}

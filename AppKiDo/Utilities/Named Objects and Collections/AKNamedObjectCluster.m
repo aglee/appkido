@@ -37,7 +37,7 @@
 
 - (NSArray *)sortedGroupNames
 {
-	return [self.groupsByName.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	return [self.groupsByName.allKeys ak_sortedStrings];
 }
 
 - (NSArray *)sortedGroups

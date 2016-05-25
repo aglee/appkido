@@ -44,7 +44,7 @@
 {
     [_xmlWriter instructXMLStandalone];
     [_xmlWriter tag:@"database" attributes:nil contentBlock:^{
-        for (NSString *frameworkName in [_database sortedFrameworkNames])
+        for (NSString *frameworkName in _database.sortedFrameworkNames)
         {
             [self _exportFramework:frameworkName];
         }

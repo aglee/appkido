@@ -18,6 +18,7 @@
 
 @property (assign, readonly) NSInteger count;
 @property (copy, readonly) NSArray *sortedObjectNames;
+@property (copy, readonly) NSArray *objects;
 @property (copy, readonly) NSArray *sortedObjects;
 
 #pragma mark - Accessing objects in the group

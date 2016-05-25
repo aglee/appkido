@@ -9,14 +9,14 @@
 #import "DocSetModel.h"
 
 @class AKClassToken;
-@class DocSetIndex;
-@class AKManagedObjectQuery;
-@class AKToken;
 @class AKFunctionToken;
 @class AKFramework;
+@class AKManagedObjectQuery;
 @class AKNamedObjectCluster;
 @class AKNamedObjectGroup;
 @class AKProtocolToken;
+@class AKToken;
+@class DocSetIndex;
 
 /*!
  * Contains information about a Cocoa-style API: the names of API constructs,
@@ -33,7 +33,7 @@
 
 @property (readonly, strong) DocSetIndex *docSetIndex;
 @property (readonly, copy) NSArray *sortedFrameworkNames;
-@property (readonly, copy) NSArray *sortedFrameworks;
+@property (readonly, copy) NSArray *frameworks;
 @property (readonly, copy) NSArray *rootClasses;
 @property (readonly, copy) NSArray *allClasses;
 @property (readonly, copy) NSArray *allProtocols;

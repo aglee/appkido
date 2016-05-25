@@ -63,7 +63,7 @@
 
 - (void)_addFrameworksToArray:(NSMutableArray *)tokenArray
 {
-	[tokenArray addObjectsFromArray:self.database.sortedFrameworks];
+	[tokenArray addObjectsFromArray:self.database.frameworks];
 }
 
 - (void)_addClassTokensToArray:(NSMutableArray *)tokenArray

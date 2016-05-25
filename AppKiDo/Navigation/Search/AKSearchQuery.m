@@ -245,7 +245,7 @@
 
 - (void)_searchFrameworks
 {
-	for (AKFramework *framework in self.database.sortedFrameworks) {
+	for (AKFramework *framework in self.database.frameworks) {
 		if ([self _matchesString:framework.name]) 	{
 			AKFrameworkTopic *topic = [[AKFrameworkTopic alloc] initWithFramework:framework];
 			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
@@ -371,7 +371,7 @@
 
 - (void)_searchFunctions
 {
-	for (AKFramework *framework in self.database.sortedFrameworks) {
+	for (AKFramework *framework in self.database.frameworks) {
 		[self _searchFunctionsInFramework:framework];
 	}
 }
@@ -386,7 +386,7 @@
 
 - (void)_searchGlobals
 {
-	for (AKFramework *framework in self.database.sortedFrameworks) {
+	for (AKFramework *framework in self.database.frameworks) {
 		[self _searchGlobalsInFramework:framework];
 	}
 }
