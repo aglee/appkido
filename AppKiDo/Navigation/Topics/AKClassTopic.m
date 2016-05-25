@@ -141,7 +141,7 @@
 		return nil;
 	}
 
-	AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];  //TODO: Global database.
+	AKDatabase *db = AKAppDelegate.appDelegate.appDatabase;  //TODO: Global database.
 	AKClassToken *classToken = [db classWithName:className];
 	if (classToken == nil) {
 		DIGSLogInfo(@"couldn't find a class in the database named %@", className);

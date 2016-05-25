@@ -287,7 +287,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 - (NSArray *)_namesOfAvailableFrameworks
 {
-    return ((AKAppDelegate *)NSApp.delegate).appDatabase.sortedFrameworkNames;
+    return AKAppDelegate.appDelegate.appDatabase.sortedFrameworkNames;
 }
 
 @end

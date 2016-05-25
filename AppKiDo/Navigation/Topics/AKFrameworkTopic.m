@@ -77,7 +77,7 @@
 		return nil;
 	}
 
-	AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];  //TODO: Global database.
+	AKDatabase *db = AKAppDelegate.appDelegate.appDatabase;  //TODO: Global database.
 	AKFramework *framework = [db frameworkWithName:fwName];
 	if (framework == nil) {
 		DIGSLogWarning(@"framework %@ named in pref dict for %@ doesn't exist", [self className], fwName);

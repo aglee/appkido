@@ -113,7 +113,7 @@
 		return nil;
 	}
 
-	AKDatabase *db = [(AKAppDelegate *)NSApp.delegate appDatabase];  //TODO: Global database.
+	AKDatabase *db = AKAppDelegate.appDelegate.appDatabase;  //TODO: Global database.
 	AKProtocolToken *protocolToken = [db protocolWithName:protocolName];
 	if (!protocolToken) {
 		DIGSLogInfo(@"couldn't find a protocol in the database named %@", protocolName);
