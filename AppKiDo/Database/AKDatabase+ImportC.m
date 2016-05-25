@@ -116,12 +116,13 @@
 		|| [tokenType isEqualToString:@"macro"]) {
 
 		[inferredInfo.behaviorToken addConstantToken:token];
-		QLog(@"+++ Added constant %@ to %@.", token.name, inferredInfo.behaviorToken);
+		//QLog(@"+++ Added constant %@ to %@.", token.name, inferredInfo.behaviorToken);
 	} else if ([tokenType isEqualToString:@"tdef"]) {
 		[inferredInfo.behaviorToken addDataTypeToken:token];
-		QLog(@"+++ Added data type %@ to %@.", token, inferredInfo.behaviorToken);
+		//QLog(@"+++ Added data type %@ to %@.", token, inferredInfo.behaviorToken);
 	} else {
-		QLog(@"+++ [ODD] %s Unexpected token type %@ for %@.", tokenType, token);
+		//QLog(@"+++ [ODD] %s Unexpected token type %@ for %@.", tokenType, token);
+		return nil;
 	}
 
 	return token;
