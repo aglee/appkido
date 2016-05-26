@@ -195,11 +195,6 @@
 							 action:@selector(revealDocFileInFinder:)
 							toArray:newMenuItems];
 	}
-	if ([AKDebugging userCanDebug]) {
-		[self _addMenuItemWithTitle:@"Open Parse Window (Debug)"
-							 action:@selector(openParseDebugWindow:)
-							toArray:newMenuItems];
-	}
 
 	// Manually add the "Speech" item *after* our custom items. Note: AppKit
 	// will add the "Services" menu if appropriate. That menu is not one of the

@@ -388,11 +388,6 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 #pragma mark - Action methods -- debugging
 
-- (IBAction)openParseDebugWindow:(id)sender
-{
-	QLog(@"%s is now a no-op", __PRETTY_FUNCTION__);
-}
-
 - (IBAction)printFunFacts:(id)sender
 {
 	NSLog(@"FUN FACTS about %@", self);
@@ -654,8 +649,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	} else if ((itemAction == @selector(copyDocFileURL:))
 			   || (itemAction == @selector(copyDocFilePath:))
 			   || (itemAction == @selector(openDocFileInBrowser:))
-			   || (itemAction == @selector(revealDocFileInFinder:))
-			   || (itemAction == @selector(openParseDebugWindow:))) {
+			   || (itemAction == @selector(revealDocFileInFinder:))) {
 		return ([self currentDocLocator] != nil);
 	} else {
 		return NO;
