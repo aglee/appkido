@@ -201,8 +201,6 @@
 
 #pragma mark - Action methods -- debugging
 
-- (IBAction)openParseDebugWindow:(id)sender;
-
 - (IBAction)printFunFacts:(id)sender;
 
 @end
