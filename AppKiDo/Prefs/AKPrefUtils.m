@@ -22,7 +22,7 @@
     [self _registerStandardDefaults];
 
     // Set logging verbosity, based on user preferences.
-    DIGSSetVerbosityLevel( [[NSUserDefaults standardUserDefaults] integerForKey:(id)DIGSLogVerbosityUserDefault]);
+    DIGSSetVerbosityLevel( [[NSUserDefaults standardUserDefaults] integerForKey:DIGSLogVerbosityUserDefault]);
 //    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
@@ -104,7 +104,7 @@
 {
     NSUserDefaults *userPrefs = [NSUserDefaults standardUserDefaults];
 
-    [userPrefs removeObjectForKey:(id)DIGSLogVerbosityUserDefault];
+    [userPrefs removeObjectForKey:DIGSLogVerbosityUserDefault];
     [userPrefs removeObjectForKey:AKDevToolsPathPrefName];
     [userPrefs removeObjectForKey:AKSearchInNewWindowPrefName];
 
@@ -171,7 +171,7 @@
 {
     NSMutableDictionary *defaultPrefsDictionary = [NSMutableDictionary dictionary];
 
-    defaultPrefsDictionary[(id)DIGSLogVerbosityUserDefault] = @(DIGS_VERBOSITY_WARNING);
+    defaultPrefsDictionary[DIGSLogVerbosityUserDefault] = @(DIGS_VERBOSITY_WARNING);
 
     defaultPrefsDictionary[AKDevToolsPathPrefName] = [self _defaultDevToolsPath];
 
