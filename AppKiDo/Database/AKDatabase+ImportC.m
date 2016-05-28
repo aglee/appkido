@@ -14,7 +14,7 @@
 #import "AKNamedObjectGroup.h"
 #import "AKNotificationToken.h"
 #import "AKProtocolToken.h"
-#import "AKTokenInferredInfo.h"
+#import "AKInferredTokenInfo.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase (ImportC)
@@ -29,7 +29,7 @@
 		}
 
 		// Infer some info about the token.
-		AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO];
+		AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
 		if (inferredInfo.frameworkName == nil) {
 			inferredInfo.frameworkName = [self _frameworkNameForTokenMO:tokenMO];
 		}
@@ -64,7 +64,7 @@
 	}
 }
 
-- (AKToken *)_maybeAddNotificationWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
+- (AKToken *)_maybeAddNotificationWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
 {
 	if (![inferredInfo.tokenMO.tokenName hasSuffix:@"Notification"]) {
 		return nil;
@@ -86,7 +86,7 @@
 	}
 }
 
-- (AKToken *)_maybeAddFunctionTokenWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
+- (AKToken *)_maybeAddFunctionTokenWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
 {
 	if (![inferredInfo.tokenMO.tokenType.typeName isEqualToString:@"func"]) {
 		return nil;
@@ -102,7 +102,7 @@
 	return token;
 }
 
-- (AKBehaviorToken *)_behaviorTokenForInferredInfo:(AKTokenInferredInfo *)inferredInfo
+- (AKBehaviorToken *)_behaviorTokenForInferredInfo:(AKInferredTokenInfo *)inferredInfo
 {
 	if (inferredInfo.nameOfClass) {
 		AKClassToken *classToken = [self classWithName:inferredInfo.nameOfClass];
@@ -123,7 +123,7 @@
 	}
 }
 
-- (AKToken *)_maybeAddTokenToBehaviorWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
+- (AKToken *)_maybeAddTokenToBehaviorWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
 {
 	AKBehaviorToken *behaviorToken = [self _behaviorTokenForInferredInfo:inferredInfo];
 	if (behaviorToken == nil) {
@@ -151,7 +151,7 @@
 	return token;
 }
 
-- (AKToken *)_maybeAddTokenToFrameworkWithInferredInfo:(AKTokenInferredInfo *)inferredInfo
+- (AKToken *)_maybeAddTokenToFrameworkWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
 {
 	// Figure out which token cluster within the framework the token belongs to.
 	AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];

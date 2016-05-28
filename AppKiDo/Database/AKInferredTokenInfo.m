@@ -1,17 +1,17 @@
 //
-//  AKTokenInferredInfo.m
+//  AKInferredTokenInfo.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 5/23/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKTokenInferredInfo.h"
+#import "AKInferredTokenInfo.h"
 #import "DocSetModel.h"
 #import "DIGSLog.h"
 #import "AKTopicConstants.h"
 
-@implementation AKTokenInferredInfo
+@implementation AKInferredTokenInfo
 
 @synthesize tokenMO = _tokenMO;
 @synthesize nodeName = _nodeName;

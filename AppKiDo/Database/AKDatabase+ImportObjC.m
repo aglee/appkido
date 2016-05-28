@@ -19,7 +19,7 @@
 #import "AKProtocolToken.h"
 #import "AKRegexUtils.h"
 #import "AKResult.h"
-#import "AKTokenInferredInfo.h"
+#import "AKInferredTokenInfo.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase (ImportObjC)
@@ -249,7 +249,7 @@
 - (AKBehaviorToken *)_ownerOfClassMemberTokenMO:(DSAToken *)tokenMO
 {
 	AKBehaviorToken *behaviorToken;
-	AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO];
+	AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
 
 	if (inferredInfo.nameOfClass) {
 		behaviorToken = [self _getOrAddClassTokenWithName:inferredInfo.nameOfClass];
@@ -302,7 +302,7 @@
 - (AKProtocolToken *)_ownerOfProtocolMemberTokenMO:(DSAToken *)tokenMO
 {
 	AKProtocolToken *protocolToken;
-	AKTokenInferredInfo *inferredInfo = [[AKTokenInferredInfo alloc] initWithTokenMO:tokenMO];
+	AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
 
 	if (inferredInfo.nameOfProtocol) {
 		protocolToken = [self _getOrAddProtocolTokenWithName:inferredInfo.nameOfProtocol];

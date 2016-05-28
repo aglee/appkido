@@ -1,5 +1,5 @@
 //
-//  AKTokenInferredInfo.h
+//  AKInferredTokenInfo.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 5/23/16.
@@ -16,7 +16,7 @@
  * named frameworkName exists in the database, or a class named nameOfClass,
  * etc.
  */
-@interface AKTokenInferredInfo : NSObject
+@interface AKInferredTokenInfo : NSObject
 
 @property (strong, readonly) DSAToken *tokenMO;
 @property (copy, readonly) NSString *nodeName;
