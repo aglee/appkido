@@ -7,38 +7,15 @@
 
 #import "DIGSLog.h"
 
-const NSString *DIGSLogVerbosityUserDefault = @"DIGSVerbosity";
+static NSInteger s_verbosityLevel = DIGS_VERBOSITY_INFO;
 
-static NSInteger g_verbosityLevel = DIGS_VERBOSITY_INFO;
-
-NSInteger DIGSGetVerbosityLevel() { return g_verbosityLevel; }
-
-void DIGSSetVerbosityLevel(NSInteger level) { g_verbosityLevel = level; }
-
-/* Copped from http://www.cocoabuilder.com/archive/message/cocoa/2007/12/13/194858 */
-int DIGSPrintf(NSString *format, ...)
+NSInteger DIGSGetVerbosityLevel()
 {
-	va_list args;
-	va_start(args, format);
-
-	NSString *output = [[NSString alloc] initWithFormat:format arguments:args];
-	va_end(args);
-
-	int result = printf("%s", output.UTF8String);
-
-	return result;
+	return s_verbosityLevel;
 }
 
-int DIGSPrintln(NSString *format, ...)
+void DIGSSetVerbosityLevel(NSInteger level)
 {
-	va_list args;
-	va_start(args, format);
-
-	NSString *output = [[NSString alloc] initWithFormat:[format stringByAppendingString:@"\n"]
-											  arguments:args];
-	va_end(args);
-
-	int result = printf("%s", output.UTF8String);
-
-	return result;
+	s_verbosityLevel = level;
 }
+

@@ -57,7 +57,7 @@ enum
  * @const       DIGSLogVerbosityUserDefault
  * @discussion  For use by NSUserDefaults.  Value is @"DIGSVerbosity".
  */
-extern const NSString *DIGSLogVerbosityUserDefault;
+#define DIGSLogVerbosityUserDefault @"DIGSLogVerbosityUserDefault"
 
 /*!
  * @function    DIGSGetVerbosityLevel
@@ -212,9 +212,6 @@ do {\
  * @function    DIGSLogError_NondesignatedInitializer
  * @discussion  Call this in the implementation of an initializer that should
  *              never be called because it is not the designated initializer.
- *
- *              Calls [super init] to avoid compiler warning about "Convenience
- *              initializer missing a 'self' call to another initializer".
  */
 #define DIGSLogError_NondesignatedInitializer()\
 do {\
@@ -226,16 +223,4 @@ do {\
 				NSStringFromSelector(_cmd));\
 	}\
 } while (0)
-
-/*!
- * @function    DIGSPrintf
- * @discussion  Like printf(), but allows %@ in the format string.
- */
-extern int DIGSPrintf(NSString *format, ...);
-
-/*!
- * @function    DIGSPrintln
- * @discussion  Like DIGSPrintf(), but adds a newline at the end of the format string.
- */
-extern int DIGSPrintln(NSString *format, ...);
 
