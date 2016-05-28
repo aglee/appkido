@@ -10,33 +10,30 @@
 
 /*!
  * @header      DIGSLog
- * @discussion  Wrappers around NSLog that allow setting of log verbosity
- *              levels.
+ * @discussion  Wrappers around NSLog.  "DIGS" stands for "digital spokes".  I
+ *              own the domain digitalspokes.com but never ended up using it.
  */
 
 /*!
- * @enum        Log verbosity levels
+ * @enum        DIGSLog verbosity levels
  * @abstract    Values that can be passed to DIGSSetVerbosityLevel().
- * @discussion  Anything lower than DIGS_VERBOSITY_NONE works the same
- *              as DIGS_VERBOSITY_NONE, and anything higher than
- *              DIGS_VERBOSITY_ALL works the same as DIGS_VERBOSITY_ALL.
+ * @discussion  Anything lower than DIGS_VERBOSITY_NONE works the same as
+ *              DIGS_VERBOSITY_NONE. Anything higher than DIGS_VERBOSITY_ALL
+ *              works the same as DIGS_VERBOSITY_ALL.
  *
- * @constant    DIGS_VERBOSITY_NONE
+ * @constant	DIGS_VERBOSITY_NONE
  *                  Use DIGS_VERBOSITY_NONE to suppress all log output.
  * @constant    DIGS_VERBOSITY_ERROR
- *                  Use DIGS_VERBOSITY_ERROR to log anomalies without
- *                  workarounds.
+ *                  Use DIGS_VERBOSITY_ERROR to log anomalies without workarounds.
  * @constant    DIGS_VERBOSITY_WARNING
- *                  Use DIGS_VERBOSITY_WARNING to log anomalies with
- *                  workarounds.
- * @constant    DIGS_VERBOSITY_INFO
- *                  Use DIGS_VERBOSITY_INFO to log normal information
- *                  about the state of the program.  This is the default
- *                  verbosity level.  
+ *					Use DIGS_VERBOSITY_WARNING to log anomalies with workarounds.
+ * @constant	DIGS_VERBOSITY_INFO
+ *                  Use DIGS_VERBOSITY_INFO to log normal information about the
+ *					state of the program.  This is the default verbosity level.
  * @constant    DIGS_VERBOSITY_DEBUG
- *                  Use DIGS_VERBOSITY_DEBUG to log information that is
- *                  only needed for debugging and should not be logged
- *                  by a deployed version of the app.
+ *                  Use DIGS_VERBOSITY_DEBUG to log information that is only
+ *                  needed for debugging and should not be logged by a deployed
+ *                  version of the app.
  * @constant    DIGS_VERBOSITY_DEBUG2
  *                  Like DIGS_VERBOSITY_DEBUG, but more verbose.
  * @constant    DIGS_VERBOSITY_DEBUG3
@@ -46,14 +43,14 @@
  */
 enum
 {
-    DIGS_VERBOSITY_NONE = 0,
-    DIGS_VERBOSITY_ERROR = 10,
-    DIGS_VERBOSITY_WARNING = 20,
-    DIGS_VERBOSITY_INFO = 30,
-    DIGS_VERBOSITY_DEBUG = 40,
-    DIGS_VERBOSITY_DEBUG2 = 50,
-    DIGS_VERBOSITY_DEBUG3 = 60,
-    DIGS_VERBOSITY_ALL = 99,
+	DIGS_VERBOSITY_NONE = 0,
+	DIGS_VERBOSITY_ERROR = 10,
+	DIGS_VERBOSITY_WARNING = 20,
+	DIGS_VERBOSITY_INFO = 30,
+	DIGS_VERBOSITY_DEBUG = 40,
+	DIGS_VERBOSITY_DEBUG2 = 50,
+	DIGS_VERBOSITY_DEBUG3 = 60,
+	DIGS_VERBOSITY_ALL = 99,
 };
 
 /*!
@@ -64,15 +61,14 @@ extern const NSString *DIGSLogVerbosityUserDefault;
 
 /*!
  * @function    DIGSGetVerbosityLevel
- * @discussion  Returns the verbosity level used by the various
- *              DIGSLogXXX() functions.
+ * @discussion  Returns the DIGSLog verbosity level.
  */
 extern NSInteger DIGSGetVerbosityLevel();
 
 /*!
  * @function    DIGSSetVerbosityLevel
  * @discussion  Sets the verbosity level used by the various DIGSLogXXX()
- *              functions.
+ *			    functions.
  */
 extern void DIGSSetVerbosityLevel(NSInteger level);
 
@@ -82,10 +78,10 @@ extern void DIGSSetVerbosityLevel(NSInteger level);
  */
 #define DIGSLogError(format, ...)\
 do {\
-    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
-    {\
-        NSLog(@"[_ERROR_] " format, ## __VA_ARGS__);\
-    }\
+	if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
+	{\
+		NSLog(@"[_ERROR_] " format, ## __VA_ARGS__);\
+	}\
 } while (0)
 
 /*!
@@ -94,10 +90,10 @@ do {\
  */
 #define DIGSLogWarning(format, ...)\
 do {\
-    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_WARNING)\
-    {\
-        NSLog(@"[_WARNING_] " format, ## __VA_ARGS__);\
-    }\
+	if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_WARNING)\
+	{\
+		NSLog(@"[_WARNING_] " format, ## __VA_ARGS__);\
+	}\
 } while (0)
 
 /*!
@@ -106,10 +102,10 @@ do {\
  */
 #define DIGSLogInfo(format, ...)\
 do {\
-    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_INFO)\
-    {\
-        NSLog(@"[_INFO_] " format, ## __VA_ARGS__);\
-    }\
+	if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_INFO)\
+	{\
+		NSLog(@"[_INFO_] " format, ## __VA_ARGS__);\
+	}\
 } while(0)
 
 /*!
@@ -118,10 +114,10 @@ do {\
  */
 #define DIGSLogDebug(format, ...)\
 do {\
-    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
-    {\
-        NSLog(@"[_DEBUG_] " format, ## __VA_ARGS__);\
-    }\
+	if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
+	{\
+		NSLog(@"[_DEBUG_] " format, ## __VA_ARGS__);\
+	}\
 } while (0)
 
 /*!
@@ -130,10 +126,10 @@ do {\
  */
 #define DIGSLogDebug2(format, ...)\
 do {\
-    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG2)\
-    {\
-        NSLog(@"[_DEBUG2_] " format, ## __VA_ARGS__);\
-    }\
+	if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG2)\
+	{\
+		NSLog(@"[_DEBUG2_] " format, ## __VA_ARGS__);\
+	}\
 } while (0)
 
 /*!
@@ -142,10 +138,10 @@ do {\
  */
 #define DIGSLogDebug3(format, ...)\
 do {\
-    if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG3)\
-    {\
-        NSLog(@"[_DEBUG3_] " format, ## __VA_ARGS__);\
-    }\
+	if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG3)\
+	{\
+		NSLog(@"[_DEBUG3_] " format, ## __VA_ARGS__);\
+	}\
 } while (0)
 
 /*!
@@ -154,29 +150,29 @@ do {\
  */
 #define DIGSLogError_MissingOverride()\
 do {\
-    {\
-        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
-            DIGSLogError(\
-                @"%@ must override %@",\
-                [self class],\
-                NSStringFromSelector(_cmd));\
-    }\
+	{\
+		if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
+			DIGSLogError(\
+				@"%@ must override %@",\
+				[self class],\
+				NSStringFromSelector(_cmd));\
+	}\
 } while (0)
 
 /*!
  * @function    DIGSLogDebug_EnteringMethod
- * @discussion  Stick this at the beginning of a method to log the fact
- *              that it is being entered.
+ * @discussion  Stick this at the beginning of a method to log the fact that it
+ *              is being entered.
  */
 #define DIGSLogDebug_EnteringMethod()\
 do {\
-    {\
-        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
-            DIGSLogDebug(\
-                @"%@ -- entering method %@",\
-                [self class],\
-                NSStringFromSelector(_cmd));\
-    }\
+	{\
+		if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
+			DIGSLogDebug(\
+				@"%@ -- entering method %@",\
+				[self class],\
+				NSStringFromSelector(_cmd));\
+	}\
 } while (0)
 
 /*!
@@ -186,14 +182,14 @@ do {\
  */
 #define DIGSLogError_ExitingMethodPrematurely(msgString)\
 do {\
-    {\
-        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
-            DIGSLogError(\
-                @"%@ -- exiting %@ early -- %@",\
-                [self class],\
-                NSStringFromSelector(_cmd),\
-                (msgString));\
-    }\
+	{\
+		if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
+			DIGSLogError(\
+				@"%@ -- exiting %@ early -- %@",\
+				[self class],\
+				NSStringFromSelector(_cmd),\
+				(msgString));\
+	}\
 } while (0)
 
 /*!
@@ -203,33 +199,32 @@ do {\
  */
 #define DIGSLogDebug_ExitingMethod()\
 do {\
-    {\
-        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
-            DIGSLogDebug(\
-                @"%@ -- exiting %@",\
-                [self class],\
-                NSStringFromSelector(_cmd));\
-    }\
+	{\
+		if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_DEBUG)\
+			DIGSLogDebug(\
+				@"%@ -- exiting %@",\
+				[self class],\
+				NSStringFromSelector(_cmd));\
+	}\
 } while (0)
 
 /*!
  * @function    DIGSLogError_NondesignatedInitializer
- * @discussion  Call this in the implementation of an initializer that
- *              should never be called because it is not the designated
- *              initializer.
+ * @discussion  Call this in the implementation of an initializer that should
+ *              never be called because it is not the designated initializer.
  *
  *              Calls [super init] to avoid compiler warning about "Convenience
  *              initializer missing a 'self' call to another initializer".
  */
 #define DIGSLogError_NondesignatedInitializer()\
 do {\
-    {\
-        if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
-            DIGSLogError(\
-                @"%@ -- '%@' is not the designated initializer",\
-                [self class],\
-                NSStringFromSelector(_cmd));\
-    }\
+	{\
+		if (DIGSGetVerbosityLevel() >= DIGS_VERBOSITY_ERROR)\
+			DIGSLogError(\
+				@"%@ -- '%@' is not the designated initializer",\
+				[self class],\
+				NSStringFromSelector(_cmd));\
+	}\
 } while (0)
 
 /*!
@@ -243,3 +238,4 @@ extern int DIGSPrintf(NSString *format, ...);
  * @discussion  Like DIGSPrintf(), but adds a newline at the end of the format string.
  */
 extern int DIGSPrintln(NSString *format, ...);
+
