@@ -20,12 +20,14 @@
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
 @end
 
+#pragma mark -
 
-@interface AKDatabase (PrivateObjC)
+@interface AKDatabase (ImportObjC)
 - (void)_importObjectiveCTokens;
 @end
 
+#pragma mark -
 
-@interface AKDatabase (PrivateC)
+@interface AKDatabase (ImportC)
 - (void)_importCTokens;
 @end

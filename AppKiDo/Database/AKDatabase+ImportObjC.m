@@ -21,7 +21,7 @@
 #import "AKResult.h"
 #import "DIGSLog.h"
 
-@implementation AKDatabase (PrivateObjC)
+@implementation AKDatabase (ImportObjC)
 
 - (void)_importObjectiveCTokens
 {

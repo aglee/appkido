@@ -196,12 +196,12 @@
 
 - (AKMethodToken *)delegateMethodWithName:(NSString *)methodName
 {
-	return self.delegateMethodsByName[methodName];
+	return self.delegateMethodsByName[methodName];  //TODO: This doesn't jibe with delegateMethodTokens.
 }
 
 - (void)addDelegateMethod:(AKMethodToken *)methodToken
 {
-	self.delegateMethodsByName[methodToken.name] = methodToken;
+	self.delegateMethodsByName[methodToken.name] = methodToken;  //TODO: This doesn't jibe with delegateMethodTokens.
 	methodToken.owningBehavior = self;
 }
 

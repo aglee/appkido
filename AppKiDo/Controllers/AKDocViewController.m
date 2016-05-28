@@ -264,8 +264,8 @@
 
 - (NSString *)_templateForWrappingHTMLAroundObjC
 {
-	static dispatch_once_t once;
 	static NSString *s_template;
+	static dispatch_once_t once;
 	dispatch_once(&once, ^{
 		NSString *resourceName = @"objc";
 		NSString *extension = @"html";

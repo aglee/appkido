@@ -17,7 +17,7 @@
 #import "AKTokenInferredInfo.h"
 #import "DIGSLog.h"
 
-@implementation AKDatabase (PrivateC)
+@implementation AKDatabase (ImportC)
 
 - (void)_importCTokens
 {
