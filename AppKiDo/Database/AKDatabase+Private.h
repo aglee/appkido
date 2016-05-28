@@ -22,10 +22,17 @@
 - (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName;
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
 
-- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
-- (NSArray *)_fetchTokenMOsWithLanguage:(NSString *)languageName
-								tokenType:(NSString *)tokenType;
 @end
+
+#pragma mark -
+
+@interface AKDatabase (ImportUtils)
+
+- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
+- (NSArray *)_fetchTokenMOsWithLanguage:(NSString *)languageName tokenType:(NSString *)tokenType;
+
+@end
+
 
 #pragma mark -
 
