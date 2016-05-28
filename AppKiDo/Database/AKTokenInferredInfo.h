@@ -7,45 +7,46 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DocSetModel.h"
 
-@class AKBehaviorToken;
-@class AKDatabase;
-@class AKFramework;
+@class DSAToken;
 
 /*!
- * Deconstructs node names to try to infer what the node is about -- what's the
- * relevant framework, class, protocol, etc.
+ * Tries to infer what a node is about, purely from the words in the node name.
+ * Purely a string parser.  Doesn't validate, for example, whether a framework
+ * named frameworkName exists in the database, or a class named nameOfClass,
+ * etc.
  */
 @interface AKTokenInferredInfo : NSObject
 
 @property (strong, readonly) DSAToken *tokenMO;
+@property (copy, readonly) NSString *nodeName;
 
-/*! For "Foundation Constants Reference" this would be the Foundation framework. */
-@property (strong) AKFramework *framework;
+/*! For "Foundation Constants Reference" this would be "Foundation". */
+@property (copy) NSString *frameworkName;
 
 /*! For "Foundation Constants Reference" this would be "Constants". */
 @property (copy, readonly) NSString *frameworkChildTopicName;
 
 /*!
- * For "AVPlayerItem Class Reference" this would be "AVPlayerItem".
- * For "NSAccessibility Protocol Reference" this would be "NSAccessibility".
+ * For "AVPlayerItem Class Reference" this would be "AVPlayerItem".  Property is
+ * named nameOfClass to avoid conflict with [NSObject className].
  */
-@property (strong, readonly) AKBehaviorToken *behaviorToken;
+@property (copy, readonly) NSString *nameOfClass;
+
+/*!
+ * For "NSAccessibility Protocol Reference" or "NSAccessibility Informal
+ * Protocol Reference" this would be "NSAccessibility".
+ */
+@property (copy, readonly) NSString *nameOfProtocol;
 
 /*! For "DRSetupPanel.h Reference" this would be "DRSetupPanel.h". */
 @property (copy, readonly) NSString *headerFileName;
 
 /*! For "Keychain Services Reference" this would be "Keychain Services". */
-@property (copy, readonly) NSString *referenceSubject;
+@property (copy, readonly) NSString *nodeSubject;
 
 #pragma mark - Init/awake/dealloc
 
-/*!
- * The provided AKDatabase gives context for checking whether a given word in
- * the node name is a framework name, a class name, a protocol name, or none of
- * the above.
- */
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO database:(AKDatabase *)database;
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO;
 
 @end

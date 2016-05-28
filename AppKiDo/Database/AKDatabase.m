@@ -15,7 +15,6 @@
 #import "AKProtocolToken.h"
 #import "AKRegexUtils.h"
 #import "AKResult.h"
-#import "AKTokenInferredInfo.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase
@@ -136,38 +135,37 @@
 	return _protocolTokensByName[name];
 }
 
-#pragma mark - Private methods - populating the database - misc
+#pragma mark - Private methods -- inferring framework info
 
-- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName
+- (AKFramework *)_frameworkForTokenMOAddIfAbsent:(DSAToken *)tokenMO
 {
-	return [[AKManagedObjectQuery alloc] initWithMOC:self.docSetIndex.managedObjectContext entityName:entityName];
-}
-
-- (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName
-{
-	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Token"];
-	query.predicateString = [NSString stringWithFormat:@"language.fullName = '%@'", languageName];
-	AKResult *result = [query fetchObjects];
-	return result.object;  //TODO: Handle error.
-}
-
-- (void)_importFrameworks
-{
-	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Header"];
-	query.keyPaths = @[ @"frameworkName" ];
-	query.predicateString = @"frameworkName != NULL";
-
-	AKResult *result = [query fetchDistinctObjects];  //TODO: Handle error.
-	if (result.error) {
-		return;
+	NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+	if (frameworkName == nil) {
+		return nil;
 	}
 
-	NSArray *fetchedObjects = result.object;
-	for (NSDictionary *dict in fetchedObjects) {
-		NSString *frameworkName = dict[@"frameworkName"];
-		AKFramework *framework = [[AKFramework alloc] initWithName:frameworkName];
+	AKFramework *framework = [self frameworkWithName:frameworkName];
+	if (framework == nil) {
+		framework = [[AKFramework alloc] initWithName:frameworkName];
 		[self.frameworksGroup addNamedObject:framework];
+		QLog(@"+++ Added framework %@.", frameworkName);
 	}
+	return framework;
+}
+
+- (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName
+{
+	if (frameworkName == nil) {
+		return nil;
+	}
+	
+	AKFramework *framework = [self frameworkWithName:frameworkName];
+	if (framework == nil) {
+		framework = [[AKFramework alloc] initWithName:frameworkName];
+		[self.frameworksGroup addNamedObject:framework];
+		QLog(@"+++ Added framework %@.", frameworkName);
+	}
+	return framework;
 }
 
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO
@@ -193,9 +191,12 @@
 	//TODO: KLUDGE -- Hard-code a fictitious "Unknown Framework" for protocols
 	// where I haven't figured out yet how to determine their real framework.
 	if (frameworkName == nil && [tokenMO.tokenType.typeName isEqualToString:@"intf"]) {
-		frameworkName = @"<UNKNOWN FRAMEWORK>";
+		frameworkName = @"<???>";
 	}
 
+	if (frameworkName == nil) {
+		//QLog(@"+++ Could not infer framework name for tokenMO %@, type %@", tokenMO.tokenName, tokenMO.tokenType.typeName);  //TODO: Fix when this happens.
+	}
 	return frameworkName;
 }
 
@@ -236,6 +237,48 @@
 		QLog(@"+++ Framework %@ for %@ was inferred from doc path", inferredFrameworkName, self);
 	}
 	return inferredFrameworkName;
+}
+
+#pragma mark - Private methods -- general
+
+- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName
+{
+	return [[AKManagedObjectQuery alloc] initWithMOC:self.docSetIndex.managedObjectContext entityName:entityName];
+}
+
+- (NSArray *)_fetchTokenMOsWithLanguage:(NSString *)languageName tokenType:(NSString *)tokenType
+{
+	// Construct the predicate string.
+	NSMutableString *predicateString = [NSMutableString stringWithFormat:@"language.fullName = '%@'",
+										languageName];
+	if (tokenType.length) {
+		[predicateString appendFormat:@" and tokenType.typeName = '%@'", tokenType];
+	}
+
+	// Perform the query.
+	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Token"];
+	query.predicateString = predicateString;
+	AKResult *result = [query fetchObjects];
+	return result.object;  //TODO: Handle error.
+}
+
+- (void)_importFrameworks
+{
+	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Header"];
+	query.keyPaths = @[ @"frameworkName" ];
+	query.predicateString = @"frameworkName != NULL";
+
+	AKResult *result = [query fetchDistinctObjects];  //TODO: Handle error.
+	if (result.error) {
+		return;
+	}
+
+	NSArray *fetchedObjects = result.object;
+	for (NSDictionary *dict in fetchedObjects) {
+		NSString *frameworkName = dict[@"frameworkName"];
+		AKFramework *framework = [[AKFramework alloc] initWithName:frameworkName];
+		[self.frameworksGroup addNamedObject:framework];
+	}
 }
 
 @end

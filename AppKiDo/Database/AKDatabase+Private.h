@@ -7,17 +7,24 @@
 //
 
 #import "AKDatabase.h"
+#import "DocSetModel.h"
 
-@class AKTokenInferredInfo;
-
+/*!
+ * This header should only be imported by the .m files for AKDatabase and its
+ * categories.
+ */
 @interface AKDatabase ()
 @property (strong, readonly) AKNamedObjectGroup *frameworksGroup;
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
 
-- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
-- (NSArray *)_arrayWithTokenMOsForLanguage:(NSString *)languageName;
+- (AKFramework *)_frameworkForTokenMOAddIfAbsent:(DSAToken *)tokenMO;
+- (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName;
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
+
+- (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
+- (NSArray *)_fetchTokenMOsWithLanguage:(NSString *)languageName
+								tokenType:(NSString *)tokenType;
 @end
 
 #pragma mark -

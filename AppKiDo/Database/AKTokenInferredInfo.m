@@ -7,123 +7,149 @@
 //
 
 #import "AKTokenInferredInfo.h"
-#import "AKClassToken.h"
-#import "AKDatabase.h"
-#import "AKProtocolToken.h"
-#import "AKTopicConstants.h"
+#import "DocSetModel.h"
 #import "DIGSLog.h"
-
-@interface AKTokenInferredInfo ()
-@property (strong) DSAToken *tokenMO;
-@property (strong) AKDatabase *database;
-@property (copy) NSString *frameworkChildTopicName;
-@property (strong) AKBehaviorToken *behaviorToken;
-@property (copy) NSString *headerFileName;
-@property (copy) NSString *referenceSubject;
-@end
+#import "AKTopicConstants.h"
 
 @implementation AKTokenInferredInfo
 
+@synthesize tokenMO = _tokenMO;
+@synthesize nodeName = _nodeName;
+@synthesize frameworkChildTopicName = _frameworkChildTopicName;
+@synthesize nameOfClass = _nameOfClass;
+@synthesize nameOfProtocol = _nameOfProtocol;
+@synthesize headerFileName = _headerFileName;
+@synthesize nodeSubject = _nodeSubject;
+
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithTokenMO:(DSAToken *)tokenMO database:(AKDatabase *)database
+- (instancetype)initWithTokenMO:(DSAToken *)tokenMO
 {
+    NSParameterAssert(tokenMO != nil);
 	self = [super init];
 	if (self) {
 		_tokenMO = tokenMO;
-		_database = database;
+		_nodeName = tokenMO.parentNode.kName;
 
-		[self _inferOtherIvarsFromNodeName];
+		[self _inferIvarsFromNodeName];
+
+		if (_nodeSubject == nil) {
+			_nodeSubject = _nodeName;
+		}
 	}
 	return self;
 }
 
-#pragma mark - Private methods
+#pragma mark - Private methods -- inferring info from tokens
 
 // Called from init, hence all the direct ivar accesses.
-- (void)_inferOtherIvarsFromNodeName
+- (void)_inferIvarsFromNodeName
 {
-	NSString *nodeName = _tokenMO.parentNode.kName;
-	NSMutableArray *words = [[nodeName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] mutableCopy];
-	[words removeObject:@""];
-
-	NSString *lastWord = words.lastObject;
-	NSString *firstWord = words.firstObject;
+	NSMutableArray *words = [[_nodeName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] mutableCopy];
+	[words removeObject:@""];  // In case there are double spaces in the original string.
 	NSString *nextToLastWord = (words.count >= 2 ? words[words.count - 2] : nil);
 
 	// If it doesn't end with "Reference" we don't know how to parse it any further.
-	if (![lastWord isEqualToString:@"Reference"]) {
-		_referenceSubject = nodeName;
-
+	if (![words.lastObject isEqualToString:@"Reference"]) {
+		//QLog(@"+++ Node name '%@' doesn't end with 'Reference'.", _nodeName);  //TODO: Fix when this happens.
+        _nodeSubject = _nodeName;
 		return;
 	}
 
-	// Does it end with "Class Reference"?
+	// "CLASSNAME Class Reference"
 	if ([nextToLastWord isEqualToString:@"Class"]) {
-		_behaviorToken = [_database classWithName:firstWord];
-		if (_behaviorToken == nil) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about class '%@', but there is no such class in the database.", nodeName, firstWord);
-		}
-
-		_framework = [_database frameworkWithName:_behaviorToken.frameworkName];
-		_referenceSubject = firstWord;
-
 		if (words.count != 3) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about class '%@', but does not have exactly 3 words.", nodeName, firstWord);
-		}
+			QLog(@"+++ Will assume '%@' is not about an ObjC class (wrong number of words).", _nodeName);
+            _nodeSubject = [self _stringByRemovingLast:1 fromWords:words];
+			return;
+        }
 
-		return;
+        _nameOfClass = words[0];
+        _nodeSubject = _nameOfClass;
+        return;
 	}
 
-	// Does it end with "Protocol Reference"?
+	// "PROTOCOLNAME Protocol Reference"
+	// "PROTOCOLNAME Informal Protocol Reference"
 	if ([nextToLastWord isEqualToString:@"Protocol"]) {
-		_behaviorToken = [_database protocolWithName:firstWord];
-		if (_behaviorToken == nil) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about protocol '%@', but there is no such protocol in the database.", nodeName, firstWord);
+		BOOL seemsLikeObjCProtocol = NO;
+
+		if (words.count == 4) {
+			if ([words[1] isEqualToString:@"Informal"]) {
+				seemsLikeObjCProtocol = YES;
+			} else {
+				//QLog(@"+++ Will assume '%@' is not about an ObjC protocol (second word is not 'Informal').", _nodeName);
+				seemsLikeObjCProtocol = NO;
+			}
+		} else if (words.count != 3) {
+			QLog(@"+++ Will assume '%@' is not about an ObjC protocol (wrong number of words).", _nodeName);
+			seemsLikeObjCProtocol = NO;
+		} else {
+			seemsLikeObjCProtocol = YES;
 		}
 
-		_framework = [_database frameworkWithName:_behaviorToken.frameworkName];
-		_referenceSubject = firstWord;
-
-		if (words.count != 3) {
-			QLog(@"+++ [ODD] Node name '%@' seems to be about protocol '%@', but does not have exactly 3 words.", nodeName, firstWord);
-		}
+		if (seemsLikeObjCProtocol) {
+            _nameOfProtocol = words[0];
+            _nodeSubject = _nameOfProtocol;
+            return;
+        } else {
+            _nodeSubject = [self _stringByRemovingLast:1 fromWords:words];
+            return;
+        }
 
 		return;
 	}
 
-	// Is it of the form "<framework> <childtopic> Reference"?
+	// "FRAMEWORKNAME CHILDTOPIC Reference"
+    // Note that CHILDTOPIC could be "Data Type", which is two words.
 	static NSSet *s_childTopicNames;
 	if (s_childTopicNames == nil) {
-		s_childTopicNames = [NSSet setWithObjects:AKEnumsTopicName, AKMacrosTopicName, AKDataTypesTopicName, AKConstantsTopicName, nil];
+		s_childTopicNames = [NSSet setWithObjects:AKEnumsTopicName, AKMacrosTopicName, AKConstantsTopicName, nil];
 	}
 	if (words.count == 3
-		&& [_database frameworkWithName:firstWord] != nil
-		&& [s_childTopicNames containsObject:nextToLastWord])
+		&& [s_childTopicNames containsObject:words[1]])
 	{
-		_framework = [_database frameworkWithName:firstWord];
-		_frameworkChildTopicName = nextToLastWord;
-		_referenceSubject = [@[firstWord, nextToLastWord] componentsJoinedByString:@" "];
-
+        _frameworkName = words[0];
+		_frameworkChildTopicName = words[1];
+		_nodeSubject = [@[words[0], words[1]] componentsJoinedByString:@" "];
 		return;
 	}
+    if (words.count == 4
+        && [words[1] isEqualToString:@"Data"]
+        && [words[2] isEqualToString:@"Types"])
+    {
+        _frameworkName = words[0];
+        _frameworkChildTopicName = AKDataTypesTopicName;
+        _nodeSubject = [@[words[0], AKDataTypesTopicName] componentsJoinedByString:@" "];
+        return;
+    }
 
-	// Is it of the form "<headerfilename> Reference"?
-	if (words.count == 2 && [firstWord.pathExtension isEqualToString:@"h"])
+	// "FRAMEWORKNAME Additions Reference"  //TODO: Fill this in.
+	if (words.count == 3
+		&& [words[1] isEqualToString:@"Additions"])
+    {
+        _frameworkName = words[0];
+	}
+
+	// "XXX.h Reference"
+	if (words.count == 2 && [[words[0] pathExtension] isEqualToString:@"h"])
 	{
-		_headerFileName = firstWord;
-		_referenceSubject = _headerFileName;
-
+		_headerFileName = words[0];
+		_nodeSubject = _headerFileName;
 		return;
 	}
 
 	// Fallback case: drop the word "Reference", and that's what the node is about.
-	if (words.count >= 1) {
-		_referenceSubject = [[words subarrayWithRange:NSMakeRange(0, words.count - 1)]
-							 componentsJoinedByString:@" "];
-
+	if (words.count > 1) {
+		_nodeSubject = [self _stringByRemovingLast:1 fromWords:words];
 		return;
 	}
+}
+
+- (NSString *)_stringByRemovingLast:(NSInteger)numWordsToRemove fromWords:(NSArray *)words
+{
+	return [[words subarrayWithRange:NSMakeRange(0, words.count - numWordsToRemove)]
+			componentsJoinedByString:@" "];
 }
 
 @end
