@@ -18,10 +18,6 @@
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
 
-- (AKFramework *)_frameworkForTokenMOAddIfAbsent:(DSAToken *)tokenMO;
-- (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName;
-- (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
-
 @end
 
 #pragma mark -
@@ -33,6 +29,16 @@
 
 @end
 
+#pragma mark -
+
+@interface AKDatabase (ImportFrameworks)
+
+- (void)_importFrameworks;
+- (AKFramework *)_frameworkForTokenMOAddIfAbsent:(DSAToken *)tokenMO;
+- (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName;
+- (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
+
+@end
 
 #pragma mark -
 
