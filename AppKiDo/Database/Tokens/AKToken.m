@@ -27,7 +27,7 @@
 
 #pragma mark - Getters and setters
 
-- (NSString *)headerPath
+- (NSString *)relativeHeaderPath
 {
 	return self.tokenMO.metainformation.declaredIn.headerPath;
 }

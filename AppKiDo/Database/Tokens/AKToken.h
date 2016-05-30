@@ -11,21 +11,18 @@
 /*!
  * Represents a named API construct, as represented by an underlying DSAToken
  * in the docset index (tokenMO).
- *
- * In practice, not all AKTokens are potentially doc list items, but most are,
- * so it's simpler to declare AKToken to conform to AKDoc.  The way it's
- * implemented should work for all tokens if they *were* to be doc list items.
  */
 @interface AKToken : AKNamedObject
 
-/*! "MO" is for "managed object", to help me tell whether I'm referring to a DSAToken instance or an AKToken object. */
+/*! "MO" is for "managed object".  When I see "token" in a variable name, this helps me tell whether it refers to a DSAToken instance (a managed object) or an AKToken object. */
 @property (nonatomic, strong) DSAToken *tokenMO;
 @property (nonatomic, copy) NSString *frameworkName;
-@property (nonatomic, readonly) NSString *headerPath;
+@property (nonatomic, readonly) NSString *relativeHeaderPath;
 @property (nonatomic, assign) BOOL isDeprecated;
 
 #pragma mark - Init/awake/dealloc
 
+/*! Note this is not a designated initializer.  It's okay to instantiate an AKToken without a tokenMO, just a name. */
 - (instancetype)initWithTokenMO:(DSAToken *)tokenMO;
 
 @end
