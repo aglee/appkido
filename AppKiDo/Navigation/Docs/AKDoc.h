@@ -8,7 +8,7 @@
 
 #import "AKNamed.h"
 
-@class DocSetIndex;
+@class AKDatabase;
 
 /*!
  * Protocol adopted by objects that can be listed in the doc list.  When the
@@ -23,6 +23,6 @@
 /*! Displayed in the comment field at the bottom of the window. */
 @property (copy, readonly) NSString *commentString;
 
-- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex;
+- (NSURL *)docURLAccordingToDatabase:(AKDatabase *)database;
 
 @end

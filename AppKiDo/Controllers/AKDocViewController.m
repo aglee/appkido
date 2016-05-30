@@ -68,8 +68,7 @@
 	if (docToDisplay == nil) {
 		return nil;
 	}
-	DocSetIndex *docSetIndex = self.owningWindowController.database.docSetIndex;
-	return [docToDisplay docURLAccordingToDocSetIndex:docSetIndex];
+	return [docToDisplay docURLAccordingToDatabase:self.owningWindowController.database];
 }
 
 #pragma mark - AKViewController methods

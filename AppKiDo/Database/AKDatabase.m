@@ -41,6 +41,11 @@
 
 #pragma mark - Getters and setters
 
+- (NSString *)headerFilesBasePath
+{
+	return @"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk";  //TODO: Get the right path instead of hardcoding.
+}
+
 - (NSArray *)sortedFrameworkNames
 {
 	return self.frameworksGroup.sortedObjectNames;

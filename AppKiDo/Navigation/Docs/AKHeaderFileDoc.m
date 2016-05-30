@@ -7,8 +7,8 @@
 
 #import "AKHeaderFileDoc.h"
 #import "AKBehaviorToken.h"
+#import "AKDatabase.h"
 #import "AKDoc.h"
-#import "DocSetIndex.h"
 
 NSString *AKHeaderFileDocName = @"Header File";
 
@@ -40,7 +40,7 @@ NSString *AKHeaderFileDocName = @"Header File";
 	return @"";
 }
 
-- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
+- (NSURL *)docURLAccordingToDatabase:(AKDatabase *)database
 {
 	// From inspection of the HeaderPath entity instances in the 10.11.4 dsidx:
 	//
@@ -51,7 +51,7 @@ NSString *AKHeaderFileDocName = @"Header File";
 	// - There's a bunch of tokens that have *no* headerPath.  I think that's a bug in some cases, not sure if all cases.
 	NSString *relativePath = self.behaviorToken.relativeHeaderPath;
 	if ([relativePath hasPrefix:@"/"]) {
-		NSURL *baseURL = [NSURL fileURLWithPath:docSetIndex.headerFilesBasePath];
+		NSURL *baseURL = [NSURL fileURLWithPath:database.headerFilesBasePath];
 		return [baseURL URLByAppendingPathComponent:relativePath];
 	} else {
 		return nil;

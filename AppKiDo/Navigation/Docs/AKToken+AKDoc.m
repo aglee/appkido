@@ -8,6 +8,7 @@
 
 #import "AKToken+AKDoc.h"
 #import "AKBindingToken.h"
+#import "AKDatabase.h"
 #import "AKInstanceMethodToken.h"
 #import "AKNotificationToken.h"
 #import "AKPropertyToken.h"
@@ -22,9 +23,9 @@
 	return @"";
 }
 
-- (NSURL *)docURLAccordingToDocSetIndex:(DocSetIndex *)docSetIndex
+- (NSURL *)docURLAccordingToDatabase:(AKDatabase *)database
 {
-	NSURL *baseURL = docSetIndex.documentsBaseURL;
+	NSURL *baseURL = database.docSetIndex.documentsBaseURL;
 	NSString *relativePath = self.tokenMO.metainformation.file.path;
 	if (relativePath == nil) {
 		return nil;

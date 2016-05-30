@@ -32,6 +32,7 @@
 @interface AKDatabase : NSObject
 
 @property (readonly, strong) DocSetIndex *docSetIndex;
+@property (readonly, copy) NSString *headerFilesBasePath;
 @property (readonly, copy) NSArray *sortedFrameworkNames;
 @property (readonly, copy) NSArray *frameworks;
 @property (readonly, copy) NSArray *rootClasses;
