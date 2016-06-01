@@ -90,9 +90,9 @@
 		frameworkName = [self _tryToInferFrameworkNameFromDocPath:docPath];
 	}
 
-	//TODO: KLUDGE -- Hard-code a fictitious "Unknown Framework" for protocols
-	// where I haven't figured out yet how to determine their real framework.
-	if (frameworkName == nil && [tokenMO.tokenType.typeName isEqualToString:@"intf"]) {
+	//TODO: KLUDGE -- Fictitious framework for tokens where I haven't figured
+	// out yet how to determine their real framework.
+	if (frameworkName == nil) {
 		frameworkName = @"<???>";
 	}
 
