@@ -157,7 +157,9 @@
 {
 	AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithToken:self.classToken];
 
-	return @[headerFileDoc];
+	// Make the token itself the first doc in the doc list.  When it's selected,
+	// the doc view will go to the top of the doc page for that token.
+	return @[ self.classToken, headerFileDoc ];
 }
 
 @end
