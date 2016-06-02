@@ -7,6 +7,7 @@
 //
 
 #import "AKToken+AKDoc.h"
+#import "AKBehaviorToken.h"
 #import "AKBindingToken.h"
 #import "AKDatabase.h"
 #import "AKInstanceMethodToken.h"
@@ -17,6 +18,11 @@
 @implementation AKToken (AKDoc)
 
 #pragma mark - <AKDoc> methods
+
+- (NSString *)displayNameForDocList
+{
+	return self.name;
+}
 
 - (NSString *)commentString
 {
@@ -38,6 +44,19 @@
 		docURL = [urlComponents URL];
 	}
 	return docURL;
+}
+
+@end
+
+
+
+@implementation AKBehaviorToken (AKDoc)
+
+#pragma mark - <AKDoc> methods
+
+- (NSString *)displayNameForDocList
+{
+	return @"Introduction";
 }
 
 @end

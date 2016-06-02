@@ -125,7 +125,7 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [self.subtopic docAtIndex:rowIndex].displayName;
+	return [self.subtopic docAtIndex:rowIndex].displayNameForDocList;
 }
 
 @end

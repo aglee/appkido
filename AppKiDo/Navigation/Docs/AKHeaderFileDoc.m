@@ -33,6 +33,11 @@ NSString *AKHeaderFileDocName = @"Header File";
 
 #pragma mark - <AKDoc> methods
 
+- (NSString *)displayNameForDocList
+{
+	return self.name;
+}
+
 - (NSString *)commentString
 {
 	return @"";

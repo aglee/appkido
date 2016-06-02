@@ -20,6 +20,7 @@
 
 @required
 
+@property (copy, readonly) NSString *displayNameForDocList;
 /*! Displayed in the comment field at the bottom of the window. */
 @property (copy, readonly) NSString *commentString;
 
