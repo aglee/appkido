@@ -13,6 +13,7 @@
 #import "AKRegexUtils.h"
 #import "AKResult.h"
 #import "DIGSLog.h"
+#import "NSString+AppKiDo.h"
 
 @implementation AKDatabase (ImportFrameworks)
 
@@ -31,9 +32,7 @@
 
 	NSArray *fetchedObjects = result.object;
 	for (NSDictionary *dict in fetchedObjects) {
-		NSString *frameworkName = dict[@"frameworkName"];
-		AKFramework *framework = [[AKFramework alloc] initWithName:frameworkName];
-		[self.frameworksGroup addNamedObject:framework];
+		(void)[self _frameworkWithNameAddIfAbsent:dict[@"frameworkName"]];
 	}
 }
 
@@ -42,25 +41,11 @@
 - (AKFramework *)_frameworkForTokenMOAddIfAbsent:(DSAToken *)tokenMO
 {
 	NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-	if (frameworkName == nil) {
-		return nil;
-	}
-
-	AKFramework *framework = [self frameworkWithName:frameworkName];
-	if (framework == nil) {
-		framework = [[AKFramework alloc] initWithName:frameworkName];
-		[self.frameworksGroup addNamedObject:framework];
-		QLog(@"+++ Added framework %@.", frameworkName);
-	}
-	return framework;
+	return [self _frameworkWithNameAddIfAbsent:frameworkName];
 }
 
 - (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName
 {
-	if (frameworkName == nil) {
-		return nil;
-	}
-
 	AKFramework *framework = [self frameworkWithName:frameworkName];
 	if (framework == nil) {
 		framework = [[AKFramework alloc] initWithName:frameworkName];
@@ -72,22 +57,31 @@
 
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO
 {
-	// See if the DocSetIndex specifies a framework for this token.
-	NSString *frameworkName = tokenMO.metainformation.declaredIn.frameworkName;
-	if (frameworkName) {
-		//QLog(@"+++ Framework %@ for %@ was explicit", frameworkName, self);
+	NSString *frameworkName;
+
+	// Does the DocSetIndex say what the framework is?
+	if (frameworkName == nil) {
+		frameworkName = tokenMO.metainformation.declaredIn.frameworkName;
 	}
 
-	// See if we can infer the framework name from the headerPath.
+	// Can we get the framework name from the headerPath?
 	if (frameworkName == nil) {
 		NSString *headerPath = tokenMO.metainformation.declaredIn.headerPath;
 		frameworkName = [self _tryToInferFrameworkNameFromHeaderPath:headerPath];
+
+		if (frameworkName) {
+			QLog(@"+++ Got framework name '%@' for '%@' from the header path.", frameworkName, tokenMO.tokenName);
+		}
 	}
 
-	// Try to infer framework name from doc path and maybe doc file name.
+	// Can we get the framework name from the doc path?
 	if (frameworkName == nil) {
 		NSString *docPath = tokenMO.metainformation.file.path;
 		frameworkName = [self _tryToInferFrameworkNameFromDocPath:docPath];
+
+		if (frameworkName) {
+			QLog(@"+++ Got framework name '%@' for '%@' from the doc path.", frameworkName, tokenMO.tokenName);
+		}
 	}
 
 	//TODO: KLUDGE -- Fictitious framework for tokens where I haven't figured
@@ -102,10 +96,9 @@
 	return frameworkName;
 }
 
-//TODO: Remember that Swift tokens have the framework name *as* the declaredIn.headerPath value.
+// Looks for a match with .../SomeFrameworkName.framework/...
 - (NSRegularExpression *)_regexForFindingFrameworkNameInHeaderPath
 {
-	// Look for a match with .../SomeFrameworkName.framework/...
 	static NSRegularExpression *s_regex;
 	static dispatch_once_t once;
 	dispatch_once(&once,^{
@@ -120,12 +113,23 @@
 		return nil;
 	}
 
-	NSDictionary *captureGroups = [AKRegexUtils matchRegex:[self _regexForFindingFrameworkNameInHeaderPath] toEntireString:headerPath].object;
-	NSString *inferredFrameworkName = captureGroups[@1];
-	if (inferredFrameworkName) {
-		QLog(@"+++ Framework %@ for %@ was inferred from header path", inferredFrameworkName, self);
+	NSString *frameworkName;
+
+	// Does the header path contain "SOMETHING.framework"?
+	if (frameworkName == nil) {
+		NSDictionary *captureGroups = [AKRegexUtils matchRegex:[self _regexForFindingFrameworkNameInHeaderPath] toEntireString:headerPath].object;
+		frameworkName = captureGroups[@1];
 	}
-	return inferredFrameworkName;
+
+	// NSObject, and by extension all its members, got moved out of Foundation
+	// into the Objective-C runtime.
+	if (frameworkName == nil) {
+		if ([headerPath ak_contains:@"usr/include/objc"]) {
+			frameworkName = @"Objective-C Runtime";
+		}
+	}
+
+	return frameworkName;
 }
 
 - (NSString *)_tryToInferFrameworkNameFromDocPath:(NSString *)docPath
@@ -134,11 +138,21 @@
 		return nil;
 	}
 
-	NSString *inferredFrameworkName;  //TODO: Fill this in.
-	if (inferredFrameworkName) {
-		QLog(@"+++ Framework %@ for %@ was inferred from doc path", inferredFrameworkName, self);
+	for (NSString *pathComponent in docPath.pathComponents) {
+		// Is pathComponent the name of an existing framework?
+		if ([self frameworkWithName:pathComponent]) {
+			return pathComponent;
+		}
+
+		// Does pathComponent have the form "SOMETHING_Framework"?
+		NSArray *splitByUnderscore = [pathComponent componentsSeparatedByString:@"_"];
+		if (splitByUnderscore.count == 2 && [splitByUnderscore[1] isEqualToString:@"Framework"]) {
+			(void)[self _frameworkWithNameAddIfAbsent:splitByUnderscore[0]];
+			return splitByUnderscore[0];
+		}
 	}
-	return inferredFrameworkName;
+
+	return nil;
 }
 
 @end
