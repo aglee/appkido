@@ -16,10 +16,7 @@ NSString *AKHeaderFileDocName = @"Header File";
 - (instancetype)initWithToken:(AKToken *)token
 {
 	NSParameterAssert(token != nil);
-	NSString *headerFileName = token.relativeHeaderPath.lastPathComponent;
-	NSString *name = (headerFileName.length ? headerFileName : AKHeaderFileDocName);
-
-	self = [super initWithName:name];
+	self = [super initWithName:AKHeaderFileDocName];
 	if (self) {
 		_token = token;
 	}
