@@ -546,34 +546,37 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 - (void)_openInitialWindows
 {
-    // If there's no saved window state, open a single new window.
-    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
+	(void)[self controllerForNewWindow];
 
-    if (savedWindows.count == 0)
-    {
-        (void)[self controllerForNewWindow];
-        return;
-    }
-
-    // Restore windows from saved window state.
-    NSInteger numWindows = savedWindows.count;
-    NSInteger i;
-
-    for (i = numWindows - 1; i >= 0; i--)
-    {
-        NSDictionary *prefDict = savedWindows[i];
-        AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
-        AKWindowLayout *windowLayout = savedWindowState.savedWindowLayout;
-        AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
-
-        [wc selectDocWithDocLocator:savedWindowState.savedDocLocator];
-        [wc showWindow:nil];
-
-        if (savedWindowState.savedWindowLayout.quicklistDrawerIsOpen)
-        {
-            [wc openQuicklistDrawer];
-        }
-    }
+//TODO: Fix loading of saved window state.
+//    // If there's no saved window state, open a single new window.
+//    NSArray *savedWindows = [AKPrefUtils arrayValueForPref:AKSavedWindowStatesPrefName];
+//
+//    if (savedWindows.count == 0)
+//    {
+//        (void)[self controllerForNewWindow];
+//        return;
+//    }
+//
+//    // Restore windows from saved window state.
+//    NSInteger numWindows = savedWindows.count;
+//    NSInteger i;
+//
+//    for (i = numWindows - 1; i >= 0; i--)
+//    {
+//        NSDictionary *prefDict = savedWindows[i];
+//        AKSavedWindowState *savedWindowState = [AKSavedWindowState fromPrefDictionary:prefDict];
+//        AKWindowLayout *windowLayout = savedWindowState.savedWindowLayout;
+//        AKWindowController *wc = [self _windowControllerForNewWindowWithLayout:windowLayout];
+//
+//        [wc selectDocWithDocLocator:savedWindowState.savedDocLocator];
+//        [wc showWindow:nil];
+//
+//        if (savedWindowState.savedWindowLayout.quicklistDrawerIsOpen)
+//        {
+//            [wc openQuicklistDrawer];
+//        }
+//    }
 }
 
 #pragma mark - Private methods -- window management
