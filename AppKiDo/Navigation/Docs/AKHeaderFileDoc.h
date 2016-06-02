@@ -8,17 +8,17 @@
 #import "AKNamedObject.h"
 #import "AKDoc.h"
 
-@class AKBehaviorToken;
+@class AKToken;
 
 extern NSString *AKHeaderFileDocName;
 
 /*!
- * Provides the URL for the header file in which a token is declared, if there is one.
+ * Displays the header file in which the token is declared, if we know it.
  */
 @interface AKHeaderFileDoc : AKNamedObject <AKDoc>
 
-@property (strong) AKBehaviorToken *behaviorToken;
+@property (strong) AKToken *token;
 
-- (instancetype)initWithBehaviorToken:(AKBehaviorToken *)behaviorToken NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithToken:(AKToken *)token NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -127,7 +127,7 @@
 
 - (NSArray *)_docListItemsForGeneralSubtopic
 {
-	AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithBehaviorToken:self.protocolToken];
+	AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithToken:self.protocolToken];
 	
 	return @[headerFileDoc];
 }
