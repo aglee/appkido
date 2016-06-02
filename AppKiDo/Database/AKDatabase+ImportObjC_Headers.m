@@ -23,7 +23,7 @@
 	// Iterate over every XXX.framework directory under <SDK>/System/Library/Frameworks.
 	static NSString *s_frameworksRelativeBasePath = @"System/Library/Frameworks";
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *frameworksBasePath = [self.headerFilesBasePath stringByAppendingPathComponent:s_frameworksRelativeBasePath];
+	NSString *frameworksBasePath = [self.sdkBasePath stringByAppendingPathComponent:s_frameworksRelativeBasePath];
 
 	for (NSString *fwItem in [fm subpathsAtPath:frameworksBasePath]) {
 		if (![fwItem hasSuffix:@".framework"]) {
@@ -53,8 +53,7 @@
 	// Load the header file into a string.  I'm using NSISOLatin1StringEncoding
 	// because NSUTF8StringEncoding doesn't work for all files.  Example:
 	// Transform.h in vImage.framework under MacOSX10.11.sdk.
-	NSString *basePath = self.headerFilesBasePath;
-	NSString *filePath = [basePath stringByAppendingPathComponent:relativePath];
+	NSString *filePath = [self.sdkBasePath stringByAppendingPathComponent:relativePath];
 	NSError *error;
 	NSString *headerString = [NSString stringWithContentsOfFile:filePath
 													   encoding:NSISOLatin1StringEncoding

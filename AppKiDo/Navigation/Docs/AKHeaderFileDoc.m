@@ -51,7 +51,7 @@ NSString *AKHeaderFileDocName = @"Header File";
 	// - There's a bunch of tokens that have *no* headerPath.  I think that's a bug in some cases, not sure if all cases.
 	NSString *relativePath = self.token.relativeHeaderPath;
 	if (relativePath) {
-		NSURL *baseURL = [NSURL fileURLWithPath:database.headerFilesBasePath];
+		NSURL *baseURL = [NSURL fileURLWithPath:database.sdkBasePath];
 		return [baseURL URLByAppendingPathComponent:relativePath];
 	} else {
 		return nil;
