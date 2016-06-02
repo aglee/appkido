@@ -17,6 +17,7 @@
 /*! "MO" is for "managed object".  When I see "token" in a variable name, this helps me tell whether it refers to a DSAToken instance (a managed object) or an AKToken object. */
 @property (nonatomic, strong) DSAToken *tokenMO;
 @property (nonatomic, copy) NSString *frameworkName;
+/*! Relative to the SDK base path. */
 @property (nonatomic, readonly) NSString *relativeHeaderPath;
 @property (nonatomic, assign) BOOL isDeprecated;
 

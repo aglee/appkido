@@ -17,7 +17,6 @@
 @property (strong, readonly) AKNamedObjectGroup *frameworksGroup;
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
-
 @end
 
 #pragma mark -
@@ -44,6 +43,14 @@
 
 @interface AKDatabase (ImportObjC)
 - (void)_importObjectiveCTokens;
+- (AKProtocolToken *)_getOrAddProtocolTokenWithName:(NSString *)protocolName;
+- (AKClassToken *)_getOrAddClassTokenWithName:(NSString *)className;
+@end
+
+#pragma mark -
+
+@interface AKDatabase (ImportObjC_Headers)
+- (void)_scanFrameworkHeaderFilesForClassDeclarations;
 @end
 
 #pragma mark -
@@ -51,3 +58,4 @@
 @interface AKDatabase (ImportC)
 - (void)_importCTokens;
 @end
+

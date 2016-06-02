@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		7322AF191CFF24BF004D91D6 /* AKDatabase+ImportObjC_Headers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7322AF181CFF24BF004D91D6 /* AKDatabase+ImportObjC_Headers.m */; };
 		73664CBC1CF2BBBE0094F405 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664CBB1CF2BBBE0094F405 /* main.m */; };
 		73664CBE1CF2BBBE0094F405 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73664CBD1CF2BBBE0094F405 /* Assets.xcassets */; };
 		73664CC11CF2BBBE0094F405 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73664CBF1CF2BBBE0094F405 /* MainMenu.xib */; };
@@ -232,6 +233,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7322AF181CFF24BF004D91D6 /* AKDatabase+ImportObjC_Headers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportObjC_Headers.m"; sourceTree = "<group>"; };
 		73664CB41CF2BBBE0094F405 /* AppKiDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppKiDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73664CBB1CF2BBBE0094F405 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		73664CBD1CF2BBBE0094F405 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
 				73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */,
 				73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */,
+				7322AF181CFF24BF004D91D6 /* AKDatabase+ImportObjC_Headers.m */,
 				73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */,
 				73664D4F1CF2BE9D0094F405 /* AKDatabaseXMLExporter.h */,
 				73664D501CF2BE9D0094F405 /* AKDatabaseXMLExporter.m */,
@@ -1483,6 +1486,7 @@
 				73664E9C1CF2BE9E0094F405 /* AKLinkResolver.m in Sources */,
 				73664E991CF2BE9E0094F405 /* _TokenType.m in Sources */,
 				73664EB91CF2BE9E0094F405 /* AKResult.m in Sources */,
+				7322AF191CFF24BF004D91D6 /* AKDatabase+ImportObjC_Headers.m in Sources */,
 				73664ED01CF2BE9E0094F405 /* AKWindow.m in Sources */,
 				73664EA01CF2BE9E0094F405 /* AKSearchQuery.m in Sources */,
 				73664E9D1CF2BE9E0094F405 /* AKHeaderFileDoc.m in Sources */,

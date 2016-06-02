@@ -26,6 +26,11 @@
 
 - (void)_importObjectiveCTokens
 {
+	// Before we scan the docset index, scan header files to get a complete
+	// class hierarchy.  The docset index doesn't give the complete ancestry for
+	// all classes (e.g. DOMElement).
+	[self _scanFrameworkHeaderFilesForClassDeclarations];
+
 	// Import tokens with protocol as their token type.
 	[self _importProtocols];
 
@@ -112,15 +117,15 @@
 {
 	NSParameterAssert(classToken.tokenMO != nil);
 	if (classToken.parentClass) {
-		QLog(@"+++ Class token %@ already has superclass token %@", classToken.name, classToken.parentClass.name);
+		//QLog(@"+++ Class token %@ already has superclass token %@", classToken.name, classToken.parentClass.name);
 		return;
 	}
 	if (classToken.tokenMO.superclassContainers.count > 1) {
 		QLog(@"%s [ODD] Unexpected multiple superclassContainers for class %@", __PRETTY_FUNCTION__, classToken.name);
 	}
 	Container *container = classToken.tokenMO.superclassContainers.anyObject;
-	NSString *superclassName = container.containerName;
 	if (container) {
+		NSString *superclassName = container.containerName;
 		AKClassToken *superclassToken = [self _getOrAddClassTokenWithName:superclassName];
 		[superclassToken addChildClass:classToken];
 	}
