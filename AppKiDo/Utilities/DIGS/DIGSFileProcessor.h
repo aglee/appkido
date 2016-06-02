@@ -7,77 +7,27 @@
 
 #import <Foundation/Foundation.h>
 
-//TODO: Behavior is applied to files, not dirnames; what about links?
+//TODO: What about links and aliases?
+
+//TODO: Any reason to use this rather than NSDirectoryEnumerator?
 
 /*!
- * Abstract class for iterating through files.
- *
- * To use a DIGSFileProcessor, call either -processFile: or
- * -processDirectory:recursively:, and it will iterate through the one or more
- * files you specified.  Directory recursion is optional, and your subclass can
- * optionally filter files by overriding -shouldProcessFile:.
+ * No-frills class for iterating through files.  rootPath may be either a file
+ * or a directory.
  */
 @interface DIGSFileProcessor : NSObject
-{
-@private
-    NSString *_basePath;
-    NSString *_currentPath;
-}
-
-@property (nonatomic, readonly, copy) NSString *basePath;
-@property (nonatomic, readonly, copy) NSString *currentPath;
-
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initWithBasePath:(NSString *)basePath NS_DESIGNATED_INITIALIZER;
-
-#pragma mark - Getters and setters
-
-/*!
- * Returns the top-level path within which to find files to process. If this
- * path is a file, we will process that file. If it's a directory, we will
- * process the directory's contents, perhaps recursively.
- *
- * Default is the empty string.  //TODO: Maybe nil would be better.
- */
-- (NSString *)basePath;
-
-/*!
- * Returns the absolute path of the file I am currently processing, or nil if
- * I'm not in the middle of processing files.
- */
-- (NSString *)currentPath;
 
 #pragma mark - Processing files
 
-/*! Returns NO if the file should be ignored. The default is YES. */
-- (BOOL)shouldProcessFile:(NSString *)filePath;
+- (void)processRootPath:(NSString *)rootPath;
 
 /*!
- * Checks whether the file at filePath satisfies the filter imposed by
- * -shouldProcessFile:. If so, calls -processCurrentFile.
- *
- * Do not override this.  Override -processCurrentFile instead.
+ * You don't call this, you override it.  Default implementation processes each
+ * item in the directory.  Subclasses should call super if they want to recurse.
  */
-- (void)processFile:(NSString *)filePath;
+- (void)processDirectoryAtPath:(NSString *)dirPath depth:(NSInteger)depth;
 
-/*!
- * Processes all files in the specified directory, subject to filtering by
- * -shouldProcessFile:. Recurses down subdirectories if recurseFlag is true.
- *
- * Changes the working directory to each directory it processes.
- *
- * Do not override this.
- */
-- (void)processDirectory:(NSString *)dirPath recursively:(BOOL)recurseFlag;
-
-/*!
- * Subclasses must override this to do whatever constitutes "processing" for
- * that subclass.
- *
- * This method is called by -processFile: and -processDirectory:recursively:.
- * Generally there's no reason for you to call this method directly.
- */
-- (void)processCurrentFile;
+/*! You don't call this, you override it.  Default implementation does nothing. */
+- (void)processFileAtPath:(NSString *)filePath depth:(NSInteger)depth;
 
 @end

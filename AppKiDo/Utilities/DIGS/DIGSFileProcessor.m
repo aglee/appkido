@@ -6,101 +6,52 @@
  */
 
 #import "DIGSFileProcessor.h"
-
 #import "DIGSLog.h"
-
-@interface DIGSFileProcessor ()
-@property (nonatomic, copy) NSString *currentPath;
-@end
 
 @implementation DIGSFileProcessor
 
-@synthesize basePath = _basePath;
-@synthesize currentPath = _currentPath;
-
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initWithBasePath:(NSString *)basePath
-{
-    if ((self = [super init]))
-    {
-        _basePath = [basePath copy];  //TODO: Handle case where basePath is nil.
-    }
-    
-    return self;
-}
-
-- (instancetype)init
-{
-    return [self initWithBasePath:@""];
-}
-
-
 #pragma mark - Processing files
 
-- (BOOL)shouldProcessFile:(NSString *)filePath
+- (void)processRootPath:(NSString *)rootPath
 {
-    return YES;
+	[self _processPath:rootPath depth:0];
 }
 
-- (void)processFile:(NSString *)filePath
+- (void)processDirectoryAtPath:(NSString *)dirPath depth:(NSInteger)depth
 {
-    // Apply our filter to the file path.
-    if ([self shouldProcessFile:filePath])
-    {
-        DIGSLogDebug2(@"processing file [%@]", filePath);
-    }
-    else
-    {
-        DIGSLogDebug(@"skipping file [%@]", filePath);
-        return;
-    }
-
-    // Remember the current file.
-    self.currentPath = [_basePath stringByAppendingPathComponent:filePath];
-
-    // Do the job.
-    [self processCurrentFile];
-
-    // Un-remember the current file.
-    [self setCurrentPath:nil];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSError *error;
+	NSArray *dirContents = [fm contentsOfDirectoryAtPath:dirPath error:&error];
+	if (dirContents == nil) {
+		QLog(@"+++ dirContents path [%@], error [%@]", dirPath, error);
+		return;
+	}
+	for (NSString *dirItem in dirContents) {
+		NSString *itemPath = [dirPath stringByAppendingPathComponent:dirItem];
+		[self _processPath:itemPath depth:(depth + 1)];
+	}
 }
 
-- (void)processDirectory:(NSString *)dirPath recursively:(BOOL)recurseFlag
+- (void)processFileAtPath:(NSString *)filePath depth:(NSInteger)depth
 {
-    if (dirPath.length == 0)
-    {
-        return;
-    }
-
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *startPath = [_basePath stringByAppendingPathComponent:dirPath].stringByStandardizingPath;
-
-    for (NSString *filename in [fm contentsOfDirectoryAtPath:startPath error:NULL])
-    {
-        BOOL isDir;
-
-        [fm changeCurrentDirectoryPath:startPath];
-        (void)[fm fileExistsAtPath:filename isDirectory:&isDir];
-        if (isDir)
-        {
-            if (recurseFlag)
-            {
-                [self processDirectory:[dirPath stringByAppendingPathComponent:filename]
-                           recursively:YES];
-            }
-        }
-        else
-        {
-            NSString *filePath = [dirPath stringByAppendingPathComponent:filename];
-            [self processFile:filePath];
-        }
-    }
 }
 
-- (void)processCurrentFile
+#pragma mark - Private methods
+
+- (void)_processPath:(NSString *)path depth:(NSInteger)depth
 {
-    DIGSLogError_MissingOverride();
+	NSFileManager *fm = [NSFileManager defaultManager];
+	BOOL isDir;
+	if (![fm fileExistsAtPath:path isDirectory:&isDir]) {
+		QLog(@"+++ [ODD] No file at %@", path);
+		return;
+	}
+
+	if (isDir) {
+		[self processDirectoryAtPath:path depth:depth];
+	} else {
+		[self processFileAtPath:path depth:depth];
+	}
 }
 
 @end
