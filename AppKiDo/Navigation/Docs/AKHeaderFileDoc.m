@@ -49,10 +49,11 @@ NSString *AKHeaderFileDocName = @"Header File";
 	// - For Swift tokens (55,905 of them in the 10.11.4 docset), the 	headerPath is not a path, but either "Swift" or a framework name.
 	//
 	// - There's a bunch of tokens that have *no* headerPath.  I think that's a bug in some cases, not sure if all cases.
-	NSString *relativePath = self.token.relativeHeaderPath;
-	if (relativePath) {
+	if (self.token.headerPathRelativeToSDK) {
 		NSURL *baseURL = [NSURL fileURLWithPath:database.sdkBasePath];
-		return [baseURL URLByAppendingPathComponent:relativePath];
+		return [baseURL URLByAppendingPathComponent:self.token.headerPathRelativeToSDK];
+	} else if (self.token.fullHeaderPathOutsideOfSDK) {
+		return [NSURL fileURLWithPath:self.token.fullHeaderPathOutsideOfSDK];
 	} else {
 		return nil;
 	}

@@ -27,9 +27,15 @@
 
 #pragma mark - Getters and setters
 
-- (NSString *)relativeHeaderPath
+- (NSString *)headerPathRelativeToSDK
 {
 	return self.tokenMO.metainformation.declaredIn.headerPath;
+}
+
+- (BOOL)hasHeader
+{
+	return (self.fullHeaderPathOutsideOfSDK != nil
+			|| self.headerPathRelativeToSDK != nil);
 }
 
 #pragma mark - NSObject methods

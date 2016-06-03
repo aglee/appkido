@@ -221,7 +221,7 @@
     else if (itemAction == @selector(selectHeaderFile:))
     {
         AKTopic *currentTopic = self.owningWindowController.currentDocLocator.topicToDisplay;
-        return (currentTopic.topicToken.relativeHeaderPath != nil);
+        return (currentTopic.topicToken.hasHeader);
     }
 
     return NO;
