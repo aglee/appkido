@@ -10,9 +10,11 @@
 #import "AKBehaviorToken.h"
 #import "AKBindingToken.h"
 #import "AKCategoryToken.h"
+#import "AKClassDeclarationInfo.h"
 #import "AKClassToken.h"
 #import "AKClassMethodToken.h"
 #import "AKFramework.h"
+#import "AKHeaderScanner.h"
 #import "AKInstanceMethodToken.h"
 #import "AKNamedObjectGroup.h"
 #import "AKPropertyToken.h"
@@ -53,6 +55,27 @@
 	[self _importProtocolClassMethods];
 	[self _importProtocolInstanceMethods];
 	[self _importProtocolProperties];
+}
+
+- (void)_scanFrameworkHeaderFilesForClassDeclarations
+{
+	AKHeaderScanner *scanner = [[AKHeaderScanner alloc] initWithSDKBasePath:self.sdkBasePath];
+	NSArray *classDeclarations = [scanner scanHeadersForClassDeclarations];
+	for (AKClassDeclarationInfo *classInfo in classDeclarations) {
+		// The framework.
+		(void)[self _frameworkWithNameAddIfAbsent:classInfo.frameworkName];
+
+		// The subclass.
+		AKClassToken *classToken = [self _getOrAddClassTokenWithName:classInfo.nameOfClass];
+		classToken.frameworkName = classInfo.frameworkName;
+		if (!classInfo.headerPathIsRelativeToSDK) {
+			classToken.fullHeaderPathOutsideOfSDK = classInfo.headerPath;
+		}
+
+		// The superclass.
+		AKClassToken *superclassToken = [self _getOrAddClassTokenWithName:classInfo.nameOfSuperclass];
+		[superclassToken addChildClass:classToken];
+	}
 }
 
 #pragma mark - Protocols
@@ -253,6 +276,12 @@
 // category that we treat as a protocol) or a class token (all other cases).
 - (AKBehaviorToken *)_ownerOfClassMemberTokenMO:(DSAToken *)tokenMO
 {
+	if (tokenMO.metainformation.file.path == nil) {
+		QLog(@"+++ [ODD] Member token '%@' doesn't point to any documentation.", tokenMO.tokenName);  //TODO: Handle this case.
+	}
+
+
+	
 	AKBehaviorToken *behaviorToken;
 	AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
 
@@ -306,6 +335,12 @@
 
 - (AKProtocolToken *)_ownerOfProtocolMemberTokenMO:(DSAToken *)tokenMO
 {
+	if (tokenMO.metainformation.file.path == nil) {
+		QLog(@"+++ [ODD] Protocol member token '%@' doesn't point to any documentation.", tokenMO.tokenName);  //TODO: Handle this case.
+	}
+
+
+
 	AKProtocolToken *protocolToken;
 	AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
 
@@ -342,6 +377,21 @@
 
 - (AKClassToken *)_getOrAddClassTokenWithName:(NSString *)className
 {
+//	if ([className isEqualToString:@"UINavigationController"]) {
+//		[self self];
+//	}
+//	if ([className isEqualToString:@"GKMatchmakerViewController"]) {
+//		[self self];
+//	}
+//	if ([className isEqualToString:@"NEHotspotNetwork"]) {
+//		[self self];
+//	}
+	if ([className isEqualToString:@"DRFile(VirtualFiles)"]) {
+		[self self];
+	}
+
+
+	
 	AKClassToken *classToken = self.classTokensByName[className];
 	if (classToken == nil) {
 		classToken = [[AKClassToken alloc] initWithName:className];

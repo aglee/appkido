@@ -49,12 +49,6 @@
 
 #pragma mark -
 
-@interface AKDatabase (ImportObjC_Headers)
-- (void)_scanFrameworkHeaderFilesForClassDeclarations;
-@end
-
-#pragma mark -
-
 @interface AKDatabase (ImportC)
 - (void)_importCTokens;
 @end
