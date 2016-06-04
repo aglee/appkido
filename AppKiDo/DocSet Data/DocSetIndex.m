@@ -21,6 +21,53 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
 
+#pragma mark - Finding installed docsets
+
++ (NSArray *)installedDocSets
+{
+	NSMutableArray *docSets = [NSMutableArray array];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSError *error;
+	NSString *docSetsContainerPath = [@"~/Library/Developer/Shared/Documentation/DocSets"
+									  stringByExpandingTildeInPath];
+	NSArray *dirContents = [fm contentsOfDirectoryAtPath:docSetsContainerPath error:&error];
+
+	if (dirContents == nil) {
+		QLog(@"+++ [ERROR] Failed to get contents of '%@' -- %@", docSetsContainerPath, error);
+		return nil;
+	}
+
+	for (NSString *itemName in dirContents) {
+		if ([itemName.pathExtension isEqualToString:@"docset"]) {
+			NSString *docSetPath = [docSetsContainerPath stringByAppendingPathComponent:itemName];
+			DocSetIndex *docSetIndex = [[DocSetIndex alloc] initWithDocSetPath:docSetPath];
+			NSArray *suffixesForSDKDocSets = @[ @".documentation.OSX",
+												@".documentation.iOS",
+												@".documentation.watchOS",
+												@".documentation.tvOS",
+
+												// Older:
+												@".CoreReference",
+												@".iOSLibrary" ];
+			for (NSString *suffix in suffixesForSDKDocSets) {
+				if ([docSetIndex.bundleIdentifier hasSuffix:suffix]) {
+					[docSets addObject:docSetIndex];
+					break;
+				}
+			}
+		}
+	}
+
+	SEL finderLikeCompare = @selector(localizedStandardCompare:);
+	[docSets sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"platform"
+																   ascending:YES
+																	selector:finderLikeCompare],
+									 [NSSortDescriptor sortDescriptorWithKey:@"platformVersion"
+																   ascending:YES
+																	selector:finderLikeCompare] ]];
+	return docSets;
+}
+
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDocSetPath:(NSString *)docSetPath
@@ -53,6 +100,16 @@
 - (NSString *)bundleIdentifier
 {
 	return self.infoPlist[(NSString *)kCFBundleIdentifierKey];
+}
+
+- (NSString *)platform
+{
+	return self.infoPlist[@"DocSetPlatformFamily"];
+}
+
+- (NSString *)platformVersion
+{
+	return self.infoPlist[@"DocSetPlatformVersion"];
 }
 
 - (NSManagedObjectModel *)managedObjectModel
@@ -136,7 +193,9 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: %@>", self.className, self.docSetName];
+	return [NSString stringWithFormat:@"<%@: %p name='%@' platform='%@' version='%@'>",
+			self.className, self,
+			self.docSetName, self.platform, self.platformVersion];
 }
 
 @end

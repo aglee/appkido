@@ -14,9 +14,20 @@
 @property (readonly, copy, nonatomic) NSString *docSetPath;
 @property (readonly, copy, nonatomic) NSString *docSetName;
 @property (readonly, copy, nonatomic) NSString *bundleIdentifier;
+@property (readonly, copy, nonatomic) NSString *platform;
+@property (readonly, copy, nonatomic) NSString *platformVersion;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, copy, nonatomic) NSURL *documentsBaseURL;
+
+#pragma mark - Finding installed docsets
+
+/*!
+ * Looks in the standard location where Xcode installs docsets, which is
+ * "~/Library/Developer/Shared/Documentation/DocSets".  The returned array is
+ * sorted by platform and version.
+ */
++ (NSArray *)installedDocSets;
 
 #pragma mark - Init/awake/dealloc
 
