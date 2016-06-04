@@ -69,16 +69,23 @@
 	// Iterate over every XXX.framework directory under <SDK>/System/Library/Frameworks.
 	static NSString *s_frameworksRelativeBasePath = @"System/Library/Frameworks";
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *frameworksBasePath = [self.sdkBasePath stringByAppendingPathComponent:s_frameworksRelativeBasePath];
+	NSError *error;
+	NSString *frameworksContainerPath = [self.sdkBasePath stringByAppendingPathComponent:s_frameworksRelativeBasePath];
+	NSArray *itemsInFrameworksContainer = [fm contentsOfDirectoryAtPath:frameworksContainerPath error:&error];
 
-	for (NSString *fwItem in [fm subpathsAtPath:frameworksBasePath]) {
+	if (itemsInFrameworksContainer == nil) {
+		QLog(@"+++ [ERROR] %s Could not get contents of directory '%@' -- %@", __PRETTY_FUNCTION__, frameworksContainerPath, error);
+		return;
+	}
+
+	for (NSString *fwItem in itemsInFrameworksContainer) {
 		if (![fwItem hasSuffix:@".framework"]) {
 			continue;
 		}
 
 		// Scan all .h files within this framework.
 		NSString *frameworkName = [fwItem.lastPathComponent stringByDeletingPathExtension];
-		NSString *frameworkDirPath = [frameworksBasePath stringByAppendingPathComponent:fwItem];
+		NSString *frameworkDirPath = [frameworksContainerPath stringByAppendingPathComponent:fwItem];
 		for (NSString *itemInsideFramework in [fm enumeratorAtPath:frameworkDirPath]) {
 			if (![itemInsideFramework hasSuffix:@".h"]) {
 				continue;
