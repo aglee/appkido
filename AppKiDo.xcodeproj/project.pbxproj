@@ -214,6 +214,7 @@
 		73AC6B5E1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */; };
 		73EC0F751D00FD110038FC48 /* AKHeaderScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */; };
 		73EC0F7B1D0118870038FC48 /* AKClassDeclarationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F7A1D0118870038FC48 /* AKClassDeclarationInfo.m */; };
+		73EC0F821D0240530038FC48 /* NSFileManager+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F811D0240530038FC48 /* NSFileManager+AppKiDo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -582,6 +583,8 @@
 		73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderScanner.m; sourceTree = "<group>"; };
 		73EC0F791D0118870038FC48 /* AKClassDeclarationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKClassDeclarationInfo.h; sourceTree = "<group>"; };
 		73EC0F7A1D0118870038FC48 /* AKClassDeclarationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKClassDeclarationInfo.m; sourceTree = "<group>"; };
+		73EC0F801D0240530038FC48 /* NSFileManager+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+AppKiDo.h"; sourceTree = "<group>"; };
+		73EC0F811D0240530038FC48 /* NSFileManager+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+AppKiDo.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -706,12 +709,14 @@
 			children = (
 				736827031CF4BAB9004B070E /* NSArray+AppKiDo.h */,
 				736827041CF4BAB9004B070E /* NSArray+AppKiDo.m */,
-				736827091CF4C269004B070E /* NSSet+AppKiDo.h */,
-				7368270A1CF4C269004B070E /* NSSet+AppKiDo.m */,
+				73EC0F801D0240530038FC48 /* NSFileManager+AppKiDo.h */,
+				73EC0F811D0240530038FC48 /* NSFileManager+AppKiDo.m */,
 				73664D1F1CF2BE9D0094F405 /* NSMutableAttributedString+AppKiDo.h */,
 				73664D201CF2BE9D0094F405 /* NSMutableAttributedString+AppKiDo.m */,
 				73664D211CF2BE9D0094F405 /* NSObject+AppKiDo.h */,
 				73664D221CF2BE9D0094F405 /* NSObject+AppKiDo.m */,
+				736827091CF4C269004B070E /* NSSet+AppKiDo.h */,
+				7368270A1CF4C269004B070E /* NSSet+AppKiDo.m */,
 				73664D231CF2BE9D0094F405 /* NSString+AppKiDo.h */,
 				73664D241CF2BE9D0094F405 /* NSString+AppKiDo.m */,
 				73664D251CF2BE9D0094F405 /* NSView+AppKiDo.h */,
@@ -771,7 +776,6 @@
 		73664D4A1CF2BE9D0094F405 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				73EC0F7C1D0138CD0038FC48 /* Scanning Header Files */,
 				73664D4D1CF2BE9D0094F405 /* AKDatabase.h */,
 				73664D4E1CF2BE9D0094F405 /* AKDatabase.m */,
 				73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */,
@@ -783,6 +787,7 @@
 				73664D501CF2BE9D0094F405 /* AKDatabaseXMLExporter.m */,
 				736827001CF355A1004B070E /* AKInferredTokenInfo.h */,
 				736827011CF355A1004B070E /* AKInferredTokenInfo.m */,
+				73EC0F7C1D0138CD0038FC48 /* Scanning Header Files */,
 				73664D511CF2BE9D0094F405 /* Dev Tools */,
 				73664D5A1CF2BE9D0094F405 /* Frameworks */,
 				73664D5F1CF2BE9D0094F405 /* Tokens */,
@@ -1563,6 +1568,7 @@
 				73664EB41CF2BE9E0094F405 /* AKMethodNameExtractor.m in Sources */,
 				73664EB61CF2BE9E0094F405 /* AKNamedObjectCluster.m in Sources */,
 				73664EAB1CF2BE9E0094F405 /* AKProtocolTopic.m in Sources */,
+				73EC0F821D0240530038FC48 /* NSFileManager+AppKiDo.m in Sources */,
 				73664E8D1CF2BE9E0094F405 /* _DSADistributionVersion.m in Sources */,
 				73664EA21CF2BE9E0094F405 /* AKSubtopic.m in Sources */,
 				73664E8C1CF2BE9E0094F405 /* _DownloadableFile.m in Sources */,
