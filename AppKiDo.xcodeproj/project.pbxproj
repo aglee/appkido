@@ -214,6 +214,7 @@
 		73AC6B5E1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */; };
 		73EC0F751D00FD110038FC48 /* AKHeaderScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */; };
 		73EC0F7B1D0118870038FC48 /* AKClassDeclarationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F7A1D0118870038FC48 /* AKClassDeclarationInfo.m */; };
+		73EC0F7F1D0233FD0038FC48 /* AKInstalledSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F7E1D0233FD0038FC48 /* AKInstalledSDK.m */; };
 		73EC0F821D0240530038FC48 /* NSFileManager+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F811D0240530038FC48 /* NSFileManager+AppKiDo.m */; };
 /* End PBXBuildFile section */
 
@@ -583,6 +584,8 @@
 		73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderScanner.m; sourceTree = "<group>"; };
 		73EC0F791D0118870038FC48 /* AKClassDeclarationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKClassDeclarationInfo.h; sourceTree = "<group>"; };
 		73EC0F7A1D0118870038FC48 /* AKClassDeclarationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKClassDeclarationInfo.m; sourceTree = "<group>"; };
+		73EC0F7D1D0233FD0038FC48 /* AKInstalledSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKInstalledSDK.h; sourceTree = "<group>"; };
+		73EC0F7E1D0233FD0038FC48 /* AKInstalledSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKInstalledSDK.m; sourceTree = "<group>"; };
 		73EC0F801D0240530038FC48 /* NSFileManager+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+AppKiDo.h"; sourceTree = "<group>"; };
 		73EC0F811D0240530038FC48 /* NSFileManager+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+AppKiDo.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -776,6 +779,8 @@
 		73664D4A1CF2BE9D0094F405 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				73EC0F7D1D0233FD0038FC48 /* AKInstalledSDK.h */,
+				73EC0F7E1D0233FD0038FC48 /* AKInstalledSDK.m */,
 				73664D4D1CF2BE9D0094F405 /* AKDatabase.h */,
 				73664D4E1CF2BE9D0094F405 /* AKDatabase.m */,
 				73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */,
@@ -1488,6 +1493,7 @@
 				73664E791CF2BE9E0094F405 /* Container.m in Sources */,
 				73664E691CF2BE9E0094F405 /* AKFrameworkConstants.m in Sources */,
 				73664E681CF2BE9E0094F405 /* AKFramework.m in Sources */,
+				73EC0F7F1D0233FD0038FC48 /* AKInstalledSDK.m in Sources */,
 				73664EB51CF2BE9E0094F405 /* AKNamedObject.m in Sources */,
 				73664E881CF2BE9E0094F405 /* TokenType.m in Sources */,
 				73664E741CF2BE9E0094F405 /* AKPropertyToken.m in Sources */,
