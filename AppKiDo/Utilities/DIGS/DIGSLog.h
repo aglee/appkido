@@ -6,7 +6,28 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "QuietLog.h"
+
+//TODO: Get consistent about how I log stuff.  Currently using NSLog, QLog, DIGSLogXXX.  Maybe forego *all* of those and use a logging package.
+
+#pragma mark - QuietLog
+
+/*!
+ * Like NSLog, but omits the info NSLog puts at the beginning of each line.
+ *
+ * Credit: Mark Dalrymple <http://borkware.com/quickies/single?id=261>.
+ */
+extern void QuietLog (NSString *format, ...);
+
+// Either QLog and NSLog are both quiet, or they're both ver
+#define QLOG_SHOULD_BE_QUIET 1
+#if QLOG_SHOULD_BE_QUIET
+#define QLog QuietLog
+#define NSLog QuietLog
+#else
+#define QLog NSLog
+#endif
+
+#pragma mark - DIGSLog
 
 /*!
  * @header      DIGSLog

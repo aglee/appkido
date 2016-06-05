@@ -164,7 +164,6 @@
 		73664EC41CF2BE9E0094F405 /* DIGSPrefUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E281CF2BE9E0094F405 /* DIGSPrefUtils.m */; };
 		73664EC51CF2BE9E0094F405 /* DIGSTextSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E2A1CF2BE9E0094F405 /* DIGSTextSelection.m */; };
 		73664EC61CF2BE9E0094F405 /* DIGSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E2C1CF2BE9E0094F405 /* DIGSTextView.m */; };
-		73664EC71CF2BE9E0094F405 /* QuietLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E2E1CF2BE9E0094F405 /* QuietLog.m */; };
 		73664EC81CF2BE9E0094F405 /* TCMXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E321CF2BE9E0094F405 /* TCMXMLWriter.m */; };
 		73664EC91CF2BE9E0094F405 /* AKBorderHidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E351CF2BE9E0094F405 /* AKBorderHidingView.m */; };
 		73664ECA1CF2BE9E0094F405 /* AKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E371CF2BE9E0094F405 /* AKBrowser.m */; };
@@ -511,8 +510,6 @@
 		73664E2A1CF2BE9E0094F405 /* DIGSTextSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIGSTextSelection.m; sourceTree = "<group>"; };
 		73664E2B1CF2BE9E0094F405 /* DIGSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIGSTextView.h; sourceTree = "<group>"; };
 		73664E2C1CF2BE9E0094F405 /* DIGSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIGSTextView.m; sourceTree = "<group>"; };
-		73664E2D1CF2BE9E0094F405 /* QuietLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuietLog.h; sourceTree = "<group>"; };
-		73664E2E1CF2BE9E0094F405 /* QuietLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuietLog.m; sourceTree = "<group>"; };
 		73664E311CF2BE9E0094F405 /* TCMXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMXMLWriter.h; sourceTree = "<group>"; };
 		73664E321CF2BE9E0094F405 /* TCMXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMXMLWriter.m; sourceTree = "<group>"; };
 		73664E341CF2BE9E0094F405 /* AKBorderHidingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBorderHidingView.h; sourceTree = "<group>"; };
@@ -1108,8 +1105,6 @@
 				73664E2A1CF2BE9E0094F405 /* DIGSTextSelection.m */,
 				73664E2B1CF2BE9E0094F405 /* DIGSTextView.h */,
 				73664E2C1CF2BE9E0094F405 /* DIGSTextView.m */,
-				73664E2D1CF2BE9E0094F405 /* QuietLog.h */,
-				73664E2E1CF2BE9E0094F405 /* QuietLog.m */,
 			);
 			path = DIGS;
 			sourceTree = "<group>";
@@ -1567,7 +1562,6 @@
 				73664EB71CF2BE9E0094F405 /* AKNamedObjectGroup.m in Sources */,
 				73664EA31CF2BE9E0094F405 /* AKSubtopicConstants.m in Sources */,
 				7368270B1CF4C269004B070E /* NSSet+AppKiDo.m in Sources */,
-				73664EC71CF2BE9E0094F405 /* QuietLog.m in Sources */,
 				73664ECA1CF2BE9E0094F405 /* AKBrowser.m in Sources */,
 				73664EAF1CF2BE9E0094F405 /* AKPrefUtils.m in Sources */,
 				73664E641CF2BE9E0094F405 /* AKDevTools.m in Sources */,
