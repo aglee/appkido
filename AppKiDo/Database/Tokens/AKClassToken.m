@@ -16,16 +16,16 @@
 
 @interface AKClassToken ()
 @property (readwrite, weak) AKClassToken *superclassToken;
-@property (copy) NSMutableDictionary *delegateMethodsByName;
-@property (copy) NSMutableDictionary *bindingsByName;
+@property (copy) NSMutableDictionary *delegateMethodTokensByName;
+@property (copy) NSMutableDictionary *bindingTokensByName;
 @end
 
 @implementation AKClassToken
 {
 @private
 	NSMutableArray *_namesOfAllOwningFrameworks;
-	NSMutableArray *_childClassTokens;  // Contains AKClassTokens.
-	NSMutableArray *_categoryTokens;  // Contains AKCategoryTokens.
+	NSMutableArray *_subclassTokens;
+	NSMutableArray *_categoryTokens;
 }
 
 #pragma mark - Init/awake/dealloc
@@ -35,19 +35,19 @@
 	self = [super initWithName:name];
 	if (self) {
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
-		_childClassTokens = [[NSMutableArray alloc] init];
+		_subclassTokens = [[NSMutableArray alloc] init];
 		_categoryTokens = [[NSMutableArray alloc] init];
-		_delegateMethodsByName = [[NSMutableDictionary alloc] init];
-		_bindingsByName = [[NSMutableDictionary alloc] init];
+		_delegateMethodTokensByName = [[NSMutableDictionary alloc] init];
+		_bindingTokensByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
 
 #pragma mark - Subclass tokens
 
-- (void)addChildClass:(AKClassToken *)classToken
+- (void)addSubclassToken:(AKClassToken *)classToken
 {
-	// We check for parent != child to avoid circularity.  This
+	// We check for subclass != superclass to avoid circularity.  This
 	// doesn't protect against the general case of a cycle, but it does
 	// work around the typo in the Tiger docs where the superclass of
 	// NSAnimation was given as NSAnimation.
@@ -56,35 +56,35 @@
 		return;
 	}
 
-	[classToken.superclassToken removeChildClass:classToken];
+	[classToken.superclassToken removeSubclassToken:classToken];
 	classToken.superclassToken = self;
-	[_childClassTokens addObject:classToken];
+	[_subclassTokens addObject:classToken];
 }
 
-- (void)removeChildClass:(AKClassToken *)classToken
+- (void)removeSubclassToken:(AKClassToken *)classToken
 {
-	NSInteger i = [_childClassTokens indexOfObject:classToken];
+	NSInteger i = [_subclassTokens indexOfObject:classToken];
 	if (i >= 0) {
 		classToken.superclassToken = nil;
-		[_childClassTokens removeObjectAtIndex:i];
+		[_subclassTokens removeObjectAtIndex:i];
 	}
 }
 
-- (NSArray *)childClasses
+- (NSArray *)subclassTokens
 {
-	return _childClassTokens;
+	return _subclassTokens;
 }
 
-- (NSSet *)descendantClasses
+- (NSSet *)descendantClassTokens
 {
 	NSMutableSet *descendantClassTokens = [NSMutableSet setWithCapacity:50];
-	[self _addDescendantsToSet:descendantClassTokens];
+	[self _addDescendantClassTokensToSet:descendantClassTokens];
 	return descendantClassTokens;
 }
 
 #pragma mark - Category tokens
 
-- (AKCategoryToken *)categoryNamed:(NSString *)name
+- (AKCategoryToken *)categoryTokenNamed:(NSString *)name
 {
 	for (AKCategoryToken *token in _categoryTokens) {
 		if ([token.name isEqualToString:name]) {
@@ -94,7 +94,7 @@
 	return nil;
 }
 
-- (void)addCategory:(AKCategoryToken *)token
+- (void)addCategoryToken:(AKCategoryToken *)token
 {
 	[token.owningClassToken removeCategoryToken:token];
 	[_categoryTokens addObject:token];
@@ -103,20 +103,20 @@
 
 - (void)removeCategoryToken:(AKCategoryToken *)token
 {
-	NSInteger i = [_childClassTokens indexOfObject:token];
+	NSInteger i = [_subclassTokens indexOfObject:token];
 	if (i >= 0) {
 		token.owningClassToken = nil;
 		[_categoryTokens removeObjectAtIndex:i];
 	}
 }
 
-- (NSArray *)allCategories
+- (NSArray *)categoryTokensIncludingInherited
 {
 	NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryTokens];
 
 	// Get categories from ancestor classes.
 	if (self.superclassToken) {
-		[result addObjectsFromArray:self.superclassToken.allCategories];
+		[result addObjectsFromArray:self.superclassToken.categoryTokensIncludingInherited];
 	}
 
 	return result;
@@ -124,19 +124,19 @@
 
 #pragma mark - Bindings tokens
 
-- (void)addBindingToken:(AKToken *)token
+- (void)addBindingToken:(AKToken *)bindingToken
 {
-	self.bindingsByName[token.name] = token;
+	self.bindingTokensByName[bindingToken.name] = bindingToken;
 }
 
 - (AKToken *)bindingTokenNamed:(NSString *)name
 {
-	return self.bindingsByName[name];
+	return self.bindingTokensByName[name];
 }
 
 - (NSArray *)bindingTokens
 {
-	return self.bindingsByName.allValues;
+	return self.bindingTokensByName.allValues;
 }
 
 #pragma mark - Owning frameworks
@@ -186,22 +186,23 @@
 
 - (NSArray *)delegateMethodTokens
 {
-	NSMutableArray *methodList = [self.delegateMethodsByName.allValues mutableCopy];
+	NSMutableArray *delegateMethodTokens = [self.delegateMethodTokensByName.allValues mutableCopy];
 
-	// Handle classes like WebView that have different *kinds* of delegates.
-	[self _addExtraDelegateMethodsTo:methodList];
+	// Handle classes like WebView that have different kinds of delegates, not
+	// just one called "delegate".
+	[self _addExtraDelegateMethodTokensToArray:delegateMethodTokens];
 
-	return methodList;
+	return delegateMethodTokens;
 }
 
-- (AKMethodToken *)delegateMethodWithName:(NSString *)methodName
+- (AKMethodToken *)delegateMethodTokenWithName:(NSString *)methodName
 {
-	return self.delegateMethodsByName[methodName];  //TODO: This doesn't jibe with delegateMethodTokens.
+	return self.delegateMethodTokensByName[methodName];  //TODO: This doesn't jibe with delegateMethodTokens.
 }
 
-- (void)addDelegateMethod:(AKMethodToken *)methodToken
+- (void)addDelegateMethodToken:(AKMethodToken *)methodToken
 {
-	self.delegateMethodsByName[methodToken.name] = methodToken;  //TODO: This doesn't jibe with delegateMethodTokens.
+	self.delegateMethodTokensByName[methodToken.name] = methodToken;  //TODO: This doesn't jibe with delegateMethodTokens.
 	methodToken.owningBehavior = self;
 }
 
@@ -212,29 +213,29 @@
 	return YES;
 }
 
-- (NSArray *)adoptedProtocols
+- (NSArray *)adoptedProtocolTokens
 {
-	NSMutableArray *result = [NSMutableArray arrayWithArray:[super adoptedProtocols]];
+	NSMutableArray *result = [NSMutableArray arrayWithArray:[super adoptedProtocolTokens]];
 
 	// Get protocols from ancestor classes.
-	[result addObjectsFromArray:self.superclassToken.adoptedProtocols];
+	[result addObjectsFromArray:self.superclassToken.adoptedProtocolTokens];
 
 	return result;
 }
 
 #pragma mark - Private methods
 
-- (void)_addDescendantsToSet:(NSMutableSet *)descendantClassTokens
+- (void)_addDescendantClassTokensToSet:(NSMutableSet *)descendantClassTokens
 {
 	[descendantClassTokens addObject:self];
-	for (AKClassToken *child in _childClassTokens) {
-		[child _addDescendantsToSet:descendantClassTokens];
+	for (AKClassToken *subclassToken in _subclassTokens) {
+		[subclassToken _addDescendantClassTokensToSet:descendantClassTokens];
 	}
 }
 
 // Look for a protocol named ThisClassDelegate.
 // Look for instance method names of the form setFooDelegate:.
-- (void)_addExtraDelegateMethodsTo:(NSMutableArray *)methodsList
+- (void)_addExtraDelegateMethodTokensToArray:(NSMutableArray *)methodsList
 {
 ////TODO: Commenting out for now, come back to this later.
 //	// Look for a protocol named ThisClassDelegate.

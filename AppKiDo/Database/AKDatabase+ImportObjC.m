@@ -74,7 +74,7 @@
 
 		// The superclass.
 		AKClassToken *superclassToken = [self _getOrAddClassTokenWithName:classInfo.nameOfSuperclass];
-		[superclassToken addChildClass:classToken];
+		[superclassToken addSubclassToken:classToken];
 	}
 }
 
@@ -150,7 +150,7 @@
 	if (container) {
 		NSString *superclassName = container.containerName;
 		AKClassToken *superclassToken = [self _getOrAddClassTokenWithName:superclassName];
-		[superclassToken addChildClass:classToken];
+		[superclassToken addSubclassToken:classToken];
 	}
 }
 
@@ -214,10 +214,10 @@
 
 	// Case 4: Category is just a category.
 	AKClassToken *classToken = [self _getOrAddClassTokenWithName:owningClassName];
-	AKCategoryToken *categoryToken = [classToken categoryNamed:categoryName];
+	AKCategoryToken *categoryToken = [classToken categoryTokenNamed:categoryName];
 	if (categoryToken == nil) {
 		categoryToken = [[AKCategoryToken alloc] initWithName:categoryName];
-		[classToken addCategory:categoryToken];
+		[classToken addCategoryToken:categoryToken];
 		categoryToken.tokenMO = tokenMO;
 		categoryToken.frameworkName = frameworkName;
 		//QLog(@"+++ Added category '%@(%@)', doc at '%@'.", owningClassName, categoryName, tokenMO.metainformation.file.path);

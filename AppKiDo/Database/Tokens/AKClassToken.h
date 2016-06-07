@@ -20,9 +20,9 @@
 @interface AKClassToken : AKBehaviorToken
 
 @property (readonly, weak) AKClassToken *superclassToken;
-@property (readonly, copy) NSArray *childClasses;
-@property (readonly, copy) NSSet *descendantClasses;
-@property (readonly, copy) NSArray *allCategories;
+@property (readonly, copy) NSArray *subclassTokens;
+@property (readonly, copy) NSSet *descendantClassTokens;
+@property (readonly, copy) NSArray *categoryTokensIncludingInherited;
 @property (readonly, copy) NSArray *delegateMethodTokens;
 
 /*!
@@ -35,17 +35,17 @@
 
 #pragma mark - Subclass tokens
 
-- (void)addChildClass:(AKClassToken *)classToken;
-- (void)removeChildClass:(AKClassToken *)classToken;
+- (void)addSubclassToken:(AKClassToken *)classToken;
+- (void)removeSubclassToken:(AKClassToken *)classToken;
 
 #pragma mark - Category tokens
 
-- (void)addCategory:(AKCategoryToken *)token;
-- (AKCategoryToken *)categoryNamed:(NSString *)name;
+- (void)addCategoryToken:(AKCategoryToken *)token;
+- (AKCategoryToken *)categoryTokenNamed:(NSString *)name;
 
 #pragma mark - Bindings tokens
 
-- (void)addBindingToken:(AKBindingToken *)token;
+- (void)addBindingToken:(AKBindingToken *)bindingToken;
 - (AKBindingToken *)bindingTokenNamed:(NSString *)name;
 - (NSArray *)bindingTokens;
 
@@ -69,9 +69,9 @@
 
 #pragma mark - Delegate method tokens
 
-- (AKMethodToken *)delegateMethodWithName:(NSString *)methodName;
+- (AKMethodToken *)delegateMethodTokenWithName:(NSString *)methodName;
 
 /*! Does nothing if a delegate method with the same name already exists. */
-- (void)addDelegateMethod:(AKMethodToken *)methodToken;
+- (void)addDelegateMethodToken:(AKMethodToken *)methodToken;
 
 @end

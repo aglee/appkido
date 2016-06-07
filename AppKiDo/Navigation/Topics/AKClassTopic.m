@@ -79,8 +79,8 @@
 {
 	NSMutableArray *childTopics = [NSMutableArray array];
 
-	NSArray *childClassTokens = [self.classToken.childClasses ak_sortedBySortName];
-	for (AKClassToken *subclassToken in childClassTokens) {
+	NSArray *subclassTokens = [self.classToken.subclassTokens ak_sortedBySortName];
+	for (AKClassToken *subclassToken in subclassTokens) {
 		[childTopics addObject:[[AKClassTopic alloc] initWithClassToken:subclassToken]];
 	}
 

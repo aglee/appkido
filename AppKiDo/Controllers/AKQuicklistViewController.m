@@ -824,7 +824,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	for (NSString *name in classNames)
 	{
 		AKClassToken *classToken = [self.owningWindowController.database classWithName:name];
-		[setOfClassTokens unionSet:[classToken descendantClasses]];
+		[setOfClassTokens unionSet:[classToken descendantClassTokens]];
 	}
 
 	return [setOfClassTokens ak_sortedBySortName];
@@ -837,7 +837,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	// Add descendant classes of the classes that were found.
 	for (AKClassToken *classToken in setOfClassTokens)
 	{
-		[resultSet unionSet:[classToken descendantClasses]];
+		[resultSet unionSet:[classToken descendantClassTokens]];
 	}
 
 	// Sort the classes we found and return the result.

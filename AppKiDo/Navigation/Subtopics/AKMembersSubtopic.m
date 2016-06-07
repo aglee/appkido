@@ -61,7 +61,7 @@
 
 		// Add protocols we conform to to the list.  They will
 		// be the last behaviors we check.
-		[ancestorItems addObjectsFromArray:[self.behaviorToken adoptedProtocols]];
+		[ancestorItems addObjectsFromArray:[self.behaviorToken adoptedProtocolTokens]];
 	}
 
 	return ancestorItems;
