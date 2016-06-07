@@ -655,6 +655,7 @@
 			children = (
 				73664DF91CF2BE9E0094F405 /* Utilities */,
 				73664DF31CF2BE9E0094F405 /* Prefs */,
+				73664D7D1CF2BE9D0094F405 /* DocSetModel */,
 				73664D7A1CF2BE9D0094F405 /* DocSet Data */,
 				734726081D075759009147AD /* DocSets and SDKs */,
 				73664D4A1CF2BE9D0094F405 /* Database */,
@@ -878,7 +879,6 @@
 		73664D7A1CF2BE9D0094F405 /* DocSet Data */ = {
 			isa = PBXGroup;
 			children = (
-				73664D7D1CF2BE9D0094F405 /* DocSetModel */,
 				73664DC51CF2BE9D0094F405 /* DocSetModel.xcdatamodeld */,
 			);
 			path = "DocSet Data";
