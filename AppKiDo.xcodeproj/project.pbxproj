@@ -1466,7 +1466,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mogenerator -m \"AppKiDo/DocSet Data/DocSetModel.xcdatamodeld/DocSetModel.xcdatamodel\" --human-dir \"AppKiDo/DocSet Data/DocSetModel/Human\" --machine-dir \"AppKiDo/DocSet Data/DocSetModel/Machine\" --includeh \"AppKiDo/DocSet Data/DocSetModel/DocSetModel.h\" --template-var arc=true";
+			shellScript = "mogenerator -m \"AppKiDo/DocSetModel/DocSetModel.xcdatamodeld/DocSetModel.xcdatamodel\" --human-dir \"AppKiDo/DocSetModel/Human\" --machine-dir \"AppKiDo/DocSetModel/Machine\" --includeh \"AppKiDo/DocSetModel/DocSetModel.h\" --template-var arc=true";
 		};
 /* End PBXShellScriptBuildPhase section */
 
