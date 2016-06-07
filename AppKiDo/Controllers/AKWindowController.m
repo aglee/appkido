@@ -33,28 +33,6 @@
 
 @implementation AKWindowController
 
-@synthesize topLevelSplitView = _topLevelSplitView;
-@synthesize bottomTwoThirdsSplitView = _bottomTwoThirdsSplitView;
-@synthesize middleView = _middleView;
-@synthesize middleThirdSplitView = _middleThirdSplitView;
-
-@synthesize topicBrowserContainerView = _topicBrowserContainerView;
-@synthesize subtopicListContainerView = _subtopicListContainerView;
-@synthesize docListContainerView = _docListContainerView;
-@synthesize docContainerView = _docContainerView;
-
-@synthesize topicDescriptionField = _topicDescriptionField;
-@synthesize backButton = _backButton;
-@synthesize forwardButton = _forwardButton;
-@synthesize superclassButton = _superclassButton;
-@synthesize backMenu = _backMenu;
-@synthesize forwardMenu = _forwardMenu;
-@synthesize superclassesMenu = _superclassesMenu;
-
-@synthesize docCommentField = _docCommentField;
-
-@synthesize quicklistDrawer = _quicklistDrawer;
-
 #pragma mark - Private constants -- toolbar identifiers
 
 static NSString *_AKToolbarID = @"AKToolbarID";

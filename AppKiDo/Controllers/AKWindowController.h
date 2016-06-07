@@ -55,32 +55,18 @@
 	AKDocListViewController *_docListController;
 	AKDocViewController *_docViewController;
 	AKQuicklistViewController *_quicklistController;
-
-	// IBOutlets.
-	NSSplitView *__weak _topLevelSplitView;
-	NSSplitView *__weak _bottomTwoThirdsSplitView;
-	NSView *__weak _middleView;
-	NSSplitView *__weak _middleThirdSplitView;
-
-	NSView *__weak _topicBrowserContainerView;
-	NSView *__weak _subtopicListContainerView;
-	NSView *__weak _docListContainerView;
-	NSView *__weak _docContainerView;
-
-	NSTextField *__weak _topicDescriptionField;
-	NSTextField *__weak _docCommentField;
-	NSTextField *__weak _docSetInfoField;
-
-	NSButton *__weak _backButton;
-	NSButton *__weak _forwardButton;
-	NSButton *__weak _superclassButton;
-
-	NSMenu *__weak _backMenu;
-	NSMenu *__weak _forwardMenu;
-	NSMenu *__weak _superclassesMenu;
-
-	NSDrawer *__weak _quicklistDrawer;
 }
+
+@property (readonly, strong) AKDatabase *database;
+
+@property (readonly, strong) AKDocLocator *currentDocLocator;
+
+// These container views will have views stuffed inside them. Those views will
+// be loaded by various view controllers.
+@property (nonatomic, weak) IBOutlet NSView *topicBrowserContainerView;
+@property (nonatomic, weak) IBOutlet NSView *subtopicListContainerView;
+@property (nonatomic, weak) IBOutlet NSView *docListContainerView;
+@property (nonatomic, weak) IBOutlet NSView *docContainerView;
 
 /*! Top pane contains the topic browser, bottom pane contains bottomTwoThirdsSplitView. */
 @property (nonatomic, weak) IBOutlet NSSplitView *topLevelSplitView;
@@ -94,12 +80,7 @@
 /*! The "middle third" contains the subtopic list and doc list, side by side. */
 @property (nonatomic, weak) IBOutlet NSSplitView *middleThirdSplitView;
 
-// These container views will have views stuffed inside them. Those views will
-// be loaded by various view controllers.
-@property (nonatomic, weak) IBOutlet NSView *topicBrowserContainerView;
-@property (nonatomic, weak) IBOutlet NSView *subtopicListContainerView;
-@property (nonatomic, weak) IBOutlet NSView *docListContainerView;
-@property (nonatomic, weak) IBOutlet NSView *docContainerView;
+@property (readonly, strong) NSView *docView;
 
 // These things are in the "middle third".
 @property (nonatomic, weak) IBOutlet NSTextField *topicDescriptionField;
@@ -121,12 +102,6 @@
 
 /*! Designated initializer though not marked as such.  Too much hassle avoiding compiler warnings in this case. */
 - (instancetype)initWithDatabase:(AKDatabase *)database /*NS_DESIGNATED_INITIALIZER*/;
-
-#pragma mark - Getters and setters
-
-@property (readonly, strong) AKDatabase *database;
-
-@property (readonly, strong) AKDocLocator *currentDocLocator;
 
 #pragma mark - Navigation
 
@@ -152,8 +127,6 @@
 - (void)searchForString:(NSString *)aString;
 
 - (void)putSavedWindowStateInto:(AKSavedWindowState *)savedWindowState;
-
-@property (readonly, strong) NSView *docView;
 
 - (void)revealPopQuizSymbol:(NSString *)apiSymbol;
 
