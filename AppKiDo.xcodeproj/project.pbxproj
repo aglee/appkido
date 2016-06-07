@@ -617,6 +617,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		734726081D075759009147AD /* DocSets and SDKs */ = {
+			isa = PBXGroup;
+			children = (
+				73664D7B1CF2BE9D0094F405 /* DocSetIndex.h */,
+				73664D7C1CF2BE9D0094F405 /* DocSetIndex.m */,
+				73EC0F7D1D0233FD0038FC48 /* AKInstalledSDK.h */,
+				73EC0F7E1D0233FD0038FC48 /* AKInstalledSDK.m */,
+			);
+			path = "DocSets and SDKs";
+			sourceTree = "<group>";
+		};
 		73664CAB1CF2BBBE0094F405 = {
 			isa = PBXGroup;
 			children = (
@@ -645,6 +656,7 @@
 				73664DF91CF2BE9E0094F405 /* Utilities */,
 				73664DF31CF2BE9E0094F405 /* Prefs */,
 				73664D7A1CF2BE9D0094F405 /* DocSet Data */,
+				734726081D075759009147AD /* DocSets and SDKs */,
 				73664D4A1CF2BE9D0094F405 /* Database */,
 				73664E331CF2BE9E0094F405 /* Views and Windows */,
 				73664D271CF2BE9D0094F405 /* Controllers */,
@@ -784,8 +796,6 @@
 		73664D4A1CF2BE9D0094F405 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				73EC0F7D1D0233FD0038FC48 /* AKInstalledSDK.h */,
-				73EC0F7E1D0233FD0038FC48 /* AKInstalledSDK.m */,
 				73664D4D1CF2BE9D0094F405 /* AKDatabase.h */,
 				73664D4E1CF2BE9D0094F405 /* AKDatabase.m */,
 				73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */,
@@ -868,8 +878,6 @@
 		73664D7A1CF2BE9D0094F405 /* DocSet Data */ = {
 			isa = PBXGroup;
 			children = (
-				73664D7B1CF2BE9D0094F405 /* DocSetIndex.h */,
-				73664D7C1CF2BE9D0094F405 /* DocSetIndex.m */,
 				73664D7D1CF2BE9D0094F405 /* DocSetModel */,
 				73664DC51CF2BE9D0094F405 /* DocSetModel.xcdatamodeld */,
 			);
