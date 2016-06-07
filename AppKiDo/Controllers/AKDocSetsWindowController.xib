@@ -23,7 +23,7 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" id="AV2-6k-afD" userLabel="Message Field">
-                        <rect key="frame" x="18" y="271" width="398" height="136"/>
+                        <rect key="frame" x="18" y="271" width="389" height="136"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="cc1-ty-p8s">
                             <font key="font" metaFont="system"/>
@@ -32,8 +32,9 @@
 - Only Objective-C.
 - Only one docset, which you must select below.
 - Some incomplete data.
+- Xcode must be at /Applications/Xcode.app.
 
-In future builds I'll be addressing these and other issues.  Thanks for your help.</string>
+I'll be addressing these and other issues.  Thanks for your help.</string>
                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -55,7 +56,7 @@ In future builds I'll be addressing these and other issues.  Thanks for your hel
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="20" rowSizeStyle="automatic" headerView="nTB-ll-ySr" viewBased="YES" floatsGroupRows="NO" id="rDv-2f-lGx" userLabel="DocSets Table View">
-                                    <rect key="frame" x="0.0" y="0.0" width="249" height="160"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="249" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
