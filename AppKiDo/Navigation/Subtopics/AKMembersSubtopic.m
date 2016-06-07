@@ -54,7 +54,7 @@
 		// superclasses first.
 		if (self.behaviorToken.isClassToken) {
 			AKClassToken *classToken = (AKClassToken *)self.behaviorToken;
-			while ((classToken = classToken.parentClass)) {
+			while ((classToken = classToken.superclassToken)) {
 				[ancestorItems addObject:classToken];
 			}
 		}

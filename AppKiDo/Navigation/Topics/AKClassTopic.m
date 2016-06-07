@@ -47,9 +47,9 @@
 	return self.classToken;
 }
 
-- (AKClassToken *)parentClassOfTopic
+- (AKClassToken *)superclassTokenForTopicToken
 {
-	return self.classToken.parentClass;
+	return self.classToken.superclassToken;
 }
 
 - (NSString *)pathInTopicBrowser
@@ -61,7 +61,7 @@
 	NSString *path = [AKTopicBrowserPathSeparator stringByAppendingString:self.classToken.name];
 	AKClassToken *classToken = self.classToken;
 
-	while ((classToken = classToken.parentClass)) {
+	while ((classToken = classToken.superclassToken)) {
 		path = [AKTopicBrowserPathSeparator stringByAppendingString:
 				[classToken.name stringByAppendingString:path]];
 	}

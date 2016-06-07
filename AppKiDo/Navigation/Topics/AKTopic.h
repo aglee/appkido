@@ -32,7 +32,7 @@
 @interface AKTopic : NSObject <AKNamed, AKPrefDictionary>
 
 @property (strong, readonly) AKToken *topicToken;  //TODO: KLUDGE
-@property (strong, readonly) AKClassToken *parentClassOfTopic;  //TODO: KLUDGE
+@property (strong, readonly) AKClassToken *superclassTokenForTopicToken;  //TODO: KLUDGE
 
 @property (copy, readonly) NSString *pathInTopicBrowser;
 @property (assign, readonly) BOOL browserCellShouldBeEnabled;

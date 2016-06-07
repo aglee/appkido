@@ -19,7 +19,7 @@
  */
 @interface AKClassToken : AKBehaviorToken
 
-@property (readonly, weak) AKClassToken *parentClass;
+@property (readonly, weak) AKClassToken *superclassToken;
 @property (readonly, copy) NSArray *childClasses;
 @property (readonly, copy) NSSet *descendantClasses;
 @property (readonly, copy) NSArray *allCategories;

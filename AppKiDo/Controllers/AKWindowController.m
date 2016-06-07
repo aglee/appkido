@@ -276,7 +276,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)selectSuperclass:(id)sender
 {
-	AKClassToken *superclassToken = [[self _currentTopic] parentClassOfTopic];
+	AKClassToken *superclassToken = [[self _currentTopic] superclassTokenForTopicToken];
 	if (superclassToken) {
 		[self selectTopic:[[AKClassTopic alloc] initWithClassToken:superclassToken]];
 	}
@@ -284,7 +284,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (IBAction)selectAncestorClass:(id)sender
 {
-	AKClassToken * classToken = [[self _currentTopic] parentClassOfTopic];
+	AKClassToken * classToken = [[self _currentTopic] superclassTokenForTopicToken];
 	NSInteger numberOfSuperlevels;
 	NSInteger i;
 
@@ -297,7 +297,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 	// Figure out what class that means to jump to.
 	for (i = 0; i < numberOfSuperlevels; i++) {
-		classToken = classToken.parentClass;
+		classToken = classToken.superclassToken;
 	}
 
 	// Do the jump.
@@ -574,13 +574,13 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 			   || (itemAction == @selector(goToHistoryItemInForwardMenu:))) {
 		return YES;
 	} else if (itemAction == @selector(selectSuperclass:)) {
-		BOOL isValid = ([[self _currentTopic] parentClassOfTopic] != nil);
+		BOOL isValid = ([[self _currentTopic] superclassTokenForTopicToken] != nil);
 		if (isValid && [anItem isKindOfClass:[NSToolbarItem class]]) 	{
 			[anItem setToolTip:[self _tooltipForSelectSuperclass]];
 		}
 		return isValid;
 	} else if (itemAction == @selector(selectAncestorClass:)) {
-		return ([[self _currentTopic] parentClassOfTopic] != nil);
+		return ([[self _currentTopic] superclassTokenForTopicToken] != nil);
 	} else if ((itemAction == @selector(selectDocWithDocLocatorRepresentedBy:))
 			   || (itemAction == @selector(rememberWindowLayout:))) {
 		return YES;
@@ -740,7 +740,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 {
 	return [NSString stringWithFormat:(@"Go to superclass (%@)"
 									   @"\n(Control-click or right-click for menu)"),
-			[[self _currentTopic] parentClassOfTopic].name];
+			[[self _currentTopic] superclassTokenForTopicToken].name];
 }
 
 - (void)_refreshNavigationButtons
@@ -752,10 +752,10 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 
 - (void)_refreshSuperclassButton
 {
-	AKClassToken *parentClass = [[self _currentTopic] parentClassOfTopic];
+	AKClassToken *superclassToken = [[self _currentTopic] superclassTokenForTopicToken];
 
 	// Enable or disable the Superclass button as appropriate.
-	_superclassButton.enabled = (parentClass != nil);
+	_superclassButton.enabled = (superclassToken != nil);
 	if (_superclassButton.enabled) {
 		_superclassButton.toolTip = [self _tooltipForSelectSuperclass];
 	}
@@ -766,12 +766,12 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	}
 
 	// Reconstruct the Superclass button's contextual menu.
-	AKClassToken *ancestorToken = parentClass;
+	AKClassToken *ancestorToken = superclassToken;
 	while (ancestorToken != nil) {
 		[_superclassesMenu addItemWithTitle:ancestorToken.name
 									 action:@selector(selectAncestorClass:)
 							  keyEquivalent:@""];
-		ancestorToken = ancestorToken.parentClass;
+		ancestorToken = ancestorToken.superclassToken;
 	}
 }
 

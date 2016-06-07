@@ -139,8 +139,8 @@
 - (void)_fillInSuperclassTokenForClassToken:(AKClassToken *)classToken
 {
 	NSParameterAssert(classToken.tokenMO != nil);
-	if (classToken.parentClass) {
-		//QLog(@"+++ Class token %@ already has superclass token %@", classToken.name, classToken.parentClass.name);
+	if (classToken.superclassToken) {
+		//QLog(@"+++ Class token %@ already has superclass token %@", classToken.name, classToken.superclassToken.name);
 		return;
 	}
 	if (classToken.tokenMO.superclassContainers.count > 1) {

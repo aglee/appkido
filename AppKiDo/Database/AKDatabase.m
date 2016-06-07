@@ -114,7 +114,7 @@
 {
 	NSMutableArray *result = [NSMutableArray array];
 	for (AKClassToken *classToken in [self allClasses]) {
-		if (classToken.parentClass == nil) {
+		if (classToken.superclassToken == nil) {
 			[result addObject:classToken];
 		}
 	}

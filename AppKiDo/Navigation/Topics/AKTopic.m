@@ -23,7 +23,7 @@
 	return nil;
 }
 
-- (AKClassToken *)parentClassOfTopic
+- (AKClassToken *)superclassTokenForTopicToken
 {
 	return nil;
 }

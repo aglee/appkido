@@ -15,7 +15,7 @@
 #import "NSString+AppKiDo.h"
 
 @interface AKClassToken ()
-@property (readwrite, weak) AKClassToken *parentClass;
+@property (readwrite, weak) AKClassToken *superclassToken;
 @property (copy) NSMutableDictionary *delegateMethodsByName;
 @property (copy) NSMutableDictionary *bindingsByName;
 @end
@@ -56,8 +56,8 @@
 		return;
 	}
 
-	[classToken.parentClass removeChildClass:classToken];
-	classToken.parentClass = self;
+	[classToken.superclassToken removeChildClass:classToken];
+	classToken.superclassToken = self;
 	[_childClassTokens addObject:classToken];
 }
 
@@ -65,7 +65,7 @@
 {
 	NSInteger i = [_childClassTokens indexOfObject:classToken];
 	if (i >= 0) {
-		classToken.parentClass = nil;
+		classToken.superclassToken = nil;
 		[_childClassTokens removeObjectAtIndex:i];
 	}
 }
@@ -115,8 +115,8 @@
 	NSMutableArray *result = [NSMutableArray arrayWithArray:_categoryTokens];
 
 	// Get categories from ancestor classes.
-	if (self.parentClass) {
-		[result addObjectsFromArray:self.parentClass.allCategories];
+	if (self.superclassToken) {
+		[result addObjectsFromArray:self.superclassToken.allCategories];
 	}
 
 	return result;
@@ -217,7 +217,7 @@
 	NSMutableArray *result = [NSMutableArray arrayWithArray:[super adoptedProtocols]];
 
 	// Get protocols from ancestor classes.
-	[result addObjectsFromArray:self.parentClass.adoptedProtocols];
+	[result addObjectsFromArray:self.superclassToken.adoptedProtocols];
 
 	return result;
 }
