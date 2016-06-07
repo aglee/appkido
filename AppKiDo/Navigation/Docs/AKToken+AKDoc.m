@@ -21,7 +21,7 @@
 
 - (NSString *)displayNameForDocList
 {
-	return self.name;
+	return self.displayName;
 }
 
 - (NSString *)commentString
