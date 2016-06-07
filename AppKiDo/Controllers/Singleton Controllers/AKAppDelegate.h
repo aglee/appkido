@@ -16,9 +16,9 @@
 @class AKWindowController;
 
 /*!
- * AppKiDo's application delegate. On launch, displays the splash window, loads
- * the database, and loads window states remembered from the previous launch.
- * On quit, saves the states of all open windows.
+ * AppKiDo's application delegate.  On launch, populates the database and
+ * restores windows remembered from the previous launch.  On quit, saves the
+ * states of all open windows so they can be restored next time.
  */
 @interface AKAppDelegate : NSObject <AKUIConfigurable, NSUserInterfaceValidations, NSApplicationDelegate>
 {

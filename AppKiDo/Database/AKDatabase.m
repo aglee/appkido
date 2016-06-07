@@ -9,6 +9,7 @@
 #import "AKClassToken.h"
 #import "DocSetIndex.h"
 #import "AKFramework.h"
+#import "AKInstalledSDK.h"
 #import "AKManagedObjectQuery.h"
 #import "AKNamedObjectCluster.h"
 #import "AKNamedObjectGroup.h"
@@ -17,15 +18,23 @@
 #import "AKResult.h"
 #import "DIGSLog.h"
 
+@interface AKDatabase ()
+@property (readonly) AKInstalledSDK *referenceSDK;
+@end
+
 @implementation AKDatabase
 
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex
+								SDK:(AKInstalledSDK *)installedSDK
 {
+	NSParameterAssert(docSetIndex != nil);
+	NSParameterAssert(installedSDK != nil);
 	self = [super init];
 	if (self) {
 		_docSetIndex = docSetIndex;
+		_referenceSDK = installedSDK;
 		_frameworksGroup = [[AKNamedObjectGroup alloc] initWithName:@"Frameworks"];
 		_classTokensByName = [[NSMutableDictionary alloc] init];
 		_protocolTokensByName = [[NSMutableDictionary alloc] init];
@@ -36,14 +45,14 @@
 - (instancetype)init
 {
 	DIGSLogError_NondesignatedInitializer();
-	return [self initWithDocSetIndex:nil];
+	return [self initWithDocSetIndex:nil SDK:nil];
 }
 
 #pragma mark - Getters and setters
 
 - (NSString *)sdkBasePath
 {
-	return @"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk";  //TODO: Get the right path instead of hardcoding.
+	return self.referenceSDK.basePath;
 }
 
 - (NSArray *)sortedFrameworkNames

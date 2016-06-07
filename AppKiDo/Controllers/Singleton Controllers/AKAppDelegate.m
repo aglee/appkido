@@ -15,6 +15,7 @@
 #import "AKDebugging.h"
 #import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
+#import "AKDocSetsWindowController.h"
 #import "AKFindPanelController.h"
 #import "AKPopQuizWindowController.h"
 #import "AKPrefPanelController.h"
@@ -430,11 +431,20 @@ static NSTimeInterval g_checkpointTime = 0.0;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     NSLog(@"Logging verbosity is at level %zd", DIGSGetVerbosityLevel());
-    
+
+	// Put up the notice about this being an early prerelease build, and prompt
+	// for docset selection.
+	AKDocSetsWindowController *docSetsWC = [[AKDocSetsWindowController alloc] initWithWindowNibName:@"AKDocSetsWindowController"];
+	[docSetsWC useInstalledSDKsInXcodePath:@"/Applications/Xcode.app"];  //TODO: Be able to specify Xcode location.
+	[docSetsWC.window center];
+	NSModalResponse modalResponse = [NSApp runModalForWindow:docSetsWC.window];
+	if (modalResponse == NSModalResponseAbort) {
+		[NSApp terminate:nil];
+	}
+
 	// Create the AKDatabase instance or bust.
-    NSString *docSetBundlePath = [@"~/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.OSX.docset/" stringByExpandingTildeInPath];  //FIXME: REMOVE DEBUGGING
-    DocSetIndex *docSetIndex = [[DocSetIndex alloc] initWithDocSetPath:docSetBundlePath];
-    _appDatabase = [[AKDatabase alloc] initWithDocSetIndex:docSetIndex];
+    _appDatabase = [[AKDatabase alloc] initWithDocSetIndex:docSetsWC.selectedDocSetIndex
+													   SDK:docSetsWC.selectedSDK];
     if (_appDatabase == nil)
     {
         [NSApp terminate:nil];

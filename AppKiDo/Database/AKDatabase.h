@@ -11,6 +11,7 @@
 @class AKClassToken;
 @class AKFunctionToken;
 @class AKFramework;
+@class AKInstalledSDK;
 @class AKManagedObjectQuery;
 @class AKNamedObjectCluster;
 @class AKNamedObjectGroup;
@@ -41,7 +42,8 @@
 
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDocSetIndex:(DocSetIndex *)docSetIndex
+								SDK:(AKInstalledSDK *)installedSDK NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Populating the database
 
