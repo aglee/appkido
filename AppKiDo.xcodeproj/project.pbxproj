@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		734725E41D04DA34009147AD /* AKDocSetsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 734725E21D04DA34009147AD /* AKDocSetsWindowController.m */; };
+		734725E51D04DA34009147AD /* AKDocSetsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 734725E31D04DA34009147AD /* AKDocSetsWindowController.xib */; };
 		73664CBC1CF2BBBE0094F405 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664CBB1CF2BBBE0094F405 /* main.m */; };
 		73664CBE1CF2BBBE0094F405 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73664CBD1CF2BBBE0094F405 /* Assets.xcassets */; };
 		73664CC11CF2BBBE0094F405 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73664CBF1CF2BBBE0094F405 /* MainMenu.xib */; };
@@ -235,6 +237,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		734725E11D04DA34009147AD /* AKDocSetsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocSetsWindowController.h; sourceTree = "<group>"; };
+		734725E21D04DA34009147AD /* AKDocSetsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocSetsWindowController.m; sourceTree = "<group>"; };
+		734725E31D04DA34009147AD /* AKDocSetsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AKDocSetsWindowController.xib; sourceTree = "<group>"; };
 		73664CB41CF2BBBE0094F405 /* AppKiDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppKiDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73664CBB1CF2BBBE0094F405 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		73664CBD1CF2BBBE0094F405 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -731,6 +736,9 @@
 				73664D371CF2BE9D0094F405 /* Singleton Controllers */,
 				73664D281CF2BE9D0094F405 /* AKDocListViewController.h */,
 				73664D291CF2BE9D0094F405 /* AKDocListViewController.m */,
+				734725E11D04DA34009147AD /* AKDocSetsWindowController.h */,
+				734725E21D04DA34009147AD /* AKDocSetsWindowController.m */,
+				734725E31D04DA34009147AD /* AKDocSetsWindowController.xib */,
 				73664D2A1CF2BE9D0094F405 /* AKDocViewController.h */,
 				73664D2B1CF2BE9D0094F405 /* AKDocViewController.m */,
 				73664D2C1CF2BE9D0094F405 /* AKQuicklistViewController.h */,
@@ -1390,6 +1398,7 @@
 				73664CC11CF2BBBE0094F405 /* MainMenu.xib in Resources */,
 				73664EFC1CF2BEB70094F405 /* down-triangle.tiff in Resources */,
 				73664F111CF2BEB70094F405 /* quicklist-tool.tiff in Resources */,
+				734725E51D04DA34009147AD /* AKDocSetsWindowController.xib in Resources */,
 				73664F001CF2BEB70094F405 /* x.tiff in Resources */,
 				73664D1B1CF2BE560094F405 /* SubtopicListView.xib in Resources */,
 				73664F0E1CF2BEB70094F405 /* browser-tool.tiff in Resources */,
@@ -1499,6 +1508,7 @@
 				73664E5A1CF2BE9E0094F405 /* AKDevToolsPanelController.m in Sources */,
 				73664EC61CF2BE9E0094F405 /* DIGSTextView.m in Sources */,
 				73664ED11CF2BE9E0094F405 /* AKSavedWindowState.m in Sources */,
+				734725E41D04DA34009147AD /* AKDocSetsWindowController.m in Sources */,
 				73664E871CF2BE9E0094F405 /* TokenMetainformation.m in Sources */,
 				73EC0F7B1D0118870038FC48 /* AKClassDeclarationInfo.m in Sources */,
 				73664EAA1CF2BE9E0094F405 /* AKLabelTopic.m in Sources */,
