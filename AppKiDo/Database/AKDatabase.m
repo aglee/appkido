@@ -99,10 +99,10 @@
 
 #pragma mark - Class tokens
 
-- (NSArray *)classesForFramework:(NSString *)frameworkName
+- (NSArray *)classTokensInFramework:(NSString *)frameworkName
 {
 	NSMutableArray *classTokens = [NSMutableArray array];
-	for (AKClassToken *classToken in [self allClasses]) {
+	for (AKClassToken *classToken in [self allClassTokens]) {
 		if ([classToken.frameworkName isEqualToString:frameworkName]) 	{
 			[classTokens addObject:classToken];
 		}
@@ -110,10 +110,10 @@
 	return classTokens;
 }
 
-- (NSArray *)rootClasses
+- (NSArray *)rootClassTokens
 {
 	NSMutableArray *result = [NSMutableArray array];
-	for (AKClassToken *classToken in [self allClasses]) {
+	for (AKClassToken *classToken in [self allClassTokens]) {
 		if (classToken.superclassToken == nil) {
 			[result addObject:classToken];
 		}
@@ -121,30 +121,30 @@
 	return result;
 }
 
-- (NSArray *)allClasses
+- (NSArray *)allClassTokens
 {
 	return self.classTokensByName.allValues;
 }
 
-- (AKClassToken *)classWithName:(NSString *)className
+- (AKClassToken *)classTokenWithName:(NSString *)className
 {
 	return self.classTokensByName[className];
 }
 
 #pragma mark - Protocol tokens
 
-- (NSArray *)protocolsForFramework:(NSString *)frameworkName
+- (NSArray *)protocolTokensInFramework:(NSString *)frameworkName
 {
 	AKFramework *framework = (AKFramework *)[self.frameworksGroup objectWithName:frameworkName];
 	return framework.protocolsGroup.objects;
 }
 
-- (NSArray *)allProtocols
+- (NSArray *)allProtocolTokens
 {
 	return _protocolTokensByName.allValues;
 }
 
-- (AKProtocolToken *)protocolWithName:(NSString *)name
+- (AKProtocolToken *)protocolTokenWithName:(NSString *)name
 {
 	return _protocolTokensByName[name];
 }

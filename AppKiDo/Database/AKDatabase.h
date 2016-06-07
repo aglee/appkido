@@ -36,9 +36,9 @@
 @property (readonly, copy) NSString *sdkBasePath;
 @property (readonly, copy) NSArray *sortedFrameworkNames;
 @property (readonly, copy) NSArray *frameworks;
-@property (readonly, copy) NSArray *rootClasses;
-@property (readonly, copy) NSArray *allClasses;
-@property (readonly, copy) NSArray *allProtocols;
+@property (readonly, copy) NSArray *rootClassTokens;
+@property (readonly, copy) NSArray *allClassTokens;
+@property (readonly, copy) NSArray *allProtocolTokens;
 
 #pragma mark - Init/awake/dealloc
 
@@ -56,13 +56,13 @@
 
 #pragma mark - Class Tokens
 
-- (NSArray<AKClassToken *> *)classesForFramework:(NSString *)frameworkName;
-- (AKClassToken *)classWithName:(NSString *)className;
+- (NSArray<AKClassToken *> *)classTokensInFramework:(NSString *)frameworkName;
+- (AKClassToken *)classTokenWithName:(NSString *)className;
 
 #pragma mark - Protocol Tokens
 
-- (NSArray<AKProtocolToken *> *)protocolsForFramework:(NSString *)frameworkName;
-- (AKProtocolToken *)protocolWithName:(NSString *)name;
+- (NSArray<AKProtocolToken *> *)protocolTokensInFramework:(NSString *)frameworkName;
+- (AKProtocolToken *)protocolTokenWithName:(NSString *)name;
 
 @end
 

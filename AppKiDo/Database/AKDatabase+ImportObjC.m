@@ -196,7 +196,7 @@
 	}
 
 	// Case: Category is actually an informal protocol.
-	if ([self protocolWithName:categoryName]) {
+	if ([self protocolTokenWithName:categoryName]) {
 		return;
 	}
 	if ([tokenMO.parentNode.kName hasSuffix:@"Protocol Reference"]

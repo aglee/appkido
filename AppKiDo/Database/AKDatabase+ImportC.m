@@ -105,14 +105,14 @@
 - (AKBehaviorToken *)_behaviorTokenForInferredInfo:(AKInferredTokenInfo *)inferredInfo
 {
 	if (inferredInfo.nameOfClass) {
-		AKClassToken *classToken = [self classWithName:inferredInfo.nameOfClass];
+		AKClassToken *classToken = [self classTokenWithName:inferredInfo.nameOfClass];
 		if (classToken == nil) {
 			QLog(@"+++ [ODD] No class with name %@.", inferredInfo.nameOfClass);
 			return nil;
 		}
 		return classToken;
 	} else if (inferredInfo.nameOfProtocol) {
-		AKProtocolToken *protocolToken = [self protocolWithName:inferredInfo.nameOfProtocol];
+		AKProtocolToken *protocolToken = [self protocolTokenWithName:inferredInfo.nameOfProtocol];
 		if (protocolToken == nil) {
 			QLog(@"+++ [ODD] No protocol with name %@.", inferredInfo.nameOfProtocol);
 			return nil;

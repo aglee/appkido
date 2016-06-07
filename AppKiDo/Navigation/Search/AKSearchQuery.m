@@ -259,7 +259,7 @@
 
 - (void)_searchClasses
 {
-	for (AKClassToken *classToken in self.database.allClasses) {
+	for (AKClassToken *classToken in self.database.allClassTokens) {
 		if ([self _matchesString:classToken.name]) 	{
 			AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
 			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
@@ -271,7 +271,7 @@
 
 - (void)_searchProtocols
 {
-	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
+	for (AKProtocolToken *protocolToken in self.database.allProtocolTokens) {
 		if ([self _matchesString:protocolToken.name]) {
 			AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
 			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
@@ -283,7 +283,7 @@
 
 - (void)_searchClassMembers
 {
-	for (AKClassToken *classToken in self.database.allClasses) {
+	for (AKClassToken *classToken in self.database.allClassTokens) {
 		AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
 
 		// Search members common to all behaviors.
@@ -298,7 +298,7 @@
 
 - (void)_searchProtocolMembers
 {
-	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
+	for (AKProtocolToken *protocolToken in self.database.allProtocolTokens) {
 		AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
 		[self _searchMembersUnderBehaviorTopic:topic];
 	}

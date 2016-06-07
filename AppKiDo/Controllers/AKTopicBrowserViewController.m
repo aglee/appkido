@@ -304,7 +304,7 @@ static const NSInteger AKMinBrowserColumns = 2;
 
 	// Set up the "classes" section.
 	[topics addObject:[[AKLabelTopic alloc] initWithLabel:@":: classes ::"]];
-	for (AKClassToken *classToken in [db.rootClasses ak_sortedBySortName]) {
+	for (AKClassToken *classToken in [db.rootClassTokens ak_sortedBySortName]) {
 		[topics addObject:[[AKClassTopic alloc] initWithClassToken:classToken]];
 	}
 

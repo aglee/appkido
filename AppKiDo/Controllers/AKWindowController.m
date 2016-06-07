@@ -553,7 +553,7 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 	_windowHistoryIndex = -1;
 	[_windowHistory removeAllObjects];
 
-	AKClassToken *classToken = [_database classWithName:@"NSObject"];
+	AKClassToken *classToken = [_database classTokenWithName:@"NSObject"];
 	[self selectTopic:[[AKClassTopic alloc] initWithClassToken:classToken]];
 
 	// Start with the topic browser having focus.

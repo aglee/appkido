@@ -241,7 +241,7 @@
 //	// Look for a protocol named ThisClassDelegate.
 //	AKDatabase *db = self.owningDatabase;
 //	NSString *possibleDelegateProtocolName = [self.name stringByAppendingString:@"Delegate"];
-//	AKProtocolToken *delegateProtocol = [db protocolWithName:possibleDelegateProtocolName];
+//	AKProtocolToken *delegateProtocol = [db protocolTokenWithName:possibleDelegateProtocolName];
 //
 //	if (delegateProtocol) {
 //		[methodsList addObjectsFromArray:delegateProtocol.instanceMethodTokens];
@@ -259,7 +259,7 @@
 //			//TODO: Can't I just look for protocol FooDelegate?
 //			NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
 //										substringFromIndex:3].uppercaseString;
-//			for (AKProtocolToken *protocolToken in [db allProtocols]) {
+//			for (AKProtocolToken *protocolToken in [db allProtocolTokens]) {
 //				NSString *protocolName = protocolToken.name.uppercaseString;
 //				if ([protocolName hasSuffix:protocolSuffix]) {
 //					[methodsList addObjectsFromArray:protocolToken.instanceMethodTokens];

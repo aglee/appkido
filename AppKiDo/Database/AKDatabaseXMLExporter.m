@@ -59,7 +59,7 @@
     [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
         // Export classes.
         [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
-            NSArray *allClassTokens = [_database classesForFramework:fwName];
+            NSArray *allClassTokens = [_database classTokensInFramework:fwName];
             for (AKClassToken *classToken in [allClassTokens ak_sortedBySortName])
             {
                 [self _exportClass:classToken];
@@ -83,7 +83,7 @@
         // Write formal protocols.
         [self _writeDividerWithString:fwName string:@"formal protocols"];
 
-        NSArray *protocolTokens = [_database protocolsForFramework:fwName];
+        NSArray *protocolTokens = [_database protocolTokensInFramework:fwName];
         for (AKProtocolToken *protocolToken in [protocolTokens ak_sortedBySortName])
         {
             [self _exportProtocol:protocolToken];

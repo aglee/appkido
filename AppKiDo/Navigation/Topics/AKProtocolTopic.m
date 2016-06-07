@@ -114,7 +114,7 @@
 	}
 
 	AKDatabase *db = AKAppDelegate.appDelegate.appDatabase;  //TODO: Global database.
-	AKProtocolToken *protocolToken = [db protocolWithName:protocolName];
+	AKProtocolToken *protocolToken = [db protocolTokenWithName:protocolName];
 	if (!protocolToken) {
 		DIGSLogInfo(@"couldn't find a protocol in the database named %@", protocolName);
 		return nil;

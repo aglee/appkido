@@ -554,7 +554,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 		{
 			NSString *frameworkName = _frameworkPopup.title;
 
-			tableValues = [self _classesForFramework:frameworkName];
+			tableValues = [self _classTokensInFramework:frameworkName];
 			break;
 		}
 
@@ -621,7 +621,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	{
 		NSString *nameOfRootViewClass;
 
-		if ([[self.owningWindowController database] classWithName:@"UIView"] != nil)
+		if ([[self.owningWindowController database] classTokenWithName:@"UIView"] != nil)
 		{
 			nameOfRootViewClass = @"UIView";
 		}
@@ -662,7 +662,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	if (!s_classesWithDelegates) {
 		NSMutableSet *setOfItems = [NSMutableSet set];
-		for (AKClassToken *classToken in [[self.owningWindowController database] allClasses]) {
+		for (AKClassToken *classToken in [[self.owningWindowController database] allClassTokens]) {
 			if ([self _classHasDelegate:classToken]) {
 				[setOfItems addObject:classToken];
 			}
@@ -695,7 +695,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	// See if there's a protocol named ThisClassDelegate.
 	NSString *delegateProtocolName = [classToken.name stringByAppendingString:@"Delegate"];
-	if ([[self.owningWindowController database] protocolWithName:delegateProtocolName]) {
+	if ([[self.owningWindowController database] protocolTokenWithName:delegateProtocolName]) {
 		return YES;
 	}
 
@@ -709,7 +709,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	if (!s_classesWithDataSources) {
 		NSMutableSet *setOfItems = [NSMutableSet set];
-		for (AKClassToken *classToken in [[self.owningWindowController database] allClasses]) {
+		for (AKClassToken *classToken in [[self.owningWindowController database] allClassTokens]) {
 			if ([self _classHasDataSource:classToken]) {
 				[setOfItems addObject:classToken];
 			}
@@ -735,7 +735,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	// See if there's a protocol named ThisClassDataSource.
 	NSString *dataSourceProtocolName = [classToken.name stringByAppendingString:@"DataSource"];
-	if ([[self.owningWindowController database] protocolWithName:dataSourceProtocolName]) {
+	if ([[self.owningWindowController database] protocolTokenWithName:dataSourceProtocolName]) {
 		return YES;
 	}
 
@@ -752,7 +752,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	{
 		NSMutableArray *protocolTokens = [NSMutableArray array];
 
-		for (AKProtocolToken *protocolToken in [[self.owningWindowController database] allProtocols])
+		for (AKProtocolToken *protocolToken in [[self.owningWindowController database] allProtocolTokens])
 		{
 			if ([protocolToken.name ak_contains:@"DataSource"])
 			{
@@ -766,9 +766,9 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	return s_dataSourceProtocols;
 }
 
-- (NSArray *)_classesForFramework:(NSString *)fwName
+- (NSArray *)_classTokensInFramework:(NSString *)fwName
 {
-	NSArray *classTokens = [[self.owningWindowController database] classesForFramework:fwName];
+	NSArray *classTokens = [[self.owningWindowController database] classTokensInFramework:fwName];
 
 	return [self _sortedDocLocatorsForClasses:classTokens];
 }
@@ -823,7 +823,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 	for (NSString *name in classNames)
 	{
-		AKClassToken *classToken = [self.owningWindowController.database classWithName:name];
+		AKClassToken *classToken = [self.owningWindowController.database classTokenWithName:name];
 		[setOfClassTokens unionSet:[classToken descendantClassTokens]];
 	}
 

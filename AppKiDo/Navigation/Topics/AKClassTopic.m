@@ -142,7 +142,7 @@
 	}
 
 	AKDatabase *db = AKAppDelegate.appDelegate.appDatabase;  //TODO: Global database.
-	AKClassToken *classToken = [db classWithName:className];
+	AKClassToken *classToken = [db classTokenWithName:className];
 	if (classToken == nil) {
 		DIGSLogInfo(@"couldn't find a class in the database named %@", className);
 		return nil;

@@ -68,12 +68,12 @@
 
 - (void)_addClassTokensToArray:(NSMutableArray *)tokenArray
 {
-	[tokenArray addObjectsFromArray:self.database.allClasses];
+	[tokenArray addObjectsFromArray:self.database.allClassTokens];
 }
 
 - (void)_addClassMemberTokensToArray:(NSMutableArray *)tokenArray
 {
-	for (AKClassToken *classToken in self.database.allClasses) {
+	for (AKClassToken *classToken in self.database.allClassTokens) {
 		[tokenArray addObjectsFromArray:classToken.propertyTokens];
 		[tokenArray addObjectsFromArray:classToken.classMethodTokens];
 		[tokenArray addObjectsFromArray:classToken.instanceMethodTokens];
@@ -86,12 +86,12 @@
 
 - (void)_addProtocolTokensToArray:(NSMutableArray *)tokenArray
 {
-	[tokenArray addObjectsFromArray:self.database.allProtocols];
+	[tokenArray addObjectsFromArray:self.database.allProtocolTokens];
 }
 
 - (void)_addProtocolMemberTokensToArray:(NSMutableArray *)tokenArray
 {
-	for (AKProtocolToken *protocolToken in self.database.allProtocols) {
+	for (AKProtocolToken *protocolToken in self.database.allProtocolTokens) {
 		[tokenArray addObjectsFromArray:protocolToken.propertyTokens];
 		[tokenArray addObjectsFromArray:protocolToken.classMethodTokens];
 		[tokenArray addObjectsFromArray:protocolToken.instanceMethodTokens];
