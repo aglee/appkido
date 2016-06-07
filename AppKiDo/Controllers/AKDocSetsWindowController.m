@@ -77,10 +77,8 @@
 	DocSetIndex *docSetIndex = self.docSetsArrayController.arrangedObjects[row];
 	NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier
 															owner:self];
-	if ([tableColumn.identifier isEqualToString:@"Platform"]) {
-		cellView.textField.stringValue = [AKInstalledSDK displayNameForPlatformInternalName:docSetIndex.platformInternalName];
-	} else if ([tableColumn.identifier isEqualToString:@"DocSetVersion"]) {
-		cellView.textField.stringValue = docSetIndex.platformVersion;
+	if ([tableColumn.identifier isEqualToString:@"DocSet"]) {
+		cellView.textField.stringValue = docSetIndex.docSetDisplayName;
 	} else if ([tableColumn.identifier isEqualToString:@"SDKVersion"]) {
 		AKInstalledSDK *sdk = self.sdksByPlatform[docSetIndex.platformInternalName];
 		cellView.textField.stringValue = sdk.sdkVersion;
