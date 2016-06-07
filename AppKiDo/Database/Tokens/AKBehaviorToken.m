@@ -14,7 +14,7 @@
 #import "AKPropertyToken.h"
 
 @interface AKBehaviorToken ()
-@property (copy) NSMutableDictionary *implementedProtocolsByName;
+@property (copy) NSMutableDictionary *adoptedProtocolsByName;
 @property (copy) NSMutableDictionary *propertiesByName;
 @property (copy) NSMutableDictionary *classMethodsByName;
 @property (copy) NSMutableDictionary *instanceMethodsByName;
@@ -31,7 +31,7 @@
 {
 	self = [super initWithName:name];
 	if (self) {
-		_implementedProtocolsByName = [[NSMutableDictionary alloc] init];
+		_adoptedProtocolsByName = [[NSMutableDictionary alloc] init];
 		_propertiesByName = [[NSMutableDictionary alloc] init];
 		_classMethodsByName = [[NSMutableDictionary alloc] init];
 		_instanceMethodsByName = [[NSMutableDictionary alloc] init];
@@ -49,13 +49,13 @@
 	return NO;
 }
 
-- (NSArray *)implementedProtocols
+- (NSArray *)adoptedProtocols
 {
-	NSArray *myProtocolTokens = self.implementedProtocolsByName.allValues;
+	NSArray *myProtocolTokens = self.adoptedProtocolsByName.allValues;
 	NSMutableArray *result = [NSMutableArray arrayWithArray:myProtocolTokens];
 	for (AKProtocolToken *protocolToken in myProtocolTokens) 	{
 		if (protocolToken != self) {
-			[result addObjectsFromArray:protocolToken.implementedProtocols];  //TODO: Could this lead to duplicates in the result list?
+			[result addObjectsFromArray:protocolToken.adoptedProtocols];  //TODO: Could this lead to duplicates in the result list?
 		}
 	}
 	return result;
@@ -80,11 +80,11 @@
 
 - (void)addImplementedProtocol:(AKProtocolToken *)protocolToken
 {
-	if (self.implementedProtocolsByName[protocolToken.name]) {
+	if (self.adoptedProtocolsByName[protocolToken.name]) {
 		DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@], will ignore",
 					 protocolToken.name, self.name);
 	} else {
-		self.implementedProtocolsByName[protocolToken.name] = protocolToken;
+		self.adoptedProtocolsByName[protocolToken.name] = protocolToken;
 	}
 }
 

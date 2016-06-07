@@ -212,12 +212,12 @@
 	return YES;
 }
 
-- (NSArray *)implementedProtocols
+- (NSArray *)adoptedProtocols
 {
-	NSMutableArray *result = [NSMutableArray arrayWithArray:[super implementedProtocols]];
+	NSMutableArray *result = [NSMutableArray arrayWithArray:[super adoptedProtocols]];
 
 	// Get protocols from ancestor classes.
-	[result addObjectsFromArray:self.parentClass.implementedProtocols];
+	[result addObjectsFromArray:self.parentClass.adoptedProtocols];
 
 	return result;
 }

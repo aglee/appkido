@@ -25,7 +25,7 @@
 
 @property (assign, readonly) BOOL isClassToken;
 /*! Includes protocols implemented by virtue of inheritance. */
-@property (readonly, copy) NSArray *implementedProtocols;
+@property (readonly, copy) NSArray *adoptedProtocols;
 @property (readonly, copy) NSArray *instanceMethodTokens;
 @property (readonly, copy) NSArray *propertyTokens;
 @property (readonly, copy) NSArray *classMethodTokens;
