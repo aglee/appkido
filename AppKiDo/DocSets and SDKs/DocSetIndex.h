@@ -13,10 +13,12 @@
 
 /*! Path to a .docset directory. */
 @property (readonly, copy, nonatomic) NSString *docSetPath;
-@property (readonly, copy, nonatomic) NSString *docSetName;
+@property (readonly, copy, nonatomic) NSString *docSetInternalName;
+@property (readonly, copy, nonatomic) NSString *docSetDisplayName;
 @property (readonly, copy, nonatomic) NSString *bundleIdentifier;
 /*! The platform name Apple uses in plists for docsets and SDKs. */
 @property (readonly, copy, nonatomic) NSString *platformInternalName;
+@property (readonly) NSString *platformDisplayName;
 @property (readonly, copy, nonatomic) NSString *platformVersion;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

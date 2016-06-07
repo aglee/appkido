@@ -7,6 +7,7 @@
 //
 
 #import "DocSetIndex.h"
+#import "AKVersionUtils.h"
 #import "DIGSLog.h"
 
 @interface DocSetIndex ()
@@ -92,9 +93,14 @@
 
 #pragma mark - Getters and setters
 
-- (NSString *)docSetName
+- (NSString *)docSetInternalName
 {
 	return self.infoPlist[(NSString *)kCFBundleNameKey];
+}
+
+- (NSString *)docSetDisplayName
+{
+	return [NSString stringWithFormat:@"%@ %@", self.platformDisplayName, self.platformVersion];
 }
 
 - (NSString *)bundleIdentifier
@@ -105,6 +111,11 @@
 - (NSString *)platformInternalName
 {
 	return self.infoPlist[@"DocSetPlatformFamily"];
+}
+
+- (NSString *)platformDisplayName
+{
+	return AKDisplayNameForPlatformInternalName(self.platformInternalName);
 }
 
 - (NSString *)platformVersion
@@ -195,7 +206,7 @@
 {
 	return [NSString stringWithFormat:@"<%@: %p name='%@' platform='%@' version='%@'>",
 			self.className, self,
-			self.docSetName, self.platformInternalName, self.platformVersion];
+			self.docSetInternalName, self.platformInternalName, self.platformVersion];
 }
 
 @end

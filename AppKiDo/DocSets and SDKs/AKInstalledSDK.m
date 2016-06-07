@@ -7,6 +7,7 @@
 //
 
 #import "AKInstalledSDK.h"
+#import "AKVersionUtils.h"
 #import "DIGSLog.h"
 #import "NSFileManager+AppKiDo.h"
 
@@ -72,34 +73,12 @@
 
 - (NSString *)platformDisplayName
 {
-	return [[self class] displayNameForPlatformInternalName:self.platformInternalName];
+	return AKDisplayNameForPlatformInternalName(self.platformInternalName);
 }
 
 - (NSString *)sdkVersion
 {
 	return self.sdkPlist[@"Version"];
-}
-
-#pragma mark - Platform names for display
-
-// Values I've observed in various SDKSettings.plist files:
-// - appletvos
-// - iphoneos
-// - macosx
-// - watchos
-+ (NSString *)displayNameForPlatformInternalName:(NSString *)platformInternalName
-{
-	static NSDictionary *s_displayNamesByInternalName;
-	static dispatch_once_t once;
-	dispatch_once(&once, ^{
-		s_displayNamesByInternalName = @{ @"macosx" : @"OS X",
-										  @"iphoneos" : @"iOS",
-										  @"watchos" : @"watchOS",
-										  @"appletvos" : @"tvOS" };
-	});
-
-	return (s_displayNamesByInternalName[platformInternalName]
-			?: platformInternalName);
 }
 
 #pragma mark - NSObject methods

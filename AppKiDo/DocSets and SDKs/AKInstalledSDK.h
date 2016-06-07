@@ -39,8 +39,4 @@
  */
 + (NSArray *)sdksWithinXcodePath:(NSString *)xcodeAppPath;
 
-#pragma mark - Platform names for display
-
-+ (NSString *)displayNameForPlatformInternalName:(NSString *)platformInternalName;
-
 @end
