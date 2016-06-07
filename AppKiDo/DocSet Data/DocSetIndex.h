@@ -11,10 +11,12 @@
 
 @interface DocSetIndex : NSObject
 
+/*! Path to a .docset directory. */
 @property (readonly, copy, nonatomic) NSString *docSetPath;
 @property (readonly, copy, nonatomic) NSString *docSetName;
 @property (readonly, copy, nonatomic) NSString *bundleIdentifier;
-@property (readonly, copy, nonatomic) NSString *platform;
+/*! The platform name Apple uses in plists for docsets and SDKs. */
+@property (readonly, copy, nonatomic) NSString *platformInternalName;
 @property (readonly, copy, nonatomic) NSString *platformVersion;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

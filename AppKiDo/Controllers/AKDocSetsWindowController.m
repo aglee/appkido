@@ -33,7 +33,7 @@
 	if (docSetIndex == nil) {
 		return nil;
 	}
-	return self.sdksByPlatform[docSetIndex.platform];
+	return self.sdksByPlatform[docSetIndex.platformInternalName];
 }
 
 #pragma mark - Setup
@@ -46,12 +46,12 @@
 	// dictionary with the highest version for each platform.
 	self.sdksByPlatform = [NSMutableDictionary dictionary];
 	for (AKInstalledSDK *sdk in installedSDKs) {
-		self.sdksByPlatform[sdk.platform] = sdk;
+		self.sdksByPlatform[sdk.platformInternalName] = sdk;
 	}
 
 	self.docSetsWithInstalledSDKs = [NSMutableArray array];
 	for (DocSetIndex *docSetIndex in [DocSetIndex installedDocSets]) {
-		AKInstalledSDK *sdk = self.sdksByPlatform[docSetIndex.platform];
+		AKInstalledSDK *sdk = self.sdksByPlatform[docSetIndex.platformInternalName];
 		if (sdk) {
 			[self.docSetsWithInstalledSDKs addObject:docSetIndex];
 		}
@@ -74,25 +74,16 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	static NSDictionary *s_platformDisplayNames;
-	if (s_platformDisplayNames == nil) {
-		s_platformDisplayNames = @{ @"macosx" : @"OS X",
-									@"iphoneos" : @"iOS",
-									@"watchos" : @"watchOS",
-									@"appletvos" : @"tvOS" };
-	}
-
 	DocSetIndex *docSetIndex = self.docSetsArrayController.arrangedObjects[row];
 	NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier
 															owner:self];
 	if ([tableColumn.identifier isEqualToString:@"Platform"]) {
-		cellView.textField.stringValue = (s_platformDisplayNames[docSetIndex.platform]
-										  ?: docSetIndex.platform);
+		cellView.textField.stringValue = [AKInstalledSDK displayNameForPlatformInternalName:docSetIndex.platformInternalName];
 	} else if ([tableColumn.identifier isEqualToString:@"DocSetVersion"]) {
 		cellView.textField.stringValue = docSetIndex.platformVersion;
 	} else if ([tableColumn.identifier isEqualToString:@"SDKVersion"]) {
-		AKInstalledSDK *sdk = self.sdksByPlatform[docSetIndex.platform];
-		cellView.textField.stringValue = sdk.version;
+		AKInstalledSDK *sdk = self.sdksByPlatform[docSetIndex.platformInternalName];
+		cellView.textField.stringValue = sdk.sdkVersion;
 	} else {
 		QLog(@"+++ [ODD] Unexpected table column identifier '%@'.", tableColumn.identifier);
 		cellView.textField.stringValue = @"???";

@@ -23,15 +23,12 @@
  */
 @interface AKInstalledSDK : NSObject
 
+/*! Path to a .sdk directory. */
 @property (copy, readonly) NSString *basePath;
-/*!
- * Values I've observed: "appletvos", "iphoneos", "macosx", "watchos".  These
- * seem to be the same as the possible values for the "DocSetPlatformVersion"
- * key in the Info.plist files of docsets.
- */
-@property (copy, readonly) NSString *platform;
-@property (copy, readonly) NSString *version;
-@property (copy, readonly) NSString *displayName;
+/*! The platform name Apple uses in plists for docsets and SDKs. */
+@property (copy, readonly) NSString *platformInternalName;
+@property (copy, readonly) NSString *platformDisplayName;
+@property (copy, readonly) NSString *sdkVersion;
 
 #pragma mark - Finding installed SDKs
 
@@ -41,5 +38,9 @@
  * version.
  */
 + (NSArray *)sdksWithinXcodePath:(NSString *)xcodeAppPath;
+
+#pragma mark - Platform names for display
+
++ (NSString *)displayNameForPlatformInternalName:(NSString *)platformInternalName;
 
 @end

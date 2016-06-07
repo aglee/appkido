@@ -59,7 +59,7 @@
 	}
 
 	SEL finderLikeCompare = @selector(localizedStandardCompare:);
-	[docSets sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"platform"
+	[docSets sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"platformInternalName"
 																   ascending:YES
 																	selector:finderLikeCompare],
 									 [NSSortDescriptor sortDescriptorWithKey:@"platformVersion"
@@ -102,7 +102,7 @@
 	return self.infoPlist[(NSString *)kCFBundleIdentifierKey];
 }
 
-- (NSString *)platform
+- (NSString *)platformInternalName
 {
 	return self.infoPlist[@"DocSetPlatformFamily"];
 }
@@ -195,7 +195,7 @@
 {
 	return [NSString stringWithFormat:@"<%@: %p name='%@' platform='%@' version='%@'>",
 			self.className, self,
-			self.docSetName, self.platform, self.platformVersion];
+			self.docSetName, self.platformInternalName, self.platformVersion];
 }
 
 @end

@@ -29,10 +29,10 @@
 	}
 
 	SEL finderLikeCompare = @selector(localizedStandardCompare:);
-	[sdks sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"platform"
+	[sdks sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"platformInternalName"
 																ascending:YES
 																 selector:finderLikeCompare],
-								  [NSSortDescriptor sortDescriptorWithKey:@"version"
+								  [NSSortDescriptor sortDescriptorWithKey:@"sdkVersion"
 																ascending:YES
 																 selector:finderLikeCompare] ]];
 	return sdks;
@@ -64,20 +64,42 @@
 
 #pragma mark - Getters and setters
 
-- (NSString *)platform
+- (NSString *)platformInternalName
 {
 	NSDictionary *defaultProperties = self.sdkPlist[@"DefaultProperties"];
 	return defaultProperties[@"PLATFORM_NAME"];
 }
 
-- (NSString *)version
+- (NSString *)platformDisplayName
+{
+	return [[self class] displayNameForPlatformInternalName:self.platformInternalName];
+}
+
+- (NSString *)sdkVersion
 {
 	return self.sdkPlist[@"Version"];
 }
 
-- (NSString *)displayName
+#pragma mark - Platform names for display
+
+// Values I've observed in various SDKSettings.plist files:
+// - appletvos
+// - iphoneos
+// - macosx
+// - watchos
++ (NSString *)displayNameForPlatformInternalName:(NSString *)platformInternalName
 {
-	return self.sdkPlist[@"DisplayName"];
+	static NSDictionary *s_displayNamesByInternalName;
+	static dispatch_once_t once;
+	dispatch_once(&once, ^{
+		s_displayNamesByInternalName = @{ @"macosx" : @"OS X",
+										  @"iphoneos" : @"iOS",
+										  @"watchos" : @"watchOS",
+										  @"appletvos" : @"tvOS" };
+	});
+
+	return (s_displayNamesByInternalName[platformInternalName]
+			?: platformInternalName);
 }
 
 #pragma mark - NSObject methods
@@ -86,7 +108,7 @@
 {
 	return [NSString stringWithFormat:@"<%@: %p name='%@' platform='%@' version='%@'>",
 			self.className, self,
-			self.displayName, self.platform, self.version];
+			self.sdkPlist[@"DisplayName"], self.platformInternalName, self.sdkVersion];
 }
 
 #pragma mark - Private methods
