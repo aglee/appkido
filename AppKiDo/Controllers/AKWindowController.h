@@ -69,6 +69,7 @@
 
 	NSTextField *__weak _topicDescriptionField;
 	NSTextField *__weak _docCommentField;
+	NSTextField *__weak _docSetInfoField;
 
 	NSButton *__weak _backButton;
 	NSButton *__weak _forwardButton;
@@ -111,6 +112,7 @@
 
 /*! At the bottom of the window. May display info about the selected doc. */
 @property (nonatomic, weak) IBOutlet NSTextField *docCommentField;
+@property (nonatomic, weak) IBOutlet NSTextField *docSetInfoField;
 
 /*! On the left side of the window. */
 @property (nonatomic, weak) IBOutlet NSDrawer *quicklistDrawer;

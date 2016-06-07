@@ -26,6 +26,7 @@
 #import "AKWindow.h"
 #import "AKWindowLayout.h"
 #import "DIGSLog.h"
+#import "DocSetIndex.h"
 #import "NSObject+AppKiDo.h"
 #import "NSView+AppKiDo.h"
 #import <WebKit/WebKit.h>
@@ -546,6 +547,9 @@ static NSString *_AKToolbarID = @"AKToolbarID";
 - (void)windowDidLoad
 {
 	_defaultBrowserHeight = NSHeight(_topicBrowserContainerView.frame);
+
+	// Display the docset name.
+	_docSetInfoField.stringValue = self.database.docSetIndex.docSetDisplayName;
 
 	// Load our view controllers and plug their views into the UI. Do this
 	// early, because a number of things we do next assume the view controllers
