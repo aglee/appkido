@@ -6,9 +6,12 @@
  */
 
 #import "AKDocLocator.h"
+#import "AKBehaviorToken.h"
+#import "AKBehaviorTopic.h"
+#import "AKFramework.h"
+#import "AKFrameworkTopic.h"
 #import "AKNamedObject.h"
 #import "AKSubtopic.h"
-#import "AKTopic.h"
 #import "DIGSLog.h"
 
 @implementation AKDocLocator
@@ -75,29 +78,152 @@
 
 - (NSString *)displayName
 {
-	// As described by the Character Palette:
-	//		Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
-	//		Unicode: 00AB
-	//		UTF8: C2 AB
-	static unichar kLeftDoubleAngle = 0x00AB;
-
 	if (_cachedDisplayName == nil) {
-		if (self.subtopicName == nil) {
-			_cachedDisplayName = self.topicToDisplay.displayName;
-		} else if (self.docName == nil) {
-			_cachedDisplayName = [[NSString alloc] initWithFormat:@"%@  %C  %@",
-								  self.subtopicName,
-								  kLeftDoubleAngle,
-								  self.topicToDisplay.displayName];
-		} else {
-			_cachedDisplayName = [[NSString alloc] initWithFormat:@"%@  %C  %@",
-								  self.docToDisplay.displayName,
-								  kLeftDoubleAngle,
-								  self.subtopicName];
-		}
+		_cachedDisplayName = [self.class _displayNameForDocLocator:self];
 	}
 
 	return _cachedDisplayName;
+}
+
+// As described by the Character Palette:
+//		Name: LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+//		Unicode: 00AB
+//		UTF8: C2 AB
+static unichar kLeftDoubleAngle = 0x00AB;
+
+// Doing this with class methods so I don't accidentally set an ivar.
+// There are nine possibilities to account for:
+// - The DocLocator may have topic, topic plus subtopic, or topic plus subtopic plus doc.
+// - The topic may be a framework, a member group of a framework, or either a class or protocol.
++ (NSString *)_displayNameForDocLocator:(AKDocLocator *)docLocator
+{
+	NSAssert(docLocator.topicToDisplay != nil, @"+++ [ERROR] %@ has nil topic", docLocator);
+
+	// Case 1: topic only.
+	if (docLocator.subtopicName.length == 0) {
+		NSAssert(docLocator.docName.length == 0,
+				 @"+++ [ERROR] %@ -- subtopicName is empty/nil but docName is not.", self);
+
+		// Topic is a framework.  Note that we check the AKFrameworkTopic case
+		// *before* the AKFrameworkRelatedTopic case, because the former subclasses
+		// from the latter.
+		// Examples: "AppKit Framework", "Foundation Framework"
+		if ([docLocator.topicToDisplay isKindOfClass:[AKFrameworkTopic class]]) {
+
+			//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 1000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+			return [NSString stringWithFormat:@"%@ Framework",
+					docLocator.topicToDisplay.displayName];
+		}
+
+		// Topic is a framework member group.
+		// Examples: "AppKit Protocols", "Foundation Data Types"
+		if ([docLocator.topicToDisplay isKindOfClass:[AKFrameworkRelatedTopic class]]) {
+
+			//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 2000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+			return [NSString stringWithFormat:@"%@ %@",
+					((AKFrameworkRelatedTopic *)docLocator.topicToDisplay).framework.name,
+					docLocator.topicToDisplay.name];
+		}
+
+		// Topic is a class or protocol.
+		// Examples: "NSView", "<NSTableViewDelegate>"
+		NSAssert([docLocator.topicToDisplay isKindOfClass:[AKBehaviorTopic class]],
+				 @"[ERROR] Unexpected kind of topic, %@.",
+				 docLocator.topicToDisplay);
+
+		//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 3000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+		return docLocator.topicToDisplay.displayName;
+	}
+
+	// Case 2: topic and subtopic only.
+	if (docLocator.docName.length == 0) {
+		// Topic is a framework.  Note that we check the AKFrameworkTopic case
+		// *before* the AKFrameworkRelatedTopic case, because the former subclasses
+		// from the latter.
+		if ([docLocator.topicToDisplay isKindOfClass:[AKFrameworkTopic class]]) {
+
+			//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 4000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+			return [NSString stringWithFormat:@"%@ %@",
+					docLocator.topicToDisplay.displayName,
+					docLocator.subtopicName];
+		}
+
+		// Topic is a framework member group.
+		// "Speech Synthesis Manager << Application Services Constants"
+		if ([docLocator.topicToDisplay isKindOfClass:[AKFrameworkRelatedTopic class]]) {
+
+			//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 5000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+			return [NSString stringWithFormat:@"%@  %C  %@ %@",
+					docLocator.subtopicName,
+					kLeftDoubleAngle,
+					((AKFrameworkRelatedTopic *)docLocator.topicToDisplay).framework.name,
+					docLocator.topicToDisplay.name];
+		}
+
+		// Topic is a class or protocol.
+		// "Subtopic << Topic"
+		NSAssert([docLocator.topicToDisplay isKindOfClass:[AKBehaviorTopic class]],
+				 @"[ERROR] Unexpected kind of topic, %@.",
+				 docLocator.topicToDisplay);
+
+		//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 6000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+		return [NSString stringWithFormat:@"%@  %C  %@",
+				docLocator.subtopicName,
+				kLeftDoubleAngle,
+				docLocator.topicToDisplay.displayName];
+	}
+
+	// Case 3: topic, subtopic, and doc name are all specified.
+
+	// Topic is a framework.  Note that we check the AKFrameworkTopic case
+	// *before* the AKFrameworkRelatedTopic case, because the former subclasses
+	// from the latter.
+	// "doc << Framework Subtopic"
+	if ([docLocator.topicToDisplay isKindOfClass:[AKFrameworkTopic class]]) {
+
+		//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 7000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+		return [NSString stringWithFormat:@"%@  %C  %@ %@",
+				docLocator.docName,
+				kLeftDoubleAngle,
+				docLocator.topicToDisplay.name,
+				docLocator.subtopicName];
+	}
+
+	// Topic is a framework member group.
+	// "doc << Framework FrameworkMemberGroup"
+	// "kSpeechCommandPrefix << Application Services Constants"
+	if ([docLocator.topicToDisplay isKindOfClass:[AKFrameworkRelatedTopic class]]) {
+
+		//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 8000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+		return [NSString stringWithFormat:@"%@  %C  %@ %@",
+				docLocator.docName,
+				kLeftDoubleAngle,
+				((AKFrameworkRelatedTopic *)docLocator.topicToDisplay).framework.name,
+				docLocator.topicToDisplay.name];
+	}
+
+	// Topic is a class or protocol.
+	// ".view << NSViewController Properties"
+	// "-browser:isLeafItem: << <NSBrowserDelegate> Instance Methods
+	NSAssert([docLocator.topicToDisplay isKindOfClass:[AKBehaviorTopic class]],
+			 @"[ERROR] Unexpected kind of topic, %@.",
+			 docLocator.topicToDisplay);
+
+	//QLog(@"+++ CHECKPOINT %zd, [%@] [%@] [%@]", 9000, docLocator.topicToDisplay, docLocator.subtopicName, docLocator.docName);
+
+	return [NSString stringWithFormat:@"%@  %C  %@ %@",
+			docLocator.docToDisplay.displayName,
+			kLeftDoubleAngle,
+			docLocator.topicToDisplay.displayName,
+			docLocator.subtopicName];
 }
 
 - (id<AKDoc>)docToDisplay
@@ -282,8 +408,9 @@ compareDocLocators(AKDocLocator *locOne, AKDocLocator *locTwo, void *context)
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: [%@][%@][%@]>",
+	return [NSString stringWithFormat:@"<%@: %p [%@] [%@] [%@]>",
 			self.className,
+			self,
 			self.topicToDisplay.pathInTopicBrowser,
 			self.subtopicName,
 			self.docName];
