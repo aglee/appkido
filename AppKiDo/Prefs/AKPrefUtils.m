@@ -67,14 +67,14 @@
 	[self setArrayValue:fwNames forPref:AKSelectedFrameworksPrefName];
 }
 
-+ (NSString *)devToolsPathPref
++ (NSString *)xcodePathPref
 {
-	return [self stringValueForPref:AKDevToolsPathPrefName];
+	return [self stringValueForPref:AKXcodePathPrefName];
 }
 
-+ (void)setDevToolsPathPref:(NSString *)dir
++ (void)setXcodePathPref:(NSString *)dir
 {
-	[self setStringValue:dir forPref:AKDevToolsPathPrefName];
+	[self setStringValue:dir forPref:AKXcodePathPrefName];
 }
 
 + (NSString *)sdkVersionPref
@@ -104,7 +104,7 @@
 	NSUserDefaults *userPrefs = [NSUserDefaults standardUserDefaults];
 
 	[userPrefs removeObjectForKey:DIGSLogVerbosityUserDefault];
-	[userPrefs removeObjectForKey:AKDevToolsPathPrefName];
+	[userPrefs removeObjectForKey:AKXcodePathPrefName];
 	[userPrefs removeObjectForKey:AKSearchInNewWindowPrefName];
 
 	[self resetAppearancePrefsToDefaults];
@@ -172,7 +172,7 @@
 
 	defaultPrefsDictionary[DIGSLogVerbosityUserDefault] = @(DIGS_VERBOSITY_WARNING);
 
-	defaultPrefsDictionary[AKDevToolsPathPrefName] = [self _defaultDevToolsPath];
+	defaultPrefsDictionary[AKXcodePathPrefName] = @"/Applications/Xcode.app";
 
 	defaultPrefsDictionary[AKSearchInNewWindowPrefName] = @NO;
 

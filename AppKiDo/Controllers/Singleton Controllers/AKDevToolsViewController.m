@@ -19,7 +19,7 @@
 - (void)awakeFromNib
 {
 	// Grab the Xcode path from NSUserDefaults.
-	self.selectedXcodeAppPath = [AKPrefUtils devToolsPathPref];
+	self.selectedXcodeAppPath = [AKPrefUtils xcodePathPref];
 }
 
 #pragma mark - Getters and setters
@@ -32,7 +32,7 @@
 - (void)setSelectedXcodeAppPath:(NSString *)selectedXcodeAppPath
 {
 	_selectedXcodeAppPath = selectedXcodeAppPath;
-	[AKPrefUtils setDevToolsPathPref:selectedXcodeAppPath];
+	[AKPrefUtils setXcodePathPref:selectedXcodeAppPath];
 }
 
 #pragma mark - Action methods

@@ -22,8 +22,8 @@
 + (void)setSelectedFrameworkNamesPref:(NSArray *)fwNames;
 
 /*! We look for the CoreReference docset within the Dev Tools directory. */
-+ (NSString *)devToolsPathPref;
-+ (void)setDevToolsPathPref:(NSString *)dir;
++ (NSString *)xcodePathPref;
++ (void)setXcodePathPref:(NSString *)dir;
 
 /*! See AKDevTools for where the SDK version comes from. */
 + (NSString *)sdkVersionPref;

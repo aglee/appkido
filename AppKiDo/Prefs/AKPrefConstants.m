@@ -29,7 +29,7 @@ NSString *AKMaxHistoryPrefName                = @"AKMaxHistory";
 NSString *AKFavoritesPrefName = @"AKFavorites";
 
 NSString *AKSelectedFrameworksPrefName = @"AKSelectedFrameworks";
-NSString *AKDevToolsPathPrefName = @"AKDevToolsPath";
+NSString *AKXcodePathPrefName = @"AKXcodePath";
 NSString *AKSDKVersionPrefName = @"AKSDKVersion";
 
 NSString *AKSearchInNewWindowPrefName         = @"AKSearchInNewWindow";

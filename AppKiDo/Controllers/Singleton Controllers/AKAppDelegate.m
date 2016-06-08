@@ -431,10 +431,17 @@ static NSTimeInterval g_checkpointTime = 0.0;
 {
     NSLog(@"Logging verbosity is at level %zd", DIGSGetVerbosityLevel());
 
+
+
+	//TODO: Prompt the user for xcodePathPref if the current value from prefs is no good.
+	DIGSLogDebug(@"Xcode path is [%@]", [AKPrefUtils xcodePathPref]);
+
+
+
 	// Put up the notice about this being an early prerelease build, and prompt
 	// for docset selection.
 	AKDocSetsWindowController *docSetsWC = [[AKDocSetsWindowController alloc] initWithWindowNibName:@"AKDocSetsWindowController"];
-	[docSetsWC useInstalledSDKsInXcodePath:@"/Applications/Xcode.app"];  //TODO: Be able to specify Xcode location.
+	[docSetsWC useInstalledSDKsInXcodePath:[AKPrefUtils xcodePathPref]];  //TODO: Be able to specify Xcode location.
 	[docSetsWC.window center];
 	NSModalResponse modalResponse = [NSApp runModalForWindow:docSetsWC.window];
 	if (modalResponse == NSModalResponseAbort) {
@@ -448,7 +455,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
     {
         [NSApp terminate:nil];
     }
-    DIGSLogDebug(@"dev tools path is [%@]", [AKPrefUtils devToolsPathPref]);
 
     // Put up the splash window, which will show progress as we populate the database.
     _splashWindowController = [[AKSplashWindowController alloc] initWithWindowNibName:@"SplashWindow"];

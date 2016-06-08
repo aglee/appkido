@@ -57,9 +57,8 @@ extern NSString *AKFavoritesPrefName;
 // selected in the Frameworks tab of the Prefs panel.
 extern NSString *AKSelectedFrameworksPrefName;
 
-// Value is the top-level directory where the Dev Tools are located, e.g.,
-// @"/Developer".
-extern NSString *AKDevToolsPathPrefName;
+/*! Path to Xcode app bundle, e.g. "/Applications/Xcode.app". */
+extern NSString *AKXcodePathPrefName;
 
 // Value is version number of the SDK for which we should get all our data --
 // see AKDevTools.
