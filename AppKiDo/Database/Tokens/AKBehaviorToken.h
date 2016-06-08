@@ -25,7 +25,7 @@
 
 @property (assign, readonly) BOOL isClassToken;
 @property (assign) BOOL isDelegateProtocolToken;
-/*! Includes protocols implemented by virtue of inheritance. */
+/*! Includes inherited protocols. */
 @property (readonly, copy) NSArray *adoptedProtocolTokens;
 @property (readonly, copy) NSArray *instanceMethodTokens;
 @property (readonly, copy) NSArray *propertyTokens;
@@ -34,7 +34,7 @@
 
 #pragma mark - Adopted protocol tokens
 
-- (void)addImplementedProtocol:(AKProtocolToken *)protocolToken;
+- (void)addAdoptedProtocol:(AKProtocolToken *)protocolToken;
 
 #pragma mark - Property tokens
 

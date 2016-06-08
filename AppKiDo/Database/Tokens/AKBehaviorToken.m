@@ -76,9 +76,9 @@
 	return self.instanceMethodsByName.allValues;
 }
 
-#pragma mark - Implemented protocol tokens
+#pragma mark - Adopted protocol tokens
 
-- (void)addImplementedProtocol:(AKProtocolToken *)protocolToken
+- (void)addAdoptedProtocol:(AKProtocolToken *)protocolToken
 {
 	if (self.adoptedProtocolTokensByName[protocolToken.name]) {
 		DIGSLogDebug(@"trying to add protocol [%@] again to behavior [%@], will ignore",
