@@ -131,6 +131,7 @@ I'll be addressing these and other issues.  Thanks for your help.</string>
                                     </tableColumns>
                                     <connections>
                                         <binding destination="ufP-WC-kZm" name="content" keyPath="arrangedObjects" id="bEJ-um-djy"/>
+                                        <binding destination="ufP-WC-kZm" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="bEJ-um-djy" id="xiS-Ye-Skt"/>
                                         <outlet property="delegate" destination="-2" id="cQD-dZ-75k"/>
                                     </connections>
                                 </tableView>
