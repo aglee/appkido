@@ -184,6 +184,11 @@
 
 #pragma mark - Delegate method tokens
 
+- (BOOL)hasDelegate
+{
+	return (self.delegateProtocolTokensByName.count > 0);
+}
+
 - (NSArray *)delegateMethodTokens
 {
 	NSMutableArray *delegateMethodTokens = [NSMutableArray array];

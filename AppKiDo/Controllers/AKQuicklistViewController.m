@@ -661,46 +661,17 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	static NSArray *s_classesWithDelegates = nil;
 
 	if (!s_classesWithDelegates) {
-		NSMutableSet *setOfItems = [NSMutableSet set];
+		NSMutableSet *setOfClassTokens = [NSMutableSet set];
 		for (AKClassToken *classToken in [[self.owningWindowController database] allClassTokens]) {
-			if ([self _classHasDelegate:classToken]) {
-				[setOfItems addObject:classToken];
+			if (classToken.hasDelegate) {
+				[setOfClassTokens addObject:classToken];
 			}
 		}
-		NSArray *classTokens = [self _sortedDescendantsOfClassesInSet:setOfItems];
+		NSArray *classTokens = [self _sortedDescendantsOfClassesInSet:setOfClassTokens];
 		s_classesWithDelegates = [self _sortedDocLocatorsForClasses:classTokens];
 	}
 
 	return s_classesWithDelegates;
-}
-
-//TODO: Note the method name tests only work with Objective-C.
-- (BOOL)_classHasDelegate:(AKClassToken *)classToken
-{
-	// See if the class has an instance method with a name like setXXXDelegate:.
-	for (AKMethodToken *methodToken in [classToken instanceMethodTokens]) {
-		NSString *methodName = methodToken.name;
-		if ([methodName hasPrefix:@"set"] && [methodName hasSuffix:@"Delegate:"]) {
-			return YES;
-		}
-	}
-
-	// See if the class has a property named "delegate" or "xxxDelegate".
-	for (AKPropertyToken *propertyToken in [classToken propertyTokens]) {
-		NSString *propertyName = propertyToken.name;
-		if ([propertyName isEqual:@"delegate"] || [propertyName hasSuffix:@"Delegate:"]) {
-			return YES;
-		}
-	}
-
-	// See if there's a protocol named ThisClassDelegate.
-	NSString *delegateProtocolName = [classToken.name stringByAppendingString:@"Delegate"];
-	if ([[self.owningWindowController database] protocolTokenWithName:delegateProtocolName]) {
-		return YES;
-	}
-
-	// If we got this far, we conclude the class has no delegate.
-	return NO;
 }
 
 - (NSArray *)_classesWithDataSources

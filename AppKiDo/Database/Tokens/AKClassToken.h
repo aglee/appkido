@@ -23,6 +23,7 @@
 @property (readonly, copy) NSArray *subclassTokens;
 @property (readonly, copy) NSSet *descendantClassTokens;
 @property (readonly, copy) NSArray *categoryTokensIncludingInherited;
+@property (readonly, assign) BOOL hasDelegate;
 @property (readonly, copy) NSArray *delegateMethodTokens;
 
 /*!
