@@ -74,13 +74,15 @@
 - (void)_addClassMemberTokensToArray:(NSMutableArray *)tokenArray
 {
 	for (AKClassToken *classToken in self.database.allClassTokens) {
+		// We don't add the class's delegate methods, because they are already
+		// searched for via the protocols they belong to.
 		[tokenArray addObjectsFromArray:classToken.propertyTokens];
 		[tokenArray addObjectsFromArray:classToken.classMethodTokens];
 		[tokenArray addObjectsFromArray:classToken.instanceMethodTokens];
-		[tokenArray addObjectsFromArray:classToken.delegateMethodTokens];
 		[tokenArray addObjectsFromArray:classToken.dataTypeTokens];
 		[tokenArray addObjectsFromArray:classToken.constantTokens];
 		[tokenArray addObjectsFromArray:classToken.notificationTokens];
+		[tokenArray addObjectsFromArray:classToken.bindingTokens];
 	}
 }
 

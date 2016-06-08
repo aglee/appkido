@@ -290,8 +290,8 @@
 		[self _searchMembersUnderBehaviorTopic:topic];
 
 		// Search members specific to classes.
-		[self _searchTokens:classToken.delegateMethodTokens
-			  underSubtopic:AKDelegateMethodsSubtopicName
+		[self _searchTokens:classToken.bindingTokens
+			  underSubtopic:AKBindingsSubtopicName
 			ofBehaviorTopic:topic];
 	}
 }
@@ -304,6 +304,8 @@
 	}
 }
 
+// Note that delegate methods are already searched for via the protocols they
+// belong to, so we don't have to search for them here.
 - (void)_searchMembersUnderBehaviorTopic:(AKBehaviorTopic *)behaviorTopic
 {
 	AKBehaviorToken *behaviorToken = (AKBehaviorToken *)[behaviorTopic topicToken];
