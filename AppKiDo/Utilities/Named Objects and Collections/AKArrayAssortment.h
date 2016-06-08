@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /*!
- * Dashed this off to help debugging.  Decided to keep it in case useful later.
- *
- * Doesn't check for collisions within arrays.  Is just a way to "bin" things by name.
+ * An AKArrayAssortment is a collection of objects grouped into named arrays.
  */
 @interface AKArrayAssortment : NSObject
 
@@ -19,5 +17,10 @@
 
 - (void)addObject:(id)obj toArrayWithName:(NSString *)name;
 - (NSArray *)arrayWithName:(NSString *)name;
+
+//TODO: These could be useful to implement.  I didn't need them for the debugging task I wrote this class for.  Could also be useful to have remove methods and enumerator methods.
+//- (NSString *)nameOfArrayContainingObject:(id)obj identical:(BOOL)objectMustBeIdentical;
+//- (NSArray *)namesOfArraysContainingObject:(id)obj identical:(BOOL)objectMustBeIdentical;
+//- (void)addObjects:(NSArray *)objects keyPathForArrayNames:(NSString *)keyPath nilArrayName:(NSString *)nilArrayName;
 
 @end

@@ -46,7 +46,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: name=%@>", self.className, self.name];
+	return [NSString stringWithFormat:@"<%@: %p name=%@>", self.className, self, self.name];
 }
 
 @end

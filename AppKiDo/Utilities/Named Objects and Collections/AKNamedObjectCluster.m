@@ -45,7 +45,7 @@
 	return [self.groupsByName.allValues ak_sortedBySortName];
 }
 
-#pragma mark - Accessing token groups
+#pragma mark - Accessing groups and objects
 
 - (AKNamedObjectGroup *)groupWithName:(NSString *)groupName
 {

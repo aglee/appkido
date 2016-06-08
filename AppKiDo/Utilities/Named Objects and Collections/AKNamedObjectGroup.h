@@ -8,11 +8,20 @@
 
 #import "AKNamedObject.h"
 
-//TODO: Consider adding subscripting syntax.
-//TODO: Consider "genericizing".  Could enable having a single class, AKNamedObject, which can have subobjects.  Or maybe AKNamedObject plus just AKNamedObjectGroup, which can behave like AKNamedObjectCluster by having its contained objects be themselves groups.  Not important right now: for now, it's simpler to essentially hard-code the hierarchy I happen to be using, and cluster>group>object is clear in my head, and I don't have to do any casting, e.g. objectWithName: returns an AKNamedObject which I would "know" that I can cast to AKNamedObjectGroup.
+//TODO: Why did I have the objects in the group inherit from AKNamedObject instead of conforming to <AKNamed>, which would be more flexible?  Maybe it was just a matter of getting around to it?
+
+//TODO: For AppKiDo I haven't (so far) needed any kind of remove methods, but that could change.
+
+//TODO: Consider "genericizing" so that groups/clusters expect their objects to be of a specific class or protocol.  Benefits?
+
 
 /*!
- * A named collection of AKNamedObjects.  Object names are unique within the group.
+ * A named collection of AKNamedObjects.  Object names are unique within the
+ * object group.
+ *
+ * Functionally this is similar to a dictionary of named objects where the
+ * dictionary keys are always the object names, with the addition of a name (the
+ * group name) for the dictionary as a whole.
  */
 @interface AKNamedObjectGroup : AKNamedObject
 
@@ -24,6 +33,7 @@
 #pragma mark - Accessing objects in the group
 
 - (AKNamedObject *)objectWithName:(NSString *)name;
-- (void)addNamedObject:(AKNamedObject *)namedObject;
+/*! If there is a name collision, the new object replaces the existing one. */
+- (void)addNamedObject:(AKNamedObject *)namedObject;  //TODO: Consider returning the old object where there is a collision.
 
 @end
