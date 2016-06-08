@@ -69,10 +69,6 @@
 		73664E611CF2BE9E0094F405 /* AKDatabase+ImportObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */; };
 		73664E621CF2BE9E0094F405 /* AKDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D4E1CF2BE9D0094F405 /* AKDatabase.m */; };
 		73664E631CF2BE9E0094F405 /* AKDatabaseXMLExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D501CF2BE9D0094F405 /* AKDatabaseXMLExporter.m */; };
-		73664E641CF2BE9E0094F405 /* AKDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D531CF2BE9D0094F405 /* AKDevTools.m */; };
-		73664E651CF2BE9E0094F405 /* AKDevToolsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D551CF2BE9D0094F405 /* AKDevToolsUtils.m */; };
-		73664E661CF2BE9E0094F405 /* AKIPhoneDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D571CF2BE9D0094F405 /* AKIPhoneDevTools.m */; };
-		73664E671CF2BE9E0094F405 /* AKMacDevTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D591CF2BE9D0094F405 /* AKMacDevTools.m */; };
 		73664E681CF2BE9E0094F405 /* AKFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D5C1CF2BE9D0094F405 /* AKFramework.m */; };
 		73664E691CF2BE9E0094F405 /* AKFrameworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D5E1CF2BE9D0094F405 /* AKFrameworkConstants.m */; };
 		73664E6A1CF2BE9E0094F405 /* AKBehaviorToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664D611CF2BE9D0094F405 /* AKBehaviorToken.m */; };
@@ -316,14 +312,6 @@
 		73664D4E1CF2BE9D0094F405 /* AKDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabase.m; sourceTree = "<group>"; };
 		73664D4F1CF2BE9D0094F405 /* AKDatabaseXMLExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDatabaseXMLExporter.h; sourceTree = "<group>"; };
 		73664D501CF2BE9D0094F405 /* AKDatabaseXMLExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseXMLExporter.m; sourceTree = "<group>"; };
-		73664D521CF2BE9D0094F405 /* AKDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevTools.h; sourceTree = "<group>"; };
-		73664D531CF2BE9D0094F405 /* AKDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevTools.m; sourceTree = "<group>"; };
-		73664D541CF2BE9D0094F405 /* AKDevToolsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDevToolsUtils.h; sourceTree = "<group>"; };
-		73664D551CF2BE9D0094F405 /* AKDevToolsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDevToolsUtils.m; sourceTree = "<group>"; };
-		73664D561CF2BE9D0094F405 /* AKIPhoneDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKIPhoneDevTools.h; sourceTree = "<group>"; };
-		73664D571CF2BE9D0094F405 /* AKIPhoneDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKIPhoneDevTools.m; sourceTree = "<group>"; };
-		73664D581CF2BE9D0094F405 /* AKMacDevTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMacDevTools.h; sourceTree = "<group>"; };
-		73664D591CF2BE9D0094F405 /* AKMacDevTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMacDevTools.m; sourceTree = "<group>"; };
 		73664D5B1CF2BE9D0094F405 /* AKFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFramework.h; sourceTree = "<group>"; };
 		73664D5C1CF2BE9D0094F405 /* AKFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFramework.m; sourceTree = "<group>"; };
 		73664D5D1CF2BE9D0094F405 /* AKFrameworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkConstants.h; sourceTree = "<group>"; };
@@ -803,37 +791,15 @@
 			children = (
 				73664D4D1CF2BE9D0094F405 /* AKDatabase.h */,
 				73664D4E1CF2BE9D0094F405 /* AKDatabase.m */,
-				73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */,
-				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
-				73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */,
-				73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */,
-				73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */,
 				73664D4F1CF2BE9D0094F405 /* AKDatabaseXMLExporter.h */,
 				73664D501CF2BE9D0094F405 /* AKDatabaseXMLExporter.m */,
-				736827001CF355A1004B070E /* AKInferredTokenInfo.h */,
-				736827011CF355A1004B070E /* AKInferredTokenInfo.m */,
-				73EC0F7C1D0138CD0038FC48 /* Scanning Header Files */,
-				73664D511CF2BE9D0094F405 /* Dev Tools */,
+				739328D01D07F1100032BDC3 /* AKDatabase Categories */,
+				73EC0F7C1D0138CD0038FC48 /* Support Classes For Import */,
 				73664D5A1CF2BE9D0094F405 /* Frameworks */,
 				73664D5F1CF2BE9D0094F405 /* Tokens */,
 				736826FF1CF3558C004B070E /* Nodes */,
 			);
 			path = Database;
-			sourceTree = "<group>";
-		};
-		73664D511CF2BE9D0094F405 /* Dev Tools */ = {
-			isa = PBXGroup;
-			children = (
-				73664D521CF2BE9D0094F405 /* AKDevTools.h */,
-				73664D531CF2BE9D0094F405 /* AKDevTools.m */,
-				73664D541CF2BE9D0094F405 /* AKDevToolsUtils.h */,
-				73664D551CF2BE9D0094F405 /* AKDevToolsUtils.m */,
-				73664D561CF2BE9D0094F405 /* AKIPhoneDevTools.h */,
-				73664D571CF2BE9D0094F405 /* AKIPhoneDevTools.m */,
-				73664D581CF2BE9D0094F405 /* AKMacDevTools.h */,
-				73664D591CF2BE9D0094F405 /* AKMacDevTools.m */,
-			);
-			path = "Dev Tools";
 			sourceTree = "<group>";
 		};
 		73664D5A1CF2BE9D0094F405 /* Frameworks */ = {
@@ -850,32 +816,12 @@
 		73664D5F1CF2BE9D0094F405 /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
-				73664D601CF2BE9D0094F405 /* AKBehaviorToken.h */,
-				73664D611CF2BE9D0094F405 /* AKBehaviorToken.m */,
-				73664D621CF2BE9D0094F405 /* AKBindingToken.h */,
-				73664D631CF2BE9D0094F405 /* AKBindingToken.m */,
-				73664D641CF2BE9D0094F405 /* AKCategoryToken.h */,
-				73664D651CF2BE9D0094F405 /* AKCategoryToken.m */,
-				73664D661CF2BE9D0094F405 /* AKClassMethodToken.h */,
-				73664D671CF2BE9D0094F405 /* AKClassMethodToken.m */,
-				73664D681CF2BE9D0094F405 /* AKClassToken.h */,
-				73664D691CF2BE9D0094F405 /* AKClassToken.m */,
-				73664D6A1CF2BE9D0094F405 /* AKFunctionToken.h */,
-				73664D6B1CF2BE9D0094F405 /* AKFunctionToken.m */,
-				73664D6C1CF2BE9D0094F405 /* AKInstanceMethodToken.h */,
-				73664D6D1CF2BE9D0094F405 /* AKInstanceMethodToken.m */,
-				73664D6E1CF2BE9D0094F405 /* AKMemberToken.h */,
-				73664D6F1CF2BE9D0094F405 /* AKMemberToken.m */,
-				73664D701CF2BE9D0094F405 /* AKMethodToken.h */,
-				73664D711CF2BE9D0094F405 /* AKMethodToken.m */,
-				73664D721CF2BE9D0094F405 /* AKNotificationToken.h */,
-				73664D731CF2BE9D0094F405 /* AKNotificationToken.m */,
-				73664D741CF2BE9D0094F405 /* AKPropertyToken.h */,
-				73664D751CF2BE9D0094F405 /* AKPropertyToken.m */,
-				73664D761CF2BE9D0094F405 /* AKProtocolToken.h */,
-				73664D771CF2BE9D0094F405 /* AKProtocolToken.m */,
 				73664D781CF2BE9D0094F405 /* AKToken.h */,
 				73664D791CF2BE9D0094F405 /* AKToken.m */,
+				739328CE1D07EFE60032BDC3 /* Behavior Tokens */,
+				739328CF1D07F02F0032BDC3 /* Member Tokens */,
+				73664D6A1CF2BE9D0094F405 /* AKFunctionToken.h */,
+				73664D6B1CF2BE9D0094F405 /* AKFunctionToken.m */,
 			);
 			path = Tokens;
 			sourceTree = "<group>";
@@ -1274,15 +1220,65 @@
 			path = Nodes;
 			sourceTree = "<group>";
 		};
-		73EC0F7C1D0138CD0038FC48 /* Scanning Header Files */ = {
+		739328CE1D07EFE60032BDC3 /* Behavior Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				73664D601CF2BE9D0094F405 /* AKBehaviorToken.h */,
+				73664D611CF2BE9D0094F405 /* AKBehaviorToken.m */,
+				73664D681CF2BE9D0094F405 /* AKClassToken.h */,
+				73664D691CF2BE9D0094F405 /* AKClassToken.m */,
+				73664D641CF2BE9D0094F405 /* AKCategoryToken.h */,
+				73664D651CF2BE9D0094F405 /* AKCategoryToken.m */,
+				73664D761CF2BE9D0094F405 /* AKProtocolToken.h */,
+				73664D771CF2BE9D0094F405 /* AKProtocolToken.m */,
+			);
+			name = "Behavior Tokens";
+			sourceTree = "<group>";
+		};
+		739328CF1D07F02F0032BDC3 /* Member Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				73664D6E1CF2BE9D0094F405 /* AKMemberToken.h */,
+				73664D6F1CF2BE9D0094F405 /* AKMemberToken.m */,
+				73664D621CF2BE9D0094F405 /* AKBindingToken.h */,
+				73664D631CF2BE9D0094F405 /* AKBindingToken.m */,
+				73664D661CF2BE9D0094F405 /* AKClassMethodToken.h */,
+				73664D671CF2BE9D0094F405 /* AKClassMethodToken.m */,
+				73664D6C1CF2BE9D0094F405 /* AKInstanceMethodToken.h */,
+				73664D6D1CF2BE9D0094F405 /* AKInstanceMethodToken.m */,
+				73664D701CF2BE9D0094F405 /* AKMethodToken.h */,
+				73664D711CF2BE9D0094F405 /* AKMethodToken.m */,
+				73664D721CF2BE9D0094F405 /* AKNotificationToken.h */,
+				73664D731CF2BE9D0094F405 /* AKNotificationToken.m */,
+				73664D741CF2BE9D0094F405 /* AKPropertyToken.h */,
+				73664D751CF2BE9D0094F405 /* AKPropertyToken.m */,
+			);
+			name = "Member Tokens";
+			sourceTree = "<group>";
+		};
+		739328D01D07F1100032BDC3 /* AKDatabase Categories */ = {
+			isa = PBXGroup;
+			children = (
+				73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */,
+				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
+				73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */,
+				73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */,
+				73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */,
+			);
+			name = "AKDatabase Categories";
+			sourceTree = "<group>";
+		};
+		73EC0F7C1D0138CD0038FC48 /* Support Classes For Import */ = {
 			isa = PBXGroup;
 			children = (
 				73EC0F791D0118870038FC48 /* AKClassDeclarationInfo.h */,
 				73EC0F7A1D0118870038FC48 /* AKClassDeclarationInfo.m */,
 				73EC0F731D00FD110038FC48 /* AKHeaderScanner.h */,
 				73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */,
+				736827001CF355A1004B070E /* AKInferredTokenInfo.h */,
+				736827011CF355A1004B070E /* AKInferredTokenInfo.m */,
 			);
-			name = "Scanning Header Files";
+			name = "Support Classes For Import";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1580,7 +1576,6 @@
 				7368270B1CF4C269004B070E /* NSSet+AppKiDo.m in Sources */,
 				73664ECA1CF2BE9E0094F405 /* AKBrowser.m in Sources */,
 				73664EAF1CF2BE9E0094F405 /* AKPrefUtils.m in Sources */,
-				73664E641CF2BE9E0094F405 /* AKDevTools.m in Sources */,
 				73664EB41CF2BE9E0094F405 /* AKMethodNameExtractor.m in Sources */,
 				73664EB61CF2BE9E0094F405 /* AKNamedObjectCluster.m in Sources */,
 				73664EAB1CF2BE9E0094F405 /* AKProtocolTopic.m in Sources */,
@@ -1588,7 +1583,6 @@
 				73664E8D1CF2BE9E0094F405 /* _DSADistributionVersion.m in Sources */,
 				73664EA21CF2BE9E0094F405 /* AKSubtopic.m in Sources */,
 				73664E8C1CF2BE9E0094F405 /* _DownloadableFile.m in Sources */,
-				73664E661CF2BE9E0094F405 /* AKIPhoneDevTools.m in Sources */,
 				73664EBB1CF2BE9E0094F405 /* AKServicesProvider.m in Sources */,
 				73664E631CF2BE9E0094F405 /* AKDatabaseXMLExporter.m in Sources */,
 				73664ECC1CF2BE9E0094F405 /* AKColoredBox.m in Sources */,
@@ -1608,7 +1602,6 @@
 				73664E521CF2BE9E0094F405 /* AKSubtopicListViewController.m in Sources */,
 				73664E9A1CF2BE9E0094F405 /* DocSetModel.xcdatamodeld in Sources */,
 				73664E6A1CF2BE9E0094F405 /* AKBehaviorToken.m in Sources */,
-				73664E671CF2BE9E0094F405 /* AKMacDevTools.m in Sources */,
 				736827021CF355A1004B070E /* AKInferredTokenInfo.m in Sources */,
 				73664E9E1CF2BE9E0094F405 /* AKToken+AKDoc.m in Sources */,
 				73664E4E1CF2BE9E0094F405 /* NSView+AppKiDo.m in Sources */,
@@ -1616,7 +1609,6 @@
 				73664E731CF2BE9E0094F405 /* AKNotificationToken.m in Sources */,
 				73664E841CF2BE9E0094F405 /* Parameter.m in Sources */,
 				73664E911CF2BE9E0094F405 /* _FilePath.m in Sources */,
-				73664E651CF2BE9E0094F405 /* AKDevToolsUtils.m in Sources */,
 				73664EC21CF2BE9E0094F405 /* DIGSMarginView.m in Sources */,
 				73664E971CF2BE9E0094F405 /* _TokenGroup.m in Sources */,
 				73664E4B1CF2BE9E0094F405 /* NSMutableAttributedString+AppKiDo.m in Sources */,

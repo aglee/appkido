@@ -8,6 +8,41 @@
 
 #import "AKSDKVersion.h"
 
+
+// Moved here from the now defunct AKDevTools.m.
+// Used for sorting SDK version strings.
+//TODO: Why didn't I use AKSDKVersion to do the comparing?
+static NSComparisonResult _versionSortFunction(NSString * leftVersionString, NSString * rightVersionString, void *ignoredContext)
+{
+	NSArray *leftComponents = [leftVersionString componentsSeparatedByString:@"."];
+	NSArray *rightComponents = [rightVersionString componentsSeparatedByString:@"."];
+	unsigned int i;
+
+	for (i = 0; i < leftComponents.count; i++) {
+		if (i >= rightComponents.count) {
+			return NSOrderedDescending;  // left has more components and is therefore greater than right
+		}
+
+		int leftNumber = [leftComponents[i] intValue];
+		int rightNumber = [rightComponents[i] intValue];
+
+		if (leftNumber < rightNumber) {
+			return NSOrderedAscending;
+		} else if (leftNumber > rightNumber) {
+			return NSOrderedDescending;
+		}
+	}
+
+	// If we got this far, rightComponents has leftComponents as a prefix.
+	if (leftComponents.count < rightComponents.count) {
+		return NSOrderedAscending;  // left has fewer components and is therefore less than right
+	} else {
+		return NSOrderedSame;  // all left components equal all right components
+	}
+}
+
+
+
 @implementation AKSDKVersion
 
 #pragma mark - Factory methods

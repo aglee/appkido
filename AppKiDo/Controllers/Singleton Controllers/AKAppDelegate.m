@@ -13,7 +13,6 @@
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
 #import "AKDebugging.h"
-#import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
 #import "AKDocSetsWindowController.h"
 #import "AKFindPanelController.h"

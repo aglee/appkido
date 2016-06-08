@@ -7,18 +7,14 @@
 //
 
 #import "AKDevToolsPanelController.h"
-
-#import "DIGSLog.h"
-#import "AKPrefUtils.h"
 #import "AKDevToolsViewController.h"
+#import "AKPrefUtils.h"
+#import "DIGSLog.h"
 
 @implementation AKDevToolsPanelController
-
-@synthesize devToolsView = _devToolsView;
-@synthesize okButton = _okButton;
-
-#pragma mark - Init/awake/dealloc
-
+{
+	AKDevToolsViewController *_devToolsViewController;
+}
 
 #pragma mark - Running the panel
 
@@ -36,13 +32,11 @@
 
 - (IBAction)ok:(id)sender
 {
-    DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] stopModal];
 }
 
 - (IBAction)cancel:(id)sender
 {
-    DIGSLogDebug_EnteringMethod();
     [[NSApplication sharedApplication] terminate:self];
 }
 
@@ -59,9 +53,6 @@
     realDevToolsView.autoresizingMask = _devToolsView.autoresizingMask;
     [_devToolsView.superview replaceSubview:_devToolsView with:realDevToolsView];
     self.devToolsView = realDevToolsView;
-
-    // Tell the dev tools view controller where the OK button is.
-    _devToolsViewController.okButton = _okButton;
 }
 
 @end
