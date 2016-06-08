@@ -25,7 +25,16 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1670">
+                <textField verticalHuggingPriority="750" id="1664" userLabel="Text Field">
+                    <rect key="frame" x="138" y="354" width="287" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" enabled="NO" sendsActionOnEndEditing="YES" alignment="left" title="SDK header files are found in the Xcode app bundle." id="1682">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" id="1670" userLabel="Xcode Path Field">
                     <rect key="frame" x="20" y="324" width="402" height="22"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1675">
@@ -33,6 +42,9 @@
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" white="0.89919352529999996" alpha="1" colorSpace="calibratedWhite"/>
                     </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="selectedXcodeAppPath" id="uO9-98-dYe"/>
+                    </connections>
                 </textField>
                 <button verticalHuggingPriority="750" id="1666">
                     <rect key="frame" x="14" y="288" width="136" height="32"/>
@@ -45,16 +57,8 @@
                         <action selector="promptForXcodeLocation:" target="-2" id="1695"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="1664">
-                    <rect key="frame" x="138" y="354" width="287" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" enabled="NO" sendsActionOnEndEditing="YES" alignment="left" title="SDK header files are found in the Xcode app bundle." id="1682">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
         </view>
+        <userDefaultsController representsSharedInstance="YES" id="qSv-4D-QVp"/>
     </objects>
 </document>
