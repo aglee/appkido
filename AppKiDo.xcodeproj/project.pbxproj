@@ -805,10 +805,10 @@
 		73664D5A1CF2BE9D0094F405 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				73664D5B1CF2BE9D0094F405 /* AKFramework.h */,
-				73664D5C1CF2BE9D0094F405 /* AKFramework.m */,
 				73664D5D1CF2BE9D0094F405 /* AKFrameworkConstants.h */,
 				73664D5E1CF2BE9D0094F405 /* AKFrameworkConstants.m */,
+				73664D5B1CF2BE9D0094F405 /* AKFramework.h */,
+				73664D5C1CF2BE9D0094F405 /* AKFramework.m */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -922,14 +922,14 @@
 		73664DC71CF2BE9D0094F405 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				73664DDE1CF2BE9D0094F405 /* Topics */,
-				73664DD71CF2BE9D0094F405 /* Subtopics */,
-				73664DCC1CF2BE9D0094F405 /* Docs */,
-				73664DD21CF2BE9D0094F405 /* Search */,
 				73664DC81CF2BE9D0094F405 /* AKDocLocator.h */,
 				73664DC91CF2BE9D0094F405 /* AKDocLocator.m */,
 				73664DCA1CF2BE9D0094F405 /* AKLinkResolver.h */,
 				73664DCB1CF2BE9D0094F405 /* AKLinkResolver.m */,
+				73664DDE1CF2BE9D0094F405 /* Topics */,
+				73664DD71CF2BE9D0094F405 /* Subtopics */,
+				73664DCC1CF2BE9D0094F405 /* Docs */,
+				73664DD21CF2BE9D0094F405 /* Search */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -973,26 +973,14 @@
 		73664DDE1CF2BE9D0094F405 /* Topics */ = {
 			isa = PBXGroup;
 			children = (
-				73664DDF1CF2BE9D0094F405 /* AKBehaviorTopic.h */,
-				73664DE01CF2BE9D0094F405 /* AKBehaviorTopic.m */,
-				73664DE11CF2BE9D0094F405 /* AKClassTopic.h */,
-				73664DE21CF2BE9D0094F405 /* AKClassTopic.m */,
-				73664DE31CF2BE9D0094F405 /* AKFrameworkProtocolsTopic.h */,
-				73664DE41CF2BE9D0094F405 /* AKFrameworkProtocolsTopic.m */,
-				73664DE51CF2BE9D0094F405 /* AKFrameworkRelatedTopic.h */,
-				73664DE61CF2BE9D0094F405 /* AKFrameworkRelatedTopic.m */,
-				73664DE71CF2BE9D0094F405 /* AKFrameworkTokenClusterTopic.h */,
-				73664DE81CF2BE9D0094F405 /* AKFrameworkTokenClusterTopic.m */,
-				73664DE91CF2BE9D0094F405 /* AKFrameworkTopic.h */,
-				73664DEA1CF2BE9D0094F405 /* AKFrameworkTopic.m */,
-				73664DEB1CF2BE9D0094F405 /* AKLabelTopic.h */,
-				73664DEC1CF2BE9D0094F405 /* AKLabelTopic.m */,
-				73664DED1CF2BE9D0094F405 /* AKProtocolTopic.h */,
-				73664DEE1CF2BE9D0094F405 /* AKProtocolTopic.m */,
-				73664DEF1CF2BE9D0094F405 /* AKTopic.h */,
-				73664DF01CF2BE9D0094F405 /* AKTopic.m */,
 				73664DF11CF2BE9D0094F405 /* AKTopicConstants.h */,
 				73664DF21CF2BE9D0094F405 /* AKTopicConstants.m */,
+				73664DEF1CF2BE9D0094F405 /* AKTopic.h */,
+				73664DF01CF2BE9D0094F405 /* AKTopic.m */,
+				739328D11D0876590032BDC3 /* Framework-Related Topics */,
+				739328D21D08766B0032BDC3 /* Behavior Topics */,
+				73664DEB1CF2BE9D0094F405 /* AKLabelTopic.h */,
+				73664DEC1CF2BE9D0094F405 /* AKLabelTopic.m */,
 			);
 			path = Topics;
 			sourceTree = "<group>";
@@ -1018,6 +1006,8 @@
 				736826FB1CF348A2004B070E /* Named Objects and Collections */,
 				73664DFA1CF2BE9E0094F405 /* AKAppVersion.h */,
 				73664DFB1CF2BE9E0094F405 /* AKAppVersion.m */,
+				736826FC1CF34998004B070E /* AKArrayAssortment.h */,
+				736826FD1CF34998004B070E /* AKArrayAssortment.m */,
 				73664DFC1CF2BE9E0094F405 /* AKDebugging.h */,
 				73664DFD1CF2BE9E0094F405 /* AKDebugging.m */,
 				73664DFE1CF2BE9E0094F405 /* AKFileUtils.h */,
@@ -1207,8 +1197,6 @@
 				73664E081CF2BE9E0094F405 /* AKNamedObjectCluster.m */,
 				73664E091CF2BE9E0094F405 /* AKNamedObjectGroup.h */,
 				73664E0A1CF2BE9E0094F405 /* AKNamedObjectGroup.m */,
-				736826FC1CF34998004B070E /* AKArrayAssortment.h */,
-				736826FD1CF34998004B070E /* AKArrayAssortment.m */,
 			);
 			path = "Named Objects and Collections";
 			sourceTree = "<group>";
@@ -1266,6 +1254,34 @@
 				73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */,
 			);
 			name = "AKDatabase Categories";
+			sourceTree = "<group>";
+		};
+		739328D11D0876590032BDC3 /* Framework-Related Topics */ = {
+			isa = PBXGroup;
+			children = (
+				73664DE51CF2BE9D0094F405 /* AKFrameworkRelatedTopic.h */,
+				73664DE61CF2BE9D0094F405 /* AKFrameworkRelatedTopic.m */,
+				73664DE91CF2BE9D0094F405 /* AKFrameworkTopic.h */,
+				73664DEA1CF2BE9D0094F405 /* AKFrameworkTopic.m */,
+				73664DE31CF2BE9D0094F405 /* AKFrameworkProtocolsTopic.h */,
+				73664DE41CF2BE9D0094F405 /* AKFrameworkProtocolsTopic.m */,
+				73664DE71CF2BE9D0094F405 /* AKFrameworkTokenClusterTopic.h */,
+				73664DE81CF2BE9D0094F405 /* AKFrameworkTokenClusterTopic.m */,
+			);
+			name = "Framework-Related Topics";
+			sourceTree = "<group>";
+		};
+		739328D21D08766B0032BDC3 /* Behavior Topics */ = {
+			isa = PBXGroup;
+			children = (
+				73664DDF1CF2BE9D0094F405 /* AKBehaviorTopic.h */,
+				73664DE01CF2BE9D0094F405 /* AKBehaviorTopic.m */,
+				73664DE11CF2BE9D0094F405 /* AKClassTopic.h */,
+				73664DE21CF2BE9D0094F405 /* AKClassTopic.m */,
+				73664DED1CF2BE9D0094F405 /* AKProtocolTopic.h */,
+				73664DEE1CF2BE9D0094F405 /* AKProtocolTopic.m */,
+			);
+			name = "Behavior Topics";
 			sourceTree = "<group>";
 		};
 		73EC0F7C1D0138CD0038FC48 /* Support Classes For Import */ = {
