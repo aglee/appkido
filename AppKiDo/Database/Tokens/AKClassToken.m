@@ -16,7 +16,7 @@
 
 @interface AKClassToken ()
 @property (readwrite, weak) AKClassToken *superclassToken;
-@property (copy) NSMutableDictionary *delegateMethodTokensByName;
+@property (copy) NSMutableDictionary *delegateProtocolTokensByName;
 @property (copy) NSMutableDictionary *bindingTokensByName;
 @end
 
@@ -37,7 +37,7 @@
 		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 		_subclassTokens = [[NSMutableArray alloc] init];
 		_categoryTokens = [[NSMutableArray alloc] init];
-		_delegateMethodTokensByName = [[NSMutableDictionary alloc] init];
+		_delegateProtocolTokensByName = [[NSMutableDictionary alloc] init];
 		_bindingTokensByName = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -186,24 +186,19 @@
 
 - (NSArray *)delegateMethodTokens
 {
-	NSMutableArray *delegateMethodTokens = [self.delegateMethodTokensByName.allValues mutableCopy];
+	NSMutableArray *delegateMethodTokens = [NSMutableArray array];
 
-	// Handle classes like WebView that have different kinds of delegates, not
-	// just one called "delegate".
-	[self _addExtraDelegateMethodTokensToArray:delegateMethodTokens];
+	for (AKProtocolToken *delegateProtocolToken in self.delegateProtocolTokensByName.allValues) {
+		[delegateMethodTokens addObjectsFromArray:delegateProtocolToken.classMethodTokens];
+		[delegateMethodTokens addObjectsFromArray:delegateProtocolToken.instanceMethodTokens];
+	}
 
 	return delegateMethodTokens;
 }
 
-- (AKMethodToken *)delegateMethodTokenWithName:(NSString *)methodName
+- (void)addDelegateProtocolToken:(AKProtocolToken *)delegateProtocolToken
 {
-	return self.delegateMethodTokensByName[methodName];  //TODO: This doesn't jibe with delegateMethodTokens.
-}
-
-- (void)addDelegateMethodToken:(AKMethodToken *)methodToken
-{
-	self.delegateMethodTokensByName[methodToken.name] = methodToken;  //TODO: This doesn't jibe with delegateMethodTokens.
-	methodToken.owningBehavior = self;
+	self.delegateProtocolTokensByName[delegateProtocolToken.name] = delegateProtocolToken;  //TODO: This doesn't jibe with delegateMethodTokens.
 }
 
 #pragma mark - AKBehaviorToken methods
@@ -231,43 +226,6 @@
 	for (AKClassToken *subclassToken in _subclassTokens) {
 		[subclassToken _addDescendantClassTokensToSet:descendantClassTokens];
 	}
-}
-
-// Look for a protocol named ThisClassDelegate.
-// Look for instance method names of the form setFooDelegate:.
-- (void)_addExtraDelegateMethodTokensToArray:(NSMutableArray *)methodsList
-{
-////TODO: Commenting out for now, come back to this later.
-//	// Look for a protocol named ThisClassDelegate.
-//	AKDatabase *db = self.owningDatabase;
-//	NSString *possibleDelegateProtocolName = [self.name stringByAppendingString:@"Delegate"];
-//	AKProtocolToken *delegateProtocol = [db protocolTokenWithName:possibleDelegateProtocolName];
-//
-//	if (delegateProtocol) {
-//		[methodsList addObjectsFromArray:delegateProtocol.instanceMethodTokens];
-//	}
-//
-//	// Look for instance method names of the form setFooDelegate:.
-//	//TODO: To be really thorough, check for fooDelegate properties.
-//	for (AKMethodToken *methodToken in [self instanceMethodTokens]) {
-//		NSString *methodName = methodToken.name;
-//
-//		if ([methodName hasPrefix:@"set"]
-//			&& [methodName hasSuffix:@"Delegate:"]
-//			&& ![methodName isEqualToString:@"setDelegate:"])
-//		{
-//			//TODO: Can't I just look for protocol FooDelegate?
-//			NSString *protocolSuffix = [[methodName substringToIndex:(methodName.length - 1)]
-//										substringFromIndex:3].uppercaseString;
-//			for (AKProtocolToken *protocolToken in [db allProtocolTokens]) {
-//				NSString *protocolName = protocolToken.name.uppercaseString;
-//				if ([protocolName hasSuffix:protocolSuffix]) {
-//					[methodsList addObjectsFromArray:protocolToken.instanceMethodTokens];
-//					break;
-//				}
-//			}
-//		}
-//	}
 }
 
 @end

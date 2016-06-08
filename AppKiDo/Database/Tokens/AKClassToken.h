@@ -69,9 +69,7 @@
 
 #pragma mark - Delegate method tokens
 
-- (AKMethodToken *)delegateMethodTokenWithName:(NSString *)methodName;
 
-/*! Does nothing if a delegate method with the same name already exists. */
-- (void)addDelegateMethodToken:(AKMethodToken *)methodToken;
+- (void)addDelegateProtocolToken:(AKProtocolToken *)delegateProtocolToken;
 
 @end

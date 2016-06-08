@@ -55,6 +55,110 @@
 	[self _importProtocolClassMethods];
 	[self _importProtocolInstanceMethods];
 	[self _importProtocolProperties];
+
+	// Associate delegates with the classes that own them.
+	[self _associateDelegateProtocolsWithClasses];
+}
+
+- (void)_associateDelegateProtocolsWithClasses
+{
+	for (AKClassToken *classToken in self.allClassTokens) {
+		[self _lookForRegularDelegateOfClassToken:classToken];
+		[self _lookForExtraDelegatesOfClassToken:classToken];
+	}
+	[self _treatToolTipOwnerAsDelegate];
+}
+
+// The simplest and most common case: look for a protocol whose name is the
+// class name with "Delegate" appended.  For example, if the class is
+// NSTableView, we would look for an NSTableViewDelegate protocol.
+- (void)_lookForRegularDelegateOfClassToken:(AKClassToken *)classToken
+{
+	NSString *protocolName = [classToken.name stringByAppendingString:@"Delegate"];
+	AKProtocolToken *protocolToken = [self protocolTokenWithName:protocolName];
+	if (protocolToken) {
+		QLog(@"+++ Adding regular delegate protocol '%@' to class '%@'.", protocolToken.name, classToken.name);
+		[classToken addDelegateProtocolToken:protocolToken];
+	}
+}
+
+// Some classes have multiple delegates.  We can discover the delegates of those
+// delegate as follows, using WebView as an example.
+//
+// - Consider each property whose name ends with "Delegate".
+//   - WebView has downloadDelegate and UIDelegate (among others).
+// - Find all protocols in the same framework as the class whose names end with
+//   the capitalized property name.
+//   - WebKit has a protocol WebDownloadDelegate that has the capitalized suffix
+//     "DownloadDelegate".
+//   - WebKit has two protocols with th suffix "UIDelegate": WebUIDelegate and
+//     WKUIDelegate.
+// - Strip the property name from each protocol name to get a prefix.  If the
+//   class name has that prefix, conclude that the protocol is a delegate
+//   protocol for the class.
+//   - "WebDownloadDelegate" minus "DownloadDelegate" is "Web", which is
+//     a prefix of "WebView", so we conclude that WebDownloadDelegate is
+//     a delegate of WebView.
+//   - Similarly, we conclude that "WebUIDelegate" is a delegate of WebView.
+//   - "WKUIDelegate" minus "UIDelegate" is "WK", which is not a prefix of
+//     "WebView", so we conclude WKUIDelegate is not a delegate of WebView.
+//
+// I'm assuming delegates are always declared as properties, so I don't have to
+// also check for getter and setter methods like xyzDelegate or setXyzDelegate:.
+- (void)_lookForExtraDelegatesOfClassToken:(AKClassToken *)classToken
+{
+	for (AKPropertyToken *propertyToken in classToken.propertyTokens) {
+		if (![propertyToken.name hasSuffix:@"Delegate"]) {
+			continue;
+		}
+
+		AKFramework *framework = [self frameworkWithName:classToken.frameworkName];
+		if (framework == nil) {
+			QLog(@"+++ [ODD] %s Skipping class '%@' because the framework is unknown.", __PRETTY_FUNCTION__, classToken);
+			continue;
+		}
+
+		// Capitalize the property name.  Can't simply use capitalizedString,
+		// because it changes "UIDelegate" to "Uidelegate".
+		NSString *cappedFirstLetter = [propertyToken.name substringToIndex:1].uppercaseString;
+		NSString *afterFirstLetter = [propertyToken.name substringFromIndex:1];
+		NSString *cappedPropertyName = [cappedFirstLetter stringByAppendingString:afterFirstLetter];
+		for (AKProtocolToken *protocolToken in framework.protocolsGroup.objects) {
+			if (![protocolToken.name hasSuffix:cappedPropertyName]) {
+				continue;
+			}
+
+			NSInteger prefixLength = protocolToken.name.length - cappedPropertyName.length;
+			NSString *prefix = [protocolToken.name substringToIndex:prefixLength];
+			if (![classToken.name hasPrefix:prefix]) {
+				continue;
+			}
+
+			QLog(@"+++ Adding extra delegate protocol '%@' to class '%@'.", protocolToken.name, classToken.name);
+			[classToken addDelegateProtocolToken:protocolToken];
+		}
+	}
+}
+
+// Hard-coded special case.  To me, NSToolTipOwner is a delegate, so I'm going
+// to treat it that way even though the docs don't.
+- (void)_treatToolTipOwnerAsDelegate
+{
+	NSString *toolTipProtocolName = @"NSToolTipOwner";
+	NSString *viewClassName = @"NSView";
+
+	AKProtocolToken *toolTipProtocolToken = [self protocolTokenWithName:toolTipProtocolName];
+	if (toolTipProtocolToken == nil) {
+		return;
+	}
+
+	AKClassToken *viewClassToken = [self classTokenWithName:viewClassName];
+	if (viewClassToken == nil) {
+		QLog(@"+++ [ODD] The protocol '%@' was found but not the class '%@'.", toolTipProtocolName, viewClassName);
+		return;
+	}
+
+	[viewClassToken addDelegateProtocolToken:toolTipProtocolToken];
 }
 
 - (void)_scanFrameworkHeaderFilesForClassDeclarations

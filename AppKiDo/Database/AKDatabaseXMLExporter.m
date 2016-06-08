@@ -123,13 +123,14 @@
                       ofType:@"instancemethods"
                       xmlTag:@"method"];
 
-        [self _exportMembers:[classToken delegateMethodTokens]
-                      ofType:@"delegatemethods"
-                      xmlTag:@"method"];
+//        [self _exportMembers:[classToken delegateMethodTokens]
+//                      ofType:@"delegatemethods"
+//                      xmlTag:@"method"];
 
         [self _exportMembers:[classToken notificationTokens]
                       ofType:@"notifications"
                       xmlTag:@"notification"];
+		//TODO: Include bindings.
     }];
 }
 
