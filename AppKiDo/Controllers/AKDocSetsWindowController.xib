@@ -16,31 +16,14 @@
         <window title="Select a Docset" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="434" height="427"/>
+            <rect key="contentRect" x="196" y="240" width="434" height="452"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="434" height="427"/>
+                <rect key="frame" x="0.0" y="0.0" width="434" height="452"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" id="AV2-6k-afD" userLabel="Message Field">
-                        <rect key="frame" x="18" y="271" width="389" height="136"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="cc1-ty-p8s">
-                            <font key="font" metaFont="system"/>
-                            <string key="title">This is a very early build of the new AppKiDo.  Some limitations:
-
-- Only Objective-C.
-- Only one docset, which you must select below.
-- Some incomplete data.
-- Xcode must be at /Applications/Xcode.app.
-
-I'll be addressing these and other issues.  Thanks for your help.</string>
-                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="bTF-gL-TOh">
-                        <rect key="frame" x="18" y="236" width="95" height="17"/>
+                        <rect key="frame" x="18" y="228" width="95" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Pick a docset:" id="ejy-eC-nDn">
                             <font key="font" size="13" name=".AppleSystemUIFontBold"/>
@@ -49,7 +32,7 @@ I'll be addressing these and other issues.  Thanks for your help.</string>
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="DbA-3c-5No" userLabel="DocSets Scroll View">
-                        <rect key="frame" x="119" y="69" width="251" height="184"/>
+                        <rect key="frame" x="119" y="61" width="251" height="184"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="ke4-vR-P4A">
                             <rect key="frame" x="1" y="0.0" width="249" height="183"/>
@@ -179,12 +162,37 @@ DQ
                             <action selector="okDocSetsWindow:" target="-2" id="Xin-EW-kq7"/>
                         </connections>
                     </button>
+                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="lut-mS-pCb">
+                        <rect key="frame" x="20" y="251" width="394" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" id="AV2-6k-afD" userLabel="Message Field">
+                        <rect key="frame" x="18" y="262" width="389" height="170"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="cc1-ty-p8s">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">This is a very early build of the new AppKiDo.  Some limitations:
+
+- Only Objective-C.
+- Only one docset, which you must select below.
+- Xcode must be at /Applications/Xcode.app.
+- Some incomplete data.
+- "ALL xyz Methods" is not implemented yet.
+
+Don't get too attached to any keyboard shortcuts; I will be making UI changes that will probably change them.</string>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="241" y="315.5"/>
+            <point key="canvasLocation" x="241" y="328"/>
         </window>
         <arrayController objectClassName="DocSetIndex" id="ufP-WC-kZm" userLabel="DocSets Array Controller">
             <connections>
