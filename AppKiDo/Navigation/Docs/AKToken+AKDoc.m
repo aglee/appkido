@@ -17,8 +17,6 @@
 
 @implementation AKToken (AKDoc)
 
-#pragma mark - <AKDoc> methods
-
 - (NSString *)displayNameForDocList
 {
 	return self.displayName;
@@ -48,11 +46,9 @@
 
 @end
 
-
+#pragma mark -
 
 @implementation AKBehaviorToken (AKDoc)
-
-#pragma mark - <AKDoc> methods
 
 - (NSString *)displayNameForDocList
 {
@@ -61,7 +57,7 @@
 
 @end
 
-
+#pragma mark -
 
 @implementation AKBindingToken (AKDoc)
 
@@ -96,7 +92,7 @@
 
 @end
 
-
+#pragma mark -
 
 @implementation AKInstanceMethodToken (AKDoc)
 
@@ -140,11 +136,18 @@
 
 @end
 
-
+#pragma mark -
 
 @implementation AKMemberToken (AKDoc)
 
-#pragma mark - <AKDoc> methods
+- (NSString *)displayNameForDocList
+{
+	NSString *displayName = [super displayNameForDocList];
+	if (self.owningBehavior.isDelegateProtocolToken) {
+		displayName = [NSString stringWithFormat:@"%@ <%@>", displayName, self.owningBehavior.name];
+	}
+	return displayName;
+}
 
 // This implementation of -commentString assumes the receiver represents a
 // method.  Subclasses of AKMemberDoc for which this is not true need to
@@ -186,8 +189,7 @@
 
 @end
 
-
-
+#pragma mark -
 
 @implementation AKNotificationToken (AKDoc)
 
@@ -222,10 +224,9 @@
 
 @end
 
+#pragma mark -
 
 @implementation AKPropertyToken (AKDoc)
-
-#pragma mark - <AKDoc> methods
 
 //- (NSString *)commentString
 //{

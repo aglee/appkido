@@ -24,6 +24,7 @@
 @interface AKBehaviorToken : AKToken
 
 @property (assign, readonly) BOOL isClassToken;
+@property (assign) BOOL isDelegateProtocolToken;
 /*! Includes protocols implemented by virtue of inheritance. */
 @property (readonly, copy) NSArray *adoptedProtocolTokens;
 @property (readonly, copy) NSArray *instanceMethodTokens;

@@ -198,7 +198,8 @@
 
 - (void)addDelegateProtocolToken:(AKProtocolToken *)delegateProtocolToken
 {
-	self.delegateProtocolTokensByName[delegateProtocolToken.name] = delegateProtocolToken;  //TODO: This doesn't jibe with delegateMethodTokens.
+	self.delegateProtocolTokensByName[delegateProtocolToken.name] = delegateProtocolToken;
+	delegateProtocolToken.isDelegateProtocolToken = YES;
 }
 
 #pragma mark - AKBehaviorToken methods
