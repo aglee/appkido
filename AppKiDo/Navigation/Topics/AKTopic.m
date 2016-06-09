@@ -46,7 +46,7 @@
 
 - (NSArray *)childTopics
 {
-	// Lazy loading.
+	// Lazy loading.  //TODO: Is this necessary?  Descendant topics will never get dealloc'ed unless root topics are dealloc'ed.
 	if (_childTopics == nil) {
 		_childTopics = [self _arrayWithChildTopics];
 	}

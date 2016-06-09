@@ -68,8 +68,8 @@
 	// class method and an instance method.
 	NSString *linkPath = linkURL.path;
 	NSString *tokenRelativeDocPath = self.tokenMO.metainformation.file.path;
-	QLog(@"+++ link path: ...%@", [[linkPath componentsSeparatedByString:@"/documentation/"] lastObject]);  // for brevity, easier to eyeball the log
-	QLog(@"+++ token doc path: %@", tokenRelativeDocPath);
+	//QLog(@"+++ link path: ...%@", [[linkPath componentsSeparatedByString:@"/documentation/"] lastObject]);  // for brevity, easier to eyeball the log
+	//QLog(@"+++ token doc path: %@", tokenRelativeDocPath);
 
 	if ([linkPath hasSuffix:tokenRelativeDocPath]
 		&& [linkAnchor.lastPathComponent isEqualToString:tokenAnchor.lastPathComponent])

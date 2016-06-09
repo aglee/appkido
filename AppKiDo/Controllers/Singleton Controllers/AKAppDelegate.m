@@ -13,6 +13,7 @@
 #import "AKDatabase.h"
 #import "AKDatabaseXMLExporter.h"
 #import "AKDebugging.h"
+#import "AKDevToolsPanelController.h"
 #import "AKDocLocator.h"
 #import "AKDocSetsWindowController.h"
 #import "AKFindPanelController.h"
@@ -434,7 +435,10 @@ static NSTimeInterval g_checkpointTime = 0.0;
 
 
 	//TODO: Prompt the user for xcodePathPref if the current value from prefs is no good.
-	DIGSLogDebug(@"Xcode path is [%@]", [AKPrefUtils xcodePathPref]);
+//	if (![AKDevToolsPanelController runDevToolsSetupPanel]) {
+//		[NSApp terminate:nil];
+//	}
+//	DIGSLogDebug(@"Xcode path is [%@]", [AKPrefUtils xcodePathPref]);
 
 
 
