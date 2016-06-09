@@ -114,7 +114,12 @@
 
 #pragma mark - WebPolicyDelegate methods
 
-- (void)webView:(WebView *)sender decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
+// Called when the user clicks a link.
+- (void)webView:(WebView *)sender
+decidePolicyForNavigationAction:(NSDictionary *)actionInformation
+		request:(NSURLRequest *)request
+		  frame:(WebFrame *)frame
+decisionListener:(id <WebPolicyDecisionListener>)listener
 {
 	NSNumber *navType = actionInformation[WebActionNavigationTypeKey];
 	BOOL isLinkClicked = ((navType != nil)
@@ -136,7 +141,9 @@
 
 #pragma mark - WebUIDelegate methods
 
-- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+- (NSArray *)webView:(WebView *)sender
+contextMenuItemsForElement:(NSDictionary *)element
+ defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	NSURL *linkURL = element[WebElementLinkURLKey];
 	NSMutableArray *newMenuItems = [NSMutableArray array];
@@ -160,13 +167,14 @@
 			menuItem.representedObject = linkURL;
 
 			[newMenuItems addObject:menuItem];
-		} else if ((tag == WebMenuItemTagDownloadImageToDisk)
-				 || (tag == WebMenuItemTagCopyImageToClipboard)
-				 || (tag == WebMenuItemTagSearchInSpotlight)
-				 || (tag == WebMenuItemTagCopy)
-				 || (tag == WebMenuItemTagSearchWeb)
-				 || (tag == WebMenuItemTagLookUpInDictionary)) {
-
+		} else if ((tag == WebMenuItemTagCopyLinkToClipboard)
+				   || (tag == WebMenuItemTagDownloadImageToDisk)
+				   || (tag == WebMenuItemTagCopyImageToClipboard)
+				   || (tag == WebMenuItemTagSearchInSpotlight)
+				   || (tag == WebMenuItemTagCopy)
+				   || (tag == WebMenuItemTagSearchWeb)
+				   || (tag == WebMenuItemTagLookUpInDictionary))
+		{
 			[newMenuItems addObject:menuItem];
 		}
 		else if (tag == 2015) {  //TODO: The "Speech" item. There's no constant for this. Figured it out empirically.
