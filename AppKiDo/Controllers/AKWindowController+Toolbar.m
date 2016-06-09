@@ -6,6 +6,7 @@
  */
 
 #import "AKWindowController.h"
+#import "AKTopicBrowserViewController.h"
 
 @implementation AKWindowController (Toolbar)
 
