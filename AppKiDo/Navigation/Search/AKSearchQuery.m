@@ -25,33 +25,27 @@
 
 @interface AKSearchQuery ()
 @property (nonatomic, strong) AKDatabase *database;
-// Caches search results.  Made this strong rather than copy because for our
-// internal purposes (modifiying the array in place), we want the self-same
-// NSMutableArray, and a copy won't do.  Copy wouldn't work anyway, because
-// it causes the getter to return an immutable NSArray; the resulting
-// exception on my attempt to modify the array was how I realized I needed
-// to change this from copy to strong.
-@property (nonatomic, strong) NSMutableArray *cachedSearchResults;
+@property (nonatomic, copy) NSString *searchString;
+// Only used during search, then reset to nil.  Made this strong rather than
+// copy because we modify the array in place in a bunch of places, so we want
+// the self-same NSMutableArray every time -- a copy won't do.  Copy wouldn't
+// work anyway, because it causes the getter to return an immutable NSArray.
+// The resulting exception on my attempt to modify the array was how I realized
+// that copy doesn't work.
+@property (nonatomic, strong) NSMutableArray *tempSearchResults;
 @end
+
 
 @implementation AKSearchQuery
 
-@synthesize searchString = _searchString;
-@synthesize includesClassesAndProtocols = _includesClassesAndProtocols;
-@synthesize includesMembers = _includesMembers;
-@synthesize includesFunctions = _includesFunctions;
-@synthesize includesGlobals = _includesGlobals;
-@synthesize ignoresCase = _ignoresCase;
-@synthesize searchComparison = _searchComparison;
-
 #pragma mark - Init/awake/dealloc
 
-- (instancetype)initWithDatabase:(AKDatabase *)db
+- (instancetype)initWithDatabase:(AKDatabase *)database
 {
-	NSParameterAssert(db != nil);
+	NSParameterAssert(database != nil);
 	self = [super init];
 	if (self) {
-		_database = db;
+		_database = database;
 		_searchString = nil;
 		_includesClassesAndProtocols = YES;
 		_includesMembers = YES;
@@ -59,7 +53,7 @@
 		_includesGlobals = YES;
 		_ignoresCase = YES;
 		_searchComparison = AKSearchForSubstring;
-		_cachedSearchResults = [[NSMutableArray alloc] init];
+		_tempSearchResults = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -70,120 +64,23 @@
 	return [self initWithDatabase:nil];
 }
 
-#pragma mark - Getters and setters
-
-- (NSString *)searchString
-{
-	return _searchString;
-}
-
-- (void)setSearchString:(NSString *)searchString
-{
-	if (_searchString == searchString || [_searchString isEqualToString:searchString]) {
-		return;
-	}
-
-	// Set the ivar.
-	_searchString = [searchString copy];
-
-	// Update other ivars.
-	self.cachedSearchResults = nil;
-}
-
-- (BOOL)includesClassesAndProtocols
-{
-	return _includesClassesAndProtocols;
-}
-
-- (void)setIncludesClassesAndProtocols:(BOOL)flag
-{
-	if (_includesClassesAndProtocols != flag) {
-		_includesClassesAndProtocols = flag;
-		self.cachedSearchResults = nil;
-	}
-}
-
-- (BOOL)includesMembers
-{
-	return _includesMembers;
-}
-
-- (void)setIncludesMembers:(BOOL)flag
-{
-	if (_includesMembers != flag) {
-		_includesMembers = flag;
-		self.cachedSearchResults = nil;
-	}
-}
-
-- (BOOL)includesFunctions
-{
-	return _includesFunctions;
-}
-
-- (void)setIncludesFunctions:(BOOL)flag
-{
-	if (_includesFunctions != flag) {
-		_includesFunctions = flag;
-		self.cachedSearchResults = nil;
-	}
-}
-
-- (BOOL)includesGlobals
-{
-	return _includesGlobals;
-}
-
-- (void)setIncludesGlobals:(BOOL)flag
-{
-	if (_includesGlobals != flag) {
-		_includesGlobals = flag;
-		self.cachedSearchResults = nil;
-	}
-}
-
-- (BOOL)ignoresCase
-{
-	return _ignoresCase;
-}
-
-- (void)setIgnoresCase:(BOOL)flag
-{
-	if (_ignoresCase != flag) {
-		_ignoresCase = flag;
-		self.cachedSearchResults = nil;
-	}
-}
-
-- (AKSearchComparison)searchComparison
-{
-	return _searchComparison;
-}
-
-- (void)setSearchComparison:(AKSearchComparison)searchComparison
-{
-	if (_searchComparison != searchComparison) {
-		_searchComparison = searchComparison;
-		self.cachedSearchResults = nil;
-	}
-}
-
-- (NSArray *)searchResults
-{
-	if (self.cachedSearchResults == nil) {
-		[self _refreshCachedSearchedResults];
-	}
-	return self.cachedSearchResults;
-}
-
 #pragma mark - Searching
+
+- (NSArray *)doSearchForString:(NSString *)searchString
+{
+	self.searchString = searchString;
+	[self _performSearch];
+	NSArray *results = self.tempSearchResults;
+	self.tempSearchResults = nil;
+	return results;
+}
 
 - (void)includeEverythingInSearch
 {
-	[self setIncludesClassesAndProtocols:YES];
-	[self setIncludesMembers:YES];
-	[self setIncludesFunctions:YES];
-	[self setIncludesGlobals:YES];
+	self.includesClassesAndProtocols = YES;
+	self.includesMembers = YES;
+	self.includesFunctions = YES;
+	self.includesGlobals = YES;
 }
 
 #pragma mark - Private methods - general
@@ -212,9 +109,9 @@
 	}
 }
 
-- (void)_refreshCachedSearchedResults
+- (void)_performSearch
 {
-	self.cachedSearchResults = [NSMutableArray array];
+	self.tempSearchResults = [NSMutableArray array];
 
 	if (self.searchString.length == 0) {
 		return;
@@ -238,7 +135,7 @@
 	}
 
 	// Sort the results.
-	[AKDocLocator sortArrayOfDocLocators:self.cachedSearchResults];
+	[AKDocLocator sortArrayOfDocLocators:self.tempSearchResults];
 }
 
 #pragma mark - Private methods - searching frameworks
@@ -248,9 +145,9 @@
 	for (AKFramework *framework in self.database.frameworks) {
 		if ([self _matchesString:framework.name]) 	{
 			AKFrameworkTopic *topic = [[AKFrameworkTopic alloc] initWithFramework:framework];
-			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
-																	   subtopicName:nil
-																			docName:nil]];
+			[self.tempSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	 subtopicName:nil
+																		  docName:nil]];
 		}
 	}
 }
@@ -262,9 +159,9 @@
 	for (AKClassToken *classToken in self.database.allClassTokens) {
 		if ([self _matchesString:classToken.name]) 	{
 			AKClassTopic *topic = [[AKClassTopic alloc] initWithClassToken:classToken];
-			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
-																	   subtopicName:nil
-																			docName:nil]];
+			[self.tempSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	 subtopicName:nil
+																		  docName:nil]];
 		}
 	}
 }
@@ -274,9 +171,9 @@
 	for (AKProtocolToken *protocolToken in self.database.allProtocolTokens) {
 		if ([self _matchesString:protocolToken.name]) {
 			AKProtocolTopic *topic = [[AKProtocolTopic alloc] initWithProtocolToken:protocolToken];
-			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
-																	   subtopicName:nil
-																			docName:nil]];
+			[self.tempSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	 subtopicName:nil
+																		  docName:nil]];
 		}
 	}
 }
@@ -362,9 +259,9 @@
 {
 	for (AKToken *token in tokenArray) {
 		if ([self _matchesString:token.name]) {
-			[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
-																	   subtopicName:subtopicName
-																			docName:token.name]];
+			[self.tempSearchResults addObject:[[AKDocLocator alloc] initWithTopic:topic
+																	 subtopicName:subtopicName
+																		  docName:token.name]];
 		}
 	}
 }
@@ -422,9 +319,9 @@
 	for (AKSubtopic *subtopic in tokenClusterTopic.subtopics) {
 		for (id<AKDoc> doc in subtopic.docListItems) {
 			if ([self _matchesString:doc.name]) {
-				[self.cachedSearchResults addObject:[[AKDocLocator alloc] initWithTopic:tokenClusterTopic
-																		   subtopicName:subtopic.name
-																				docName:doc.name]];
+				[self.tempSearchResults addObject:[[AKDocLocator alloc] initWithTopic:tokenClusterTopic
+																		 subtopicName:subtopic.name
+																			  docName:doc.name]];
 			}
 		}
 	}

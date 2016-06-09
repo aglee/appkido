@@ -26,7 +26,6 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
  */
 @interface AKSearchQuery : NSObject
 
-@property (nonatomic, copy) NSString *searchString;
 @property (nonatomic, assign) BOOL includesClassesAndProtocols;
 /*!
  * If true, searches properties, methods (including delegate methods), and
@@ -38,8 +37,6 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 @property (nonatomic, assign) BOOL includesGlobals;
 @property (nonatomic, assign) BOOL ignoresCase;
 @property (nonatomic, assign) AKSearchComparison searchComparison;
-/*! Returns a sorted array of AKDocLocators. */
-@property (nonatomic, readonly) NSArray *searchResults;
 
 #pragma mark - Init/awake/dealloc
 
@@ -47,7 +44,10 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
 
 #pragma mark - Searching
 
-/*! Sends all the -setIncludesXXX: messages with YES as the flag. */
+/*! Returns a sorted array of AKDocLocators. */
+- (NSArray *)doSearchForString:(NSString *)searchString;
+
+/*! Sets all the includesXXX properties to YES. */
 - (void)includeEverythingInSearch;
 
 @end
