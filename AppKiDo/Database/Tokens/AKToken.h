@@ -27,4 +27,9 @@
 /*! Note this is not a designated initializer.  It's okay to instantiate an AKToken without a tokenMO, just a name. */
 - (instancetype)initWithTokenMO:(DSAToken *)tokenMO;
 
+#pragma mark - Matching URLs
+
+/*! Tries to tell whether the given URL points to documentation about this token. */
+- (BOOL)matchesLinkURL:(NSURL *)linkURL;
+
 @end

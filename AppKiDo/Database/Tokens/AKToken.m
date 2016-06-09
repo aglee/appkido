@@ -38,6 +38,49 @@
 			|| self.headerPathRelativeToSDK != nil);
 }
 
+#pragma mark - Matching URLs
+
+// Example: clicked on a link to NSMutableDictionary.
+//
+// Link URL was file:///Users/alee/Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.OSX.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/Foundation/Classes/NSMutableDictionary_Class/index.html#//apple_ref/doc/c_ref/NSMutableDictionary
+//
+// Search results had one result, with this anchor: //apple_ref/occ/cl/NSMutableDictionary,
+// which doesn't pass the first test of exactly matching anchors.  But the file
+// path was
+// documentation/Cocoa/Reference/Foundation/Classes/NSMutableDictionary_Class/index.html,
+// which passed the second test.
+- (BOOL)matchesLinkURL:(NSURL *)linkURL
+{
+	// Ideally the anchors match exactly.
+	NSString *linkAnchor = linkURL.fragment;
+	NSString *tokenAnchor = self.tokenMO.metainformation.anchor;
+
+	//QLog(@"+++ link anchor: %@", linkAnchor);
+	//QLog(@"+++ token anchor: %@", tokenAnchor);
+
+	if ([linkAnchor isEqualToString:tokenAnchor]) {
+		return YES;
+	}
+
+	// Next best thing: if the paths match, and the last components of the
+	// anchors match.  The only way I can think of that this might fail is if
+	// there are two tokens in the same doc file with the same name -- perhaps a
+	// class method and an instance method.
+	NSString *linkPath = linkURL.path;
+	NSString *tokenRelativeDocPath = self.tokenMO.metainformation.file.path;
+	QLog(@"+++ link path: ...%@", [[linkPath componentsSeparatedByString:@"/documentation/"] lastObject]);  // for brevity, easier to eyeball the log
+	QLog(@"+++ token doc path: %@", tokenRelativeDocPath);
+
+	if ([linkPath hasSuffix:tokenRelativeDocPath]
+		&& [linkAnchor.lastPathComponent isEqualToString:tokenAnchor.lastPathComponent])
+	{
+		return YES;
+	}
+
+	// If we got this far, we don't have a match.
+	return NO;
+}
+
 #pragma mark - NSObject methods
 
 - (NSString *)description
