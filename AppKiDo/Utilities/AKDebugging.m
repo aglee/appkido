@@ -53,22 +53,22 @@
 
 	[debugSubmenu addItemWithTitle:@"Print First Responder"
 							action:@selector(printFirstResponder:)
-					 keyEquivalent:@"r"];
+					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print Modified Tab Chain"
 							action:@selector(printModifiedTabChain:)
-					 keyEquivalent:@"t"];
+					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print Unmodified Tab Chain"
 							action:@selector(printUnmodifiedTabChain:)
-					 keyEquivalent:@"T"];
+					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print nextValidKeyView Loop"
 							action:@selector(printValidKeyViewLoop:)
-					 keyEquivalent:@"k"];
+					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print nextKeyView Loop"
 							action:@selector(printEntireKeyViewLoop:)
-					 keyEquivalent:@"K"];
+					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print Window Info"
 							action:@selector(printFunWindowFacts:)
-					 keyEquivalent:@"i"];
+					 keyEquivalent:@""];
 
 	// Attach the submenu to the "Debug" top-level menu item.
 	[mainMenu setSubmenu:debugSubmenu forItem:debugMenuItem];
