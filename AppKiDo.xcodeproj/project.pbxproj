@@ -121,7 +121,6 @@
 		73664E991CF2BE9E0094F405 /* _TokenType.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664DC41CF2BE9D0094F405 /* _TokenType.m */; };
 		73664E9A1CF2BE9E0094F405 /* DocSetModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 73664DC51CF2BE9D0094F405 /* DocSetModel.xcdatamodeld */; };
 		73664E9B1CF2BE9E0094F405 /* AKDocLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664DC91CF2BE9D0094F405 /* AKDocLocator.m */; };
-		73664E9C1CF2BE9E0094F405 /* AKLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664DCB1CF2BE9D0094F405 /* AKLinkResolver.m */; };
 		73664E9D1CF2BE9E0094F405 /* AKHeaderFileDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664DCF1CF2BE9D0094F405 /* AKHeaderFileDoc.m */; };
 		73664E9E1CF2BE9E0094F405 /* AKToken+AKDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664DD11CF2BE9D0094F405 /* AKToken+AKDoc.m */; };
 		73664E9F1CF2BE9E0094F405 /* AKRandomSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664DD41CF2BE9D0094F405 /* AKRandomSearch.m */; };
@@ -416,8 +415,6 @@
 		73664DC61CF2BE9D0094F405 /* DocSetModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DocSetModel.xcdatamodel; sourceTree = "<group>"; };
 		73664DC81CF2BE9D0094F405 /* AKDocLocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocLocator.h; sourceTree = "<group>"; };
 		73664DC91CF2BE9D0094F405 /* AKDocLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocLocator.m; sourceTree = "<group>"; };
-		73664DCA1CF2BE9D0094F405 /* AKLinkResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKLinkResolver.h; sourceTree = "<group>"; };
-		73664DCB1CF2BE9D0094F405 /* AKLinkResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKLinkResolver.m; sourceTree = "<group>"; };
 		73664DCD1CF2BE9D0094F405 /* AKDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDoc.h; sourceTree = "<group>"; };
 		73664DCE1CF2BE9D0094F405 /* AKHeaderFileDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHeaderFileDoc.h; sourceTree = "<group>"; };
 		73664DCF1CF2BE9D0094F405 /* AKHeaderFileDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderFileDoc.m; sourceTree = "<group>"; };
@@ -924,8 +921,6 @@
 			children = (
 				73664DC81CF2BE9D0094F405 /* AKDocLocator.h */,
 				73664DC91CF2BE9D0094F405 /* AKDocLocator.m */,
-				73664DCA1CF2BE9D0094F405 /* AKLinkResolver.h */,
-				73664DCB1CF2BE9D0094F405 /* AKLinkResolver.m */,
 				73664DDE1CF2BE9D0094F405 /* Topics */,
 				73664DD71CF2BE9D0094F405 /* Subtopics */,
 				73664DCC1CF2BE9D0094F405 /* Docs */,
@@ -1533,7 +1528,6 @@
 				73664E7A1CF2BE9E0094F405 /* DocSet.m in Sources */,
 				73664E571CF2BE9E0094F405 /* AKAboutWindowController.m in Sources */,
 				73664EB21CF2BE9E0094F405 /* AKFileUtils.m in Sources */,
-				73664E9C1CF2BE9E0094F405 /* AKLinkResolver.m in Sources */,
 				73664E991CF2BE9E0094F405 /* _TokenType.m in Sources */,
 				73664EB91CF2BE9E0094F405 /* AKResult.m in Sources */,
 				73664ED01CF2BE9E0094F405 /* AKWindow.m in Sources */,
