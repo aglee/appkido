@@ -15,21 +15,8 @@
  * currently selected topic.
  */
 @interface AKSubtopicListViewController : AKViewController <NSTableViewDelegate, NSTableViewDataSource, NSUserInterfaceValidations>
-{
-@private
-    // Elements are instances of AKSubtopic classes.  Order of elements
-    // matches order of subtopics listed in _subtopicsTable.  This is a
-    // derived attribute based on the window's currently selected topic.
-    NSMutableArray *_subtopics;
-
-    // IBOutlets.
-    AKTableView *__weak _subtopicsTable;
-}
 
 @property (nonatomic, weak) IBOutlet AKTableView *subtopicsTable;
-
-#pragma mark - Getters and setters
-
 @property (readonly, strong) AKSubtopic *selectedSubtopic;
 
 #pragma mark - Action methods

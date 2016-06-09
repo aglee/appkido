@@ -16,32 +16,23 @@
 
 - (instancetype)initWithNibName:nibName windowController:(AKWindowController *)windowController
 {
-    self = [super initWithNibName:nibName bundle:nil];
-    if (self)
-    {
-        _owningWindowController = windowController;
-    }
-
-    return self;
+	self = [super initWithNibName:nibName bundle:nil];
+	if (self) {
+		_owningWindowController = windowController;
+	}
+	return self;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithNibName:nil windowController:nil];
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithNibName:nil windowController:nil];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
-    DIGSLogError_NondesignatedInitializer();
-    return [self initWithNibName:nil windowController:nil];
-}
-
-#pragma mark - Getters and setters
-
-- (AKWindowController *)owningWindowController
-{
-    return _owningWindowController;
+	DIGSLogError_NondesignatedInitializer();
+	return [self initWithNibName:nil windowController:nil];
 }
 
 #pragma mark - Navigation
@@ -68,7 +59,7 @@
 
 - (BOOL)validateUserInterfaceItem:(id)anItem
 {
-    return NO;
+	return NO;
 }
 
 @end

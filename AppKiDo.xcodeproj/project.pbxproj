@@ -751,9 +751,9 @@
 				73664D311CF2BE9D0094F405 /* AKTopicBrowserViewController.m */,
 				73664D321CF2BE9D0094F405 /* AKViewController.h */,
 				73664D331CF2BE9D0094F405 /* AKViewController.m */,
-				73664D341CF2BE9D0094F405 /* AKWindowController+Toolbar.m */,
 				73664D351CF2BE9D0094F405 /* AKWindowController.h */,
 				73664D361CF2BE9D0094F405 /* AKWindowController.m */,
+				73664D341CF2BE9D0094F405 /* AKWindowController+Toolbar.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
