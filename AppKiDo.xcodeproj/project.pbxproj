@@ -207,6 +207,7 @@
 		736827021CF355A1004B070E /* AKInferredTokenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 736827011CF355A1004B070E /* AKInferredTokenInfo.m */; };
 		736827051CF4BAB9004B070E /* NSArray+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 736827041CF4BAB9004B070E /* NSArray+AppKiDo.m */; };
 		7368270B1CF4C269004B070E /* NSSet+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368270A1CF4C269004B070E /* NSSet+AppKiDo.m */; };
+		739328D81D0929E00032BDC3 /* AKWindowController+Links.m in Sources */ = {isa = PBXBuildFile; fileRef = 739328D71D0929E00032BDC3 /* AKWindowController+Links.m */; };
 		73AC6B5B1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */; };
 		73AC6B5E1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */; };
 		73EC0F751D00FD110038FC48 /* AKHeaderScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */; };
@@ -567,6 +568,7 @@
 		736827041CF4BAB9004B070E /* NSArray+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+AppKiDo.m"; sourceTree = "<group>"; };
 		736827091CF4C269004B070E /* NSSet+AppKiDo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+AppKiDo.h"; sourceTree = "<group>"; };
 		7368270A1CF4C269004B070E /* NSSet+AppKiDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+AppKiDo.m"; sourceTree = "<group>"; };
+		739328D71D0929E00032BDC3 /* AKWindowController+Links.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKWindowController+Links.m"; sourceTree = "<group>"; };
 		73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportUtils.m"; sourceTree = "<group>"; };
 		73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportFrameworks.m"; sourceTree = "<group>"; };
 		73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AKDatabase+Private.h"; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 				73664D331CF2BE9D0094F405 /* AKViewController.m */,
 				73664D351CF2BE9D0094F405 /* AKWindowController.h */,
 				73664D361CF2BE9D0094F405 /* AKWindowController.m */,
+				739328D71D0929E00032BDC3 /* AKWindowController+Links.m */,
 				73664D341CF2BE9D0094F405 /* AKWindowController+Toolbar.m */,
 			);
 			path = Controllers;
@@ -1503,6 +1506,7 @@
 				73664E511CF2BE9E0094F405 /* AKQuicklistViewController.m in Sources */,
 				73664E5E1CF2BE9E0094F405 /* AKPrefPanelController.m in Sources */,
 				73664E551CF2BE9E0094F405 /* AKWindowController+Toolbar.m in Sources */,
+				739328D81D0929E00032BDC3 /* AKWindowController+Links.m in Sources */,
 				73664EBD1CF2BE9E0094F405 /* AKTabChain.m in Sources */,
 				73664EA61CF2BE9E0094F405 /* AKFrameworkProtocolsTopic.m in Sources */,
 				73664E931CF2BE9E0094F405 /* _NodeUUID.m in Sources */,

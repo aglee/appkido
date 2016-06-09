@@ -116,12 +116,6 @@
 
 - (void)selectDocWithDocLocator:(AKDocLocator *)docLocator;
 
-/*!
- * Returns YES if we are able to jump to the URL, either within the app if
- * possible or, if necessary, in the user's browser.
- */
-- (BOOL)followLinkURL:(NSURL *)linkURL;
-
 - (void)openQuicklistDrawer;
 
 - (void)searchForString:(NSString *)aString;
@@ -167,15 +161,22 @@
 #pragma mark - Action methods -- accessing the doc file
 
 - (IBAction)copyDocFileURL:(id)sender;
-
 - (IBAction)copyDocFilePath:(id)sender;
-
 - (IBAction)openDocFileInBrowser:(id)sender;
-
 - (IBAction)revealDocFileInFinder:(id)sender;
 
 #pragma mark - Action methods -- debugging
 
 - (IBAction)printFunFacts:(id)sender;
 
+@end
+
+#pragma mark - 
+
+@interface AKWindowController (Links)
+/*!
+ * Returns YES if we are able to jump to the URL, either within the app if
+ * possible or, if necessary, in the user's browser.
+ */
+- (BOOL)followLinkURL:(NSURL *)linkURL;
 @end
