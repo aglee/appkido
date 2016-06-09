@@ -49,8 +49,7 @@
 		_searchString = nil;
 		_includesClassesAndProtocols = YES;
 		_includesMembers = YES;
-		_includesFunctions = YES;
-		_includesGlobals = YES;
+		_includesFunctionsAndGlobals = YES;
 		_ignoresCase = YES;
 		_searchComparison = AKSearchForSubstring;
 		_tempSearchResults = [[NSMutableArray alloc] init];
@@ -79,8 +78,7 @@
 {
 	self.includesClassesAndProtocols = YES;
 	self.includesMembers = YES;
-	self.includesFunctions = YES;
-	self.includesGlobals = YES;
+	self.includesFunctionsAndGlobals = YES;
 }
 
 #pragma mark - Private methods - general
@@ -127,11 +125,8 @@
 		[self _searchClassMembers];
 		[self _searchProtocolMembers];
 	}
-	if (self.includesFunctions) {
-		[self _searchFunctions];
-	}
-	if (self.includesGlobals) {
-		[self _searchGlobals];
+	if (self.includesFunctionsAndGlobals) {
+		[self _searchFunctionsAndGlobals];
 	}
 
 	// Sort the results.
@@ -268,36 +263,17 @@
 
 #pragma mark - Private methods - searching token clusters with AKFramework
 
-- (void)_searchFunctions
+- (void)_searchFunctionsAndGlobals
 {
 	for (AKFramework *framework in self.database.frameworks) {
-		[self _searchFunctionsInFramework:framework];
+		[self _searchFunctionsAndGlobalsInFramework:framework];
 	}
 }
 
-- (void)_searchFunctionsInFramework:(AKFramework *)framework
+- (void)_searchFunctionsAndGlobalsInFramework:(AKFramework *)framework
 {
-	NSArray *childTopicNames = @[ AKFunctionsTopicName ];
 	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
-	[self _searchTokenClusterChildTopicsWithNames:childTopicNames
-							  underFrameworkTopic:frameworkTopic ];
-}
-
-- (void)_searchGlobals
-{
-	for (AKFramework *framework in self.database.frameworks) {
-		[self _searchGlobalsInFramework:framework];
-	}
-}
-
-- (void)_searchGlobalsInFramework:(AKFramework *)framework
-{
-	NSArray *childTopicNames = @[ AKEnumsTopicName,
-								  AKMacrosTopicName,
-								  AKDataTypesTopicName,
-								  AKConstantsTopicName ];
-	AKFrameworkTopic *frameworkTopic = [[AKFrameworkTopic alloc] initWithFramework:framework];
-	[self _searchTokenClusterChildTopicsWithNames:childTopicNames
+	[self _searchTokenClusterChildTopicsWithNames:@[ AKFunctionsAndGlobalsTopicName ]
 							  underFrameworkTopic:frameworkTopic ];
 }
 

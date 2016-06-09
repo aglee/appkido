@@ -11,9 +11,14 @@
 NSString *AKTopicBrowserPathSeparator = @"/";
 
 NSString *AKProtocolsTopicName = @"Protocols";
+
+
 NSString *AKFunctionsTopicName = @"Functions";
 NSString *AKEnumsTopicName     = @"Enums";
 NSString *AKMacrosTopicName    = @"Macros";
 NSString *AKDataTypesTopicName = @"Data Types";
 NSString *AKConstantsTopicName = @"Constants";
+
+
+NSString *AKFunctionsAndGlobalsTopicName = @"Functions and Globals";
 

@@ -20,11 +20,7 @@
 	self = [super initWithName:name];
 	if (self) {
 		_protocolsGroup = [[AKNamedObjectGroup alloc] initWithName:AKProtocolsTopicName];
-		_constantsCluster = [[AKNamedObjectCluster alloc] initWithName:AKConstantsTopicName];
-		_enumsCluster = [[AKNamedObjectCluster alloc] initWithName:AKEnumsTopicName];
-		_functionsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsTopicName];
-		_macrosCluster = [[AKNamedObjectCluster alloc] initWithName:AKMacrosTopicName];
-		_dataTypesCluster = [[AKNamedObjectCluster alloc] initWithName:AKDataTypesTopicName];
+		_functionsAndGlobalsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsAndGlobalsTopicName];
 	}
 	return self;
 }

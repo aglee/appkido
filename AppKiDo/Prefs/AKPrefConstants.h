@@ -95,8 +95,7 @@ extern NSString *AKQuicklistDrawerWidthPrefKey;        // float
 extern NSString *AKQuicklistModePrefKey;               // int
 extern NSString *AKIncludeClassesAndProtocolsPrefKey;  // boolean
 extern NSString *AKIncludeMethodsPrefKey;              // boolean
-extern NSString *AKIncludeFunctionsPrefKey;            // boolean
-extern NSString *AKIncludeGlobalsPrefKey;              // boolean
+extern NSString *AKIncludeFunctionsAndGlobalsPrefKey;  // boolean
 extern NSString *AKIgnoreCasePrefKey;                  // boolean
 extern NSString *AKFrameworkPopupSelectionPrefKey;     // string
 

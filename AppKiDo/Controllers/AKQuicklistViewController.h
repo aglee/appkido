@@ -26,8 +26,7 @@
 @property (nonatomic, weak) IBOutlet NSPopUpButton *searchOptionsPopup;
 @property (nonatomic, weak) IBOutlet NSMenuItem *includeClassesItem;
 @property (nonatomic, weak) IBOutlet NSMenuItem *includeMethodsItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *includeFunctionsItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *includeGlobalsItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *includeFunctionsAndGlobalsItem;
 @property (nonatomic, weak) IBOutlet NSMenuItem *ignoreCaseItem;
 @property (nonatomic, weak) IBOutlet NSMenuItem *searchOptionsDividerItem;
 @property (nonatomic, weak) IBOutlet AKTableView *quicklistTable;

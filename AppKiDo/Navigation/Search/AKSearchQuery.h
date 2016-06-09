@@ -33,8 +33,7 @@ typedef NS_ENUM(unsigned int, AKSearchComparison) {
  * property whose name begins with "XYZ".
  */
 @property (nonatomic, assign) BOOL includesMembers;
-@property (nonatomic, assign) BOOL includesFunctions;
-@property (nonatomic, assign) BOOL includesGlobals;
+@property (nonatomic, assign) BOOL includesFunctionsAndGlobals;
 @property (nonatomic, assign) BOOL ignoresCase;
 @property (nonatomic, assign) AKSearchComparison searchComparison;
 

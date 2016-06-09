@@ -101,28 +101,28 @@
 	}
 
 	// "FRAMEWORKNAME CHILDTOPIC Reference"
-    // Note that CHILDTOPIC could be "Data Type", which is two words.
-	static NSSet *s_childTopicNames;
-	if (s_childTopicNames == nil) {
-		s_childTopicNames = [NSSet setWithObjects:AKEnumsTopicName, AKMacrosTopicName, AKConstantsTopicName, nil];
-	}
-	if (words.count == 3
-		&& [s_childTopicNames containsObject:words[1]])
-	{
-        _frameworkName = words[0];
-		_frameworkChildTopicName = words[1];
-		_nodeSubject = [@[words[0], words[1]] componentsJoinedByString:@" "];
-		return;
-	}
-    if (words.count == 4
-        && [words[1] isEqualToString:@"Data"]
-        && [words[2] isEqualToString:@"Types"])
-    {
-        _frameworkName = words[0];
-        _frameworkChildTopicName = AKDataTypesTopicName;
-        _nodeSubject = [@[words[0], AKDataTypesTopicName] componentsJoinedByString:@" "];
-        return;
-    }
+//TODO: I don't *think* this turned out to be needed, but should double-check, by comparing export with and without -- once I get export working again.
+//	static NSSet *s_childTopicNames;
+//	if (s_childTopicNames == nil) {
+//		s_childTopicNames = [NSSet setWithObjects:AKEnumsTopicName, AKMacrosTopicName, AKConstantsTopicName, nil];
+//	}
+//	if (words.count == 3
+//		&& [s_childTopicNames containsObject:words[1]])
+//	{
+//        _frameworkName = words[0];
+//		_frameworkChildTopicName = words[1];
+//		_nodeSubject = [@[words[0], words[1]] componentsJoinedByString:@" "];
+//		return;
+//	}
+//    if (words.count == 4
+//        && [words[1] isEqualToString:@"Data"]
+//        && [words[2] isEqualToString:@"Types"])
+//    {
+//        _frameworkName = words[0];
+//        _frameworkChildTopicName = AKDataTypesTopicName;
+//        _nodeSubject = [@[words[0], AKDataTypesTopicName] componentsJoinedByString:@" "];
+//        return;
+//    }
 
 	// "FRAMEWORKNAME Additions Reference"  //TODO: Fill this in.
 	if (words.count == 3

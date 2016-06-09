@@ -149,8 +149,7 @@
 	[userPrefs removeObjectForKey:AKMaxSearchStringsPrefName];
 	[userPrefs removeObjectForKey:AKIncludeClassesAndProtocolsPrefKey];
 	[userPrefs removeObjectForKey:AKIncludeMethodsPrefKey];
-	[userPrefs removeObjectForKey:AKIncludeFunctionsPrefKey];
-	[userPrefs removeObjectForKey:AKIncludeGlobalsPrefKey];
+	[userPrefs removeObjectForKey:AKIncludeFunctionsAndGlobalsPrefKey];
 	[userPrefs removeObjectForKey:AKIgnoreCasePrefKey];
 }
 
@@ -182,9 +181,7 @@
 
 	defaultPrefsDictionary[AKIncludeMethodsPrefKey] = @YES;
 
-	defaultPrefsDictionary[AKIncludeFunctionsPrefKey] = @YES;
-
-	defaultPrefsDictionary[AKIncludeGlobalsPrefKey] = @YES;
+	defaultPrefsDictionary[AKIncludeFunctionsAndGlobalsPrefKey] = @YES;
 
 	defaultPrefsDictionary[AKIgnoreCasePrefKey] = @YES;
 

@@ -120,12 +120,9 @@ enum
 	_includeMethodsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeMethodsPrefKey]
 								 ? NSOnState
 								 : NSOffState);
-	_includeFunctionsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeFunctionsPrefKey]
+	_includeFunctionsAndGlobalsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeFunctionsAndGlobalsPrefKey]
 								   ? NSOnState
 								   : NSOffState);
-	_includeGlobalsItem.state = ([AKPrefUtils boolValueForPref:AKIncludeGlobalsPrefKey]
-								 ? NSOnState
-								 : NSOffState);
 	_ignoreCaseItem.state = ([AKPrefUtils boolValueForPref:AKIgnoreCasePrefKey]
 							 ? NSOnState
 							 : NSOffState);
@@ -151,8 +148,7 @@ enum
 {
 	_includeClassesItem.state = NSOnState;
 	_includeMethodsItem.state = NSOnState;
-	_includeFunctionsItem.state = NSOnState;
-	_includeGlobalsItem.state = NSOnState;
+	_includeFunctionsAndGlobalsItem.state = NSOnState;
 }
 
 #pragma mark - Action methods
@@ -251,8 +247,7 @@ enum
 	// Restore the settings in the search options popup.
 	_includeClassesItem.state = (windowLayout.searchIncludesClasses ? NSOnState : NSOffState);
 	_includeMethodsItem.state = (windowLayout.searchIncludesMembers ? NSOnState : NSOffState);
-	_includeFunctionsItem.state = (windowLayout.searchIncludesFunctions ? NSOnState : NSOffState);
-	_includeGlobalsItem.state = (windowLayout.searchIncludesGlobals ? NSOnState : NSOffState);
+	_includeFunctionsAndGlobalsItem.state = (windowLayout.searchIncludesFunctionsAndGlobals ? NSOnState : NSOffState);
 	_ignoreCaseItem.state = (windowLayout.searchIgnoresCase ? NSOnState : NSOffState);
 
 	// Restore the quicklist mode -- after the other ducks have been
@@ -271,8 +266,7 @@ enum
 	// Remember the settings in the search options popup.
 	windowLayout.searchIncludesClasses = (_includeClassesItem.state == NSOnState);
 	windowLayout.searchIncludesMembers = (_includeMethodsItem.state == NSOnState);
-	windowLayout.searchIncludesFunctions = (_includeFunctionsItem.state == NSOnState);
-	windowLayout.searchIncludesGlobals = (_includeGlobalsItem.state == NSOnState);
+	windowLayout.searchIncludesFunctionsAndGlobals = (_includeFunctionsAndGlobalsItem.state == NSOnState);
 	windowLayout.searchIgnoresCase = (_ignoreCaseItem.state == NSOnState);
 }
 
@@ -726,8 +720,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}
 	searchQuery.includesClassesAndProtocols = (_includeClassesItem.state == NSOnState);
 	searchQuery.includesMembers = (_includeMethodsItem.state == NSOnState);
-	searchQuery.includesFunctions = (_includeFunctionsItem.state == NSOnState);
-	searchQuery.includesGlobals = (_includeGlobalsItem.state == NSOnState);
+	searchQuery.includesFunctionsAndGlobals = (_includeFunctionsAndGlobalsItem.state == NSOnState);
 	searchQuery.ignoresCase = (_ignoreCaseItem.state == NSOnState);
 
 	// Perform the search.

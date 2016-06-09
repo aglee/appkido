@@ -22,97 +22,32 @@
  * browserHeight.
  */
 @interface AKWindowLayout : NSObject <AKPrefDictionary>
-{
-@private
-    // General window attributes.
-    NSRect _windowFrame;
-    BOOL _toolbarIsVisible;
 
-    // Attributes of the browser section.
-    BOOL _browserIsVisible;
-    CGFloat _browserFraction;
-    CGFloat _browserHeight;
-    NSInteger _numberOfBrowserColumns;
-
-    // Attributes of the middle section.
-    CGFloat _middleViewHeight;
-    CGFloat _subtopicListWidth;  // This is an attribute being added in March 2013.
-
-    // Attributes of the quicklist drawer.
-    BOOL _quicklistDrawerIsOpen;
-    CGFloat _quicklistDrawerWidth;
-    NSInteger _quicklistMode;
-    NSString *_frameworkPopupSelection;
-    BOOL _searchIncludesClasses;
-    BOOL _searchIncludesMembers;
-    BOOL _searchIncludesFunctions;
-    BOOL _searchIncludesGlobals;
-    BOOL _searchIgnoresCase;
-}
+#pragma mark - General window attributes
 
 @property (nonatomic, assign) NSRect windowFrame;
 @property (nonatomic, assign) BOOL toolbarIsVisible;
+
+#pragma mark - Browser section
+
 @property (nonatomic, assign) BOOL browserIsVisible;
 @property (nonatomic, assign) CGFloat browserFraction;
 @property (nonatomic, assign) CGFloat browserHeight;
 @property (nonatomic, assign) NSInteger numberOfBrowserColumns;
+
+#pragma mark - Middle section
+
 @property (nonatomic, assign) CGFloat middleViewHeight;
 @property (nonatomic, assign) CGFloat subtopicListWidth;
+
+#pragma mark - Quicklist drawer
 @property (nonatomic, assign) BOOL quicklistDrawerIsOpen;
 @property (nonatomic, assign) CGFloat quicklistDrawerWidth;
 @property (nonatomic, assign) NSInteger quicklistMode;
 @property (nonatomic, copy) NSString *frameworkPopupSelection;
 @property (nonatomic, assign) BOOL searchIncludesClasses;
 @property (nonatomic, assign) BOOL searchIncludesMembers;
-@property (nonatomic, assign) BOOL searchIncludesFunctions;
-@property (nonatomic, assign) BOOL searchIncludesGlobals;
+@property (nonatomic, assign) BOOL searchIncludesFunctionsAndGlobals;
 @property (nonatomic, assign) BOOL searchIgnoresCase;
-
-#pragma mark - Getters and setters
-
-- (NSRect)windowFrame;
-- (void)setWindowFrame:(NSRect)frame;
-
-- (BOOL)toolbarIsVisible;
-- (void)setToolbarIsVisible:(BOOL)flag;
-
-- (BOOL)browserIsVisible;
-- (void)setBrowserIsVisible:(BOOL)flag;
-
-- (CGFloat)browserFraction;
-- (void)setBrowserFraction:(CGFloat)height;
-
-- (NSInteger)numberOfBrowserColumns;
-- (void)setNumberOfBrowserColumns:(NSInteger)numColumns;
-
-- (CGFloat)middleViewHeight;
-- (void)setMiddleViewHeight:(CGFloat)height;
-
-- (BOOL)quicklistDrawerIsOpen;
-- (void)setQuicklistDrawerIsOpen:(BOOL)flag;
-
-- (CGFloat)quicklistDrawerWidth;
-- (void)setQuicklistDrawerWidth:(CGFloat)width;
-
-- (NSInteger)quicklistMode;
-- (void)setQuicklistMode:(NSInteger)mode;
-
-- (NSString *)frameworkPopupSelection;
-- (void)setFrameworkPopupSelection:(NSString *)frameworkName;
-
-- (BOOL)searchIncludesClasses;
-- (void)setSearchIncludesClasses:(BOOL)flag;
-
-- (BOOL)searchIncludesMembers;
-- (void)setSearchIncludesMembers:(BOOL)flag;
-
-- (BOOL)searchIncludesFunctions;
-- (void)setSearchIncludesFunctions:(BOOL)flag;
-
-- (BOOL)searchIncludesGlobals;
-- (void)setSearchIncludesGlobals:(BOOL)flag;
-
-- (BOOL)searchIgnoresCase;
-- (void)setSearchIgnoresCase:(BOOL)flag;
 
 @end

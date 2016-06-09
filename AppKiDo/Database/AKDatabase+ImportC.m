@@ -81,7 +81,7 @@
 		AKToken *notifToken = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
 		NSString *groupName = inferredInfo.nodeSubject;  //TODO: Figure out the right group name.
 		AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];
-		[framework.constantsCluster addNamedObject:notifToken toGroupWithName:groupName];
+		[framework.functionsAndGlobalsCluster addNamedObject:notifToken toGroupWithName:groupName];
 		return notifToken;
 	}
 }
@@ -97,7 +97,7 @@
 
 	NSString *groupName = inferredInfo.tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
 	AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];
-	[framework.functionsCluster addNamedObject:token toGroupWithName:groupName];
+	[framework.functionsAndGlobalsCluster addNamedObject:token toGroupWithName:groupName];
 
 	return token;
 }
@@ -155,14 +155,8 @@
 {
 	// Figure out which token cluster within the framework the token belongs to.
 	AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];
-	NSDictionary *clustersByType = @{
-									 @"data" : framework.constantsCluster,
-									 @"econst" : framework.enumsCluster,
-									 @"macro" : framework.macrosCluster,
-									 @"tdef" : framework.dataTypesCluster,
-									 };
-	AKNamedObjectCluster *tokenCluster = clustersByType[inferredInfo.tokenMO.tokenType.typeName];
-	if (tokenCluster == nil) {
+	NSArray *tokenTypes = @[@"data", @"econst", @"macro", @"tdef"];
+	if (![tokenTypes containsObject:inferredInfo.tokenMO.tokenType.typeName]) {
 		QLog(@"+++ Could not import token %@ -- framework %@ has no token bin for type %@.", inferredInfo.tokenMO.tokenName, framework.name, inferredInfo.tokenMO.tokenType.typeName);
 		return nil;
 	}
@@ -172,7 +166,7 @@
 	token.frameworkName = inferredInfo.frameworkName;
 
 	NSString *groupName = inferredInfo.nodeSubject;  //TODO: Figure out the right group name.
-	[tokenCluster addNamedObject:token toGroupWithName:groupName];
+	[framework.functionsAndGlobalsCluster addNamedObject:token toGroupWithName:groupName];
 
 	return token;
 }

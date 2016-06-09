@@ -11,111 +11,85 @@
 
 @implementation AKWindowLayout
 
-@synthesize windowFrame = _windowFrame;
-@synthesize toolbarIsVisible = _toolbarIsVisible;
-@synthesize browserIsVisible = _browserIsVisible;
-@synthesize browserFraction = _browserFraction;
-@synthesize browserHeight = _browserHeight;
-@synthesize numberOfBrowserColumns = _numberOfBrowserColumns;
-@synthesize middleViewHeight = _middleViewHeight;
-@synthesize subtopicListWidth = _subtopicListWidth;
-@synthesize quicklistDrawerIsOpen = _quicklistDrawerIsOpen;
-@synthesize quicklistDrawerWidth = _quicklistDrawerWidth;
-@synthesize quicklistMode = _quicklistMode;
-@synthesize frameworkPopupSelection = _frameworkPopupSelection;
-@synthesize searchIncludesClasses = _searchIncludesClasses;
-@synthesize searchIncludesMembers = _searchIncludesMembers;
-@synthesize searchIncludesFunctions = _searchIncludesFunctions;
-@synthesize searchIncludesGlobals = _searchIncludesGlobals;
-@synthesize searchIgnoresCase = _searchIgnoresCase;
-
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)init
 {
-    if ((self = [super init]))
-    {
-        _toolbarIsVisible = YES;
-        _quicklistDrawerIsOpen = YES;
-        _quicklistMode = 0;
-        _frameworkPopupSelection = AKFoundationFrameworkName;
-        _searchIncludesClasses = YES;
-        _searchIncludesMembers = YES;
-        _searchIncludesFunctions = YES;
-        _searchIncludesGlobals = YES;
-        _searchIgnoresCase = YES;
-    }
-
-    return self;
+	self = [super init];
+	if (self) {
+		_toolbarIsVisible = YES;
+		_quicklistDrawerIsOpen = YES;
+		_quicklistMode = 0;
+		_frameworkPopupSelection = AKFoundationFrameworkName;
+		_searchIncludesClasses = YES;
+		_searchIncludesMembers = YES;
+		_searchIncludesFunctionsAndGlobals = YES;
+		_searchIgnoresCase = YES;
+	}
+	return self;
 }
-
 
 #pragma mark - AKPrefDictionary methods
 
 + (instancetype)fromPrefDictionary:(NSDictionary *)prefDict
 {
-    if (prefDict == nil)
-    {
-        return nil;
-    }
+	if (prefDict == nil) {
+		return nil;
+	}
 
-    AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
+	AKWindowLayout *windowLayout = [[AKWindowLayout alloc] init];
 
-    windowLayout.windowFrame = NSRectFromString(prefDict[AKWindowFramePrefKey]);
-    windowLayout.toolbarIsVisible = [prefDict[AKToolbarIsVisiblePrefKey] boolValue];
-    windowLayout.middleViewHeight = [prefDict[AKMiddleViewHeightPrefKey] floatValue];
-    windowLayout.subtopicListWidth = [prefDict[AKSubtopicListWidthPrefKey] floatValue];
-    windowLayout.browserIsVisible = [prefDict[AKBrowserIsVisiblePrefKey] boolValue];
-    windowLayout.browserFraction = [prefDict[AKBrowserFractionPrefKey] floatValue];
-    windowLayout.browserHeight = [prefDict[AKBrowserHeightPrefKey] floatValue];
-    windowLayout.numberOfBrowserColumns = [prefDict[AKNumberOfBrowserColumnsPrefKey] intValue];
-    windowLayout.quicklistDrawerIsOpen = [prefDict[AKQuicklistDrawerIsOpenPrefKey] boolValue];
-    windowLayout.quicklistDrawerWidth = [prefDict[AKQuicklistDrawerWidthPrefKey] floatValue];
-    windowLayout.quicklistMode = [prefDict[AKQuicklistModePrefKey] intValue];
+	windowLayout.windowFrame = NSRectFromString(prefDict[AKWindowFramePrefKey]);
+	windowLayout.toolbarIsVisible = [prefDict[AKToolbarIsVisiblePrefKey] boolValue];
+	windowLayout.middleViewHeight = [prefDict[AKMiddleViewHeightPrefKey] floatValue];
+	windowLayout.subtopicListWidth = [prefDict[AKSubtopicListWidthPrefKey] floatValue];
+	windowLayout.browserIsVisible = [prefDict[AKBrowserIsVisiblePrefKey] boolValue];
+	windowLayout.browserFraction = [prefDict[AKBrowserFractionPrefKey] floatValue];
+	windowLayout.browserHeight = [prefDict[AKBrowserHeightPrefKey] floatValue];
+	windowLayout.numberOfBrowserColumns = [prefDict[AKNumberOfBrowserColumnsPrefKey] intValue];
+	windowLayout.quicklistDrawerIsOpen = [prefDict[AKQuicklistDrawerIsOpenPrefKey] boolValue];
+	windowLayout.quicklistDrawerWidth = [prefDict[AKQuicklistDrawerWidthPrefKey] floatValue];
+	windowLayout.quicklistMode = [prefDict[AKQuicklistModePrefKey] intValue];
 
-    NSString *frameworkSelection = prefDict[AKFrameworkPopupSelectionPrefKey];
-    if (frameworkSelection != nil)
-    {
-        windowLayout.frameworkPopupSelection = frameworkSelection;
-    }
+	NSString *frameworkSelection = prefDict[AKFrameworkPopupSelectionPrefKey];
+	if (frameworkSelection != nil) {
+		windowLayout.frameworkPopupSelection = frameworkSelection;
+	}
 
-    windowLayout.searchIncludesClasses = [prefDict[AKIncludeClassesAndProtocolsPrefKey] boolValue];
-    windowLayout.searchIncludesMembers = [prefDict[AKIncludeMethodsPrefKey] boolValue];
-    windowLayout.searchIncludesFunctions = [prefDict[AKIncludeFunctionsPrefKey] boolValue];
-    windowLayout.searchIncludesGlobals = [prefDict[AKIncludeGlobalsPrefKey] boolValue];
-    windowLayout.searchIgnoresCase = [prefDict[AKIgnoreCasePrefKey] boolValue];
+	windowLayout.searchIncludesClasses = [prefDict[AKIncludeClassesAndProtocolsPrefKey] boolValue];
+	windowLayout.searchIncludesMembers = [prefDict[AKIncludeMethodsPrefKey] boolValue];
+	windowLayout.searchIncludesFunctionsAndGlobals = [prefDict[AKIncludeFunctionsAndGlobalsPrefKey] boolValue];
+	windowLayout.searchIgnoresCase = [prefDict[AKIgnoreCasePrefKey] boolValue];
 
-    return windowLayout;
+	return windowLayout;
 }
 
 - (NSDictionary *)asPrefDictionary
 {
-    NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
+	NSMutableDictionary *prefDict = [NSMutableDictionary dictionary];
 
-    prefDict[AKWindowFramePrefKey] = NSStringFromRect(_windowFrame);
-    prefDict[AKToolbarIsVisiblePrefKey] = @(_toolbarIsVisible);
-    prefDict[AKMiddleViewHeightPrefKey] = @(_middleViewHeight);
-    prefDict[AKSubtopicListWidthPrefKey] = @(_subtopicListWidth);
-    prefDict[AKBrowserIsVisiblePrefKey] = @(_browserIsVisible);
-    prefDict[AKBrowserFractionPrefKey] = @(_browserFraction);
-    prefDict[AKBrowserHeightPrefKey] = @(_browserHeight);
-    prefDict[AKNumberOfBrowserColumnsPrefKey] = @(_numberOfBrowserColumns);
-    prefDict[AKQuicklistDrawerIsOpenPrefKey] = @(_quicklistDrawerIsOpen);
-    prefDict[AKQuicklistDrawerWidthPrefKey] = @(_quicklistDrawerWidth);
-    prefDict[AKQuicklistModePrefKey] = @(_quicklistMode);
+	prefDict[AKWindowFramePrefKey] = NSStringFromRect(self.windowFrame);
+	prefDict[AKToolbarIsVisiblePrefKey] = @(self.toolbarIsVisible);
+	prefDict[AKMiddleViewHeightPrefKey] = @(self.middleViewHeight);
+	prefDict[AKSubtopicListWidthPrefKey] = @(self.subtopicListWidth);
+	prefDict[AKBrowserIsVisiblePrefKey] = @(self.browserIsVisible);
+	prefDict[AKBrowserFractionPrefKey] = @(self.browserFraction);
+	prefDict[AKBrowserHeightPrefKey] = @(self.browserHeight);
+	prefDict[AKNumberOfBrowserColumnsPrefKey] = @(self.numberOfBrowserColumns);
+	prefDict[AKQuicklistDrawerIsOpenPrefKey] = @(self.quicklistDrawerIsOpen);
+	prefDict[AKQuicklistDrawerWidthPrefKey] = @(self.quicklistDrawerWidth);
+	prefDict[AKQuicklistModePrefKey] = @(self.quicklistMode);
 
-    if (_frameworkPopupSelection)
-    {
-        prefDict[AKFrameworkPopupSelectionPrefKey] = _frameworkPopupSelection;
-    }
+	if (self.frameworkPopupSelection) {
+		prefDict[AKFrameworkPopupSelectionPrefKey] = self.frameworkPopupSelection;
+	}
 
-    prefDict[AKIncludeClassesAndProtocolsPrefKey] = @(_searchIncludesClasses);
-    prefDict[AKIncludeMethodsPrefKey] = @(_searchIncludesMembers);
-    prefDict[AKIncludeFunctionsPrefKey] = @(_searchIncludesFunctions);
-    prefDict[AKIncludeGlobalsPrefKey] = @(_searchIncludesGlobals);
-    prefDict[AKIgnoreCasePrefKey] = @(_searchIgnoresCase);
+	prefDict[AKIncludeClassesAndProtocolsPrefKey] = @(self.searchIncludesClasses);
+	prefDict[AKIncludeMethodsPrefKey] = @(self.searchIncludesMembers);
+	prefDict[AKIncludeFunctionsAndGlobalsPrefKey] = @(self.searchIncludesFunctionsAndGlobals);
+	prefDict[AKIgnoreCasePrefKey] = @(self.searchIgnoresCase);
 
-    return prefDict;
+	return prefDict;
 }
 
 @end

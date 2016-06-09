@@ -34,19 +34,18 @@
 		[childTopics addObject:protocolsTopic];
 	}
 
-	NSArray *tokenClusters = @[self.framework.functionsCluster,
-							   self.framework.enumsCluster,
-							   self.framework.macrosCluster,
-							   self.framework.dataTypesCluster,
-							   self.framework.constantsCluster];
-	for (AKNamedObjectCluster *cluster in tokenClusters) {
-		if (cluster.count > 0) {
-			AKTopic *child = [[AKFrameworkTokenClusterTopic alloc] initWithFramework:self.framework tokenCluster:cluster];
-			[childTopics addObject:child];
-		}
+	if (self.framework.functionsAndGlobalsCluster.count > 0) {
+		[childTopics addObject:[self _functionsAndGlobalsTopic]];
 	}
 
 	return childTopics;
+}
+
+- (AKTopic *)_functionsAndGlobalsTopic
+{
+	AKNamedObjectCluster *tokenCluster = self.framework.functionsAndGlobalsCluster;
+	return [[AKFrameworkTokenClusterTopic alloc] initWithFramework:self.framework
+													  tokenCluster:tokenCluster];
 }
 
 #pragma mark - <AKNamed> methods
