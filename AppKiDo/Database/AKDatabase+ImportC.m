@@ -95,7 +95,7 @@
 	AKToken *token = [[AKFunctionToken alloc] initWithTokenMO:inferredInfo.tokenMO];
 	token.frameworkName = inferredInfo.frameworkName;
 
-	NSString *groupName = inferredInfo.tokenMO.parentNode.kName;  //TODO: Figure out the right group name.
+	NSString *groupName = inferredInfo.nodeSubject;
 	AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];
 	[framework.functionsAndGlobalsCluster addNamedObject:token toGroupWithName:groupName];
 
