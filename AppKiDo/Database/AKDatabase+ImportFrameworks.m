@@ -96,17 +96,6 @@
 	return frameworkName;
 }
 
-// Looks for a match with .../SomeFrameworkName.framework/...
-- (NSRegularExpression *)_regexForFindingFrameworkNameInHeaderPath
-{
-	static NSRegularExpression *s_regex;
-	static dispatch_once_t once;
-	dispatch_once(&once,^{
-		s_regex = [AKRegexUtils constructRegexWithPattern:@".*/(%ident%)\\.framework/.*"].object;
-	});
-	return s_regex;
-}
-
 - (NSString *)_tryToInferFrameworkNameFromHeaderPath:(NSString *)headerPath
 {
 	if (headerPath == nil) {
@@ -117,12 +106,20 @@
 
 	// Does the header path contain "SOMETHING.framework"?
 	if (frameworkName == nil) {
-		NSDictionary *captureGroups = [AKRegexUtils matchRegex:[self _regexForFindingFrameworkNameInHeaderPath] toEntireString:headerPath].object;
+		static NSRegularExpression *s_headerPathRegex;
+		static dispatch_once_t once;
+		dispatch_once(&once,^{
+			NSString *pattern = @".*/(%ident%)\\.framework/.*";
+			s_headerPathRegex = [AKRegexUtils constructRegexWithPattern:pattern].object;
+		});
+
+		NSDictionary *captureGroups = [AKRegexUtils matchRegex:s_headerPathRegex
+												toEntireString:headerPath].object;
 		frameworkName = captureGroups[@1];
 	}
 
-	// NSObject, and by extension all its members, got moved out of Foundation
-	// into the Objective-C runtime.
+	// Is this the special case of NSObject?  NSObject, and by extension all its
+	// members, got moved out of Foundation into the Objective-C runtime.
 	if (frameworkName == nil) {
 		if ([headerPath ak_contains:@"usr/include/objc"]) {
 			frameworkName = @"Objective-C Runtime";
