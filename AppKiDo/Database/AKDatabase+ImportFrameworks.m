@@ -32,13 +32,13 @@
 
 	NSArray *fetchedObjects = result.object;
 	for (NSDictionary *dict in fetchedObjects) {
-		(void)[self _frameworkWithNameAddIfAbsent:dict[@"frameworkName"]];
+		(void)[self _getOrAddFrameworkWithName:dict[@"frameworkName"]];
 	}
 }
 
 #pragma mark - Inferring framework info
 
-- (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName
+- (AKFramework *)_getOrAddFrameworkWithName:(NSString *)frameworkName
 {
 	AKFramework *framework = [self frameworkWithName:frameworkName];
 	if (framework == nil) {
@@ -138,7 +138,7 @@
 		// Does pathComponent have the form "SOMETHING_Framework"?
 		NSArray *splitByUnderscore = [pathComponent componentsSeparatedByString:@"_"];
 		if (splitByUnderscore.count == 2 && [splitByUnderscore[1] isEqualToString:@"Framework"]) {
-			(void)[self _frameworkWithNameAddIfAbsent:splitByUnderscore[0]];
+			(void)[self _getOrAddFrameworkWithName:splitByUnderscore[0]];
 			return splitByUnderscore[0];
 		}
 	}

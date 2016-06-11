@@ -80,7 +80,7 @@
 		// Non-behavior notifications get lumped with the framework's other constants.
 		AKToken *notifToken = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
 		NSString *groupName = inferredInfo.nodeSubject;  //TODO: Figure out the right group name.
-		AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];
+		AKFramework *framework = [self _getOrAddFrameworkWithName:inferredInfo.frameworkName];
 		[framework.functionsAndGlobalsCluster addNamedObject:notifToken toGroupWithName:groupName];
 		return notifToken;
 	}
@@ -96,7 +96,7 @@
 	token.frameworkName = inferredInfo.frameworkName;
 
 	NSString *groupName = inferredInfo.nodeSubject;
-	AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];
+	AKFramework *framework = [self _getOrAddFrameworkWithName:inferredInfo.frameworkName];
 	[framework.functionsAndGlobalsCluster addNamedObject:token toGroupWithName:groupName];
 
 	return token;
@@ -154,7 +154,7 @@
 - (AKToken *)_maybeAddTokenToFrameworkWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
 {
 	// Figure out which token cluster within the framework the token belongs to.
-	AKFramework *framework = [self _frameworkWithNameAddIfAbsent:inferredInfo.frameworkName];
+	AKFramework *framework = [self _getOrAddFrameworkWithName:inferredInfo.frameworkName];
 	NSArray *tokenTypes = @[@"data", @"econst", @"macro", @"tdef"];
 	if (![tokenTypes containsObject:inferredInfo.tokenMO.tokenType.typeName]) {
 		QLog(@"+++ Could not import token %@ -- framework %@ has no token bin for type %@.", inferredInfo.tokenMO.tokenName, framework.name, inferredInfo.tokenMO.tokenType.typeName);

@@ -167,7 +167,7 @@
 	NSArray *classDeclarations = [scanner scanHeadersForClassDeclarations];
 	for (AKClassDeclarationInfo *classInfo in classDeclarations) {
 		// The framework.
-		(void)[self _frameworkWithNameAddIfAbsent:classInfo.frameworkName];
+		(void)[self _getOrAddFrameworkWithName:classInfo.frameworkName];
 
 		// The subclass.
 		AKClassToken *classToken = [self _getOrAddClassTokenWithName:classInfo.nameOfClass];
@@ -189,7 +189,7 @@
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"intf"]) {
 		// Require that we identify the framework the protocol belongs to.
 		NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-		AKFramework *framework = [self _frameworkWithNameAddIfAbsent:frameworkName];
+		AKFramework *framework = [self _getOrAddFrameworkWithName:frameworkName];
 		if (framework == nil) {
 			continue;
 		}
@@ -223,7 +223,7 @@
 
 		// Require that we identify the framework the class belongs to.
 		NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-		AKFramework *framework = [self _frameworkWithNameAddIfAbsent:frameworkName];
+		AKFramework *framework = [self _getOrAddFrameworkWithName:frameworkName];
 		if (framework == nil) {
 			continue;
 		}
@@ -310,7 +310,7 @@
 		|| [categoryName hasSuffix:@"DataSource"])
 	{
 		QLog(@"+++ Category '%@' is an informal protocol.", categoryName);
-		AKFramework *framework = [self _frameworkWithNameAddIfAbsent:frameworkName];
+		AKFramework *framework = [self _getOrAddFrameworkWithName:frameworkName];
 		AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:categoryName];
 		protocolToken.tokenMO = tokenMO;
 		protocolToken.frameworkName = frameworkName;
