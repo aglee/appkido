@@ -33,6 +33,15 @@
 @property (copy, readonly) NSString *nameOfClass;
 
 /*!
+ * Gets set we come across a node name of the form
+ * "CLASSNAME(CATEGORYNAME) Class Reference".  An example from the macOS 10.11.4
+ * docset is "DRBurn(ImageContentCreation) Class Reference".  We don't to figure
+ * out if the category is actually an informal protocol -- it's up to the caller
+ * to figure that out if it needs to.
+ */
+@property (copy, readonly) NSString *nameOfCategory;
+
+/*!
  * For "NSAccessibility Protocol Reference" or "NSAccessibility Informal
  * Protocol Reference" this would be "NSAccessibility".
  */

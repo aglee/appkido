@@ -87,6 +87,12 @@
 	}
 
 	// "CLASSNAME Class Reference"
+	// "CLASSNAME(CATEGORYNAME) Class Reference"
+	//
+	// We check for the latter because there are cases where node name is like
+	// "DRBurn(ImageContentCreation) Class Reference".  We assume the category
+	// name is a category name.  It's up to the caller to figure out if it's
+	// really an informal protocol name.
 	if ([nextToLastWord isEqualToString:@"Class"]) {
 		if (words.count != 3) {
 			QLog(@"+++ Will assume '%@' is not about an ObjC class (wrong number of words).", _nodeName);
@@ -94,8 +100,10 @@
 			return;
         }
 
-        _nameOfClass = words[0];
-        _nodeSubject = _nameOfClass;
+		NSDictionary *captureGroups = [AKInferredTokenInfo parsePossibleCategoryName:words[0]];
+		_nameOfClass = captureGroups[@1];
+		_nameOfCategory = captureGroups[@2];
+        _nodeSubject = words[0];
         return;
 	}
 
