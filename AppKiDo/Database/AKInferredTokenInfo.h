@@ -11,7 +11,7 @@
 @class DSAToken;
 
 /*!
- * Tries to infer what a node is about, purely from the words in the node name.
+ * Tries to infer what a token is "about", purely by parsing a given string.
  * Purely a string parser.  Doesn't validate, for example, whether a framework
  * named frameworkName exists in the database, or a class named nameOfClass,
  * etc.
@@ -19,7 +19,6 @@
 @interface AKInferredTokenInfo : NSObject
 
 @property (strong, readonly) DSAToken *tokenMO;
-@property (copy, readonly) NSString *nodeName;
 
 /*! For "Foundation Constants Reference" this would be "Foundation". */
 @property (copy) NSString *frameworkName;
@@ -38,9 +37,6 @@
  * Protocol Reference" this would be "NSAccessibility".
  */
 @property (copy, readonly) NSString *nameOfProtocol;
-
-/*! For "DRSetupPanel.h Reference" this would be "DRSetupPanel.h". */
-@property (copy, readonly) NSString *headerFileName;
 
 /*! For "Keychain Services Reference" this would be "Keychain Services". */
 @property (copy, readonly) NSString *nodeSubject;

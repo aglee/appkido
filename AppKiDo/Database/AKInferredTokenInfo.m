@@ -13,6 +13,10 @@
 #import "DocSetModel.h"
 #import "DIGSLog.h"
 
+@interface AKInferredTokenInfo ()
+@property (copy, readonly) NSString *nodeName;
+@end
+
 @implementation AKInferredTokenInfo
 
 @synthesize tokenMO = _tokenMO;
@@ -20,7 +24,6 @@
 @synthesize frameworkChildTopicName = _frameworkChildTopicName;
 @synthesize nameOfClass = _nameOfClass;
 @synthesize nameOfProtocol = _nameOfProtocol;
-@synthesize headerFileName = _headerFileName;
 @synthesize nodeSubject = _nodeSubject;
 
 #pragma mark - Init/awake/dealloc
@@ -68,7 +71,8 @@
 
 #pragma mark - Private methods -- inferring info from tokens
 
-// Called from init, hence all the direct ivar accesses.
+// Called from init, hence all the direct ivar accesses.  Assumes _nodeName has
+// been set.
 - (void)_inferIvarsFromNodeName
 {
 	NSMutableArray *words = [[_nodeName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] mutableCopy];
@@ -160,8 +164,7 @@
 	// "XXX.h Reference"
 	if (words.count == 2 && [[words[0] pathExtension] isEqualToString:@"h"])
 	{
-		_headerFileName = words[0];
-		_nodeSubject = _headerFileName;
+		_nodeSubject = words[0];
 		return;
 	}
 
