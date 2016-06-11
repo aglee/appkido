@@ -31,6 +31,8 @@
 @property (readonly, copy) NSArray *propertyTokens;
 @property (readonly, copy) NSArray *classMethodTokens;
 @property (readonly, copy) NSArray *notificationTokens;
+@property (readonly, copy) NSArray *dataTypeTokens;
+@property (readonly, copy) NSArray *constantTokens;
 
 #pragma mark - Adopted protocol tokens
 
@@ -57,13 +59,11 @@
 
 - (void)addDataTypeToken:(AKToken *)token;
 - (AKToken *)dataTypeTokenWithName:(NSString *)name;
-- (NSArray *)dataTypeTokens;
 
 #pragma mark - Constants tokens
 
 - (void)addConstantToken:(AKToken *)token;
 - (AKToken *)constantTokenWithName:(NSString *)name;
-- (NSArray *)constantTokens;
 
 #pragma mark - Notification tokens
 

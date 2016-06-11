@@ -76,6 +76,16 @@
 	return self.instanceMethodsByName.allValues;
 }
 
+- (NSArray *)dataTypeTokens
+{
+	return self.dataTypeTokensByName.allValues;
+}
+
+- (NSArray *)constantTokens
+{
+	return self.constantTokensByName.allValues;
+}
+
 #pragma mark - Adopted protocol tokens
 
 - (void)addAdoptedProtocol:(AKProtocolToken *)protocolToken
@@ -152,11 +162,6 @@
 	return self.dataTypeTokensByName[name];
 }
 
-- (NSArray *)dataTypeTokens
-{
-	return self.dataTypeTokensByName.allValues;
-}
-
 #pragma mark - Constants tokens
 
 - (void)addConstantToken:(AKToken *)token
@@ -167,11 +172,6 @@
 - (AKToken *)constantTokenWithName:(NSString *)name
 {
 	return self.constantTokensByName[name];
-}
-
-- (NSArray *)constantTokens
-{
-	return self.constantTokensByName.allValues;
 }
 
 #pragma mark - Notification tokens
