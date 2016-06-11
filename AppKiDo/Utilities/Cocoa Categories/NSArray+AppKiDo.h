@@ -13,5 +13,7 @@
 
 - (NSArray *)ak_sortedStrings;
 - (NSArray *)ak_sortedBySortName;
+- (NSString *)ak_joinedBySpaces;
+- (NSArray *)ak_arrayByRemovingLast:(NSInteger)numObjectsToRemove;
 
 @end

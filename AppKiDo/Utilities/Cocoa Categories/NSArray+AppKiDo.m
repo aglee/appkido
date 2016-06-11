@@ -38,4 +38,14 @@ static NSComparisonResult compareSortNames(NSObject<AKSortable> *left,
 	return [self sortedArrayUsingFunction:&compareSortNames context:NULL];
 }
 
+- (NSString *)ak_joinedBySpaces
+{
+	return [self componentsJoinedByString:@" "];
+}
+
+- (NSArray *)ak_arrayByRemovingLast:(NSInteger)numObjectsToRemove
+{
+	return [self subarrayWithRange:NSMakeRange(0, self.count - numObjectsToRemove)];
+}
+
 @end
