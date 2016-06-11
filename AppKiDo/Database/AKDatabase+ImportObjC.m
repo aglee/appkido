@@ -15,13 +15,13 @@
 #import "AKClassMethodToken.h"
 #import "AKFramework.h"
 #import "AKHeaderScanner.h"
+#import "AKInferredTokenInfo.h"
 #import "AKInstanceMethodToken.h"
 #import "AKNamedObjectGroup.h"
 #import "AKPropertyToken.h"
 #import "AKProtocolToken.h"
 #import "AKRegexUtils.h"
 #import "AKResult.h"
-#import "AKInferredTokenInfo.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase (ImportObjC)
@@ -212,9 +212,9 @@
 		// Workaround for a bug in the 10.11.4 docset.  It contains tokens with
 		// token type "cl" but whose token names indicate that they are category
 		// tokens, not class tokens, e.g. "NSObject(NSFontPanelValidationAdditions)".
-		// Calling _parsePossibleCategoryName: also catches another docset bug;
+		// Calling parsePossibleCategoryName: also catches another docset bug;
 		// see comments there for explanation.
-		NSDictionary *captureGroups = [self _parsePossibleCategoryName:tokenMO.tokenName];
+		NSDictionary *captureGroups = [AKInferredTokenInfo parsePossibleCategoryName:tokenMO.tokenName];
 		if (captureGroups[@2]) {
 			[categoriesMistakenlyLabeledAsClasses addObject:tokenMO];
 			continue;
@@ -289,7 +289,7 @@
 	}
 
 	// Try to parse a class name and category name from the token name.
-	NSDictionary *captureGroups = [self _parsePossibleCategoryName:tokenMO.tokenName];
+	NSDictionary *captureGroups = [AKInferredTokenInfo parsePossibleCategoryName:tokenMO.tokenName];
 	NSString *owningClassName = captureGroups[@1];
 	NSString *categoryName = captureGroups[@2];
 
@@ -502,32 +502,6 @@
 		self.classTokensByName[className] = classToken;
 	}
 	return classToken;
-}
-
-// The returned dictionary will have one of the following forms:
-// - @{ @1 : CLASSNAME, @2 : CATEGORYNAME }
-// - @{ @1 : CLASSNAME }
-// - nil
-- (NSDictionary *)_parsePossibleCategoryName:(NSString *)name
-{
-	// Workaround for a bug/quirk in the 10.11.4 docset.  The token named
-	// "NSObjectIOBluetoothHostControllerDelegate" has token type "cl" but
-	// is actually a category on NSObject.
-	if ([name isEqualToString:@"NSObjectIOBluetoothHostControllerDelegate"]) {
-		return @{ @1: @"NSObject",
-				  @2: @"IOBluetoothHostControllerDelegate" };
-	}
-
-	// Use a regex to parse the class name and category name.
-	static NSRegularExpression *s_regexForCategoryNames;
-	static dispatch_once_t once;
-	dispatch_once(&once,^{
-		s_regexForCategoryNames = [AKRegexUtils constructRegexWithPattern:@"(%ident%)(?:\\((%ident%)\\))?"].object;
-		NSAssert(s_regexForCategoryNames != nil, @"%s Failed to construct regex.", __PRETTY_FUNCTION__);
-	});
-	AKResult *result = [AKRegexUtils matchRegex:s_regexForCategoryNames toEntireString:name];
-	NSDictionary *captureGroups = result.object;
-	return captureGroups;
 }
 
 @end

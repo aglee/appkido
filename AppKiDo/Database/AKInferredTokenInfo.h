@@ -49,4 +49,21 @@
 
 - (instancetype)initWithTokenMO:(DSAToken *)tokenMO;
 
+#pragma mark - Parsing
+
+/*!
+ * The returned dictionary will have one of the following forms:
+ *
+ * - class name and category name
+ *   - input is @"CLASSNAME(CATEGORYNAME)"
+ *   - output is @{ @1 : @"CLASSNAME", @2 : @"CATEGORYNAME" }
+ *
+ * - class name only
+ *   - input is @"CLASSNAME"
+ *   - output is @{ @1 : @"CLASSNAME" }
+ *
+ * - any other input causes nil to be returned
+ */
++ (NSDictionary *)parsePossibleCategoryName:(NSString *)name;
+
 @end

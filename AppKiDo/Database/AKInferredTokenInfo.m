@@ -7,9 +7,11 @@
 //
 
 #import "AKInferredTokenInfo.h"
+#import "AKRegexUtils.h"
+#import "AKResult.h"
+#import "AKTopicConstants.h"
 #import "DocSetModel.h"
 #import "DIGSLog.h"
-#import "AKTopicConstants.h"
 
 @implementation AKInferredTokenInfo
 
@@ -38,6 +40,30 @@
 		}
 	}
 	return self;
+}
+
+#pragma mark - Parsing
+
++ (NSDictionary *)parsePossibleCategoryName:(NSString *)name
+{
+	// Workaround for a bug/quirk in the 10.11.4 docset.  The token named
+	// "NSObjectIOBluetoothHostControllerDelegate" has token type "cl" but
+	// is actually a category on NSObject.
+	if ([name isEqualToString:@"NSObjectIOBluetoothHostControllerDelegate"]) {
+		return @{ @1: @"NSObject",
+				  @2: @"IOBluetoothHostControllerDelegate" };
+	}
+
+	// Use a regex to parse the class name and category name.
+	static NSRegularExpression *s_regexForCategoryNames;
+	static dispatch_once_t once;
+	dispatch_once(&once,^{
+		s_regexForCategoryNames = [AKRegexUtils constructRegexWithPattern:@"(%ident%)(?:\\((%ident%)\\))?"].object;
+		NSAssert(s_regexForCategoryNames != nil, @"%s Failed to construct regex.", __PRETTY_FUNCTION__);
+	});
+	AKResult *result = [AKRegexUtils matchRegex:s_regexForCategoryNames toEntireString:name];
+	NSDictionary *captureGroups = result.object;
+	return captureGroups;
 }
 
 #pragma mark - Private methods -- inferring info from tokens
