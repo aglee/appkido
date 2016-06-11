@@ -84,7 +84,7 @@
 
 #pragma mark - Category tokens
 
-- (AKCategoryToken *)categoryTokenNamed:(NSString *)name
+- (AKCategoryToken *)categoryTokenWithName:(NSString *)name
 {
 	for (AKCategoryToken *token in _categoryTokens) {
 		if ([token.name isEqualToString:name]) {
@@ -129,7 +129,7 @@
 	self.bindingTokensByName[bindingToken.name] = bindingToken;
 }
 
-- (AKToken *)bindingTokenNamed:(NSString *)name
+- (AKToken *)bindingTokenWithName:(NSString *)name
 {
 	return self.bindingTokensByName[name];
 }

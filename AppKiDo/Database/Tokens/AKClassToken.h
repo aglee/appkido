@@ -42,12 +42,12 @@
 #pragma mark - Category tokens
 
 - (void)addCategoryToken:(AKCategoryToken *)token;
-- (AKCategoryToken *)categoryTokenNamed:(NSString *)name;
+- (AKCategoryToken *)categoryTokenWithName:(NSString *)name;
 
 #pragma mark - Bindings tokens
 
 - (void)addBindingToken:(AKBindingToken *)bindingToken;
-- (AKBindingToken *)bindingTokenNamed:(NSString *)name;
+- (AKBindingToken *)bindingTokenWithName:(NSString *)name;
 - (NSArray *)bindingTokens;
 
 #pragma mark - Owning frameworks

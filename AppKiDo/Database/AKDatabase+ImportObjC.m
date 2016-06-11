@@ -320,7 +320,7 @@
 
 	// Case 4: Category is just a category.
 	AKClassToken *classToken = [self _getOrAddClassTokenWithName:owningClassName];
-	AKCategoryToken *categoryToken = [classToken categoryTokenNamed:categoryName];
+	AKCategoryToken *categoryToken = [classToken categoryTokenWithName:categoryName];
 	if (categoryToken == nil) {
 		categoryToken = [[AKCategoryToken alloc] initWithName:categoryName];
 		[classToken addCategoryToken:categoryToken];
@@ -426,7 +426,7 @@
 	}
 
 	// The remaining case is that we have a "real" category.
-	AKCategoryToken *categoryToken = [classToken categoryTokenNamed:inferredInfo.nameOfCategory];
+	AKCategoryToken *categoryToken = [classToken categoryTokenWithName:inferredInfo.nameOfCategory];
 	if (categoryToken == nil) {
 		categoryToken = [[AKCategoryToken alloc] initWithName:inferredInfo.nameOfCategory];
 		[classToken addCategoryToken:categoryToken];

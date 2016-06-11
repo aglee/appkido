@@ -56,13 +56,13 @@
 #pragma mark - Data types tokens
 
 - (void)addDataTypeToken:(AKToken *)token;
-- (AKToken *)dataTypeTokenNamed:(NSString *)name;
+- (AKToken *)dataTypeTokenWithName:(NSString *)name;
 - (NSArray *)dataTypeTokens;
 
 #pragma mark - Constants tokens
 
 - (void)addConstantToken:(AKToken *)token;
-- (AKToken *)constantTokenNamed:(NSString *)name;
+- (AKToken *)constantTokenWithName:(NSString *)name;
 - (NSArray *)constantTokens;
 
 #pragma mark - Notification tokens

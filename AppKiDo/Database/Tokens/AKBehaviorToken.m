@@ -147,7 +147,7 @@
 	self.dataTypeTokensByName[token.name] = token;
 }
 
-- (AKToken *)dataTypeTokenNamed:(NSString *)name
+- (AKToken *)dataTypeTokenWithName:(NSString *)name
 {
 	return self.dataTypeTokensByName[name];
 }
@@ -164,7 +164,7 @@
 	self.constantTokensByName[token.name] = token;
 }
 
-- (AKToken *)constantTokenNamed:(NSString *)name
+- (AKToken *)constantTokenWithName:(NSString *)name
 {
 	return self.constantTokensByName[name];
 }
