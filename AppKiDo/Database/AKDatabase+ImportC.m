@@ -17,12 +17,13 @@
 #import "AKInferredTokenInfo.h"
 #import "DIGSLog.h"
 
+// Slight misnomer since some of these are Objective-C string constants, but whatever.
 @implementation AKDatabase (ImportC)
 
 - (void)_importCTokens
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"C" tokenType:nil]) {
-		// Special case: "tag" tokens.  As far as I can tell, they are redundant
+		// As far as I can tell, tokens whose tokenType is "tag" are redundant
 		// with other tags, so I'm going to ignore them until I learn otherwise.
 		if ([tokenMO.tokenType.typeName isEqualToString:@"tag"]) {
 			continue;
