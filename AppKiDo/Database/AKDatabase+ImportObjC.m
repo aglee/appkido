@@ -376,31 +376,62 @@
 	}
 }
 
-// May return either a protocol token (when the member belongs to a class
-// category that we treat as a protocol) or a class token (all other cases).
 - (AKBehaviorToken *)_ownerOfClassMemberTokenMO:(DSAToken *)tokenMO
 {
 	if (tokenMO.metainformation.file.path == nil) {
 		QLog(@"+++ [ODD] Member token '%@' doesn't point to any documentation.", tokenMO.tokenName);  //TODO: Handle this case.
 	}
 
-
-	
-	AKBehaviorToken *behaviorToken;
 	AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
-
-	if (inferredInfo.nameOfClass) {
-		behaviorToken = [self _getOrAddClassTokenWithName:inferredInfo.nameOfClass];
-	} else if (inferredInfo.nameOfProtocol) {
-		behaviorToken = [self _getOrAddProtocolTokenWithName:inferredInfo.nameOfProtocol];
-	}
-
+	AKBehaviorToken *behaviorToken = [self _behaviorTokenFromInferredInfo:inferredInfo];
 	if (behaviorToken == nil) {
 		QLog(@"+++ [ODD] Can't figure out owner from parent node '%@', container '%@'.", tokenMO.parentNode.kName, tokenMO.container.containerName);
 	}
 
 	return behaviorToken;
 }
+
+// Returns one of the following:
+//
+// - A class token.
+// - A protocol token, perhaps because the member belongs to a category that we
+//   have inferred is an informal protocol.
+// - A category token.
+// - nil if we can't figure out who should own the member token.
+//
+- (AKBehaviorToken *)_behaviorTokenFromInferredInfo:(AKInferredTokenInfo *)inferredInfo
+{
+	if (inferredInfo.nameOfProtocol) {
+		return [self _getOrAddProtocolTokenWithName:inferredInfo.nameOfProtocol];
+	}
+
+	// If there's neither a protocol name nor a class name, we don't have enough to go on.
+	if (inferredInfo.nameOfClass == nil) {
+		return nil;
+	}
+
+	// If there's only a class name, return a class token.
+	AKClassToken *classToken = [self _getOrAddClassTokenWithName:inferredInfo.nameOfClass];
+	if (inferredInfo.nameOfCategory == nil) {
+		return classToken;
+	}
+
+	// If the category name matches a known protocol name, return that protocol.
+	//TODO: Handle the case where there isn't a protocol but there should be, e.g. because the name ends with "Delegate".
+	AKProtocolToken *protocolToken = [self protocolTokenWithName:inferredInfo.nameOfCategory];
+	if (protocolToken) {
+		return protocolToken;
+	}
+
+	// The remaining case is that we have a "real" category.
+	AKCategoryToken *categoryToken = [classToken categoryTokenNamed:inferredInfo.nameOfCategory];
+	if (categoryToken == nil) {
+		categoryToken = [[AKCategoryToken alloc] initWithName:inferredInfo.nameOfCategory];
+		[classToken addCategoryToken:categoryToken];
+	}
+	return categoryToken;
+}
+
 
 #pragma mark - Methods owned by protocols
 
