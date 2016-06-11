@@ -33,7 +33,6 @@
 @interface AKDatabase (ImportFrameworks)
 
 - (void)_importFrameworks;
-- (AKFramework *)_frameworkForTokenMOAddIfAbsent:(DSAToken *)tokenMO;
 - (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName;
 - (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
 

@@ -38,12 +38,6 @@
 
 #pragma mark - Inferring framework info
 
-- (AKFramework *)_frameworkForTokenMOAddIfAbsent:(DSAToken *)tokenMO
-{
-	NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-	return [self _frameworkWithNameAddIfAbsent:frameworkName];
-}
-
 - (AKFramework *)_frameworkWithNameAddIfAbsent:(NSString *)frameworkName
 {
 	AKFramework *framework = [self frameworkWithName:frameworkName];

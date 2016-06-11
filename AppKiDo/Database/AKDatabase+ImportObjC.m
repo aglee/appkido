@@ -188,7 +188,8 @@
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"intf"]) {
 		// Require that we identify the framework the protocol belongs to.
-		AKFramework *framework = [self _frameworkForTokenMOAddIfAbsent:tokenMO];
+		NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+		AKFramework *framework = [self _frameworkWithNameAddIfAbsent:frameworkName];
 		if (framework == nil) {
 			continue;
 		}
@@ -221,7 +222,8 @@
 		}
 
 		// Require that we identify the framework the class belongs to.
-		AKFramework *framework = [self _frameworkForTokenMOAddIfAbsent:tokenMO];
+		NSString *frameworkName = [self _frameworkNameForTokenMO:tokenMO];
+		AKFramework *framework = [self _frameworkWithNameAddIfAbsent:frameworkName];
 		if (framework == nil) {
 			continue;
 		}
