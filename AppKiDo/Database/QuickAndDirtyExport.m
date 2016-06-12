@@ -23,6 +23,13 @@
 #import "DIGSLog.h"
 #import "NSArray+AppKiDo.h"
 
+
+// Categories on AKDatabase and various AKToken classes to support exporting
+// basic info about most of the tokens in the database, one line per token.
+// The method to call is AKDatabase's debugExport.
+
+#pragma mark -
+
 static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 {
 	va_list argList;
@@ -85,7 +92,7 @@ static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 
 	// Protocols.
 	for (AKProtocolToken *protocolToken in self.protocolsGroup.sortedObjects) {
-		ExportLog(indentLevel + 1, @"PROTOCOL %@", protocolToken.name);
+		ExportLog(indentLevel + 1, @"PROTOCOL %@ [%@]", protocolToken.name, protocolToken.frameworkName);
 	}
 
 	// Functions and globals.
@@ -105,7 +112,12 @@ static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 
 - (void)debugExportWithIndentLevel:(NSInteger)indentLevel
 {
-	ExportLog(indentLevel, @"CLASS %@ : %@", self.name, self.superclassToken.name);
+	ExportLog(indentLevel, @"CLASS %@ : %@ [%@]", self.name, self.superclassToken.name, self.frameworkName);
+
+	// Categories.
+	for (AKToken *token in [self.categoryTokensImmediateOnly ak_sortedBySortName]) {
+		ExportLog(indentLevel + 1, @"CATEGORY %@ [%@]", token.displayName, token.frameworkName);
+	}
 
 	// Properties.
 	for (AKToken *token in [self.propertyTokens ak_sortedBySortName]) {
@@ -145,11 +157,6 @@ static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 	// Bindings.
 	for (AKToken *token in [self.bindingTokens ak_sortedBySortName]) {
 		ExportLog(indentLevel + 1, @"BINDING %@", token.displayName);
-	}
-
-	// Categories.
-	for (AKToken *token in [self.categoryTokensImmediateOnly ak_sortedBySortName]) {
-		ExportLog(indentLevel + 1, @"CATEGORY %@", token.displayName);
 	}
 }
 
