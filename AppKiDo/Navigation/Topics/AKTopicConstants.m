@@ -10,6 +10,7 @@
 
 NSString *AKTopicBrowserPathSeparator = @"/";
 
+NSString *AKClassesTopicName   = @"Classes";
 NSString *AKProtocolsTopicName = @"Protocols";
 
 

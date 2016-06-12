@@ -19,6 +19,7 @@
 {
 	self = [super initWithName:name];
 	if (self) {
+		_classesGroup = [[AKNamedObjectGroup alloc] initWithName:AKClassesTopicName];
 		_protocolsGroup = [[AKNamedObjectGroup alloc] initWithName:AKProtocolsTopicName];
 		_functionsAndGlobalsCluster = [[AKNamedObjectCluster alloc] initWithName:AKFunctionsAndGlobalsTopicName];
 	}

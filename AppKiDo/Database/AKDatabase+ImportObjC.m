@@ -167,7 +167,7 @@
 	NSArray *classDeclarations = [scanner scanHeadersForClassDeclarations];
 	for (AKClassDeclarationInfo *classInfo in classDeclarations) {
 		// The framework.
-		(void)[self _getOrAddFrameworkWithName:classInfo.frameworkName];
+		AKFramework *framework = [self _getOrAddFrameworkWithName:classInfo.frameworkName];
 
 		// The subclass.
 		AKClassToken *classToken = [self _getOrAddClassTokenWithName:classInfo.nameOfClass];
@@ -175,6 +175,7 @@
 		if (!classInfo.headerPathIsRelativeToSDK) {
 			classToken.fullHeaderPathOutsideOfSDK = classInfo.headerPath;
 		}
+		[framework.classesGroup addNamedObject:classToken];
 
 		// The superclass.
 		AKClassToken *superclassToken = [self _getOrAddClassTokenWithName:classInfo.nameOfSuperclass];
@@ -514,21 +515,6 @@
 
 - (AKClassToken *)_getOrAddClassTokenWithName:(NSString *)className
 {
-//	if ([className isEqualToString:@"UINavigationController"]) {
-//		[self self];
-//	}
-//	if ([className isEqualToString:@"GKMatchmakerViewController"]) {
-//		[self self];
-//	}
-//	if ([className isEqualToString:@"NEHotspotNetwork"]) {
-//		[self self];
-//	}
-	if ([className isEqualToString:@"DRFile(VirtualFiles)"]) {
-		[self self];
-	}
-
-
-	
 	AKClassToken *classToken = self.classTokensByName[className];
 	if (classToken == nil) {
 		classToken = [[AKClassToken alloc] initWithName:className];
