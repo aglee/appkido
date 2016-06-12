@@ -42,8 +42,6 @@
 
 @interface AKDatabase (ImportObjC)
 - (void)_importObjectiveCTokens;
-- (AKProtocolToken *)_getOrAddProtocolTokenWithName:(NSString *)protocolName;
-- (AKClassToken *)_getOrAddClassTokenWithName:(NSString *)className;
 @end
 
 #pragma mark -
