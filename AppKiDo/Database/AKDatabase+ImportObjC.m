@@ -303,11 +303,15 @@
 	}
 
 	// Case: Category is actually an informal protocol.
+	// We check for "DelegateMethods" as a suffix to handle cases like
+	// "NSObject(DRBurnProgressPanelDelegateMethods)" and
+	// "NSObject(DREraseProgressPanelDelegateMethods)".
 	if ([self protocolTokenWithName:categoryName]) {
 		return;
 	}
 	if ([tokenMO.parentNode.kName hasSuffix:@"Protocol Reference"]
 		|| [categoryName hasSuffix:@"Delegate"]
+		|| [categoryName hasSuffix:@"DelegateMethods"]
 		|| [categoryName hasSuffix:@"DataSource"])
 	{
 		QLog(@"+++ Category '%@' is an informal protocol.", categoryName);
