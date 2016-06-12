@@ -797,6 +797,7 @@
 			children = (
 				73664D4D1CF2BE9D0094F405 /* AKDatabase.h */,
 				73664D4E1CF2BE9D0094F405 /* AKDatabase.m */,
+				73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */,
 				739328D01D07F1100032BDC3 /* AKDatabase Categories */,
 				73EC0F7C1D0138CD0038FC48 /* Support Classes For Import */,
 				739328E91D0D675C0032BDC3 /* Export */,
@@ -1250,7 +1251,6 @@
 		739328D01D07F1100032BDC3 /* AKDatabase Categories */ = {
 			isa = PBXGroup;
 			children = (
-				73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */,
 				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
 				73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */,
 				73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */,
