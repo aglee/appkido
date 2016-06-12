@@ -10,6 +10,13 @@
 
 @implementation AKCategoryToken
 
+#pragma mark - <AKNamed> methods
+
+- (NSString *)displayName
+{
+	return [NSString stringWithFormat:@"%@(%@)", self.owningClassToken.name, self.name];
+}
+
 #pragma mark - NSObject methods
 
 - (NSString *)description
