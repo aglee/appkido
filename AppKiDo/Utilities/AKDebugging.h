@@ -22,6 +22,8 @@
 
 #pragma mark - Action methods
 
+- (IBAction)printDatabase:(id)sender;
+
 - (IBAction)printFirstResponder:(id)sender;
 
 - (IBAction)printModifiedTabChain:(id)sender;

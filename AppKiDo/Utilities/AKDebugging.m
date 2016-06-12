@@ -8,6 +8,7 @@
 
 #import "AKDebugging.h"
 #import "AKAppDelegate.h"
+#import "QuickAndDirtyExport.h"
 #import "AKTabChain.h"
 #import "AKWindow.h"
 #import "AKWindowController.h"
@@ -51,6 +52,9 @@
 
 	[debugSubmenu setAutoenablesItems:NO];
 
+	[debugSubmenu addItemWithTitle:@"Print Database"
+							action:@selector(printDatabase:)
+					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print First Responder"
 							action:@selector(printFirstResponder:)
 					 keyEquivalent:@""];
@@ -75,6 +79,11 @@
 }
 
 #pragma mark - Action methods
+
+- (IBAction)printDatabase:(id)sender
+{
+	[AKAppDelegate.appDelegate.appDatabase debugExport];
+}
 
 - (IBAction)printFirstResponder:(id)sender
 {
