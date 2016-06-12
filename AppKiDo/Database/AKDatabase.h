@@ -33,7 +33,7 @@
 @interface AKDatabase : NSObject
 
 @property (readonly, strong) DocSetIndex *docSetIndex;
-@property (readonly, copy) NSString *sdkBasePath;
+@property (readonly) AKInstalledSDK *referenceSDK;
 @property (readonly, copy) NSArray *sortedFrameworkNames;
 @property (readonly, copy) NSArray *frameworks;
 @property (readonly, copy) NSArray *rootClassTokens;

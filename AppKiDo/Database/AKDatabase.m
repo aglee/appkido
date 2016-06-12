@@ -18,10 +18,6 @@
 #import "AKResult.h"
 #import "DIGSLog.h"
 
-@interface AKDatabase ()
-@property (readonly) AKInstalledSDK *referenceSDK;
-@end
-
 @implementation AKDatabase
 
 #pragma mark - Init/awake/dealloc
@@ -49,11 +45,6 @@
 }
 
 #pragma mark - Getters and setters
-
-- (NSString *)sdkBasePath
-{
-	return self.referenceSDK.basePath;
-}
 
 - (NSArray *)sortedFrameworkNames
 {

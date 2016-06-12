@@ -163,7 +163,7 @@
 
 - (void)_scanFrameworkHeaderFilesForClassDeclarations
 {
-	AKHeaderScanner *scanner = [[AKHeaderScanner alloc] initWithSDKBasePath:self.sdkBasePath];
+	AKHeaderScanner *scanner = [[AKHeaderScanner alloc] initWithInstalledSDK:self.referenceSDK];
 	NSArray *classDeclarations = [scanner scanHeadersForClassDeclarations];
 	for (AKClassDeclarationInfo *classInfo in classDeclarations) {
 		// The framework.

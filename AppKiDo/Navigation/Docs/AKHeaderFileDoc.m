@@ -6,6 +6,7 @@
  */
 
 #import "AKHeaderFileDoc.h"
+#import "AKInstalledSDK.h"
 #import "AKToken.h"
 #import "AKDatabase.h"
 
@@ -50,7 +51,7 @@ NSString *AKHeaderFileDocName = @"Header File";
 	//
 	// - There's a bunch of tokens that have *no* headerPath.  I think that's a bug in some cases, not sure if all cases.
 	if (self.token.headerPathRelativeToSDK) {
-		NSURL *baseURL = [NSURL fileURLWithPath:database.sdkBasePath];
+		NSURL *baseURL = [NSURL fileURLWithPath:database.referenceSDK.basePath];
 		return [baseURL URLByAppendingPathComponent:self.token.headerPathRelativeToSDK];
 	} else if (self.token.fullHeaderPathOutsideOfSDK) {
 		return [NSURL fileURLWithPath:self.token.fullHeaderPathOutsideOfSDK];

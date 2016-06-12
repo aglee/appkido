@@ -8,12 +8,14 @@
 
 #import "AKHeaderScanner.h"
 #import "AKClassDeclarationInfo.h"
+#import "AKInstalledSDK.h"
 #import "AKRegexUtils.h"
 #import "AKResult.h"
+#import "AKVersionUtils.h"
 #import "DIGSLog.h"
 
 @interface AKHeaderScanner ()
-@property (strong) NSString *sdkBasePath;
+@property (strong) AKInstalledSDK *installedSDK;
 @property (strong) NSMutableArray *classDeclarations;  // Elements are dictionaries.
 @property (strong) NSMutableSet *classNamesWithDeclaredSuperclass;
 @property (strong) NSMutableSet *classNamesPENDINGDeclaredSuperclass;
@@ -21,20 +23,24 @@
 
 @implementation AKHeaderScanner
 
-- (instancetype)initWithSDKBasePath:(NSString *)sdkBasePath
+#pragma mark - Init/awake/dealloc
+
+- (instancetype)initWithInstalledSDK:(AKInstalledSDK *)installedSDK
 {
-	NSParameterAssert(sdkBasePath != nil);
+	NSParameterAssert(installedSDK != nil);
 	self = [super init];
 	if (self) {
-		_sdkBasePath = sdkBasePath;
+		_installedSDK = installedSDK;
 	}
 	return self;
 }
 
 - (instancetype)init
 {
-	return [self initWithSDKBasePath:nil];
+	return [self initWithInstalledSDK:nil];
 }
+
+#pragma mark - Scanning header files
 
 - (NSArray *)scanHeadersForClassDeclarations
 {
@@ -45,8 +51,10 @@
 	self.classNamesPENDINGDeclaredSuperclass = [[NSMutableSet alloc] init];
 
 	[self _scanSDKHeaders];
-	[self _scanITunesLibraryHeaders];
-	[self _scanFxPlugHeaders];
+	if ([self.installedSDK.platformInternalName isEqualToString:AKPlatformInternalNameMac]) {
+		[self _scanITunesLibraryHeaders];
+		[self _scanFxPlugHeaders];
+	}
 
 	// Return class declarations where the superclass is a class we have
 	// previously seen declared as a subclass.  This should handle the cases
@@ -70,7 +78,7 @@
 	static NSString *s_frameworksRelativeBasePath = @"System/Library/Frameworks";
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSError *error;
-	NSString *frameworksContainerPath = [self.sdkBasePath stringByAppendingPathComponent:s_frameworksRelativeBasePath];
+	NSString *frameworksContainerPath = [self.installedSDK.basePath stringByAppendingPathComponent:s_frameworksRelativeBasePath];
 	NSArray *itemsInFrameworksContainer = [fm contentsOfDirectoryAtPath:frameworksContainerPath error:&error];
 
 	if (itemsInFrameworksContainer == nil) {
@@ -96,7 +104,7 @@
 												  stringByAppendingPathComponent:fwItem]
 												 stringByAppendingPathComponent:itemInsideFramework];
 			[self _scanHeaderFileAtRelativePath:headerPathRelativeToSDK
-									   basePath:self.sdkBasePath
+									   basePath:self.installedSDK.basePath
 								  isSDKBasePath:YES
 								  frameworkName:frameworkName];
 		}
@@ -105,29 +113,23 @@
 
 - (void)_scanITunesLibraryHeaders
 {
-	[self _scanHeadersInDirectoryOutsideOfSDK:@"/Library/Frameworks/iTunesLibrary.framework"];
-}
-
-- (void)_scanFxPlugHeaders
-{
-
-}
-
-- (void)_scanHeadersInDirectoryOutsideOfSDK:(NSString *)dirPath
-{
+	NSString *frameworkDirPath = @"/Library/Frameworks/iTunesLibrary.framework";
 	NSFileManager *fm = [NSFileManager defaultManager];
-	for (NSString *itemInsideFramework in [fm enumeratorAtPath:dirPath]) {
+	for (NSString *itemInsideFramework in [fm enumeratorAtPath:frameworkDirPath]) {
 		if (![itemInsideFramework hasSuffix:@".h"]) {
 			continue;
 		}
 
 		[self _scanHeaderFileAtRelativePath:itemInsideFramework
-								   basePath:dirPath
+								   basePath:frameworkDirPath
 							  isSDKBasePath:NO
 							  frameworkName:@"iTunesLibrary"];
 	}
 }
 
+- (void)_scanFxPlugHeaders
+{
+}
 
 // relativePath is relative to self.sdkBasePath.
 - (void)_scanHeaderFileAtRelativePath:(NSString *)relativePath

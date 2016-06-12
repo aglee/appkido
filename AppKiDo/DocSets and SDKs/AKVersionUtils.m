@@ -8,20 +8,20 @@
 
 #import "AKVersionUtils.h"
 
-// Values I've observed in various SDKSettings.plist files:
-// - appletvos
-// - iphoneos
-// - macosx
-// - watchos
+NSString *AKPlatformInternalNameMac   = @"macosx";
+NSString *AKPlatformInternalNameIOS   = @"iphoneos";
+NSString *AKPlatformInternalNameWatch = @"watchos";
+NSString *AKPlatformInternalNameTV    = @"appletvos";
+
 NSString *AKDisplayNameForPlatformInternalName(NSString *platformInternalName)
 {
 	static NSDictionary *s_displayNamesByInternalName;
 	static dispatch_once_t once;
 	dispatch_once(&once, ^{
-		s_displayNamesByInternalName = @{ @"macosx" : @"OS X",
-										  @"iphoneos" : @"iOS",
-										  @"watchos" : @"watchOS",
-										  @"appletvos" : @"tvOS" };
+		s_displayNamesByInternalName = @{ AKPlatformInternalNameMac : @"OS X",
+										  AKPlatformInternalNameIOS : @"iOS",
+										  AKPlatformInternalNameWatch : @"watchOS",
+										  AKPlatformInternalNameTV : @"tvOS" };
 	});
 
 	return (s_displayNamesByInternalName[platformInternalName]
