@@ -11,7 +11,7 @@
 #import "AKInstalledSDK.h"
 #import "AKRegexUtils.h"
 #import "AKResult.h"
-#import "AKVersionUtils.h"
+#import "AKPlatformConstants.h"
 #import "DIGSLog.h"
 
 @interface AKHeaderScanner ()

@@ -7,7 +7,7 @@
 //
 
 #import "AKInstalledSDK.h"
-#import "AKVersionUtils.h"
+#import "AKPlatformConstants.h"
 #import "DIGSLog.h"
 #import "NSFileManager+AppKiDo.h"
 

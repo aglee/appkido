@@ -7,7 +7,7 @@
 //
 
 #import "DocSetIndex.h"
-#import "AKVersionUtils.h"
+#import "AKPlatformConstants.h"
 #import "DIGSLog.h"
 
 @interface DocSetIndex ()

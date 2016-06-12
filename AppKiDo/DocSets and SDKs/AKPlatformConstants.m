@@ -1,12 +1,12 @@
 //
-//  AKVersionUtils.m
+//  AKPlatformConstants.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 6/7/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "AKVersionUtils.h"
+#import "AKPlatformConstants.h"
 
 NSString *AKPlatformInternalNameMac   = @"macosx";
 NSString *AKPlatformInternalNameIOS   = @"iphoneos";

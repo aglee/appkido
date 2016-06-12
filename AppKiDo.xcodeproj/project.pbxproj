@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		731BC90D1D07617C00B01D2D /* AKVersionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 731BC90C1D07617C00B01D2D /* AKVersionUtils.m */; };
+		731BC90D1D07617C00B01D2D /* AKPlatformConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 731BC90C1D07617C00B01D2D /* AKPlatformConstants.m */; };
 		734725E41D04DA34009147AD /* AKDocSetsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 734725E21D04DA34009147AD /* AKDocSetsWindowController.m */; };
 		734725E51D04DA34009147AD /* AKDocSetsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 734725E31D04DA34009147AD /* AKDocSetsWindowController.xib */; };
 		73664CBC1CF2BBBE0094F405 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664CBB1CF2BBBE0094F405 /* main.m */; };
@@ -236,8 +236,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		731BC90B1D07617C00B01D2D /* AKVersionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKVersionUtils.h; sourceTree = "<group>"; };
-		731BC90C1D07617C00B01D2D /* AKVersionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKVersionUtils.m; sourceTree = "<group>"; };
+		731BC90B1D07617C00B01D2D /* AKPlatformConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPlatformConstants.h; sourceTree = "<group>"; };
+		731BC90C1D07617C00B01D2D /* AKPlatformConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPlatformConstants.m; sourceTree = "<group>"; };
 		734725E11D04DA34009147AD /* AKDocSetsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocSetsWindowController.h; sourceTree = "<group>"; };
 		734725E21D04DA34009147AD /* AKDocSetsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocSetsWindowController.m; sourceTree = "<group>"; };
 		734725E31D04DA34009147AD /* AKDocSetsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AKDocSetsWindowController.xib; sourceTree = "<group>"; };
@@ -616,10 +616,10 @@
 		734726081D075759009147AD /* DocSets and SDKs */ = {
 			isa = PBXGroup;
 			children = (
+				731BC90B1D07617C00B01D2D /* AKPlatformConstants.h */,
+				731BC90C1D07617C00B01D2D /* AKPlatformConstants.m */,
 				73EC0F7D1D0233FD0038FC48 /* AKInstalledSDK.h */,
 				73EC0F7E1D0233FD0038FC48 /* AKInstalledSDK.m */,
-				731BC90B1D07617C00B01D2D /* AKVersionUtils.h */,
-				731BC90C1D07617C00B01D2D /* AKVersionUtils.m */,
 				73664D7B1CF2BE9D0094F405 /* DocSetIndex.h */,
 				73664D7C1CF2BE9D0094F405 /* DocSetIndex.m */,
 			);
@@ -1529,7 +1529,7 @@
 				73664EA61CF2BE9E0094F405 /* AKFrameworkProtocolsTopic.m in Sources */,
 				73664E931CF2BE9E0094F405 /* _NodeUUID.m in Sources */,
 				73664E791CF2BE9E0094F405 /* Container.m in Sources */,
-				731BC90D1D07617C00B01D2D /* AKVersionUtils.m in Sources */,
+				731BC90D1D07617C00B01D2D /* AKPlatformConstants.m in Sources */,
 				73664E691CF2BE9E0094F405 /* AKFrameworkConstants.m in Sources */,
 				73664E681CF2BE9E0094F405 /* AKFramework.m in Sources */,
 				73EC0F7F1D0233FD0038FC48 /* AKInstalledSDK.m in Sources */,
