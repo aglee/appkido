@@ -27,6 +27,10 @@ extern void QuietLog (NSString *format, ...);
 #define QLog NSLog
 #endif
 
+#pragma mark - Indented output
+
+extern void DIGSPrintTabIndented(NSInteger indentLevel, NSString *format, ...);
+
 #pragma mark - DIGSLog
 
 /*!

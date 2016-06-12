@@ -20,6 +20,22 @@ void QuietLog (NSString *format, ...)
 	va_end  (argList);
 }
 
+#pragma mark - Indented output
+
+void DIGSPrintTabIndented(NSInteger indentLevel, NSString *format, ...)
+{
+	va_list argList;
+	va_start(argList, format);
+	{{
+		NSString *indent = [@"" stringByPaddingToLength:indentLevel
+											 withString:@"\t"
+										startingAtIndex:0];
+		NSString *message = [[NSString alloc] initWithFormat:format arguments:argList];
+		fprintf(stderr, "%s%s\n", indent.UTF8String, message.UTF8String);
+	}}
+	va_end(argList);
+}
+
 #pragma mark - DIGSLog
 
 static NSInteger s_verbosityLevel = DIGS_VERBOSITY_INFO;
