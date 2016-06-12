@@ -1,5 +1,5 @@
 //
-//  QuickAndDirtyExport.h
+//  AKTabIndentedOutlineExport.h
 //  AppKiDo
 //
 //  Created by Andy Lee on 6/11/16.
@@ -8,7 +8,7 @@
 
 #import "AKDatabase+Private.h"
 
-@interface AKDatabase (QuickAndDirtyExport)
+@interface AKDatabase (TabIndentedOutlineExport)
 
 - (void)debugExport;
 

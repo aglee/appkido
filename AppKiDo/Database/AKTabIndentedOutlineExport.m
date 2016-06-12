@@ -1,12 +1,12 @@
 //
-//  QuickAndDirtyExport.m
+//  AKTabIndentedOutlineExport.m
 //  AppKiDo
 //
 //  Created by Andy Lee on 6/11/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import "QuickAndDirtyExport.h"
+#import "AKTabIndentedOutlineExport.h"
 #import "AKBindingToken.h"
 #import "AKCategoryToken.h"
 #import "AKClassToken.h"
@@ -25,8 +25,8 @@
 
 
 // Categories on AKDatabase and various AKToken classes to support exporting
-// basic info about most of the tokens in the database, one line per token.
-// The method to call is AKDatabase's debugExport.
+// basic info about most of the tokens in the database, one line per token, in a
+// tab-indented outline.  The method to call is AKDatabase's debugExport.
 
 #pragma mark -
 
@@ -47,7 +47,7 @@ static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 
 #pragma mark -
 
-@implementation AKNamedObject (QuickAndDirtyExport)
+@implementation AKNamedObject (TabIndentedOutlineExport)
 
 - (void)debugExportWithIndentLevel:(NSInteger)indentLevel
 {
@@ -58,7 +58,7 @@ static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 
 #pragma mark -
 
-@implementation AKDatabase (QuickAndDirtyExport)
+@implementation AKDatabase (TabIndentedOutlineExport)
 
 - (void)debugExport
 {
@@ -84,7 +84,7 @@ static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 
 #pragma mark -
 
-@implementation AKFramework (QuickAndDirtyExport)
+@implementation AKFramework (TabIndentedOutlineExport)
 
 - (void)debugExportWithIndentLevel:(NSInteger)indentLevel
 {
@@ -108,7 +108,7 @@ static void ExportLog(NSInteger indentLevel, NSString *format, ...)
 
 #pragma mark -
 
-@implementation AKClassToken (QuickAndDirtyExport)
+@implementation AKClassToken (TabIndentedOutlineExport)
 
 - (void)debugExportWithIndentLevel:(NSInteger)indentLevel
 {
