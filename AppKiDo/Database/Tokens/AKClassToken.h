@@ -22,9 +22,11 @@
 @property (readonly, weak) AKClassToken *superclassToken;
 @property (readonly, copy) NSArray *subclassTokens;
 @property (readonly, copy) NSSet *descendantClassTokens;
+@property (readonly, copy) NSArray *categoryTokensImmediateOnly;
 @property (readonly, copy) NSArray *categoryTokensIncludingInherited;
 @property (readonly, assign) BOOL hasDelegate;
 @property (readonly, copy) NSArray *delegateMethodTokens;
+@property (readonly, copy) NSArray *delegateProtocolTokens;
 
 /*!
  * Names of all frameworks the class belongs to. The first element of the

@@ -16,8 +16,8 @@
 
 @interface AKClassToken ()
 @property (readwrite, weak) AKClassToken *superclassToken;
-@property (copy) NSMutableDictionary *delegateProtocolTokensByName;
-@property (copy) NSMutableDictionary *bindingTokensByName;
+@property (readwrite, strong) NSMutableDictionary *delegateProtocolTokensByName;
+@property (readwrite, strong) NSMutableDictionary *bindingTokensByName;
 @end
 
 @implementation AKClassToken
@@ -108,6 +108,11 @@
 		token.owningClassToken = nil;
 		[_categoryTokens removeObjectAtIndex:i];
 	}
+}
+
+- (NSArray *)categoryTokensImmediateOnly
+{
+	return _categoryTokens;
 }
 
 - (NSArray *)categoryTokensIncludingInherited
@@ -205,6 +210,11 @@
 {
 	self.delegateProtocolTokensByName[delegateProtocolToken.name] = delegateProtocolToken;
 	delegateProtocolToken.isDelegateProtocolToken = YES;
+}
+
+- (NSArray *)delegateProtocolTokens
+{
+	return self.delegateProtocolTokensByName.allValues;
 }
 
 #pragma mark - AKBehaviorToken methods
