@@ -52,7 +52,7 @@
 
 - (NSString *)displayNameForDocList
 {
-	return @"Introduction";
+	return self.tokenMO.parentNode.kName;
 }
 
 @end

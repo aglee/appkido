@@ -147,13 +147,18 @@
 
 #pragma mark - Private methods
 
+// Make the class token itself the first doc in the doc list.  When it's
+// selected, the doc view will go to the top of the doc page for that token.
+// Likewise any category tokens the class owns.
 - (NSArray *)_docListItemsForGeneralSubtopic
 {
-	AKHeaderFileDoc *headerFileDoc = [[AKHeaderFileDoc alloc] initWithToken:self.classToken];
+	NSMutableArray *docListItems = [NSMutableArray arrayWithObject:self.classToken];
+	NSArray *categoryTokens = [self.classToken.categoryTokensImmediateOnly ak_sortedBySortName];
+	
+	[docListItems addObjectsFromArray:categoryTokens];
+	[docListItems addObject:[[AKHeaderFileDoc alloc] initWithToken:self.classToken]];
 
-	// Make the token itself the first doc in the doc list.  When it's selected,
-	// the doc view will go to the top of the doc page for that token.
-	return @[ self.classToken, headerFileDoc ];
+	return docListItems;
 }
 
 @end
