@@ -10,8 +10,7 @@
 @class AKClassToken;
 
 /*!
- * Represents an Objective-C category. This class currently isn't complete and
- * isn't used for anything serious.
+ * Represents an Objective-C category.
  */
 @interface AKCategoryToken : AKBehaviorToken
 @property (weak) AKClassToken *owningClassToken;
