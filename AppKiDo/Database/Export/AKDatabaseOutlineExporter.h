@@ -6,7 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AKDatabaseLoggingExporter.h"
 
 @class AKDatabase;
 
@@ -14,7 +14,7 @@
  * Prints a dump of the database that can be used for regression testing.  Can
  * also be used to see what's changed between releases of the docs or the SDK.
  */
-@interface AKDatabaseOutlineExporter : NSObject
+@interface AKDatabaseOutlineExporter : AKDatabaseLoggingExporter
 
 - (void)printOutlineOfFrameworksInDatabase:(AKDatabase *)database;
 - (void)printOutlineOfProtocolsInDatabase:(AKDatabase *)database;

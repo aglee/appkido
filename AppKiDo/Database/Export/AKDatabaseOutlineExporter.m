@@ -29,46 +29,31 @@
 
 - (void)printOutlineOfFrameworksInDatabase:(AKDatabase *)database
 {
-	[self _printMetadataForDatabase:database];
+	[self printMetadataForDatabase:database];
 	[self _printProtocolsInDatabase:database indent:0];
 }
 
 - (void)printOutlineOfProtocolsInDatabase:(AKDatabase *)database
 {
-	[self _printMetadataForDatabase:database];
+	[self printMetadataForDatabase:database];
 	[self _printProtocolsInDatabase:database indent:0];
 }
 
 - (void)printOutlineOfClassesInDatabase:(AKDatabase *)database
 {
-	[self _printMetadataForDatabase:database];
+	[self printMetadataForDatabase:database];
 	[self _printClassesInDatabase:database indent:0];
 }
 
 - (void)printFullOutlineOfDatabase:(AKDatabase *)database
 {
-	[self _printMetadataForDatabase:database];
+	[self printMetadataForDatabase:database];
 	[self _printFrameworksInDatabase:database indent:0];
 	[self _printProtocolsInDatabase:database indent:0];
 	[self _printClassesInDatabase:database indent:0];
 }
 
 #pragma mark - Private methods -- printing high-level outlines
-
-- (void)_printMetadataForDatabase:(AKDatabase *)database
-{
-	NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-														  dateStyle:NSDateFormatterFullStyle
-														  timeStyle:NSDateFormatterMediumStyle];
-	DIGSPrintTabIndented(0, @"%@", dateString);
-	DIGSPrintTabIndented(0, @"Docset for platform %@, version %@",
-						 database.docSetIndex.platformInternalName,
-						 database.docSetIndex.platformVersion);
-	DIGSPrintTabIndented(0, (@"SDK for platform %@, version %@"
-							 @"\n"),
-						 database.referenceSDK.platformInternalName,
-						 database.referenceSDK.sdkVersion);
-}
 
 - (void)_printFrameworksInDatabase:(AKDatabase *)database indent:(NSInteger)indentLevel
 {
