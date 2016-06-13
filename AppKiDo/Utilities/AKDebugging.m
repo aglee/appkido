@@ -52,8 +52,17 @@
 
 	[debugSubmenu setAutoenablesItems:NO];
 
-	[debugSubmenu addItemWithTitle:@"Print Database"
+	[debugSubmenu addItemWithTitle:@"Print Outline of Whole Database"
 							action:@selector(printDatabase:)
+					 keyEquivalent:@""];
+	[debugSubmenu addItemWithTitle:@"Print Outline of Frameworks"
+							action:@selector(printOutlineOfFrameworks:)
+					 keyEquivalent:@""];
+	[debugSubmenu addItemWithTitle:@"Print Outline of Protocols"
+							action:@selector(printOutlineOfProtocols:)
+					 keyEquivalent:@""];
+	[debugSubmenu addItemWithTitle:@"Print Outline of Classes"
+							action:@selector(printOutlineOfClasses:)
 					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print First Responder"
 							action:@selector(printFirstResponder:)
@@ -85,6 +94,27 @@
 	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
 	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
 	[exporter printFullOutlineOfDatabase:database];
+}
+
+- (IBAction)printOutlineOfFrameworks:(id)sender
+{
+	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
+	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
+	[exporter printOutlineOfFrameworksInDatabase:database];
+}
+
+- (IBAction)printOutlineOfProtocols:(id)sender
+{
+	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
+	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
+	[exporter printOutlineOfProtocolsInDatabase:database];
+}
+
+- (IBAction)printOutlineOfClasses:(id)sender
+{
+	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
+	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
+	[exporter printOutlineOfProtocolsInDatabase:database];
 }
 
 - (IBAction)printFirstResponder:(id)sender
