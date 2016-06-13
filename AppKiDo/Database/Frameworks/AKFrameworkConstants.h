@@ -18,10 +18,7 @@ extern NSString *AKQuartzCoreFrameworkName;
 
 /*!
  * Returns the names of frameworks that must be loaded into the database
- * if available within the docset for that database.  These frameworks must
- * be loaded first and in the order given.  Order is important because the
- * first framework seen for a token is considered to be the token's primary
- * framework.
+ * if available within the docset for that database.
  */
 extern NSArray *_AKNamesOfEssentialFrameworks();
 

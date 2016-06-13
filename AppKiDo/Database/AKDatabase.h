@@ -26,9 +26,12 @@
  * subclass of NSObject, and is documented in file XYZ."
  *
  * Before querying a database, you need to populate it by calling -populate,
- * which imports imformation from the database's DocSetIndex.  An AKDatabase
- * lives entirely in memory, and there is currently no way to save the imported
- * information; it must be re-imported when the application relaunches.
+ * which imports information from the database's DocSetIndex and from header
+ * files in the referenceSDK directory.
+ *
+ * An AKDatabase lives entirely in memory.  There is currently no support for
+ * saving the imported information; it must be re-imported when the application
+ * relaunches.
  */
 @interface AKDatabase : NSObject
 

@@ -32,6 +32,13 @@
 
 #pragma mark - Private methods - init
 
+
+
+
+//TODO: remember ApplicationKit = AppKit
+
+
+
 // Called from init, hence all the direct ivar accesses.  Assumes _tokenMO has been set.
 - (void)_initFrameworkIvarsUsingTokenMO
 {
