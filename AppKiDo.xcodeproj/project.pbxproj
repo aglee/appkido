@@ -209,7 +209,7 @@
 		7368270B1CF4C269004B070E /* NSSet+AppKiDo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7368270A1CF4C269004B070E /* NSSet+AppKiDo.m */; };
 		739328D81D0929E00032BDC3 /* AKWindowController+Links.m in Sources */ = {isa = PBXBuildFile; fileRef = 739328D71D0929E00032BDC3 /* AKWindowController+Links.m */; };
 		739328E11D0CBBB30032BDC3 /* AKInferredFrameworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 739328E01D0CBBB30032BDC3 /* AKInferredFrameworkInfo.m */; };
-		739328E81D0CD6730032BDC3 /* AKTabIndentedOutlineExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 739328E71D0CD6730032BDC3 /* AKTabIndentedOutlineExport.m */; };
+		739328E81D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 739328E71D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m */; };
 		73AC6B5B1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */; };
 		73AC6B5E1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */; };
 		73EC0F751D00FD110038FC48 /* AKHeaderScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */; };
@@ -573,8 +573,8 @@
 		739328D71D0929E00032BDC3 /* AKWindowController+Links.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKWindowController+Links.m"; sourceTree = "<group>"; };
 		739328DF1D0CBBB30032BDC3 /* AKInferredFrameworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKInferredFrameworkInfo.h; sourceTree = "<group>"; };
 		739328E01D0CBBB30032BDC3 /* AKInferredFrameworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKInferredFrameworkInfo.m; sourceTree = "<group>"; };
-		739328E61D0CD6730032BDC3 /* AKTabIndentedOutlineExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTabIndentedOutlineExport.h; sourceTree = "<group>"; };
-		739328E71D0CD6730032BDC3 /* AKTabIndentedOutlineExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTabIndentedOutlineExport.m; sourceTree = "<group>"; };
+		739328E61D0CD6730032BDC3 /* AKDatabaseOutlineExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDatabaseOutlineExporter.h; sourceTree = "<group>"; };
+		739328E71D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseOutlineExporter.m; sourceTree = "<group>"; };
 		73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportUtils.m"; sourceTree = "<group>"; };
 		73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportFrameworks.m"; sourceTree = "<group>"; };
 		73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AKDatabase+Private.h"; sourceTree = "<group>"; };
@@ -1292,8 +1292,8 @@
 			children = (
 				73664D4F1CF2BE9D0094F405 /* AKDatabaseXMLExporter.h */,
 				73664D501CF2BE9D0094F405 /* AKDatabaseXMLExporter.m */,
-				739328E61D0CD6730032BDC3 /* AKTabIndentedOutlineExport.h */,
-				739328E71D0CD6730032BDC3 /* AKTabIndentedOutlineExport.m */,
+				739328E61D0CD6730032BDC3 /* AKDatabaseOutlineExporter.h */,
+				739328E71D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m */,
 			);
 			name = Export;
 			sourceTree = "<group>";
@@ -1640,7 +1640,7 @@
 				73664E4E1CF2BE9E0094F405 /* NSView+AppKiDo.m in Sources */,
 				73664E781CF2BE9E0094F405 /* APILanguage.m in Sources */,
 				73664E731CF2BE9E0094F405 /* AKNotificationToken.m in Sources */,
-				739328E81D0CD6730032BDC3 /* AKTabIndentedOutlineExport.m in Sources */,
+				739328E81D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m in Sources */,
 				73664E841CF2BE9E0094F405 /* Parameter.m in Sources */,
 				73664E911CF2BE9E0094F405 /* _FilePath.m in Sources */,
 				73664EC21CF2BE9E0094F405 /* DIGSMarginView.m in Sources */,

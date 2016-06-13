@@ -8,7 +8,7 @@
 
 #import "AKDebugging.h"
 #import "AKAppDelegate.h"
-#import "AKTabIndentedOutlineExport.h"
+#import "AKDatabaseOutlineExporter.h"
 #import "AKTabChain.h"
 #import "AKWindow.h"
 #import "AKWindowController.h"
@@ -82,7 +82,9 @@
 
 - (IBAction)printDatabase:(id)sender
 {
-	[AKAppDelegate.appDelegate.appDatabase debugExport];
+	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
+	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
+	[exporter printFullOutlineOfDatabase:database];
 }
 
 - (IBAction)printFirstResponder:(id)sender
