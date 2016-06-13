@@ -212,6 +212,8 @@
 		739328E81D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 739328E71D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m */; };
 		73AC6B5B1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */; };
 		73AC6B5E1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */; };
+		73DFDDE81D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DFDDE71D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.m */; };
+		73DFDDEB1D0E4F2F002D98FE /* AKFrameworkClassesTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DFDDEA1D0E4F2F002D98FE /* AKFrameworkClassesTopic.m */; };
 		73EC0F751D00FD110038FC48 /* AKHeaderScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */; };
 		73EC0F7B1D0118870038FC48 /* AKClassDeclarationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F7A1D0118870038FC48 /* AKClassDeclarationInfo.m */; };
 		73EC0F7F1D0233FD0038FC48 /* AKInstalledSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F7E1D0233FD0038FC48 /* AKInstalledSDK.m */; };
@@ -577,6 +579,10 @@
 		739328E71D0CD6730032BDC3 /* AKDatabaseOutlineExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDatabaseOutlineExporter.m; sourceTree = "<group>"; };
 		73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportUtils.m"; sourceTree = "<group>"; };
 		73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AKDatabase+ImportFrameworks.m"; sourceTree = "<group>"; };
+		73DFDDE61D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKClassTopicUnderFrameworkTopic.h; sourceTree = "<group>"; };
+		73DFDDE71D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKClassTopicUnderFrameworkTopic.m; sourceTree = "<group>"; };
+		73DFDDE91D0E4F2F002D98FE /* AKFrameworkClassesTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKFrameworkClassesTopic.h; sourceTree = "<group>"; };
+		73DFDDEA1D0E4F2F002D98FE /* AKFrameworkClassesTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKFrameworkClassesTopic.m; sourceTree = "<group>"; };
 		73E988D31CF4E49F00D39623 /* AKDatabase+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AKDatabase+Private.h"; sourceTree = "<group>"; };
 		73EC0F731D00FD110038FC48 /* AKHeaderScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHeaderScanner.h; sourceTree = "<group>"; };
 		73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHeaderScanner.m; sourceTree = "<group>"; };
@@ -1268,6 +1274,8 @@
 				73664DEA1CF2BE9D0094F405 /* AKFrameworkTopic.m */,
 				73664DE31CF2BE9D0094F405 /* AKFrameworkProtocolsTopic.h */,
 				73664DE41CF2BE9D0094F405 /* AKFrameworkProtocolsTopic.m */,
+				73DFDDE91D0E4F2F002D98FE /* AKFrameworkClassesTopic.h */,
+				73DFDDEA1D0E4F2F002D98FE /* AKFrameworkClassesTopic.m */,
 				73664DE71CF2BE9D0094F405 /* AKFrameworkTokenClusterTopic.h */,
 				73664DE81CF2BE9D0094F405 /* AKFrameworkTokenClusterTopic.m */,
 			);
@@ -1281,6 +1289,8 @@
 				73664DE01CF2BE9D0094F405 /* AKBehaviorTopic.m */,
 				73664DE11CF2BE9D0094F405 /* AKClassTopic.h */,
 				73664DE21CF2BE9D0094F405 /* AKClassTopic.m */,
+				73DFDDE61D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.h */,
+				73DFDDE71D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.m */,
 				73664DED1CF2BE9D0094F405 /* AKProtocolTopic.h */,
 				73664DEE1CF2BE9D0094F405 /* AKProtocolTopic.m */,
 			);
@@ -1609,9 +1619,11 @@
 				7368270B1CF4C269004B070E /* NSSet+AppKiDo.m in Sources */,
 				73664ECA1CF2BE9E0094F405 /* AKBrowser.m in Sources */,
 				73664EAF1CF2BE9E0094F405 /* AKPrefUtils.m in Sources */,
+				73DFDDEB1D0E4F2F002D98FE /* AKFrameworkClassesTopic.m in Sources */,
 				73664EB41CF2BE9E0094F405 /* AKMethodNameExtractor.m in Sources */,
 				73664EB61CF2BE9E0094F405 /* AKNamedObjectCluster.m in Sources */,
 				73664EAB1CF2BE9E0094F405 /* AKProtocolTopic.m in Sources */,
+				73DFDDE81D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.m in Sources */,
 				73EC0F821D0240530038FC48 /* NSFileManager+AppKiDo.m in Sources */,
 				73664E8D1CF2BE9E0094F405 /* _DSADistributionVersion.m in Sources */,
 				73664EA21CF2BE9E0094F405 /* AKSubtopic.m in Sources */,

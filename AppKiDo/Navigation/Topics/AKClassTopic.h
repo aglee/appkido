@@ -11,6 +11,8 @@
 
 @interface AKClassTopic : AKBehaviorTopic
 
+@property (strong, readonly) AKClassToken *classToken;
+
 - (instancetype)initWithClassToken:(AKClassToken *)classToken NS_DESIGNATED_INITIALIZER;
 
 @end

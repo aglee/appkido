@@ -9,6 +9,7 @@
 #import "AKAppDelegate.h"
 #import "AKDatabase.h"
 #import "AKFramework.h"
+#import "AKFrameworkClassesTopic.h"
 #import "AKFrameworkConstants.h"
 #import "AKFrameworkProtocolsTopic.h"
 #import "AKFrameworkTokenClusterTopic.h"
@@ -29,6 +30,11 @@
 {
 	NSMutableArray *childTopics = [NSMutableArray array];
 
+	if (self.framework.classesGroup.count > 0) {
+		AKTopic *protocolsTopic = [[AKFrameworkClassesTopic alloc] initWithFramework:self.framework];
+		[childTopics addObject:protocolsTopic];
+	}
+
 	if (self.framework.protocolsGroup.count > 0) {
 		AKTopic *protocolsTopic = [[AKFrameworkProtocolsTopic alloc] initWithFramework:self.framework];
 		[childTopics addObject:protocolsTopic];
@@ -39,13 +45,6 @@
 	}
 
 	return childTopics;
-}
-
-- (AKTopic *)_functionsAndGlobalsTopic
-{
-	AKNamedObjectCluster *tokenCluster = self.framework.functionsAndGlobalsCluster;
-	return [[AKFrameworkTokenClusterTopic alloc] initWithFramework:self.framework
-													  tokenCluster:tokenCluster];
 }
 
 #pragma mark - <AKNamed> methods
@@ -91,6 +90,15 @@
 {
 	return @{ AKTopicClassNamePrefKey: self.className,
 			  AKFrameworkNamePrefKey: self.framework.name };
+}
+
+#pragma mark - Private methods
+
+- (AKTopic *)_functionsAndGlobalsTopic
+{
+	AKNamedObjectCluster *tokenCluster = self.framework.functionsAndGlobalsCluster;
+	return [[AKFrameworkTokenClusterTopic alloc] initWithFramework:self.framework
+													  tokenCluster:tokenCluster];
 }
 
 @end

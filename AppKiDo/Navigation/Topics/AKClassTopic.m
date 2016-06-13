@@ -14,13 +14,7 @@
 #import "AKSubtopicConstants.h"
 #import "NSArray+AppKiDo.h"
 
-@interface AKClassTopic ()
-@property (strong, readonly) AKClassToken *classToken;
-@end
-
 @implementation AKClassTopic
-
-@synthesize classToken = _classToken;
 
 #pragma mark - Init/awake/dealloc
 
