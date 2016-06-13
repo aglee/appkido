@@ -27,14 +27,7 @@
 @property (readonly, assign) BOOL hasDelegate;
 @property (readonly, copy) NSArray *delegateMethodTokens;
 @property (readonly, copy) NSArray *delegateProtocolTokens;
-
-/*!
- * Names of all frameworks the class belongs to. The first element of the
- * returned array is the name of the framework the class was declared in (its
- * owningFramework). After that, the order of the array is the order in which it
- * was discovered that the class belongs to the framework.
- */
-@property (readonly, copy) NSArray *namesOfAllOwningFrameworks;
+@property (readonly, copy) NSArray *bindingTokens;
 
 #pragma mark - Subclass tokens
 
@@ -50,28 +43,8 @@
 
 - (void)addBindingToken:(AKBindingToken *)bindingToken;
 - (AKBindingToken *)bindingTokenWithName:(NSString *)name;
-- (NSArray *)bindingTokens;
-
-#pragma mark - Owning frameworks
-
-- (void)setMainFrameworkName:(NSString *)frameworkName;  //TODO: Handle the multi-frameworkness of classes.
-
-- (BOOL)isOwnedByFramework:(NSString *)frameworkName;
-
-//TODO: Commenting out, come back later.
-//- (AKFileSection *)documentationAssociatedWithFramework:(NSString *)frameworkName;
-//
-///*!
-// * It's possible for a class to belong to multiple frameworks. The usual example
-// * I give is NSString, which is declared in Foundation and also has methods in
-// * AppKit by way of a category. We keep track of all the frameworks that "own" a
-// * class, and all the doc files that are associated with each framework.
-// */
-//- (void)associateDocumentation:(AKFileSection *)fileSection
-//            withFramework:(NSString *)frameworkName;
 
 #pragma mark - Delegate method tokens
-
 
 - (void)addDelegateProtocolToken:(AKProtocolToken *)delegateProtocolToken;
 

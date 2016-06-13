@@ -23,7 +23,6 @@
 @implementation AKClassToken
 {
 @private
-	NSMutableArray *_namesOfAllOwningFrameworks;
 	NSMutableArray *_subclassTokens;
 	NSMutableArray *_categoryTokens;
 }
@@ -34,7 +33,6 @@
 {
 	self = [super initWithName:name];
 	if (self) {
-		_namesOfAllOwningFrameworks = [[NSMutableArray alloc] init];
 		_subclassTokens = [[NSMutableArray alloc] init];
 		_categoryTokens = [[NSMutableArray alloc] init];
 		_delegateProtocolTokensByName = [[NSMutableDictionary alloc] init];
@@ -143,49 +141,6 @@
 {
 	return self.bindingTokensByName.allValues;
 }
-
-#pragma mark - Owning frameworks
-
-- (void)setMainFrameworkName:(NSString *)frameworkName  //TODO: Fix the multiple-frameworks thing for classes.
-{
-	// Move this framework name to the beginning of _namesOfAllOwningFrameworks.
-	if (frameworkName) {
-		[_namesOfAllOwningFrameworks removeObject:frameworkName];
-		[_namesOfAllOwningFrameworks insertObject:frameworkName atIndex:0];
-	}
-}
-
-- (NSArray *)namesOfAllOwningFrameworks
-{
-	return _namesOfAllOwningFrameworks;
-}
-
-- (BOOL)isOwnedByFramework:(NSString *)frameworkName
-{
-	return [_namesOfAllOwningFrameworks containsObject:frameworkName];
-}
-
-//TODO: Commenting out, come back later.
-//- (AKFileSection *)documentationAssociatedWithFramework:(NSString *)frameworkName
-//{
-//	return _tokenDocumentationByFrameworkName[frameworkName];
-//}
-//
-//- (void)associateDocumentation:(AKFileSection *)fileSection
-//				 withFramework:(NSString *)frameworkName
-//{
-//	if (frameworkName == nil) {
-//		DIGSLogWarning(@"ODD -- nil framework name passed for %@ -- file %@",
-//					   self.name, fileSection.filePath);
-//		return;
-//	}
-//
-//	if (![_namesOfAllOwningFrameworks containsObject:frameworkName]) {
-//		[_namesOfAllOwningFrameworks addObject:frameworkName];
-//	}
-//
-//	_tokenDocumentationByFrameworkName[frameworkName] = fileSection;
-//}
 
 #pragma mark - Delegate method tokens
 
