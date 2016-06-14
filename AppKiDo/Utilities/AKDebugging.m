@@ -9,6 +9,7 @@
 #import "AKDebugging.h"
 #import "AKAppDelegate.h"
 #import "AKDatabaseOutlineExporter.h"
+#import "AKDatabaseFlatFormatExporter.h"
 #import "AKTabChain.h"
 #import "AKWindow.h"
 #import "AKWindowController.h"
@@ -52,17 +53,20 @@
 
 	[debugSubmenu setAutoenablesItems:NO];
 
+	[debugSubmenu addItemWithTitle:@"Print Database in Flat Format"
+							action:@selector(printDatabaseInFlatFormat:)
+					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print Outline of Whole Database"
-							action:@selector(printDatabase:)
+							action:@selector(printDatabaseAsOutline:)
 					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print Outline of Frameworks"
-							action:@selector(printOutlineOfFrameworks:)
+							action:@selector(printFrameworksAsOutline:)
 					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print Outline of Protocols"
-							action:@selector(printOutlineOfProtocols:)
+							action:@selector(printProtocolsAsOutline:)
 					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print Outline of Classes"
-							action:@selector(printOutlineOfClasses:)
+							action:@selector(printClassesAsOutline:)
 					 keyEquivalent:@""];
 	[debugSubmenu addItemWithTitle:@"Print First Responder"
 							action:@selector(printFirstResponder:)
@@ -89,28 +93,35 @@
 
 #pragma mark - Action methods
 
-- (IBAction)printDatabase:(id)sender
+- (IBAction)printDatabaseInFlatFormat:(id)sender
+{
+	AKDatabaseFlatFormatExporter *exporter = [[AKDatabaseFlatFormatExporter alloc] init];
+	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
+	[exporter printContentsOfDatabase:database];
+}
+
+- (IBAction)printDatabaseAsOutline:(id)sender
 {
 	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
 	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
 	[exporter printFullOutlineOfDatabase:database];
 }
 
-- (IBAction)printOutlineOfFrameworks:(id)sender
+- (IBAction)printFrameworksAsOutline:(id)sender
 {
 	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
 	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
 	[exporter printOutlineOfFrameworksInDatabase:database];
 }
 
-- (IBAction)printOutlineOfProtocols:(id)sender
+- (IBAction)printProtocolsAsOutline:(id)sender
 {
 	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
 	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;
 	[exporter printOutlineOfProtocolsInDatabase:database];
 }
 
-- (IBAction)printOutlineOfClasses:(id)sender
+- (IBAction)printClassesAsOutline:(id)sender
 {
 	AKDatabaseOutlineExporter *exporter = [[AKDatabaseOutlineExporter alloc] init];
 	AKDatabase *database = AKAppDelegate.appDelegate.appDatabase;

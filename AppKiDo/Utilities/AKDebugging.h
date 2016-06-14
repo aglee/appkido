@@ -22,7 +22,12 @@
 
 #pragma mark - Action methods
 
-- (IBAction)printDatabase:(id)sender;
+- (IBAction)printDatabaseInFlatFormat:(id)sender;
+
+- (IBAction)printDatabaseAsOutline:(id)sender;
+- (IBAction)printFrameworksAsOutline:(id)sender;
+- (IBAction)printProtocolsAsOutline:(id)sender;
+- (IBAction)printClassesAsOutline:(id)sender;
 
 - (IBAction)printFirstResponder:(id)sender;
 
