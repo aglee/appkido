@@ -39,4 +39,8 @@
  */
 + (NSArray *)sdksWithinXcodePath:(NSString *)xcodeAppPath;
 
+#pragma mark - Init/awake/dealloc
+
+- (instancetype)initWithBasePath:(NSString *)sdkBasePath;
+
 @end
