@@ -22,7 +22,7 @@
 
 	// Set logging verbosity, based on user preferences.
 	DIGSSetVerbosityLevel( [[NSUserDefaults standardUserDefaults] integerForKey:DIGSLogVerbosityUserDefault]);
-	//    NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
+	//NSLog(@"AppKiDo log level is %d", DIGSGetVerbosityLevel());
 }
 
 #pragma mark - AppKiDo preferences
@@ -33,8 +33,7 @@
 	// array rather than nil.
 	NSArray *prefArray = [self arrayValueForPref:AKSelectedFrameworksPrefName];
 
-	if (prefArray == nil)
-	{
+	if (prefArray == nil) {
 		return nil;
 	}
 
@@ -42,8 +41,7 @@
 
 	// In older versions, "AppKit" was saved as "ApplicationKit" in prefs.
 	NSUInteger frameworkIndex = [fwNames indexOfObject:@"ApplicationKit"];
-	if (frameworkIndex != NSNotFound)
-	{
+	if (frameworkIndex != NSNotFound) {
 		[fwNames removeObjectAtIndex:frameworkIndex];
 		[fwNames insertObject:AKAppKitFrameworkName atIndex:frameworkIndex];
 	}
@@ -51,10 +49,8 @@
 	// It seems prefs files can be messed up from earlier app versions.  In
 	// particular, required frameworks can be missing from the prefs setting.
 	// Thanks to Gerriet for pointing this out.
-	for (NSString *essentialFrameworkName in AKNamesOfEssentialFrameworks)
-	{
-		if (![fwNames containsObject:essentialFrameworkName])
-		{
+	for (NSString *essentialFrameworkName in AKNamesOfEssentialFrameworks) {
+		if (![fwNames containsObject:essentialFrameworkName]) {
 			[fwNames addObject:essentialFrameworkName];
 		}
 	}
@@ -204,9 +200,7 @@
 	// Don't register a default for the selected-frameworks pref.  We'll set it
 	// in -[AKAppDelegate awakeFromNib] if it hasn't been set.  We do it there
 	// because we may have to query the AKDatabase for the frameworks to use.
-	//    [defaultPrefsDictionary
-	//        setObject:AKNamesOfEssentialFrameworks
-	//        forKey:AKSelectedFrameworksPrefName];
+	//defaultPrefsDictionary[AKSelectedFrameworksPrefName] = AKNamesOfEssentialFrameworks;
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefsDictionary];
 }
@@ -214,14 +208,10 @@
 + (NSString *)_defaultDevToolsPath
 {
 	NSString *xcodeSelectPath = [self _pathReturnedByXcodeSelect];
-
-	if (xcodeSelectPath.length == 0)
-	{
+	if (xcodeSelectPath.length == 0) {
 		// We got nothing from xcode-select, so return a hard-coded default.
 		return @"/Applications/Xcode.app/Contents/Developer";
-	}
-	else
-	{
+	} else {
 		return nil; // [AKDevToolsUtils devToolsPathFromPossibleXcodePath:xcodeSelectPath];
 	}
 }
