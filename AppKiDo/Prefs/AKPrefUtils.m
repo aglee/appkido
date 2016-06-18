@@ -167,7 +167,7 @@
 
 	defaultPrefsDictionary[DIGSLogVerbosityUserDefault] = @(DIGS_VERBOSITY_WARNING);
 
-	defaultPrefsDictionary[AKXcodePathPrefName] = @"/Applications/Xcode.app";
+	defaultPrefsDictionary[AKXcodePathPrefName] = [self _defaultXcodePath];
 
 	defaultPrefsDictionary[AKSearchInNewWindowPrefName] = @NO;
 
@@ -205,18 +205,35 @@
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefsDictionary];
 }
 
-+ (NSString *)_defaultDevToolsPath
+// From `man xcode-select`:
+//
+//   Note that for historical reason, the developer directory is  considered
+//   to be the Developer content directory inside the Xcode application (for
+//   example /Applications/Xcode.app/Contents/Developer). You  can  set  the
+//   environment variable to either the actual Developer contents directory,
+//   or the Xcode application directory -- the xcode-select  provided  shims
+//   will  automatically  convert  the  environment  variable  into the full
+//   Developer content path.
+//
+// We want to return the path to the .app, so if necessary we prune the path
+// returned by xcode-select.
++ (NSString *)_defaultXcodePath
 {
+	// Our loop condition checks for length > 1 rather than length > 0 because
+	// if the path gets shortened all the way to "/", it won't get any shorter.
 	NSString *xcodeSelectPath = [self _pathReturnedByXcodeSelect];
-	if (xcodeSelectPath.length == 0) {
-		// We got nothing from xcode-select, so return a hard-coded default.
-		return @"/Applications/Xcode.app/Contents/Developer";
-	} else {
-		return nil; // [AKDevToolsUtils devToolsPathFromPossibleXcodePath:xcodeSelectPath];
+	while (xcodeSelectPath.length > 1) {
+		if ([xcodeSelectPath.pathExtension isEqualToString:@"app"]) {
+			return xcodeSelectPath;
+		}
+		xcodeSelectPath = [xcodeSelectPath stringByDeletingLastPathComponent];
 	}
+
+	// If we got this far, either we got nothing from xcode-select or the path
+	// didn't contain a .app component, so we return a hard-coded default path.
+	return @"/Applications/Xcode.app";
 }
 
-//TODO: Moved here from the now defunct AKDevToolsUtils.m.
 // Facts about xcode-select:
 //
 // "xcode-select -print-path" looks for /usr/share/xcode-select/xcode_dir_path.
