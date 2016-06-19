@@ -214,7 +214,6 @@
 		73AC6B5E1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */; };
 		73DFDDE81D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DFDDE71D0E4ECE002D98FE /* AKClassTopicUnderFrameworkTopic.m */; };
 		73DFDDEB1D0E4F2F002D98FE /* AKFrameworkClassesTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DFDDEA1D0E4F2F002D98FE /* AKFrameworkClassesTopic.m */; };
-		73DFDDED1D0EA637002D98FE /* DevIntro.md in Sources */ = {isa = PBXBuildFile; fileRef = 73DFDDEC1D0EA636002D98FE /* DevIntro.md */; };
 		73DFDDF01D0F3EFC002D98FE /* AKDatabaseFlatFormatExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DFDDEF1D0F3EFC002D98FE /* AKDatabaseFlatFormatExporter.m */; };
 		73DFDDF31D0F41AE002D98FE /* AKDatabaseLoggingExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DFDDF21D0F41AE002D98FE /* AKDatabaseLoggingExporter.m */; };
 		73EC0F751D00FD110038FC48 /* AKHeaderScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EC0F741D00FD110038FC48 /* AKHeaderScanner.m */; };
@@ -1552,7 +1551,6 @@
 				73664EA61CF2BE9E0094F405 /* AKFrameworkProtocolsTopic.m in Sources */,
 				73664E931CF2BE9E0094F405 /* _NodeUUID.m in Sources */,
 				73664E791CF2BE9E0094F405 /* Container.m in Sources */,
-				73DFDDED1D0EA637002D98FE /* DevIntro.md in Sources */,
 				731BC90D1D07617C00B01D2D /* AKPlatformConstants.m in Sources */,
 				73664E691CF2BE9E0094F405 /* AKFrameworkConstants.m in Sources */,
 				73664E681CF2BE9E0094F405 /* AKFramework.m in Sources */,
