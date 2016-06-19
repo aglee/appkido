@@ -8,6 +8,7 @@
 
 #import "DocSetIndex.h"
 #import "AKPlatformConstants.h"
+#import "AKSortUtils.h"
 #import "DIGSLog.h"
 
 @interface DocSetIndex ()
@@ -59,13 +60,8 @@
 		}
 	}
 
-	SEL finderLikeCompare = @selector(localizedStandardCompare:);
-	[docSets sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"platformInternalName"
-																   ascending:YES
-																	selector:finderLikeCompare],
-									 [NSSortDescriptor sortDescriptorWithKey:@"platformVersion"
-																   ascending:YES
-																	selector:finderLikeCompare] ]];
+	[docSets sortUsingDescriptors:@[AKFinderLikeSort(@"platformInternalName"),
+									AKFinderLikeSort(@"platformVersion")]];
 	return docSets;
 }
 

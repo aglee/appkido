@@ -8,6 +8,7 @@
 
 #import "AKInstalledSDK.h"
 #import "AKPlatformConstants.h"
+#import "AKSortUtils.h"
 #import "DIGSLog.h"
 #import "NSFileManager+AppKiDo.h"
 
@@ -28,14 +29,9 @@
 	for (NSString *sdkBasePath in [self _sdkBasePathsWithinXcodePath:xcodeAppPath]) {
 		[sdks addObject:[[AKInstalledSDK alloc] initWithBasePath:sdkBasePath]];
 	}
+	[sdks sortUsingDescriptors:@[AKFinderLikeSort(@"platformInternalName"),
+								 AKFinderLikeSort(@"sdkVersion")]];
 
-	SEL finderLikeCompare = @selector(localizedStandardCompare:);
-	[sdks sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"platformInternalName"
-																ascending:YES
-																 selector:finderLikeCompare],
-								  [NSSortDescriptor sortDescriptorWithKey:@"sdkVersion"
-																ascending:YES
-																 selector:finderLikeCompare] ]];
 	return sdks;
 }
 
