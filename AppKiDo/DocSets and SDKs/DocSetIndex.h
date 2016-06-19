@@ -31,7 +31,7 @@
  * "~/Library/Developer/Shared/Documentation/DocSets".  The returned array is
  * sorted by platform and version.
  */
-+ (NSArray *)installedDocSets;
++ (NSArray *)sortedDocSetsInStandardLocation;
 
 #pragma mark - Init/awake/dealloc
 

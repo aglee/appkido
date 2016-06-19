@@ -445,7 +445,6 @@ static NSTimeInterval g_checkpointTime = 0.0;
 	// Put up the notice about this being an early prerelease build, and prompt
 	// for docset selection.
 	AKDocSetsWindowController *docSetsWC = [[AKDocSetsWindowController alloc] initWithWindowNibName:@"AKDocSetsWindowController"];
-	[docSetsWC useInstalledSDKsInXcodePath:[AKPrefUtils xcodePathPref]];  //TODO: Be able to specify Xcode location.
 	[docSetsWC.window center];
 	NSModalResponse modalResponse = [NSApp runModalForWindow:docSetsWC.window];
 	if (modalResponse == NSModalResponseAbort) {

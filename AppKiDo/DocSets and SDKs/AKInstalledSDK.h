@@ -34,10 +34,10 @@
 
 /*!
  * xcodeAppPath must point to an Xcode application bundle, e.g.
- * "/Applications/Xcode.app".  The returned array is sorted by platform and
- * version.
+ * "/Applications/Xcode.app".  The returned array is sorted by platform name and
+ * SDK version.
  */
-+ (NSArray *)sdksWithinXcodePath:(NSString *)xcodeAppPath;
++ (NSArray *)sortedSDKsWithinXcodePath:(NSString *)xcodeAppPath;
 
 #pragma mark - Init/awake/dealloc
 

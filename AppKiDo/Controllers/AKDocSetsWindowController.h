@@ -11,14 +11,10 @@
 @class DocSetIndex;
 @class AKInstalledSDK;
 
-@interface AKDocSetsWindowController : NSWindowController <NSTableViewDelegate>
+@interface AKDocSetsWindowController : NSWindowController <NSOpenSavePanelDelegate>
 
 @property (readonly) DocSetIndex *selectedDocSetIndex;
 @property (readonly) AKInstalledSDK *selectedSDK;
-
-#pragma mark - Setup
-
-/*! Need to call this to populate the docsets table view. */
-- (void)useInstalledSDKsInXcodePath:(NSString *)xcodePath;
+@property (copy) NSString *selectedXcodePath;
 
 @end

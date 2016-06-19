@@ -21,7 +21,7 @@
 
 #pragma mark - Finding installed SDKs
 
-+ (NSArray *)sdksWithinXcodePath:(NSString *)xcodeAppPath
++ (NSArray *)sortedSDKsWithinXcodePath:(NSString *)xcodeAppPath
 {
 	NSParameterAssert(xcodeAppPath != nil);
 	NSMutableArray *sdks = [NSMutableArray array];

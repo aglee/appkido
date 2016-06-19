@@ -25,7 +25,7 @@
 
 #pragma mark - Finding installed docsets
 
-+ (NSArray *)installedDocSets
++ (NSArray *)sortedDocSetsInStandardLocation
 {
 	NSMutableArray *docSets = [NSMutableArray array];
 	NSFileManager *fm = [NSFileManager defaultManager];
