@@ -10,6 +10,14 @@
 
 @implementation NSString (AppKiDo)
 
++ (NSString *)ak_stringByRepeating:(NSString *)stringToRepeat
+							 times:(NSUInteger)timesToRepeat
+{
+	return [@"" stringByPaddingToLength:(timesToRepeat * stringToRepeat.length)
+							 withString:stringToRepeat
+						startingAtIndex:0];
+}
+
 - (BOOL)ak_contains:(NSString *)searchString
 {
     NSRange r = [self rangeOfString:searchString];

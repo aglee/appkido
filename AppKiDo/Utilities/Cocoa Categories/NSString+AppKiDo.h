@@ -9,6 +9,9 @@
 
 @interface NSString (AppKiDo)
 
++ (NSString *)ak_stringByRepeating:(NSString *)stringToRepeat
+							 times:(NSUInteger)timesToRepeat;
+
 /*! Does a case-sensitive substring search. */
 - (BOOL)ak_contains:(NSString *)searchString;
 
