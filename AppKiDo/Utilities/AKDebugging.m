@@ -183,7 +183,8 @@
 	[self printFirstResponder:nil];
 	id firstResponder = NSApp.keyWindow.firstResponder;
 	if ([firstResponder isKindOfClass:[NSView class]]) {
-		[firstResponder ak_printSequenceWithKeyPath:nextViewKeyPath];
+		[firstResponder ak_printSequenceWithValuesForKeyPaths:nil
+											nextObjectKeyPath:nextViewKeyPath];
 	}
 }
 

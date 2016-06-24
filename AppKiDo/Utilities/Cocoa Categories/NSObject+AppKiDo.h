@@ -15,12 +15,19 @@
 
 /*!
  * Logs a sequence of objects starting at self and ending when we either hit
- * nil or detect a loop. Sends nextObjectSelector to each object to get the next
- * object in the sequence.
+ * nil or detect a loop.  Uses nextObjectKeyPath to get each object's successor
+ * in the sequence.
  */
-- (void)ak_printSequenceWithKeyPath:(NSString *)nextObjectKeyPath;
+- (void)ak_printSequenceWithValuesForKeyPaths:(NSArray *)keyPathsToPrint
+							nextObjectKeyPath:(NSString *)nextObjectKeyPath;
 
-- (void)ak_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths
-				 childObjectsKeyPath:(NSString *)childObjectsKeyPath;
+/*!
+ * Logs a tab-indented outline representing a tree rooted at self.  Uses
+ * childObjectsKeyPath to get the children of each object in the tree.
+ *
+ * TODO: Handle cycles.
+ */
+- (void)ak_printTreeWithValuesForKeyPaths:(NSArray *)keyPathsToPrint
+					  childObjectsKeyPath:(NSString *)childObjectsKeyPath;
 
 @end

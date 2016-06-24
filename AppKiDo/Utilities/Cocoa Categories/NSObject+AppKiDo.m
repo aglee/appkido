@@ -7,6 +7,7 @@
 //
 
 #import "NSObject+AppKiDo.h"
+#import "NSString+AppKiDo.h"
 
 @implementation NSObject (AppKiDo)
 
@@ -15,7 +16,8 @@
 	return [NSString stringWithFormat:@"<%@: %p>", self.className, self];
 }
 
-- (void)ak_printSequenceWithKeyPath:(NSString *)nextObjectKeyPath
+- (void)ak_printSequenceWithValuesForKeyPaths:(NSArray *)keyPathsToPrint
+							nextObjectKeyPath:(NSString *)nextObjectKeyPath
 {
 	NSMutableSet *pointersToVisitedObjects = [NSMutableSet set];
 
@@ -37,37 +39,48 @@
 	NSLog(@"END %@ sequence -- sequence ends with nil", nextObjectKeyPath);
 }
 
-- (void)ak_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths
-				 childObjectsKeyPath:(NSString *)childObjectsKeyPath
+- (void)ak_printTreeWithValuesForKeyPaths:(NSArray *)keyPathsToPrint
+					  childObjectsKeyPath:(NSString *)childObjectsKeyPath
 {
-	[self _printTreeWithSelfKeyPaths:selfKeyPaths
-				 childObjectsKeyPath:childObjectsKeyPath
-							   depth:0];
+	[self _printTreeWithValuesForKeyPaths:keyPathsToPrint
+					  childObjectsKeyPath:childObjectsKeyPath
+							  indentLevel:0];
 }
 
 #pragma mark - Private methods
 
-- (void)_printTreeWithSelfKeyPaths:(NSArray *)selfKeyPaths
-			   childObjectsKeyPath:(NSString *)childObjectsKeyPath
-							 depth:(NSUInteger)depth
+- (void)_printTreeWithValuesForKeyPaths:(NSArray *)keyPathsToPrint
+					childObjectsKeyPath:(NSString *)childObjectsKeyPath
+							indentLevel:(NSUInteger)indentLevel
 {
 	// Print info for self.
-	NSMutableString *selfString = [NSMutableString string];
-	for (NSUInteger indentCount = 0; indentCount < depth; indentCount++) {
-		[selfString appendString:@"\t"];
-	}
-	[selfString appendString:self.className];
-	for (NSString *keyPath in selfKeyPaths) {
-		[selfString appendFormat:@" %@=%@", keyPath, [self valueForKeyPath:keyPath]];
-	}
-	NSLog(@"%@", selfString);
+	NSLog(@"%@", [self _stringToPrintForKeyPaths:keyPathsToPrint indentLevel:indentLevel]);
 
-	// Print each of self's child objects.
+	// Print info for each of self's descendant objects.
 	for (id childObject in [self valueForKeyPath:childObjectsKeyPath]) {
-		[childObject _printTreeWithSelfKeyPaths:selfKeyPaths
-							childObjectsKeyPath:childObjectsKeyPath
-										  depth:(depth + 1)];
+		[childObject _printTreeWithValuesForKeyPaths:keyPathsToPrint
+								 childObjectsKeyPath:childObjectsKeyPath
+										 indentLevel:(indentLevel + 1)];
 	}
+}
+
+- (NSString *)_stringToPrintForKeyPaths:(NSArray *)keyPathsToPrint
+							indentLevel:(NSUInteger)indentLevel
+{
+	NSMutableString *infoString = [NSMutableString string];
+
+	// Indentation.
+	[infoString appendString:[NSString ak_stringByRepeating:@"\t" times:indentLevel]];
+
+	// Minimal info about self.
+	[infoString appendFormat:@"%@: %p", self.className, self];
+
+	// Values for the given key paths, if any.
+	for (NSString *keyPath in keyPathsToPrint) {
+		[infoString appendFormat:@" %@=%@", keyPath, [self valueForKeyPath:keyPath]];
+	}
+
+	return infoString;
 }
 
 @end
