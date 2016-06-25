@@ -8,12 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-// These are the values I've observed in various SDKSettings.plist files.  The
-// same internal platform names are used in the Info.plist files in docsets.
+#pragma mark - Platform names -- "internal"
+
+// Used by SDKs in SDKSettings.plist and by docsets in Info.plist.
 extern NSString *AKPlatformInternalNameMac;
 extern NSString *AKPlatformInternalNameIOS;
 extern NSString *AKPlatformInternalNameTV;
 extern NSString *AKPlatformInternalNameWatch;
 
-/*! Converts an internal name to the corresponding marketing name. */
-extern NSString *AKDisplayNameForPlatformInternalName(NSString *platformInternalName);
+#pragma mark - Platform names -- displayed
+
+// Display names corresponding to the "internal" platform names above.
+extern NSString *AKPlatformDisplayNameMac;
+extern NSString *AKPlatformDisplayNameIOS;
+extern NSString *AKPlatformDisplayNameTV;
+extern NSString *AKPlatformDisplayNameWatch;
+
+#pragma mark - Platform names -- converting
+
+/*! Converts an internal name to the corresponding display name. */
+extern NSString *AKPlatformDisplayNameForInternalName(NSString *internalName);
+
+/*! Converts a display name to the corresponding internal name. */
+extern NSString *AKPlatformInternalNameForDisplayName(NSString *displayName);

@@ -69,7 +69,7 @@
 
 - (NSString *)platformDisplayName
 {
-	return AKDisplayNameForPlatformInternalName(self.platformInternalName);
+	return AKPlatformDisplayNameForInternalName(self.platformInternalName);
 }
 
 - (NSString *)sdkVersion
