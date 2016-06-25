@@ -44,7 +44,11 @@
 - (void)setSelectedXcodePath:(NSString *)selectedXcodePath
 {
 	_selectedXcodePath = selectedXcodePath;
+	[self _repopulateDocsSetsArrayController];
+}
 
+- (void)_repopulateDocsSetsArrayController
+{
 	// For each platform, find the installed SDK with the highest version.
 	NSArray *sortedSDKs = [AKInstalledSDK sortedSDKsWithinXcodePath:self.selectedXcodePath];
 	NSMutableDictionary *sdksByPlatform = [NSMutableDictionary dictionary];
@@ -53,7 +57,8 @@
 	}
 
 	// Update docSetsArrayController.  Each row object is an NSDictionary whose
-	// values are a DocSetIndex and an AKInstalledSDK for the same platform.
+	// values are a DocSetIndex and/or an AKInstalledSDK for the same platform.
+	// Each SDK is paired with the "nearest matching" docset.
 	NSMutableArray *tableRowObjects = [NSMutableArray array];
 	for (DocSetIndex *docSetIndex in [DocSetIndex sortedDocSetsInStandardLocation]) {
 		AKInstalledSDK *sdk = sdksByPlatform[docSetIndex.platformInternalName];
@@ -68,9 +73,56 @@
 #pragma mark - Action methods
 
 // Displays an open panel sheet in self.window.
+//
+// It would be helpful for the open panel to pre-select the user's current prefs
+// value for the Xcode path, but it can't be done.  NSOpenPanel no longer has
+// methods for pre-selecting a file before it is displayed.  We can only
+// pre-select a directory, by setting the directoryURL property.  I can't even
+// cheat by calling the deprecated methods -- they don't work.
+//
+// Since Xcode.app is a bundle, it's true that technically we do want to
+// pre-select a directory.  But we want the open panel's file browser to *treat*
+// it as a file, and not allow navigation to subdirectories.
+//
+// There is a bug in NSOpenPanel such that if I set directoryURL to
+// /Applications/Xcode.app, it will actually pre-select Xcode.app, in violation
+// of its own treatsFilePackagesAsDirectories property, which I set to NO, and
+// which defaults to NO anyway.  I would be tempted to exploit this bug, but
+// unfortunately the file browser treats the package exactly like a directory
+// and exposes the app bundle's "Contents" subdirectory.
+//
+//TODO: File a Radar about NSOpenPanel and add links here, e.g. to my question on cocoa-dev.
 - (IBAction)selectXcode:(id)sender
 {
-	[self _promptForXcodeLocation];
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	openPanel.delegate = self;
+	openPanel.title = @"Locate Xcode.app";
+	openPanel.prompt = @"Select Xcode";
+	openPanel.allowsMultipleSelection = NO;
+	openPanel.canChooseDirectories = NO;
+	openPanel.canChooseFiles = YES;
+	openPanel.resolvesAliases = YES;
+	openPanel.allowedFileTypes = @[@"app"];
+	openPanel.treatsFilePackagesAsDirectories = NO;
+
+	if (self.selectedXcodePath) {
+		openPanel.directoryURL = [NSURL fileURLWithPath:self.selectedXcodePath.stringByDeletingLastPathComponent];
+	} else {
+		NSFileManager *fm = [NSFileManager defaultManager];
+		NSURL *appDirURL = [fm URLsForDirectory:NSApplicationDirectory
+									  inDomains:NSSystemDomainMask].lastObject;
+		if (appDirURL) {
+			openPanel.directoryURL = appDirURL;
+		}
+	}
+
+	[openPanel beginSheetModalForWindow:self.window
+					  completionHandler:^(NSInteger result) {
+						  if (result == NSFileHandlingPanelOKButton) {
+							  [openPanel orderOut:nil];
+							  self.selectedXcodePath = openPanel.URL.path;
+						  }
+					  }];
 }
 
 - (IBAction)okDocSetsWindow:(id)sender
@@ -116,44 +168,13 @@
 
 #pragma mark - Private methods
 
-// Displays an open panel sheet in self.window.
-- (void)_promptForXcodeLocation
-{
-	// Even though a .app bundle is a directory and not a file, we pretend
-	// otherwise when setting up the open panel.
-	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-	openPanel.delegate = self;
-	openPanel.title = @"Locate Xcode.app";
-	openPanel.prompt = @"Select Xcode";
-	openPanel.allowsMultipleSelection = NO;
-	openPanel.canChooseDirectories = NO;
-	openPanel.canChooseFiles = YES;
-	openPanel.resolvesAliases = YES;
-	openPanel.allowedFileTypes = @[@"app"];
-
-	if (self.selectedXcodePath) {
-		openPanel.directoryURL = [NSURL fileURLWithPath:self.selectedXcodePath];
-	} else {
-		NSFileManager *fm = [NSFileManager defaultManager];
-		NSURL *appDirURL = [fm URLsForDirectory:NSApplicationDirectory
-									  inDomains:NSSystemDomainMask].lastObject;
-		if (appDirURL) {
-			openPanel.directoryURL = appDirURL;
-		}
-	}
-
-	[openPanel beginSheetModalForWindow:self.window
-					  completionHandler:^(NSInteger result) {
-						  if (result == NSFileHandlingPanelOKButton) {
-							  [openPanel orderOut:nil];
-							  self.selectedXcodePath = openPanel.URL.path;
-						  }
-					  }];
-}
-
-// Assumes xcodePath points to a .app bundle.
 - (BOOL)_isSupportedXcodeAppAtPath:(NSString *)appPath
 {
+	// Must be a .app directory.
+	if (![appPath.pathExtension isEqualToString:@"app"]) {
+		return NO;
+	}
+
 	// Load the app's Info.plist.
 	NSString *infoPlistPath = [appPath stringByAppendingPathComponent:@"Contents/Info.plist"];
 	NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:infoPlistPath];
@@ -167,8 +188,10 @@
 		return NO;
 	}
 
-	// We only support docsets that use the Core Data docset index, which means
-	// Xcode 6.x or 7.x.
+	// We only support Xcode versions 6.x or 7.x, which use a Core Data-based
+	// "docset index".  It doesn't work to check for the presence of the .dsidx
+	// file, because that file is present in Xcode 8 (at least in beta 1).  So
+	// we check the Xcode version string instead.
 	NSString *version = infoPlist[@"CFBundleShortVersionString"];
 	if ([version compare:@"6"] == NSOrderedAscending) {
 		return NO;
