@@ -16,14 +16,14 @@
         <window title="Select Xcode and Docset" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="580" height="503"/>
+            <rect key="contentRect" x="196" y="240" width="568" height="420"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="580" height="503"/>
+                <rect key="frame" x="0.0" y="0.0" width="568" height="420"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Beb-SU-evK">
-                        <rect key="frame" x="18" y="412" width="120" height="17"/>
+                        <rect key="frame" x="6" y="329" width="120" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Please note:" id="N5o-er-jOv">
                             <font key="font" size="13" name=".AppleSystemUIFontBold"/>
@@ -32,14 +32,14 @@
                         </textFieldCell>
                     </textField>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="CdE-7q-b1u" userLabel="Note About This Build">
-                        <rect key="frame" x="144" y="358" width="416" height="125"/>
+                        <rect key="frame" x="132" y="275" width="416" height="125"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="E9b-be-e4X">
                             <rect key="frame" x="1" y="1" width="399" height="123"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="2WB-Pw-Vwk">
-                                    <rect key="frame" x="0.0" y="0.0" width="399" height="236"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="399" height="254.5"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="399" height="123"/>
@@ -59,46 +59,7 @@
 </string>
                                             <attributes>
                                                 <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                    <tabStops>
-                                                        <textTab alignment="left" location="28">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="56">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="84">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="112">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="140">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="168">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="196">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="224">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="252">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="280">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="308">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="336">
-                                                            <options/>
-                                                        </textTab>
-                                                    </tabStops>
-                                                </paragraphStyle>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                             </attributes>
                                         </fragment>
                                         <fragment>
@@ -116,46 +77,7 @@
 </string>
                                             <attributes>
                                                 <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                    <tabStops>
-                                                        <textTab alignment="left" location="28">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="56">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="84">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="112">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="140">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="168">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="196">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="224">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="252">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="280">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="308">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="336">
-                                                            <options/>
-                                                        </textTab>
-                                                    </tabStops>
-                                                </paragraphStyle>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                             </attributes>
                                         </fragment>
                                         <fragment>
@@ -187,7 +109,7 @@ Thanks to all for your help!</string>
                         </scroller>
                     </scrollView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="VMG-sA-3dk">
-                        <rect key="frame" x="18" y="316" width="120" height="17"/>
+                        <rect key="frame" x="6" y="233" width="120" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Xcode location:" id="9Sd-ea-QsI">
                             <font key="font" size="13" name=".AppleSystemUIFontBold"/>
@@ -196,7 +118,7 @@ Thanks to all for your help!</string>
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="F6Y-Vn-cEi" userLabel="Xcode Location Field">
-                        <rect key="frame" x="144" y="313" width="330" height="22"/>
+                        <rect key="frame" x="132" y="230" width="330" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="lI8-kM-4Bj">
                             <font key="font" metaFont="system"/>
@@ -208,7 +130,7 @@ Thanks to all for your help!</string>
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="6b1-y3-ce7" userLabel="Xcode Location Explanation">
-                        <rect key="frame" x="142" y="268" width="235" height="42"/>
+                        <rect key="frame" x="130" y="185" width="235" height="42"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" id="52R-ph-bbV">
                             <font key="font" metaFont="smallSystem"/>
@@ -220,7 +142,7 @@ The Xcode version must be either 6.x or 7.x.</string>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" id="Z6B-vY-u9K">
-                        <rect key="frame" x="476" y="307" width="90" height="32"/>
+                        <rect key="frame" x="464" y="224" width="90" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Select..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xuP-jJ-Vxe">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -231,30 +153,66 @@ The Xcode version must be either 6.x or 7.x.</string>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="bTF-gL-TOh">
-                        <rect key="frame" x="18" y="228" width="120" height="17"/>
+                        <rect key="frame" x="18" y="145" width="108" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Installed docsets:" id="ejy-eC-nDn">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Select a docset:" id="ejy-eC-nDn">
                             <font key="font" size="13" name=".AppleSystemUIFontBold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="DbA-3c-5No" userLabel="DocSets Scroll View">
-                        <rect key="frame" x="145" y="61" width="180" height="184"/>
+                        <rect key="frame" x="133" y="56" width="200" height="106"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="ke4-vR-P4A">
-                            <rect key="frame" x="1" y="0.0" width="178" height="183"/>
+                            <rect key="frame" x="1" y="0.0" width="198" height="105"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="nTB-ll-ySr" viewBased="YES" floatsGroupRows="NO" id="rDv-2f-lGx" userLabel="DocSets Table View">
-                                    <rect key="frame" x="0.0" y="0.0" width="179" height="160"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="nTB-ll-ySr" viewBased="YES" floatsGroupRows="NO" id="rDv-2f-lGx" userLabel="DocSets Table View">
+                                    <rect key="frame" x="0.0" y="0.0" width="198" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="DocSet" editable="NO" width="100" minWidth="10" maxWidth="3.4028234663852886e+38" id="XIx-aB-zjv" userLabel="DocSet Name Column">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="DocSet">
+                                        <tableColumn identifier="" width="68.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="X5x-pn-9Ni" userLabel="Platform Name">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Platform">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="rDm-ib-fwI">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView id="WjB-Vq-fUi" userLabel="Platform Name Cell View">
+                                                    <rect key="frame" x="1" y="1" width="68.5" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="YEj-6C-wF1" userLabel="Platform Name Text Field">
+                                                            <rect key="frame" x="0.0" y="0.0" width="68.5" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="platform" id="maX-ZA-wPh">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="WjB-Vq-fUi" name="value" keyPath="objectValue.docSetIndex.platformDisplayName" id="gdQ-eJ-Vzd"/>
+                                                            </connections>
+                                                        </textField>
+                                                    </subviews>
+                                                    <connections>
+                                                        <outlet property="textField" destination="YEj-6C-wF1" id="obq-Lx-tSv"/>
+                                                    </connections>
+                                                </tableCellView>
+                                            </prototypeCellViews>
+                                        </tableColumn>
+                                        <tableColumn identifier="DocSet" editable="NO" width="60" minWidth="10" maxWidth="3.4028234663852886e+38" id="XIx-aB-zjv" userLabel="DocSet Version Column">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Docset">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -266,20 +224,20 @@ The Xcode version must be either 6.x or 7.x.</string>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="g24-uw-wLR" userLabel="DocSet Name Cell View">
-                                                    <rect key="frame" x="1" y="1" width="100" height="17"/>
+                                                <tableCellView id="g24-uw-wLR" userLabel="DocSet Version Cell View">
+                                                    <rect key="frame" x="72.5" y="1" width="60" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="XIj-6S-hqm" userLabel="DocSet Name Cell Field">
-                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="XIj-6S-hqm" userLabel="DocSet Version Text Field">
+                                                            <rect key="frame" x="0.0" y="0.0" width="60.5" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="ds version" id="Sq9-oo-Fs3">
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="docset" id="Sq9-oo-Fs3">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="g24-uw-wLR" name="value" keyPath="objectValue.docSetIndex.docSetDisplayName" id="xFZ-hn-rqI"/>
+                                                                <binding destination="g24-uw-wLR" name="value" keyPath="objectValue.docSetIndex.platformVersion" id="hDF-gq-v1t"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -289,7 +247,7 @@ The Xcode version must be either 6.x or 7.x.</string>
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="SDKVersion" editable="NO" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="DH6-h7-afz" userLabel="SDK Version Column">
+                                        <tableColumn identifier="SDKVersion" editable="NO" width="60.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="DH6-h7-afz" userLabel="SDK Version Column">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="SDK">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -303,13 +261,13 @@ The Xcode version must be either 6.x or 7.x.</string>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="3uD-9x-o8w" userLabel="SDK Version Cell View">
-                                                    <rect key="frame" x="104" y="1" width="73" height="17"/>
+                                                    <rect key="frame" x="135.5" y="1" width="60.5" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="HE2-h7-rhf" userLabel="SDK Version Field">
-                                                            <rect key="frame" x="0.0" y="0.0" width="73" height="17"/>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="HE2-h7-rhf" userLabel="SDK Version Text Field">
+                                                            <rect key="frame" x="0.0" y="0.0" width="61" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="sdk version" id="GFV-os-Acr">
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="sdk" id="GFV-os-Acr">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -344,21 +302,24 @@ The Xcode version must be either 6.x or 7.x.</string>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="nTB-ll-ySr">
-                            <rect key="frame" x="0.0" y="0.0" width="179" height="23"/>
+                            <rect key="frame" x="0.0" y="0.0" width="198" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="oqd-bq-VZh" userLabel="DocSets Explanation">
-                        <rect key="frame" x="331" y="203" width="231" height="42"/>
+                        <rect key="frame" x="339" y="75" width="190" height="84"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Only docsets that match an installed SDK are listed.  Installed SDKs are found in the Xcode location above." id="qxz-Wl-Tyn">
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" id="qxz-Wl-Tyn">
                             <font key="font" metaFont="smallSystem"/>
+                            <string key="title">SDKs are found in the Xcode application bundle specified above.
+
+For each platform, the newest available docset is associated with the newest available SDK.</string>
                             <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" id="WIM-B2-THc">
-                        <rect key="frame" x="402" y="13" width="82" height="32"/>
+                        <rect key="frame" x="390" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bZf-H4-n3L">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -372,7 +333,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="AcT-dD-0vz">
-                        <rect key="frame" x="484" y="13" width="82" height="32"/>
+                        <rect key="frame" x="472" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="05m-8r-ATA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -383,14 +344,36 @@ DQ
                         </buttonCell>
                         <connections>
                             <action selector="okDocSetsWindow:" target="-2" id="Xin-EW-kq7"/>
+                            <binding destination="ufP-WC-kZm" name="enabled" keyPath="selectedObjects.firstObject" id="T5D-yK-hsy">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="uyg-BS-lBo">
+                        <rect key="frame" x="131" y="34" width="140" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="You must select a docset." id="Pjj-ZM-QXt">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ufP-WC-kZm" name="hidden" keyPath="selectedObjects.firstObject" id="gXg-hm-K8J">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </textField>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+                <outlet property="initialFirstResponder" destination="rDv-2f-lGx" id="8RV-4L-rxD"/>
             </connections>
-            <point key="canvasLocation" x="314" y="353.5"/>
+            <point key="canvasLocation" x="320" y="312"/>
         </window>
         <arrayController editable="NO" id="ufP-WC-kZm" userLabel="DocSets Array Controller">
             <declaredKeys>

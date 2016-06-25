@@ -47,23 +47,34 @@
 	[self _repopulateDocsSetsArrayController];
 }
 
+// Updates the content of docSetsArrayController.  Each element is a dictionary
+// with keys "docSetIndex" and "installedSDK", where the associated docset and
+// SDK are for the same platform.
+
+// If multiple docsets are installed for a given platform, only the one with the highest version number is listed.
 - (void)_repopulateDocsSetsArrayController
 {
+	// For each platform, find the installed docset with the highest version.
+	NSArray *sortedDocSets = [DocSetIndex sortedDocSetsInStandardLocation];
+	NSMutableDictionary *docSetsByPlatform = [NSMutableDictionary dictionary];
+	for (DocSetIndex *docSetIndex in sortedDocSets) {
+		docSetsByPlatform[docSetIndex.platformDisplayName] = docSetIndex;
+	}
+
 	// For each platform, find the installed SDK with the highest version.
 	NSArray *sortedSDKs = [AKInstalledSDK sortedSDKsWithinXcodePath:self.selectedXcodePath];
 	NSMutableDictionary *sdksByPlatform = [NSMutableDictionary dictionary];
 	for (AKInstalledSDK *sdk in sortedSDKs) {
-		sdksByPlatform[sdk.platformInternalName] = sdk;
+		sdksByPlatform[sdk.platformDisplayName] = sdk;
 	}
 
-	// Update docSetsArrayController.  Each row object is an NSDictionary whose
-	// values are a DocSetIndex and/or an AKInstalledSDK for the same platform.
-	// Each SDK is paired with the "nearest matching" docset.
+	// Create an array element for each platform for which we are able to pair a
+	// docset with an SDK.
 	NSMutableArray *tableRowObjects = [NSMutableArray array];
-	for (DocSetIndex *docSetIndex in [DocSetIndex sortedDocSetsInStandardLocation]) {
-		AKInstalledSDK *sdk = sdksByPlatform[docSetIndex.platformInternalName];
+	for (NSString *platformName in [docSetsByPlatform.allKeys ak_sortedStrings]) {
+		AKInstalledSDK *sdk = sdksByPlatform[platformName];
 		if (sdk) {
-			[tableRowObjects addObject:@{ @"docSetIndex" : docSetIndex,
+			[tableRowObjects addObject:@{ @"docSetIndex" : docSetsByPlatform[platformName],
 										  @"installedSDK" : sdk }];
 		}
 	}
