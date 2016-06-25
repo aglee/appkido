@@ -18,7 +18,7 @@ NSString *AKDisplayNameForPlatformInternalName(NSString *platformInternalName)
 	static NSDictionary *s_displayNamesByInternalName;
 	static dispatch_once_t once;
 	dispatch_once(&once, ^{
-		s_displayNamesByInternalName = @{ AKPlatformInternalNameMac : @"OS X",
+		s_displayNamesByInternalName = @{ AKPlatformInternalNameMac : @"macOS",
 										  AKPlatformInternalNameIOS : @"iOS",
 										  AKPlatformInternalNameWatch : @"watchOS",
 										  AKPlatformInternalNameTV : @"tvOS" };
