@@ -60,10 +60,10 @@
 
 - (void)populate
 {
-	// Prefetch all these objects so they don't have to be individually fetched
-	// later when we iterate through various objects.  Saves a few seconds.
-	NSArray *entitiesToPrefetch = @[ @"Token", @"TokenMetainformation", @"Header", @"FilePath", @"Node" ];
+	// Prefetch all instances of these entities from the docset index.  Saves a
+	// few seconds because they don't have to be individually fetched later.
 	NSMutableArray *keepAround = [NSMutableArray array];
+	NSArray *entitiesToPrefetch = @[ @"Token", @"TokenMetainformation", @"Header", @"FilePath", @"Node" ];
 	for (NSString *entityName in entitiesToPrefetch) {
 		AKManagedObjectQuery *query = [self _queryWithEntityName:entityName];
 		query.returnsObjectsAsFaults = NO;

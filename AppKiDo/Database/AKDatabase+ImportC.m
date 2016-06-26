@@ -17,7 +17,6 @@
 #import "AKInferredTokenInfo.h"
 #import "DIGSLog.h"
 
-// Slight misnomer since some of these are Objective-C string constants, but whatever.
 @implementation AKDatabase (ImportC)
 
 - (void)_importCTokens

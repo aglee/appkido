@@ -481,8 +481,6 @@
 		QLog(@"+++ [ODD] Protocol member token '%@' doesn't point to any documentation.", tokenMO.tokenName);  //TODO: Handle this case.
 	}
 
-
-
 	AKProtocolToken *protocolToken;
 	AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
 
