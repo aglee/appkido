@@ -86,37 +86,10 @@
 										  description:@"Entity name is not a valid identifier."];
 	}
 
-	// Try to make an NSPredicate, if one was specified.
-	NSPredicate *predicate = nil;
-	if (self.predicateString.length) {
-		AKResult *result = [self _createPredicate];
-		if (result.error) {
-			return result;
-		}
-		predicate = result.object;
-	}
-
 	// If we got this far, we can construct the fetch request.
 	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:self.entityName];
-	fetchRequest.predicate = predicate;
+	fetchRequest.predicate = self.predicate;
 	return [AKResult successResultWithObject:fetchRequest];
-}
-
-- (AKResult *)_createPredicate
-{
-	@try {
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:self.predicateString];
-		return [AKResult successResultWithObject:predicate];
-	}
-	@catch (NSException *ex) {
-		if ([ex.name isEqualToString:NSInvalidArgumentException]) {
-			return [AKResult failureResultWithErrorDomain:MyErrorDomain
-													 code:9999
-											  description:@"Invalid predicate string."];
-		} else {
-			@throw ex;
-		}
-	}
 }
 
 - (AKResult *)_executeFetchRequest:(NSFetchRequest *)fetchRequest

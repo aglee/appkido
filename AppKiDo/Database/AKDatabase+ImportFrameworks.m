@@ -23,7 +23,7 @@
 {
 	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Header"];
 	query.keyPaths = @[ @"frameworkName" ];
-	query.predicateString = @"frameworkName != NULL";
+	query.predicate = [NSPredicate predicateWithFormat:@"frameworkName != NULL"];
 
 	AKResult *result = [query fetchDistinctObjects];  //TODO: Handle error.
 	if (result.error) {

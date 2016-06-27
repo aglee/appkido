@@ -16,8 +16,7 @@
 @interface AKManagedObjectQuery : NSObject
 
 @property (copy) NSArray *keyPaths;
-/*! No placeholders, just a string. */
-@property (copy) NSString *predicateString;
+@property (strong) NSPredicate *predicate;
 /*! Defaults to YES, just like NSFetchRequest. */
 @property (assign) BOOL returnsObjectsAsFaults;
 

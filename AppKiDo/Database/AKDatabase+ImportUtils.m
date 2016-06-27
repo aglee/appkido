@@ -20,16 +20,17 @@
 
 - (NSArray *)_fetchTokenMOsWithLanguage:(NSString *)languageName tokenType:(NSString *)tokenType
 {
-	// Construct the predicate string.
-	NSMutableString *predicateString = [NSMutableString stringWithFormat:@"language.fullName = '%@'",
-										languageName];
+	// Construct the predicate.
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"language.fullName = %@", languageName];
 	if (tokenType.length) {
-		[predicateString appendFormat:@" and tokenType.typeName = '%@'", tokenType];
+		NSPredicate *tokenTypePredicate = [NSPredicate predicateWithFormat:@"tokenType.typeName = %@", tokenType];
+		predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate,
+																		 tokenTypePredicate]];
 	}
 
 	// Perform the query.
 	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Token"];
-	query.predicateString = predicateString;
+	query.predicate = predicate;
 	AKResult *result = [query fetchObjects];
 	return result.object;  //TODO: Handle error.
 }
