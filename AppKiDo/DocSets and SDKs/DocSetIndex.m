@@ -134,7 +134,7 @@
 	for (NSEntityDescription *entity in _managedObjectModel.entities) {
 		if ([entity.managedObjectClassName isEqualToString:@"NSManagedObject"]) {
 			if (NSClassFromString(entity.name)) {
-				QLog(@"+++ Changing MO class for entity %@ to %@", entity.managedObjectClassName, entity.name);
+				//QLog(@"+++ Changing MO class for entity %@ to %@", entity.managedObjectClassName, entity.name);
 				entity.managedObjectClassName = nil;
 			} else {
 				QLog(@"+++ There is no class %@, will stick with %@", entity.name, entity.managedObjectClassName);

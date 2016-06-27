@@ -77,7 +77,7 @@
 	NSString *protocolName = [classToken.name stringByAppendingString:@"Delegate"];
 	AKProtocolToken *protocolToken = [self protocolTokenWithName:protocolName];
 	if (protocolToken) {
-		QLog(@"+++ Adding regular delegate protocol '%@' to class '%@'.", protocolToken.name, classToken.name);
+		//QLog(@"+++ Adding regular delegate protocol '%@' to class '%@'.", protocolToken.name, classToken.name);
 		[classToken addDelegateProtocolToken:protocolToken];
 	}
 }
@@ -134,7 +134,7 @@
 				continue;
 			}
 
-			QLog(@"+++ Adding extra delegate protocol '%@' to class '%@'.", protocolToken.name, classToken.name);
+			//QLog(@"+++ Adding extra delegate protocol '%@' to class '%@'.", protocolToken.name, classToken.name);
 			[classToken addDelegateProtocolToken:protocolToken];
 		}
 	}
@@ -314,7 +314,7 @@
 		|| [categoryName hasSuffix:@"DelegateMethods"]
 		|| [categoryName hasSuffix:@"DataSource"])
 	{
-		QLog(@"+++ Category '%@' is an informal protocol.", categoryName);
+		//QLog(@"+++ Category '%@' is an informal protocol.", categoryName);
 		AKFramework *framework = [self _getOrAddFrameworkWithName:frameworkName];
 		AKProtocolToken *protocolToken = [self _getOrAddProtocolTokenWithName:categoryName];
 		protocolToken.tokenMO = tokenMO;

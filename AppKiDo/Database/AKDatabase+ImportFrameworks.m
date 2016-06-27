@@ -44,7 +44,7 @@
 	if (framework == nil) {
 		framework = [[AKFramework alloc] initWithName:frameworkName];
 		[self.frameworksGroup addNamedObject:framework];
-		QLog(@"+++ Added framework %@.", frameworkName);
+		//QLog(@"+++ Added framework %@.", frameworkName);
 	}
 	return framework;
 }
@@ -64,7 +64,7 @@
 		frameworkName = [self _tryToInferFrameworkNameFromHeaderPath:headerPath];
 
 		if (frameworkName) {
-			QLog(@"+++ Got framework name '%@' for '%@' from the header path.", frameworkName, tokenMO.tokenName);
+			//QLog(@"+++ Got framework name '%@' for '%@' from the header path.", frameworkName, tokenMO.tokenName);
 		}
 	}
 
@@ -74,7 +74,7 @@
 		frameworkName = [self _tryToInferFrameworkNameFromDocPath:docPath];
 
 		if (frameworkName) {
-			QLog(@"+++ Got framework name '%@' for '%@' from the doc path.", frameworkName, tokenMO.tokenName);
+			//QLog(@"+++ Got framework name '%@' for '%@' from the doc path.", frameworkName, tokenMO.tokenName);
 		}
 	}
 

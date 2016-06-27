@@ -225,7 +225,7 @@ contextMenuItemsForElement:(NSDictionary *)element
 - (void)_updateDocDisplay
 {
 	NSURL *docURL = [self docURL];
-	QLog(@"+++ Doc URL: %@", docURL);
+	//QLog(@"+++ Doc URL: %@", docURL);
 
 	if (docURL == nil) {
 		[self _displayEmptyContent];
