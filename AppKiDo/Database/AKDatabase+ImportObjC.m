@@ -386,7 +386,19 @@
 - (AKBehaviorToken *)_ownerOfClassMemberTokenMO:(DSAToken *)tokenMO
 {
 	if (tokenMO.metainformation.file.path == nil) {
-		QLog(@"+++ [ODD] Member token '%@' doesn't point to any documentation.", tokenMO.tokenName);  //TODO: Handle this case.
+		// Here's an example of why I'm skipping tokens that don't point to a
+		// documentation path.  In the iOS 9.3 docset, there are two tokens
+		// named attributedStringFromPostalAddress:withDefaultAttributes:.  One
+		// is tagged as an instance method of CNPostalAddressFormatter, and
+		// points to a doc path.  The other is tagged as a class method, and
+		// does not point to a doc path.  Only the instance method token is
+		// correct.
+		//
+		// I suspect at some point somebody noticed the incorrect token
+		// entry and added the correct one, but forgot to delete the incorrect
+		// one, or had to leave it in for some technical reason.
+		//QLog(@"+++ [ODD] Skipping member token '%@', type '%@', container '%@'; it doesn't point to any documentation.", tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.container.containerName);
+		return nil;
 	}
 
 	AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
@@ -478,7 +490,8 @@
 - (AKProtocolToken *)_ownerOfProtocolMemberTokenMO:(DSAToken *)tokenMO
 {
 	if (tokenMO.metainformation.file.path == nil) {
-		QLog(@"+++ [ODD] Protocol member token '%@' doesn't point to any documentation.", tokenMO.tokenName);  //TODO: Handle this case.
+		//QLog(@"+++ [ODD] Skipping protocol member token '%@', type '%@', container '%@'; it doesn't point to any documentation.", tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.container.containerName);
+		return nil;
 	}
 
 	AKProtocolToken *protocolToken;
