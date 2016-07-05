@@ -30,17 +30,17 @@
 {
 	NSMutableArray *childTopics = [NSMutableArray array];
 
-	if (self.framework.classesGroup.count > 0) {
+	if (self.framework.classesGroup.objectCount > 0) {
 		AKTopic *protocolsTopic = [[AKFrameworkClassesTopic alloc] initWithFramework:self.framework];
 		[childTopics addObject:protocolsTopic];
 	}
 
-	if (self.framework.protocolsGroup.count > 0) {
+	if (self.framework.protocolsGroup.objectCount > 0) {
 		AKTopic *protocolsTopic = [[AKFrameworkProtocolsTopic alloc] initWithFramework:self.framework];
 		[childTopics addObject:protocolsTopic];
 	}
 
-	if (self.framework.functionsAndGlobalsCluster.count > 0) {
+	if (self.framework.functionsAndGlobalsCluster.groupCount > 0) {
 		[childTopics addObject:[self _functionsAndGlobalsTopic]];
 	}
 

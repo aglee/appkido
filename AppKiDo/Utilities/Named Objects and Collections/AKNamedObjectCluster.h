@@ -18,7 +18,8 @@
  */
 @interface AKNamedObjectCluster : AKNamedObject
 
-@property (assign, readonly) NSInteger count;
+@property (readonly) NSUInteger objectCount;
+@property (readonly) NSUInteger groupCount;
 @property (copy, readonly) NSArray *sortedGroupNames;
 @property (copy, readonly) NSArray *sortedGroups;
 

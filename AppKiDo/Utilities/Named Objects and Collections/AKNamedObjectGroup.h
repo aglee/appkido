@@ -25,7 +25,7 @@
  */
 @interface AKNamedObjectGroup : AKNamedObject
 
-@property (assign, readonly) NSInteger count;
+@property (assign, readonly) NSUInteger objectCount;
 @property (copy, readonly) NSArray *sortedObjectNames;
 @property (copy, readonly) NSArray *objects;
 @property (copy, readonly) NSArray *sortedObjects;
@@ -35,5 +35,7 @@
 - (AKNamedObject *)objectWithName:(NSString *)name;
 /*! If there is a name collision, the new object replaces the existing one. */
 - (void)addNamedObject:(AKNamedObject *)namedObject;  //TODO: Consider returning the old object where there is a collision.
+- (void)removeNamedObject:(AKNamedObject *)namedObject;
+- (void)removeObjectWithName:(NSString *)name;
 
 @end

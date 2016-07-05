@@ -29,7 +29,7 @@
 
 #pragma mark - Getters and setters
 
-- (NSInteger)count
+- (NSUInteger)objectCount
 {
 	return self.objectsByName.count;
 }
@@ -63,6 +63,16 @@
 		QLog(@"+++ [ODD] %s Replacing existing object %@ with %@", __PRETTY_FUNCTION__, self.objectsByName[namedObject.name], namedObject);
 	}
 	self.objectsByName[namedObject.name] = namedObject;
+}
+
+- (void)removeNamedObject:(AKNamedObject *)namedObject
+{
+	[self removeObjectWithName:namedObject.name];
+}
+
+- (void)removeObjectWithName:(NSString *)name
+{
+	self.objectsByName[name] = nil;
 }
 
 @end

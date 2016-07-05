@@ -30,7 +30,16 @@
 
 #pragma mark - Getters and setters
 
-- (NSInteger)count
+- (NSUInteger)objectCount
+{
+	NSUInteger totalObjectCount = 0;
+	for (AKNamedObjectGroup *group in self.groupsByName.allValues) {
+		totalObjectCount += group.objectCount;
+	}
+	return totalObjectCount;
+}
+
+- (NSUInteger)groupCount
 {
 	return self.groupsByName.count;
 }
