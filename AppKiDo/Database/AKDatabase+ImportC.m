@@ -14,7 +14,7 @@
 #import "AKNamedObjectGroup.h"
 #import "AKNotificationToken.h"
 #import "AKProtocolToken.h"
-#import "AKInferredTokenInfo.h"
+#import "AKBehaviorInfo.h"
 #import "DIGSLog.h"
 
 @implementation AKDatabase (ImportC)
@@ -24,151 +24,115 @@
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"C" tokenType:nil]) {
 		// As far as I can tell, tokens whose tokenType is "tag" are redundant
 		// with other tags, so I'm going to ignore them until I learn otherwise.
-		if ([tokenMO.tokenType.typeName isEqualToString:@"tag"]) {
+		NSString *tokenType = tokenMO.tokenType.typeName;
+		if ([tokenType isEqualToString:@"tag"]) {
+			//QLog(@"+++ Skipping tokenMO with type 'tag', path '%@', anchor '%@'.", tokenMO.metainformation.file.path, tokenMO.metainformation.anchor);
 			continue;
 		}
 
-		// Infer some info about the token.
-		AKInferredTokenInfo *inferredInfo = [[AKInferredTokenInfo alloc] initWithTokenMO:tokenMO];
-		if (inferredInfo.frameworkName == nil) {
-			inferredInfo.frameworkName = [self _frameworkNameForTokenMO:tokenMO];
-		}
-		if (inferredInfo.frameworkName == nil) {
+		// What framework does this token belong to?
+		AKFramework *framework = [self _frameworkForTokenMO:tokenMO];
+		if (framework == nil) {
+			QLog(@"+++ [ERROR] Could not infer framework name for tokenMO '%@', type '%@'.", tokenMO.tokenName, tokenType);
 			continue;
 		}
 
-		// Is it a function?
-		AKToken *token;
-		token = [self _maybeAddFunctionTokenWithInferredInfo:inferredInfo];
-		if (token) {
-			continue;
+		// Is this token a "pseudo-member" of a behavior?
+		AKToken *token = [self _maybeAddPseudoMemberWithTokenMO:tokenMO];
+
+		// If not, add it to the framework.
+		if (token == nil) {
+			NSString *groupName = tokenMO.parentNode.kName;
+			NSString *suffixToTrim = @" Reference";
+			if ([groupName hasSuffix:suffixToTrim]) {
+				groupName = [groupName substringToIndex:(groupName.length - suffixToTrim.length)];
+			}
+
+			if ([tokenType isEqualToString:@"func"]) {
+				token = [[AKFunctionToken alloc] initWithTokenMO:tokenMO];
+//				groupName = @"FUNCTIONS";
+			} else {
+				token = [[AKToken alloc] initWithTokenMO:tokenMO];
+//				groupName = @"GLOBALS";
+			}
+			[framework.functionsAndGlobalsCluster addNamedObject:token toGroupWithName:groupName];
 		}
 
-		// Is it a notification?
-		token = [self _maybeAddNotificationWithInferredInfo:inferredInfo];
-		if (token) {
-			continue;
-		}
+//		// Figure out which token cluster within the framework the token belongs to.
+//		NSArray *tokenTypes = @[@"data", @"econst", @"macro", @"tdef"];
+//		if (![tokenTypes containsObject:tokenType]) {
+//			QLog(@"+++ Could not import token %@ -- framework %@ has no token bin for type %@.", tokenMO.tokenName, framework.name, tokenType);
+//			return nil;
+//		}
 
-		// Does it belong to a behavior?
-		token = [self _maybeAddTokenToBehaviorWithInferredInfo:inferredInfo];
-		if (token) {
-			continue;
-		}
-
-		// Add the token to one of the framework's bins.
-		token = [self _maybeAddTokenToFrameworkWithInferredInfo:inferredInfo];
-		if (token) {
-			continue;
-		}
+		// Note the token's owning framework.
+		token.frameworkName = framework.name;
 	}
 }
 
-- (AKToken *)_maybeAddNotificationWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
+- (AKToken *)_maybeAddPseudoMemberWithTokenMO:(DSAToken *)tokenMO
 {
-	if (![inferredInfo.tokenMO.tokenName hasSuffix:@"Notification"]) {
+	// Figure out what behavior, if any, owns this token.
+	AKBehaviorInfo *owningBehaviorInfo = [self _behaviorInfoInferredFromTokenMO:tokenMO];
+	if (owningBehaviorInfo == nil) {
+		return nil;
+	}
+	AKBehaviorToken *owningBehaviorToken = [self _behaviorTokenWithInfo:owningBehaviorInfo];
+	if (owningBehaviorToken == nil) {
+		//QLog(@"+++ Could not derive behavior token from behaviorInfo %@.", owningBehaviorInfo);
 		return nil;
 	}
 
-	AKBehaviorToken *behaviorToken = [self _behaviorTokenForInferredInfo:inferredInfo];
-	if (behaviorToken) {
-		// Attach the notification to its owning behavior.
-		AKNotificationToken *notifToken = [[AKNotificationToken alloc] initWithTokenMO:inferredInfo.tokenMO];
-		[behaviorToken addNotification:notifToken];
-		return notifToken;
-	} else {
-		// Non-behavior notifications get lumped with the framework's other constants.
-		AKToken *notifToken = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
-		NSString *groupName = inferredInfo.nodeSubject;  //TODO: Figure out the right group name.
-		AKFramework *framework = [self _getOrAddFrameworkWithName:inferredInfo.frameworkName];
-		[framework.functionsAndGlobalsCluster addNamedObject:notifToken toGroupWithName:groupName];
+	// Is this token one of the behavior's "Notifications"?
+	if ([tokenMO.tokenName hasSuffix:@"Notification"]) {
+		AKNotificationToken *notifToken = [[AKNotificationToken alloc] initWithTokenMO:tokenMO];
+		[owningBehaviorToken addNotification:notifToken];
 		return notifToken;
 	}
-}
 
-- (AKToken *)_maybeAddFunctionTokenWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
-{
-	if (![inferredInfo.tokenMO.tokenType.typeName isEqualToString:@"func"]) {
-		return nil;
+	// Is this token one of the behavior's "Constants"?
+	NSString *tokenType = tokenMO.tokenType.typeName;
+	if ([tokenType isEqualToString:@"data"]
+		|| [tokenType isEqualToString:@"econst"]
+		|| [tokenType isEqualToString:@"macro"])
+	{
+		AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
+		[owningBehaviorToken addConstantToken:token];
+		//QLog(@"+++ Added constant %@ to %@.", token, owningBehaviorToken);
+		return token;
 	}
 
-	AKToken *token = [[AKFunctionToken alloc] initWithTokenMO:inferredInfo.tokenMO];
-	token.frameworkName = inferredInfo.frameworkName;
+	// Is this token one of the behavior's "Data Types"?
+	if ([tokenType isEqualToString:@"tdef"]) {
+		AKToken *token = [[AKToken alloc] initWithTokenMO:tokenMO];
+		[owningBehaviorToken addDataTypeToken:token];
+		//QLog(@"+++ Added data type '%@' to %@.", token.name, owningBehaviorToken);
+		return token;
+	}
 
-	NSString *groupName = inferredInfo.nodeSubject;
-	AKFramework *framework = [self _getOrAddFrameworkWithName:inferredInfo.frameworkName];
-	[framework.functionsAndGlobalsCluster addNamedObject:token toGroupWithName:groupName];
-
-	return token;
+	QLog(@"+++ [ODD] %s Unexpected token type '%@' for tokenMO '%@' seemingly owned by behavior %@.", tokenType, tokenMO.tokenName, owningBehaviorToken);
+	return nil;
 }
 
-- (AKBehaviorToken *)_behaviorTokenForInferredInfo:(AKInferredTokenInfo *)inferredInfo
+- (AKBehaviorToken *)_behaviorTokenWithInfo:(AKBehaviorInfo *)behaviorInfo
 {
-	if (inferredInfo.nameOfClass) {
-		AKClassToken *classToken = [self classTokenWithName:inferredInfo.nameOfClass];
+	if (behaviorInfo.nameOfClass) {
+		AKClassToken *classToken = [self classTokenWithName:behaviorInfo.nameOfClass];
 		if (classToken == nil) {
-			QLog(@"+++ [ODD] No class with name %@.", inferredInfo.nameOfClass);
+			QLog(@"+++ [ODD] No class with name %@.", behaviorInfo.nameOfClass);
 			return nil;
 		}
 		return classToken;
-	} else if (inferredInfo.nameOfProtocol) {
-		AKProtocolToken *protocolToken = [self protocolTokenWithName:inferredInfo.nameOfProtocol];
+	} else if (behaviorInfo.nameOfProtocol) {
+		AKProtocolToken *protocolToken = [self protocolTokenWithName:behaviorInfo.nameOfProtocol];
 		if (protocolToken == nil) {
-			QLog(@"+++ [ODD] No protocol with name %@.", inferredInfo.nameOfProtocol);
+			QLog(@"+++ [ODD] No protocol with name %@.", behaviorInfo.nameOfProtocol);
 			return nil;
 		}
 		return protocolToken;
 	} else {
 		return nil;
 	}
-}
-
-- (AKToken *)_maybeAddTokenToBehaviorWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
-{
-	AKBehaviorToken *behaviorToken = [self _behaviorTokenForInferredInfo:inferredInfo];
-	if (behaviorToken == nil) {
-		return nil;
-	}
-
-	AKToken *token = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
-	token.frameworkName = inferredInfo.frameworkName;
-
-	NSString *tokenType = inferredInfo.tokenMO.tokenType.typeName;
-	if ([tokenType isEqualToString:@"data"]
-		|| [tokenType isEqualToString:@"econst"]
-		|| [tokenType isEqualToString:@"macro"]) {
-
-		[behaviorToken addConstantToken:token];
-		//QLog(@"+++ Added constant %@ to %@.", token.name, behaviorToken);
-	} else if ([tokenType isEqualToString:@"tdef"]) {
-		[behaviorToken addDataTypeToken:token];
-		//QLog(@"+++ Added data type %@ to %@.", token, behaviorToken);
-	} else {
-		//QLog(@"+++ [ODD] %s Unexpected token type %@ for %@.", tokenType, token);
-		return nil;
-	}
-
-	return token;
-}
-
-- (AKToken *)_maybeAddTokenToFrameworkWithInferredInfo:(AKInferredTokenInfo *)inferredInfo
-{
-	// Figure out which token cluster within the framework the token belongs to.
-	AKFramework *framework = [self _getOrAddFrameworkWithName:inferredInfo.frameworkName];
-	NSArray *tokenTypes = @[@"data", @"econst", @"macro", @"tdef"];
-	if (![tokenTypes containsObject:inferredInfo.tokenMO.tokenType.typeName]) {
-		QLog(@"+++ Could not import token %@ -- framework %@ has no token bin for type %@.", inferredInfo.tokenMO.tokenName, framework.name, inferredInfo.tokenMO.tokenType.typeName);
-		return nil;
-	}
-
-	// Create the token and add it to the framework.
-	AKToken *token = [[AKToken alloc] initWithTokenMO:inferredInfo.tokenMO];
-	token.frameworkName = inferredInfo.frameworkName;
-
-	NSString *groupName = inferredInfo.nodeSubject;  //TODO: Figure out the right group name.
-	[framework.functionsAndGlobalsCluster addNamedObject:token toGroupWithName:groupName];
-
-	return token;
 }
 
 @end

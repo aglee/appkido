@@ -7,6 +7,8 @@
 //
 
 #import "AKDatabase.h"
+#import "AKBehaviorInfo.h"
+#import "AKBehaviorToken.h"
 #import "DocSetModel.h"
 
 /*!
@@ -14,6 +16,7 @@
  * categories.
  */
 @interface AKDatabase ()
+// "Private" properties.
 @property (strong, readonly) AKNamedObjectGroup *frameworksGroup;
 @property (copy, readonly) NSMutableDictionary *classTokensByName;
 @property (copy, readonly) NSMutableDictionary *protocolTokensByName;
@@ -26,6 +29,21 @@
 - (AKManagedObjectQuery *)_queryWithEntityName:(NSString *)entityName;
 - (NSArray *)_fetchTokenMOsWithLanguage:(NSString *)languageName tokenType:(NSString *)tokenType;
 
+/*!
+ * The returned dictionary will have one of the following forms:
+ *
+ * - class name and category name
+ *   - input is @"CLASSNAME(CATEGORYNAME)"
+ *   - output is @{ @1 : @"CLASSNAME", @2 : @"CATEGORYNAME" }
+ *
+ * - class name only
+ *   - input is @"CLASSNAME"
+ *   - output is @{ @1 : @"CLASSNAME" }
+ *
+ * - any other input causes nil to be returned
+ */
+- (NSDictionary *)_parsePossibleCategoryName:(NSString *)name;
+
 @end
 
 #pragma mark -
@@ -34,7 +52,6 @@
 
 - (void)_importFrameworks;
 - (AKFramework *)_getOrAddFrameworkWithName:(NSString *)frameworkName;
-- (NSString *)_frameworkNameForTokenMO:(DSAToken *)tokenMO;
 
 @end
 
@@ -50,6 +67,8 @@
  * - Some "pseudo-members" of behaviors (notifications, delegates, bindings).
  */
 - (void)_importObjectiveCTokens;
+- (AKProtocolToken *)_getOrAddProtocolTokenWithName:(NSString *)protocolName;
+- (AKClassToken *)_getOrAddClassTokenWithName:(NSString *)className;
 @end
 
 #pragma mark -
@@ -74,5 +93,18 @@
  * and globals are grouped with the framework they belong to.
  */
 - (void)_importCTokens;
+@end
+
+#pragma mark -
+
+@interface AKDatabase (InferringFramework)
+- (AKFramework *)_frameworkForTokenMO:(DSAToken *)tokenMO;
+@end
+
+#pragma mark -
+
+@interface AKDatabase (InferringBehavior)
+- (AKBehaviorToken *)_behaviorTokenFromInferredInfo:(AKBehaviorInfo *)behaviorInfo;
+- (AKBehaviorInfo *)_behaviorInfoInferredFromTokenMO:(DSAToken *)tokenMO;
 @end
 
