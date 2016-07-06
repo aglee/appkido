@@ -38,12 +38,22 @@
 
 - (NSDictionary *)_parsePossibleCategoryName:(NSString *)name
 {
-	// Workaround for a bug/quirk in the 10.11.4 docset.  The token named
-	// "NSObjectIOBluetoothHostControllerDelegate" has token type "cl" but
-	// is actually a category on NSObject.
+	// Workarounds for typos in the docsets.
 	if ([name isEqualToString:@"NSObjectIOBluetoothHostControllerDelegate"]) {
+		// In the macOS 10.11.4 docset index, the token named
+		// "NSObjectIOBluetoothHostControllerDelegate" has token type "cl" but
+		// is actually a category.  The name should have had parens like this:
+		// "NSObject(IOBluetoothHostControllerDelegate)".  TODO: File a Radar.
 		return @{ @1: @"NSObject",
 				  @2: @"IOBluetoothHostControllerDelegate" };
+	} else if ([name isEqualToString:@"AVAudioPCMBufer"]) {
+		// In the macOS 10.11.4 docset index, the class name "AVAudioPCMBuffer"
+		// is misspelled as "AVAudioPCMBufer".  TODO: File a Radar.
+		return @{ @1: @"AVAudioPCMBuffer" };
+	} else if ([name isEqualToString:@"MPSimageThresholdToZeroInverse"]) {
+		// In the iOS 9.3 docset index, "MPSImageThresholdToZeroInverse" is
+		// misspelled as "MPSimageThresholdToZeroInverse" (lower case "i").
+		return @{ @1: @"MPSImageThresholdToZeroInverse" };
 	}
 
 	// Use a regex to parse the class name and category name.
