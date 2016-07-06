@@ -62,15 +62,8 @@
 {
 	// Prefetch all instances of these entities from the docset index.  Saves a
 	// few seconds because they don't have to be individually fetched later.
-	NSMutableArray *keepAround = [NSMutableArray array];
-	NSArray *entitiesToPrefetch = @[ @"Token", @"TokenMetainformation", @"Header", @"FilePath", @"Node" ];
-	for (NSString *entityName in entitiesToPrefetch) {
-		AKManagedObjectQuery *query = [self _queryWithEntityName:entityName];
-		query.returnsObjectsAsFaults = NO;
-		NSArray *fetchedObjects = [query fetchObjects].object;
-		QLog(@"+++ Pre-fetched %zd instances of %@", fetchedObjects.count, entityName);
-		[keepAround addObject:fetchedObjects];
-	}
+	NSArray *entityNames = @[ @"Token", @"TokenMetainformation", @"Header", @"FilePath", @"Node" ];
+	NSArray *keepAround = [self _fetchAllInstancesOfEntitiesWithNames:entityNames];
 
 	// Load up our internal data structures with stuff from the docset index.
 	[self _importFrameworks];
@@ -138,6 +131,23 @@
 - (AKProtocolToken *)protocolTokenWithName:(NSString *)name
 {
 	return _protocolTokensByName[name];
+}
+
+#pragma mark - Private methods
+
+- (NSArray *)_fetchAllInstancesOfEntitiesWithNames:(NSArray *)entityNames
+{
+	NSMutableArray *arrayOfFetchedObjectArrays = [NSMutableArray array];
+
+	for (NSString *entityName in entityNames) {
+		AKManagedObjectQuery *query = [self _queryWithEntityName:entityName];
+		query.returnsObjectsAsFaults = NO;
+		NSArray *fetchedObjects = [query fetchObjects].object;
+		QLog(@"+++ Pre-fetched %zd instances of %@", fetchedObjects.count, entityName);
+		[arrayOfFetchedObjectArrays addObject:fetchedObjects];
+	}
+
+	return arrayOfFetchedObjectArrays;
 }
 
 @end
