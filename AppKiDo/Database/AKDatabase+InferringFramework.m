@@ -107,7 +107,7 @@
 	if (frameworkName) {
 		//QLog(@"+++ Got framework name '%@' for '%@' from the doc path.", frameworkName, tokenMO.tokenName);
 	}
-	return nil;
+	return frameworkName;
 }
 
 // Does the node name have the form "SOMETHING Framework Reference"?  SOMETHING
