@@ -58,22 +58,25 @@
 #pragma mark -
 
 @interface AKDatabase (ImportObjC)
+
 /*!
  * Scans tokens in the DocSetIndex tagged with "Objective-C" as their language.
  * Adds AKToken objects to the database accordingly.  This means:
  *
  * - Behaviors (my umbrella word for protocols, classes, and categories).
- * - "Real" members of behaviors (properties and methods).
- * - Some "pseudo-members" of behaviors (notifications, delegates, bindings).
+ * - Members (my umbrella word for properties, methods, and bindings).
  */
 - (void)_importObjectiveCTokens;
+
 - (AKProtocolToken *)_getOrAddProtocolTokenWithName:(NSString *)protocolName;
 - (AKClassToken *)_getOrAddClassTokenWithName:(NSString *)className;
+
 @end
 
 #pragma mark -
 
 @interface AKDatabase (ImportC)
+
 /*
  * Scans tokens in the DocSetIndex tagged with "C" as their language.  Adds
  * AKToken objects to the database accordingly.  This means C functions,
@@ -93,6 +96,7 @@
  * and globals are grouped with the framework they belong to.
  */
 - (void)_importCTokens;
+
 @end
 
 #pragma mark -

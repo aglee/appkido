@@ -28,19 +28,18 @@
 
 - (void)_importObjectiveCTokens
 {
-	// Scan the header files for all frameworks in the SDK.  One reason is to
-	// construct the class hierarchy, since there are classes for which the
-	// docset index doesn't give the complete ancestry (e.g. DOMElement).  The
-	// other reason is to discover framework names that we might not otherwise
-	// discover -- e.g. "Cocoa" (!).
+	// Construct a class hierarchy by parsing class declarations in the SDK's
+	// header files.  We do this because there are classes such as DOMElement
+	// for which the docset index does not give the complete superclass
+	// ancestry.
 	[self _scanObjCHeaderFiles];
 
-	// Scan the docset index for tokens that refer to Objective-C "behaviors"
-	// (my umbrella word for protocols, classes, and categories).
+	// Scan tokens in the docset index that refer to Objective-C protocols,
+	// classes, and categories.  (My umbrella word for these is "behaviors".)
 	[self _importObjCBehaviors];
 
-	// Scan tokens in the docset that refer to Objective-C properties, methods,
-	// and bindings.
+	// Scan tokens in the docset index that refer to Objective-C properties,
+	// methods, and bindings.
 	[self _importObjCMembers];
 
 	// Now that (in theory) we've discovered all our classes and protocols,
@@ -59,7 +58,7 @@
 		// The framework.
 		AKFramework *framework = [self _getOrAddFrameworkWithName:classInfo.frameworkName];
 
-		// The subclass.
+		// Add the subclass.
 		AKClassToken *classToken = [self _getOrAddClassTokenWithName:classInfo.nameOfClass];
 		classToken.frameworkName = classInfo.frameworkName;
 		if (!classInfo.headerPathIsRelativeToSDK) {
@@ -67,7 +66,7 @@
 		}
 		[framework.classesGroup addNamedObject:classToken];
 
-		// The superclass.
+		// Add the superclass.
 		AKClassToken *superclassToken = [self _getOrAddClassTokenWithName:classInfo.nameOfSuperclass];
 		[superclassToken addSubclassToken:classToken];
 	}
@@ -75,23 +74,22 @@
 
 - (void)_importObjCBehaviors
 {
-	// Scan tokens in the docset index that refer to Objective-C protocols.
+	// Scan tokens in the docset index that are tagged as Objective-C protocols.
 	[self _importProtocols];
 
-	// Scan tokens in the docset index that refer to Objective-C classes.
+	// Scan tokens in the docset index that are tagged as Objective-C classes.
 	// Some of these will actually be category tokens.
 	NSArray *mistakenTokenMOs = [self _importClassesAndReturnCategoriesMistakenlyLabeledAsClasses];
 
 	// Scan tokens in the docset index that are either tagged as Objective-C
-	// categories or that we indentified as such in the previous step.  Some of
+	// categories or that we identified as such in the previous step.  Some of
 	// the categories may be informal protocols.
 	[self _importCategoriesIncludingMistakenlyLabeled:mistakenTokenMOs];
 }
 
 - (void)_importObjCMembers
 {
-	// Scan the docset index for three kinds of  methods, properties, and bindings, associating each with the
-	// protocol, class, or category it belongs to.
+	// Scan the docset index for methods, properties, and bindings that are owned .
 	[self _importClassMethods];
 	[self _importInstanceMethods];
 	[self _importProperties];
@@ -211,7 +209,7 @@
 {
 	// Import categories that mistakenly had "cl" as their token type.
 	for (DSAToken *tokenMO in mistakenlyLabeledCategories) {
-		QLog(@"+++ [RADAR] Category whose token type is mistakenly 'cl': %@.", tokenMO.tokenName);
+		//QLog(@"+++ [RADAR] Category whose token type is mistakenly 'cl': %@.", tokenMO.tokenName);
 		[self _importWhateverWithCategoryTokenMO:tokenMO];
 	}
 
@@ -278,7 +276,7 @@
 	}
 }
 
-#pragma mark - Importing member tokens of classes and categories
+#pragma mark - Importing member tokens owned by classes and categories
 
 - (void)_importClassMethods
 {
@@ -347,12 +345,10 @@
 	AKBehaviorInfo *behaviorInfo = [self _behaviorInfoInferredFromTokenMO:tokenMO];
 	AKBehaviorToken *behaviorToken = [self _behaviorTokenFromInferredInfo:behaviorInfo];
 	if (behaviorToken == nil) {
-		QLog(@"+++ [ODD] Can't figure out owner from parent node '%@', container '%@'.", tokenMO.parentNode.kName, tokenMO.container.containerName);
+		QLog(@"+++ [ODD] Can't figure out the behavior that owns member '%@' of type '%@'; parent node is '%@', container is '%@'.", tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.parentNode.kName, tokenMO.container.containerName);
 	}
-
 	return behaviorToken;
 }
-
 
 #pragma mark - Importing member tokens owned by protocols
 
@@ -412,7 +408,7 @@
 	}
 
 	if (protocolToken == nil) {
-		QLog(@"+++ [ODD] Can't figure out protocol from parent node '%@', container '%@'.", tokenMO.parentNode.kName, tokenMO.container.containerName);
+		QLog(@"+++ [ODD] Can't figure out the behavior that owns member '%@' of type '%@'; parent node is '%@', container is '%@'.", tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.parentNode.kName, tokenMO.container.containerName);
 	}
 
 	return protocolToken;

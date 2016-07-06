@@ -8,12 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define AKHeaderScannerClassNameKey @"ClassName"
-#define AKHeaderScannerSuperclassNameKey @"SuperclassName"
-#define AKHeaderScannerFrameworkNameKey @"FrameworkName"
-/*! If HeaderPath begins with a "/", it is an absolute path.  Otherwise, it is relative to sdkBasePath. */
-#define AKHeaderScannerHeaderPathNameKey @"HeaderPath"
-
 @class AKInstalledSDK;
 
 /*!

@@ -17,8 +17,6 @@
 
 @implementation AKDatabase (ImportFrameworks)
 
-#pragma mark - Importing frameworks
-
 - (void)_importFrameworks
 {
 	AKManagedObjectQuery *query = [self _queryWithEntityName:@"Header"];
@@ -35,8 +33,6 @@
 		(void)[self _getOrAddFrameworkWithName:dict[@"frameworkName"]];
 	}
 }
-
-#pragma mark - Inferring framework info
 
 - (AKFramework *)_getOrAddFrameworkWithName:(NSString *)frameworkName
 {

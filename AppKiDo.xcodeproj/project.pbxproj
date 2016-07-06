@@ -1263,9 +1263,9 @@
 		739328D01D07F1100032BDC3 /* AKDatabase Categories */ = {
 			isa = PBXGroup;
 			children = (
-				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
 				73AC6B5D1CFA4E5100D6676C /* AKDatabase+ImportFrameworks.m */,
 				73664D4C1CF2BE9D0094F405 /* AKDatabase+ImportObjC.m */,
+				73664D4B1CF2BE9D0094F405 /* AKDatabase+ImportC.m */,
 				73AC6B5A1CFA4BFE00D6676C /* AKDatabase+ImportUtils.m */,
 				73C02EAF1D244B0700086B4F /* AKDatabase+InferringFramework.m */,
 				73C02EB21D244C4200086B4F /* AKDatabase+InferringBehavior.m */,

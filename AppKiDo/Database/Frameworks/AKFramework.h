@@ -13,6 +13,7 @@
 
 @interface AKFramework : AKNamedObject
 
+// Note that while these named object collections are readonly, they are mutable.
 @property (strong, readonly) AKNamedObjectGroup *protocolsGroup;
 @property (strong, readonly) AKNamedObjectGroup *classesGroup;
 @property (strong, readonly) AKNamedObjectCluster *functionsAndGlobalsCluster;
