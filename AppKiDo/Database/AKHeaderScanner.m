@@ -16,9 +16,10 @@
 
 @interface AKHeaderScanner ()
 @property (strong) AKInstalledSDK *installedSDK;
-@property (strong) NSMutableArray *classDeclarations;  // Elements are dictionaries.
-@property (strong) NSMutableSet *classNamesWithDeclaredSuperclass;
-@property (strong) NSMutableSet *classNamesPENDINGDeclaredSuperclass;
+@property (strong) NSMutableArray<NSString *> *frameworkNamesInternal;
+@property (strong) NSMutableArray<AKClassDeclarationInfo *> *classDeclarationsInternal;
+@property (strong) NSMutableSet *classNamesWithKnownSuperclass;
+@property (strong) NSMutableSet *classNamesPendingDeclaredSuperclass;
 @end
 
 @implementation AKHeaderScanner
@@ -40,37 +41,91 @@
 	return [self initWithInstalledSDK:nil];
 }
 
-#pragma mark - Scanning header files
+#pragma mark - Getters and setters
 
-- (NSArray *)scanHeadersForClassDeclarations
+- (NSArray *)frameworkNames
 {
-	// Treat NSObject and NSProxy as having declared superclasses.  You could
-	// say their superclasses have been "declared" to be nil.
-	self.classDeclarations = [[NSMutableArray alloc] init];
-	self.classNamesWithDeclaredSuperclass = [NSMutableSet setWithObjects:@"NSObject", @"NSProxy", nil];
-	self.classNamesPENDINGDeclaredSuperclass = [[NSMutableSet alloc] init];
+	if (self.frameworkNamesInternal == nil) {
+		[self _lazyInit];
+	}
+	return [self.frameworkNamesInternal copy];
+}
 
+- (NSArray<AKClassDeclarationInfo *> *)classDeclarations
+{
+	if (self.classDeclarationsInternal == nil) {
+		[self _lazyInit];
+	}
+	return [self.classDeclarationsInternal copy];
+}
+
+#pragma mark - Private methods
+
+// Constructs the frameworkNamesInternal and classDeclarationsInternal arrays by
+// scanning the SDK's framework directories.
+- (void)_lazyInit
+{
+	// Initialize the array properties we will be populating.
+	self.frameworkNamesInternal = [[NSMutableArray alloc] init];
+	self.classDeclarationsInternal = [[NSMutableArray alloc] init];
+
+	// Initialize arrays we will use for temporary storage.
+	self.classNamesWithKnownSuperclass = [NSMutableSet setWithObjects:@"NSObject", @"NSProxy", nil];
+	self.classNamesPendingDeclaredSuperclass = [[NSMutableSet alloc] init];
+
+	// Find the SDK's framework directories, and scan the .h files within them.
 	[self _scanSDKHeaders];
+
+	// KLUDGE: Some classes, at least in the macOS 10.11.4 docset, are declared
+	// in header files that don't live in the SDK directory.
 	if ([self.installedSDK.platformInternalName isEqualToString:AKPlatformInternalNameMac]) {
 		[self _scanITunesLibraryHeaders];
 		[self _scanFxPlugHeaders];
 	}
 
-	// Return class declarations where the superclass is a class we have
-	// previously seen declared as a subclass.  This should handle the cases
-	// where a header contains two declarations for the same class, separated
-	// by "#if TARGET_OS_IPHONE".  This should weed out whichever of the
-	// declarations is the wrong one for this SDK.
-	NSMutableArray *goodDeclarations = [[NSMutableArray alloc] init];
-	for (AKClassDeclarationInfo *classInfo in self.classDeclarations) {
-		if ([self.classNamesWithDeclaredSuperclass containsObject:classInfo.nameOfSuperclass]) {
-			[goodDeclarations addObject:classInfo];
+	// The array self.classDeclarationsInternal now contains information about
+	// all the class:superclass declarations we found.  The problem is that some
+	// header files contain two declarations of the same class, separated by
+	// "#if TARGET_OS_PHONE".  This means we may have duplicate, possibly
+	// conflicting class declarations in our list.
+	//
+	// To avoid this, one option would have been to do more sophisticated
+	// parsing of the header files, and select the appropriate class declaration
+	// by mimicking what the compiler would do -- essentially, by evaluating the
+	// TARGET_OS_PHONE macro and ignoring whichever class declaration is in the
+	// branch I don't want.
+	//
+	// I'm taking a simpler approach, which is first to collect *all* the class
+	// declarations, including the possible duplicates, and then discard any for
+	// which I can't trace ancestry back to one of the two root classes.  I
+	// *think* this works.
+	while (YES) {
+		NSInteger numPruned = [self _pruneClassDeclarationsAndReturnNumberPruned];
+		QLog(@"+++ Pruned %zd class declarations.", numPruned);
+		if (numPruned == 0) {
+			break;
 		}
 	}
-	return goodDeclarations;
+
+	// Clear out the temporary arrays.
+	self.classNamesWithKnownSuperclass = nil;
+	self.classNamesPendingDeclaredSuperclass = nil;
 }
 
-#pragma mark - Private methods
+- (NSInteger)_pruneClassDeclarationsAndReturnNumberPruned
+{
+	NSInteger numPruned = 0;
+
+	NSMutableArray *declarationsToKeep = [[NSMutableArray alloc] init];
+	for (AKClassDeclarationInfo *classInfo in self.classDeclarationsInternal) {
+		if ([self.classNamesWithKnownSuperclass containsObject:classInfo.nameOfSuperclass]) {
+			[declarationsToKeep addObject:classInfo];
+		}
+	}
+	self.classDeclarationsInternal = declarationsToKeep;
+
+	return numPruned;
+}
 
 - (void)_scanSDKHeaders
 {
@@ -87,12 +142,16 @@
 	}
 
 	for (NSString *fwItem in itemsInFrameworksContainer) {
+		// We're only interested in item names of the form "X.framework".
 		if (![fwItem hasSuffix:@".framework"]) {
 			continue;
 		}
 
-		// Scan all .h files within this framework.
+		// Make note of the framework name.
 		NSString *frameworkName = [fwItem.lastPathComponent stringByDeletingPathExtension];
+		[self.frameworkNamesInternal addObject:frameworkName];
+
+		// Scan all .h files within this framework.
 		NSString *frameworkDirPath = [frameworksContainerPath stringByAppendingPathComponent:fwItem];
 		for (NSString *itemInsideFramework in [fm enumeratorAtPath:frameworkDirPath]) {
 			if (![itemInsideFramework hasSuffix:@".h"]) {
@@ -127,7 +186,7 @@
 	}
 }
 
-- (void)_scanFxPlugHeaders
+- (void)_scanFxPlugHeaders  //TODO: Either fill this in or decide not to.
 {
 }
 
@@ -158,11 +217,11 @@
 		NSString *subclassName = [fileContents substringWithRange:[match rangeAtIndex:1]];
 		NSString *superclassName = [fileContents substringWithRange:[match rangeAtIndex:2]];
 
-		[self.classNamesWithDeclaredSuperclass addObject:subclassName];
-		[self.classNamesPENDINGDeclaredSuperclass removeObject:subclassName];
+		[self.classNamesWithKnownSuperclass addObject:subclassName];
+		[self.classNamesPendingDeclaredSuperclass removeObject:subclassName];
 
-		if (![self.classNamesWithDeclaredSuperclass containsObject:superclassName]) {
-			[self.classNamesPENDINGDeclaredSuperclass addObject:superclassName];
+		if (![self.classNamesWithKnownSuperclass containsObject:superclassName]) {
+			[self.classNamesPendingDeclaredSuperclass addObject:superclassName];
 		}
 
 		AKClassDeclarationInfo *classInfo = [[AKClassDeclarationInfo alloc] init];
@@ -171,7 +230,7 @@
 		classInfo.frameworkName = frameworkName;
 		classInfo.headerPath = (isSDKBasePath ? relativePath : filePath);
 		classInfo.headerPathIsRelativeToSDK = isSDKBasePath;
-		[self.classDeclarations addObject:classInfo];
+		[self.classDeclarationsInternal addObject:classInfo];
 	}
 }
 

@@ -8,21 +8,28 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class AKClassDeclarationInfo;
 @class AKInstalledSDK;
 
 /*!
- * Scans header files looking for declarations of non-root Objective-C classes,
- * where the superclass is specified.
+ * For internal use by AKDatabase.
+ *
+ * Scans the frameworks in the SDK's System/Library/Frameworks directory.  Each
+ * framework is a directory whose name has the form "FRAMEWORKNAME.framework".
+ *
+ * Gets framework names by removing the ".framework" extension from the
+ * framework directory names.
+ *
+ * Finds class declarations by scanning the .h files in the framework
+ * directories, looking for the pattern "@interface SomeClass : SomeSuperclass".
  */
 @interface AKHeaderScanner : NSObject
+
+@property (copy, readonly) NSArray *frameworkNames;
+@property (copy, readonly) NSArray<AKClassDeclarationInfo *> *classDeclarations;
 
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithInstalledSDK:(AKInstalledSDK *)installedSDK NS_DESIGNATED_INITIALIZER;
-
-#pragma mark - Scanning header files
-
-/*! Returns an array of dictionaries.  Dictionary keys are listed above. */
-- (NSArray *)scanHeadersForClassDeclarations;
 
 @end
