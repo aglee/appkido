@@ -10,13 +10,6 @@
 
 @implementation AKCategoryToken
 
-#pragma mark - <AKNamed> methods
-
-- (NSString *)displayName
-{
-	return [NSString stringWithFormat:@"%@(%@)", self.owningClassToken.name, self.name];
-}
-
 #pragma mark - AKBehaviorToken methods
 
 - (void)tearDown
@@ -34,6 +27,13 @@
 			self.className,
 			self.owningClassToken.name,
 			self.name];
+}
+
+#pragma mark - <AKNamed> methods
+
+- (NSString *)displayName
+{
+	return [NSString stringWithFormat:@"%@(%@)", self.owningClassToken.name, self.name];
 }
 
 @end
