@@ -16,7 +16,6 @@
 
 @interface AKHeaderScanner ()
 @property (strong) AKInstalledSDK *installedSDK;
-@property (strong) NSMutableArray<NSString *> *frameworkNamesInternal;
 @property (strong) NSMutableArray<AKClassDeclarationInfo *> *classDeclarationsInternal;
 @property (strong) NSMutableSet *classNamesWithKnownSuperclass;
 @property (strong) NSMutableSet *classNamesPendingDeclaredSuperclass;
@@ -43,14 +42,6 @@
 
 #pragma mark - Getters and setters
 
-- (NSArray *)frameworkNames
-{
-	if (self.frameworkNamesInternal == nil) {
-		[self _lazyInit];
-	}
-	return [self.frameworkNamesInternal copy];
-}
-
 - (NSArray<AKClassDeclarationInfo *> *)classDeclarations
 {
 	if (self.classDeclarationsInternal == nil) {
@@ -61,12 +52,10 @@
 
 #pragma mark - Private methods
 
-// Constructs the frameworkNamesInternal and classDeclarationsInternal arrays by
-// scanning the SDK's framework directories.
+// Populates the classDeclarationsInternal array by scanning the SDK's framework directories.
 - (void)_lazyInit
 {
 	// Initialize the array properties we will be populating.
-	self.frameworkNamesInternal = [[NSMutableArray alloc] init];
 	self.classDeclarationsInternal = [[NSMutableArray alloc] init];
 
 	// Initialize arrays we will use for temporary storage.
@@ -147,11 +136,8 @@
 			continue;
 		}
 
-		// Make note of the framework name.
-		NSString *frameworkName = [fwItem.lastPathComponent stringByDeletingPathExtension];
-		[self.frameworkNamesInternal addObject:frameworkName];
-
 		// Scan all .h files within this framework.
+		NSString *frameworkName = [fwItem.lastPathComponent stringByDeletingPathExtension];
 		NSString *frameworkDirPath = [frameworksContainerPath stringByAppendingPathComponent:fwItem];
 		for (NSString *itemInsideFramework in [fm enumeratorAtPath:frameworkDirPath]) {
 			if (![itemInsideFramework hasSuffix:@".h"]) {
