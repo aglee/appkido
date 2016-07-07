@@ -17,6 +17,15 @@
 	return [NSString stringWithFormat:@"%@(%@)", self.owningClassToken.name, self.name];
 }
 
+#pragma mark - AKBehaviorToken methods
+
+- (void)tearDown
+{
+	[super tearDown];
+
+	self.owningClassToken = nil;
+}
+
 #pragma mark - NSObject methods
 
 - (NSString *)description

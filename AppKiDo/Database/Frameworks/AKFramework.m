@@ -26,4 +26,13 @@
 	return self;
 }
 
+#pragma mark - Getters and setters
+
+-(BOOL)hasContent
+{
+	return (self.classesGroup.objectCount > 0
+			|| self.protocolsGroup.objectCount > 0
+			|| self.functionsAndGlobalsCluster.objectCount > 0);
+}
+
 @end

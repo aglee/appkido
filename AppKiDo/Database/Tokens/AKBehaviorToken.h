@@ -33,6 +33,7 @@
 @property (readonly, copy) NSArray *notificationTokens;
 @property (readonly, copy) NSArray *dataTypeTokens;
 @property (readonly, copy) NSArray *constantTokens;
+@property (readonly) BOOL hasContent;
 
 #pragma mark - Adopted protocol tokens
 
@@ -70,5 +71,9 @@
 - (AKNotificationToken *)notificationWithName:(NSString *)notificationName;
 /*! Does nothing if a notification with the same name already exists. */
 - (void)addNotification:(AKNotificationToken *)notificationToken;
+
+#pragma mark - Tear-down
+
+- (void)tearDown;
 
 @end

@@ -189,6 +189,26 @@
 	return result;
 }
 
+- (BOOL)hasContent
+{
+	return (super.hasContent
+			|| self.delegateProtocolTokensByName.count > 0
+			|| self.bindingTokensByName.count > 0
+			|| _subclassTokens.count > 0
+			|| _categoryTokens.count > 0);
+}
+
+- (void)tearDown
+{
+	[super tearDown];
+
+	[self.superclassToken removeSubclassToken:self];
+	[self.delegateProtocolTokensByName removeAllObjects];
+	[self.bindingTokensByName removeAllObjects];
+	[_subclassTokens removeAllObjects];
+	[_categoryTokens removeAllObjects];
+}
+
 #pragma mark - Private methods
 
 - (void)_addDescendantClassTokensToSet:(NSMutableSet *)descendantClassTokens

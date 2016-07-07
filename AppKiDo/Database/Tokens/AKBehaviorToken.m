@@ -86,6 +86,20 @@
 	return self.constantTokensByName.allValues;
 }
 
+- (BOOL)hasContent
+{
+	// The token is empty if it has no header, no doc path, and no members.
+	return (self.hasHeader
+			|| self.tokenMO.metainformation.file.path != nil
+			|| self.adoptedProtocolTokensByName.count > 0
+			|| self.propertiesByName.count > 0
+			|| self.classMethodsByName.count > 0
+			|| self.instanceMethodsByName.count > 0
+			|| self.dataTypeTokensByName.count > 0
+			|| self.constantTokensByName.count > 0
+			|| self.notificationsByName.count > 0);
+}
+
 #pragma mark - Adopted protocol tokens
 
 - (void)addAdoptedProtocol:(AKProtocolToken *)protocolToken
@@ -190,6 +204,19 @@
 {
 	self.notificationsByName[notificationToken.name] = notificationToken;
 	notificationToken.owningBehavior = self;
+}
+
+#pragma mark - Tear-down
+
+- (void)tearDown
+{
+	[self.adoptedProtocolTokensByName removeAllObjects];
+	[self.propertiesByName removeAllObjects];
+	[self.classMethodsByName removeAllObjects];
+	[self.instanceMethodsByName removeAllObjects];
+	[self.dataTypeTokensByName removeAllObjects];
+	[self.constantTokensByName removeAllObjects];
+	[self.notificationsByName removeAllObjects];
 }
 
 @end

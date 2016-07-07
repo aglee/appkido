@@ -18,4 +18,6 @@
 @property (strong, readonly) AKNamedObjectGroup *classesGroup;
 @property (strong, readonly) AKNamedObjectCluster *functionsAndGlobalsCluster;
 
+@property (readonly) BOOL hasContent;
+
 @end
