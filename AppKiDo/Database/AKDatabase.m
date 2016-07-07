@@ -70,6 +70,9 @@
 	[self _importObjectiveCTokens];
 	[self _importCTokens];
 
+	// Post-processing: remove classes, protocols, and frameworks with no content.
+	[self _pruneTokensAndFrameworks];
+
 	// This will keep ARC from freeing keepAround until we've finished importing.
 	[keepAround self];
 }
@@ -148,6 +151,78 @@
 	}
 
 	return arrayOfFetchedObjectArrays;
+}
+
+// One way we might have content-free class tokens is from parsing .h files in
+// sample code.  Another way is from parsing header files that contain
+// declarations of obsolete classes.
+- (void)_pruneTokensAndFrameworks
+{
+	// Remove class and protocol tokens that have no content.
+	[self _removeEmptyClassTokens];
+	[self _removeEmptyProtocolTokens];
+
+	// Remove frameworks that have no content.  Do so *after* the above, since
+	// the above pruning may cause frameworks to become empty.
+	for (AKFramework *framework in [self.frameworks copy]) {
+		if (!framework.hasContent) {
+			//QLog(@"+++ Removing content-free framework %@.", framework.name);
+			[self _removeFramework:framework];
+		}
+	}
+}
+
+- (void)_removeEmptyClassTokens
+{
+	while (YES) {
+		NSUInteger numRemoved = 0;
+
+		for (AKClassToken *classToken in self.allClassTokens) {
+			if (!classToken.hasContent) {
+				//QLog(@"+++ Removing content-free class %@.", classToken.name);
+
+				[classToken tearDown];
+				AKFramework *framework = [self frameworkWithName:classToken.frameworkName];
+				[framework.classesGroup removeNamedObject:classToken];
+				self.classTokensByName[classToken.name] = nil;
+
+				numRemoved++;
+			}
+		}
+
+		if (numRemoved == 0) {
+			break;
+		}
+	}
+}
+
+- (void)_removeEmptyProtocolTokens
+{
+	while (YES) {
+		NSUInteger numRemoved = 0;
+
+		for (AKProtocolToken *protocolToken in self.allProtocolTokens) {
+			if (!protocolToken.hasContent) {
+				//QLog(@"+++ Removing content-free protocol %@.", protocolToken.name);
+
+				[protocolToken tearDown];
+				AKFramework *framework = [self frameworkWithName:protocolToken.frameworkName];
+				[framework.protocolsGroup removeNamedObject:protocolToken];
+				self.protocolTokensByName[protocolToken.name] = nil;
+
+				numRemoved++;
+			}
+		}
+
+		if (numRemoved == 0) {
+			break;
+		}
+	}
+}
+
+- (void)_removeFramework:(AKFramework *)framework
+{
+	[self.frameworksGroup removeNamedObject:framework];
 }
 
 @end

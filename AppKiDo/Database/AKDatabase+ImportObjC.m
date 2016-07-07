@@ -56,7 +56,7 @@
 	for (AKClassDeclarationInfo *classInfo in scanner.classDeclarations) {
 		// Get the framework.
 		if ([self frameworkWithName:classInfo.frameworkName] == nil) {
-			QLog(@"+++ Adding framework name '%@' encountered while scanning the SDK's frameworks.", classInfo.frameworkName);
+			//QLog(@"+++ Adding framework name '%@' encountered while scanning the SDK's frameworks.", classInfo.frameworkName);
 		}
 		AKFramework *framework = [self _getOrAddFrameworkWithName:classInfo.frameworkName];
 
