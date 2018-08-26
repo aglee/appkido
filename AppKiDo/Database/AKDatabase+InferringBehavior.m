@@ -60,13 +60,12 @@
 - (AKBehaviorInfo *)_behaviorInfoInferredFromTokenMO:(DSAToken *)tokenMO
 {
 	AKBehaviorInfo *behaviorInfo = [[AKBehaviorInfo alloc] init];
-	[self _initBehaviorInfo:behaviorInfo usingTokenMO:tokenMO];
+	[self _initBehaviorInfo:behaviorInfo byParsingNodeName:tokenMO.parentNode.kName];
 	return behaviorInfo;
 }
 
-- (void)_initBehaviorInfo:(AKBehaviorInfo *)behaviorInfo usingTokenMO:(DSAToken *)tokenMO
+- (void)_initBehaviorInfo:(AKBehaviorInfo *)behaviorInfo byParsingNodeName:(NSString *)nodeName
 {
-	NSString *nodeName = tokenMO.parentNode.kName;
 	NSMutableArray *words = [[nodeName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] mutableCopy];
 	[words removeObject:@""];  // In case there are double spaces in the original string.
 
