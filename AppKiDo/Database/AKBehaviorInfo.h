@@ -31,12 +31,4 @@
  */
 @property (copy) NSString *nameOfProtocol;
 
-/*!
- * What the node is "about".  This may be used, for example, as a group name for
- * "functions and globals" tokens.
- *
- * For "Keychain Services Reference" this would be "Keychain Services".
- */
-@property (copy) NSString *nodeSubject;
-
 @end

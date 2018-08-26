@@ -76,7 +76,6 @@
 	// If it doesn't end with "Reference" we don't know how to parse it any further.
 	if (![words.lastObject isEqualToString:@"Reference"]) {
 		//QLog(@"+++ Node name '%@' doesn't end with 'Reference'.", nodeName);  //TODO: Fix when this happens.
-		behaviorInfo.nodeSubject = nodeName;
 		return;
 	}
 
@@ -90,14 +89,12 @@
 	if ([nextToLastWord isEqualToString:@"Class"]) {
 		if (words.count != 3) {
 			QLog(@"+++ Will assume '%@' is not about an ObjC class (wrong number of words).", nodeName);
-			behaviorInfo.nodeSubject = [[words ak_arrayByRemovingLast:1] ak_joinedBySpaces];
 			return;
 		}
 
 		NSDictionary *captureGroups = [self _parsePossibleCategoryName:firstWord];
 		behaviorInfo.nameOfClass = captureGroups[@1];
 		behaviorInfo.nameOfCategory = captureGroups[@2];
-		behaviorInfo.nodeSubject = firstWord;
 		return;
 	}
 
@@ -122,17 +119,7 @@
 
 		if (seemsLikeObjCProtocol) {
 			behaviorInfo.nameOfProtocol = firstWord;
-			behaviorInfo.nodeSubject = behaviorInfo.nameOfProtocol;
-			return;
-		} else {
-			behaviorInfo.nodeSubject = [[words ak_arrayByRemovingLast:1] ak_joinedBySpaces];
-			return;
 		}
-	}
-
-	// Fallback case: drop the word "Reference", and that's what the node is about.
-	if (words.count > 1) {
-		behaviorInfo.nodeSubject = [[words ak_arrayByRemovingLast:1] ak_joinedBySpaces];
 		return;
 	}
 }
