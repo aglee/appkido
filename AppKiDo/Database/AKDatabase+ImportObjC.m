@@ -344,10 +344,20 @@
 		return nil;
 	}
 
+	// See if the container name is a class name.
+	AKClassToken *classToken = [self classTokenWithName:tokenMO.container.containerName];
+	if (classToken) {
+		return classToken;
+	}
+
+	// Try AKBehaviorInfo.
 	AKBehaviorInfo *behaviorInfo = [self _behaviorInfoInferredFromTokenMO:tokenMO];
 	AKBehaviorToken *behaviorToken = [self _behaviorTokenFromInferredInfo:behaviorInfo];
-	if (behaviorToken == nil) {
-		QLog(@"+++ [ODD] Can't figure out the behavior that owns member '%@' of type '%@'; parent node is '%@', container is '%@'.", tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.parentNode.kName, tokenMO.container.containerName);
+	if (![behaviorToken isKindOfClass:[AKClassToken class]]
+		&& ![behaviorToken isKindOfClass:[AKCategoryToken class]])
+	{
+		QLog(@"+++ [ODD] container='%@', can't figure out owning behavior for '%@'  '%@'  '%@', .", tokenMO.container.containerName, tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.parentNode.kName);
+		return nil;
 	}
 	return behaviorToken;
 }
@@ -394,9 +404,14 @@
 		return nil;
 	}
 
-	AKProtocolToken *protocolToken;
-	AKBehaviorInfo *behaviorInfo = [self _behaviorInfoInferredFromTokenMO:tokenMO];
+	// See if the container name is a protocol name.
+	AKProtocolToken *protocolToken = [self protocolTokenWithName:tokenMO.container.containerName];
+	if (protocolToken) {
+		return protocolToken;
+	}
 
+	// Try AKBehaviorInfo.
+	AKBehaviorInfo *behaviorInfo = [self _behaviorInfoInferredFromTokenMO:tokenMO];
 	if (behaviorInfo.nameOfProtocol) {
 		protocolToken = [self _getOrAddProtocolTokenWithName:behaviorInfo.nameOfProtocol];
 	}
@@ -410,9 +425,8 @@
 	}
 
 	if (protocolToken == nil) {
-		QLog(@"+++ [ODD] Can't figure out the behavior that owns member '%@' of type '%@'; parent node is '%@', container is '%@'.", tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.parentNode.kName, tokenMO.container.containerName);
+		QLog(@"+++ [ODD] container='%@', can't figure out owning protocol for '%@'  '%@'  '%@', .", tokenMO.container.containerName, tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.parentNode.kName);
 	}
-
 	return protocolToken;
 }
 
