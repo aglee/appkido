@@ -283,7 +283,7 @@
 - (void)_importClassMethods
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"clm"]) {
-		AKBehaviorToken *behaviorToken = [self _ownerOfClassMemberTokenMO:tokenMO];
+		AKBehaviorToken *behaviorToken = [self _classOrCategoryTokenThatOwnsMemberTokenMO:tokenMO];
 		if (behaviorToken) {
 			AKClassMethodToken *methodToken = [[AKClassMethodToken alloc] initWithTokenMO:tokenMO];
 			[behaviorToken addClassMethod:methodToken];
@@ -294,7 +294,7 @@
 - (void)_importInstanceMethods
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"instm"]) {
-		AKBehaviorToken *behaviorToken = [self _ownerOfClassMemberTokenMO:tokenMO];
+		AKBehaviorToken *behaviorToken = [self _classOrCategoryTokenThatOwnsMemberTokenMO:tokenMO];
 		if (behaviorToken) {
 			AKInstanceMethodToken *methodToken = [[AKInstanceMethodToken alloc] initWithTokenMO:tokenMO];
 			[behaviorToken addInstanceMethod:methodToken];
@@ -305,7 +305,7 @@
 - (void)_importProperties
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"instp"]) {
-		AKBehaviorToken *behaviorToken = [self _ownerOfClassMemberTokenMO:tokenMO];
+		AKBehaviorToken *behaviorToken = [self _classOrCategoryTokenThatOwnsMemberTokenMO:tokenMO];
 		if (behaviorToken) {
 			AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithTokenMO:tokenMO];
 			[behaviorToken addPropertyToken:propertyToken];
@@ -326,7 +326,7 @@
 	}
 }
 
-- (AKBehaviorToken *)_ownerOfClassMemberTokenMO:(DSAToken *)tokenMO
+- (AKBehaviorToken *)_classOrCategoryTokenThatOwnsMemberTokenMO:(DSAToken *)tokenMO
 {
 	if (tokenMO.metainformation.file.path == nil) {
 		// Here's an example of why I'm skipping tokens that don't point to a
@@ -357,7 +357,7 @@
 - (void)_importProtocolClassMethods
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"intfcm"]) {
-		AKProtocolToken *protocolToken = [self _ownerOfProtocolMemberTokenMO:tokenMO];
+		AKProtocolToken *protocolToken = [self _protocolTokenThatOwnsMemberTokenMO:tokenMO];
 		if (protocolToken) {
 			AKClassMethodToken *methodToken = [[AKClassMethodToken alloc] initWithTokenMO:tokenMO];
 			[protocolToken addClassMethod:methodToken];
@@ -368,7 +368,7 @@
 - (void)_importProtocolInstanceMethods
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"intfm"]) {
-		AKProtocolToken *protocolToken = [self _ownerOfProtocolMemberTokenMO:tokenMO];
+		AKProtocolToken *protocolToken = [self _protocolTokenThatOwnsMemberTokenMO:tokenMO];
 		if (protocolToken) {
 			AKInstanceMethodToken *methodToken = [[AKInstanceMethodToken alloc] initWithTokenMO:tokenMO];
 			[protocolToken addInstanceMethod:methodToken];
@@ -379,7 +379,7 @@
 - (void)_importProtocolProperties
 {
 	for (DSAToken *tokenMO in [self _fetchTokenMOsWithLanguage:@"Objective-C" tokenType:@"intfp"]) {
-		AKProtocolToken *protocolToken = [self _ownerOfProtocolMemberTokenMO:tokenMO];
+		AKProtocolToken *protocolToken = [self _protocolTokenThatOwnsMemberTokenMO:tokenMO];
 		if (protocolToken) {
 			AKPropertyToken *propertyToken = [[AKPropertyToken alloc] initWithTokenMO:tokenMO];
 			[protocolToken addPropertyToken:propertyToken];
@@ -387,7 +387,7 @@
 	}
 }
 
-- (AKProtocolToken *)_ownerOfProtocolMemberTokenMO:(DSAToken *)tokenMO
+- (AKProtocolToken *)_protocolTokenThatOwnsMemberTokenMO:(DSAToken *)tokenMO
 {
 	if (tokenMO.metainformation.file.path == nil) {
 		//QLog(@"+++ [ODD] Skipping protocol member token '%@', type '%@', container '%@'; it doesn't point to any documentation.", tokenMO.tokenName, tokenMO.tokenType.typeName, tokenMO.container.containerName);
