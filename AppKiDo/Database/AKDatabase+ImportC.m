@@ -73,11 +73,7 @@
 - (AKToken *)_maybeAddPseudoMemberWithTokenMO:(DSAToken *)tokenMO
 {
 	// Figure out what behavior, if any, owns this token.
-	AKBehaviorInfo *owningBehaviorInfo = [self _behaviorInfoInferredFromTokenMO:tokenMO];
-	if (owningBehaviorInfo == nil) {
-		return nil;
-	}
-	AKBehaviorToken *owningBehaviorToken = [self _behaviorTokenWithInfo:owningBehaviorInfo];
+	AKBehaviorToken *owningBehaviorToken = [self _owningBehaviorTokenForPseudoMemberWithTokenMO:tokenMO];
 	if (owningBehaviorToken == nil) {
 		//QLog(@"+++ Could not derive behavior token from behaviorInfo %@.", owningBehaviorInfo);
 		return nil;
@@ -113,6 +109,30 @@
 	QLog(@"+++ [ODD] %s Unexpected token type '%@' for tokenMO '%@' seemingly owned by behavior %@.", tokenType, tokenMO.tokenName, owningBehaviorToken);
 	return nil;
 }
+
+- (AKBehaviorToken *)_owningBehaviorTokenForPseudoMemberWithTokenMO:(DSAToken *)tokenMO
+{
+	// See if the container name is a class name.
+	NSString *maybeBehaviorName = tokenMO.container.containerName;
+	AKClassToken *classToken = [self classTokenWithName:maybeBehaviorName];
+	if (classToken) {
+		return classToken;
+	}
+
+	// See if the container name is a protocol name.
+	AKProtocolToken *protocolToken = [self protocolTokenWithName:maybeBehaviorName];
+	if (protocolToken) {
+		return protocolToken;
+	}
+
+	// Try using AKBehaviorInfo.
+	AKBehaviorInfo *owningBehaviorInfo = [self _behaviorInfoInferredFromTokenMO:tokenMO];
+	if (owningBehaviorInfo == nil) {
+		return nil;
+	}
+	return [self _behaviorTokenWithInfo:owningBehaviorInfo];
+}
+
 
 - (AKBehaviorToken *)_behaviorTokenWithInfo:(AKBehaviorInfo *)behaviorInfo
 {
