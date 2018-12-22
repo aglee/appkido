@@ -8,7 +8,7 @@
 #import "AKViewController.h"
 
 @class AKSubtopic;
-@class AKTableView;
+@class AppKiDoTableView;
 
 /*!
  * Manages the "subtopic list", which lists the subtopics of the window's
@@ -16,7 +16,7 @@
  */
 @interface AKSubtopicListViewController : AKViewController <NSTableViewDelegate, NSTableViewDataSource, NSUserInterfaceValidations>
 
-@property (nonatomic, weak) IBOutlet AKTableView *subtopicsTable;
+@property (nonatomic, weak) IBOutlet AppKiDoTableView *subtopicsTable;
 @property (readonly, strong) AKSubtopic *selectedSubtopic;
 
 #pragma mark - Action methods

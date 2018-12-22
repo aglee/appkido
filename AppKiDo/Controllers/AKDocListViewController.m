@@ -12,7 +12,7 @@
 #import "AKDocLocator.h"
 #import "AKNamedObject.h"
 #import "AKSubtopic.h"
-#import "AKTableView.h"
+#import "AppKiDoTableView.h"
 #import "AKToken.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"

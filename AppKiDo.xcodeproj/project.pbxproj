@@ -169,7 +169,7 @@
 		73664ECC1CF2BE9E0094F405 /* AKColoredBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E3B1CF2BE9E0094F405 /* AKColoredBox.m */; };
 		73664ECD1CF2BE9E0094F405 /* AKFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E3D1CF2BE9E0094F405 /* AKFocusView.m */; };
 		73664ECE1CF2BE9E0094F405 /* AKMultiRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E3F1CF2BE9E0094F405 /* AKMultiRadioView.m */; };
-		73664ECF1CF2BE9E0094F405 /* AKTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E421CF2BE9E0094F405 /* AKTableView.m */; };
+		73664ECF1CF2BE9E0094F405 /* AppKiDoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E421CF2BE9E0094F405 /* AppKiDoTableView.m */; };
 		73664ED01CF2BE9E0094F405 /* AKWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E441CF2BE9E0094F405 /* AKWindow.m */; };
 		73664ED11CF2BE9E0094F405 /* AKSavedWindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E471CF2BE9E0094F405 /* AKSavedWindowState.m */; };
 		73664ED21CF2BE9E0094F405 /* AKWindowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73664E4A1CF2BE9E0094F405 /* AKWindowLayout.m */; };
@@ -527,8 +527,8 @@
 		73664E3E1CF2BE9E0094F405 /* AKMultiRadioView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMultiRadioView.h; sourceTree = "<group>"; };
 		73664E3F1CF2BE9E0094F405 /* AKMultiRadioView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMultiRadioView.m; sourceTree = "<group>"; };
 		73664E401CF2BE9E0094F405 /* AKMultiRadioViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMultiRadioViewDelegate.h; sourceTree = "<group>"; };
-		73664E411CF2BE9E0094F405 /* AKTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTableView.h; sourceTree = "<group>"; };
-		73664E421CF2BE9E0094F405 /* AKTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTableView.m; sourceTree = "<group>"; };
+		73664E411CF2BE9E0094F405 /* AppKiDoTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppKiDoTableView.h; sourceTree = "<group>"; };
+		73664E421CF2BE9E0094F405 /* AppKiDoTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppKiDoTableView.m; sourceTree = "<group>"; };
 		73664E431CF2BE9E0094F405 /* AKWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindow.h; sourceTree = "<group>"; };
 		73664E441CF2BE9E0094F405 /* AKWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindow.m; sourceTree = "<group>"; };
 		73664E461CF2BE9E0094F405 /* AKSavedWindowState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSavedWindowState.h; sourceTree = "<group>"; };
@@ -1114,8 +1114,8 @@
 				73664E3E1CF2BE9E0094F405 /* AKMultiRadioView.h */,
 				73664E3F1CF2BE9E0094F405 /* AKMultiRadioView.m */,
 				73664E401CF2BE9E0094F405 /* AKMultiRadioViewDelegate.h */,
-				73664E411CF2BE9E0094F405 /* AKTableView.h */,
-				73664E421CF2BE9E0094F405 /* AKTableView.m */,
+				73664E411CF2BE9E0094F405 /* AppKiDoTableView.h */,
+				73664E421CF2BE9E0094F405 /* AppKiDoTableView.m */,
 				73664E431CF2BE9E0094F405 /* AKWindow.h */,
 				73664E441CF2BE9E0094F405 /* AKWindow.m */,
 			);
@@ -1536,7 +1536,7 @@
 				73664EA71CF2BE9E0094F405 /* AKFrameworkRelatedTopic.m in Sources */,
 				73664E541CF2BE9E0094F405 /* AKViewController.m in Sources */,
 				73C02EB01D244B0700086B4F /* AKDatabase+InferringFramework.m in Sources */,
-				73664ECF1CF2BE9E0094F405 /* AKTableView.m in Sources */,
+				73664ECF1CF2BE9E0094F405 /* AppKiDoTableView.m in Sources */,
 				73664EC91CF2BE9E0094F405 /* AKBorderHidingView.m in Sources */,
 				73664E921CF2BE9E0094F405 /* _Header.m in Sources */,
 				73664E4F1CF2BE9E0094F405 /* AKDocListViewController.m in Sources */,

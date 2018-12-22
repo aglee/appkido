@@ -12,7 +12,7 @@
 #import "AKBehaviorToken.h"
 #import "AKSubtopic.h"
 #import "AKSubtopicConstants.h"
-#import "AKTableView.h"
+#import "AppKiDoTableView.h"
 #import "AKTopic.h"
 #import "AKWindowController.h"
 #import "DocSetModel.h"

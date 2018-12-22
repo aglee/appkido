@@ -25,7 +25,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="236" height="210"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="15" id="1119" customClass="AKTableView">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="15" id="1119" customClass="AppKiDoTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="236" height="210"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>

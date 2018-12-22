@@ -21,7 +21,7 @@
 #import "AKSearchQuery.h"
 #import "AKSubtopicListViewController.h"
 #import "AKTabChain.h"
-#import "AKTableView.h"
+#import "AppKiDoTableView.h"
 #import "AKTopicBrowserViewController.h"
 #import "AKWindow.h"
 #import "AKWindowLayout.h"

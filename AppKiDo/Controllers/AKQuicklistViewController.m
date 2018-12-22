@@ -19,7 +19,7 @@
 #import "AKProtocolToken.h"
 #import "AKProtocolTopic.h"
 #import "AKSearchQuery.h"
-#import "AKTableView.h"
+#import "AppKiDoTableView.h"
 #import "AKWindowController.h"
 #import "AKWindowLayout.h"
 #import "DIGSFindBuffer.h"

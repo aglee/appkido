@@ -7,7 +7,7 @@
 
 #import "AKViewController.h"
 
-@class AKTableView;
+@class AppKiDoTableView;
 @class AKSubtopic;
 @class AKDocLocator;
 @class AKDocView;
@@ -24,11 +24,11 @@
 	AKSubtopic *_subtopic;
 
 	// IBOutlets.
-	AKTableView *__weak _docListTable;
+	AppKiDoTableView *__weak _docListTable;
 }
 
 @property (nonatomic, strong) AKSubtopic *subtopic;
-@property (nonatomic, weak) IBOutlet AKTableView *docListTable;
+@property (nonatomic, weak) IBOutlet AppKiDoTableView *docListTable;
 
 #pragma mark - Getters and setters
 

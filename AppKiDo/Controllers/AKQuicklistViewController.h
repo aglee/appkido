@@ -10,7 +10,7 @@
 #import "AKMultiRadioViewDelegate.h"
 
 @class AKMultiRadioView;
-@class AKTableView;
+@class AppKiDoTableView;
 
 /*!
  * Controller for a browser window's quicklist drawer.
@@ -29,7 +29,7 @@
 @property (nonatomic, weak) IBOutlet NSMenuItem *includeFunctionsAndGlobalsItem;
 @property (nonatomic, weak) IBOutlet NSMenuItem *ignoreCaseItem;
 @property (nonatomic, weak) IBOutlet NSMenuItem *searchOptionsDividerItem;
-@property (nonatomic, weak) IBOutlet AKTableView *quicklistTable;
+@property (nonatomic, weak) IBOutlet AppKiDoTableView *quicklistTable;
 @property (nonatomic, weak) IBOutlet NSButton *removeFavoriteButton;
 
 #pragma mark - Navigation

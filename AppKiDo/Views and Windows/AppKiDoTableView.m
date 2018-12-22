@@ -1,11 +1,11 @@
 /*
- * AKTableView.m
+ * AppKiDoTableView.m
  *
  * Created by Andy Lee on Wed May 28 2003.
  * Copyright (c) 2003, 2004 Andy Lee. All rights reserved.
  */
 
-#import "AKTableView.h"
+#import "AppKiDoTableView.h"
 
 #import "AKPrefUtils.h"
 #import "AKTabChain.h"
@@ -13,7 +13,7 @@
 
 #import "NSView+AppKiDo.h"
 
-@implementation AKTableView
+@implementation AppKiDoTableView
 
 #pragma mark - Preferences
 
