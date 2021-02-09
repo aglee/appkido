@@ -25,6 +25,7 @@ Here are the API constructs represented in AppKiDo, and their corresponding item
 * Delegate methods are treated similarly to instance methods, because they are considered part of the behavior of the class. In particular, they are "inherited" by subclasses of the delegating class.
 * TODO: Note there are delegate class methods too.
 * Notifications are treated similarly to methods, even though they aren't methods at all, for the same reason.
+	* TODO: Mention my "pseudo-member" terminology.
 * Examples: -init, +stringWithFormat:, tabView:willSelectTabViewItem:, NSWindowWillCloseNotification.
 * **Functions** -- AKFunctionToken
 * C functions. Also, #define'd macros that look like functions.
@@ -97,6 +98,8 @@ xxx Topic browser, subtopic list, doc list, and doc view are always in sync. If 
 
 ## Etc.
 ----
+
+Debating whether to describe the UI components before the implementation details.  Maybe move UI discussion to a separate doc altogether, and flesh that out with discussion of design decisions (left-right/top-bottom principle, why there are Quicklists, etc.).
 
 * [TODO: this section is a dumping area for things it occurs to me are worth mentioning somewhere]*
 
