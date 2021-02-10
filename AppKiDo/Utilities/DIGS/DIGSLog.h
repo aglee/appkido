@@ -88,7 +88,7 @@ enum
  * @function    DIGSGetVerbosityLevel
  * @discussion  Returns the DIGSLog verbosity level.
  */
-extern NSInteger DIGSGetVerbosityLevel();
+extern NSInteger DIGSGetVerbosityLevel(void);
 
 /*!
  * @function    DIGSSetVerbosityLevel

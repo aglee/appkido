@@ -317,7 +317,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 #pragma mark - NSTableView delegate methods
 
-- (BOOL)tableView:(NSTableView*)tableView
+- (BOOL)tableView:(NSTableView *)tableView
 	   acceptDrop:(id <NSDraggingInfo>)info
 			  row:(NSInteger)row
 	dropOperation:(NSTableViewDropOperation)operation
@@ -344,7 +344,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	return YES;
 }
 
-- (NSDragOperation)tableView:(NSTableView*)tableView
+- (NSDragOperation)tableView:(NSTableView *)tableView
 				validateDrop:(id <NSDraggingInfo>)info
 				 proposedRow:(NSInteger)row
 	   proposedDropOperation:(NSTableViewDropOperation)operation
@@ -356,12 +356,17 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 }
 
 - (BOOL)tableView:(NSTableView *)tableView
-		writeRows:(NSArray*)rows
+writeRowsWithIndexes:(NSIndexSet *)rowIndexes
 	 toPasteboard:(NSPasteboard*)pboard
 {
 	if (_selectedQuicklistMode != _AKFavoritesQuicklistMode) {
 		return NO;
 	}
+
+	NSMutableArray *rows = [[NSMutableArray alloc] init];
+	[rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+		[rows addObject:@(idx)];
+	}];
 	[pboard declareTypes:@[_AKQuicklistPasteboardType] owner:self];
 	[pboard setPropertyList:rows forType:_AKQuicklistPasteboardType];
 	return YES;
