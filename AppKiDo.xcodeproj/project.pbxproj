@@ -244,6 +244,7 @@
 /* Begin PBXFileReference section */
 		731BC90B1D07617C00B01D2D /* AKPlatformConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPlatformConstants.h; sourceTree = "<group>"; };
 		731BC90C1D07617C00B01D2D /* AKPlatformConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPlatformConstants.m; sourceTree = "<group>"; };
+		731E596E25D3B529007C3B53 /* AppKiDo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = AppKiDo.entitlements; sourceTree = "<group>"; };
 		734725E11D04DA34009147AD /* AKDocSetsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDocSetsWindowController.h; sourceTree = "<group>"; };
 		734725E21D04DA34009147AD /* AKDocSetsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDocSetsWindowController.m; sourceTree = "<group>"; };
 		734725E31D04DA34009147AD /* AKDocSetsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AKDocSetsWindowController.xib; sourceTree = "<group>"; };
@@ -669,6 +670,7 @@
 		73664CB61CF2BBBE0094F405 /* AppKiDo */ = {
 			isa = PBXGroup;
 			children = (
+				731E596E25D3B529007C3B53 /* AppKiDo.entitlements */,
 				73664DF91CF2BE9E0094F405 /* Utilities */,
 				73664DF31CF2BE9E0094F405 /* Prefs */,
 				73664D7D1CF2BE9D0094F405 /* DocSetModel */,
