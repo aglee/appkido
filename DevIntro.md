@@ -71,27 +71,27 @@ Here are the major areas of an AppKiDo browser window, and the controller classe
 xxx introduce the term "browser window"
 
 * **Topic browser**
-* An NSBrowser for navigating two things: Cocoa's class hierarchy, plus the non-object.
-* The first column lists the two root classes in Cocoa: NSObject and NSProxy.
-* The first column also lists the names of all the frameworks that have been loaded. For each framework, you can use the topic browser to browse API constructs that are not classes: protocols, functions, and globals.
-* Note: when you select a topic in the topic browser, the subordinate items that appear in the next column are NOT called subtopics. The term "subtopic" is used for the subtopic list.
-* Each item in the topic browser is called a "**topic**" and is represented by an instance of AKTopic.
+	* An NSBrowser for navigating two things: Cocoa's class hierarchy, plus the non-object.
+	* The first column lists the two root classes in Cocoa: NSObject and NSProxy.
+	* The first column also lists the names of all the frameworks that have been loaded. For each framework, you can use the topic browser to browse API constructs that are not classes: protocols, functions, and globals.
+	* Note: when you select a topic in the topic browser, the subordinate items that appear in the next column are NOT called subtopics. The term "subtopic" is used for the subtopic list.
+	* Each item in the topic browser is called a "**topic**" and is represented by an instance of AKTopic.
 
 * **Subtopic list**
-* A single-column table view that lists categories of documentation that are available for the topic that is selected in the topic browser.
-* Example: if you select a class in the topic browser, the subtopics include "Class Methods", "Instance Methods", "Delegate Methods", and "Notifications". If you select a framework in the topic browser and then the "Functions" topic for that framework, the subtopics are groups of functions.
-* Each item in the topic browser is called a "**subtopic**" and is represented by an instance of AKSubtopic.
+	* A single-column table view that lists categories of documentation that are available for the topic that is selected in the topic browser.
+	* Example: if you select a class in the topic browser, the subtopics include "Class Methods", "Instance Methods", "Delegate Methods", and "Notifications". If you select a framework in the topic browser and then the "Functions" topic for that framework, the subtopics are groups of functions.
+	* Each item in the topic browser is called a "**subtopic**" and is represented by an instance of AKSubtopic.
 
 * **Doc list**
-* A single-column table view that lists documentation items available for the selected subtopic.
-* Each item in the doc list is called a "**doc**" and is represented by an instance of AKDoc.
+	* A single-column table view that lists documentation items available for the selected subtopic.
+	* Each item in the doc list is called a "**doc**" and is represented by an instance of AKDoc.
 
 * **Doc view**
-* A single-column NSTableView that lists the documentation for whatever item is selected in the doc list.
-* or header file
+	* A single-column NSTableView that lists the documentation for whatever item is selected in the doc list.
+	* or header file
 
 * **Quicklist**
-* An NSDrawer that displays "quicklists" and the Search UI.
+	* An NSDrawer that displays "quicklists" and the Search UI.
 
 xxx Topic browser, subtopic list, doc list, and doc view are always in sync. If you select from the Quicklist it navigates all of those panes accordingly in the main window.
 
