@@ -15,21 +15,23 @@ The fundamental model object in AppKiDo is an AKToken, or simply "token item", o
 Here are the API constructs represented in AppKiDo, and their corresponding item classes:
 
 * **Classes and protocols** -- AKClassToken, AKProtocolToken
-* Classes and protocols are collectively referred to as "behaviors". AKClassToken and AKProtocolToken are subclasses of AKBehaviorToken.
-* AKBehaviorToken has a third subclass, AKCategoryToken, which is a historical artifact and isn't used in any way the user sees.
-* Examples: NSObject, NSTableDataSource.
+	* Classes and protocols are collectively referred to as "behaviors". AKClassToken and AKProtocolToken are subclasses of AKBehaviorToken.
+	* AKBehaviorToken has a third subclass, AKCategoryToken, which is a historical artifact and isn't used in any way the user sees.
+	* Examples: NSObject, NSTableDataSource.
 * **Properties** -- AKPropertyToken
-* Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyToken for such properties. Rather, AKMethodToken is used for their documented getter and setter methods.
-* Examples: NSDraggingSession's draggingLocation, NSTask's terminationHandler.
+	* Many classes have de facto properties in the KVC sense that are not listed as properties in the documentation. AppKiDo doesn't use AKPropertyToken for such properties. Rather, AKMethodToken is used for their documented getter and setter methods.
+	* Examples: NSDraggingSession's draggingLocation, NSTask's terminationHandler.
 * **Methods** -- AKClassMethodToken, AKInstanceMethodToken
-* Delegate methods are treated similarly to instance methods, because they are considered part of the behavior of the class. In particular, they are "inherited" by subclasses of the delegating class.
-* TODO: Note there are delegate class methods too.
-* Notifications are treated similarly to methods, even though they aren't methods at all, for the same reason.
-	* TODO: Mention my "pseudo-member" terminology.
-* Examples: -init, +stringWithFormat:, tabView:willSelectTabViewItem:, NSWindowWillCloseNotification.
+	* Delegate methods are treated similarly to instance methods, because they are considered part of the behavior of the class. In particular, they are "inherited" by subclasses of the delegating class.
+	* TODO: Note there are delegate class methods too.
+	* Notifications are treated similarly to methods, even though they aren't methods at all, for the same reason.
+		* TODO: Mention my "pseudo-member" terminology.
+	* Examples: -init, +stringWithFormat:, tabView:willSelectTabViewItem:, NSWindowWillCloseNotification.
 * **Functions** -- AKFunctionToken
-* C functions. Also, #define'd macros that look like functions.
-* Examples: NSStringFromSelector(), NSAssert1().
+	* C functions. Also, #define'd macros that look like functions.
+	* Examples: NSStringFromSelector(), NSAssert1().
+* **Globals**
+	* xxx formerly "Types & Constants" -- now lumped with functions -- need to explain what class is used to represent
 
 xxx discuss AKToken, AKFramework
 
@@ -173,6 +175,8 @@ FEATURE: multiple selection of Favorites, for drag-drop convenience
 TODO: (maybe) real-time update of the display when frameworks are selected/deselected for inclusion; maybe put the frameworks list more front-and-center instead of having to navigate to a tab in the prefs window
 
 BUG: Initial window for selecting Xcode location is not closing on OK, and Cancel doesn't seem to work.
+
+BUG: Do something about all those classes that are mis-perceived as root classes, they're screwing up the first column.  Maybe hard-code NSObject and NSProxy as the only real root classes, and ignore classes whose superclasses can't be found -- looks like it's because I'm not coming across a .h file for them.
 
 TODO: mention use of MOGenerator -- occurs to me I should add it to the Credits too
 
