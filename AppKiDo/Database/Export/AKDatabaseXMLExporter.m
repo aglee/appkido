@@ -14,6 +14,11 @@
 #import "DIGSLog.h"
 #import "NSArray+AppKiDo.h"
 
+@interface AKDatabaseXMLExporter ()
+@property AKDatabase *database;
+@property TCMXMLWriter *xmlWriter;
+@end
+
 @implementation AKDatabaseXMLExporter
 
 #pragma mark - Init/awake/dealloc
@@ -43,8 +48,9 @@
 - (void)doExport
 {
     [_xmlWriter instructXMLStandalone];
+
     [_xmlWriter tag:@"database" attributes:nil contentBlock:^{
-        for (NSString *frameworkName in _database.sortedFrameworkNames)
+		for (NSString *frameworkName in self.database.sortedFrameworkNames)
         {
             [self _exportFramework:frameworkName];
         }
@@ -58,8 +64,8 @@
     [self _writeLongDividerWithString:fwName];
     [_xmlWriter tag:@"framework" attributes:@{ @"name": fwName } contentBlock:^{
         // Export classes.
-        [_xmlWriter tag:@"classes" attributes:nil contentBlock:^{
-            NSArray *allClassTokens = [_database classTokensInFramework:fwName];
+		[self.xmlWriter tag:@"classes" attributes:nil contentBlock:^{
+			NSArray *allClassTokens = [self.database classTokensInFramework:fwName];
             for (AKClassToken *classToken in [allClassTokens ak_sortedBySortName])
             {
                 [self _exportClass:classToken];
@@ -83,7 +89,7 @@
         // Write formal protocols.
         [self _writeDividerWithString:fwName string:@"formal protocols"];
 
-        NSArray *protocolTokens = [_database protocolTokensInFramework:fwName];
+		NSArray *protocolTokens = [self.database protocolTokensInFramework:fwName];
         for (AKProtocolToken *protocolToken in [protocolTokens ak_sortedBySortName])
         {
             [self _exportProtocol:protocolToken];

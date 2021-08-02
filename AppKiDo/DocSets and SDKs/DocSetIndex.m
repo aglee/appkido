@@ -25,13 +25,11 @@
 
 #pragma mark - Finding installed docsets
 
-+ (NSArray *)sortedDocSetsInStandardLocation
++ (NSArray *)sortedDocSetsInDirectory:(NSString *)docSetsContainerPath
 {
 	NSMutableArray *docSets = [NSMutableArray array];
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSError *error;
-	NSString *docSetsContainerPath = [@"~/Library/Developer/Shared/Documentation/DocSets"
-									  stringByExpandingTildeInPath];
 	NSArray *dirContents = [fm contentsOfDirectoryAtPath:docSetsContainerPath error:&error];
 
 	if (dirContents == nil) {
@@ -63,6 +61,19 @@
 	[docSets sortUsingDescriptors:@[AKFinderLikeSort(@"platformInternalName"),
 									AKFinderLikeSort(@"platformVersion")]];
 	return docSets;
+}
+
++ (NSArray *)sortedDocSetsInStandardLocation
+{
+	NSString *docSetsContainerPath = [@"~/Library/Developer/Shared/Documentation/DocSets"
+									  stringByExpandingTildeInPath];
+	return [self sortedDocSetsInDirectory:docSetsContainerPath];
+}
+
++ (NSArray *)sortedDocSetsWithinXcodePath:(NSString *)xcodeAppPath
+{
+	NSString *docSetsContainerPath = [xcodeAppPath stringByAppendingPathComponent:@"Contents/Developer/Documentation/DocSets"];
+	return [self sortedDocSetsInDirectory:docSetsContainerPath];
 }
 
 #pragma mark - Init/awake/dealloc

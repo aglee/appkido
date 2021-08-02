@@ -27,11 +27,27 @@
 #pragma mark - Finding installed docsets
 
 /*!
+ * Looks in the directory's immediate (non-recursive) contents for things that look like
+ * docsets.
+ */
++ (NSArray *)sortedDocSetsInDirectory:(NSString *)docSetsContainerPath;
+
+/*!
  * Looks in the standard location where Xcode installs docsets, which is
  * "~/Library/Developer/Shared/Documentation/DocSets".  The returned array is
  * sorted by platform and version.
  */
 + (NSArray *)sortedDocSetsInStandardLocation;
+
+/*!
+ * Expects `xcodeAppPath` to point to an Xcode app bundle, e.g. "/Applications/Xcode.app".
+ * Currently this works with Xcode 7.3.1, which includes docsets in the bundle.  I think
+ * Xcode 6 may still have required a separate download which installed the docs in
+ * "~/Library/Developer/Shared/Documentation/DocSets", but I don't remember for sure when
+ * they started including docs in the Xcode app bundle instead of requiring the separate
+ * download.
+ */
++ (NSArray *)sortedDocSetsWithinXcodePath:(NSString *)xcodeAppPath;
 
 #pragma mark - Init/awake/dealloc
 

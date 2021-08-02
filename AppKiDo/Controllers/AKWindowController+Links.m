@@ -65,7 +65,7 @@
 - (AKDocLocator *)_docLocatorForURL:(NSURL *)linkURL
 {
 	if (!linkURL.fileURL) {
-		return NO;
+		return nil;
 	}
 
 	NSString *linkAnchor = linkURL.fragment;
