@@ -20,6 +20,6 @@ extern NSString *AKQuartzCoreFrameworkName;
  * Returns the names of frameworks that must be loaded into the database
  * if available within the docset for that database.
  */
-extern NSArray *_AKNamesOfEssentialFrameworks();
+extern NSArray *_AKNamesOfEssentialFrameworks(void);
 
 #define AKNamesOfEssentialFrameworks _AKNamesOfEssentialFrameworks()

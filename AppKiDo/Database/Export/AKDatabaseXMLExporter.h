@@ -21,11 +21,6 @@
  * release of the Dev Tools.
  */
 @interface AKDatabaseXMLExporter : NSObject
-{
-@private
-    AKDatabase *_database;
-    TCMXMLWriter *_xmlWriter;
-}
 
 #pragma mark - Init/awake/dealloc
 

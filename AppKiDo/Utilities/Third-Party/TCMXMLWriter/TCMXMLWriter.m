@@ -6,9 +6,17 @@
 //  Copyright 2011 TheCodingMonkeys. All rights reserved.
 //
 
+// this file needs arc - either project wide,
+// or add -fobjc-arc on a per file basis in the compile build phase
+// for a pre arc version go to https://github.com/monkeydom/TCMXMLWriter/tree/295a377f60104afe6d13124cbe6105aaff5c1317
+#if !__has_feature(objc_arc)
+#error ARC must be enabled!
+#endif
+
 #import "TCMXMLWriter.h"
 
 #define SHOULDPRETTYPRINT (_writerOptions & TCMXMLWriterOptionPrettyPrinted)
+#define SHOULDPRETTYBOOL  (_writerOptions & TCMXMLWriterOptionPrettyBOOL)
 
 @interface TCMXMLWriter ()
 @property BOOL currentTagHasContent;
@@ -32,25 +40,31 @@
 
 @synthesize fileURL = _fileURL;
 
-- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField {
+- (id)init {
+    return [self initWithOptions:0];
+}
+
+- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField {
 	if ((self = [super init])) {
 		_elementNameStackArray = [NSMutableArray new];
 		self.writerOptions = anOptionField;
 		_indentationString = [NSMutableString new];
 		_dateFormatter = [NSDateFormatter new];
-		_dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-		_dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+		_boolNOValue = @"no";
+		_boolYESValue = @"yes";
+		[_dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+		[_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
 	}
 	return self;
 }
-- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField fileURL:(NSURL *)aFileURL {
+- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField fileURL:(NSURL *)aFileURL {
 	if ((self = [self initWithOptions:anOptionField])) {
 		self.fileURL = aFileURL;
 	}
 	return self;
 }
 
-- (instancetype)initWithOptions:(TCMXMLWriterOptions)anOptionField outputStream:(NSOutputStream *)anOutputStream {
+- (id)initWithOptions:(TCMXMLWriterOptions)anOptionField outputStream:(NSOutputStream *)anOutputStream {
 	if ((self = [self initWithOptions:anOptionField])) {
 		self.outputStream = anOutputStream;
 	}
@@ -65,8 +79,8 @@
 
 - (void)createAndOpenStream {
 	if (self.fileURL) {
-		if (![[NSFileManager defaultManager] isWritableFileAtPath:(self.fileURL).path]) {
-			[[NSFileManager defaultManager] createDirectoryAtPath:(self.fileURL).path.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
+		if (![[NSFileManager defaultManager] isWritableFileAtPath:[self.fileURL path]]) {
+			[[NSFileManager defaultManager] createDirectoryAtPath:[[self.fileURL path] stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
 		}
 		self.outputStream = [NSOutputStream outputStreamWithURL:self.fileURL append:NO];
 	} else {
@@ -86,7 +100,7 @@
 			do {
 				NSInteger writtenLength = [_outputStream write:bytes maxLength:endOfBytes-bytes];
 				if (writtenLength == -1 || writtenLength == 0) {
-					NSLog(@"stream error occured: %@", _outputStream.streamError);
+					NSLog(@"stream error occured: %@", [_outputStream streamError]);
 					break;
 				}
 				bytes += writtenLength;
@@ -108,12 +122,12 @@
 	} else if ([anAttributeValue isKindOfClass:[NSNumber class]]) {
 		NSNumber *value = (NSNumber *)anAttributeValue;
 		needsEscaping = NO;
-		if (value == (NSNumber *)kCFBooleanTrue) {
-			string = @"yes";
-		} else if (value == (NSNumber *)kCFBooleanFalse) {
-			string = @"no";
+		if (value == (NSNumber *)kCFBooleanTrue && SHOULDPRETTYBOOL) {
+			string = _boolYESValue;
+		} else if (value == (NSNumber *)kCFBooleanFalse && SHOULDPRETTYBOOL) {
+			string = _boolNOValue;
 		} else {
-			string = value.stringValue;
+			string = [value stringValue];
 		}
 	}
 	if (needsEscaping) {
@@ -146,7 +160,7 @@
 		[self writeString:@"\""];
 	};
 	if (_writerOptions & TCMXMLWriterOptionOrderedAttributes) {
-		NSMutableArray *sortedAttributeKeys = [anAttributeDictionary.allKeys mutableCopy];
+		NSMutableArray *sortedAttributeKeys = [[anAttributeDictionary allKeys] mutableCopy];
 		[sortedAttributeKeys sortUsingSelector:@selector(caseInsensitiveCompare:)];
 		for (NSString *key in sortedAttributeKeys) {
 			writerBlock(key, anAttributeDictionary[key], NULL);
@@ -205,8 +219,13 @@
 	[self openTag:aTagName attributes:anAttributeDictionary hasDirectContent:NO];
 }
 
+- (void)openTag:(NSString *)aTagName {
+	[self openTag:aTagName attributes:nil];
+}
+
+
 - (void)closeLastTag {
-	NSString *tagName = (self.elementNameStackArray).lastObject;
+	NSString *tagName = [self.elementNameStackArray lastObject];
 	[_indentationString deleteCharactersInRange:NSMakeRange(_indentationString.length-1,1)];
 	if (SHOULDPRETTYPRINT) {
 		[self writeString:_indentationString];
@@ -255,6 +274,22 @@
 		[self writeString:@"\n"];
 	}
 }
+
+// shortcuts
+- (void)tag:(NSString *)aTagName contentBlock:(void (^)(void))aContentBlock {
+	[self tag:aTagName attributes:nil contentBlock:aContentBlock];
+}
+- (void)tag:(NSString *)aTagName contentXML:(NSString *)aContentXML {
+	[self tag:aTagName attributes:nil contentXML:aContentXML];
+}
+- (void)tag:(NSString *)aTagName contentText:(NSString *)aContentText {
+	[self tag:aTagName attributes:nil contentText:aContentText];
+}
+- (void)tag:(NSString *)aTagName contentCDATA:(NSString *)aContentCDATA {
+	[self tag:aTagName attributes:nil contentCDATA:aContentCDATA];
+}
+
+
 
 - (void)tag:(NSString *)aTagName attributes:(NSDictionary *)anAttributeDictionary {
 	if (SHOULDPRETTYPRINT) {
